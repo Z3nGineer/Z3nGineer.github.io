@@ -186,20 +186,32 @@ footer span{font-size:0.75rem;color:var(--text-muted);font-weight:300}
   <p class="section-label reveal">Projects</p>
   <div class="projects">
 
+    <div class="project reveal" data-c="orange">
+      <div class="project-top">
+        <div class="project-icon">&#x1F525;</div>
+        <div><h2 class="project-name">PC Tuning & Overclocking</h2><p class="project-sub">Custom Hardware Optimization — Windows & Linux</p></div>
+      </div>
+      <p class="project-desc">I tune my own hardware from scratch. No presets, no auto-OC utilities — manual voltage curves, stress testing, and fan profiles until everything is stable under real workloads. I've done this across both Windows and Linux on the same hardware, so I know the tuning process on both platforms.</p>
+      <div class="features">
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>GPU — RTX 5070 Ti</strong> — +400 core, +5000 memory, 350W power limit. Custom fan curve balanced for thermals and noise. Stable under hours of ML training, rendering, and gaming</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>CPU — Ryzen 9 9800X3D</strong> — Precision Boost override, per-CCX tuning, curve optimizer. Hours of stress testing to dial in stability. 3D V-Cache makes this chip a beast for both gaming and workstation loads</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Cross-Platform</strong> — Same hardware tuned and validated on both Windows and Linux. BIOS-level tweaks, OS-specific power management, driver configs on both platforms</div></div>
+      </div>
+      <div class="stack"><span class="tech">RTX 5070 Ti</span><span class="tech">Ryzen 9 9800X3D</span><span class="tech">Manual OC</span><span class="tech">Curve Optimizer</span><span class="tech">Fan Curves</span><span class="tech">Stress Testing</span><span class="tech">BIOS Tuning</span></div>
+    </div>
+
     <div class="project reveal" data-c="green">
       <div class="project-top">
         <div class="project-icon">&#9881;</div>
         <div><h2 class="project-name">Linux Systems Engineering</h2><p class="project-sub">CachyOS / Arch — Bare Metal</p></div>
       </div>
-      <p class="project-desc">My daily driver is a custom-tuned Arch Linux (CachyOS) workstation. Both the CPU and GPU are fully overclocked and stability-tested — not just XMP and call it a day. Every layer is configured by hand — kernel scheduler, power limits, fan curves, sleep state management, pacman hooks. It breaks sometimes. I fix it. That's the deal.</p>
+      <p class="project-desc">My daily driver is a custom-tuned Arch Linux (CachyOS) workstation. Every layer is configured by hand — kernel scheduler, sleep state management, pacman hooks, driver configs. It breaks sometimes. I fix it. That's the deal.</p>
       <div class="features">
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>GPU Overclock (RTX 5070 Ti)</strong> — +400 core, +5000 memory, 350W power limit, custom fan curve tuned for noise/thermals. Rock solid under sustained ML training and gaming</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>CPU Overclock (Ryzen 9 9800X3D)</strong> — Precision Boost override, per-CCX tuning, curve optimizer. Hours of stress testing to dial it in. Both overclocks done by hand, no presets</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>OS &amp; Kernel</strong> — CachyOS (Arch), sched-ext bpfland scheduler, custom pacman hooks, modprobe configs, multi-monitor persistence. Previously ran the same hardware tuned on Windows</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>OS &amp; Kernel</strong> — sched-ext bpfland scheduler, custom pacman hooks, modprobe configs, multi-monitor position persistence</div></div>
         <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>ML Stack</strong> — CUDA 12.8, PyTorch nightly cu128, separate venvs for app vs ML workloads, Docker services</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Gaming</strong> — Proton + DXVK on Linux, per-game launch configs, DX11 over DX12 for lower overhead, multi-monitor Wayland</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Gaming</strong> — Proton + DXVK, per-game launch configs, DX11 over DX12 for lower overhead, multi-monitor Wayland</div></div>
       </div>
-      <div class="stack"><span class="tech">Arch Linux</span><span class="tech">KDE Plasma 6</span><span class="tech">Wayland</span><span class="tech">NVIDIA 595</span><span class="tech">Ryzen 9 9800X3D</span><span class="tech">RTX 5070 Ti</span><span class="tech">Overclocking</span><span class="tech">Docker</span><span class="tech">Proton</span></div>
+      <div class="stack"><span class="tech">Arch Linux</span><span class="tech">KDE Plasma 6</span><span class="tech">Wayland</span><span class="tech">NVIDIA 595</span><span class="tech">Docker</span><span class="tech">Proton</span></div>
     </div>
 
     <div class="project reveal" data-c="purple">
