@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blizzard Sorceress — Diablo 2 Resurrected Season 13 Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0808;--bg-card:#121014;--bg-el:#1a161e;--bg-hover:#221c28;
+  --border:#2a2030;--border-light:#3a2c42;
+  --text:#e0dce8;--text-dim:#a098b0;--text-muted:#685e78;--white:#f0ecf8;
+  --accent:#c44030;--accent-hover:#e04838;--accent-dim:rgba(196,64,48,0.12);
+  --ice:#60b8e8;--ice-bright:#80d0ff;--ice-dim:rgba(96,184,232,0.12);--ice-border:rgba(96,184,232,0.25);
+  --gold:#c8a050;--gold-dim:rgba(200,160,80,0.12);
+  --green:#58a048;--green-dim:rgba(88,160,72,0.10);
+  --fire:#d05030;--fire-dim:rgba(208,80,48,0.12);
+  --crimson:#c44030;--crimson-bright:#e04838;--crimson-dim:rgba(196,64,48,0.12);
+  --purple:#9068c0;--purple-dim:rgba(144,104,192,0.10);
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:19px;line-height:1.75;-webkit-font-smoothing:antialiased}
+::selection{background:var(--ice);color:#0a0808}
+a{color:var(--ice);text-decoration:none}a:hover{color:var(--ice-bright);text-decoration:underline}
+
+/* ═══ UNIVERSAL TOP NAV ═══ */
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,8,8,0.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:60px}
+.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.top-nav-brand{font-family:'Cinzel',serif;font-size:0.85rem;font-weight:700;letter-spacing:0.12em;color:var(--white);text-decoration:none;transition:color 0.3s}
+.top-nav-brand:hover{color:var(--ice);text-decoration:none}
+.top-nav-links{display:flex;gap:0;list-style:none;align-items:center;height:60px}
+.top-nav-links>li{position:relative;height:60px;display:flex;align-items:center}
+.top-nav-links>li>a{
+  font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--text-muted);padding:0 1rem;height:60px;
+  display:flex;align-items:center;position:relative;
+  transition:color 0.2s,background 0.2s;text-decoration:none;
+}
+.top-nav-links>li>a:hover{color:var(--text);background:rgba(255,255,255,0.03);text-decoration:none}
+.top-nav-links>li>a.active{color:var(--ice)}
+.top-nav-links>li>a::after{
+  content:'';position:absolute;bottom:0;left:1rem;right:1rem;height:2px;
+  background:var(--ice);transform:scaleX(0);transition:transform 0.2s;
+}
+.top-nav-links>li>a.active::after,.top-nav-links>li>a:hover::after{transform:scaleX(1)}
+
+/* Dropdown */
+.nav-dropdown{position:relative}
+.nav-dropdown-btn{cursor:pointer;gap:0.3rem}
+.nav-dropdown-btn::before{content:'';display:none}
+.nav-dropdown-arrow{font-size:0.55rem;margin-left:0.25rem;transition:transform 0.2s}
+.nav-dropdown:hover .nav-dropdown-arrow{transform:rotate(180deg)}
+.nav-dropdown-menu{
+  display:none;position:absolute;top:60px;left:0;min-width:180px;
+  background:rgba(10,8,8,0.97);backdrop-filter:blur(16px);border:1px solid var(--border);
+  border-radius:0 0 8px 8px;padding:0.4rem 0;box-shadow:0 8px 24px rgba(0,0,0,0.5);
+}
+.nav-dropdown:hover .nav-dropdown-menu{display:block}
+.nav-dropdown-menu a{
+  display:block;padding:0.5rem 1.25rem;font-size:0.78rem;font-weight:500;
+  color:var(--text-dim);text-decoration:none;transition:all 0.15s;letter-spacing:0.03em;
+}
+.nav-dropdown-menu a:hover{color:var(--white);background:rgba(96,184,232,0.06);text-decoration:none}
+
+/* Top nav hamburger */
+.top-nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.top-nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s;border-radius:1px}
+.top-nav-mobile{display:none;position:absolute;top:60px;left:0;right:0;flex-direction:column;background:rgba(10,8,8,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0.5rem 0;z-index:999}
+.top-nav-mobile.open{display:flex}
+.top-nav-mobile a{display:block;padding:0.6rem 2rem;font-size:0.82rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color 0.15s}
+.top-nav-mobile a:hover{color:var(--white);text-decoration:none}
+.top-nav-mobile .mobile-section{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);padding:0.6rem 2rem 0.2rem;margin-top:0.3rem}
+
+@media(max-width:800px){
+  .top-nav-toggle{display:flex}
+  .top-nav-links{display:none}
+}
+
+/* ═══ PAGE SUB-NAV ═══ */
+.sub-nav{position:sticky;top:60px;z-index:900;background:rgba(10,8,8,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.sub-nav::-webkit-scrollbar{display:none}
+.sub-nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:0;padding:0 1rem;height:44px}
+.sub-nav a{
+  font-size:0.72rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;
+  color:var(--text-muted);padding:0 0.75rem;height:44px;white-space:nowrap;
+  display:flex;align-items:center;position:relative;
+  transition:color 0.2s;text-decoration:none;flex-shrink:0;
+}
+.sub-nav a:hover{color:var(--ice);text-decoration:none}
+.sub-nav a.active{color:var(--ice)}
+.sub-nav a::after{
+  content:'';position:absolute;bottom:0;left:0.5rem;right:0.5rem;height:2px;
+  background:var(--ice);transform:scaleX(0);transition:transform 0.2s;
+}
+.sub-nav a.active::after,.sub-nav a:hover::after{transform:scaleX(1)}
+
+/* ═══ LAYOUT ═══ */
+.page{display:flex;max-width:1100px;margin:0 auto;padding-top:104px}
+.sidebar{width:220px;flex-shrink:0;position:sticky;top:104px;height:calc(100vh - 104px);overflow-y:auto;border-right:1px solid var(--border);background:var(--bg-card);padding:1.5rem 0;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.sidebar-title{font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);padding:0 1.25rem;margin-bottom:.75rem}
+.sidebar a{display:flex;align-items:center;gap:.5rem;padding:.45rem 1.25rem;font-size:.88rem;font-weight:500;color:var(--text-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s}
+.sidebar a:hover{color:var(--white);background:rgba(96,184,232,0.04);text-decoration:none}
+.sidebar a.active{color:var(--white);border-left-color:var(--ice);background:rgba(96,184,232,0.06)}
+.nav-icon{font-size:1rem;width:1.2rem;text-align:center}
+.content{flex:1;min-width:0;padding:2.5rem 2.5rem 4rem}
+@media(max-width:800px){.sidebar{display:none}.content{padding:1.5rem}}
+
+/* ═══ HERO ═══ */
+.hero-art{width:100%;margin-bottom:1.25rem;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:var(--bg-card)}
+.hero-svg{width:100%;height:auto;display:block}
+.guide-header{margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.header-row{display:flex;align-items:center;gap:1rem;margin-bottom:.5rem}
+.header-text{flex:1}
+.breadcrumb{font-size:.78rem;color:var(--text-muted);margin-bottom:.3rem}
+.guide-header h1{font-family:'Cinzel',serif;font-size:2.2rem;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:.3rem}
+.subtitle{font-size:1rem;color:var(--text-dim)}
+.tag-row{display:flex;gap:.4rem;margin-top:.6rem;flex-wrap:wrap}
+.tag{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim);text-transform:uppercase;letter-spacing:.04em}
+.tag.ice{color:var(--ice);border-color:var(--ice-border);background:var(--ice-dim)}
+.tag.gold{color:var(--gold);border-color:rgba(200,160,80,0.3);background:var(--gold-dim)}
+.tag.green{color:var(--green);border-color:rgba(88,160,72,0.3);background:var(--green-dim)}
+.tag.crimson{color:var(--crimson-bright);border-color:rgba(196,64,48,0.3);background:var(--crimson-dim)}
+
+/* ═══ SECTIONS ═══ */
+.section{margin-top:3rem;opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease}
+.section.visible{opacity:1;transform:translateY(0)}
+.section h2{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.5rem}
+.section h2 .h2-icon{color:var(--ice);font-size:1.1rem}
+.section h3{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:600;color:var(--text);margin:1.5rem 0 .6rem}
+.section p{margin-bottom:1rem}
+
+/* ═══ CALLOUTS ═══ */
+.callout{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--ice);border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0}
+.callout.warn{border-left-color:var(--fire)}
+.callout.tip{border-left-color:var(--green)}
+.callout.gold{border-left-color:var(--gold)}
+.callout-label{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem;color:var(--ice)}
+.callout.warn .callout-label{color:var(--fire)}
+.callout.tip .callout-label{color:var(--green)}
+.callout.gold .callout-label{color:var(--gold)}
+.callout p{margin-bottom:.5rem;font-size:.95rem}.callout p:last-child{margin-bottom:0}
+
+/* ═══ STATS ═══ */
+.stats{display:flex;gap:.5rem;flex-wrap:wrap;margin:.75rem 0}
+.stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:.4rem .75rem;text-align:center;min-width:4rem}
+.stat-box.primary{border-color:var(--ice-border)}
+.stat-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
+.stat-val{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--white)}
+.stat-box.primary .stat-val{color:var(--ice)}
+
+/* ═══ PICKS ═══ */
+.picks{list-style:none;margin:.5rem 0}
+.picks li{padding:.3rem 0;font-size:.95rem;display:flex;gap:.4rem;align-items:baseline}
+.picks .label{font-size:.72rem;font-weight:600;color:var(--ice);text-transform:uppercase;letter-spacing:.03em;flex-shrink:0;min-width:5rem}
+.picks .name{font-weight:600;color:var(--white)}
+.picks .note{color:var(--text-dim);font-size:.88rem}
+
+/* ═══ SKILL TABLE ═══ */
+.skill-table{width:100%;border-collapse:collapse;margin:1rem 0}
+.skill-table th{font-family:'Cinzel',serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--border)}
+.skill-table td{padding:.5rem .6rem;border-bottom:1px solid var(--border);font-size:.9rem}
+.skill-table tr:hover{background:var(--bg-card)}
+.skill-name{font-weight:600;color:var(--white)}
+.skill-badge{font-size:.65rem;font-weight:600;padding:.12rem .4rem;border-radius:3px;text-transform:uppercase}
+.skill-badge.max{color:var(--ice);background:var(--ice-dim);border:1px solid var(--ice-border)}
+.skill-badge.mid{color:var(--gold);background:var(--gold-dim);border:1px solid rgba(200,160,80,0.15)}
+.skill-badge.pts{color:var(--text-dim);background:var(--bg-el);border:1px solid var(--border)}
+
+/* ═══ LEVEL CARDS ═══ */
+.lv-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.4rem;overflow:hidden;transition:border-color .15s}
+.lv-card:hover{border-color:var(--border-light)}
+.lv-card.spike{border-left:3px solid var(--ice)}
+.lv-head{display:flex;align-items:center;gap:.6rem;padding:.65rem 1rem;cursor:pointer;user-select:none;transition:background .1s;flex-wrap:wrap}
+.lv-head:hover{background:var(--bg-hover)}
+.lv-num{font-family:'Cinzel',serif;font-weight:900;font-size:1.3rem;color:var(--white);min-width:1.6rem;text-align:center}
+.lv-range{font-size:.72rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;color:var(--ice);background:var(--ice-dim);border:1px solid var(--ice-border);text-transform:uppercase;letter-spacing:.04em}
+.lv-title{font-weight:600;font-size:.95rem;color:var(--text);flex:1}
+.lv-spike{font-size:.65rem;font-weight:600;color:var(--ice);background:var(--ice-dim);padding:.15rem .45rem;border-radius:4px;border:1px solid var(--ice-border);text-transform:uppercase}
+.lv-arrow{color:var(--text-muted);font-size:.75rem;transition:transform .2s}
+.lv-card.open .lv-arrow{transform:rotate(90deg)}
+.lv-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.lv-card.open .lv-body{max-height:2000px}
+.lv-inner{padding:0 1rem 1rem;border-top:1px solid var(--border)}
+
+/* Quick picks */
+.qp-row{display:flex;flex-wrap:wrap;gap:.3rem;margin:.75rem 0 .5rem}
+.qp{font-size:.78rem;font-weight:500;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim)}
+.qp.skill{color:var(--ice);border-color:var(--ice-border)}
+.qp.gear{color:var(--gold);border-color:rgba(200,160,80,0.2)}
+.qp.stat{color:var(--green);border-color:rgba(88,160,72,0.2)}
+
+/* ═══ GEAR GRID ═══ */
+.gear-group{margin-bottom:1.5rem}
+.gear-group-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--ice);padding-bottom:.35rem;margin-bottom:.5rem;border-bottom:1px solid rgba(96,184,232,0.15)}
+.gear-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.75rem 0}
+@media(max-width:600px){.gear-grid{grid-template-columns:1fr}}
+.gear-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.9rem 1rem;transition:border-color .15s}
+.gear-card:hover{border-color:var(--border-light)}
+.gear-slot{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:.2rem}
+.gear-item{font-weight:700;font-size:.95rem}
+.gear-item.unique{color:var(--gold)}
+.gear-item.runeword{color:var(--crimson-bright)}
+.gear-item.set{color:var(--green)}
+.gear-item.rare{color:#e8d040}
+.gear-notes{color:var(--text-dim);font-size:.82rem;margin-top:.15rem}
+.gear-alt{font-size:.78rem;color:var(--text-muted);margin-top:.3rem;font-style:italic}
+
+/* ═══ FCR TABLE ═══ */
+.fcr-table{width:100%;border-collapse:collapse;margin:1rem 0}
+.fcr-table th{font-family:'Cinzel',serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--border)}
+.fcr-table td{padding:.5rem .6rem;border-bottom:1px solid var(--border);font-size:.9rem}
+.fcr-table tr:hover{background:var(--bg-card)}
+.fcr-table .hit{color:var(--ice);font-weight:700}
+.fcr-table .target{background:var(--ice-dim);border:1px solid var(--ice-border);border-radius:3px;padding:.1rem .4rem;font-size:.7rem;font-weight:600;text-transform:uppercase;color:var(--ice)}
+
+/* ═══ MERC CARD ═══ */
+.merc-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin:.75rem 0}
+.merc-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--gold);margin-bottom:.5rem}
+.merc-detail{font-size:.9rem;color:var(--text-dim);margin-bottom:.3rem}
+.merc-detail strong{color:var(--white);font-weight:600}
+
+/* ═══ STEP LIST ═══ */
+.step-list{list-style:none;counter-reset:step}
+.step-list li{position:relative;padding:.75rem 0 .75rem 3rem;border-left:2px solid var(--border);margin-left:.75rem;counter-increment:step}
+.step-list li::before{content:counter(step);position:absolute;left:-.75rem;top:.6rem;width:1.4rem;height:1.4rem;background:var(--bg);border:2px solid var(--ice);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:700;font-size:.75rem;color:var(--ice)}
+.step-list li:last-child{border-left-color:transparent}
+.step-action{font-weight:600;color:var(--white)}
+.step-detail{color:var(--text-dim);font-size:.9rem;margin-top:.2rem}
+
+/* ═══ FARMING GRID ═══ */
+.farm-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin:1rem 0}
+@media(max-width:700px){.farm-grid{grid-template-columns:1fr}}
+.farm-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;transition:border-color .15s}
+.farm-card:hover{border-color:var(--ice-border)}
+.farm-card.recommended{border-color:var(--ice);box-shadow:0 0 0 1px rgba(96,184,232,0.1)}
+.farm-name{font-family:'Cinzel',serif;font-weight:700;font-size:1rem;color:var(--white)}
+.farm-loc{font-size:.82rem;color:var(--ice);margin-top:.2rem}
+.farm-note{font-size:.82rem;color:var(--text-dim);margin-top:.3rem}
+
+/* ═══ MOBILE NAV ═══ */
+.mobile-nav{display:none;position:sticky;top:60px;z-index:800;background:rgba(10,8,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:50px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Cinzel',serif;font-size:.85rem;font-weight:700;color:var(--ice);letter-spacing:.06em}
+.mobile-toggle{display:flex;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.mobile-toggle span{display:block;width:18px;height:2px;background:var(--text);border-radius:1px}
+.mobile-links{display:none;position:absolute;top:50px;left:0;right:0;flex-direction:column;background:rgba(10,8,8,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.mobile-links.open{display:flex}
+.mobile-links a{display:flex;align-items:center;gap:.5rem;height:40px;font-size:.88rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.mobile-links a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){.mobile-nav{display:flex}.sub-nav{display:none}}
+
+/* ═══ FOOTER ═══ */
+.guide-footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.75rem;color:var(--text-muted);text-align:center}
+.guide-footer a{color:var(--text-dim)}
+.guide-footer a:hover{color:var(--ice)}
+
+/* ═══ SCROLL REVEAL ═══ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:800px){
+  .page{padding-top:60px}
+  .sidebar{display:none}
+  .content{padding:1.5rem}
+  .guide-header h1{font-size:1.6rem}
+  .gear-grid{grid-template-columns:1fr}
+  .farm-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- UNIVERSAL TOP NAV                          -->
+<!-- ═══════════════════════════════════════════ -->
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="top-nav-brand">Z3nGineer</a>
+    <button class="top-nav-toggle" id="topNavToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="top-nav-links" id="topNavLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li class="nav-dropdown">
+        <a href="#" class="nav-dropdown-btn" onclick="return false">Pages <span class="nav-dropdown-arrow">&#9662;</span></a>
+        <div class="nav-dropdown-menu">
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+          <a href="#">CrockedNLoaded</a>
+          <a href="guides.html">Game Guides</a>
+          <a href="CHIM.html">CHIM</a>
+        </div>
+      </li>
+    </ul>
+    <div class="top-nav-mobile" id="topNavMobile">
+      <a href="index.html">Home</a>
+      <a href="index.html#projects">Projects</a>
+      <div class="mobile-section">Pages</div>
+      <a href="omnisuite.html">OmniSuite</a>
+      <a href="heatsync.html">HeatSync</a>
+      <a href="#">CrockedNLoaded</a>
+      <a href="guides.html">Game Guides</a>
+      <a href="CHIM.html">CHIM</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PAGE SUB-NAV                               -->
+<!-- ═══════════════════════════════════════════ -->
+<nav class="sub-nav">
+  <div class="sub-nav-inner">
+    <a href="#overview">Overview</a>
+    <a href="#skills">Skills</a>
+    <a href="#stats">Stats</a>
+    <a href="#progression">Progression</a>
+    <a href="#fcr">FCR</a>
+    <a href="#gear-budget">Budget Gear</a>
+    <a href="#gear-bis">BiS Gear</a>
+    <a href="#cold-mastery">Cold Mastery</a>
+    <a href="#mercenary">Mercenary</a>
+    <a href="#playstyle">Playstyle</a>
+    <a href="#farming">Farming</a>
+    <a href="#tips">Tips</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- MOBILE SECTION NAV                         -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="mobile-nav">
+  <span class="mobile-nav-title">Blizzard Sorceress</span>
+  <button class="mobile-toggle" aria-label="Sections">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="mobile-links">
+    <a href="#overview"><span class="nav-icon">&#9670;</span> Overview</a>
+    <a href="#skills"><span class="nav-icon">&#10022;</span> Skills</a>
+    <a href="#stats"><span class="nav-icon">&#8593;</span> Stats</a>
+    <a href="#progression"><span class="nav-icon">&#9654;</span> Progression</a>
+    <a href="#fcr"><span class="nav-icon">&#9889;</span> FCR</a>
+    <a href="#gear-budget"><span class="nav-icon">&#9830;</span> Budget Gear</a>
+    <a href="#gear-bis"><span class="nav-icon">&#9733;</span> BiS Gear</a>
+    <a href="#cold-mastery"><span class="nav-icon">&#10052;</span> Cold Mastery</a>
+    <a href="#mercenary"><span class="nav-icon">&#9876;</span> Mercenary</a>
+    <a href="#playstyle"><span class="nav-icon">&#9881;</span> Playstyle</a>
+    <a href="#farming"><span class="nav-icon">&#9632;</span> Farming</a>
+    <a href="#tips"><span class="nav-icon">&#128161;</span> Tips</a>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SIDEBAR                                    -->
+<!-- ═══════════════════════════════════════════ -->
+<nav class="sidebar">
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">&#9670;</span> Overview</a>
+  <a href="#skills"><span class="nav-icon">&#10022;</span> Skills</a>
+  <a href="#stats"><span class="nav-icon">&#8593;</span> Stats</a>
+  <a href="#progression"><span class="nav-icon">&#9654;</span> Progression</a>
+  <a href="#fcr"><span class="nav-icon">&#9889;</span> FCR Breakpoints</a>
+  <a href="#gear-budget"><span class="nav-icon">&#9830;</span> Budget Gear</a>
+  <a href="#gear-bis"><span class="nav-icon">&#9733;</span> BiS Gear</a>
+  <a href="#cold-mastery"><span class="nav-icon">&#10052;</span> Cold Mastery</a>
+  <a href="#mercenary"><span class="nav-icon">&#9876;</span> Mercenary</a>
+  <a href="#playstyle"><span class="nav-icon">&#9881;</span> Playstyle</a>
+  <a href="#farming"><span class="nav-icon">&#9632;</span> Farming</a>
+  <a href="#tips"><span class="nav-icon">&#128161;</span> Tips</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- CONTENT                                    -->
+<!-- ═══════════════════════════════════════════ -->
+<main class="content">
+
+  <!-- ═══ HEADER + HERO SVG ═══ -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="iceAura" cx="42%" cy="45%" r="55%">
+            <stop offset="0%" stop-color="#60b8e8" stop-opacity="0.25"/>
+            <stop offset="35%" stop-color="#3080b0" stop-opacity="0.1"/>
+            <stop offset="100%" stop-color="#0a0808" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="blizzardCore" cx="50%" cy="20%" r="60%">
+            <stop offset="0%" stop-color="#a0d8f8" stop-opacity="0.15"/>
+            <stop offset="40%" stop-color="#60b8e8" stop-opacity="0.05"/>
+            <stop offset="100%" stop-color="#0a0808" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="iceShard" x1="0%" y1="0%" x2="50%" y2="100%">
+            <stop offset="0%" stop-color="#c0e8ff" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#60b8e8" stop-opacity="0.3"/>
+          </linearGradient>
+          <linearGradient id="iceShardDim" x1="0%" y1="0%" x2="50%" y2="100%">
+            <stop offset="0%" stop-color="#80c8e8" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#4090b0" stop-opacity="0.15"/>
+          </linearGradient>
+          <radialGradient id="freezeGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#60b8e8" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#60b8e8" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="frostGround" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="transparent"/>
+            <stop offset="20%" stop-color="rgba(96,184,232,0.06)"/>
+            <stop offset="50%" stop-color="rgba(96,184,232,0.1)"/>
+            <stop offset="80%" stop-color="rgba(96,184,232,0.06)"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Background: dark dungeon -->
+        <rect width="900" height="320" fill="#0a0808"/>
+        <rect width="900" height="320" fill="url(#blizzardCore)"/>
+        <rect width="900" height="320" fill="url(#iceAura)"/>
+
+        <!-- Dungeon walls — faint stone blocks -->
+        <g opacity="0.08" stroke="#4a4a5a" fill="none" stroke-width="0.5">
+          <rect x="0" y="0" width="120" height="60"/>
+          <rect x="120" y="0" width="100" height="60"/>
+          <rect x="220" y="0" width="130" height="60"/>
+          <rect x="350" y="0" width="110" height="60"/>
+          <rect x="460" y="0" width="140" height="60"/>
+          <rect x="600" y="0" width="100" height="60"/>
+          <rect x="700" y="0" width="120" height="60"/>
+          <rect x="820" y="0" width="80" height="60"/>
+          <rect x="50" y="60" width="110" height="55"/>
+          <rect x="160" y="60" width="130" height="55"/>
+          <rect x="640" y="60" width="120" height="55"/>
+          <rect x="760" y="60" width="140" height="55"/>
+        </g>
+
+        <!-- Frost covering on floor -->
+        <rect x="100" y="260" width="700" height="60" fill="url(#frostGround)"/>
+        <!-- Ice crystal floor patches -->
+        <g opacity="0.12">
+          <polygon points="200,280 210,265 220,280 215,290 205,290" fill="#60b8e8"/>
+          <polygon points="450,275 458,262 466,275 462,285 454,285" fill="#80c8e8"/>
+          <polygon points="680,278 688,266 696,278 692,288 684,288" fill="#60b8e8"/>
+          <polygon points="330,282 336,272 342,282 340,290 332,290" fill="#70c0e8"/>
+          <polygon points="580,280 586,268 592,280 590,290 582,290" fill="#60b8e8"/>
+        </g>
+
+        <!-- Frozen enemy 1 — left, encased in ice -->
+        <g transform="translate(160,200)" opacity="0.7">
+          <!-- Ice block encasing -->
+          <rect x="-22" y="-30" width="44" height="70" rx="4" fill="rgba(96,184,232,0.08)" stroke="rgba(96,184,232,0.2)" stroke-width="1"/>
+          <!-- Frozen body inside -->
+          <ellipse cx="0" cy="10" rx="14" ry="22" fill="#3a2828" opacity="0.6"/>
+          <circle cx="0" cy="-12" r="9" fill="#3a2828" opacity="0.6"/>
+          <!-- Arms frozen outward -->
+          <line x1="-10" y1="0" x2="-20" y2="-10" stroke="#3a2828" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+          <line x1="10" y1="0" x2="20" y2="-12" stroke="#3a2828" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+          <!-- Frost crystals on body -->
+          <polygon points="-8,-25 -5,-35 -2,-25" fill="#80d0ff" opacity="0.4"/>
+          <polygon points="5,-22 8,-32 11,-22" fill="#a0e0ff" opacity="0.3"/>
+          <polygon points="-18,5 -22,-2 -14,2" fill="#60b8e8" opacity="0.35"/>
+          <!-- Ice sheen lines -->
+          <line x1="-15" y1="-20" x2="-15" y2="30" stroke="#80d0ff" stroke-width="0.5" opacity="0.2"/>
+          <line x1="10" y1="-25" x2="10" y2="32" stroke="#80d0ff" stroke-width="0.5" opacity="0.15"/>
+          <!-- Frozen ground beneath -->
+          <ellipse cx="0" cy="40" rx="24" ry="6" fill="rgba(96,184,232,0.08)"/>
+        </g>
+
+        <!-- Frozen enemy 2 — right, being hit by Glacial Spike -->
+        <g transform="translate(700,190)" opacity="0.75">
+          <!-- Monster body staggering -->
+          <ellipse cx="0" cy="15" rx="16" ry="25" fill="#4a2020" transform="rotate(-8)"/>
+          <circle cx="5" cy="-12" r="10" fill="#4a2020"/>
+          <!-- Horns -->
+          <path d="M0,-20 Q-6,-32 -8,-36" stroke="#5a3828" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12,-18 Q18,-28 20,-32" stroke="#5a3828" stroke-width="2" stroke-linecap="round"/>
+          <!-- Eyes pained -->
+          <ellipse cx="2" cy="-14" rx="1.5" ry="1" fill="#d03030" opacity="0.5"/>
+          <ellipse cx="9" cy="-13" rx="1.5" ry="1" fill="#d03030" opacity="0.5"/>
+          <!-- Arms flailing -->
+          <line x1="-12" y1="5" x2="-28" y2="-8" stroke="#4a2020" stroke-width="4" stroke-linecap="round"/>
+          <line x1="14" y1="2" x2="28" y2="-12" stroke="#4a2020" stroke-width="4" stroke-linecap="round"/>
+          <!-- Legs -->
+          <line x1="-6" y1="35" x2="-14" y2="58" stroke="#4a2020" stroke-width="5" stroke-linecap="round"/>
+          <line x1="6" y1="33" x2="12" y2="56" stroke="#4a2020" stroke-width="5" stroke-linecap="round"/>
+          <!-- Glacial Spike impact — explosion of ice -->
+          <circle cx="-5" cy="5" r="20" fill="url(#freezeGlow)"/>
+          <polygon points="-5,-8 -2,-22 1,-8" fill="#c0e8ff" opacity="0.6"/>
+          <polygon points="-18,2 -28,-2 -18,-2" fill="#a0d8f8" opacity="0.5"/>
+          <polygon points="8,0 18,-5 10,-3" fill="#a0d8f8" opacity="0.45"/>
+          <polygon points="-8,15 -14,22 -5,18" fill="#80c8e8" opacity="0.4"/>
+          <!-- Frost spreading on body -->
+          <path d="M-10,-5 Q-12,5 -8,15" stroke="#80d0ff" stroke-width="1" opacity="0.4" fill="none"/>
+          <path d="M8,-2 Q10,8 6,18" stroke="#60b8e8" stroke-width="0.8" opacity="0.35" fill="none"/>
+        </g>
+
+        <!-- Frozen enemy 3 — background, fully frozen pillar -->
+        <g transform="translate(580,180)" opacity="0.4">
+          <rect x="-12" y="-20" width="24" height="55" rx="3" fill="rgba(96,184,232,0.06)" stroke="rgba(96,184,232,0.15)" stroke-width="0.8"/>
+          <ellipse cx="0" cy="8" rx="10" ry="18" fill="#3a2020" opacity="0.5"/>
+          <circle cx="0" cy="-10" r="7" fill="#3a2020" opacity="0.5"/>
+          <polygon points="-4,-22 -2,-30 0,-22" fill="#80d0ff" opacity="0.3"/>
+          <polygon points="3,-18 6,-28 8,-18" fill="#a0e0ff" opacity="0.25"/>
+        </g>
+
+        <!-- ═══ THE SORCERESS — center, casting Blizzard ═══ -->
+        <g transform="translate(420,170)" opacity="0.95">
+          <!-- Icy aura around her -->
+          <circle cx="0" cy="0" r="60" fill="rgba(96,184,232,0.03)"/>
+          <circle cx="0" cy="0" r="40" fill="rgba(96,184,232,0.04)"/>
+
+          <!-- Robes — flowing, billowing in cold wind -->
+          <path d="M-15,20 Q-22,45 -28,70 Q-32,85 -25,90 Q-10,92 10,92 Q25,90 30,85 Q24,70 18,45 Q12,20 15,20 Z" fill="#1a1830"/>
+          <!-- Robe inner fold -->
+          <path d="M-5,25 Q-8,50 -10,75 Q-8,88 0,90 Q8,88 6,75 Q4,50 2,25 Z" fill="#141228" opacity="0.7"/>
+          <!-- Robe frost trim -->
+          <path d="M-25,88 Q-10,94 10,94 Q25,90 28,86" stroke="rgba(96,184,232,0.3)" stroke-width="1.5" fill="none"/>
+          <!-- Robe ice patterns -->
+          <path d="M-18,40 L-14,35 L-10,42" stroke="rgba(96,184,232,0.15)" stroke-width="0.5" fill="none"/>
+          <path d="M12,50 L16,45 L18,52" stroke="rgba(96,184,232,0.12)" stroke-width="0.5" fill="none"/>
+
+          <!-- Body — slender torso -->
+          <ellipse cx="0" cy="5" rx="12" ry="18" fill="#2a2240"/>
+
+          <!-- Head -->
+          <circle cx="0" cy="-22" r="10" fill="#c0a888"/>
+          <!-- Hair flowing in wind -->
+          <path d="M-8,-30 Q-15,-35 -22,-30 Q-28,-25 -25,-18 Q-20,-22 -10,-28 Z" fill="#1a1828"/>
+          <path d="M8,-30 Q15,-38 20,-35 Q25,-30 22,-22 Q18,-26 10,-30 Z" fill="#1a1828"/>
+          <path d="M-10,-28 Q-18,-20 -24,-10 Q-28,-2 -30,8" stroke="#1a1828" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+          <!-- Crown/circlet — icy -->
+          <path d="M-8,-30 Q0,-34 8,-30" stroke="#80d0ff" stroke-width="1.5" fill="none" opacity="0.6"/>
+          <circle cx="0" cy="-33" r="2" fill="#a0e0ff" opacity="0.7"/>
+          <!-- Eyes — glowing ice blue -->
+          <ellipse cx="-3" cy="-23" rx="1.8" ry="1.2" fill="#60b8e8" opacity="0.9"/>
+          <ellipse cx="4" cy="-23" rx="1.8" ry="1.2" fill="#60b8e8" opacity="0.9"/>
+          <!-- Eye glow -->
+          <circle cx="-3" cy="-23" r="4" fill="rgba(96,184,232,0.15)"/>
+          <circle cx="4" cy="-23" r="4" fill="rgba(96,184,232,0.15)"/>
+
+          <!-- LEFT ARM — raised, channeling Blizzard upward -->
+          <line x1="-10" y1="-5" x2="-32" y2="-40" stroke="#c0a888" stroke-width="4" stroke-linecap="round"/>
+          <!-- Hand open, fingers spread -->
+          <line x1="-32" y1="-40" x2="-36" y2="-48" stroke="#c0a888" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="-32" y1="-40" x2="-34" y2="-49" stroke="#c0a888" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="-32" y1="-40" x2="-30" y2="-49" stroke="#c0a888" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="-32" y1="-40" x2="-28" y2="-47" stroke="#c0a888" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Ice energy in left hand -->
+          <circle cx="-32" cy="-45" r="12" fill="rgba(96,184,232,0.15)"/>
+          <circle cx="-32" cy="-45" r="7" fill="rgba(128,208,255,0.2)"/>
+          <circle cx="-32" cy="-45" r="3" fill="rgba(192,232,255,0.5)"/>
+
+          <!-- RIGHT ARM — extended, casting Glacial Spike toward enemy -->
+          <line x1="10" y1="-2" x2="35" y2="-18" stroke="#c0a888" stroke-width="4" stroke-linecap="round"/>
+          <!-- Hand pointing -->
+          <line x1="35" y1="-18" x2="42" y2="-22" stroke="#c0a888" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="35" y1="-18" x2="41" y2="-20" stroke="#c0a888" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Glacial Spike projectile flying right -->
+          <g filter="url(#glow)">
+            <polygon points="55,-22 80,-25 55,-28 50,-25" fill="url(#iceShard)" opacity="0.8"/>
+            <polygon points="80,-25 120,-26 80,-28" fill="url(#iceShardDim)" opacity="0.6"/>
+            <circle cx="55" cy="-25" r="5" fill="rgba(192,232,255,0.3)"/>
+          </g>
+          <!-- Trail particles -->
+          <circle cx="65" cy="-20" r="1.5" fill="#c0e8ff" opacity="0.4"/>
+          <circle cx="75" cy="-28" r="1" fill="#a0d8f8" opacity="0.35"/>
+          <circle cx="90" cy="-22" r="1.2" fill="#80c8e8" opacity="0.3"/>
+
+          <!-- Legs beneath robes — hints -->
+          <line x1="-5" y1="75" x2="-10" y2="95" stroke="#1a1828" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+          <line x1="5" y1="75" x2="12" y2="95" stroke="#1a1828" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+
+          <!-- Cold wind swirl around sorceress -->
+          <path d="M-40,10 Q-20,-15 0,-10 Q20,-5 40,-20" stroke="rgba(96,184,232,0.12)" stroke-width="1" fill="none"/>
+          <path d="M-35,25 Q-15,5 5,10 Q25,15 45,0" stroke="rgba(96,184,232,0.08)" stroke-width="0.8" fill="none"/>
+          <path d="M-30,-30 Q-10,-45 10,-40 Q30,-35 50,-50" stroke="rgba(128,208,255,0.1)" stroke-width="0.6" fill="none"/>
+        </g>
+
+        <!-- ═══ BLIZZARD — massive ice shards raining from above ═══ -->
+        <g filter="url(#glow)">
+          <!-- Large ice shards falling -->
+          <polygon points="300,5 305,-25 310,5 308,15 302,15" fill="url(#iceShard)" opacity="0.7" transform="rotate(12,305,0)"/>
+          <polygon points="370,20 374,-15 378,20 377,32 371,32" fill="url(#iceShard)" opacity="0.6" transform="rotate(-5,374,10)"/>
+          <polygon points="440,-10 443,-40 446,-10 445,5 441,5" fill="url(#iceShard)" opacity="0.75" transform="rotate(8,443,-20)"/>
+          <polygon points="500,10 504,-25 508,10 507,25 501,25" fill="url(#iceShard)" opacity="0.55" transform="rotate(-10,504,0)"/>
+          <polygon points="260,30 264,-5 268,30 267,45 261,45" fill="url(#iceShardDim)" opacity="0.5" transform="rotate(15,264,20)"/>
+          <polygon points="540,0 543,-30 546,0 545,15 541,15" fill="url(#iceShardDim)" opacity="0.45" transform="rotate(-8,543,-10)"/>
+
+          <!-- Medium shards -->
+          <polygon points="330,40 333,18 336,40 335,50 331,50" fill="url(#iceShard)" opacity="0.5" transform="rotate(6,333,35)"/>
+          <polygon points="480,35 482,12 484,35 483,45 481,45" fill="url(#iceShard)" opacity="0.45" transform="rotate(-12,482,25)"/>
+          <polygon points="350,55 352,35 354,55 353,62 351,62" fill="url(#iceShardDim)" opacity="0.4" transform="rotate(18,352,45)"/>
+          <polygon points="410,45 413,20 416,45 415,58 411,58" fill="url(#iceShard)" opacity="0.5" transform="rotate(-3,413,35)"/>
+
+          <!-- Small shards / ice crystals -->
+          <polygon points="290,60 292,48 294,60 293,65 291,65" fill="#a0d8f8" opacity="0.35" transform="rotate(20,292,55)"/>
+          <polygon points="520,50 521,40 522,50 522,54 520,54" fill="#80c8e8" opacity="0.3" transform="rotate(-15,521,45)"/>
+          <polygon points="380,65 381,55 382,65 382,70 380,70" fill="#a0d8f8" opacity="0.3" transform="rotate(10,381,60)"/>
+          <polygon points="460,60 461,50 462,60 462,65 460,65" fill="#80c8e8" opacity="0.25"/>
+        </g>
+
+        <!-- Blizzard area effect on ground — swirling ice -->
+        <g opacity="0.2">
+          <ellipse cx="400" cy="275" rx="180" ry="30" fill="rgba(96,184,232,0.15)" stroke="rgba(96,184,232,0.1)" stroke-width="1"/>
+          <ellipse cx="400" cy="275" rx="120" ry="18" fill="rgba(96,184,232,0.1)"/>
+          <ellipse cx="400" cy="275" rx="60" ry="8" fill="rgba(128,208,255,0.12)"/>
+        </g>
+
+        <!-- Ice particles floating everywhere -->
+        <g opacity="0.5">
+          <circle cx="250" cy="100" r="1.5" fill="#c0e8ff"/>
+          <circle cx="300" cy="75" r="1" fill="#a0d8f8"/>
+          <circle cx="350" cy="120" r="1.2" fill="#80c8e8"/>
+          <circle cx="400" cy="60" r="1.8" fill="#c0e8ff"/>
+          <circle cx="450" cy="90" r="1" fill="#a0d8f8"/>
+          <circle cx="500" cy="110" r="1.5" fill="#80c8e8"/>
+          <circle cx="550" cy="70" r="0.8" fill="#c0e8ff"/>
+          <circle cx="320" cy="150" r="1.3" fill="#a0d8f8"/>
+          <circle cx="470" cy="140" r="1.1" fill="#c0e8ff"/>
+          <circle cx="380" cy="95" r="0.9" fill="#80d0ff"/>
+          <circle cx="280" cy="180" r="1" fill="#60b8e8"/>
+          <circle cx="520" cy="160" r="1.2" fill="#a0d8f8"/>
+          <circle cx="430" cy="50" r="0.7" fill="#c0e8ff"/>
+          <circle cx="340" cy="40" r="1" fill="#80c8e8"/>
+          <circle cx="490" cy="45" r="0.8" fill="#a0d8f8"/>
+        </g>
+
+        <!-- Cold wind effect lines -->
+        <g stroke="rgba(96,184,232,0.06)" fill="none" stroke-width="0.5">
+          <path d="M100,80 Q200,60 300,90 Q400,120 500,80"/>
+          <path d="M150,150 Q250,130 350,160 Q450,180 550,140"/>
+          <path d="M80,200 Q180,180 280,210 Q380,230 480,190"/>
+          <path d="M200,50 Q300,30 400,55 Q500,75 600,45"/>
+        </g>
+
+        <!-- Ground line -->
+        <line x1="60" y1="290" x2="840" y2="290" stroke="#2a2030" stroke-width="0.5" opacity="0.3"/>
+
+        <!-- Frozen ground patches -->
+        <ellipse cx="350" cy="288" rx="40" ry="5" fill="rgba(96,184,232,0.06)"/>
+        <ellipse cx="500" cy="286" rx="35" ry="4" fill="rgba(96,184,232,0.05)"/>
+        <ellipse cx="200" cy="287" rx="30" ry="4" fill="rgba(96,184,232,0.04)"/>
+
+        <!-- Icicles hanging from top edge -->
+        <g opacity="0.15">
+          <polygon points="100,0 103,18 106,0" fill="#80c8e8"/>
+          <polygon points="200,0 202,12 204,0" fill="#60b8e8"/>
+          <polygon points="350,0 353,22 356,0" fill="#a0d8f8"/>
+          <polygon points="500,0 502,15 504,0" fill="#80c8e8"/>
+          <polygon points="650,0 652,20 654,0" fill="#60b8e8"/>
+          <polygon points="780,0 782,14 784,0" fill="#a0d8f8"/>
+          <polygon points="150,0 152,10 154,0" fill="#80c8e8"/>
+          <polygon points="420,0 422,16 424,0" fill="#60b8e8"/>
+          <polygon points="580,0 581,11 582,0" fill="#a0d8f8"/>
+          <polygon points="720,0 722,18 724,0" fill="#80c8e8"/>
+          <polygon points="850,0 851,13 852,0" fill="#60b8e8"/>
+        </g>
+
+        <!-- Floating ice runes around Sorceress -->
+        <g opacity="0.12" fill="none" stroke="#60b8e8" stroke-width="0.8">
+          <circle cx="360" cy="140" r="8"/><path d="M360,132 L360,148 M352,140 L368,140"/>
+          <circle cx="490" cy="125" r="7"/><path d="M485,119 L495,131 M495,119 L485,131"/>
+          <circle cx="340" cy="180" r="6"/><path d="M340,174 L340,186"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="header-row">
+      <div class="header-text">
+        <div class="breadcrumb">Diablo 2 Resurrected &rsaquo; Season 13 &rsaquo; Blizzard Sorceress</div>
+        <h1>Blizzard Sorceress</h1>
+        <div class="subtitle">Sorceress &middot; Cold Tree &middot; #3 Ranked &middot; Best Ladder Starter</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag ice">Cold Damage</span>
+      <span class="tag green">Best Starter</span>
+      <span class="tag gold">S-Tier</span>
+      <span class="tag crimson">Season 13</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- OVERVIEW                                -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="overview">
+    <h2><span class="h2-icon">&#9670;</span> Overview</h2>
+    <p>The Blizzard Sorceress is <strong>the best ladder starter build in Diablo 2 Resurrected</strong>. No other build can go from fresh character to Hell Mephisto farming with literally zero traded gear. Spirit sword, Lore helm, Stealth armor &mdash; all self-found runewords that carry you through the entire game. Cold Mastery reduces enemy cold resistance below zero, making your damage scale absurdly well against non-immune enemies.</p>
+
+    <p>The core gameplay loop is simple: Teleport into packs, drop Blizzard (massive AoE), fill the cooldown with Glacial Spike (freezes on hit), and skip anything cold immune. Ancient Tunnels in Act 2 has <strong>zero cold immunes</strong> &mdash; it's your personal loot farm.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Why Blizzard Over Frozen Orb?</div>
+      <p>Frozen Orb is smoother at low levels, but Blizzard has <strong>far higher total damage</strong> at max synergies. A fully synergized Blizzard hits for 4,000&ndash;6,000+ damage across its duration. Frozen Orb caps around 400&ndash;500 per bolt with no synergy investment. For endgame farming, Blizzard is not even close &mdash; it obliterates everything that isn't immune.</p>
+    </div>
+
+    <h3>Why This Build?</h3>
+    <ul class="picks">
+      <li><span class="label">Cost</span> <span class="name">Zero</span> &mdash; <span class="note">functions on self-found gear. Spirit + Lore + Stealth costs nothing.</span></li>
+      <li><span class="label">Scaling</span> <span class="name">Cold Mastery</span> &mdash; <span class="note">reduces enemy cold res below zero. Damage scales multiplicatively.</span></li>
+      <li><span class="label">Farming</span> <span class="name">Ancient Tunnels</span> &mdash; <span class="note">zero cold immunes in Hell. Drops every item in the game.</span></li>
+      <li><span class="label">Teleport</span> <span class="name">Native</span> &mdash; <span class="note">Sorceress has Teleport built-in. Fastest farmer in the game.</span></li>
+      <li><span class="label">Endgame</span> <span class="name">Death's Fathom</span> &mdash; <span class="note">+30% cold damage weapon turns you into an ice god.</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Season 13 Notes</div>
+      <p>Cold Mastery diminishing returns were <strong>softened slightly</strong> in Patch 3.1.1. The level 17 sweet spot remains optimal, but you get marginally more value from extra points now. Blizzard Sorc remains firmly S-tier and the undisputed best starter for Season 13.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SKILL ALLOCATION                        -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="skills">
+    <h2><span class="h2-icon">&#10022;</span> Skill Allocation</h2>
+    <p>Every point matters. Max your synergies first for raw damage, then invest in Cold Mastery up to level 17 (the sweet spot). Remaining points go into Warmth for mana sustain or Teleport for reduced cost.</p>
+
+    <table class="skill-table">
+      <thead>
+        <tr><th>Skill</th><th>Points</th><th>Priority</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="skill-name">Blizzard</td>
+          <td>20</td>
+          <td><span class="skill-badge max">Max</span></td>
+          <td>Your main damage skill. Rains ice shards over a large area for 4 seconds. Has a 1.8-second cooldown.</td>
+        </tr>
+        <tr>
+          <td class="skill-name">Glacial Spike</td>
+          <td>20</td>
+          <td><span class="skill-badge max">Max</span></td>
+          <td>Synergy to Blizzard (+5% damage per level). Also your primary filler spell &mdash; freezes enemies on hit for crowd control.</td>
+        </tr>
+        <tr>
+          <td class="skill-name">Ice Blast</td>
+          <td>20</td>
+          <td><span class="skill-badge max">Max</span></td>
+          <td>Synergy to Blizzard (+5% damage per level). Single-target filler. Use against bosses between Blizzard casts.</td>
+        </tr>
+        <tr>
+          <td class="skill-name">Ice Bolt</td>
+          <td>20</td>
+          <td><span class="skill-badge max">Max</span></td>
+          <td>Synergy to Blizzard (+5% damage per level) AND synergy to Glacial Spike AND Ice Blast. Triple duty.</td>
+        </tr>
+        <tr>
+          <td class="skill-name">Cold Mastery</td>
+          <td>17</td>
+          <td><span class="skill-badge mid">Sweet Spot</span></td>
+          <td>Reduces enemy cold resistance. Level 17 = -115% cold res. Diminishing returns after this point.</td>
+        </tr>
+        <tr>
+          <td class="skill-name">Teleport</td>
+          <td>1</td>
+          <td><span class="skill-badge pts">1 pt</span></td>
+          <td>Prerequisite + mobility. FCR gear handles the speed; 1 point is all you need.</td>
+        </tr>
+        <tr>
+          <td class="skill-name">Warmth</td>
+          <td>1</td>
+          <td><span class="skill-badge pts">1 pt</span></td>
+          <td>Mana regeneration. 1 point + gear bonuses is usually enough. Dump remaining points here.</td>
+        </tr>
+        <tr>
+          <td class="skill-name">Static Field</td>
+          <td>1</td>
+          <td><span class="skill-badge pts">1 pt</span></td>
+          <td>Instantly removes 25% of enemy current HP (Hell). Use on bosses before Blizzard. Massive.</td>
+        </tr>
+        <tr>
+          <td class="skill-name">Frozen Armor</td>
+          <td>1</td>
+          <td><span class="skill-badge pts">1 pt</span></td>
+          <td>Defense buff + freezes melee attackers. Keep this active at all times. 1 point is fine.</td>
+        </tr>
+        <tr>
+          <td class="skill-name">Prerequisites</td>
+          <td>~6</td>
+          <td><span class="skill-badge pts">Pre-req</span></td>
+          <td>Ice Bolt (1), Frost Nova (1), Blaze (1), Firewall (1), etc. &mdash; just to unlock Blizzard and Teleport.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-label">Skill Point Budget</div>
+      <p>At level 90 you have ~101 skill points (98 from levels + 3 from quests). That's 80 for four maxed synergies, 17 for Cold Mastery, and ~4&ndash;6 for prerequisites and 1-point wonders. It all fits perfectly.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- STAT ALLOCATION                         -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="stats">
+    <h2><span class="h2-icon">&#8593;</span> Stat Allocation</h2>
+    <p>Sorceress stat allocation is extremely simple. You only need enough Strength to wear a Monarch shield (Spirit), then everything into Vitality.</p>
+
+    <div class="stats">
+      <div class="stat-box primary"><div class="stat-label">STR</div><div class="stat-val">156</div></div>
+      <div class="stat-box"><div class="stat-label">DEX</div><div class="stat-val">Base</div></div>
+      <div class="stat-box primary"><div class="stat-label">VIT</div><div class="stat-val">All</div></div>
+      <div class="stat-box"><div class="stat-label">ENE</div><div class="stat-val">Base</div></div>
+    </div>
+
+    <ul class="picks">
+      <li><span class="label">Strength</span> <span class="name">156</span> &mdash; <span class="note">Monarch shield requirement. Account for +STR from gear (Arachnid, torch, anni) and lower this accordingly.</span></li>
+      <li><span class="label">Dexterity</span> <span class="name">Base</span> &mdash; <span class="note">Never touch this. You don't attack with weapons. Max block is not worth it on a caster.</span></li>
+      <li><span class="label">Vitality</span> <span class="name">Everything</span> &mdash; <span class="note">Every single remaining point. More life = more survivability. Sorceress has the lowest base HP in the game.</span></li>
+      <li><span class="label">Energy</span> <span class="name">Base</span> &mdash; <span class="note">Never invest here. Insight merc gives infinite mana. Silk of the Victor/Frostburns patch early issues.</span></li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="callout-label">Don't Over-Invest Strength</div>
+      <p>If your endgame gear gives +20 STR from Arachnid Mesh (+20), Torch (+20), and Annihilus (+20), you only need 96 base STR for Monarch. <strong>Plan ahead</strong> &mdash; you can always respec via Akara after Den of Evil.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- PROGRESSION                             -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="progression">
+    <h2><span class="h2-icon">&#9654;</span> Progression</h2>
+    <p>The Blizzard Sorc's progression is the smoothest of any build. Here's how to level from 1 to Hell farming.</p>
+
+    <!-- Normal -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Normal</span>
+        <span class="lv-num">1-40</span>
+        <span class="lv-title">Frozen Orb Leveling &rarr; Respec to Blizzard</span>
+        <span class="lv-spike">Key Phase</span>
+        <span class="lv-arrow">&#9654;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Frozen Orb (temp)</span>
+          <span class="qp skill">Static Field</span>
+          <span class="qp gear">Stealth (Tal+Eth)</span>
+          <span class="qp gear">Leaf staff (Tir+Ral)</span>
+        </div>
+        <p><strong>Levels 1&ndash;6:</strong> Put points into Fire Bolt and Warmth. Fire is your best early damage.</p>
+        <p><strong>Levels 6&ndash;18:</strong> Pick up Static Field at level 6. Fire Ball unlocks at 12 &mdash; use it as your main skill through Normal Act 2&ndash;3. Make a <strong>Leaf</strong> runeword staff (Tir+Ral in a 2-socket staff with +fire skills) for huge early damage.</p>
+        <p><strong>Level 18:</strong> Teleport unlocks. Make a <strong>Stealth</strong> runeword (Tal+Eth in 2-socket armor) for 25% FCR and faster run/walk. This armor lasts until Nightmare.</p>
+        <p><strong>Levels 18&ndash;30:</strong> If you want smooth leveling, put points into Frozen Orb at 30. Otherwise, just keep using Fire Ball. Static Field is your boss killer &mdash; use it on every act boss to chunk their HP, then finish with fire/cold.</p>
+        <p><strong>Level 30+:</strong> Blizzard unlocks. If you used Frozen Orb, respec at Akara (free after Den of Evil) and put all synergy points into Ice Bolt, Ice Blast, and start maxing Blizzard.</p>
+        <p><strong>Beat Normal Baal</strong> around level 40. No special gear needed &mdash; just keep using Static Field on bosses.</p>
+      </div></div>
+    </div>
+
+    <!-- Nightmare -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Nightmare</span>
+        <span class="lv-num">40-65</span>
+        <span class="lv-title">Spirit + Lore &mdash; Budget Powerhouse</span>
+        <span class="lv-spike">Power Spike</span>
+        <span class="lv-arrow">&#9654;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Blizzard (maxing)</span>
+          <span class="qp skill">Cold Mastery (start)</span>
+          <span class="qp gear">Spirit Sword</span>
+          <span class="qp gear">Spirit Monarch</span>
+          <span class="qp gear">Lore (Ort+Sol)</span>
+        </div>
+        <p><strong>Priority #1:</strong> Make a <strong>Spirit</strong> runeword sword (Tal+Thul+Ort+Amn in a 4-socket Crystal Sword). Farm Normal Cows for the base. This single item gives +2 skills, 25-35% FCR, mana, and vitality. It's absurdly powerful for the cost (literally free runes).</p>
+        <p><strong>Priority #2:</strong> Make a <strong>Lore</strong> helmet (Ort+Sol in a 2-socket helm). +1 skills, lightning resist, and mana regen. Sol drops in Normal Act 5.</p>
+        <p><strong>Priority #3:</strong> Find a 4-socket Monarch shield for a second <strong>Spirit</strong>. Monarchs start dropping in Hell, but you can sometimes find one late Nightmare. This pushes you to 105% FCR with minimal other gear.</p>
+        <p><strong>Nightmare progression:</strong> Blizzard deletes everything. Cold immunes exist but are rare &mdash; your merc handles them or you skip. Farm Nightmare Mephisto for mid-tier uniques if you want, but honestly just push to Hell.</p>
+        <p><strong>Beat Nightmare Baal</strong> around level 60&ndash;65.</p>
+      </div></div>
+    </div>
+
+    <!-- Hell -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Hell</span>
+        <span class="lv-num">65+</span>
+        <span class="lv-title">Skip Cold Immunes &mdash; Farm Ancient Tunnels</span>
+        <span class="lv-spike">Endgame</span>
+        <span class="lv-arrow">&#9654;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Blizzard (maxed)</span>
+          <span class="qp skill">Cold Mastery 17</span>
+          <span class="qp gear">Insight Merc</span>
+          <span class="qp stat">Skip immunes</span>
+        </div>
+        <p><strong>The Golden Rule:</strong> Skip cold immune monsters. Period. Don't try to fight them. Teleport past them. Your merc can slowly kill them, but it's never worth the time. Your job is to farm non-immune areas as fast as possible.</p>
+        <p><strong>Hell Act 1&ndash;2:</strong> Teleport through everything. Use Static Field on act bosses (still works in Hell, stops at 50% HP). Blizzard + Glacial Spike kills everything else. Your Act 2 merc with <strong>Insight</strong> (Ral+Tir+Tal+Sol in a polearm) gives you infinite mana.</p>
+        <p><strong>Hell Act 3&ndash;5:</strong> Some areas are dense with cold immunes (Chaos Sanctuary has Oblivion Knights). Teleport through. Get carried through Ancients if needed (they can roll cold immune). Baal waves have cold immunes &mdash; let your merc handle wave 2 or get help.</p>
+        <p><strong>Once you beat Hell:</strong> Start farming Ancient Tunnels (Act 2 Lost City). Zero cold immunes. Treasure class 87 &mdash; every item in the game can drop. This is where you build your wealth to fund every other character.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- FCR BREAKPOINTS                         -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="fcr">
+    <h2><span class="h2-icon">&#9889;</span> FCR Breakpoints</h2>
+    <p>Faster Cast Rate (FCR) determines your Teleport speed and how quickly you can chain spells. Sorceress breakpoints are well-defined. Hit either 63% or 105% &mdash; nothing in between matters.</p>
+
+    <table class="fcr-table">
+      <thead>
+        <tr><th>FCR %</th><th>Frames</th><th>Casts/Sec</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>0%</td><td>13</td><td>1.92</td><td>Base speed. Painfully slow.</td></tr>
+        <tr><td class="hit">63% <span class="target">Budget Target</span></td><td>9</td><td>2.77</td><td>Spirit Sword (35%) + Spirit Monarch (35%) = 70%. Easy to hit. Comfortable farming speed.</td></tr>
+        <tr><td>78%</td><td>8</td><td>3.12</td><td>Marginal gain. Not worth targeting specifically.</td></tr>
+        <tr><td class="hit">105% <span class="target">Endgame Target</span></td><td>7</td><td>3.57</td><td>Maximum practical speed. Spirit + Arachnid (20%) + rings/amulet. Teleport feels instant.</td></tr>
+        <tr><td>200%</td><td>7</td><td>3.57</td><td>Same as 105%. There is no breakpoint above 105% for Sorceress. Don't chase it.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-label">How to Hit 105% FCR</div>
+      <p><strong>Spirit Sword</strong> (35%) + <strong>Spirit Monarch</strong> (35%) + <strong>Arachnid Mesh</strong> (20%) + <strong>any 15% ring or amulet</strong> = 105%. Alternatively: Magefist gloves (20%) + 2x FCR rings. Many paths to get there.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- GEAR — BUDGET                           -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="gear-budget">
+    <h2><span class="h2-icon">&#9830;</span> Gear &mdash; Budget</h2>
+    <p>This is the gear that makes Blizzard Sorc the best starter. Every single piece is self-found or costs essentially nothing. This setup <strong>clears Hell difficulty</strong>.</p>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Budget Setup &mdash; Clears Hell</div>
+      <div class="gear-grid">
+        <div class="gear-card">
+          <div class="gear-slot">Weapon</div>
+          <div class="gear-item runeword">Spirit Crystal Sword</div>
+          <div class="gear-notes">Tal + Thul + Ort + Amn in a 4-socket Crystal Sword. +2 All Skills, 25-35% FCR, 55% FHR, +89-112 Mana, +22 Vitality.</div>
+          <div class="gear-alt">Base: Farm Normal Cows for Crystal Sword (up to 4 sockets from Larzuk).</div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-slot">Shield</div>
+          <div class="gear-item runeword">Spirit Monarch</div>
+          <div class="gear-notes">Same runes in a 4-socket Monarch. +2 All Skills, 25-35% FCR, 55% FHR, +89-112 Mana. Requires 156 STR.</div>
+          <div class="gear-alt">Monarch is the only non-Paladin shield with 4 sockets. Drops in Hell.</div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-slot">Helmet</div>
+          <div class="gear-item runeword">Lore</div>
+          <div class="gear-notes">Ort + Sol in any 2-socket helmet. +1 All Skills, +30 Lightning Resist, +2 Mana per kill, +10 Energy.</div>
+          <div class="gear-alt">Use any 2-socket bone helm, crown, or even a circlet as the base.</div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-slot">Armor</div>
+          <div class="gear-item runeword">Stealth</div>
+          <div class="gear-notes">Tal + Eth in any 2-socket armor. 25% FCR, 25% FRW, +6 Dexterity, Mana Regen 15%, Poison Resist 30%.</div>
+          <div class="gear-alt">Upgrade to Smoke (Nef+Lum) for +50 All Resist once you get Lum rune.</div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-slot">Gloves</div>
+          <div class="gear-item unique">Magefist</div>
+          <div class="gear-notes">+20% FCR, +1 Fire Skills, Mana Regen. Extremely common drop. Helps hit 105% FCR breakpoint.</div>
+          <div class="gear-alt">Alt: Any rare gloves with resists. Frostburns for +40% max mana early on.</div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-slot">Boots</div>
+          <div class="gear-item rare">Rare Boots with Resists</div>
+          <div class="gear-notes">Look for: 30%+ FRW, resistances, MF. No specific unique needed &mdash; just fill resists.</div>
+          <div class="gear-alt">Alt: Silkweave (+5 Mana per kill, +10% max mana) or War Traveler (MF).</div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-slot">Belt</div>
+          <div class="gear-item unique">Goldwrap / Nightsmoke</div>
+          <div class="gear-notes">Goldwrap for MF farming. Nightsmoke for mana and resist. Either works &mdash; both are common drops.</div>
+          <div class="gear-alt">Alt: Tal Rasha's belt (set, 10-15% MF) or rare belt with life/resist.</div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-slot">Rings / Amulet</div>
+          <div class="gear-item rare">FCR + Resist Rares</div>
+          <div class="gear-notes">Prioritize: 10% FCR rings (to hit 105%), +resist, +life, +mana. Amulet: +skills or FCR.</div>
+          <div class="gear-alt">Alt: Rare amulet with +2 Sorc skills if you find one. They exist.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Total Cost of This Setup</div>
+      <p><strong>Literally free.</strong> Every rune (Tal, Thul, Ort, Amn, Sol, Eth) drops in Normal/Nightmare. Crystal Sword from Normal Cows. Monarch from early Hell. You can be farming Hell Mephisto within 24 hours of a ladder reset with zero trades.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- GEAR — BIS                              -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="gear-bis">
+    <h2><span class="h2-icon">&#9733;</span> Gear &mdash; Best in Slot</h2>
+    <p>Once you've farmed enough wealth, these upgrades turn the Blizzard Sorc from "clears Hell" to "deletes Hell." The damage difference is absurd.</p>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Best in Slot &mdash; Maximum Damage</div>
+      <div class="gear-grid">
+        <div class="gear-card">
+          <div class="gear-slot">Weapon</div>
+          <div class="gear-item unique">Death's Fathom</div>
+          <div class="gear-notes">+15-30% Cold Skill Damage (look for 25%+), +20% FCR, +Lightning/Fire Resist. Socket with a 5/5 Cold Facet for +35% total cold damage.</div>
+          <div class="gear-alt">The single biggest damage upgrade. A 30% DF + 5/5 facet = +35% cold damage from one slot.</div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-slot">Helmet</div>
+          <div class="gear-item unique">Nightwing's Veil</div>
+          <div class="gear-notes">+8-15% Cold Skill Damage, +2 All Skills, +10-20 DEX, 5-9% Cold Absorb. Socket with a 5/5 Cold Facet.</div>
+          <div class="gear-alt">+15% Nightwing's + 5/5 facet = +20% cold damage from helmet alone. Stacks with Death's Fathom.</div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-slot">Armor</div>
+          <div class="gear-item unique">Ormus' Robes</div>
+          <div class="gear-notes">+10-15% Cold Skill Damage (if Blizzard roll), +3 Blizzard, +20% FCR, Regenerate Mana 10-15%.</div>
+          <div class="gear-alt">MUST roll +3 Blizzard and +15% cold damage. Bad rolls are worthless. Socket with a cold facet.</div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-slot">Shield</div>
+          <div class="gear-item runeword">Spirit Monarch (35% FCR)</div>
+          <div class="gear-notes">Even at BiS, Spirit Monarch stays. Nothing competes with +2 skills + 35% FCR in the shield slot for a Blizzard Sorc.</div>
+          <div class="gear-alt">Perfect 35% FCR Spirit is worth farming for. Roll until you hit 35%.</div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-slot">Belt</div>
+          <div class="gear-item unique">Arachnid Mesh</div>
+          <div class="gear-notes">+1 All Skills, +20% FCR, +5% Max Mana, Slows Target 10%. Best caster belt in the game.</div>
+          <div class="gear-alt">The +20% FCR makes hitting 105% trivial. +1 skill is huge for Blizzard damage.</div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-slot">Amulet</div>
+          <div class="gear-item unique">Mara's Kaleidoscope</div>
+          <div class="gear-notes">+2 All Skills, +20-30 All Resist. Massive skill boost and resist coverage.</div>
+          <div class="gear-alt">Alt: Crafted +2 Sorc/20% FCR amulet. Rare but powerful if you craft one.</div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-slot">Gloves</div>
+          <div class="gear-item unique">Magefist / Trang-Oul's</div>
+          <div class="gear-notes">Magefist: 20% FCR + mana regen. Trang-Oul's: 20% FCR + 30% cold resist. Both work.</div>
+          <div class="gear-alt">FCR is the only stat that matters here. Both are dirt cheap.</div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-slot">Boots</div>
+          <div class="gear-item unique">War Traveler</div>
+          <div class="gear-notes">+30-50% MF, +15-25 Vitality, +15-25 Strength. The MF farming boots.</div>
+          <div class="gear-alt">Alt: Sandstorm Trek (STR/VIT/FHR/Poison Resist) for survivability.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout gold">
+      <div class="callout-label">Total Cold Damage Bonus at BiS</div>
+      <p>Death's Fathom (30%) + Cold Facet in DF (5%) + Nightwing's (15%) + Cold Facet in NW (5%) + Ormus' Robes (15%) + Cold Facet in Ormus (5%) = <strong>+75% Cold Skill Damage</strong>. Your Blizzard goes from ~5,000 to ~8,750 damage. Enemies evaporate.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- COLD MASTERY                            -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="cold-mastery">
+    <h2><span class="h2-icon">&#10052;</span> Cold Mastery</h2>
+    <p>Cold Mastery is what makes this build work. It's not a percentage increase to YOUR damage &mdash; it <strong>reduces the enemy's cold resistance</strong>. This is a critical distinction.</p>
+
+    <h3>How It Works</h3>
+    <p>Most Hell monsters have 50% cold resistance. If your Cold Mastery provides -100% cold resistance, the enemy effectively has <strong>-50% cold resistance</strong>, which means they take 150% of your cold damage instead of 50%. That's a 3x damage multiplier from a single skill.</p>
+
+    <div class="callout">
+      <div class="callout-label">Important: Cold Mastery Cannot Break Immunities</div>
+      <p>If a monster is "Cold Immune" (100%+ cold resistance), Cold Mastery <strong>does nothing</strong>. Only Conviction aura (from Infinity runeword) or Lower Resist curse can break cold immunity. Cold Mastery only works on non-immune enemies. This is why you skip cold immunes.</p>
+    </div>
+
+    <h3>The Level 17 Sweet Spot</h3>
+    <p>Cold Mastery has diminishing returns built into its scaling:</p>
+
+    <table class="skill-table">
+      <thead>
+        <tr><th>Cold Mastery Level</th><th>-Enemy Cold Res</th><th>Effective vs 50% Res</th><th>Value per Point</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="skill-name">Level 1</td><td>-20%</td><td>Monster takes 70% dmg</td><td>High</td></tr>
+        <tr><td class="skill-name">Level 5</td><td>-40%</td><td>Monster takes 90% dmg</td><td>High</td></tr>
+        <tr><td class="skill-name">Level 10</td><td>-70%</td><td>Monster takes 120% dmg</td><td>High</td></tr>
+        <tr><td class="skill-name">Level 15</td><td>-100%</td><td>Monster takes 150% dmg</td><td>Good</td></tr>
+        <tr><td class="skill-name" style="color:var(--ice)">Level 17</td><td style="color:var(--ice);font-weight:700">-115%</td><td style="color:var(--ice);font-weight:700">Monster takes 165% dmg</td><td><span class="skill-badge max">Sweet Spot</span></td></tr>
+        <tr><td class="skill-name">Level 20</td><td>-135%</td><td>Monster takes 185% dmg</td><td>Low</td></tr>
+        <tr><td class="skill-name">Level 25</td><td>-160%</td><td>Monster takes 210% dmg</td><td>Very Low</td></tr>
+      </tbody>
+    </table>
+
+    <p>After level 17, each additional hard point in Cold Mastery gives only ~3-4% more enemy resistance reduction. Those points are <strong>far better spent</strong> maxing your synergies (which give +5% Blizzard damage per point). The math is clear: stop at 17 hard points, let +skills gear push it higher for free.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">+Skills Gear Boosts Cold Mastery for Free</div>
+      <p>With +10 to +15 from all skills gear (Spirit x2, Shako, Mara's, torch, anni), your level 17 Cold Mastery becomes level 27-32. That's -175% to -200% enemy cold res. Monsters with 50% base cold res take <strong>2.5x&ndash;3x damage</strong>. No extra hard points needed.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- MERCENARY                               -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="mercenary">
+    <h2><span class="h2-icon">&#9876;</span> Mercenary</h2>
+    <p>Your merc is your mana battery, your meat shield, and optionally your cold immunity breaker. Act 2 Nightmare Offensive (Might aura) is the standard, but the gear choice is what matters.</p>
+
+    <div class="merc-card">
+      <div class="merc-title">Act 2 Mercenary &mdash; Nightmare Offensive (Might)</div>
+      <div class="merc-detail"><strong>Aura:</strong> Might &mdash; boosts merc's own physical damage for clearing cold immunes you can't touch.</div>
+      <div class="merc-detail"><strong>Hire from:</strong> Greiz in Act 2 Nightmare difficulty. Must be Nightmare difficulty for Might aura.</div>
+    </div>
+
+    <h3>Budget Merc Gear</h3>
+    <div class="gear-grid">
+      <div class="gear-card">
+        <div class="gear-slot">Weapon</div>
+        <div class="gear-item runeword">Insight</div>
+        <div class="gear-notes">Ral + Tir + Tal + Sol in a 4-socket polearm (Thresher/CV). <strong>Meditation Aura = infinite mana.</strong> This is mandatory. You will never run out of mana again.</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Armor</div>
+        <div class="gear-item runeword">Treachery</div>
+        <div class="gear-notes">Shael + Thul + Lem. 45% IAS, Fade proc (60% resist + 15% DR). Incredibly tanky once Fade procs. Cheap.</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Helmet</div>
+        <div class="gear-item unique">Tal Rasha's Horadric Crest</div>
+        <div class="gear-notes">Life Steal, +15 All Resist, +45 Defense. Common set helmet. Keeps the merc alive.</div>
+        <div class="gear-alt">Alt: Vampire Gaze (life steal + DR) or Guillaume's Face (crushing blow).</div>
+      </div>
+    </div>
+
+    <h3>Endgame Merc Gear</h3>
+    <div class="gear-grid">
+      <div class="gear-card">
+        <div class="gear-slot">Weapon (Endgame)</div>
+        <div class="gear-item runeword">Infinity</div>
+        <div class="gear-notes">Ber + Mal + Ber + Ist. Conviction Aura (-85% enemy resist) <strong>BREAKS COLD IMMUNITIES</strong> on many monsters. Turns Blizzard Sorc from "skip immunes" to "kill everything."</div>
+        <div class="gear-alt">Extremely expensive. Save this for your second or third character's worth of farming.</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Armor (Endgame)</div>
+        <div class="gear-item runeword">Fortitude</div>
+        <div class="gear-notes">El + Sol + Dol + Lo. +300% Enhanced Damage, +200% Defense, +25-30 All Resist. Makes the merc unkillable and gives him massive damage.</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Helmet (Endgame)</div>
+        <div class="gear-item unique">Andariel's Visage</div>
+        <div class="gear-notes">+2 All Skills, 20% IAS, 8-10% Life Steal, +25-30 STR. Socket with Ral rune to offset fire resist penalty.</div>
+        <div class="gear-alt">Best merc helmet in the game. The IAS + life steal keeps the merc topped off.</div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Infinity vs Insight — The Tradeoff</div>
+      <p>When you upgrade to Infinity, you <strong>lose Insight's Meditation aura</strong> (infinite mana). You'll need to compensate with Silkweave boots, Frostburns, or mana potions. Most endgame Sorc gear provides enough mana that this isn't an issue, but be prepared for the transition.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- PLAYSTYLE                               -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="playstyle">
+    <h2><span class="h2-icon">&#9881;</span> Playstyle</h2>
+    <p>The Blizzard Sorc gameplay loop is elegant and fast. Master this rotation and you'll farm faster than any other build in the game.</p>
+
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Teleport into a pack of enemies</span>
+        <div class="step-detail">Hold Teleport and zip through the map. You're looking for dense packs. Teleport is your main mobility &mdash; never walk. FCR breakpoints determine your Teleport speed (105% is the goal).</div>
+      </li>
+      <li>
+        <span class="step-action">Cast Blizzard on the pack</span>
+        <div class="step-detail">Blizzard has a <strong>1.8-second cooldown</strong>. Cast it directly on top of the densest cluster. The shards rain over a large area for ~4 seconds. Enemies don't need to be standing still &mdash; the AoE is generous.</div>
+      </li>
+      <li>
+        <span class="step-action">Fill the cooldown with Glacial Spike</span>
+        <div class="step-detail">While Blizzard is on cooldown, spam <strong>Glacial Spike</strong>. It freezes enemies in place (keeping them inside your Blizzard AoE) and deals solid damage. This is your crowd control and your filler.</div>
+      </li>
+      <li>
+        <span class="step-action">Use Ice Blast on single targets / bosses</span>
+        <div class="step-detail">Ice Blast has higher single-target DPS than Glacial Spike. Use it on bosses or tough rares between Blizzard casts. Against bosses, open with <strong>Static Field</strong> to chunk their HP first.</div>
+      </li>
+      <li>
+        <span class="step-action">Skip cold immunes immediately</span>
+        <div class="step-detail">See "Cold Immune" text? Teleport past. Don't engage. Don't let your merc fight them (unless you have Infinity). Your time is better spent finding the next non-immune pack. Cold immunes are someone else's problem.</div>
+      </li>
+      <li>
+        <span class="step-action">Repeat: Teleport &rarr; Blizzard &rarr; Glacial Spike &rarr; Move</span>
+        <div class="step-detail">The cycle takes about 3&ndash;4 seconds per pack. At full gear, you clear Ancient Tunnels in under 2 minutes per run. The speed is addictive.</div>
+      </li>
+    </ol>
+
+    <div class="callout">
+      <div class="callout-label">Boss Killing Rotation</div>
+      <p><strong>Teleport to boss &rarr; Static Field (3-4 casts to chunk HP to 50%) &rarr; Blizzard on top &rarr; Glacial Spike spam &rarr; Blizzard again &rarr; dead.</strong> Mephisto dies in under 10 seconds. Andariel dies in 5. Baal takes maybe 20 seconds.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Blizzard Placement Tip</div>
+      <p>Blizzard's visual effect is <strong>slightly offset</strong> from where the actual damage lands. The damage area is centered about half a screen length north of your cursor. Practice the placement &mdash; aim slightly south of where you want the shards to land. This is the one "skill expression" of the build.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- FARMING                                 -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="farming">
+    <h2><span class="h2-icon">&#9632;</span> Farming Spots</h2>
+    <p>Blizzard Sorc has the best farming spots in the game because she can Teleport natively and her main targets have zero cold immunes.</p>
+
+    <div class="farm-grid">
+      <div class="farm-card recommended">
+        <div class="farm-name">Ancient Tunnels</div>
+        <div class="farm-loc">Act 2 &mdash; Lost City</div>
+        <div class="farm-note"><strong>ZERO cold immunes.</strong> Area level 85. Every item in the game can drop here. This is your #1 farm.</div>
+      </div>
+      <div class="farm-card">
+        <div class="farm-name">Mephisto</div>
+        <div class="farm-loc">Act 3 &mdash; Durance of Hate</div>
+        <div class="farm-note">Teleport to Durance level 3, Static Field + Blizzard. Sub-30 second runs. Best for early gearing.</div>
+      </div>
+      <div class="farm-card">
+        <div class="farm-name">Andariel</div>
+        <div class="farm-loc">Act 1 &mdash; Catacombs</div>
+        <div class="farm-note">Fastest boss kill in the game. Quest-bugged Andy drops amazing loot. Great for SoJ + unique rings.</div>
+      </div>
+    </div>
+
+    <h3>Additional Farming Spots</h3>
+    <ul class="picks">
+      <li><span class="label">Pindle</span> <span class="name">Pindleskin</span> &mdash; <span class="note">Nihlathak's Temple waypoint. Area level 83. 15-second runs. Can drop almost everything.</span></li>
+      <li><span class="label">Tunnels</span> <span class="name">Stony Tomb</span> &mdash; <span class="note">Act 2, Rocky Waste. Area level 81. Good density, very few cold immunes.</span></li>
+      <li><span class="label">MF Run</span> <span class="name">Meph + Andy + Pindle Loop</span> &mdash; <span class="note">Chain these three for maximum drops per hour. Sub-5 minute full loop with Teleport.</span></li>
+      <li><span class="label">Keys</span> <span class="name">Countess + Summoner + Nihlathak</span> &mdash; <span class="note">Farm Uber keys for Torch runs. Blizz Sorc handles Countess and Summoner easily; Nihla has cold immunes though.</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Ancient Tunnels &mdash; How to Find It</div>
+      <p>Take the Lost City waypoint (Act 2). Look for a <strong>trap door on the ground</strong> &mdash; it's a small stone staircase entrance somewhere in the Lost City. The layout is random each game, but the entrance is always in the Lost City zone. Teleport around until you find it. Once inside, it's a linear dungeon with high-density packs and zero cold immunes.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Magic Find Sweet Spot</div>
+      <p><strong>200&ndash;350% MF</strong> is the sweet spot for unique finding. Beyond 350%, diminishing returns hit hard and you're sacrificing kill speed. War Traveler (50%), Chance Guards (40%), Goldwrap (30%), Shako (74% with Ptopaz), Tal amulet (35-50% with partial set), and an Ist in your weapon get you there easily.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TIPS                                    -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="tips">
+    <h2><span class="h2-icon">&#128161;</span> Tips</h2>
+
+    <div class="callout">
+      <div class="callout-label">Blizzard Has a Cooldown &mdash; Use Fillers</div>
+      <p>The biggest newbie mistake is casting Blizzard and then standing there waiting. <strong>Blizzard has a 1.8-second cooldown.</strong> During that cooldown, you should be spamming Glacial Spike (for AoE/freeze) or Ice Blast (for single target). Never stop casting. Every second you're idle is wasted damage.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Ancient Tunnels Location</div>
+      <p>New players constantly ask "where is Ancient Tunnels?" It's in the <strong>Act 2 Lost City</strong> &mdash; take the Lost City waypoint and look for a trap door on the ground. It looks like a small stone staircase going down. The entrance location is randomized each game, so Teleport around until you spot it. You'll be running this zone thousands of times.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">This Build Funds Everything</div>
+      <p>Blizzard Sorc is the <strong>ladder economy starter</strong>. You farm Mephisto and Ancient Tunnels for the first week, sell the drops, and use the wealth to build your Hammerdin, Lightning Sorc, or Warlock. Every serious D2 player has a Blizzard Sorc as their first character. It's not the flashiest build &mdash; it's the most practical one.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Keep Frozen Armor Up</div>
+      <p>Frozen Armor (or Shiver Armor if you have spare points) should <strong>always be active</strong>. It freezes melee attackers and gives you defense. Rebuff after every town visit. It's easy to forget, and it will cost you deaths in Hell.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Respec Wisely</div>
+      <p>You get <strong>3 free respecs</strong> (one per difficulty from Akara after Den of Evil). Use your Normal respec to switch from fire leveling to Blizzard. Save Nightmare and Hell respecs for fine-tuning once you understand your gear. If you need more respecs, farm Essences from act bosses (Token of Absolution).</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Resistances in Hell</div>
+      <p>Hell difficulty applies a <strong>-100% resist penalty</strong> to all your resistances. If you had 75% fire resist in Nightmare, you now have -25% in Hell. You WILL die if you don't gear for resists. Smoke armor (Nef+Lum, +50 all res), resist charms, and Lore helm's lightning resist all help. Max your resistances before you start farming.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Teleport Safety</div>
+      <p>Teleporting into the middle of a pack can get you killed instantly. <strong>Teleport to the edge of packs, not into them.</strong> Cast Blizzard, then Teleport away. The damage continues even after you move. You don't need to stand in the danger zone. "Telestomp" is for Hammerdins, not for glass-cannon Sorceresses.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Socket Quests</div>
+      <p>Larzuk's socket quest (Act 5, "Siege on Harrogath") gives the <strong>maximum sockets</strong> to a normal-quality item. Use this on your Crystal Sword (guarantees 4 sockets for Spirit) and later on a Monarch. Don't waste it on something you'll replace &mdash; these quests are limited (one per difficulty).</p>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="guide-footer">
+    <p><a href="d2r-builds.html">D2R Season 13 Builds</a> &middot; <a href="guides.html">All Game Guides</a> &middot; <a href="index.html">Z3nGineer Home</a></p>
+    <p style="margin-top:.5rem">Diablo 2 Resurrected &middot; Season 13 &middot; Blizzard Sorceress Build Guide &middot; 2025</p>
+  </div>
+
+</main>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- JAVASCRIPT                                 -->
+<!-- ═══════════════════════════════════════════ -->
+<script>
+/* Top nav hamburger */
+const topToggle = document.getElementById('topNavToggle');
+const topMobile = document.getElementById('topNavMobile');
+topToggle.addEventListener('click', () => {
+  topMobile.classList.toggle('open');
+  topToggle.classList.toggle('open');
+});
+topMobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  topMobile.classList.remove('open');
+  topToggle.classList.remove('open');
+}));
+
+/* Mobile section nav */
+const mobileToggle = document.querySelector('.mobile-toggle');
+const mobileLinks = document.querySelector('.mobile-links');
+if (mobileToggle && mobileLinks) {
+  mobileToggle.addEventListener('click', () => mobileLinks.classList.toggle('open'));
+  mobileLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileLinks.classList.remove('open')));
+}
+
+/* Sidebar active tracking */
+const sections = document.querySelectorAll('.section');
+const sidebarLinks = document.querySelectorAll('.sidebar a');
+const subNavLinks = document.querySelectorAll('.sub-nav a');
+const sectionObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      sidebarLinks.forEach(l => l.classList.remove('active'));
+      subNavLinks.forEach(l => l.classList.remove('active'));
+      const sideLink = document.querySelector('.sidebar a[href="#' + id + '"]');
+      const subLink = document.querySelector('.sub-nav a[href="#' + id + '"]');
+      if (sideLink) sideLink.classList.add('active');
+      if (subLink) subLink.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => sectionObserver.observe(s));
+
+/* Scroll reveal */
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { rootMargin: '0px 0px -80px 0px' });
+sections.forEach(s => revealObserver.observe(s));
+
+/* Level card toggle (backup for non-onclick) */
+document.querySelectorAll('.lv-head').forEach(head => {
+  head.addEventListener('click', () => head.parentElement.classList.toggle('open'));
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Immortal Absorber — Oblivion Remastered Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0c0a08;--bg-card:#161310;--bg-el:#1e1a16;--bg-hover:#252018;
+  --border:#302a22;--border-light:#403828;
+  --text:#e0d8c8;--text-dim:#a89878;--text-muted:#6a5a48;--white:#f0e8d8;
+  --accent:#c8a050;--accent-hover:#e0b860;--accent-dim:rgba(200,160,80,0.12);
+  --fire:#d05030;--fire-dim:rgba(208,80,48,0.12);
+  --frost:#4080c0;--frost-dim:rgba(64,128,192,0.12);
+  --shock:#8060c0;--shock-dim:rgba(128,96,192,0.12);
+  --green:#5a9040;--green-dim:rgba(90,144,64,0.1);
+  --blue:#4080b0;--blue-dim:rgba(64,128,176,0.1);
+  --red:#b03030;
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:19px;line-height:1.75;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);text-decoration:underline}
+
+.page{display:flex;max-width:1100px;margin:0 auto}
+.sidebar{width:220px;flex-shrink:0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;border-right:1px solid var(--border);background:var(--bg-card);padding:1.5rem 0;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.sidebar-badge{text-align:center;padding:0 1.25rem 1rem}
+.sidebar-badge img{width:48px;height:48px;border-radius:8px;border:1px solid var(--border)}
+.sidebar-title{font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);padding:0 1.25rem;margin-bottom:.75rem}
+.sidebar a{display:flex;align-items:center;gap:.5rem;padding:.45rem 1.25rem;font-size:.88rem;font-weight:500;color:var(--text-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s}
+.sidebar a:hover{color:var(--white);background:rgba(200,160,80,0.04);text-decoration:none}
+.sidebar a.active{color:var(--white);border-left-color:var(--accent);background:rgba(200,160,80,0.06)}
+.nav-icon{font-size:1rem;width:1.2rem;text-align:center}
+.content{flex:1;min-width:0;padding:2.5rem 2.5rem 4rem}
+@media(max-width:800px){.sidebar{display:none}.content{padding:1.5rem}}
+
+/* Hero */
+.hero-art{width:100%;margin-bottom:1.25rem;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:var(--bg-card)}
+.hero-svg{width:100%;height:auto;display:block}
+.guide-header{margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.header-row{display:flex;align-items:center;gap:1rem;margin-bottom:.5rem}
+.header-portrait{width:72px;height:72px;border-radius:8px;border:2px solid var(--border);object-fit:cover;background:var(--bg-el)}
+.header-text{flex:1}
+.breadcrumb{font-size:.78rem;color:var(--text-muted);margin-bottom:.3rem}
+.guide-header h1{font-family:'Cinzel',serif;font-size:2.2rem;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:.3rem}
+.subtitle{font-size:1rem;color:var(--text-dim)}
+.tag-row{display:flex;gap:.4rem;margin-top:.6rem;flex-wrap:wrap}
+.tag{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim);text-transform:uppercase;letter-spacing:.04em}
+.tag.fire{color:var(--fire);border-color:rgba(208,80,48,0.3);background:var(--fire-dim)}
+.tag.gold{color:var(--accent);border-color:rgba(200,160,80,0.3);background:var(--accent-dim)}
+.tag.green{color:var(--green);border-color:rgba(90,144,64,0.3);background:var(--green-dim)}
+.tag.blue{color:var(--blue);border-color:rgba(64,128,176,0.3);background:var(--blue-dim)}
+.tag.shock{color:var(--shock);border-color:rgba(128,96,192,0.3);background:var(--shock-dim)}
+
+/* Sections */
+.section{margin-top:3rem}
+.section h2{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.section h3{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:600;color:var(--text);margin:1.5rem 0 .6rem}
+.section p{margin-bottom:1rem}
+
+/* Callouts */
+.callout{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0}
+.callout.warn{border-left-color:var(--fire)}
+.callout.tip{border-left-color:var(--green)}
+.callout-label{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem;color:var(--accent)}
+.callout.warn .callout-label{color:var(--fire)}
+.callout.tip .callout-label{color:var(--green)}
+.callout p{margin-bottom:.5rem;font-size:.95rem}.callout p:last-child{margin-bottom:0}
+
+/* Stats */
+.stats{display:flex;gap:.5rem;flex-wrap:wrap;margin:.75rem 0}
+.stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:.4rem .75rem;text-align:center;min-width:3.5rem}
+.stat-box.primary{border-color:rgba(200,160,80,0.4)}
+.stat-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
+.stat-val{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--white)}
+.stat-box.primary .stat-val{color:var(--accent)}
+
+/* Picks */
+.picks{list-style:none;margin:.5rem 0}
+.picks li{padding:.3rem 0;font-size:.95rem;display:flex;gap:.4rem;align-items:baseline}
+.picks .label{font-size:.72rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.03em;flex-shrink:0;min-width:5rem}
+.picks .name{font-weight:600;color:var(--white)}
+.picks .note{color:var(--text-dim);font-size:.88rem}
+
+/* Level cards */
+.lv-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.4rem;overflow:hidden;transition:border-color .15s}
+.lv-card:hover{border-color:var(--border-light)}
+.lv-card.spike{border-left:3px solid var(--accent)}
+.lv-head{display:flex;align-items:center;gap:.6rem;padding:.65rem 1rem;cursor:pointer;user-select:none;transition:background .1s;flex-wrap:wrap}
+.lv-head:hover{background:var(--bg-hover)}
+.lv-num{font-family:'Cinzel',serif;font-weight:900;font-size:1.3rem;color:var(--white);min-width:1.6rem;text-align:center}
+.lv-range{font-size:.72rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(200,160,80,0.2);text-transform:uppercase;letter-spacing:.04em}
+.lv-title{font-weight:600;font-size:.95rem;color:var(--text);flex:1}
+.lv-spike{font-size:.65rem;font-weight:600;color:var(--accent);background:var(--accent-dim);padding:.15rem .45rem;border-radius:4px;border:1px solid rgba(200,160,80,0.2);text-transform:uppercase}
+.lv-arrow{color:var(--text-muted);font-size:.75rem;transition:transform .2s}
+.lv-card.open .lv-arrow{transform:rotate(90deg)}
+.lv-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.lv-card.open .lv-body{max-height:1200px}
+.lv-inner{padding:0 1rem 1rem;border-top:1px solid var(--border)}
+
+/* Quick picks */
+.qp-row{display:flex;flex-wrap:wrap;gap:.3rem;margin:.75rem 0 .5rem}
+.qp{font-size:.78rem;font-weight:500;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim)}
+.qp.skill{color:var(--green);border-color:rgba(90,144,64,0.2)}
+.qp.spell{color:var(--frost);border-color:rgba(64,128,192,0.2)}
+.qp.gear{color:var(--accent);border-color:rgba(200,160,80,0.2)}
+.qp.attr{color:var(--fire);border-color:rgba(208,80,48,0.2)}
+
+/* Gear cards */
+.gear-group{margin-bottom:1.5rem}
+.gear-group-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--accent);padding-bottom:.35rem;margin-bottom:.5rem;border-bottom:1px solid rgba(200,160,80,0.15)}
+.gear-row{display:flex;gap:.75rem;padding:.6rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:.35rem;align-items:center}
+.gear-img{width:48px;height:48px;border-radius:4px;border:1px solid var(--border);object-fit:cover;flex-shrink:0;background:var(--bg-el)}
+.gear-info{flex:1}
+.gear-name{font-weight:600;color:var(--accent);font-size:.95rem}
+.gear-slot{font-size:.7rem;color:var(--text-muted);margin-left:.35rem;text-transform:uppercase}
+.gear-desc{color:var(--text-dim);font-size:.85rem;margin-top:.1rem}
+.gear-loc{font-size:.8rem;color:var(--green);margin-top:.15rem}
+
+/* Spell grid */
+.spell-section{margin-bottom:1.5rem}
+.spell-level{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--white);padding-bottom:.35rem;margin-bottom:.5rem;border-bottom:1px solid var(--border)}
+.spell-row{display:flex;justify-content:space-between;align-items:start;padding:.5rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:.35rem;gap:.75rem}
+.spell-info{flex:1}.spell-name{font-weight:600;color:var(--white);font-size:.95rem}
+.spell-desc{color:var(--text-dim);font-size:.85rem;margin-top:.1rem}
+.spell-badge{font-size:.68rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;flex-shrink:0;align-self:center}
+.spell-badge.must{color:var(--green);background:var(--green-dim);border:1px solid rgba(90,144,64,0.2)}
+.spell-badge.good{color:var(--accent);background:var(--accent-dim);border:1px solid rgba(200,160,80,0.15)}
+.spell-badge.fire{color:var(--fire);background:var(--fire-dim);border:1px solid rgba(208,80,48,0.2)}
+.spell-badge.frost{color:var(--frost);background:var(--frost-dim);border:1px solid rgba(64,128,192,0.2)}
+.spell-badge.shock{color:var(--shock);background:var(--shock-dim);border:1px solid rgba(128,96,192,0.2)}
+.spell-badge.custom{color:#c0a060;background:rgba(192,160,96,0.08);border:1px solid rgba(192,160,96,0.15)}
+
+/* Birthsign cards */
+.bs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin:1rem 0}
+@media(max-width:700px){.bs-grid{grid-template-columns:1fr}}
+.bs-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center}
+.bs-card.recommended{border-color:var(--accent);box-shadow:0 0 0 1px rgba(200,160,80,0.1)}
+.bs-card img{width:64px;height:64px;border-radius:50%;border:2px solid var(--border);margin-bottom:.5rem;background:var(--bg-el)}
+.bs-card.recommended img{border-color:var(--accent)}
+.bs-name{font-family:'Cinzel',serif;font-weight:700;font-size:1rem;color:var(--white)}
+.bs-bonus{font-size:.85rem;color:var(--green);margin-top:.2rem}
+.bs-penalty{font-size:.85rem;color:var(--fire);margin-top:.1rem}
+.bs-note{font-size:.82rem;color:var(--text-dim);margin-top:.3rem}
+
+/* Rotation */
+.step-list{list-style:none;counter-reset:step}
+.step-list li{position:relative;padding:.75rem 0 .75rem 3rem;border-left:2px solid var(--border);margin-left:.75rem;counter-increment:step}
+.step-list li::before{content:counter(step);position:absolute;left:-.75rem;top:.6rem;width:1.4rem;height:1.4rem;background:var(--bg);border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:700;font-size:.75rem;color:var(--accent)}
+.step-list li:last-child{border-left-color:transparent}
+.step-action{font-weight:600;color:var(--white)}
+.step-detail{color:var(--text-dim);font-size:.9rem;margin-top:.2rem}
+
+/* Virtues table */
+.virtue-table{width:100%;border-collapse:collapse;margin:1rem 0}
+.virtue-table th{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--border)}
+.virtue-table td{padding:.5rem .6rem;border-bottom:1px solid var(--border);font-size:.9rem}
+.virtue-table tr:hover{background:var(--bg-card)}
+.virtue-table .attr-name{font-weight:600;color:var(--white)}
+.virtue-table .priority{font-size:.7rem;font-weight:600;padding:.1rem .4rem;border-radius:3px}
+.priority.t1{color:var(--accent);background:var(--accent-dim)}
+.priority.t2{color:var(--green);background:var(--green-dim)}
+.priority.t3{color:var(--text-muted);background:rgba(200,200,200,0.04)}
+
+/* Section images */
+.section-img{width:100%;max-height:200px;object-fit:cover;object-position:center;border-radius:8px;border:1px solid var(--border);margin:1rem 0;filter:brightness(0.85)}
+.inline-icon{width:28px;height:28px;vertical-align:middle;margin-right:.3rem;border-radius:4px}
+
+/* Form image row */
+.form-img-row{display:flex;gap:.75rem;margin:1rem 0;flex-wrap:wrap}
+.form-img-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;overflow:hidden;text-align:center;flex:1;min-width:140px;max-width:200px}
+.form-img-card img{width:100%;height:120px;object-fit:cover;object-position:center top;display:block}
+.form-img-label{font-family:'Cinzel',serif;font-size:.75rem;font-weight:600;color:var(--text-dim);padding:.35rem;text-transform:uppercase;letter-spacing:.04em}
+
+.guide-footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.75rem;color:var(--text-muted);text-align:center}
+
+/* Mobile nav */
+.mobile-nav{display:none;position:sticky;top:60px;z-index:100;background:rgba(12,10,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:56px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Cinzel',serif;font-size:.85rem;font-weight:700;color:var(--accent);letter-spacing:.06em}
+.nav-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s}
+.nav-links{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:rgba(12,10,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.nav-links.open{display:flex}
+.nav-links a{display:flex;align-items:center;gap:.5rem;height:44px;font-size:.9rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){.mobile-nav{display:flex}}
+
+/* ── Universal Nav ── */
+.unav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.unav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.unav-brand{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;color:var(--text);text-decoration:none;transition:color 0.3s}
+.unav-brand:hover{color:var(--accent,#c9a84c)}
+.unav-links{display:flex;gap:1.5rem;list-style:none;align-items:center}
+.unav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.3s;position:relative}
+.unav-links a:hover,.unav-links a.active{color:var(--accent,#c9a84c)}
+.unav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--accent,#c9a84c);transform:scaleX(0);transition:transform 0.3s;transform-origin:right}
+.unav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.unav-dropdown{position:relative}
+.unav-dropdown>a::after{display:none}
+.unav-dropdown>a{display:flex;align-items:center;gap:0.3rem}
+.unav-dropdown>a .dd-arrow{font-size:0.5rem;transition:transform 0.2s;margin-top:1px}
+.unav-dropdown:hover>a .dd-arrow{transform:rotate(180deg)}
+.unav-dd{
+  position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);
+  background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border);border-radius:10px;
+  min-width:200px;padding:0.5rem 0;
+  opacity:0;visibility:hidden;transform:translateX(-50%) translateY(-5px);
+  transition:opacity 0.2s,visibility 0.2s,transform 0.2s;
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+}
+.unav-dropdown:hover .unav-dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.unav-dd a{display:block;padding:0.6rem 1.2rem;font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.15s,background 0.15s;white-space:nowrap}
+.unav-dd a:hover{color:var(--accent,#c9a84c);background:rgba(201,168,76,0.06)}
+.unav-dd a::after{display:none}
+.unav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:0.5rem;z-index:1001}
+.unav-hamburger span{display:block;width:22px;height:2px;background:var(--text-dim,#aaa);margin:5px 0;transition:all 0.3s ease;border-radius:1px}
+.unav-hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.unav-hamburger.open span:nth-child(2){opacity:0}
+.unav-hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+@media(max-width:700px){
+  .unav-hamburger{display:block}
+  .unav-links{
+    display:flex;flex-direction:column;gap:0;
+    position:absolute;top:60px;left:0;right:0;
+    background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;
+    padding:0 0;
+  }
+  .unav-links.open{max-height:600px;padding:0.5rem 0}
+  .unav-links>li{list-style:none}
+  .unav-links>li>a{display:block;padding:0.8rem 2rem;font-size:0.85rem;border-bottom:1px solid var(--border)}
+  .unav-links>li:last-child>a{border-bottom:none}
+  .unav-links a::after{display:none}
+  .unav-dd{position:static;opacity:1;visibility:visible;transform:none;border:none;border-radius:0;min-width:auto;padding:0;background:none;backdrop-filter:none;box-shadow:none}
+  .unav-dd a{padding:0.7rem 2rem 0.7rem 3rem;font-size:0.8rem;border-bottom:1px solid var(--border)}
+  .unav-dropdown>a{display:none}
+  .unav-dropdown{border-bottom:none}
+}
+
+</style>
+</head>
+<body>
+<nav class="unav">
+  <div class="unav-inner">
+    <a href="index.html" class="unav-brand">Z3nGineer</a>
+    <button class="unav-hamburger" id="unav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="unav-links" id="unav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="unav-dropdown">
+        <a href="#">Projects <span class="dd-arrow">&#x25BC;</span></a>
+        <div class="unav-dd">
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+          <a href="https://crockednloaded.com">CrockedNLoaded</a>
+          <a href="guides.html">Game Guides</a>
+          <a href="CHIM.html">CHIM Modpack</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="mobile-nav" style="margin-top:60px;">
+  <span class="mobile-nav-title">Immortal Absorber</span>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="#overview"><span class="nav-icon">◈</span> Overview</a>
+    <a href="#firststeps"><span class="nav-icon">►</span> First Steps</a>
+    <a href="#birthsign"><span class="nav-icon">★</span> Birthsign</a>
+    <a href="#virtues"><span class="nav-icon">↑</span> Leveling</a>
+    <a href="#progression"><span class="nav-icon">⚔</span> Progression</a>
+    <a href="#spells"><span class="nav-icon">✦</span> Spells</a>
+    <a href="#gear"><span class="nav-icon">◆</span> Gear</a>
+    <a href="#enchanting"><span class="nav-icon">✧</span> Enchanting</a>
+    <a href="#combat"><span class="nav-icon">⚡</span> Combat</a>
+    <a href="#tips"><span class="nav-icon">💡</span> Tips</a>
+  </div>
+</div>
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-badge">
+    <img src="https://images.uesp.net/thumb/1/1f/OBbsign_Atronach.jpg/200px-OBbsign_Atronach.jpg" alt="The Atronach">
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">◈</span> Overview</a>
+  <a href="#firststeps"><span class="nav-icon">►</span> First Steps</a>
+  <a href="#birthsign"><span class="nav-icon">★</span> Birthsign</a>
+  <a href="#virtues"><span class="nav-icon">↑</span> Leveling</a>
+  <a href="#progression"><span class="nav-icon">⚔</span> Progression</a>
+  <a href="#spells"><span class="nav-icon">✦</span> Spells</a>
+  <a href="#gear"><span class="nav-icon">◆</span> Gear</a>
+  <a href="#enchanting"><span class="nav-icon">✧</span> Enchanting</a>
+  <a href="#combat"><span class="nav-icon">⚡</span> Combat</a>
+  <a href="#tips"><span class="nav-icon">💡</span> Tips</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="glow" cx="50%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="#2a1840" stop-opacity="0.9"/>
+            <stop offset="50%" stop-color="#180a30" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#0c0a08" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="absorbGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#8060c0" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#8060c0" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="absorbGlow2" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#c8a050" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#c8a050" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#a080e0" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#6040a0" stop-opacity="0.1"/>
+          </linearGradient>
+        </defs>
+        <rect width="900" height="260" fill="url(#glow)"/>
+
+        <!-- Magical energy streams being absorbed — left side -->
+        <g opacity="0.5">
+          <path d="M100,60 Q200,80 350,130 Q380,140 420,135" stroke="#d05030" stroke-width="2" fill="none" opacity="0.6"/>
+          <path d="M80,120 Q180,110 320,130 Q380,138 420,135" stroke="#e08040" stroke-width="1.5" fill="none" opacity="0.5"/>
+          <path d="M120,180 Q220,160 340,140 Q390,136 420,135" stroke="#d05030" stroke-width="1.8" fill="none" opacity="0.4"/>
+          <!-- Frost stream -->
+          <path d="M150,30 Q250,60 360,120 Q400,133 420,135" stroke="#4080c0" stroke-width="1.5" fill="none" opacity="0.5"/>
+          <!-- Shock stream -->
+          <path d="M60,200 Q160,170 300,145 Q370,137 420,135" stroke="#8060c0" stroke-width="2" fill="none" opacity="0.5"/>
+        </g>
+
+        <!-- Magical energy streams being absorbed — right side -->
+        <g opacity="0.5">
+          <path d="M800,50 Q700,80 540,125 Q480,135 450,135" stroke="#4080c0" stroke-width="2" fill="none" opacity="0.5"/>
+          <path d="M820,140 Q720,130 560,132 Q490,134 450,135" stroke="#8060c0" stroke-width="1.5" fill="none" opacity="0.4"/>
+          <path d="M780,200 Q680,170 550,142 Q490,136 450,135" stroke="#d05030" stroke-width="1.8" fill="none" opacity="0.45"/>
+          <path d="M750,30 Q650,70 530,120 Q480,133 450,135" stroke="#e08040" stroke-width="1.5" fill="none" opacity="0.4"/>
+        </g>
+
+        <!-- Enemy mage — left, casting and failing -->
+        <g transform="translate(130,155)" opacity="0.75">
+          <ellipse cx="0" cy="10" rx="15" ry="25" fill="#4a3050"/>
+          <circle cx="0" cy="-15" r="10" fill="#4a3050"/>
+          <!-- Hood -->
+          <path d="M-10,-18 Q0,-30 10,-18" fill="#3a2040"/>
+          <!-- Eyes — panicked -->
+          <ellipse cx="-3" cy="-16" rx="2" ry="1.5" fill="#d03030" opacity="0.7"/>
+          <ellipse cx="4" cy="-16" rx="2" ry="1.5" fill="#d03030" opacity="0.7"/>
+          <!-- Staff raised -->
+          <line x1="12" y1="0" x2="35" y2="-30" stroke="#6a5040" stroke-width="3" stroke-linecap="round"/>
+          <!-- Fizzling spell at staff tip -->
+          <circle cx="37" cy="-33" r="6" fill="#d05030" opacity="0.15"/>
+          <circle cx="37" cy="-33" r="3" fill="#e08040" opacity="0.1"/>
+          <!-- Legs -->
+          <line x1="-5" y1="30" x2="-10" y2="55" stroke="#4a3050" stroke-width="5" stroke-linecap="round"/>
+          <line x1="5" y1="30" x2="12" y2="53" stroke="#4a3050" stroke-width="5" stroke-linecap="round"/>
+          <ellipse cx="-11" cy="57" rx="5" ry="3" fill="#3a2040"/>
+          <ellipse cx="13" cy="55" rx="5" ry="3" fill="#3a2040"/>
+        </g>
+
+        <!-- Enemy mage — right, recoiling from reflect damage -->
+        <g transform="translate(730,150)" opacity="0.7">
+          <ellipse cx="0" cy="10" rx="15" ry="25" fill="#503030" transform="rotate(-10)"/>
+          <circle cx="-2" cy="-15" r="10" fill="#503030"/>
+          <path d="M-10,-18 Q0,-28 10,-18" fill="#402020"/>
+          <!-- Eyes -->
+          <ellipse cx="-4" cy="-16" rx="2" ry="1.5" fill="#d03030" opacity="0.6"/>
+          <ellipse cx="3" cy="-16" rx="2" ry="1.5" fill="#d03030" opacity="0.6"/>
+          <!-- Arms flailing back -->
+          <line x1="-12" y1="0" x2="-30" y2="-15" stroke="#503030" stroke-width="5" stroke-linecap="round"/>
+          <line x1="12" y1="-5" x2="28" y2="-20" stroke="#503030" stroke-width="5" stroke-linecap="round"/>
+          <!-- Damage sparks on body from reflect -->
+          <circle cx="5" cy="0" r="4" fill="#c8a050" opacity="0.4"/>
+          <circle cx="-3" cy="5" r="3" fill="#e0b860" opacity="0.3"/>
+          <circle cx="8" cy="-8" r="2" fill="#f0e8d8" opacity="0.3"/>
+          <!-- Legs buckling -->
+          <line x1="-5" y1="30" x2="-15" y2="55" stroke="#503030" stroke-width="5" stroke-linecap="round"/>
+          <line x1="5" y1="30" x2="18" y2="52" stroke="#503030" stroke-width="5" stroke-linecap="round"/>
+        </g>
+
+        <!-- === THE IMMORTAL ABSORBER — center, absorbing magic === -->
+        <g transform="translate(440,130)" opacity="0.95">
+          <!-- Absorption aura — large -->
+          <circle cx="0" cy="5" r="70" fill="url(#absorbGlow)"/>
+          <circle cx="0" cy="5" r="50" fill="url(#absorbGlow2)"/>
+
+          <!-- Shield bubble — spell absorption barrier -->
+          <ellipse cx="0" cy="5" rx="42" ry="50" fill="url(#shieldGrad)" stroke="#a080e0" stroke-width="0.8" opacity="0.4"/>
+          <!-- Shield runes orbiting -->
+          <g opacity="0.25" fill="none" stroke="#c8a050" stroke-width="0.8">
+            <circle cx="-35" cy="-10" r="5"/><path d="M-35,-15 L-35,-5 M-40,-10 L-30,-10"/>
+            <circle cx="38" cy="5" r="5"/><path d="M33,0 L43,10"/>
+            <circle cx="-20" cy="45" r="4"/><path d="M-20,41 L-20,49"/>
+            <circle cx="25" cy="-40" r="4"/><path d="M21,-44 L29,-36"/>
+          </g>
+
+          <!-- Body — heavy armor, standing firm -->
+          <ellipse cx="0" cy="20" rx="20" ry="30" fill="#5a5248"/>
+          <!-- Madness Armor chest plate (dark greenish-black) -->
+          <ellipse cx="0" cy="15" rx="17" ry="22" fill="#2a3028" opacity="0.85"/>
+          <!-- Armor detail — madness swirl patterns -->
+          <path d="M-10,5 Q-5,12 0,8 Q5,4 10,10" stroke="#4a5040" stroke-width="0.8" opacity="0.5" fill="none"/>
+          <path d="M-8,18 Q-2,22 4,18 Q10,14 14,20" stroke="#4a5040" stroke-width="0.6" opacity="0.4" fill="none"/>
+          <!-- Pauldrons -->
+          <ellipse cx="-18" cy="2" rx="8" ry="5" fill="#2a3028"/>
+          <ellipse cx="18" cy="2" rx="8" ry="5" fill="#2a3028"/>
+          <!-- Belt -->
+          <rect x="-15" y="34" width="30" height="4" rx="2" fill="#4a5040" opacity="0.7"/>
+          <!-- Belt buckle — glowing sigil -->
+          <rect x="-3" y="34" width="6" height="4" rx="1" fill="#c8a050" opacity="0.5"/>
+
+          <!-- Head — heavy helmet with slits -->
+          <circle cx="0" cy="-15" r="12" fill="#2a3028"/>
+          <!-- Helmet crest -->
+          <path d="M0,-27 L0,-20" stroke="#4a5040" stroke-width="3" stroke-linecap="round"/>
+          <path d="M-4,-25 L0,-28 L4,-25" fill="#4a5040" opacity="0.6"/>
+          <!-- Visor slits — glowing eyes -->
+          <rect x="-8" y="-17" width="16" height="3" rx="1" fill="#0a0a0a"/>
+          <ellipse cx="-3" cy="-16" rx="2.5" ry="1.2" fill="#8060c0" opacity="0.95"/>
+          <ellipse cx="4" cy="-16" rx="2.5" ry="1.2" fill="#8060c0" opacity="0.95"/>
+          <!-- Eye glow -->
+          <circle cx="-3" cy="-16" r="4" fill="#8060c0" opacity="0.15"/>
+          <circle cx="4" cy="-16" r="4" fill="#8060c0" opacity="0.15"/>
+
+          <!-- Legs — wide stance -->
+          <line x1="-7" y1="44" x2="-16" y2="75" stroke="#2a3028" stroke-width="9" stroke-linecap="round"/>
+          <line x1="7" y1="44" x2="16" y2="75" stroke="#2a3028" stroke-width="9" stroke-linecap="round"/>
+          <!-- Boots -->
+          <ellipse cx="-17" cy="77" rx="7" ry="4" fill="#1a2018"/>
+          <ellipse cx="17" cy="77" rx="7" ry="4" fill="#1a2018"/>
+
+          <!-- LEFT ARM — Escutcheon shield raised -->
+          <line x1="-14" y1="5" x2="-32" y2="-8" stroke="#2a3028" stroke-width="7" stroke-linecap="round"/>
+          <!-- Shield — Escutcheon of Chorrol -->
+          <path d="M-38,-20 L-28,-25 L-18,-20 L-18,-5 L-28,5 L-38,-5 Z" fill="#6a5a40" stroke="#c8a050" stroke-width="1"/>
+          <!-- Shield emblem -->
+          <circle cx="-28" cy="-10" r="5" fill="none" stroke="#c8a050" stroke-width="0.8" opacity="0.6"/>
+          <path d="M-28,-15 L-28,-5" stroke="#c8a050" stroke-width="0.6" opacity="0.5"/>
+          <!-- Reflect damage aura on shield -->
+          <circle cx="-28" cy="-10" r="10" fill="#c8a050" opacity="0.08"/>
+
+          <!-- RIGHT ARM — open hand channeling absorption -->
+          <line x1="14" y1="5" x2="32" y2="-10" stroke="#2a3028" stroke-width="7" stroke-linecap="round"/>
+          <!-- Gauntlet -->
+          <circle cx="34" cy="-12" r="4" fill="#2a3028"/>
+          <!-- Open fingers -->
+          <line x1="36" y1="-14" x2="40" y2="-20" stroke="#2a3028" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="34" y1="-16" x2="36" y2="-22" stroke="#2a3028" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="-16" x2="33" y2="-23" stroke="#2a3028" stroke-width="1.5" stroke-linecap="round"/>
+
+          <!-- Absorption vortex in right hand -->
+          <circle cx="36" cy="-20" r="18" fill="url(#absorbGlow)"/>
+          <circle cx="36" cy="-20" r="12" fill="#8060c0" opacity="0.12"/>
+          <circle cx="36" cy="-20" r="8" fill="#a080e0" opacity="0.2"/>
+          <circle cx="36" cy="-20" r="5" fill="#c0a0f0" opacity="0.35"/>
+          <circle cx="36" cy="-20" r="3" fill="#e0d0ff" opacity="0.6"/>
+          <circle cx="36" cy="-20" r="1.5" fill="#f0e8ff" opacity="0.9"/>
+          <!-- Spiral lines — absorption vortex -->
+          <path d="M36,-20 Q28,-30 36,-38 Q44,-30 36,-20" stroke="#a080e0" stroke-width="0.8" opacity="0.3" fill="none"/>
+          <path d="M36,-20 Q46,-28 36,-36 Q26,-28 36,-20" stroke="#c8a050" stroke-width="0.6" opacity="0.25" fill="none"/>
+          <!-- Sparks being pulled in -->
+          <circle cx="48" cy="-30" r="1.2" fill="#e08040" opacity="0.5"/>
+          <circle cx="28" cy="-32" r="1" fill="#4080c0" opacity="0.4"/>
+          <circle cx="44" cy="-10" r="0.8" fill="#d05030" opacity="0.35"/>
+          <circle cx="22" cy="-18" r="0.7" fill="#8060c0" opacity="0.4"/>
+        </g>
+
+        <!-- Fallen enemy — behind, killed by reflect damage -->
+        <g transform="translate(400,220)" opacity="0.6">
+          <ellipse cx="0" cy="0" rx="22" ry="9" fill="#4a3040"/>
+          <circle cx="-18" cy="2" r="7" fill="#4a3040"/>
+          <line x1="15" y1="-3" x2="28" y2="-8" stroke="#4a3040" stroke-width="4" stroke-linecap="round"/>
+          <ellipse cx="3" cy="6" rx="14" ry="4" fill="#3a0828" opacity="0.35"/>
+        </g>
+
+        <!-- Floating absorption particles everywhere -->
+        <g opacity="0.35">
+          <circle cx="300" cy="80" r="1.5" fill="#8060c0"/>
+          <circle cx="580" cy="70" r="1.2" fill="#c8a050"/>
+          <circle cx="350" cy="50" r="1" fill="#4080c0"/>
+          <circle cx="520" cy="55" r="0.8" fill="#d05030"/>
+          <circle cx="250" cy="110" r="1.3" fill="#a080e0"/>
+          <circle cx="620" cy="100" r="1.1" fill="#e08040"/>
+          <circle cx="380" cy="190" r="0.9" fill="#8060c0"/>
+          <circle cx="500" cy="185" r="1" fill="#c8a050"/>
+          <circle cx="200" cy="90" r="0.7" fill="#4080c0"/>
+          <circle cx="680" cy="85" r="0.8" fill="#a080e0"/>
+        </g>
+
+        <!-- Ground -->
+        <line x1="80" y1="240" x2="820" y2="240" stroke="#3a2a18" stroke-width="0.5" opacity="0.3"/>
+        <!-- Magical residue on ground -->
+        <ellipse cx="300" cy="238" rx="20" ry="3" fill="#2a1840" opacity="0.25"/>
+        <ellipse cx="580" cy="237" rx="18" ry="3" fill="#2a1840" opacity="0.2"/>
+      </svg>
+    </div>
+    <div class="header-row">
+      <img class="header-portrait" src="https://images.uesp.net/thumb/8/80/OBR-icon-race-HighElf.png/200px-OBR-icon-race-HighElf.png" alt="High Elf">
+      <div class="header-text">
+        <div class="breadcrumb">Oblivion Remastered › Builds › The Immortal Absorber</div>
+        <h1>The Immortal Absorber</h1>
+        <div class="subtitle">High Elf · The Atronach · Heavy Armor + Spell Absorption + Reflect Damage</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag shock">Spell Absorb</span>
+      <span class="tag gold">Invincible</span>
+      <span class="tag green">Heavy Armor</span>
+      <span class="tag blue">Remastered 2025</span>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="section" id="overview">
+    <h2>Overview</h2>
+    <p>The Immortal Absorber is the most powerful endgame build in Oblivion Remastered. The core mechanic is simple: reach <strong>100% Spell Absorption</strong> so every spell cast at you is converted into free magicka, then stack <strong>100% Reflect Damage</strong> so enemies kill themselves hitting you. You become literally invincible — immune to all magic, and anything that attacks you in melee dies from its own damage bouncing back.</p>
+
+    <p>The build requires patience through the early game (Stunted Magicka means zero natural regen), but once the pieces come together around level 15-20, nothing in the game can threaten you. Not Mehrunes Dagon. Not the final boss of Shivering Isles. Nothing.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Why This Build is #1</div>
+      <p><strong>100% Spell Absorption</strong> = every spell heals your magicka instead of damaging you. Enemy mages become walking mana potions. Conjured creatures get absorbed on summon. Traps do nothing. <strong>100% Reflect Damage</strong> = melee attackers take their own damage. Combined, you are immune to magic AND melee simultaneously.</p>
+    </div>
+
+    <h3><img class="inline-icon" src="https://images.uesp.net/thumb/8/80/OBR-icon-race-HighElf.png/200px-OBR-icon-race-HighElf.png" alt="">Race — High Elf (Altmer)</h3>
+    <ul class="picks">
+      <li><span class="label">Passive</span> <span class="name">+100 Magicka</span> — <span class="note">largest magicka bonus of any race, critical for an Atronach build</span></li>
+      <li><span class="label">Weakness</span> <span class="name">25% Weakness to Magic, Fire, Frost, Shock</span> — <span class="note">irrelevant once you hit 100% Spell Absorption</span></li>
+      <li><span class="label">Skills</span> <span class="name">+10 Destruction, Alteration, Mysticism</span> · <span class="name">+5 Alchemy, Conjuration, Illusion</span></li>
+      <li><span class="label">Why</span> <span class="name">+100 Magicka + Atronach (+150) = +250 Magicka at level 1</span> — <span class="note">massive pool to work with before you solve the regen problem</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Alternative — Breton</div>
+      <p>Breton gets 50% Magic Resistance and +50 Magicka. Safer early game but weaker endgame. With 100% Spell Absorption you don't need Magic Resistance at all — it becomes redundant. The High Elf's +100 Magicka is more valuable since your pool is everything before you get sigil stones. Pick Breton only if the early game difficulty worries you.</p>
+    </div>
+
+    <h3>Class — Custom: The Absorber</h3>
+    <ul class="picks">
+      <li><span class="label">Spec</span> <span class="name">Magic</span></li>
+      <li><span class="label">Favored</span> <span class="name">Intelligence, Willpower</span></li>
+      <li><span class="label">Major</span> <span class="name">Alchemy, Alteration, Conjuration, Destruction, Heavy Armor, Mysticism, Restoration</span></li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="callout-label">Why These Major Skills</div>
+      <p><strong>Alchemy</strong> is your lifeline — it's the only way to restore magicka with Stunted Magicka. <strong>Mysticism</strong> gives you Telekinesis and Spell Absorption spells. <strong>Conjuration</strong> provides summons that you can absorb to regain magicka. Every skill here has a purpose in the absorption loop.</p>
+    </div>
+
+    <h3>Starting Attributes (Level 1 — High Elf + Atronach)</h3>
+    <div class="stats">
+      <div class="stat-box"><div class="stat-label">STR</div><div class="stat-val">30</div></div>
+      <div class="stat-box primary"><div class="stat-label">INT</div><div class="stat-val">60</div></div>
+      <div class="stat-box primary"><div class="stat-label">WIL</div><div class="stat-val">50</div></div>
+      <div class="stat-box"><div class="stat-label">AGI</div><div class="stat-val">40</div></div>
+      <div class="stat-box"><div class="stat-label">SPD</div><div class="stat-val">30</div></div>
+      <div class="stat-box"><div class="stat-label">END</div><div class="stat-val">40</div></div>
+      <div class="stat-box"><div class="stat-label">PER</div><div class="stat-val">40</div></div>
+      <div class="stat-box"><div class="stat-label">LCK</div><div class="stat-val">50</div></div>
+    </div>
+    <p style="font-size:.88rem;color:var(--text-dim);">High Elf Absorber. Starting magicka pool is 350+ (base 200 + 100 racial + 150 Atronach). Intelligence is your most important attribute for raw pool size.</p>
+  </section>
+
+  <!-- FIRST STEPS -->
+  <section class="section" id="firststeps">
+    <h2>First Steps After the Tutorial</h2>
+    <p>The Atronach sign means you leave the sewers with zero magicka regen. You need to solve this immediately or you're a mage who can't cast. Here's the exact path:</p>
+
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Collect Every Ingredient in the Tutorial</span>
+        <div class="step-detail">Before leaving the sewers, pick up <strong>every ingredient</strong> you see — Rat Meat, Bonemeal, Cairn Bolete, etc. You need these for Restore Magicka potions. Alchemy is your only way to get magicka back. Buy a <strong>Mortar and Pestle</strong> from the first vendor you find.</div>
+      </li>
+      <li>
+        <span class="step-action">Go to Imperial City — Buy Restore Magicka Potions</span>
+        <div class="step-detail">Head straight to the <strong>Imperial City Market District</strong>. Buy every Restore Magicka potion from <strong>The Main Ingredient</strong> (alchemy shop) and <strong>Edgar's Discount Spells</strong>. Also buy ingredients with the <strong>Restore Magicka</strong> effect: Milk Thistle Seeds, Flax Seeds, Steel-Blue Entoloma Cap, Bog Beacon Asco Cap.</div>
+      </li>
+      <li>
+        <span class="step-action">Buy Starter Spells</span>
+        <div class="step-detail">From <strong>Edgar's Discount Spells</strong> and <strong>Mystic Emporium</strong>: buy <strong>Minor Life Detection</strong> (Mysticism trainer spell — cheap to cast), <strong>Flare</strong> (Destruction), <strong>Protect</strong> (Alteration Shield), and <strong>Summon Skeleton</strong> (Conjuration). At <strong>Mystic Emporium</strong>, buy <strong>Telekinesis</strong> if available.</div>
+      </li>
+      <li>
+        <span class="step-action">Join the Mages Guild</span>
+        <div class="step-detail">Start the <strong>recommendation quest chain</strong> immediately. You need access to the <strong>Arcane University</strong> for the Spellmaking Altar AND the Enchanting Altar. This is non-negotiable for this build. Talk to any Mages Guild hall to start. You need recommendations from all 7 cities.</div>
+      </li>
+      <li>
+        <span class="step-action">Visit Leyawiin Mages Guild — Buy Telekinesis</span>
+        <div class="step-detail">Travel to Leyawiin. Buy <strong>Telekinesis</strong> from Agata at the Mages Guild. This Mysticism spell is the cornerstone of your magicka recovery loop. Also buy <strong>Absorb Health</strong> and any other Mysticism spells they have. Do the Leyawiin recommendation quest while here.</div>
+      </li>
+      <li>
+        <span class="step-action">Grind Alchemy to 25+ Immediately</span>
+        <div class="step-detail">Combine every ingredient pair that shares <strong>Restore Magicka</strong>. Flax Seeds + Milk Thistle Seeds is the easiest combo. Eat individual ingredients to discover their effects. Get Alchemy to <strong>Apprentice (25)</strong> so your potions are actually useful. This is survival — not optional.</div>
+      </li>
+      <li>
+        <span class="step-action">Start the Main Quest for Sigil Stones</span>
+        <div class="step-detail">Deliver the Amulet to Jauffre at Weynon Priory, then progress the main quest until Oblivion Gates start opening. <strong>Sigil Stones</strong> from Oblivion Gates are how you enchant your armor with Spell Absorption and Reflect Damage. You need multiple gates, so start early.</div>
+      </li>
+    </ol>
+
+    <div class="callout warn">
+      <div class="callout-label">The Magicka Problem (and How to Solve It)</div>
+      <p>Stunted Magicka means <strong>zero natural regeneration, ever</strong>. Your magicka bar only refills through: <strong>1)</strong> Restore Magicka potions (Alchemy), <strong>2)</strong> Absorbing spells cast at you (50% base from Atronach), <strong>3)</strong> Absorbing your own summons (Conjuration + Spell Absorption loop), <strong>4)</strong> Welkynd Stones (one-time use, found in Ayleid ruins). Early game, carry 10+ Restore Magicka potions at all times.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">The Summon + Absorb Loop (Learn This Early)</div>
+      <p>Once your Spell Absorption is high enough, you can <strong>cast Summon Skeleton, then immediately re-cast it</strong>. When the first summon is dispelled, the re-summoning spell has a chance to be absorbed (giving you magicka back). At 100% Spell Absorption, this becomes infinite magicka — every summon gives more mana than it costs. This is the core engine of the build.</p>
+    </div>
+  </section>
+
+  <!-- BIRTHSIGN -->
+  <section class="section" id="birthsign">
+    <h2>Birthsign</h2>
+    <div class="bs-grid">
+      <div class="bs-card recommended">
+        <img src="https://images.uesp.net/thumb/1/1f/OBbsign_Atronach.jpg/200px-OBbsign_Atronach.jpg" alt="The Atronach">
+        <div class="bs-name">The Atronach</div>
+        <div class="bs-bonus">+150 Magicka, 50% Spell Absorption</div>
+        <div class="bs-penalty">Stunted Magicka (ZERO regen — ever)</div>
+        <div class="bs-note">The entire build revolves around this. 50% base absorption gets pushed to 100% with enchantments. The drawback becomes irrelevant once you reach 100%.</div>
+        <div style="margin-top:.5rem"><span class="tag gold">Required</span></div>
+      </div>
+      <div class="bs-card">
+        <img src="https://images.uesp.net/thumb/c/c7/OBbsign_Mage.jpg/200px-OBbsign_Mage.jpg" alt="The Mage">
+        <div class="bs-name">The Mage</div>
+        <div class="bs-bonus">+50 Magicka</div>
+        <div class="bs-note">Safe but defeats the purpose. You need Atronach's 50% Spell Absorption as your foundation. Without it, reaching 100% requires more gear slots.</div>
+      </div>
+      <div class="bs-card">
+        <img src="https://images.uesp.net/thumb/a/a8/OBbsign_Lady.jpg/200px-OBbsign_Lady.jpg" alt="The Lady">
+        <div class="bs-name">The Lady</div>
+        <div class="bs-bonus">+10 Willpower, +10 Endurance</div>
+        <div class="bs-note">Willpower is useless for this build (no regen to scale). Endurance is nice but not worth losing 150 Magicka and 50% Spell Absorption.</div>
+      </div>
+    </div>
+    <div class="callout">
+      <div class="callout-label">Why Stunted Magicka Doesn't Matter</div>
+      <p>It sounds terrifying but the build is designed around it. At 100% Spell Absorption, every enemy spell cast at you fully restores magicka. Conjuration summons absorbed refund their cost and then some. Alchemy potions cover the early game gap. By level 15, you'll have more magicka than you can spend.</p>
+    </div>
+  </section>
+
+  <!-- VIRTUES / LEVELING -->
+  <section class="section" id="virtues">
+    <h2>Leveling — Virtue System</h2>
+    <p>The remaster replaced the old attribute multiplier system. At each level-up you get <strong>12 Virtues</strong> to distribute freely. Max 5 per attribute, max 3 attributes per level. Luck costs 4 per point. Your priorities are different from most builds because Willpower's regen benefit is useless to you.</p>
+
+    <table class="virtue-table">
+      <thead><tr><th>Attribute</th><th>Priority</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">Intelligence</td><td><span class="priority t1">MAX FIRST</span></td><td>Max Magicka pool. Your only stat that matters for casting. Every point = more spells before needing a refill.</td></tr>
+        <tr><td class="attr-name">Endurance</td><td><span class="priority t1">MAX FIRST</span></td><td>Health pool. You're in heavy armor taking hits to proc Reflect Damage. You need HP to survive until your defenses are complete.</td></tr>
+        <tr><td class="attr-name">Strength</td><td><span class="priority t2">SECOND</span></td><td>Carry weight (you'll carry lots of potions and ingredients) + contributes to HP. Also needed for melee when magicka runs dry early.</td></tr>
+        <tr><td class="attr-name">Willpower</td><td><span class="priority t2">SECOND</span></td><td>Normally critical for casters, but Stunted Magicka means regen scaling is worthless. Still governs Fatigue and spell resistance chance. Low priority.</td></tr>
+        <tr><td class="attr-name">Agility</td><td><span class="priority t3">LATER</span></td><td>Fatigue pool for power attacks. Not urgent — you're a mage first.</td></tr>
+        <tr><td class="attr-name">Speed</td><td><span class="priority t3">LATER</span></td><td>Movement speed. Nice to have but you don't need to kite — enemies kill themselves on you.</td></tr>
+        <tr><td class="attr-name">Luck</td><td><span class="priority t3">SKIP</span></td><td>Costs 4 Virtues per point. Not worth the investment for this build.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-label">Suggested Distribution</div>
+      <p><strong>Levels 2-8:</strong> Intelligence 5, Endurance 5, Strength 2</p>
+      <p><strong>Levels 9-15:</strong> Intelligence 5, Endurance 5, Agility 2 (or Strength if still low)</p>
+      <p><strong>Levels 16+:</strong> Fill remaining. Speed, Willpower, then top off everything else.</p>
+    </div>
+  </section>
+
+  <!-- PROGRESSION -->
+  <section class="section" id="progression">
+    <h2>Level Progression</h2>
+    <p style="color:var(--text-dim);margin-bottom:1rem;">Click to expand. The build has three distinct phases: survival, engine online, and godhood.</p>
+
+    <!-- Phase 1 — Survival -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 1-5</span>
+        <span class="lv-title">Survival Mode — Alchemy + Potion Dependency</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Alchemy to 25+</span>
+          <span class="qp skill">Heavy Armor to 25</span>
+          <span class="qp skill">Destruction to 25</span>
+          <span class="qp spell">Flare</span>
+          <span class="qp spell">Summon Skeleton</span>
+          <span class="qp gear">Mortar and Pestle</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Priority</span> <span class="name">Alchemy to 25</span> — <span class="note">Apprentice perk. Your Restore Magicka potions become actually effective. This is life or death.</span></li>
+          <li><span class="label">Alch 25</span> <span class="name">Apprentice perk</span> — <span class="note">see 2 effects per ingredient (instead of 1). Discover Restore Magicka combos faster.</span></li>
+          <li><span class="label">HA 25</span> <span class="name">Apprentice perk</span> — <span class="note">reduced armor degradation. You need to tank while conserving magicka.</span></li>
+          <li><span class="label">Dest 25</span> <span class="name">Apprentice perk</span> — <span class="note">access to better damage spells. Use sparingly — every cast costs precious magicka.</span></li>
+          <li><span class="label">Survival</span> <span class="name">Carry 10+ Restore Magicka potions</span> — <span class="note">buy from every alchemy shop, brew your own, hoard Welkynd Stones from Ayleid ruins</span></li>
+          <li><span class="label">Quest</span> <span class="name">Mages Guild recommendations</span> — <span class="note">start immediately. You need the Arcane University for enchanting and spellmaking.</span></li>
+          <li><span class="label">Tactic</span> <span class="name">Let enemies cast at you</span> — <span class="note">50% chance to absorb their spells for free magicka. Stand in front of enemy mages deliberately.</span></li>
+        </ul>
+        <div class="callout warn" style="margin-top:.5rem;">
+          <div class="callout-label">This Phase is Hard</div>
+          <p>You are a mage with no mana regen wearing heavy armor. You will run out of magicka constantly. This is normal. Lean on melee weapons, Alchemy potions, and let enemies cast at you for absorption procs. It gets dramatically better at level 10+.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Phase 2 — Engine -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 6-15</span>
+        <span class="lv-title">Engine Online — Oblivion Gates + Sigil Stones</span>
+        <span class="lv-spike">Power Spike</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Alchemy to 50</span>
+          <span class="qp skill">Mysticism to 50</span>
+          <span class="qp skill">Heavy Armor to 50</span>
+          <span class="qp skill">Conjuration to 50</span>
+          <span class="qp spell">Telekinesis</span>
+          <span class="qp gear">Sigil Stones</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">HA 50</span> <span class="name">Journeyman</span> — <span class="note">95% spell effectiveness in armor. You can now cast properly in full heavy armor.</span></li>
+          <li><span class="label">Myst 50</span> <span class="name">Journeyman</span> — <span class="note">access to Spell Absorption spells. Stack these with your birthsign's 50%.</span></li>
+          <li><span class="label">Conj 50</span> <span class="name">Journeyman</span> — <span class="note">better summons = more magicka when absorbed. Summon Daedroth at Journeyman.</span></li>
+          <li><span class="label">Alch 50</span> <span class="name">Journeyman</span> — <span class="note">potent Restore Magicka potions. You start needing fewer potions per dungeon.</span></li>
+          <li><span class="label">Main Q</span> <span class="name">Progress to Oblivion Gates</span> — <span class="note">complete Kvatch, get gates spawning. Each gate gives a Sigil Stone when closed.</span></li>
+          <li><span class="label">Sigil</span> <span class="name">Farm Spell Absorption sigil stones</span> — <span class="note">save before grabbing the stone, reload until you get Spell Absorption or Reflect Damage. You need both.</span></li>
+          <li><span class="label">Goal</span> <span class="name">Push Spell Absorption to 75-80%</span> — <span class="note">50% birthsign + sigil stone enchantments on armor. Summon + absorb loop becomes reliable.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:.5rem;">
+          <div class="callout-label">Sigil Stone Save Scumming</div>
+          <p>Save your game <strong>before</strong> grabbing the Sigil Stone at the top of an Oblivion tower. The stone's enchantment is randomly determined when you grab it. Reload until you get <strong>Absorb Spell</strong> or <strong>Reflect Damage</strong>. At level 17+, sigil stones give the best magnitude enchantments. Farm gates at level 17+ for maximum values.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Phase 3 — 100% Absorption -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 16-20</span>
+        <span class="lv-title">100% Spell Absorption — Magic Immunity</span>
+        <span class="lv-spike">God Mode</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Mysticism to 75</span>
+          <span class="qp gear">Spell Absorption Sigil Stones</span>
+          <span class="qp gear">Escutcheon of Chorrol</span>
+          <span class="qp attr">100% Spell Absorb</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Target</span> <span class="name">50% Atronach + 50% from enchantments = 100%</span> — <span class="note">every spell cast at you is fully absorbed into magicka. Complete immunity to all magic.</span></li>
+          <li><span class="label">How</span> <span class="name">Enchant 2-3 armor pieces with Spell Absorption sigil stones</span> — <span class="note">each stone gives ~20% at level 17+. You need 50% total from gear to reach 100% with birthsign.</span></li>
+          <li><span class="label">Effect</span> <span class="name">Infinite magicka engine</span> — <span class="note">summon anything → absorb the conjuration = full mana refund. Enemy spells = free magicka. You never run dry again.</span></li>
+          <li><span class="label">Myst 75</span> <span class="name">Expert</span> — <span class="note">Spell Absorption 30pts spell from vendors. Stack on top of everything for overkill.</span></li>
+          <li><span class="label">Bypass</span> <span class="name">Traps, Enchantments, Scrolls</span> — <span class="note">all absorbed. Walk through magical trap rooms. Stand in fire runes. Nothing touches you.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:.5rem;">
+          <div class="callout-label">The Moment Everything Changes</div>
+          <p>When you equip that last piece of Spell Absorption gear and hit 100%, the game fundamentally changes. Magicka problems vanish forever. Enemy mages become your battery. You can stand in a room full of Lich kings and just... absorb everything they throw at you. Then nuke them with the magicka they gave you.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Phase 4 — Reflect Damage -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 20-25+</span>
+        <span class="lv-title">100% Reflect Damage — True Immortality</span>
+        <span class="lv-spike">Endgame</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp gear">Reflect Damage Sigil Stones</span>
+          <span class="qp gear">Escutcheon of Chorrol</span>
+          <span class="qp gear">Ring of Iron Fist</span>
+          <span class="qp attr">100% Reflect Damage</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Target</span> <span class="name">100% Reflect Damage from gear</span> — <span class="note">every point of melee damage dealt to you is reflected back at the attacker. They kill themselves.</span></li>
+          <li><span class="label">Shield</span> <span class="name">Escutcheon of Chorrol</span> — <span class="note">33% Reflect Damage built-in. Your foundation piece.</span></li>
+          <li><span class="label">Sigil</span> <span class="name">Reflect Damage sigil stones on remaining armor</span> — <span class="note">each stone gives ~20% at level 17+. Enchant 3-4 pieces to fill the gap.</span></li>
+          <li><span class="label">Ring</span> <span class="name">Ring of Iron Fist</span> — <span class="note">Reflect Damage enchantment. Fills remaining percentage if needed.</span></li>
+          <li><span class="label">Result</span> <span class="name">AFK combat</span> — <span class="note">you can literally stand still and enemies kill themselves. Magic absorbed, melee reflected. You are invincible.</span></li>
+          <li><span class="label">DLC</span> <span class="name">Shivering Isles</span> — <span class="note">Madness Armor (best heavy armor in the game). Enchant all pieces with your sigil stones for the ultimate setup.</span></li>
+        </ul>
+        <div class="callout" style="margin-top:.5rem;">
+          <div class="callout-label">What Can Still Kill You?</div>
+          <p>Almost nothing. Physical damage from traps (not magical) can still hurt you, but your heavy armor + HP handles that. Falling damage still applies. Poison from Alchemy ingredients (not spells) bypasses absorption. That's about it. You are functionally immortal against any combat encounter in the game.</p>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- SPELLS -->
+  <section class="section" id="spells">
+    <h2>Best Spells</h2>
+
+    <div class="spell-section">
+      <div class="spell-level">Mysticism — Your Core School</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Telekinesis</div><div class="spell-desc">Move objects at range. More importantly, this spell is cheap to cast and levels Mysticism fast. Spam it on random objects to grind toward the Spell Absorption spells.</div><div class="gear-loc">📍 Agata — Leyawiin Mages Guild · Delphine Jend — Bravil Mages Guild</div></div><span class="spell-badge must">Must · Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Minor Life Detection</div><div class="spell-desc">Detects living creatures through walls. Extremely cheap to cast — perfect for grinding Mysticism XP while exploring.</div><div class="gear-loc">📍 Edgar Vautrine — Imperial City, Edgar's Discount Spells</div></div><span class="spell-badge good">Good · Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Absorb Health</div><div class="spell-desc">Drain enemy health into your own. Touch range. Great for sustain without spending magicka on separate heal + damage spells.</div><div class="gear-loc">📍 Agata — Leyawiin Mages Guild</div></div><span class="spell-badge must">Must · Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Spell Absorption (Spell)</div><div class="spell-desc">Temporarily boost your Spell Absorption percentage. Stack with birthsign + enchantments to push past 100% for guaranteed absorption.</div><div class="gear-loc">📍 Available at Mysticism Expert (75) from Mages Guild vendors</div></div><span class="spell-badge custom">Expert · Key</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Dispel</div><div class="spell-desc">Remove magical effects from target. Useful against enemy buffs and for removing unwanted effects from yourself.</div><div class="gear-loc">📍 Druja — Skingrad Mages Guild · Trayvond — Cheydinhal Mages Guild</div></div><span class="spell-badge good">Good · Journ</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level"><img class="inline-icon" src="https://images.uesp.net/b/bd/OB-icon-skill-Destruction.png" alt="">Destruction — Your Offense (Use the Magicka You Absorb)</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Flare</div><div class="spell-desc">Cheap fire damage. Your go-to opener at level 1. Conserve magicka early — use only when needed.</div><div class="gear-loc">📍 Druja — Skingrad Mages Guild · Volanaro — Bruma Mages Guild</div></div><span class="spell-badge fire">Fire · Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Lightning Bolt</div><div class="spell-desc">Best element — damage + drains enemy Magicka. Once you have infinite magicka from absorption, spam this freely.</div><div class="gear-loc">📍 Vigge the Cautious — Skingrad Mages Guild</div></div><span class="spell-badge shock">Shock · Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Immolating Blast</div><div class="spell-desc">Area fire damage. With infinite magicka, you can spam AoE destruction into packs. Endgame offense.</div><div class="gear-loc">📍 Borissean — Arcane University · Expert Destruction vendors</div></div><span class="spell-badge fire">Fire · Expert</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Custom: Elemental Nuke</div><div class="spell-desc">Shock 50 + Drain Health 100 + Weakness to Magic 100%. Your signature nuke once magicka is infinite.</div><div class="gear-loc">📍 Craft at Spellmaking Altar — Arcane University or Frostcrag Spire</div></div><span class="spell-badge custom">Custom · Expert</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Conjuration — Your Magicka Engine</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Skeleton</div><div class="spell-desc">Cheapest summon. Cast, then re-cast to absorb the dispel effect for magicka. The core of your early-game engine.</div><div class="gear-loc">📍 Edgar Vautrine — Imperial City, Edgar's Discount Spells · Calindil — Mystic Emporium</div></div><span class="spell-badge must">Must · Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Scamp</div><div class="spell-desc">Stronger summon, higher magicka cost but more magicka returned on absorption. Upgrade once your pool allows it.</div><div class="gear-loc">📍 Calindil — Imperial City, Mystic Emporium</div></div><span class="spell-badge good">Good · Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Daedroth</div><div class="spell-desc">Powerful summon that also returns massive magicka when absorbed. Great for both combat utility and the absorption loop.</div><div class="gear-loc">📍 Athragar — Chorrol Mages Guild (Journeyman Conjuration required)</div></div><span class="spell-badge good">Good · Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Xivilai / Storm Atronach</div><div class="spell-desc">Top-tier summons. When absorbed at 100%, these refund enormous magicka. Use for the engine or as actual combat support.</div><div class="gear-loc">📍 Available at Expert Conjuration from Mages Guild vendors</div></div><span class="spell-badge custom">Expert · Late</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Restoration — Sustain + Buffs</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Heal Minor Wounds / Heal Major Wounds</div><div class="spell-desc">Standard healing. Less critical once you have Reflect Damage (enemies hurt themselves, not you), but always useful.</div><div class="gear-loc">📍 Starting spell + sold everywhere</div></div><span class="spell-badge must">Must · Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Fortify Health (Self)</div><div class="spell-desc">Temporary HP boost. Cast before entering dangerous areas in the early game when you're still vulnerable.</div><div class="gear-loc">📍 Craft at Spellmaking Altar</div></div><span class="spell-badge custom">Custom · Appr</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Alteration — Defense + Utility</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Protect / Shield</div><div class="spell-desc">Physical damage reduction. Stack with heavy armor for massive defense. Essential until you get Reflect Damage.</div><div class="gear-loc">📍 Calindil — Imperial City, Mystic Emporium · Trayvond — Cheydinhal Mages Guild</div></div><span class="spell-badge must">Must · Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Open Lock Spells</div><div class="spell-desc">Never waste skill points on Security. Upgrade through Easy → Average → Hard → Very Hard as Alteration levels.</div><div class="gear-loc">📍 Druja — Skingrad MG · Orintur — Cheydinhal MG</div></div><span class="spell-badge good">Good · Appr+</span></div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Magicka Conservation (Early Game)</div>
+      <p>Before 100% Spell Absorption, every cast matters. <strong>Don't spam Destruction</strong> — use it only for kills you can't handle in melee. Lean on your summon as a tank, use Absorb Health for sustain (drains enemy HP into yours), and let enemies cast at you for free magicka. Think of magicka as a precious resource until level 16+.</p>
+    </div>
+  </section>
+
+  <!-- GEAR -->
+  <section class="section" id="gear">
+    <h2>Gear by Level</h2>
+
+    <div class="callout">
+      <div class="callout-label">Gear Philosophy</div>
+      <p>Every gear slot serves one purpose: push Spell Absorption and Reflect Damage toward 100%. Armor rating matters less than enchantments. A piece of Steel Armor with a Spell Absorption sigil stone is better than unenchanted Daedric Armor for this build.</p>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Early Game — Levels 1-10</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">⚗</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Mortar and Pestle</span> <span class="gear-slot">Alchemy</span></div>
+          <div class="gear-desc">Your most important item. Without this, you can't brew Restore Magicka potions. Buy the best quality you can afford — Journeyman+ grade gives better potion yields.</div>
+          <div class="gear-loc">📍 The Main Ingredient — Imperial City Market District. Any alchemy vendor in any city.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">⚔</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Steel / Chainmail Heavy Armor</span> <span class="gear-slot">Heavy Armor</span></div>
+          <div class="gear-desc">Any heavy armor works early. You'll replace it all once you start enchanting with sigil stones. Just survive.</div>
+          <div class="gear-loc">📍 "A Fighting Chance" — Imperial City Market District. Any armorer.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <img class="gear-img" src="https://images.uesp.net/thumb/5/51/OBR-item-Umbra.jpg/200px-OBR-item-Umbra.jpg" alt="Umbra">
+        <div class="gear-info">
+          <div><span class="gear-name">Umbra</span> <span class="gear-slot">Blade + Armor</span></div>
+          <div class="gear-desc">28 damage + Soul Trap. Also drops full Ebony Armor set. You need Soul Trap for filling soul gems (for enchanting later). Available at level 1.</div>
+          <div class="gear-loc">📍 Vindasel ruins (southwest of Imperial City). Lure Umbra NPC to Imperial City guards if you can't fight her directly.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Mid Game — Levels 10-20</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🛡</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Escutcheon of Chorrol</span> <span class="gear-slot">Shield</span></div>
+          <div class="gear-desc"><strong>33% Reflect Damage</strong> built-in. This is your most important single piece of gear. A massive head start toward 100% Reflect Damage. Also has Fortify Endurance.</div>
+          <div class="gear-loc">📍 Chorrol — complete "Sins of the Father" quest for the Countess. Available at any level.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <img class="gear-img" src="https://images.uesp.net/thumb/6/64/OB-item-Ebony_Armor.jpg/200px-OB-item-Ebony_Armor.jpg" alt="Ebony Armor">
+        <div class="gear-info">
+          <div><span class="gear-name">Ebony Armor (Enchanted with Sigil Stones)</span> <span class="gear-slot">Heavy Armor</span></div>
+          <div class="gear-desc">AR 69. Your mid-game armor base. Enchant each piece with Spell Absorption or Reflect Damage sigil stones as you acquire them.</div>
+          <div class="gear-loc">📍 Random loot at level 15+. "The Best Defense" — Imperial City Market District.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <img class="gear-img" src="https://images.uesp.net/thumb/b/ba/OBR-item-Spell_Breaker.jpg/200px-OBR-item-Spell_Breaker.jpg" alt="Spellbreaker">
+        <div class="gear-info">
+          <div><span class="gear-name">Spellbreaker</span> <span class="gear-slot">Shield (Alternative)</span></div>
+          <div class="gear-desc">30% Reflect Spell. Useful before you reach 100% Spell Absorption. Once you hit 100% Absorb, switch to Escutcheon for Reflect Damage instead — Reflect Spell becomes redundant.</div>
+          <div class="gear-loc">📍 Peryite's Shrine (southeast of Bravil). Daedric quest, requires level 10+.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Endgame — Levels 20+</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">⚔</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Madness Armor</span> <span class="gear-slot">Heavy Armor (DLC)</span></div>
+          <div class="gear-desc">Best heavy armor in the game (AR 85+). From Shivering Isles DLC. Enchant every piece with Spell Absorption or Reflect Damage sigil stones. This is your final armor set.</div>
+          <div class="gear-loc">📍 Shivering Isles DLC — crafted by the smith in Crucible (New Sheoth) using Madness Ore. Bring ore + gold.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <img class="gear-img" src="https://images.uesp.net/thumb/2/2e/OBR-item-Goldbrand.jpg/200px-OBR-item-Goldbrand.jpg" alt="Goldbrand">
+        <div class="gear-info">
+          <div><span class="gear-name">Goldbrand</span> <span class="gear-slot">Blade</span></div>
+          <div class="gear-desc">25 damage + 22 Fire Damage. Best sword in the game. With infinite magicka you don't strictly need melee, but this closes kills fast when you want to.</div>
+          <div class="gear-loc">📍 Boethiah's Shrine (east of Cheydinhal). Tournament quest. Best at level 21+.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Key Accessories</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">📿</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Amulet of Axes</span> <span class="gear-slot">Amulet</span></div>
+          <div class="gear-desc"><strong>Reflect Damage 15-20%</strong>. Stacks with Escutcheon and your enchanted armor to push toward 100% Reflect Damage. One of the few accessories with this effect.</div>
+          <div class="gear-loc">📍 Random loot or vendor. Also check "Rindir's Staffs" and "Mystic Emporium" in Imperial City. Enchant your own at Arcane University if you can't find one.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">💍</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Ring of Iron Fist</span> <span class="gear-slot">Ring</span></div>
+          <div class="gear-desc"><strong>Reflect Damage</strong> pre-enchanted. The second ring slot for reaching 100%. Reflect Damage cannot be custom-enchanted at the altar &mdash; you need pre-enchanted gear or Sigil Stones.</div>
+          <div class="gear-loc">📍 Random leveled loot / vendors. Apply a Reflect Damage Sigil Stone to any ring as backup (no altar needed).</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">💍</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Ring of Spell Absorption</span> <span class="gear-slot">Ring</span></div>
+          <div class="gear-desc">Fills remaining Spell Absorption percentage if your armor enchantments aren't enough. Enchant with a Spell Absorption sigil stone.</div>
+          <div class="gear-loc">📍 Enchant at Arcane University using a Spell Absorption sigil stone + filled soul gem.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENCHANTING -->
+  <section class="section" id="enchanting">
+    <h2>Enchanting — The Path to 100%</h2>
+    <p>Enchanting is not optional for this build — it IS the build. Your entire endgame revolves around stacking the right enchantments across all your gear slots to reach two critical thresholds: <strong>100% Spell Absorption</strong> and <strong>100% Reflect Damage</strong>.</p>
+
+    <h3>Spell Absorption — Reaching 100%</h3>
+    <div class="callout">
+      <div class="callout-label">The Math</div>
+      <p><strong>50%</strong> — The Atronach birthsign (permanent, always active)</p>
+      <p><strong>+20%</strong> — Sigil Stone on Cuirass (level 17+ stone)</p>
+      <p><strong>+20%</strong> — Sigil Stone on Helmet or Greaves</p>
+      <p><strong>+10%</strong> — Sigil Stone on Ring or remaining armor piece</p>
+      <p><strong>= 100%</strong> Total. Every spell absorbed. Complete magic immunity.</p>
+    </div>
+
+    <p>Sigil Stones from Oblivion Gates are the primary source. At level 17+, stones grant the highest magnitude enchantments. The Absorb Spell effect on sigil stones provides approximately 20% per stone at max level. You need 2-3 stones with this effect to bridge the gap from 50% to 100%.</p>
+
+    <h3>Reflect Damage — Reaching 100%</h3>
+    <div class="callout">
+      <div class="callout-label">The Math</div>
+      <p><strong>33%</strong> — Escutcheon of Chorrol (permanent while equipped)</p>
+      <p><strong>+20%</strong> — Sigil Stone on armor piece</p>
+      <p><strong>+20%</strong> — Sigil Stone on another armor piece</p>
+      <p><strong>+15%</strong> — Amulet of Axes (or enchanted amulet)</p>
+      <p><strong>+12%</strong> — Ring of Iron Fist (or enchanted ring)</p>
+      <p><strong>= 100%</strong> Total. Every melee hit reflected. Enemies kill themselves.</p>
+    </div>
+
+    <h3>Sigil Stone Farming Guide</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Progress the Main Quest until Oblivion Gates spawn</span>
+        <div class="step-detail">After "Breaking the Siege of Kvatch," random Oblivion Gates start appearing near cities. Each gate contains a Sigil Stone at the top of the main tower. Closing the gate gives you the stone.</div>
+      </li>
+      <li>
+        <span class="step-action">Reach level 17 before farming</span>
+        <div class="step-detail">Sigil Stone magnitudes scale with your level. At level 17+, you get the best possible enchantment values (Transcendent tier). Stones grabbed before level 17 give weaker enchantments. Wait if you can.</div>
+      </li>
+      <li>
+        <span class="step-action">Save before grabbing the stone</span>
+        <div class="step-detail">The enchantment on the stone is randomly determined when you interact with it. <strong>Save your game right before touching it.</strong> If you get the wrong enchantment, reload and try again. You're looking for <strong>Absorb Spell</strong> and <strong>Reflect Damage</strong> specifically.</div>
+      </li>
+      <li>
+        <span class="step-action">Enchant at the Arcane University or Frostcrag Spire</span>
+        <div class="step-detail">Take your sigil stones to the Enchanting Altar (Chironasium at the Arcane University, or Frostcrag Spire DLC). Apply the sigil stone directly to your armor piece. Unlike normal enchanting, sigil stones don't require a filled soul gem — they ARE the power source.</div>
+      </li>
+      <li>
+        <span class="step-action">Repeat for every gear slot</span>
+        <div class="step-detail">You need 4-6 sigil stones total: 2-3 for Spell Absorption (on armor), 2-3 for Reflect Damage (on remaining armor + accessories). Farm Oblivion Gates until you have everything.</div>
+      </li>
+    </ol>
+
+    <h3>Enchantment Priority by Slot</h3>
+    <table class="virtue-table">
+      <thead><tr><th>Slot</th><th>Enchantment</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">Cuirass</td><td>Spell Absorption ~20%</td><td>Sigil Stone (Absorb Spell)</td></tr>
+        <tr><td class="attr-name">Helmet</td><td>Spell Absorption ~20%</td><td>Sigil Stone (Absorb Spell)</td></tr>
+        <tr><td class="attr-name">Greaves</td><td>Reflect Damage ~20%</td><td>Sigil Stone (Reflect Damage)</td></tr>
+        <tr><td class="attr-name">Gauntlets</td><td>Reflect Damage ~20%</td><td>Sigil Stone (Reflect Damage)</td></tr>
+        <tr><td class="attr-name">Boots</td><td>Spell Absorption or Reflect Damage</td><td>Sigil Stone (whichever you need more)</td></tr>
+        <tr><td class="attr-name">Shield</td><td>Reflect Damage 33% (built-in)</td><td>Escutcheon of Chorrol</td></tr>
+        <tr><td class="attr-name">Amulet</td><td>Reflect Damage 15-20%</td><td>Amulet of Axes or Sigil Stone</td></tr>
+        <tr><td class="attr-name">Ring 1</td><td>Reflect Damage or Spell Absorption</td><td>Ring of Iron Fist or Sigil Stone</td></tr>
+        <tr><td class="attr-name">Ring 2</td><td>Fortify Intelligence or Fortify Health</td><td>Custom enchant (once both 100% thresholds are met)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <div class="callout-label">Don't Enchant Until Level 17</div>
+      <p>Sigil stones grabbed before level 17 give weaker enchantments that you'll want to replace. Use your early sigil stones on temporary gear, or ideally, wait until level 17 to start farming gates seriously. The difference between a level 12 stone (~12% Absorption) and a level 17+ stone (~20% Absorption) is massive.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Sigil Stones vs. Normal Enchanting</div>
+      <p>Sigil stones are applied directly — no soul gem needed. Normal enchanting at the altar requires filled soul gems and known spells. For Spell Absorption and Reflect Damage, <strong>sigil stones are the only practical source</strong> since these effects aren't available as learnable spells for normal enchanting. Always use sigil stones for your core build enchantments.</p>
+    </div>
+  </section>
+
+  <!-- COMBAT -->
+  <section class="section" id="combat">
+    <h2>Combat Rotation</h2>
+
+    <h3>Early Game (Before 100% Absorption)</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Cast Summon Skeleton before entering combat</span>
+        <div class="step-detail">Your summon tanks while you conserve magicka. Let it take aggro first. If your Spell Absorption procs on the summon spell, you get magicka back — free army.</div>
+      </li>
+      <li>
+        <span class="step-action">Let enemy mages cast at you</span>
+        <div class="step-detail">Stand in their line of fire deliberately. Your 50% Spell Absorption means half their spells restore your magicka instead of damaging you. This is your primary magicka source in combat.</div>
+      </li>
+      <li>
+        <span class="step-action">Use Absorb Health in melee</span>
+        <div class="step-detail">Touch-range Mysticism spell. Drains their HP into yours — a heal and damage spell in one. More magicka-efficient than casting Destruction + Restoration separately.</div>
+      </li>
+      <li>
+        <span class="step-action">Drink Restore Magicka potions as needed</span>
+        <div class="step-detail">Your Alchemy-brewed potions are your safety net. Pop one when magicka drops below 25%. Always have 5+ in your inventory.</div>
+      </li>
+      <li>
+        <span class="step-action">Block with shield + counter-attack</span>
+        <div class="step-detail">Use Escutcheon of Chorrol — its 33% Reflect Damage is already working for you. Block, let them take reflected damage, then swing back.</div>
+      </li>
+    </ol>
+
+    <h3>Endgame (100% Absorption + 100% Reflect)</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Walk into the room</span>
+        <div class="step-detail">Literally just walk in. You don't need to prepare or prebuff. You are immune to everything.</div>
+      </li>
+      <li>
+        <span class="step-action">Let enemies attack you</span>
+        <div class="step-detail">Every spell they cast restores your magicka (100% Spell Absorption). Every melee hit they land damages them, not you (100% Reflect Damage). They are killing themselves.</div>
+      </li>
+      <li>
+        <span class="step-action">Cast Destruction to speed things up (optional)</span>
+        <div class="step-detail">With infinite magicka from absorption, spam your strongest Destruction spells. Lightning Bolt drains their magicka too. Or just AFK and let Reflect Damage do all the work.</div>
+      </li>
+      <li>
+        <span class="step-action">Summon + Absorb for magicka top-off</span>
+        <div class="step-detail">If you somehow need more magicka (you won't), cast Summon Skeleton then immediately re-cast it. The absorption of the conjuration spell at 100% fully refunds the cost plus extra.</div>
+      </li>
+    </ol>
+
+    <div class="callout tip" style="margin-top:1.25rem;">
+      <div class="callout-label">The AFK Build</div>
+      <p>At endgame, you can literally put your controller down during most fights. Enemies approach you, swing their weapons, take full reflected damage, and die. Mages cast at you, you absorb it all, and they run out of magicka while your bar stays full. This is not an exaggeration — this is how the build plays at 100%/100%.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Conjuration Absorption Trick</div>
+      <p>Enemy conjurers summon creatures against you — but with 100% Spell Absorption, their conjuration spells get absorbed before the summon materializes. The enemy wastes their magicka and you gain it. Eventually enemy mages run completely dry and can only feebly punch you (which reflects back at them). It's beautiful.</p>
+    </div>
+  </section>
+
+  <!-- TIPS -->
+  <section class="section" id="tips">
+    <h2>Tips for the Remaster</h2>
+
+    <div class="callout">
+      <div class="callout-label">Alchemy Ingredient Farming</div>
+      <p>Your lifeline in the early game. The best Restore Magicka combos: <strong>Flax Seeds + Milk Thistle Seeds</strong> (found everywhere in the wild), <strong>Steel-Blue Entoloma Cap + Bog Beacon Asco Cap</strong> (found in swamps near Leyawiin/Bravil), <strong>Bugloss + Dryad Saddle Polypore</strong>. Buy ingredients from <strong>The Main Ingredient</strong> (Imperial City) — they restock every 3 in-game days.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Welkynd Stone Locations</div>
+      <p>Welkynd Stones fully restore your magicka on use (one-time). Found in <strong>Ayleid Ruins</strong> throughout Cyrodiil. They glow blue and sit on pedestals. Carry 5+ as emergency backup. Best early ruins: <strong>Vilverin</strong> (right outside the tutorial exit), <strong>Lipsand Tarn</strong> (north of Imperial City), <strong>Arpenia</strong> (west of Bravil).</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Spell Absorption Quirks</div>
+      <p>Spell Absorption can absorb <strong>your own area-of-effect spells</strong> if you're standing in the blast radius. This is actually beneficial — cast a fire AoE at your feet and absorb part of it for free magicka. However, it also means buff spells you cast on yourself have a chance to be absorbed (wasted). At 100%, self-buffs will <strong>always</strong> be absorbed. Use potions or enchantments for self-buffs instead of casting them.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">The Self-Buff Problem at 100%</div>
+      <p>At 100% Spell Absorption, <strong>all spells targeting you are absorbed</strong> — including your own healing and buff spells. This means you cannot cast Restore Health, Shield, or Fortify spells on yourself. Solutions: <strong>1)</strong> Use potions for healing (Alchemy), <strong>2)</strong> Use enchanted gear for buffs (Fortify Health on armor), <strong>3)</strong> Temporarily unequip a Spell Absorption piece to drop below 100%, cast your buff, then re-equip. This is the build's only real inconvenience.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Oblivion Gate Respawning</div>
+      <p>Random Oblivion Gates spawn near cities as the main quest progresses. After closing one, new gates can appear nearby. You can farm indefinitely for sigil stones. The most reliable gate locations are near <strong>Kvatch</strong>, <strong>Bruma</strong>, and along the <strong>Gold Road</strong>. Each gate takes about 15-20 minutes to clear.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Level Scaling Works in Your Favor</div>
+      <p>Unlike most builds where Oblivion's level scaling can punish you, the Absorber benefits from it. Higher-level enemies deal more damage — which means Reflect Damage kills them faster. Higher-level enemy mages cast more powerful spells — which means you absorb more magicka per spell. The harder the game tries to scale against you, the stronger you get.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Shivering Isles — Madness Armor</div>
+      <p>The Shivering Isles DLC (included in Remastered) has the best heavy armor in the game: <strong>Madness Armor</strong>. It's crafted, not found — bring <strong>Madness Ore</strong> (found throughout the Shivering Isles) to the smith in <strong>Crucible, New Sheoth</strong>. The armor is cosmetically unique (dark, organic-looking) and has the highest AR of any heavy armor. Enchant every piece with your sigil stones.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Poison Still Works</div>
+      <p>Spell Absorption does NOT block <strong>poison damage from Alchemy-applied poisons</strong> (only poison from spells is absorbed). Enemies with poisoned weapons can still hurt you. This is extremely rare in practice — only a handful of NPCs use applied poisons. Carry Cure Poison potions just in case, but you'll almost never need them.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Repair Your Gear</div>
+      <p>Your armor and weapons still degrade with use. Reflect Damage doesn't prevent armor condition loss — you're still getting hit, the damage is just reflected. Carry <strong>Repair Hammers</strong> and repair after every major fight. A broken piece of enchanted armor loses its enchantment effectiveness.</p>
+    </div>
+  </section>
+
+  <div class="guide-footer">
+    <p>Oblivion Remastered · The Immortal Absorber Build Guide · 2025</p>
+    <p style="margin-top:.5rem;"><a href="guides.html">All Guides</a> · <a href="index.html">Home</a></p>
+  </div>
+
+</main>
+</div>
+
+<script>
+const sections=document.querySelectorAll('.section');const navLinks=document.querySelectorAll('.sidebar a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const a=document.querySelector('.sidebar a[href="#'+entry.target.id+'"]');if(a)a.classList.add('active')}})},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>observer.observe(s));
+
+// Mobile hamburger menu
+const toggle=document.querySelector('.nav-toggle');
+const links=document.querySelector('.nav-links');
+toggle.addEventListener('click',()=>links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+/* ── Universal Nav Toggle ── */
+(function(){
+  const btn=document.getElementById('unav-hamburger'),nav=document.getElementById('unav-links');
+  if(!btn||!nav)return;
+  btn.addEventListener('click',()=>{btn.classList.toggle('open');nav.classList.toggle('open')});
+  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+    btn.classList.remove('open');nav.classList.remove('open');
+  }));
+})();
+
+</script>
+</body>
+</html>

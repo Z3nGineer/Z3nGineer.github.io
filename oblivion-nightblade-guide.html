@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nightblade — Oblivion Remastered Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0c0a08;--bg-card:#161310;--bg-el:#1e1a16;--bg-hover:#252018;
+  --border:#302a22;--border-light:#403828;
+  --text:#e0d8c8;--text-dim:#a89878;--text-muted:#6a5a48;--white:#f0e8d8;
+  --accent:#c8a050;--accent-hover:#e0b860;--accent-dim:rgba(200,160,80,0.12);
+  --fire:#d05030;--fire-dim:rgba(208,80,48,0.12);
+  --frost:#4080c0;--frost-dim:rgba(64,128,192,0.12);
+  --shock:#8060c0;--shock-dim:rgba(128,96,192,0.12);
+  --green:#5a9040;--green-dim:rgba(90,144,64,0.1);
+  --blue:#4080b0;--blue-dim:rgba(64,128,176,0.1);
+  --red:#b03030;
+  --illusion:#9060d0;--illusion-dim:rgba(144,96,208,0.12);
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:19px;line-height:1.75;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);text-decoration:underline}
+
+.page{display:flex;max-width:1100px;margin:0 auto}
+.sidebar{width:220px;flex-shrink:0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;border-right:1px solid var(--border);background:var(--bg-card);padding:1.5rem 0;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.sidebar-badge{text-align:center;padding:0 1.25rem 1rem}
+.sidebar-badge img{width:48px;height:48px;border-radius:8px;border:1px solid var(--border)}
+.sidebar-title{font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);padding:0 1.25rem;margin-bottom:.75rem}
+.sidebar a{display:flex;align-items:center;gap:.5rem;padding:.45rem 1.25rem;font-size:.88rem;font-weight:500;color:var(--text-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s}
+.sidebar a:hover{color:var(--white);background:rgba(200,160,80,0.04);text-decoration:none}
+.sidebar a.active{color:var(--white);border-left-color:var(--accent);background:rgba(200,160,80,0.06)}
+.nav-icon{font-size:1rem;width:1.2rem;text-align:center}
+.content{flex:1;min-width:0;padding:2.5rem 2.5rem 4rem}
+@media(max-width:800px){.sidebar{display:none}.content{padding:1.5rem}}
+
+/* Hero */
+.hero-art{width:100%;margin-bottom:1.25rem;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:var(--bg-card)}
+.hero-svg{width:100%;height:auto;display:block}
+.guide-header{margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.header-row{display:flex;align-items:center;gap:1rem;margin-bottom:.5rem}
+.header-portrait{width:72px;height:72px;border-radius:8px;border:2px solid var(--border);object-fit:cover;background:var(--bg-el)}
+.header-text{flex:1}
+.breadcrumb{font-size:.78rem;color:var(--text-muted);margin-bottom:.3rem}
+.guide-header h1{font-family:'Cinzel',serif;font-size:2.2rem;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:.3rem}
+.subtitle{font-size:1rem;color:var(--text-dim)}
+.tag-row{display:flex;gap:.4rem;margin-top:.6rem;flex-wrap:wrap}
+.tag{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim);text-transform:uppercase;letter-spacing:.04em}
+.tag.fire{color:var(--fire);border-color:rgba(208,80,48,0.3);background:var(--fire-dim)}
+.tag.gold{color:var(--accent);border-color:rgba(200,160,80,0.3);background:var(--accent-dim)}
+.tag.green{color:var(--green);border-color:rgba(90,144,64,0.3);background:var(--green-dim)}
+.tag.blue{color:var(--blue);border-color:rgba(64,128,176,0.3);background:var(--blue-dim)}
+.tag.purple{color:var(--illusion);border-color:rgba(144,96,208,0.3);background:var(--illusion-dim)}
+
+/* Sections */
+.section{margin-top:3rem}
+.section h2{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.section h3{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:600;color:var(--text);margin:1.5rem 0 .6rem}
+.section p{margin-bottom:1rem}
+
+/* Callouts */
+.callout{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0}
+.callout.warn{border-left-color:var(--fire)}
+.callout.tip{border-left-color:var(--green)}
+.callout.illusion{border-left-color:var(--illusion)}
+.callout-label{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem;color:var(--accent)}
+.callout.warn .callout-label{color:var(--fire)}
+.callout.tip .callout-label{color:var(--green)}
+.callout.illusion .callout-label{color:var(--illusion)}
+.callout p{margin-bottom:.5rem;font-size:.95rem}.callout p:last-child{margin-bottom:0}
+
+/* Stats */
+.stats{display:flex;gap:.5rem;flex-wrap:wrap;margin:.75rem 0}
+.stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:.4rem .75rem;text-align:center;min-width:3.5rem}
+.stat-box.primary{border-color:rgba(200,160,80,0.4)}
+.stat-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
+.stat-val{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--white)}
+.stat-box.primary .stat-val{color:var(--accent)}
+
+/* Picks */
+.picks{list-style:none;margin:.5rem 0}
+.picks li{padding:.3rem 0;font-size:.95rem;display:flex;gap:.4rem;align-items:baseline}
+.picks .label{font-size:.72rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.03em;flex-shrink:0;min-width:5rem}
+.picks .name{font-weight:600;color:var(--white)}
+.picks .note{color:var(--text-dim);font-size:.88rem}
+
+/* Level cards */
+.lv-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.4rem;overflow:hidden;transition:border-color .15s}
+.lv-card:hover{border-color:var(--border-light)}
+.lv-card.spike{border-left:3px solid var(--accent)}
+.lv-head{display:flex;align-items:center;gap:.6rem;padding:.65rem 1rem;cursor:pointer;user-select:none;transition:background .1s;flex-wrap:wrap}
+.lv-head:hover{background:var(--bg-hover)}
+.lv-num{font-family:'Cinzel',serif;font-weight:900;font-size:1.3rem;color:var(--white);min-width:1.6rem;text-align:center}
+.lv-range{font-size:.72rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(200,160,80,0.2);text-transform:uppercase;letter-spacing:.04em}
+.lv-title{font-weight:600;font-size:.95rem;color:var(--text);flex:1}
+.lv-spike{font-size:.65rem;font-weight:600;color:var(--accent);background:var(--accent-dim);padding:.15rem .45rem;border-radius:4px;border:1px solid rgba(200,160,80,0.2);text-transform:uppercase}
+.lv-arrow{color:var(--text-muted);font-size:.75rem;transition:transform .2s}
+.lv-card.open .lv-arrow{transform:rotate(90deg)}
+.lv-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.lv-card.open .lv-body{max-height:1200px}
+.lv-inner{padding:0 1rem 1rem;border-top:1px solid var(--border)}
+
+/* Quick picks */
+.qp-row{display:flex;flex-wrap:wrap;gap:.3rem;margin:.75rem 0 .5rem}
+.qp{font-size:.78rem;font-weight:500;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim)}
+.qp.skill{color:var(--green);border-color:rgba(90,144,64,0.2)}
+.qp.spell{color:var(--frost);border-color:rgba(64,128,192,0.2)}
+.qp.gear{color:var(--accent);border-color:rgba(200,160,80,0.2)}
+.qp.attr{color:var(--fire);border-color:rgba(208,80,48,0.2)}
+.qp.illusion{color:var(--illusion);border-color:rgba(144,96,208,0.2)}
+
+/* Gear cards */
+.gear-group{margin-bottom:1.5rem}
+.gear-group-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--accent);padding-bottom:.35rem;margin-bottom:.5rem;border-bottom:1px solid rgba(200,160,80,0.15)}
+.gear-row{display:flex;gap:.75rem;padding:.6rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:.35rem;align-items:center}
+.gear-img{width:48px;height:48px;border-radius:4px;border:1px solid var(--border);object-fit:cover;flex-shrink:0;background:var(--bg-el)}
+.gear-info{flex:1}
+.gear-name{font-weight:600;color:var(--accent);font-size:.95rem}
+.gear-slot{font-size:.7rem;color:var(--text-muted);margin-left:.35rem;text-transform:uppercase}
+.gear-desc{color:var(--text-dim);font-size:.85rem;margin-top:.1rem}
+.gear-loc{font-size:.8rem;color:var(--green);margin-top:.15rem}
+
+/* Spell grid */
+.spell-section{margin-bottom:1.5rem}
+.spell-level{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--white);padding-bottom:.35rem;margin-bottom:.5rem;border-bottom:1px solid var(--border)}
+.spell-row{display:flex;justify-content:space-between;align-items:start;padding:.5rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:.35rem;gap:.75rem}
+.spell-info{flex:1}.spell-name{font-weight:600;color:var(--white);font-size:.95rem}
+.spell-desc{color:var(--text-dim);font-size:.85rem;margin-top:.1rem}
+.spell-badge{font-size:.68rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;flex-shrink:0;align-self:center}
+.spell-badge.must{color:var(--green);background:var(--green-dim);border:1px solid rgba(90,144,64,0.2)}
+.spell-badge.good{color:var(--accent);background:var(--accent-dim);border:1px solid rgba(200,160,80,0.15)}
+.spell-badge.fire{color:var(--fire);background:var(--fire-dim);border:1px solid rgba(208,80,48,0.2)}
+.spell-badge.frost{color:var(--frost);background:var(--frost-dim);border:1px solid rgba(64,128,192,0.2)}
+.spell-badge.shock{color:var(--shock);background:var(--shock-dim);border:1px solid rgba(128,96,192,0.2)}
+.spell-badge.custom{color:#c0a060;background:rgba(192,160,96,0.08);border:1px solid rgba(192,160,96,0.15)}
+.spell-badge.illusion{color:var(--illusion);background:var(--illusion-dim);border:1px solid rgba(144,96,208,0.2)}
+
+/* Birthsign cards */
+.bs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin:1rem 0}
+@media(max-width:700px){.bs-grid{grid-template-columns:1fr}}
+.bs-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center}
+.bs-card.recommended{border-color:var(--accent);box-shadow:0 0 0 1px rgba(200,160,80,0.1)}
+.bs-card img{width:64px;height:64px;border-radius:50%;border:2px solid var(--border);margin-bottom:.5rem;background:var(--bg-el)}
+.bs-card.recommended img{border-color:var(--accent)}
+.bs-name{font-family:'Cinzel',serif;font-weight:700;font-size:1rem;color:var(--white)}
+.bs-bonus{font-size:.85rem;color:var(--green);margin-top:.2rem}
+.bs-penalty{font-size:.85rem;color:var(--fire);margin-top:.1rem}
+.bs-note{font-size:.82rem;color:var(--text-dim);margin-top:.3rem}
+
+/* Rotation */
+.step-list{list-style:none;counter-reset:step}
+.step-list li{position:relative;padding:.75rem 0 .75rem 3rem;border-left:2px solid var(--border);margin-left:.75rem;counter-increment:step}
+.step-list li::before{content:counter(step);position:absolute;left:-.75rem;top:.6rem;width:1.4rem;height:1.4rem;background:var(--bg);border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:700;font-size:.75rem;color:var(--accent)}
+.step-list li:last-child{border-left-color:transparent}
+.step-action{font-weight:600;color:var(--white)}
+.step-detail{color:var(--text-dim);font-size:.9rem;margin-top:.2rem}
+
+/* Virtues table */
+.virtue-table{width:100%;border-collapse:collapse;margin:1rem 0}
+.virtue-table th{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--border)}
+.virtue-table td{padding:.5rem .6rem;border-bottom:1px solid var(--border);font-size:.9rem}
+.virtue-table tr:hover{background:var(--bg-card)}
+.virtue-table .attr-name{font-weight:600;color:var(--white)}
+.virtue-table .priority{font-size:.7rem;font-weight:600;padding:.1rem .4rem;border-radius:3px}
+.priority.t1{color:var(--accent);background:var(--accent-dim)}
+.priority.t2{color:var(--green);background:var(--green-dim)}
+.priority.t3{color:var(--text-muted);background:rgba(200,200,200,0.04)}
+
+/* Section images */
+.section-img{width:100%;max-height:200px;object-fit:cover;object-position:center;border-radius:8px;border:1px solid var(--border);margin:1rem 0;filter:brightness(0.85)}
+.inline-icon{width:28px;height:28px;vertical-align:middle;margin-right:.3rem;border-radius:4px}
+
+.guide-footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.75rem;color:var(--text-muted);text-align:center}
+.guide-footer a{color:var(--text-dim)}
+.guide-footer a:hover{color:var(--accent)}
+
+/* Mobile nav */
+.mobile-nav{display:none;position:sticky;top:60px;z-index:100;background:rgba(12,10,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:56px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Cinzel',serif;font-size:.85rem;font-weight:700;color:var(--accent);letter-spacing:.06em}
+.nav-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s}
+.nav-links{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:rgba(12,10,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.nav-links.open{display:flex}
+.nav-links a{display:flex;align-items:center;gap:.5rem;height:44px;font-size:.9rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){.mobile-nav{display:flex}}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── Universal Nav ── */
+.unav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.unav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.unav-brand{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;color:var(--text);text-decoration:none;transition:color 0.3s}
+.unav-brand:hover{color:var(--accent,#c9a84c)}
+.unav-links{display:flex;gap:1.5rem;list-style:none;align-items:center}
+.unav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.3s;position:relative}
+.unav-links a:hover,.unav-links a.active{color:var(--accent,#c9a84c)}
+.unav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--accent,#c9a84c);transform:scaleX(0);transition:transform 0.3s;transform-origin:right}
+.unav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.unav-dropdown{position:relative}
+.unav-dropdown>a::after{display:none}
+.unav-dropdown>a{display:flex;align-items:center;gap:0.3rem}
+.unav-dropdown>a .dd-arrow{font-size:0.5rem;transition:transform 0.2s;margin-top:1px}
+.unav-dropdown:hover>a .dd-arrow{transform:rotate(180deg)}
+.unav-dd{
+  position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);
+  background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border);border-radius:10px;
+  min-width:200px;padding:0.5rem 0;
+  opacity:0;visibility:hidden;transform:translateX(-50%) translateY(-5px);
+  transition:opacity 0.2s,visibility 0.2s,transform 0.2s;
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+}
+.unav-dropdown:hover .unav-dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.unav-dd a{display:block;padding:0.6rem 1.2rem;font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.15s,background 0.15s;white-space:nowrap}
+.unav-dd a:hover{color:var(--accent,#c9a84c);background:rgba(201,168,76,0.06)}
+.unav-dd a::after{display:none}
+.unav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:0.5rem;z-index:1001}
+.unav-hamburger span{display:block;width:22px;height:2px;background:var(--text-dim,#aaa);margin:5px 0;transition:all 0.3s ease;border-radius:1px}
+.unav-hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.unav-hamburger.open span:nth-child(2){opacity:0}
+.unav-hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+@media(max-width:700px){
+  .unav-hamburger{display:block}
+  .unav-links{
+    display:flex;flex-direction:column;gap:0;
+    position:absolute;top:60px;left:0;right:0;
+    background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;
+    padding:0 0;
+  }
+  .unav-links.open{max-height:600px;padding:0.5rem 0}
+  .unav-links>li{list-style:none}
+  .unav-links>li>a{display:block;padding:0.8rem 2rem;font-size:0.85rem;border-bottom:1px solid var(--border)}
+  .unav-links>li:last-child>a{border-bottom:none}
+  .unav-links a::after{display:none}
+  .unav-dd{position:static;opacity:1;visibility:visible;transform:none;border:none;border-radius:0;min-width:auto;padding:0;background:none;backdrop-filter:none;box-shadow:none}
+  .unav-dd a{padding:0.7rem 2rem 0.7rem 3rem;font-size:0.8rem;border-bottom:1px solid var(--border)}
+  .unav-dropdown>a{display:none}
+  .unav-dropdown{border-bottom:none}
+}
+
+</style>
+</head>
+<body>
+<nav class="unav">
+  <div class="unav-inner">
+    <a href="index.html" class="unav-brand">Z3nGineer</a>
+    <button class="unav-hamburger" id="unav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="unav-links" id="unav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="unav-dropdown">
+        <a href="#">Projects <span class="dd-arrow">&#x25BC;</span></a>
+        <div class="unav-dd">
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+          <a href="https://crockednloaded.com">CrockedNLoaded</a>
+          <a href="guides.html">Game Guides</a>
+          <a href="CHIM.html">CHIM Modpack</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="mobile-nav" style="margin-top:60px;">
+  <span class="mobile-nav-title">Nightblade</span>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="#overview"><span class="nav-icon">&#9672;</span> Overview</a>
+    <a href="#firststeps"><span class="nav-icon">&#9654;</span> First Steps</a>
+    <a href="#birthsign"><span class="nav-icon">&#9733;</span> Birthsign</a>
+    <a href="#virtues"><span class="nav-icon">&uarr;</span> Leveling</a>
+    <a href="#progression"><span class="nav-icon">&#9876;</span> Progression</a>
+    <a href="#illusion"><span class="nav-icon">&#9670;</span> Illusion Mastery</a>
+    <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+    <a href="#gear"><span class="nav-icon">&#9670;</span> Gear</a>
+    <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+    <a href="#tips"><span class="nav-icon">&#128161;</span> Tips</a>
+  </div>
+</div>
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-badge">
+    <img src="https://images.uesp.net/thumb/3/3f/OBR-class-Nightblade.png/200px-OBR-class-Nightblade.png" alt="Nightblade">
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">&#9672;</span> Overview</a>
+  <a href="#firststeps"><span class="nav-icon">&#9654;</span> First Steps</a>
+  <a href="#birthsign"><span class="nav-icon">&#9733;</span> Birthsign</a>
+  <a href="#virtues"><span class="nav-icon">&uarr;</span> Leveling</a>
+  <a href="#progression"><span class="nav-icon">&#9876;</span> Progression</a>
+  <a href="#illusion"><span class="nav-icon">&#9670;</span> Illusion Mastery</a>
+  <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+  <a href="#gear"><span class="nav-icon">&#9674;</span> Gear</a>
+  <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+  <a href="#tips"><span class="nav-icon">&#128161;</span> Tips</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="ambientGlow" cx="40%" cy="50%" r="65%">
+            <stop offset="0%" stop-color="#1a1028" stop-opacity="0.9"/>
+            <stop offset="40%" stop-color="#100a18" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#0c0a08" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="paralyzeGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#7040c0" stop-opacity="0.5"/>
+            <stop offset="50%" stop-color="#5030a0" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#5030a0" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="daggerGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#c8a050" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#c8a050" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="detectGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#d03030" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#d03030" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="blade" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f0e0c0" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#c8a050" stop-opacity="0.5"/>
+          </linearGradient>
+          <linearGradient id="glassArmor" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#3a7848"/>
+            <stop offset="50%" stop-color="#4a9858"/>
+            <stop offset="100%" stop-color="#2a5838"/>
+          </linearGradient>
+          <filter id="shadowBlur">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
+          </filter>
+          <filter id="detectBlur">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4"/>
+          </filter>
+        </defs>
+        <rect width="900" height="320" fill="url(#ambientGlow)"/>
+
+        <!-- === DARK CORRIDOR ENVIRONMENT === -->
+        <!-- Stone walls — left -->
+        <rect x="0" y="0" width="60" height="320" fill="#1a1410" opacity="0.8"/>
+        <rect x="60" y="0" width="8" height="320" fill="#252018" opacity="0.4"/>
+        <line x1="30" y1="0" x2="30" y2="320" stroke="#201a12" stroke-width="0.5" opacity="0.3"/>
+        <line x1="0" y1="80" x2="68" y2="80" stroke="#201a12" stroke-width="0.5" opacity="0.3"/>
+        <line x1="0" y1="160" x2="68" y2="160" stroke="#201a12" stroke-width="0.5" opacity="0.3"/>
+        <line x1="0" y1="240" x2="68" y2="240" stroke="#201a12" stroke-width="0.5" opacity="0.3"/>
+        <!-- Stone walls — right -->
+        <rect x="832" y="0" width="68" height="320" fill="#1a1410" opacity="0.8"/>
+        <rect x="824" y="0" width="8" height="320" fill="#252018" opacity="0.4"/>
+        <line x1="866" y1="0" x2="866" y2="320" stroke="#201a12" stroke-width="0.5" opacity="0.3"/>
+        <line x1="832" y1="100" x2="900" y2="100" stroke="#201a12" stroke-width="0.5" opacity="0.3"/>
+        <line x1="832" y1="200" x2="900" y2="200" stroke="#201a12" stroke-width="0.5" opacity="0.3"/>
+        <!-- Ceiling archway -->
+        <path d="M68,0 Q450,-20 832,0" stroke="#252018" stroke-width="2" fill="none" opacity="0.4"/>
+        <!-- Ground/floor -->
+        <line x1="68" y1="280" x2="832" y2="280" stroke="#302818" stroke-width="1" opacity="0.3"/>
+        <rect x="68" y="280" width="764" height="40" fill="#0a0808" opacity="0.5"/>
+        <!-- Stone floor tiles -->
+        <line x1="200" y1="280" x2="200" y2="320" stroke="#201a12" stroke-width="0.5" opacity="0.2"/>
+        <line x1="350" y1="280" x2="350" y2="320" stroke="#201a12" stroke-width="0.5" opacity="0.2"/>
+        <line x1="500" y1="280" x2="500" y2="320" stroke="#201a12" stroke-width="0.5" opacity="0.2"/>
+        <line x1="650" y1="280" x2="650" y2="320" stroke="#201a12" stroke-width="0.5" opacity="0.2"/>
+
+        <!-- Wall-mounted torch (distant, dim) -->
+        <g transform="translate(130,80)" opacity="0.3">
+          <rect x="-2" y="0" width="4" height="15" fill="#4a3828"/>
+          <circle cx="0" cy="-4" r="6" fill="#e08040" opacity="0.15"/>
+          <circle cx="0" cy="-4" r="3" fill="#f0a040" opacity="0.25"/>
+          <path d="M-2,-4 Q0,-14 2,-4" fill="#f0c060" opacity="0.3"/>
+        </g>
+
+        <!-- === DETECT LIFE — RED SILHOUETTES THROUGH FAR WALL === -->
+        <!-- Enemy silhouette 1 — behind right wall, seen through Detect Life -->
+        <g transform="translate(790,140)" opacity="0.55" filter="url(#detectBlur)">
+          <circle cx="0" cy="0" r="30" fill="url(#detectGlow)"/>
+          <ellipse cx="0" cy="10" rx="10" ry="20" fill="#d03030" opacity="0.4"/>
+          <circle cx="0" cy="-12" r="7" fill="#d03030" opacity="0.45"/>
+          <line x1="-8" y1="0" x2="-18" y2="10" stroke="#d03030" stroke-width="3" stroke-linecap="round" opacity="0.35"/>
+          <line x1="8" y1="0" x2="18" y2="8" stroke="#d03030" stroke-width="3" stroke-linecap="round" opacity="0.35"/>
+          <line x1="-4" y1="28" x2="-8" y2="48" stroke="#d03030" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+          <line x1="4" y1="28" x2="10" y2="46" stroke="#d03030" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+        </g>
+        <!-- Enemy silhouette 2 — behind right wall, further back -->
+        <g transform="translate(820,180)" opacity="0.35" filter="url(#detectBlur)">
+          <circle cx="0" cy="0" r="22" fill="url(#detectGlow)"/>
+          <ellipse cx="0" cy="8" rx="8" ry="16" fill="#d03030" opacity="0.3"/>
+          <circle cx="0" cy="-10" r="6" fill="#d03030" opacity="0.35"/>
+          <line x1="-6" y1="-2" x2="-14" y2="6" stroke="#d03030" stroke-width="2.5" stroke-linecap="round" opacity="0.25"/>
+          <line x1="6" y1="-2" x2="14" y2="4" stroke="#d03030" stroke-width="2.5" stroke-linecap="round" opacity="0.25"/>
+        </g>
+        <!-- Detect Life aura ring around nightblade -->
+        <circle cx="350" cy="180" r="120" fill="none" stroke="#d03030" stroke-width="1" opacity="0.12"/>
+        <circle cx="350" cy="180" r="140" fill="none" stroke="#d03030" stroke-width="0.5" opacity="0.06"/>
+
+        <!-- === FROZEN ENEMY (PARALYZED) — right of center === -->
+        <g transform="translate(580,175)" opacity="0.9">
+          <!-- Paralyze energy field around enemy -->
+          <circle cx="0" cy="0" r="50" fill="url(#paralyzeGlow)"/>
+          <circle cx="0" cy="0" r="35" fill="none" stroke="#8060c0" stroke-width="1" opacity="0.25"/>
+          <!-- Paralyze energy tendrils wrapping the body -->
+          <path d="M-20,-30 Q-5,-25 5,-35 Q15,-28 10,-15" stroke="#9070d0" stroke-width="1.5" opacity="0.4" fill="none"/>
+          <path d="M-15,20 Q0,15 10,25 Q18,18 25,30" stroke="#8060c0" stroke-width="1.2" opacity="0.35" fill="none"/>
+          <path d="M-25,0 Q-15,-10 -5,5 Q5,-5 15,0" stroke="#a080e0" stroke-width="1" opacity="0.3" fill="none"/>
+          <!-- Sparkling paralyze particles -->
+          <circle cx="-18" cy="-25" r="1.5" fill="#b090e0" opacity="0.6"/>
+          <circle cx="15" cy="-20" r="1.2" fill="#a080d0" opacity="0.5"/>
+          <circle cx="-10" cy="25" r="1" fill="#b090e0" opacity="0.45"/>
+          <circle cx="20" cy="15" r="1.3" fill="#9070c0" opacity="0.5"/>
+          <circle cx="-22" cy="10" r="0.8" fill="#c0a0f0" opacity="0.4"/>
+          <circle cx="8" cy="-35" r="0.9" fill="#b090e0" opacity="0.35"/>
+
+          <!-- Bandit body — frozen mid-swing, leaning forward -->
+          <ellipse cx="0" cy="10" rx="16" ry="25" fill="#5a4838" transform="rotate(8)"/>
+          <!-- Chest armor -->
+          <ellipse cx="2" cy="5" rx="13" ry="18" fill="#6a5848" opacity="0.6"/>
+          <line x1="-6" y1="-5" x2="-4" y2="20" stroke="#7a6858" stroke-width="0.7" opacity="0.4"/>
+          <line x1="8" y1="-5" x2="10" y2="20" stroke="#7a6858" stroke-width="0.7" opacity="0.4"/>
+          <!-- Head -->
+          <circle cx="3" cy="-18" r="10" fill="#6a5848"/>
+          <!-- Eyes frozen wide -->
+          <ellipse cx="-1" cy="-20" rx="2" ry="1.8" fill="#1a1a1a"/>
+          <ellipse cx="7" cy="-19" rx="2" ry="1.8" fill="#1a1a1a"/>
+          <circle cx="-1" cy="-20" r="0.8" fill="#8a7040" opacity="0.7"/>
+          <circle cx="7" cy="-19" r="0.8" fill="#8a7040" opacity="0.7"/>
+          <!-- Open mouth — frozen scream -->
+          <ellipse cx="3" cy="-12" rx="4" ry="3" fill="#2a1a15"/>
+          <!-- Right arm — frozen mid-swing with mace -->
+          <line x1="12" y1="0" x2="32" y2="-20" stroke="#5a4838" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="34" cy="-22" r="3.5" fill="#6a5848"/>
+          <!-- Mace frozen in air -->
+          <line x1="34" y1="-24" x2="42" y2="-40" stroke="#808080" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="42" cy="-42" r="5" fill="#707070"/>
+          <line x1="38" y1="-45" x2="46" y2="-39" stroke="#808080" stroke-width="2" opacity="0.7"/>
+          <!-- Left arm reaching forward, frozen -->
+          <line x1="-10" y1="2" x2="-28" y2="-10" stroke="#5a4838" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="-30" cy="-12" r="3" fill="#6a5848"/>
+          <!-- Fingers splayed -->
+          <line x1="-30" y1="-14" x2="-34" y2="-18" stroke="#6a5848" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="-31" y1="-12" x2="-36" y2="-14" stroke="#6a5848" stroke-width="1.2" stroke-linecap="round"/>
+          <!-- Legs — mid-stride, frozen -->
+          <line x1="-6" y1="32" x2="-16" y2="60" stroke="#5a4838" stroke-width="7" stroke-linecap="round"/>
+          <line x1="6" y1="30" x2="18" y2="58" stroke="#5a4838" stroke-width="7" stroke-linecap="round"/>
+          <ellipse cx="-18" cy="62" rx="6" ry="3.5" fill="#4a3828"/>
+          <ellipse cx="20" cy="60" rx="6" ry="3.5" fill="#4a3828"/>
+          <!-- Purple paralyze glow on skin -->
+          <ellipse cx="0" cy="10" rx="18" ry="27" fill="#7040c0" opacity="0.08"/>
+        </g>
+
+        <!-- === THE NIGHTBLADE — left-center, emerging from shadows === -->
+        <!-- Shadow pool the nightblade emerges from -->
+        <g transform="translate(320,180)">
+          <ellipse cx="0" cy="95" rx="60" ry="15" fill="#0a0808" opacity="0.6"/>
+          <!-- Shadow wisps rising -->
+          <path d="M-30,80 Q-35,60 -28,40 Q-22,25 -30,10" stroke="#1a1418" stroke-width="3" opacity="0.3" fill="none"/>
+          <path d="M25,85 Q30,65 22,45 Q18,30 25,15" stroke="#1a1418" stroke-width="2.5" opacity="0.25" fill="none"/>
+          <path d="M-10,90 Q-15,70 -8,50 Q-2,35 -10,20" stroke="#161018" stroke-width="2" opacity="0.2" fill="none"/>
+          <path d="M40,82 Q45,62 38,42 Q32,28 40,12" stroke="#181218" stroke-width="2" opacity="0.2" fill="none"/>
+        </g>
+
+        <g transform="translate(340,170)" opacity="0.95">
+          <!-- CLOAK — dark, flowing, covering parts of Glass armor -->
+          <path d="M-12,-5 Q-18,15 -25,40 Q-35,65 -45,85 Q-50,95 -55,100 Q-48,98 -40,88 Q-28,65 -20,40 Q-14,15 -10,-2 Z" fill="#1a1418" opacity="0.85"/>
+          <path d="M12,-5 Q8,15 2,40 Q-5,65 -15,85 Q-22,95 -30,100 Q-25,98 -18,90 Q-8,68 0,42 Q6,18 10,-2 Z" fill="#141018" opacity="0.7"/>
+          <!-- Cloak inner fold -->
+          <path d="M-14,20 Q-22,40 -30,60" stroke="#201820" stroke-width="0.6" opacity="0.4" fill="none"/>
+
+          <!-- Body — Glass Armor (green crystalline) -->
+          <ellipse cx="0" cy="20" rx="16" ry="26" fill="url(#glassArmor)"/>
+          <!-- Glass armor plate details -->
+          <ellipse cx="0" cy="15" rx="13" ry="19" fill="none" stroke="#5ab868" stroke-width="0.8" opacity="0.4"/>
+          <line x1="-8" y1="5" x2="-6" y2="28" stroke="#60c070" stroke-width="0.6" opacity="0.3"/>
+          <line x1="8" y1="5" x2="6" y2="28" stroke="#60c070" stroke-width="0.6" opacity="0.3"/>
+          <line x1="-10" y1="16" x2="10" y2="16" stroke="#60c070" stroke-width="0.5" opacity="0.25"/>
+          <!-- Glass armor shimmer -->
+          <ellipse cx="-4" cy="10" rx="3" ry="6" fill="#70d080" opacity="0.1"/>
+          <ellipse cx="5" cy="18" rx="2" ry="4" fill="#70d080" opacity="0.08"/>
+          <!-- Belt -->
+          <rect x="-12" y="32" width="24" height="3.5" rx="1.5" fill="#2a4830" opacity="0.8"/>
+          <rect x="-2.5" y="32" width="5" height="3.5" rx="1" fill="#c8a050" opacity="0.4"/>
+
+          <!-- Head — hooded, face mostly shadowed -->
+          <circle cx="0" cy="-14" r="10" fill="#3a3032"/>
+          <!-- Hood -->
+          <path d="M-14,-18 Q-12,-32 0,-36 Q12,-32 14,-18 Q10,-20 0,-22 Q-10,-20 -14,-18 Z" fill="#1a1418"/>
+          <!-- Hood brim shadow -->
+          <path d="M-12,-18 Q0,-20 12,-18" stroke="#0a0808" stroke-width="2" opacity="0.5" fill="none"/>
+          <!-- Eyes — glowing faintly in shadow -->
+          <ellipse cx="-3" cy="-16" rx="2" ry="1.2" fill="#c8a050" opacity="0.8"/>
+          <ellipse cx="4" cy="-16" rx="2" ry="1.2" fill="#c8a050" opacity="0.8"/>
+          <!-- Eye glow -->
+          <circle cx="-3" cy="-16" r="4" fill="#c8a050" opacity="0.06"/>
+          <circle cx="4" cy="-16" r="4" fill="#c8a050" opacity="0.06"/>
+
+          <!-- Glass Armor shoulder pauldrons -->
+          <ellipse cx="-14" cy="0" rx="6" ry="4" fill="#3a7848" opacity="0.8"/>
+          <ellipse cx="14" cy="0" rx="6" ry="4" fill="#3a7848" opacity="0.8"/>
+          <ellipse cx="-14" cy="0" rx="4" ry="2.5" fill="#5ab868" opacity="0.15"/>
+          <ellipse cx="14" cy="0" rx="4" ry="2.5" fill="#5ab868" opacity="0.15"/>
+
+          <!-- Legs — crouched stealth pose -->
+          <line x1="-5" y1="40" x2="-14" y2="65" stroke="#2a4830" stroke-width="7" stroke-linecap="round"/>
+          <line x1="5" y1="38" x2="16" y2="62" stroke="#2a4830" stroke-width="7" stroke-linecap="round"/>
+          <!-- Glass boots -->
+          <ellipse cx="-16" cy="67" rx="6" ry="3.5" fill="#2a5838"/>
+          <ellipse cx="18" cy="64" rx="6" ry="3.5" fill="#2a5838"/>
+
+          <!-- LEFT HAND — Paralyze spell energy -->
+          <line x1="-12" y1="5" x2="-35" y2="-12" stroke="#2a4830" stroke-width="5" stroke-linecap="round"/>
+          <!-- Glass gauntlet -->
+          <circle cx="-37" cy="-14" r="3.5" fill="#3a7848"/>
+          <!-- Open fingers casting -->
+          <line x1="-38" y1="-16" x2="-42" y2="-22" stroke="#3a7848" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="-36" y1="-18" x2="-39" y2="-24" stroke="#3a7848" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="-35" y1="-17" x2="-36" y2="-24" stroke="#3a7848" stroke-width="1.3" stroke-linecap="round"/>
+          <!-- PARALYZE ENERGY — purple/blue swirling magic -->
+          <circle cx="-40" cy="-25" r="22" fill="url(#paralyzeGlow)"/>
+          <circle cx="-40" cy="-25" r="14" fill="#7040c0" opacity="0.12"/>
+          <circle cx="-40" cy="-25" r="9" fill="#8060d0" opacity="0.2"/>
+          <circle cx="-40" cy="-25" r="5" fill="#a080e0" opacity="0.4"/>
+          <circle cx="-40" cy="-25" r="2.5" fill="#c0a0f0" opacity="0.7"/>
+          <!-- Spell tendrils reaching toward frozen enemy -->
+          <path d="M-28,-25 Q0,-30 40,-20" stroke="#8060c0" stroke-width="1.5" opacity="0.2" fill="none"/>
+          <path d="M-28,-20 Q10,-25 50,-15" stroke="#7050b0" stroke-width="1" opacity="0.15" fill="none"/>
+          <path d="M-30,-30 Q-5,-40 35,-30" stroke="#9070d0" stroke-width="0.8" opacity="0.12" fill="none"/>
+          <!-- Spell energy orbiting -->
+          <path d="M-40,-25 Q-50,-38 -42,-45" stroke="#a080e0" stroke-width="1.2" opacity="0.3" fill="none"/>
+          <path d="M-40,-25 Q-30,-40 -36,-48" stroke="#8060c0" stroke-width="1" opacity="0.25" fill="none"/>
+          <path d="M-40,-25 Q-52,-30 -55,-40" stroke="#9070d0" stroke-width="0.8" opacity="0.2" fill="none"/>
+          <!-- Particles -->
+          <circle cx="-44" cy="-42" r="1.2" fill="#b090e0" opacity="0.5"/>
+          <circle cx="-34" cy="-44" r="1" fill="#a080d0" opacity="0.4"/>
+          <circle cx="-50" cy="-36" r="0.8" fill="#c0a0f0" opacity="0.35"/>
+
+          <!-- RIGHT HAND — Glowing dagger -->
+          <line x1="12" y1="8" x2="32" y2="-8" stroke="#2a4830" stroke-width="5" stroke-linecap="round"/>
+          <!-- Glass gauntlet -->
+          <circle cx="34" cy="-10" r="3.5" fill="#3a7848"/>
+          <!-- DAGGER — held in reverse grip (assassination style) -->
+          <line x1="35" y1="-12" x2="28" y2="-40" stroke="url(#blade)" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Crossguard -->
+          <line x1="32" y1="-14" x2="38" y2="-10" stroke="#c8a050" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+          <!-- Blade glow -->
+          <circle cx="30" cy="-26" r="12" fill="url(#daggerGlow)"/>
+          <line x1="30" y1="-22" x2="29" y2="-28" stroke="#f0e8d0" stroke-width="0.8" opacity="0.5"/>
+          <line x1="29" y1="-34" x2="28" y2="-38" stroke="#f0e8d0" stroke-width="0.6" opacity="0.4"/>
+          <!-- Enchantment shimmer along blade -->
+          <circle cx="31" cy="-20" r="1" fill="#f0c060" opacity="0.4"/>
+          <circle cx="29" cy="-30" r="0.8" fill="#f0c060" opacity="0.35"/>
+          <circle cx="28" cy="-37" r="0.6" fill="#f0e8a0" opacity="0.3"/>
+        </g>
+
+        <!-- === FALLEN ENEMY — already dispatched, left side === -->
+        <g transform="translate(170,250)" opacity="0.6">
+          <ellipse cx="0" cy="0" rx="24" ry="10" fill="#4a3828"/>
+          <circle cx="-20" cy="2" r="7" fill="#4a3828"/>
+          <line x1="16" y1="-3" x2="30" y2="-8" stroke="#4a3828" stroke-width="4" stroke-linecap="round"/>
+          <line x1="14" y1="5" x2="26" y2="10" stroke="#4a3828" stroke-width="4" stroke-linecap="round"/>
+          <!-- Dagger wound in back -->
+          <line x1="-5" y1="-6" x2="3" y2="4" stroke="#5a1515" stroke-width="1.2" opacity="0.5"/>
+          <ellipse cx="0" cy="8" rx="16" ry="4" fill="#3a0808" opacity="0.3"/>
+        </g>
+
+        <!-- === ENVIRONMENTAL DETAILS === -->
+        <!-- Purple magical residue on walls from Illusion spells -->
+        <circle cx="90" cy="120" r="15" fill="#7040c0" opacity="0.04"/>
+        <circle cx="800" cy="100" r="12" fill="#7040c0" opacity="0.03"/>
+
+        <!-- Floating Illusion runes around the nightblade -->
+        <g opacity="0.12" fill="none" stroke="#9070d0" stroke-width="0.8">
+          <circle cx="280" cy="130" r="8"/><path d="M276,124 L284,136 M272,130 L288,130"/>
+          <circle cx="420" cy="115" r="7"/><path d="M416,109 L424,121 M424,109 L416,121"/>
+          <circle cx="300" cy="175" r="6"/><path d="M300,169 L300,181"/>
+        </g>
+
+        <!-- Detect Life wave emanation -->
+        <circle cx="350" cy="180" r="80" fill="none" stroke="#d03030" stroke-width="0.5" opacity="0.08"/>
+        <circle cx="350" cy="180" r="100" fill="none" stroke="#d03030" stroke-width="0.3" opacity="0.05"/>
+
+        <!-- Dust particles in the dim corridor light -->
+        <circle cx="200" cy="60" r="0.8" fill="#a09070" opacity="0.2"/>
+        <circle cx="450" cy="40" r="0.6" fill="#a09070" opacity="0.15"/>
+        <circle cx="350" cy="50" r="0.7" fill="#a09070" opacity="0.18"/>
+        <circle cx="600" cy="55" r="0.5" fill="#a09070" opacity="0.12"/>
+        <circle cx="150" cy="90" r="0.9" fill="#a09070" opacity="0.15"/>
+        <circle cx="700" cy="70" r="0.6" fill="#a09070" opacity="0.1"/>
+
+        <!-- Blood pool under fallen enemy -->
+        <ellipse cx="170" cy="265" rx="20" ry="4" fill="#3a0808" opacity="0.25"/>
+
+        <!-- Lockpick on ground (nightblade detail) -->
+        <g transform="translate(250,270)" opacity="0.3">
+          <line x1="0" y1="0" x2="12" y2="-3" stroke="#a09080" stroke-width="1" stroke-linecap="round"/>
+          <line x1="12" y1="-3" x2="15" y2="-6" stroke="#a09080" stroke-width="0.8" stroke-linecap="round"/>
+        </g>
+
+        <!-- Potion bottle on ground -->
+        <g transform="translate(480,268)" opacity="0.35">
+          <rect x="-2.5" y="-10" width="5" height="10" rx="2" fill="#3a3060"/>
+          <rect x="-1.5" y="-12" width="3" height="3" rx="1" fill="#3a3060"/>
+          <circle cx="0" cy="-5" r="2.5" fill="#5040a0" opacity="0.15"/>
+        </g>
+      </svg>
+    </div>
+    <div class="header-row">
+      <img class="header-portrait" src="https://images.uesp.net/thumb/1/15/OBR-icon-race-Breton.png/200px-OBR-icon-race-Breton.png" alt="Breton">
+      <div class="header-text">
+        <div class="breadcrumb">Oblivion Remastered &rsaquo; Builds &rsaquo; Nightblade</div>
+        <h1>Nightblade</h1>
+        <div class="subtitle">Breton &middot; The Shadow &middot; Blade + Illusion + Sneak</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag purple">Magic Assassin</span>
+      <span class="tag gold">Nightblade</span>
+      <span class="tag green">Stealth</span>
+      <span class="tag blue">Remastered 2025</span>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="section reveal" id="overview">
+    <h2>Overview</h2>
+    <p>The Nightblade is the magical assassin &mdash; a shadow operative who uses Illusion magic instead of poisons. Where a mundane assassin relies on arrows and alchemy, the Nightblade controls the battlefield with Paralyze, Calm, Frenzy, and Invisibility. Sneak behind enemies to deliver devastating 6x dagger backstabs, then vanish before anyone knows you were there. When things go sideways, Calm resets combat instantly so you can re-stealth and try again.</p>
+    <p>Breton is the perfect race. 50% innate Magic Resistance means enemy mages can't touch you, and the extra Magicka fuels your Illusion spells. Combined with The Shadow birthsign's daily Invisibility power, you have a guaranteed escape button from level 1.</p>
+
+    <div class="callout illusion">
+      <div class="callout-label">Why Illusion Over Poisons?</div>
+      <p><strong>Paralyze has no saving throw.</strong> Unlike Alchemy poisons that can be resisted, Illusion's Paralyze spell at Expert rank is a guaranteed disable on any enemy in the game. Calm instantly exits combat, letting you re-stealth for another sneak attack. Frenzy turns a room against itself. This build doesn't fight fair &mdash; it doesn't have to.</p>
+    </div>
+
+    <h3><img class="inline-icon" src="https://images.uesp.net/thumb/1/15/OBR-icon-race-Breton.png/200px-OBR-icon-race-Breton.png" alt="">Race &mdash; Breton</h3>
+    <ul class="picks">
+      <li><span class="label">Passive</span> <span class="name">50% Magic Resistance</span> &mdash; <span class="note">best defensive racial in the game, permanent. Enemy mages are a non-issue.</span></li>
+      <li><span class="label">Passive</span> <span class="name">+50 Magicka</span> &mdash; <span class="note">fuels your Illusion and Mysticism spells from the start</span></li>
+      <li><span class="label">Daily</span> <span class="name">Dragon Skin</span> &mdash; <span class="note">50% physical damage shield for 60 seconds. Emergency panic button.</span></li>
+      <li><span class="label">Skills</span> <span class="name">+10 Conjuration, Mysticism, Restoration</span> &middot; <span class="name">+5 Alchemy, Alteration, Illusion</span></li>
+    </ul>
+
+    <h3>Class &mdash; Nightblade (Custom)</h3>
+    <ul class="picks">
+      <li><span class="label">Spec</span> <span class="name">Stealth</span></li>
+      <li><span class="label">Favored</span> <span class="name">Agility, Willpower</span></li>
+      <li><span class="label">Major</span> <span class="name">Blade, Sneak, Light Armor, Illusion, Mysticism, Destruction, Acrobatics</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Why Custom Over Pre-Made?</div>
+      <p>The pre-made Nightblade class uses Alteration and Restoration instead of Destruction and Acrobatics. Our custom version is better for a pure assassin: Destruction gives you a ranged finisher, and Acrobatics lets you escape by jumping over enemies. You don't need Alteration when you have Invisibility and Paralyze.</p>
+    </div>
+
+    <h3>Starting Attributes</h3>
+    <div class="stats">
+      <div class="stat-box"><div class="stat-label">STR</div><div class="stat-val">30</div></div>
+      <div class="stat-box primary"><div class="stat-label">INT</div><div class="stat-val">60</div></div>
+      <div class="stat-box primary"><div class="stat-label">WIL</div><div class="stat-val">55</div></div>
+      <div class="stat-box primary"><div class="stat-label">AGI</div><div class="stat-val">55</div></div>
+      <div class="stat-box"><div class="stat-label">SPD</div><div class="stat-val">45</div></div>
+      <div class="stat-box"><div class="stat-label">END</div><div class="stat-val">30</div></div>
+      <div class="stat-box"><div class="stat-label">PER</div><div class="stat-val">40</div></div>
+      <div class="stat-box"><div class="stat-label">LCK</div><div class="stat-val">50</div></div>
+    </div>
+    <p style="font-size:.88rem;color:var(--text-dim);">Breton Nightblade with The Shadow birthsign. High INT/WIL for Illusion casting. Agility governs dagger damage in Remastered &mdash; perfect synergy. Low STR/END is fine because you avoid taking hits entirely.</p>
+  </section>
+
+  <!-- FIRST STEPS -->
+  <section class="section reveal" id="firststeps">
+    <h2>First Steps After the Tutorial</h2>
+    <p>You emerge from the sewers as a walking shadow. Here is exactly what to do:</p>
+
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Use your Shadow birthsign power immediately</span>
+        <div class="step-detail">The Shadow gives you a daily <strong>Invisibility</strong> power (60 seconds). Test it right outside the sewers. This is your "get out of jail free" card for the entire game. Use it once per day when you're outmatched or need to bypass something dangerous.</div>
+      </li>
+      <li>
+        <span class="step-action">Go to Bravil Mages Guild &mdash; buy Illusion spells</span>
+        <div class="step-detail">Travel to <strong>Bravil</strong>. At the Mages Guild, buy <strong>Starlight</strong> (Night-Eye) and <strong>Soothing Touch</strong> (Calm) from <strong>Ita Rienus</strong>. Also pick up <strong>Chameleon</strong> if you can afford it. These are your bread and butter.</div>
+      </li>
+      <li>
+        <span class="step-action">Buy Detect Life from Mysticism trainers</span>
+        <div class="step-detail">Visit <strong>Leyawiin Mages Guild</strong> and buy <strong>Detect Life</strong> from <strong>Dagail</strong> or <strong>Agata</strong>. This spell reveals enemies through walls &mdash; essential for scouting before you commit to a room.</div>
+      </li>
+      <li>
+        <span class="step-action">Join the Dark Brotherhood</span>
+        <div class="step-detail">Murder an innocent NPC (a bandit at a camp works). Sleep in any bed. <strong>Lucien Lachance</strong> will visit you with an invitation. The Dark Brotherhood questline gives you the <strong>Blade of Woe</strong> and <strong>Shrouded Armor</strong> &mdash; both perfect for this build. Start this early.</div>
+      </li>
+      <li>
+        <span class="step-action">Start the Mages Guild recommendation chain</span>
+        <div class="step-detail">Visit any Mages Guild hall to begin recommendations. You need access to the <strong>Arcane University</strong> for custom spellmaking later. Do these between Dark Brotherhood contracts.</div>
+      </li>
+      <li>
+        <span class="step-action">Steal a horse &mdash; or earn one</span>
+        <div class="step-detail">Deliver the Amulet of Kings to Jauffre at Weynon Priory for a free horse. Or just steal one from the Imperial City Stables at night (you're an assassin &mdash; act like one).</div>
+      </li>
+    </ol>
+
+    <div class="callout tip">
+      <div class="callout-label">Level Illusion by Casting Constantly</div>
+      <p>In the remaster, <strong>higher-cost spells give more XP</strong>. Cast your most expensive Illusion spell whenever you have spare Magicka. Calm on friendly NPCs, Charm on merchants, Starlight while exploring &mdash; every cast levels the skill. Rush Illusion to Expert (75) for Paralyze.</p>
+    </div>
+  </section>
+
+  <!-- BIRTHSIGN -->
+  <section class="section reveal" id="birthsign">
+    <h2>Birthsign</h2>
+    <div class="bs-grid">
+      <div class="bs-card recommended">
+        <img src="https://images.uesp.net/thumb/3/3a/OBbsign_Shadow.jpg/200px-OBbsign_Shadow.jpg" alt="The Shadow">
+        <div class="bs-name">The Shadow</div>
+        <div class="bs-bonus">Invisibility (60 sec, once/day)</div>
+        <div class="bs-note">Guaranteed daily escape or perfect assassination opener. Thematically perfect, mechanically powerful. No drawbacks.</div>
+        <div style="margin-top:.5rem"><span class="tag gold">Recommended</span></div>
+      </div>
+      <div class="bs-card">
+        <img src="https://images.uesp.net/thumb/5/5f/OBbsign_Thief.jpg/200px-OBbsign_Thief.jpg" alt="The Thief">
+        <div class="bs-name">The Thief</div>
+        <div class="bs-bonus">+10 Agility, +10 Speed, +10 Luck</div>
+        <div class="bs-note">Passive stat boost to your three most useful attributes. No daily power, but the stats compound at every level. Better long-term scaling.</div>
+      </div>
+      <div class="bs-card">
+        <img src="https://images.uesp.net/thumb/d/d9/OBbsign_Lover.jpg/200px-OBbsign_Lover.jpg" alt="The Lover">
+        <div class="bs-name">The Lover</div>
+        <div class="bs-bonus">Lover's Kiss: Paralyze target 10 sec (daily)</div>
+        <div class="bs-penalty">200 Fatigue cost (you collapse after using it)</div>
+        <div class="bs-note">Paralyze from level 1 is absurdly strong, but the Fatigue cost leaves you vulnerable. Redundant once Illusion reaches Expert.</div>
+      </div>
+    </div>
+    <div class="callout warn">
+      <div class="callout-label">Avoid &mdash; The Mage</div>
+      <p>+50 Magicka sounds nice, but you already get +50 from being Breton. The Shadow's Invisibility is worth more than raw Magicka &mdash; it saves your life in situations where no amount of spellcasting could. Magicka grows naturally through Intelligence; daily Invisibility doesn't.</p>
+    </div>
+  </section>
+
+  <!-- VIRTUES / LEVELING -->
+  <section class="section reveal" id="virtues">
+    <h2>Leveling &mdash; Virtue System</h2>
+    <p>The remaster replaced the old attribute multiplier system. At each level-up you get <strong>12 Virtues</strong> to distribute freely. Max 5 per attribute, max 3 attributes per level. Luck costs 4 per point.</p>
+
+    <table class="virtue-table">
+      <thead><tr><th>Attribute</th><th>Priority</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">Agility</td><td><span class="priority t1">MAX FIRST</span></td><td>Governs dagger damage in Remastered. Also increases Sneak effectiveness, bow damage, and Fatigue. Your #1 stat.</td></tr>
+        <tr><td class="attr-name">Intelligence</td><td><span class="priority t1">MAX FIRST</span></td><td>Max Magicka pool. You need a deep mana well for Invisibility + Paralyze + Detect Life chains.</td></tr>
+        <tr><td class="attr-name">Willpower</td><td><span class="priority t2">SECOND</span></td><td>Magicka regen (quadratic scaling). Keeps you casting between kills without waiting.</td></tr>
+        <tr><td class="attr-name">Speed</td><td><span class="priority t2">SECOND</span></td><td>Movement speed. Assassins need to reposition fast. At 45, decent but could be better.</td></tr>
+        <tr><td class="attr-name">Endurance</td><td><span class="priority t3">LATER</span></td><td>HP pool. You're avoiding damage, not tanking it. Still useful as a safety net.</td></tr>
+        <tr><td class="attr-name">Strength</td><td><span class="priority t3">LATER</span></td><td>Carry weight only. Daggers scale with Agility, not Strength, in Remastered.</td></tr>
+        <tr><td class="attr-name">Luck</td><td><span class="priority t3">SKIP</span></td><td>Costs 4 Virtues per point. At 50, it's fine. Not worth the investment.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-label">Suggested Distribution</div>
+      <p><strong>Levels 2-8:</strong> Agility 5, Intelligence 5, Willpower 2</p>
+      <p><strong>Levels 9-15:</strong> Agility 5, Willpower 5, Speed 2</p>
+      <p><strong>Levels 16+:</strong> Fill remaining attributes. Endurance for survivability, then top off whatever's lowest.</p>
+    </div>
+  </section>
+
+  <!-- PROGRESSION -->
+  <section class="section reveal" id="progression">
+    <h2>Level Progression</h2>
+    <p style="color:var(--text-dim);margin-bottom:1rem;">Click to expand. Focus on the skills and goals for each phase.</p>
+
+    <!-- Phase 1 -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 1-5</span>
+        <span class="lv-title">Shadow's Apprentice &mdash; Sneak + Shadow Power</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Sneak to 25</span>
+          <span class="qp skill">Blade to 25</span>
+          <span class="qp illusion">Illusion to 25</span>
+          <span class="qp spell">Starlight / Calm</span>
+          <span class="qp gear">Blade of Woe</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Priority</span> <span class="name">Sneak + Illusion</span> &mdash; <span class="note">Sneak gives backstab multiplier at 25; Illusion Apprentice unlocks Calm spells</span></li>
+          <li><span class="label">Sneak 25</span> <span class="name">Apprentice perk</span> &mdash; <span class="note">sneak attacks deal 4x damage with melee weapons</span></li>
+          <li><span class="label">Illusion 25</span> <span class="name">Apprentice perk</span> &mdash; <span class="note">Calm, Charm, and Command spells become available</span></li>
+          <li><span class="label">Shadow</span> <span class="name">Daily Invisibility</span> &mdash; <span class="note">use it once per day for guaranteed stealth approach or escape</span></li>
+          <li><span class="label">Quest</span> <span class="name">Dark Brotherhood &mdash; "A Knife in the Dark"</span> &mdash; <span class="note">join early for Blade of Woe + Shrouded Armor</span></li>
+          <li><span class="label">Quest</span> <span class="name">Mages Guild recommendations</span> &mdash; <span class="note">start these now, 7 cities, unlocks spellmaking</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:.5rem;">
+          <div class="callout-label">Early Game Stealth Loop</div>
+          <p>Crouch behind enemies, backstab with dagger, immediately crouch again. At Sneak 25, this deals 4x damage. Most early enemies die in one or two backstabs. Use Shadow power for the tough ones.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 6-12</span>
+        <span class="lv-title">Illusionist &mdash; Calm + Invisibility Spells</span>
+        <span class="lv-spike">Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Illusion to 50</span>
+          <span class="qp skill">Sneak to 50</span>
+          <span class="qp skill">Light Armor to 50</span>
+          <span class="qp illusion">Invisibility spell</span>
+          <span class="qp spell">Detect Life</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Illusion 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">Invisibility and Chameleon spells become castable. This is where the build comes online.</span></li>
+          <li><span class="label">Sneak 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">6x sneak attack damage with melee. Daggers one-shot most enemies from stealth.</span></li>
+          <li><span class="label">Key Spell</span> <span class="name">Invisibility (Illusion)</span> &mdash; <span class="note">on-demand stealth, no daily limit. Cast, approach, backstab, repeat.</span></li>
+          <li><span class="label">Key Spell</span> <span class="name">Calm (Illusion)</span> &mdash; <span class="note">instantly exits combat. Enemy sheathes weapon, forgets you. Re-stealth and backstab again.</span></li>
+          <li><span class="label">Key Spell</span> <span class="name">Detect Life (Mysticism)</span> &mdash; <span class="note">see all living enemies through walls. Plan every approach before entering a room.</span></li>
+          <li><span class="label">Combo</span> <span class="name">Detect Life &rarr; Invisibility &rarr; Backstab &rarr; Calm &rarr; Repeat</span> &mdash; <span class="note">your core combat loop from this phase forward</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 13-20</span>
+        <span class="lv-title">Phantom &mdash; Paralyze Changes Everything</span>
+        <span class="lv-spike">Game Changer</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Illusion to 75</span>
+          <span class="qp skill">Blade to 50</span>
+          <span class="qp illusion">Paralyze</span>
+          <span class="qp illusion">Frenzy</span>
+          <span class="qp gear">Glass Armor</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Illusion 75</span> <span class="name">Expert &mdash; PARALYZE</span> &mdash; <span class="note">guaranteed disable on any enemy. No saving throw. No resistance. They freeze and you execute them. This is THE reason to play this build.</span></li>
+          <li><span class="label">Paralyze</span> <span class="name">Touch or Target</span> &mdash; <span class="note">freeze an enemy for 3-10 seconds. Walk up, power attack while they're helpless. Repeat if they survive.</span></li>
+          <li><span class="label">Frenzy</span> <span class="name">Expert Illusion</span> &mdash; <span class="note">turn enemies against each other. Cast from stealth, watch them fight, kill the survivor.</span></li>
+          <li><span class="label">Custom</span> <span class="name">Paralyze Touch 3s</span> &mdash; <span class="note">craft at Spellmaking Altar. Cheaper than vendor Paralyze spells, equally effective.</span></li>
+          <li><span class="label">Gear</span> <span class="name">Glass Armor</span> &mdash; <span class="note">best light armor in the game. Starts appearing around level 15.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Meridia's Shrine</span> &mdash; <span class="note">get the Ring of Khajiiti (Speed + 35% Chameleon). Best assassin ring in the game.</span></li>
+        </ul>
+        <div class="callout illusion" style="margin-top:.5rem;">
+          <div class="callout-label">Paralyze Has No Counter</div>
+          <p>Unlike Calm (which can be resisted by high-level enemies), <strong>Paralyze in Oblivion has no saving throw</strong>. If the spell hits, the target is frozen. Period. This makes it the strongest crowd-control ability in the entire game, and it belongs to the Illusion school &mdash; your specialty.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 20+</span>
+        <span class="lv-title">Puppet Master &mdash; Master Illusion</span>
+        <span class="lv-spike">Endgame</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Illusion to 100</span>
+          <span class="qp skill">Sneak to 75+</span>
+          <span class="qp illusion">Command Humanoid</span>
+          <span class="qp gear">Ring of Khajiiti</span>
+          <span class="qp gear">Sufferthorn</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Illusion 100</span> <span class="name">Master</span> &mdash; <span class="note">Command Humanoid turns any NPC into your ally. Walk into a fort, turn the boss against his own men, watch the carnage.</span></li>
+          <li><span class="label">Sneak 75</span> <span class="name">Expert</span> &mdash; <span class="note">8x sneak attack damage. Combined with a good dagger, this one-shots almost anything.</span></li>
+          <li><span class="label">Custom</span> <span class="name">Mass Frenzy + Invisibility combo</span> &mdash; <span class="note">Frenzy the room, go invisible, let them kill each other. Finish the last one standing.</span></li>
+          <li><span class="label">Custom</span> <span class="name">Chameleon 100% (stacked)</span> &mdash; <span class="note">with Ring of Khajiiti (35%) + enchanted gear, reach permanent invisibility that doesn't break on action</span></li>
+          <li><span class="label">Strategy</span> <span class="name">You never fight fair again</span> &mdash; <span class="note">every encounter is scouted, manipulated, and controlled before you draw your blade</span></li>
+        </ul>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ILLUSION MASTERY -->
+  <section class="section reveal" id="illusion">
+    <h2>Illusion Mastery</h2>
+    <p>Illusion is the heart and soul of this build. Every spell in this school serves a tactical purpose. Master it, and you become untouchable.</p>
+
+    <h3>Paralyze &mdash; The Ultimate Disable</h3>
+    <div class="callout illusion">
+      <div class="callout-label">Expert Illusion (Skill 75)</div>
+      <p><strong>Paralyze has no saving throw.</strong> If the spell connects, the target is frozen in place for the duration. No resistance check, no magic resist, no level scaling. A level 1 Nightblade with Paralyze could freeze Mankar Camoran. This is the single most powerful crowd-control ability in Oblivion and the reason Illusion Expert is your #1 priority.</p>
+      <p>Craft a <strong>custom Paralyze Touch 3 sec</strong> at the Spellmaking Altar &mdash; it costs a fraction of the vendor version's Magicka and works just as well. Follow with power attacks while the target is helpless.</p>
+    </div>
+
+    <h3>Calm &mdash; Instant Combat Reset</h3>
+    <p>Calm forces an enemy to stop fighting and sheathe their weapon. The moment combat ends, you can crouch and re-enter stealth. This means <strong>every failed sneak attack gets a second chance</strong>. Cast Calm, crouch, wait for the eye to close, backstab again. Repeat until the enemy is dead. Against groups, Calm one enemy while you deal with the others.</p>
+
+    <h3>Frenzy &mdash; Turn Enemies Against Each Other</h3>
+    <p>Frenzy makes a target attack the nearest creature &mdash; friend or foe. In a dungeon with multiple enemies, cast Frenzy on one from stealth. The room erupts into infighting. You stay hidden, wait for the dust to settle, and execute the wounded survivor. Zero risk, maximum reward.</p>
+
+    <h3>Invisibility &mdash; Superior to Chameleon (Mostly)</h3>
+    <p>Invisibility makes you completely undetectable but breaks on any action (attacking, opening doors, casting another spell). Chameleon reduces your visibility percentage but lets you act freely. For assassination, <strong>Invisibility is better</strong> &mdash; it guarantees the first strike. Use Chameleon for sustained stealth (pickpocketing, bypassing entire dungeons).</p>
+    <div class="callout tip">
+      <div class="callout-label">100% Chameleon = God Mode</div>
+      <p>If you stack Chameleon effects on enchanted gear to reach 100%, you become permanently invisible AND can still attack. Ring of Khajiiti gives 35%. Enchant a helmet, cuirass, greaves, and boots with Chameleon to cover the remaining 65%. At 100%, nothing in the game can detect you &mdash; ever.</p>
+    </div>
+
+    <h3>Detect Life &mdash; Scout Through Walls</h3>
+    <p>Detect Life (Mysticism school, but critical to this build) reveals all living creatures within a large radius as glowing auras &mdash; visible through walls, floors, and doors. Cast it before entering any room. Know exactly how many enemies are inside, where they're standing, and whether they're moving or stationary. Plan your approach, choose your target, and execute flawlessly.</p>
+
+    <div class="callout">
+      <div class="callout-label">The Illusion Assassin's Toolkit</div>
+      <p><strong>Detect Life</strong> &rarr; scout the room. <strong>Invisibility</strong> &rarr; walk in unseen. <strong>Backstab</strong> &rarr; 8x dagger damage. <strong>Paralyze</strong> &rarr; freeze survivors. <strong>Calm</strong> &rarr; reset combat if needed. <strong>Frenzy</strong> &rarr; make them fight each other. You have an answer for every situation.</p>
+    </div>
+  </section>
+
+  <!-- SPELLS -->
+  <section class="section reveal" id="spells">
+    <h2>Best Spells</h2>
+
+    <div class="spell-section">
+      <div class="spell-level">Illusion &mdash; Your Primary School</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Starlight</div><div class="spell-desc">Night-Eye for 30 seconds. See in the dark without a torch (which breaks stealth). Cast constantly to level Illusion.</div><div class="gear-loc">&#128205; Ita Rienus &mdash; Bravil Mages Guild</div></div><span class="spell-badge illusion">Illusion &middot; Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Soothing Touch / Calm</div><div class="spell-desc">Forces target to stop fighting. Instant combat reset. Crouch after casting to re-enter stealth for another backstab.</div><div class="gear-loc">&#128205; Ita Rienus &mdash; Bravil Mages Guild &middot; Delphine Jend &mdash; Bravil MG</div></div><span class="spell-badge must">Must &middot; Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Alluring Gaze / Charm</div><div class="spell-desc">Boost NPC disposition for better prices, quest options, and information. Pure utility.</div><div class="gear-loc">&#128205; Delphine Jend &mdash; Bravil Mages Guild &middot; Selena Orania &mdash; Bruma MG</div></div><span class="spell-badge good">Good &middot; Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Chameleon</div><div class="spell-desc">Partial invisibility. You can still act (pick locks, pickpocket, open doors). Stack with enchanted gear to approach 100%.</div><div class="gear-loc">&#128205; Ita Rienus &mdash; Bravil Mages Guild</div></div><span class="spell-badge must">Must &middot; Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Shadow Shape (Invisibility)</div><div class="spell-desc">Full invisibility. Breaks on action, but guarantees the first strike. Your primary approach spell.</div><div class="gear-loc">&#128205; Ita Rienus &mdash; Bravil Mages Guild</div></div><span class="spell-badge must">Must &middot; Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Frenzy</div><div class="spell-desc">Makes target attack nearest creature. Cast from stealth to turn a room against itself. Zero risk, maximum chaos.</div><div class="gear-loc">&#128205; Ita Rienus &mdash; Bravil MG (higher ranks from Borissean &mdash; Imperial City)</div></div><span class="spell-badge illusion">Illusion &middot; Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Paralyze</div><div class="spell-desc">THE spell. Freezes any enemy in place with no saving throw. Guaranteed disable. Follow with power attack for a free kill.</div><div class="gear-loc">&#128205; Borissean &mdash; Imperial City, Mystic Emporium (Expert level required)</div></div><span class="spell-badge must">Must &middot; Expert</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Command Humanoid</div><div class="spell-desc">Forces an NPC to fight for you. Turn the boss against his own guards. Master-level crowd manipulation.</div><div class="gear-loc">&#128205; Requires Illusion Master (100). Craft at Spellmaking Altar.</div></div><span class="spell-badge illusion">Illusion &middot; Master</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Mysticism &mdash; Intel &amp; Utility</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Detect Life</div><div class="spell-desc">See all living creatures through walls as glowing auras. Scout every room before entering. Non-negotiable for assassins.</div><div class="gear-loc">&#128205; Dagail &mdash; Leyawiin Mages Guild &middot; Druja &mdash; Skingrad MG</div></div><span class="spell-badge must">Must &middot; Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Telekinesis</div><div class="spell-desc">Grab objects from a distance. Steal items without getting close to NPCs. Trigger traps from safety.</div><div class="gear-loc">&#128205; Calindil &mdash; Imperial City, Mystic Emporium</div></div><span class="spell-badge good">Good &middot; Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Soul Trap</div><div class="spell-desc">Fill soul gems for enchanting. Cast before a kill to capture souls for your Chameleon enchantments.</div><div class="gear-loc">&#128205; Druja &mdash; Skingrad MG &middot; Edgar Vautrine &mdash; Imperial City</div></div><span class="spell-badge good">Good &middot; Appr</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Destruction &mdash; Ranged Finisher</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Flare</div><div class="spell-desc">Cheap fire damage. Use to finish low-HP enemies without approaching or to pull a single target.</div><div class="gear-loc">&#128205; Druja &mdash; Skingrad MG &middot; Volanaro &mdash; Bruma MG</div></div><span class="spell-badge fire">Fire &middot; Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Lightning Bolt</div><div class="spell-desc">Best ranged finisher. Shock drains enemy Magicka too, shutting down mage enemies. Use after backstab on survivors.</div><div class="gear-loc">&#128205; Vigge the Cautious &mdash; Skingrad Mages Guild</div></div><span class="spell-badge shock">Shock &middot; Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Weakness to Magic + Shock Burst</div><div class="spell-desc">Custom spell. Apply Weakness to Magic 100% then hit with shock damage. Devastating on magic-resistant enemies.</div><div class="gear-loc">&#128205; Craft at Spellmaking Altar &mdash; Arcane University or Frostcrag Spire</div></div><span class="spell-badge custom">Custom &middot; Expert</span></div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Shopping Route for Nightblades</div>
+      <p><strong>1. Bravil Mages Guild</strong> &mdash; Starlight, Calm, Charm, Chameleon, Invisibility (Ita Rienus + Delphine Jend). This is your one-stop shop.</p>
+      <p><strong>2. Leyawiin Mages Guild</strong> &mdash; Detect Life (Dagail/Agata). Essential scouting spell.</p>
+      <p><strong>3. Imperial City</strong> &mdash; Paralyze (Borissean at Mystic Emporium, requires Expert), Telekinesis (Calindil).</p>
+      <p><strong>4. Skingrad Mages Guild</strong> &mdash; Flare, Soul Trap, Lightning Bolt (Druja + Vigge). Backup offense.</p>
+    </div>
+  </section>
+
+  <!-- GEAR -->
+  <section class="section reveal" id="gear">
+    <h2>Gear by Level</h2>
+
+    <div class="callout">
+      <div class="callout-label">Light Armor + Stealth Synergy</div>
+      <p>Light armor has lower spell effectiveness penalties than heavy armor and doesn't interfere with Sneak as much. At Light Armor Journeyman (50), the spell penalty is negligible. Glass Armor is the endgame set &mdash; best AR in the light category with minimal magic penalty.</p>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Early Game &mdash; Levels 1-10</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128481;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Blade of Woe</span> <span class="gear-slot">Dagger</span></div>
+          <div class="gear-desc">The Dark Brotherhood's signature weapon. Given to you upon joining. Decent dagger to start, can be upgraded by completing more contracts.</div>
+          <div class="gear-loc">&#128205; Dark Brotherhood &mdash; given by Lucien Lachance when you join. Murder an innocent, then sleep.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128085;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Shrouded Armor</span> <span class="gear-slot">Light Armor Set</span></div>
+          <div class="gear-desc">Dark Brotherhood armor with Sneak and Illusion bonuses. Perfect for early game. Provides decent protection with stealth utility.</div>
+          <div class="gear-loc">&#128205; Dark Brotherhood &mdash; received during early questline from the Cheydinhal Sanctuary.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128300;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Sufferthorn</span> <span class="gear-slot">Dagger</span></div>
+          <div class="gear-desc">Damage Health + Damage Agility. A nasty dagger that weakens enemies' combat stats while draining health. Excellent for assassinations.</div>
+          <div class="gear-loc">&#128205; Complete the "Raid on Leafrot Cave" quest. The cave is northwest of Leyawiin. Sufferthorn is level-scaled &mdash; get it early for best relative value.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128085;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Leather / Chainmail Light Armor</span> <span class="gear-slot">Light Armor</span></div>
+          <div class="gear-desc">Early filler until you get Shrouded Armor or better drops. Any light armor trains the skill.</div>
+          <div class="gear-loc">&#128205; Any general goods shop or looted from bandits and marauders.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Mid Game &mdash; Levels 10-20</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128161;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Ring of Khajiiti</span> <span class="gear-slot">Ring</span></div>
+          <div class="gear-desc">Fortify Speed 10 + Chameleon 35%. The best assassin accessory in the game. 35% permanent Chameleon means you're harder to detect at all times, and the Speed boost helps you reposition.</div>
+          <div class="gear-loc">&#128205; Meridia's Shrine (west of Skingrad, along the Gold Road). Complete the Daedric quest. Requires level 10+.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128481;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Elven / Mithril Light Armor</span> <span class="gear-slot">Light Armor</span></div>
+          <div class="gear-desc">Major upgrade over leather/chain. Good AR with low weight. Appears in shops and loot around level 10-15.</div>
+          <div class="gear-loc">&#128205; Random loot at level 10+. "The Best Defense" in Imperial City sometimes stocks it.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#9876;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Ebony Dagger (Enchanted)</span> <span class="gear-slot">Dagger</span></div>
+          <div class="gear-desc">Find or buy an ebony dagger and enchant it with Paralyze, Soul Trap, or Absorb Health at the Spellmaking Altar. A custom enchanted dagger is better than any vendor weapon.</div>
+          <div class="gear-loc">&#128205; Random loot at level 15+. Enchant at Arcane University or Frostcrag Spire.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Late Game &mdash; Levels 20+</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128155;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Glass Armor (Full Set)</span> <span class="gear-slot">Light Armor</span></div>
+          <div class="gear-desc">Best light armor in the game. AR 54 full set. Enchant every piece with Chameleon to approach 100% permanent stealth. The crystalline green look is iconic.</div>
+          <div class="gear-loc">&#128205; Random loot at level 20+. Full set can be found in high-level Ayleid ruins and Oblivion gates.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128481;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Glass Dagger (Enchanted)</span> <span class="gear-slot">Dagger</span></div>
+          <div class="gear-desc">Highest base damage dagger. Enchant with Absorb Health + Paralyze for the ultimate assassination weapon. Each backstab heals you and freezes the next target.</div>
+          <div class="gear-loc">&#128205; Random loot at level 18+. Enchant at Arcane University or Frostcrag Spire.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128142;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Mundane Ring / Fortify Intelligence Jewelry</span> <span class="gear-slot">Ring / Amulet</span></div>
+          <div class="gear-desc">Stack Fortify Intelligence and Fortify Willpower on jewelry for a larger Magicka pool and faster regen. More spells = more control.</div>
+          <div class="gear-loc">&#128205; Enchant your own at Arcane University, or find randomly in high-level loot.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Key Accessories (Any Level)</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128141;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Ring of Khajiiti</span></div>
+          <div class="gear-desc">35% Chameleon + Fortify Speed 10. Core item. Never take this off once you get it. Build your Chameleon stack around it.</div>
+          <div class="gear-loc">&#128205; Meridia's Shrine (west of Skingrad). Daedric quest, requires level 10+.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128141;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Amulet of Chameleon / Fortify Illusion</span></div>
+          <div class="gear-desc">Enchant with Chameleon to stack toward 100%, or Fortify Illusion to make your spells more effective on higher-level enemies.</div>
+          <div class="gear-loc">&#128205; Enchant your own. Buy the Chameleon spell first to unlock the enchantment option.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128095;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Boots of Springheel Jak</span></div>
+          <div class="gear-desc">Fortify Acrobatics 50. Jump over enemies to escape, reach hidden areas, and bypass obstacles. Perfect for an agile assassin.</div>
+          <div class="gear-loc">&#128205; Thieves Guild questline &mdash; "Boots of Springheel Jak" quest. Join the Thieves Guild at the Imperial City Waterfront.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMBAT -->
+  <section class="section reveal" id="combat">
+    <h2>Combat Guide</h2>
+
+    <h3>The Nightblade Kill Chain</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Cast Detect Life to scout the room</span>
+        <div class="step-detail">Before entering any space, cast Detect Life. Count the enemies, note their positions and patrol routes. Identify isolated targets. If the room is too crowded, plan your Frenzy or Calm strategy before going in.</div>
+      </li>
+      <li>
+        <span class="step-action">Cast Invisibility and approach your target</span>
+        <div class="step-detail">Full Invisibility lets you walk right up to any enemy unseen. Position yourself directly behind them for the backstab angle. If you have 100% Chameleon from enchantments, skip this step &mdash; you're always invisible.</div>
+      </li>
+      <li>
+        <span class="step-action">Dagger sneak attack &mdash; 6x or 8x damage</span>
+        <div class="step-detail">At Sneak Journeyman (50) you deal 6x damage; at Expert (75) it's 8x. With a Glass Dagger, this one-shots most enemies. Use a power attack from stealth for even more damage. This is your primary kill method.</div>
+      </li>
+      <li>
+        <span class="step-action">Paralyze any survivors</span>
+        <div class="step-detail">If the target survives the backstab, immediately cast Paralyze Touch. They freeze in place &mdash; no saving throw. Walk behind them and deliver another power attack while they're helpless. Repeat until dead.</div>
+      </li>
+      <li>
+        <span class="step-action">Finish with Destruction at range</span>
+        <div class="step-detail">If an enemy is low HP and running, hit them with Lightning Bolt or Flare. Shock drains their Magicka too, preventing enemy mages from retaliating. Don't chase &mdash; let spells do the work.</div>
+      </li>
+      <li>
+        <span class="step-action">Calm if overwhelmed &mdash; reset to stealth</span>
+        <div class="step-detail">If you're detected and multiple enemies are closing in, cast Calm on the most dangerous one. They stop fighting and sheathe their weapon. Immediately crouch to re-enter stealth. The Calmed enemy forgets you exist. Now you're back to step 1.</div>
+      </li>
+      <li>
+        <span class="step-action">Re-stealth and repeat the cycle</span>
+        <div class="step-detail">The beauty of this build: every fight is a controlled assassination. If anything goes wrong, Calm resets the encounter. You never have a "fair fight" unless you choose to. The cycle is: Detect &rarr; Approach &rarr; Strike &rarr; Control &rarr; Repeat.</div>
+      </li>
+    </ol>
+
+    <div class="callout illusion" style="margin-top:1.25rem;">
+      <div class="callout-label">Group Fights &mdash; The Frenzy Strategy</div>
+      <p>When facing 3+ enemies, don't fight them yourself. Cast <strong>Frenzy</strong> on the strongest enemy from stealth. They attack the nearest ally. The room erupts into chaos while you stay invisible. Wait for the fighting to end, then execute the battered survivor with a backstab. This works on any group in the game, including Oblivion gate defenders.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Boss Fights &mdash; The Paralyze Lock</div>
+      <p>Against a single powerful enemy: <strong>Paralyze &rarr; Power Attack &rarr; Paralyze &rarr; Power Attack</strong>. The target never gets to swing. With enough Magicka (stack Intelligence), you can chain Paralyze indefinitely. The boss dies having never taken a single action. This trivializes every boss in the game, including the final one.</p>
+    </div>
+  </section>
+
+  <!-- TIPS -->
+  <section class="section reveal" id="tips">
+    <h2>Tips &mdash; Remastered Changes</h2>
+
+    <div class="callout illusion">
+      <div class="callout-label">Agility Governs Daggers (New in Remastered)</div>
+      <p>In the original Oblivion, Strength governed all melee damage. In Remastered, <strong>Agility governs dagger damage</strong>. This is a massive buff to Nightblades &mdash; you were already stacking Agility for Sneak, and now it also boosts your primary weapon. No wasted stats.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Magic XP Scales with Cost</div>
+      <p>In Remastered, <strong>higher-cost spells give more XP</strong> toward leveling that school. This means expensive Illusion spells like Invisibility and Paralyze level your Illusion skill faster than cheap ones like Starlight. Cast your most expensive available spell whenever you have Magicka to spare.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Calm, Paralyze, and Frenzy Are Unchanged</div>
+      <p>These three spells work identically to the original game. <strong>Paralyze still has no saving throw.</strong> Calm still instantly resets combat. Frenzy still makes enemies attack each other. The Remastered version didn't nerf any of these. The Nightblade is just as broken as it was in 2006.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Join Both Dark Brotherhood and Thieves Guild</div>
+      <p>The <strong>Dark Brotherhood</strong> gives you the Blade of Woe, Shrouded Armor, and access to assassination contracts for gold. The <strong>Thieves Guild</strong> gives you the Boots of Springheel Jak and access to fences for selling stolen goods. Both questlines are built for this character &mdash; do them both.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Sleep to Level Up</div>
+      <p>When the game says "you should rest and meditate on what you've learned," you need to <strong>sleep in any bed</strong> to trigger the level-up screen. Consider your timing &mdash; the world scales with your level. If you're steamrolling everything, delay sleeping. If you need more Magicka for bigger spells, level up for the Virtue points.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Don't Get Caught Stealing in the Mages Guild</div>
+      <p>You need Mages Guild access for the Spellmaking Altar. Getting expelled means no custom Paralyze spell until you pay fines and do a penance quest. Steal from everyone else &mdash; just not the Mages Guild.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Enchanting is Your Endgame</div>
+      <p>The Nightblade's endgame is <strong>100% Chameleon</strong> through enchanted gear. Ring of Khajiiti gives 35%. You need 65% more spread across helmet, cuirass, greaves, boots, and amulet. Use Grand Soul Gems for the strongest enchantments. With 100% Chameleon, you can attack without breaking stealth &mdash; permanent invisibility with full combat capability.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Alchemy: Invisibility Potions as Backup</div>
+      <p>Even without investing in Alchemy, you can brew <strong>Invisibility potions</strong> from Bloodgrass + Nirnroot. These serve as backup Invisibility when your Magicka is depleted. Pick up Nirnroot whenever you find it near water &mdash; it glows and hums. Carry 5-10 Invisibility potions at all times as an insurance policy.</p>
+    </div>
+  </section>
+
+  <div class="guide-footer">
+    <a href="guides.html">All Build Guides</a> &middot; <a href="index.html">Home</a><br>
+    Oblivion Remastered &middot; Nightblade Build Guide &middot; 2025
+  </div>
+
+</main>
+</div>
+
+<script>
+// Active nav highlighting
+const sections=document.querySelectorAll('.section');const navLinks=document.querySelectorAll('.sidebar a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const a=document.querySelector('.sidebar a[href="#'+entry.target.id+'"]');if(a)a.classList.add('active')}})},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>observer.observe(s));
+
+// Mobile hamburger menu
+const toggle=document.querySelector('.nav-toggle');
+const links=document.querySelector('.nav-links');
+toggle.addEventListener('click',()=>links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+// Scroll reveal
+const revealObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');revealObserver.unobserve(entry.target)}})},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+/* ── Universal Nav Toggle ── */
+(function(){
+  const btn=document.getElementById('unav-hamburger'),nav=document.getElementById('unav-links');
+  if(!btn||!nav)return;
+  btn.addEventListener('click',()=>{btn.classList.toggle('open');nav.classList.toggle('open')});
+  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+    btn.classList.remove('open');nav.classList.remove('open');
+  }));
+})();
+
+</script>
+</body>
+</html>

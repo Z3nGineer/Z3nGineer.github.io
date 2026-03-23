@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Armored Archmage (Battlemage) — Oblivion Remastered Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0c0a08;--bg-card:#161310;--bg-el:#1e1a16;--bg-hover:#252018;
+  --border:#302a22;--border-light:#403828;
+  --text:#e0d8c8;--text-dim:#a89878;--text-muted:#6a5a48;--white:#f0e8d8;
+  --accent:#c8a050;--accent-hover:#e0b860;--accent-dim:rgba(200,160,80,0.12);
+  --fire:#d05030;--fire-dim:rgba(208,80,48,0.12);
+  --frost:#4080c0;--frost-dim:rgba(64,128,192,0.12);
+  --shock:#8060c0;--shock-dim:rgba(128,96,192,0.12);
+  --green:#5a9040;--green-dim:rgba(90,144,64,0.1);
+  --blue:#4080b0;--blue-dim:rgba(64,128,176,0.1);
+  --red:#b03030;
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:19px;line-height:1.75;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);text-decoration:underline}
+
+.page{display:flex;max-width:1100px;margin:0 auto}
+.sidebar{width:220px;flex-shrink:0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;border-right:1px solid var(--border);background:var(--bg-card);padding:1.5rem 0;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.sidebar-badge{text-align:center;padding:0 1.25rem 1rem}
+.sidebar-badge img{width:48px;height:48px;border-radius:8px;border:1px solid var(--border)}
+.sidebar-title{font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);padding:0 1.25rem;margin-bottom:.75rem}
+.sidebar a{display:flex;align-items:center;gap:.5rem;padding:.45rem 1.25rem;font-size:.88rem;font-weight:500;color:var(--text-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s}
+.sidebar a:hover{color:var(--white);background:rgba(200,160,80,0.04);text-decoration:none}
+.sidebar a.active{color:var(--white);border-left-color:var(--accent);background:rgba(200,160,80,0.06)}
+.nav-icon{font-size:1rem;width:1.2rem;text-align:center}
+.content{flex:1;min-width:0;padding:2.5rem 2.5rem 4rem}
+@media(max-width:800px){.sidebar{display:none}.content{padding:1.5rem}}
+
+/* Hero */
+.hero-art{width:100%;margin-bottom:1.25rem;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:var(--bg-card)}
+.hero-svg{width:100%;height:auto;display:block}
+.guide-header{margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.header-row{display:flex;align-items:center;gap:1rem;margin-bottom:.5rem}
+.header-portrait{width:72px;height:72px;border-radius:8px;border:2px solid var(--border);object-fit:cover;background:var(--bg-el)}
+.header-text{flex:1}
+.breadcrumb{font-size:.78rem;color:var(--text-muted);margin-bottom:.3rem}
+.guide-header h1{font-family:'Cinzel',serif;font-size:2.2rem;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:.3rem}
+.subtitle{font-size:1rem;color:var(--text-dim)}
+.tag-row{display:flex;gap:.4rem;margin-top:.6rem;flex-wrap:wrap}
+.tag{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim);text-transform:uppercase;letter-spacing:.04em}
+.tag.fire{color:var(--fire);border-color:rgba(208,80,48,0.3);background:var(--fire-dim)}
+.tag.gold{color:var(--accent);border-color:rgba(200,160,80,0.3);background:var(--accent-dim)}
+.tag.green{color:var(--green);border-color:rgba(90,144,64,0.3);background:var(--green-dim)}
+.tag.blue{color:var(--blue);border-color:rgba(64,128,176,0.3);background:var(--blue-dim)}
+.tag.shock{color:var(--shock);border-color:rgba(128,96,192,0.3);background:var(--shock-dim)}
+
+/* Sections */
+.section{margin-top:3rem}
+.section h2{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.section h3{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:600;color:var(--text);margin:1.5rem 0 .6rem}
+.section p{margin-bottom:1rem}
+
+/* Callouts */
+.callout{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0}
+.callout.warn{border-left-color:var(--fire)}
+.callout.tip{border-left-color:var(--green)}
+.callout-label{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem;color:var(--accent)}
+.callout.warn .callout-label{color:var(--fire)}
+.callout.tip .callout-label{color:var(--green)}
+.callout p{margin-bottom:.5rem;font-size:.95rem}.callout p:last-child{margin-bottom:0}
+
+/* Stats */
+.stats{display:flex;gap:.5rem;flex-wrap:wrap;margin:.75rem 0}
+.stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:.4rem .75rem;text-align:center;min-width:3.5rem}
+.stat-box.primary{border-color:rgba(200,160,80,0.4)}
+.stat-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
+.stat-val{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--white)}
+.stat-box.primary .stat-val{color:var(--accent)}
+
+/* Picks */
+.picks{list-style:none;margin:.5rem 0}
+.picks li{padding:.3rem 0;font-size:.95rem;display:flex;gap:.4rem;align-items:baseline}
+.picks .label{font-size:.72rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.03em;flex-shrink:0;min-width:5rem}
+.picks .name{font-weight:600;color:var(--white)}
+.picks .note{color:var(--text-dim);font-size:.88rem}
+
+/* Level cards */
+.lv-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.4rem;overflow:hidden;transition:border-color .15s}
+.lv-card:hover{border-color:var(--border-light)}
+.lv-card.spike{border-left:3px solid var(--accent)}
+.lv-head{display:flex;align-items:center;gap:.6rem;padding:.65rem 1rem;cursor:pointer;user-select:none;transition:background .1s;flex-wrap:wrap}
+.lv-head:hover{background:var(--bg-hover)}
+.lv-num{font-family:'Cinzel',serif;font-weight:900;font-size:1.3rem;color:var(--white);min-width:1.6rem;text-align:center}
+.lv-range{font-size:.72rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(200,160,80,0.2);text-transform:uppercase;letter-spacing:.04em}
+.lv-title{font-weight:600;font-size:.95rem;color:var(--text);flex:1}
+.lv-spike{font-size:.65rem;font-weight:600;color:var(--accent);background:var(--accent-dim);padding:.15rem .45rem;border-radius:4px;border:1px solid rgba(200,160,80,0.2);text-transform:uppercase}
+.lv-arrow{color:var(--text-muted);font-size:.75rem;transition:transform .2s}
+.lv-card.open .lv-arrow{transform:rotate(90deg)}
+.lv-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.lv-card.open .lv-body{max-height:1200px}
+.lv-inner{padding:0 1rem 1rem;border-top:1px solid var(--border)}
+
+/* Quick picks */
+.qp-row{display:flex;flex-wrap:wrap;gap:.3rem;margin:.75rem 0 .5rem}
+.qp{font-size:.78rem;font-weight:500;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim)}
+.qp.skill{color:var(--green);border-color:rgba(90,144,64,0.2)}
+.qp.spell{color:var(--frost);border-color:rgba(64,128,192,0.2)}
+.qp.gear{color:var(--accent);border-color:rgba(200,160,80,0.2)}
+.qp.attr{color:var(--fire);border-color:rgba(208,80,48,0.2)}
+
+/* Gear cards */
+.gear-group{margin-bottom:1.5rem}
+.gear-group-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--accent);padding-bottom:.35rem;margin-bottom:.5rem;border-bottom:1px solid rgba(200,160,80,0.15)}
+.gear-row{display:flex;gap:.75rem;padding:.6rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:.35rem;align-items:center}
+.gear-img{width:48px;height:48px;border-radius:4px;border:1px solid var(--border);object-fit:cover;flex-shrink:0;background:var(--bg-el)}
+.gear-info{flex:1}
+.gear-name{font-weight:600;color:var(--accent);font-size:.95rem}
+.gear-slot{font-size:.7rem;color:var(--text-muted);margin-left:.35rem;text-transform:uppercase}
+.gear-desc{color:var(--text-dim);font-size:.85rem;margin-top:.1rem}
+.gear-loc{font-size:.8rem;color:var(--green);margin-top:.15rem}
+
+/* Spell grid */
+.spell-section{margin-bottom:1.5rem}
+.spell-level{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--white);padding-bottom:.35rem;margin-bottom:.5rem;border-bottom:1px solid var(--border)}
+.spell-row{display:flex;justify-content:space-between;align-items:start;padding:.5rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:.35rem;gap:.75rem}
+.spell-info{flex:1}.spell-name{font-weight:600;color:var(--white);font-size:.95rem}
+.spell-desc{color:var(--text-dim);font-size:.85rem;margin-top:.1rem}
+.spell-badge{font-size:.68rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;flex-shrink:0;align-self:center}
+.spell-badge.must{color:var(--green);background:var(--green-dim);border:1px solid rgba(90,144,64,0.2)}
+.spell-badge.good{color:var(--accent);background:var(--accent-dim);border:1px solid rgba(200,160,80,0.15)}
+.spell-badge.fire{color:var(--fire);background:var(--fire-dim);border:1px solid rgba(208,80,48,0.2)}
+.spell-badge.frost{color:var(--frost);background:var(--frost-dim);border:1px solid rgba(64,128,192,0.2)}
+.spell-badge.shock{color:var(--shock);background:var(--shock-dim);border:1px solid rgba(128,96,192,0.2)}
+.spell-badge.custom{color:#c0a060;background:rgba(192,160,96,0.08);border:1px solid rgba(192,160,96,0.15)}
+
+/* Birthsign cards */
+.bs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin:1rem 0}
+@media(max-width:700px){.bs-grid{grid-template-columns:1fr}}
+.bs-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center}
+.bs-card.recommended{border-color:var(--accent);box-shadow:0 0 0 1px rgba(200,160,80,0.1)}
+.bs-card img{width:64px;height:64px;border-radius:50%;border:2px solid var(--border);margin-bottom:.5rem;background:var(--bg-el)}
+.bs-card.recommended img{border-color:var(--accent)}
+.bs-name{font-family:'Cinzel',serif;font-weight:700;font-size:1rem;color:var(--white)}
+.bs-bonus{font-size:.85rem;color:var(--green);margin-top:.2rem}
+.bs-penalty{font-size:.85rem;color:var(--fire);margin-top:.1rem}
+.bs-note{font-size:.82rem;color:var(--text-dim);margin-top:.3rem}
+
+/* Rotation */
+.step-list{list-style:none;counter-reset:step}
+.step-list li{position:relative;padding:.75rem 0 .75rem 3rem;border-left:2px solid var(--border);margin-left:.75rem;counter-increment:step}
+.step-list li::before{content:counter(step);position:absolute;left:-.75rem;top:.6rem;width:1.4rem;height:1.4rem;background:var(--bg);border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:700;font-size:.75rem;color:var(--accent)}
+.step-list li:last-child{border-left-color:transparent}
+.step-action{font-weight:600;color:var(--white)}
+.step-detail{color:var(--text-dim);font-size:.9rem;margin-top:.2rem}
+
+/* Virtues table */
+.virtue-table{width:100%;border-collapse:collapse;margin:1rem 0}
+.virtue-table th{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--border)}
+.virtue-table td{padding:.5rem .6rem;border-bottom:1px solid var(--border);font-size:.9rem}
+.virtue-table tr:hover{background:var(--bg-card)}
+.virtue-table .attr-name{font-weight:600;color:var(--white)}
+.virtue-table .priority{font-size:.7rem;font-weight:600;padding:.1rem .4rem;border-radius:3px}
+.priority.t1{color:var(--accent);background:var(--accent-dim)}
+.priority.t2{color:var(--green);background:var(--green-dim)}
+.priority.t3{color:var(--text-muted);background:rgba(200,200,200,0.04)}
+
+/* Section images */
+.section-img{width:100%;max-height:200px;object-fit:cover;object-position:center;border-radius:8px;border:1px solid var(--border);margin:1rem 0;filter:brightness(0.85)}
+.inline-icon{width:28px;height:28px;vertical-align:middle;margin-right:.3rem;border-radius:4px}
+
+.guide-footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.75rem;color:var(--text-muted);text-align:center}
+.guide-footer a{color:var(--accent);margin:0 .5rem}
+
+/* Mobile nav */
+.mobile-nav{display:none;position:sticky;top:60px;z-index:100;background:rgba(12,10,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:56px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Cinzel',serif;font-size:.85rem;font-weight:700;color:var(--accent);letter-spacing:.06em}
+.nav-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s}
+.nav-links{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:rgba(12,10,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.nav-links.open{display:flex}
+.nav-links a{display:flex;align-items:center;gap:.5rem;height:44px;font-size:.9rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){.mobile-nav{display:flex}}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── Universal Nav ── */
+.unav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.unav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.unav-brand{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;color:var(--text);text-decoration:none;transition:color 0.3s}
+.unav-brand:hover{color:var(--accent,#c9a84c)}
+.unav-links{display:flex;gap:1.5rem;list-style:none;align-items:center}
+.unav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.3s;position:relative}
+.unav-links a:hover,.unav-links a.active{color:var(--accent,#c9a84c)}
+.unav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--accent,#c9a84c);transform:scaleX(0);transition:transform 0.3s;transform-origin:right}
+.unav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.unav-dropdown{position:relative}
+.unav-dropdown>a::after{display:none}
+.unav-dropdown>a{display:flex;align-items:center;gap:0.3rem}
+.unav-dropdown>a .dd-arrow{font-size:0.5rem;transition:transform 0.2s;margin-top:1px}
+.unav-dropdown:hover>a .dd-arrow{transform:rotate(180deg)}
+.unav-dd{
+  position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);
+  background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border);border-radius:10px;
+  min-width:200px;padding:0.5rem 0;
+  opacity:0;visibility:hidden;transform:translateX(-50%) translateY(-5px);
+  transition:opacity 0.2s,visibility 0.2s,transform 0.2s;
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+}
+.unav-dropdown:hover .unav-dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.unav-dd a{display:block;padding:0.6rem 1.2rem;font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.15s,background 0.15s;white-space:nowrap}
+.unav-dd a:hover{color:var(--accent,#c9a84c);background:rgba(201,168,76,0.06)}
+.unav-dd a::after{display:none}
+.unav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:0.5rem;z-index:1001}
+.unav-hamburger span{display:block;width:22px;height:2px;background:var(--text-dim,#aaa);margin:5px 0;transition:all 0.3s ease;border-radius:1px}
+.unav-hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.unav-hamburger.open span:nth-child(2){opacity:0}
+.unav-hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+@media(max-width:700px){
+  .unav-hamburger{display:block}
+  .unav-links{
+    display:flex;flex-direction:column;gap:0;
+    position:absolute;top:60px;left:0;right:0;
+    background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;
+    padding:0 0;
+  }
+  .unav-links.open{max-height:600px;padding:0.5rem 0}
+  .unav-links>li{list-style:none}
+  .unav-links>li>a{display:block;padding:0.8rem 2rem;font-size:0.85rem;border-bottom:1px solid var(--border)}
+  .unav-links>li:last-child>a{border-bottom:none}
+  .unav-links a::after{display:none}
+  .unav-dd{position:static;opacity:1;visibility:visible;transform:none;border:none;border-radius:0;min-width:auto;padding:0;background:none;backdrop-filter:none;box-shadow:none}
+  .unav-dd a{padding:0.7rem 2rem 0.7rem 3rem;font-size:0.8rem;border-bottom:1px solid var(--border)}
+  .unav-dropdown>a{display:none}
+  .unav-dropdown{border-bottom:none}
+}
+
+</style>
+</head>
+<body>
+<nav class="unav">
+  <div class="unav-inner">
+    <a href="index.html" class="unav-brand">Z3nGineer</a>
+    <button class="unav-hamburger" id="unav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="unav-links" id="unav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="unav-dropdown">
+        <a href="#">Projects <span class="dd-arrow">&#x25BC;</span></a>
+        <div class="unav-dd">
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+          <a href="https://crockednloaded.com">CrockedNLoaded</a>
+          <a href="guides.html">Game Guides</a>
+          <a href="CHIM.html">CHIM Modpack</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="mobile-nav" style="margin-top:60px;">
+  <span class="mobile-nav-title">Armored Archmage</span>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="#overview"><span class="nav-icon">&#9670;</span> Overview</a>
+    <a href="#firststeps"><span class="nav-icon">&#9654;</span> First Steps</a>
+    <a href="#birthsign"><span class="nav-icon">&#9733;</span> Birthsign</a>
+    <a href="#virtues"><span class="nav-icon">&#8593;</span> Leveling</a>
+    <a href="#progression"><span class="nav-icon">&#9876;</span> Progression</a>
+    <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+    <a href="#gear"><span class="nav-icon">&#9670;</span> Gear</a>
+    <a href="#enchanting"><span class="nav-icon">&#10023;</span> Enchanting</a>
+    <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+    <a href="#tips"><span class="nav-icon">&#9670;</span> Tips</a>
+  </div>
+</div>
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-badge">
+    <img src="https://images.uesp.net/thumb/a/a3/OBR-class-Battlemage.png/200px-OBR-class-Battlemage.png" alt="Battlemage">
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">&#9670;</span> Overview</a>
+  <a href="#firststeps"><span class="nav-icon">&#9654;</span> First Steps</a>
+  <a href="#birthsign"><span class="nav-icon">&#9733;</span> Birthsign</a>
+  <a href="#virtues"><span class="nav-icon">&#8593;</span> Leveling</a>
+  <a href="#progression"><span class="nav-icon">&#9876;</span> Progression</a>
+  <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+  <a href="#gear"><span class="nav-icon">&#9670;</span> Gear</a>
+  <a href="#enchanting"><span class="nav-icon">&#10023;</span> Enchanting</a>
+  <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+  <a href="#tips"><span class="nav-icon">&#9670;</span> Tips</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="glow" cx="45%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="#3a1a30" stop-opacity="0.9"/>
+            <stop offset="50%" stop-color="#1a0a18" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#0c0a08" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="destGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#d05030" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#d05030" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="swordGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#c8a050" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#c8a050" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="blade" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f0e0c0" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#c8a050" stop-opacity="0.5"/>
+          </linearGradient>
+          <linearGradient id="plateGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#7a7268"/>
+            <stop offset="100%" stop-color="#4a4438"/>
+          </linearGradient>
+        </defs>
+        <rect width="900" height="260" fill="url(#glow)"/>
+
+        <!-- Ayleid ruin columns in background -->
+        <g opacity="0.15">
+          <rect x="100" y="60" width="18" height="180" rx="3" fill="#6a6a70"/>
+          <rect x="94" y="55" width="30" height="8" rx="2" fill="#7a7a80"/>
+          <rect x="780" y="70" width="18" height="170" rx="3" fill="#6a6a70"/>
+          <rect x="774" y="65" width="30" height="8" rx="2" fill="#7a7a80"/>
+          <rect x="200" y="80" width="14" height="160" rx="2" fill="#5a5a60"/>
+          <rect x="700" y="85" width="14" height="155" rx="2" fill="#5a5a60"/>
+        </g>
+
+        <!-- Arcane circle on ground -->
+        <g transform="translate(440,230)" opacity="0.12">
+          <ellipse cx="0" cy="0" rx="120" ry="18" fill="none" stroke="#c8a050" stroke-width="1"/>
+          <ellipse cx="0" cy="0" rx="90" ry="14" fill="none" stroke="#c8a050" stroke-width="0.7"/>
+          <line x1="-80" y1="0" x2="80" y2="0" stroke="#c8a050" stroke-width="0.5"/>
+          <line x1="0" y1="-12" x2="0" y2="12" stroke="#c8a050" stroke-width="0.5"/>
+          <line x1="-60" y1="-10" x2="60" y2="10" stroke="#c8a050" stroke-width="0.4"/>
+          <line x1="-60" y1="10" x2="60" y2="-10" stroke="#c8a050" stroke-width="0.4"/>
+        </g>
+
+        <!-- Fallen dremora — left -->
+        <g transform="translate(180,210)" opacity="0.65">
+          <ellipse cx="0" cy="0" rx="26" ry="11" fill="#5a2828"/>
+          <circle cx="-22" cy="3" r="8" fill="#5a2828"/>
+          <line x1="18" y1="-3" x2="32" y2="-8" stroke="#5a2828" stroke-width="5" stroke-linecap="round"/>
+          <line x1="16" y1="7" x2="28" y2="14" stroke="#5a2828" stroke-width="4" stroke-linecap="round"/>
+          <ellipse cx="2" cy="8" rx="16" ry="4" fill="#3a0808" opacity="0.35"/>
+        </g>
+
+        <!-- Fallen dremora — right -->
+        <g transform="translate(700,215)" opacity="0.6">
+          <ellipse cx="0" cy="0" rx="24" ry="10" fill="#5a2828" transform="rotate(-12)"/>
+          <circle cx="18" cy="-2" r="7" fill="#5a2828"/>
+          <line x1="-15" y1="5" x2="-28" y2="10" stroke="#5a2828" stroke-width="4" stroke-linecap="round"/>
+          <ellipse cx="3" cy="7" rx="14" ry="4" fill="#3a0808" opacity="0.3"/>
+        </g>
+
+        <!-- === THE ARMORED ARCHMAGE — center === -->
+        <g transform="translate(440,128)" opacity="0.95">
+          <!-- Cape — dark blue, flowing behind -->
+          <path d="M-10,-2 Q-15,15 -22,35 Q-30,60 -42,80 Q-48,92 -55,95 Q-60,93 -50,82 Q-38,60 -28,38 Q-18,15 -12,0 Z" fill="#1a2848" opacity="0.85"/>
+          <path d="M6,-2 Q2,15 -6,35 Q-15,60 -28,82 Q-36,94 -45,96 Q-52,93 -40,82 Q-28,62 -18,38 Q-8,15 0,0 Z" fill="#142040" opacity="0.6"/>
+
+          <!-- HEAVY PLATE BODY — armored torso -->
+          <ellipse cx="0" cy="22" rx="20" ry="30" fill="url(#plateGrad)"/>
+          <!-- Breastplate detail -->
+          <ellipse cx="0" cy="16" rx="16" ry="22" fill="#6a6258" opacity="0.6"/>
+          <!-- Armor plate lines -->
+          <line x1="-10" y1="4" x2="-10" y2="34" stroke="#8a8070" stroke-width="0.8" opacity="0.5"/>
+          <line x1="10" y1="4" x2="10" y2="34" stroke="#8a8070" stroke-width="0.8" opacity="0.5"/>
+          <line x1="-14" y1="18" x2="14" y2="18" stroke="#8a8070" stroke-width="0.6" opacity="0.4"/>
+          <line x1="-14" y1="28" x2="14" y2="28" stroke="#8a8070" stroke-width="0.6" opacity="0.4"/>
+          <!-- Shoulder pauldrons -->
+          <ellipse cx="-16" cy="4" rx="10" ry="6" fill="#7a7268"/>
+          <ellipse cx="16" cy="4" rx="10" ry="6" fill="#7a7268"/>
+          <ellipse cx="-16" cy="4" rx="8" ry="4" fill="#8a8278" opacity="0.4"/>
+          <ellipse cx="16" cy="4" rx="8" ry="4" fill="#8a8278" opacity="0.4"/>
+          <!-- Belt -->
+          <rect x="-16" y="36" width="32" height="5" rx="2" fill="#7a6040" opacity="0.8"/>
+          <rect x="-4" y="36" width="8" height="5" rx="1" fill="#c8a050" opacity="0.5"/>
+
+          <!-- HEAD — heavy helm with open visor -->
+          <circle cx="0" cy="-14" r="12" fill="#6a6258"/>
+          <!-- Helm ridge -->
+          <path d="M-10,-24 Q0,-30 10,-24" stroke="#8a8070" stroke-width="2" fill="none"/>
+          <!-- Helm crest -->
+          <path d="M0,-28 Q0,-36 2,-40" stroke="#7a7268" stroke-width="3" stroke-linecap="round"/>
+          <!-- Visor slit — glowing eyes -->
+          <rect x="-8" y="-17" width="16" height="3.5" rx="1" fill="#0a0a0a"/>
+          <ellipse cx="-4" cy="-15.5" rx="2.8" ry="1.3" fill="#4080c0" opacity="0.95"/>
+          <ellipse cx="4" cy="-15.5" rx="2.8" ry="1.3" fill="#4080c0" opacity="0.95"/>
+          <!-- Cheek guards -->
+          <path d="M-10,-12 L-12,-4" stroke="#6a6258" stroke-width="3" stroke-linecap="round"/>
+          <path d="M10,-12 L12,-4" stroke="#6a6258" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- Legs — armored, wide stance -->
+          <line x1="-7" y1="46" x2="-16" y2="78" stroke="#5a5248" stroke-width="9" stroke-linecap="round"/>
+          <line x1="7" y1="46" x2="18" y2="76" stroke="#5a5248" stroke-width="9" stroke-linecap="round"/>
+          <!-- Greaves detail -->
+          <line x1="-10" y1="56" x2="-14" y2="70" stroke="#7a7268" stroke-width="1" opacity="0.4"/>
+          <line x1="11" y1="54" x2="16" y2="68" stroke="#7a7268" stroke-width="1" opacity="0.4"/>
+          <!-- Sabatons -->
+          <ellipse cx="-17" cy="80" rx="7" ry="4" fill="#5a5248"/>
+          <ellipse cx="19" cy="78" rx="7" ry="4" fill="#5a5248"/>
+
+          <!-- LEFT ARM — casting destruction magic, palm open -->
+          <line x1="-14" y1="6" x2="-42" y2="-18" stroke="#5a5248" stroke-width="7" stroke-linecap="round"/>
+          <!-- Gauntlet -->
+          <circle cx="-44" cy="-20" r="5" fill="#6a6258"/>
+          <!-- Open fingers -->
+          <line x1="-46" y1="-22" x2="-50" y2="-27" stroke="#6a6258" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="-44" y1="-24" x2="-47" y2="-30" stroke="#6a6258" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="-42" y1="-25" x2="-44" y2="-31" stroke="#6a6258" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="-40" y1="-24" x2="-40" y2="-30" stroke="#6a6258" stroke-width="1.5" stroke-linecap="round"/>
+
+          <!-- DESTRUCTION MAGIC — fire + lightning swirling from left hand -->
+          <circle cx="-45" cy="-30" r="28" fill="url(#destGlow)"/>
+          <circle cx="-45" cy="-30" r="18" fill="#d05030" opacity="0.12"/>
+          <circle cx="-45" cy="-30" r="12" fill="#e08040" opacity="0.22"/>
+          <circle cx="-45" cy="-30" r="8" fill="#f0a040" opacity="0.4"/>
+          <circle cx="-45" cy="-30" r="5" fill="#f0c060" opacity="0.65"/>
+          <circle cx="-45" cy="-30" r="2.5" fill="#f8e8a0" opacity="0.95"/>
+          <!-- Fire tendrils -->
+          <path d="M-45,-30 Q-52,-45 -48,-55" stroke="#e08040" stroke-width="1.8" opacity="0.4" fill="none"/>
+          <path d="M-45,-30 Q-38,-48 -42,-58" stroke="#d05030" stroke-width="1.4" opacity="0.35" fill="none"/>
+          <path d="M-45,-30 Q-56,-40 -60,-52" stroke="#e08040" stroke-width="1.2" opacity="0.3" fill="none"/>
+          <!-- Lightning arcs from the fire -->
+          <path d="M-45,-30 Q-30,-50 -25,-55 L-28,-48 Q-20,-58 -15,-62" stroke="#8090e0" stroke-width="1" opacity="0.5" fill="none"/>
+          <path d="M-45,-30 Q-55,-50 -58,-60 L-54,-52 Q-60,-62 -62,-68" stroke="#8090e0" stroke-width="0.8" opacity="0.35" fill="none"/>
+          <!-- Sparks -->
+          <circle cx="-50" cy="-50" r="1.3" fill="#f0c060" opacity="0.5"/>
+          <circle cx="-40" cy="-52" r="1" fill="#f0a040" opacity="0.45"/>
+          <circle cx="-56" cy="-46" r="0.9" fill="#e08040" opacity="0.4"/>
+          <circle cx="-36" cy="-44" r="0.8" fill="#8090e0" opacity="0.35"/>
+          <circle cx="-48" cy="-58" r="0.7" fill="#f8e8a0" opacity="0.3"/>
+
+          <!-- RIGHT ARM — holding glowing sword out to the side -->
+          <line x1="14" y1="6" x2="40" y2="-12" stroke="#5a5248" stroke-width="7" stroke-linecap="round"/>
+          <!-- Gauntlet -->
+          <circle cx="42" cy="-14" r="5" fill="#6a6258"/>
+
+          <!-- GLOWING SWORD — Goldbrand style -->
+          <circle cx="72" cy="-42" r="18" fill="url(#swordGlow)"/>
+          <line x1="44" y1="-16" x2="90" y2="-55" stroke="url(#blade)" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- Crossguard -->
+          <line x1="42" y1="-19" x2="48" y2="-12" stroke="#c8a050" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+          <!-- Blade gleam -->
+          <line x1="58" y1="-30" x2="61" y2="-33" stroke="#f0e8d0" stroke-width="1.2" opacity="0.6"/>
+          <line x1="72" y1="-42" x2="74" y2="-44" stroke="#f0e8d0" stroke-width="1" opacity="0.5"/>
+          <line x1="82" y1="-50" x2="84" y2="-52" stroke="#f0e8d0" stroke-width="0.8" opacity="0.4"/>
+          <!-- Sword enchantment glow along blade -->
+          <line x1="50" y1="-22" x2="85" y2="-52" stroke="#c8a050" stroke-width="5" opacity="0.08" stroke-linecap="round"/>
+          <!-- Enchantment runes on blade -->
+          <circle cx="60" cy="-32" r="1.5" fill="#c8a050" opacity="0.3"/>
+          <circle cx="70" cy="-40" r="1.2" fill="#c8a050" opacity="0.25"/>
+          <circle cx="78" cy="-47" r="1" fill="#c8a050" opacity="0.2"/>
+        </g>
+
+        <!-- Shield spell aura around the archmage -->
+        <g opacity="0.1">
+          <ellipse cx="440" cy="155" rx="55" ry="75" fill="none" stroke="#4080c0" stroke-width="1.5"/>
+          <ellipse cx="440" cy="155" rx="50" ry="70" fill="none" stroke="#4080c0" stroke-width="0.8" stroke-dasharray="4 6"/>
+        </g>
+
+        <!-- Resist Magic ward glyphs floating around -->
+        <g opacity="0.18" fill="none" stroke="#c8a050" stroke-width="0.8">
+          <circle cx="370" cy="90" r="9"/><path d="M370,81 L370,99 M361,90 L379,90"/>
+          <circle cx="520" cy="80" r="8"/><path d="M514,74 L526,86 M526,74 L514,86"/>
+          <circle cx="340" cy="145" r="7"/><path d="M340,138 L340,152"/>
+          <circle cx="550" cy="135" r="6"/><path d="M544,135 L556,135 M550,129 L550,141"/>
+        </g>
+
+        <!-- Magic particles -->
+        <circle cx="410" cy="70" r="1.3" fill="#f0a040" opacity="0.4"/>
+        <circle cx="470" cy="55" r="0.9" fill="#f0c060" opacity="0.35"/>
+        <circle cx="380" cy="88" r="1.1" fill="#4080c0" opacity="0.3"/>
+        <circle cx="510" cy="68" r="0.8" fill="#c8a050" opacity="0.3"/>
+        <circle cx="350" cy="65" r="1" fill="#8090e0" opacity="0.25"/>
+        <circle cx="540" cy="85" r="0.7" fill="#e08040" opacity="0.25"/>
+
+        <!-- Ground line -->
+        <line x1="80" y1="240" x2="820" y2="240" stroke="#3a2a18" stroke-width="0.5" opacity="0.3"/>
+      </svg>
+    </div>
+    <div class="header-row">
+      <img class="header-portrait" src="https://images.uesp.net/thumb/1/15/OBR-icon-race-Breton.png/200px-OBR-icon-race-Breton.png" alt="Breton">
+      <div class="header-text">
+        <div class="breadcrumb">Oblivion Remastered &rsaquo; Builds &rsaquo; Armored Archmage</div>
+        <h1>Armored Archmage</h1>
+        <div class="subtitle">Breton &middot; The Apprentice &middot; Destruction + Blade + Heavy Armor</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag fire">Battlemage</span>
+      <span class="tag gold">Heavy Armor Caster</span>
+      <span class="tag shock">Destruction Focus</span>
+      <span class="tag blue">Remastered 2025</span>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="section reveal" id="overview">
+    <h2>Overview</h2>
+    <p>The Armored Archmage is the definitive battlemage fantasy in Oblivion Remastered: full Daedric plate armor, devastating destruction magic from one hand, a glowing enchanted blade in the other. Where the Spellsword is a melee fighter who casts, the Armored Archmage is a <strong>mage who refuses to be squishy</strong>. You lead with Destruction at range, close with a blade when they survive, and your heavy armor means you never need to run.</p>
+
+    <p>The build's genius is in its racial synergy. The Apprentice birthsign gives you <strong>+100 Magicka</strong> (the largest flat Magicka boost in the game) but inflicts a brutal <strong>100% Weakness to Magic</strong>. On any other race, this is suicide. On a Breton, your innate <strong>50% Magic Resistance</strong> cancels exactly half of that weakness, leaving you with only a manageable 50% net vulnerability. Then you stack Resist Magic through enchanting and gear until that weakness is completely erased, and you're left with +100 free Magicka and zero drawback.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Why Battlemage, Not Spellsword?</div>
+      <p>Both are melee-magic hybrids, but the Armored Archmage leans <strong>magic-primary</strong>. Your Strength and Intelligence are both favored attributes. You carry Alchemy as a Major skill for potion sustain. Conjuration gives you summoned tanks. The Apprentice birthsign's +100 Magicka (vs. The Mage's +50) means you can cast more spells, more often. This is a mage in heavy armor, not a warrior who dabbles in magic.</p>
+    </div>
+
+    <h3><img class="inline-icon" src="https://images.uesp.net/thumb/1/15/OBR-icon-race-Breton.png/200px-OBR-icon-race-Breton.png" alt="">Race &mdash; Breton</h3>
+    <ul class="picks">
+      <li><span class="label">Passive</span> <span class="name">50% Magic Resistance</span> &mdash; <span class="note">best defensive racial in the game, permanent. Critical for Apprentice synergy.</span></li>
+      <li><span class="label">Passive</span> <span class="name">+50 Magicka</span> &mdash; <span class="note">permanent bonus to your mana pool. Stacks with Apprentice for +150 total.</span></li>
+      <li><span class="label">Daily</span> <span class="name">Dragon Skin</span> &mdash; <span class="note">50% physical damage absorption for 60 seconds. Save for bosses.</span></li>
+      <li><span class="label">Skills</span> <span class="name">+10 Conjuration, Mysticism, Restoration</span> &middot; <span class="name">+5 Alchemy, Alteration, Illusion</span></li>
+    </ul>
+
+    <h3>Class &mdash; Custom Battlemage</h3>
+    <ul class="picks">
+      <li><span class="label">Spec</span> <span class="name">Magic</span></li>
+      <li><span class="label">Favored</span> <span class="name">Strength, Intelligence</span></li>
+      <li><span class="label">Major</span> <span class="name">Alchemy, Alteration, Blade, Conjuration, Destruction, Heavy Armor, Mysticism</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Why These 7 Major Skills?</div>
+      <p><strong>Alchemy</strong> &mdash; potion crafting for sustain (Restore Magicka, Resist Magic potions, Fortify Intelligence). Breton gets +5 racial.</p>
+      <p><strong>Alteration</strong> &mdash; Shield spells stack with heavy armor for absurd defense. Open Lock saves you from Security. Breton gets +5 racial.</p>
+      <p><strong>Blade</strong> &mdash; your melee weapon skill. Power attacks + enchanted sword for when enemies close the gap.</p>
+      <p><strong>Conjuration</strong> &mdash; summons tank for you while you cast. Breton gets +10 racial, so you start at Apprentice rank.</p>
+      <p><strong>Destruction</strong> &mdash; your primary damage school. Fire, frost, shock at range. The reason you're a mage.</p>
+      <p><strong>Heavy Armor</strong> &mdash; full plate protection. Rush to Journeyman (50) for near-zero spell penalty.</p>
+      <p><strong>Mysticism</strong> &mdash; Soul Trap for enchanting, Detect Life for awareness, Dispel for enemy buffs. Breton gets +10 racial.</p>
+    </div>
+
+    <h3>Starting Attributes</h3>
+    <div class="stats">
+      <div class="stat-box primary"><div class="stat-label">STR</div><div class="stat-val">45</div></div>
+      <div class="stat-box primary"><div class="stat-label">INT</div><div class="stat-val">55</div></div>
+      <div class="stat-box"><div class="stat-label">WIL</div><div class="stat-val">50</div></div>
+      <div class="stat-box"><div class="stat-label">AGI</div><div class="stat-val">30</div></div>
+      <div class="stat-box"><div class="stat-label">SPD</div><div class="stat-val">30</div></div>
+      <div class="stat-box"><div class="stat-label">END</div><div class="stat-val">40</div></div>
+      <div class="stat-box"><div class="stat-label">PER</div><div class="stat-val">40</div></div>
+      <div class="stat-box"><div class="stat-label">LCK</div><div class="stat-val">50</div></div>
+    </div>
+    <p style="font-size:.88rem;color:var(--text-dim);">Breton with Magic spec and STR/INT favored. +150 Magicka total (Breton racial +50, Apprentice +100). INT and STR both boosted by favored attribute bonus. Willpower is a secondary priority for regen.</p>
+  </section>
+
+  <!-- FIRST STEPS -->
+  <section class="section reveal" id="firststeps">
+    <h2>First Steps After the Tutorial</h2>
+    <p>You leave the sewers with +150 Magicka, 50% Magic Resistance, and a 100% Weakness to Magic that you need to manage. Here is the optimal opening sequence:</p>
+
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Buy spells at the Imperial City Market District</span>
+        <div class="step-detail">Visit <strong>Edgar's Discount Spells</strong> for Snowball and basic Destruction spells. Hit <strong>Mystic Emporium</strong> for Protect (Shield spell) and Soul Trap. Buy a cheap blade and any heavy armor from <strong>"A Fighting Chance"</strong> if you exited without gear.</div>
+      </li>
+      <li>
+        <span class="step-action">Grab a Mortar and Pestle from any alchemist</span>
+        <div class="step-detail">Alchemy is a Major skill. Start collecting every ingredient you see. Your first priority potions are <strong>Restore Magicka</strong> (Steel-Blue Entoloma + Flax Seeds) and <strong>Resist Magic</strong> (Clouded Funnel Cap + Wisp Stalk Caps). Resist Magic potions are your early-game defense against The Apprentice weakness.</div>
+      </li>
+      <li>
+        <span class="step-action">Join the Mages Guild</span>
+        <div class="step-detail">Talk to any Mages Guild hall to start the <strong>recommendation quest chain</strong>. You need all 7 city recommendations to access the Arcane University for spellmaking and enchanting. Start early and do them between other quests. This is your most important questline.</div>
+      </li>
+      <li>
+        <span class="step-action">Travel to Skingrad for Destruction spells</span>
+        <div class="step-detail">Skingrad Mages Guild is the best spell shop. Buy <strong>Flare</strong> and <strong>Snowball</strong> from Druja, <strong>Frost Touch</strong> from Sulinus Vassinus, and <strong>Fireball</strong> from Vigge the Cautious. Do Skingrad's recommendation quest while here.</div>
+      </li>
+      <li>
+        <span class="step-action">Get Chillrend in Chorrol</span>
+        <div class="step-detail">Complete <strong>"The Killing Field"</strong> quest (talk to Valus Odiil at the Grey Mare inn). Keep both his sons alive. Reward: <strong>Chillrend</strong> &mdash; frost damage blade that scales with your level. Best early weapon for this build.</div>
+      </li>
+      <li>
+        <span class="step-action">Raid Vindasel for Umbra (optional, risky)</span>
+        <div class="step-detail">Southwest of Imperial City. The NPC Umbra drops a 28-damage sword with built-in Soul Trap and a full Ebony Armor set. You can lure her to Imperial City guards if you cannot fight her. Umbra trivializes soul gem farming for enchanting later.</div>
+      </li>
+    </ol>
+
+    <div class="callout warn">
+      <div class="callout-label">Manage Your Weakness Early</div>
+      <p>Until you stack enough Resist Magic to negate The Apprentice weakness, <strong>enemy mages are extremely dangerous</strong>. Carry Resist Magic potions (Alchemy), use Dragon Skin (daily power) for tough magic-heavy fights, and let your summoned creatures tank caster enemies. Do not facetank mage bosses at low level.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Grind While You Travel</div>
+      <p>Cast <strong>Flare at nothing</strong> to level Destruction. Cast <strong>Protect on yourself</strong> repeatedly to level Alteration. Collect every ingredient along the road and brew potions to level Alchemy. Summon a Skeleton before fights for Conjuration XP. Every step should level something.</p>
+    </div>
+  </section>
+
+  <!-- BIRTHSIGN -->
+  <section class="section reveal" id="birthsign">
+    <h2>Birthsign</h2>
+    <p>The Apprentice is the defining choice of this build. It is dangerous on every other race and brilliant on a Breton.</p>
+
+    <div class="bs-grid">
+      <div class="bs-card recommended">
+        <img src="https://images.uesp.net/thumb/d/d4/OBbsign_Apprentice.jpg/200px-OBbsign_Apprentice.jpg" alt="The Apprentice">
+        <div class="bs-name">The Apprentice</div>
+        <div class="bs-bonus">+100 Magicka</div>
+        <div class="bs-penalty">100% Weakness to Magic</div>
+        <div class="bs-note">Breton's 50% MR halves the weakness to 50%. Stack Resist Magic gear to erase it entirely. Biggest Magicka boost of any birthsign without losing regen.</div>
+        <div style="margin-top:.5rem"><span class="tag gold">Recommended</span></div>
+      </div>
+      <div class="bs-card">
+        <img src="https://images.uesp.net/thumb/c/c7/OBbsign_Mage.jpg/200px-OBbsign_Mage.jpg" alt="The Mage">
+        <div class="bs-name">The Mage</div>
+        <div class="bs-bonus">+50 Magicka</div>
+        <div class="bs-note">Safe alternative. No drawback, but 50 less Magicka than The Apprentice. Better if you do not want to manage a weakness.</div>
+      </div>
+      <div class="bs-card">
+        <img src="https://images.uesp.net/thumb/1/1f/OBbsign_Atronach.jpg/200px-OBbsign_Atronach.jpg" alt="The Atronach">
+        <div class="bs-name">The Atronach</div>
+        <div class="bs-bonus">+150 Magicka, 50% Spell Absorb</div>
+        <div class="bs-penalty">ZERO magicka regen &mdash; ever</div>
+        <div class="bs-note">More Magicka but no regen. Requires Alchemy-only sustain. Expert only &mdash; not for this build.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">The Math Behind Breton + Apprentice</div>
+      <p><strong>The Apprentice</strong> applies 100% Weakness to Magic. This is a <em>separate modifier</em> from Magic Resistance. In Oblivion's formula, Weakness and Resistance are additive: 50% Resist + 100% Weakness = net 50% Weakness to Magic. That means you effectively take 1.5x magic damage early on.</p>
+      <p>However, every point of additional Resist Magic you stack further reduces this. At just <strong>50 additional Resist Magic</strong> (from enchantments, gear, or Alchemy), you reach: 100% Resist - 100% Weakness = 0% net. You take normal magic damage with +100 free Magicka. Stack <strong>beyond</strong> 50% additional and you become magic-resistant again.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Resist Magic Milestones</div>
+      <p><strong>0 extra Resist:</strong> 50% net weakness (early game &mdash; be careful with mages)</p>
+      <p><strong>+25 Resist:</strong> 25% net weakness (mid game &mdash; manageable)</p>
+      <p><strong>+50 Resist:</strong> 0% net (neutral &mdash; the Apprentice weakness is fully negated)</p>
+      <p><strong>+85+ Resist:</strong> 35%+ net resistance (endgame &mdash; you are now magic-resistant with +100 free Magicka)</p>
+    </div>
+  </section>
+
+  <!-- VIRTUES / LEVELING -->
+  <section class="section reveal" id="virtues">
+    <h2>Leveling &mdash; Virtue System</h2>
+    <p>The remaster replaced the old attribute multiplier system. At each level-up you get <strong>12 Virtues</strong> to distribute freely. Max 5 per attribute, max 3 attributes per level. Luck costs 4 per point. For the Armored Archmage, you want to push both Strength and Intelligence hard, with Willpower close behind.</p>
+
+    <table class="virtue-table">
+      <thead><tr><th>Attribute</th><th>Priority</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">Strength</td><td><span class="priority t1">MAX FIRST</span></td><td>Melee damage + carry weight + contributes to HP. You are in heavy plate &mdash; you need the carry capacity and the blade damage.</td></tr>
+        <tr><td class="attr-name">Intelligence</td><td><span class="priority t1">MAX FIRST</span></td><td>Max Magicka pool. Every point of INT = 2 Magicka (with Magic spec). You already have +150 from race/birthsign &mdash; push this higher.</td></tr>
+        <tr><td class="attr-name">Willpower</td><td><span class="priority t2">SECOND</span></td><td>Magicka regen (quadratic scaling in Remastered). The single most impactful stat for sustain. Push to 80+ as soon as STR and INT are comfortable.</td></tr>
+        <tr><td class="attr-name">Endurance</td><td><span class="priority t2">SECOND</span></td><td>HP per level + HP regen. Retroactive in Remastered, so no rush, but you want this at 60+ for melee durability.</td></tr>
+        <tr><td class="attr-name">Agility</td><td><span class="priority t3">LATER</span></td><td>Fatigue pool for power attacks. At 30, you are Fatigue-starved early. Bump to 50 when you can.</td></tr>
+        <tr><td class="attr-name">Speed</td><td><span class="priority t3">LATER</span></td><td>Movement speed. At 30, you are slow in heavy plate. Not urgent but quality of life.</td></tr>
+        <tr><td class="attr-name">Luck</td><td><span class="priority t3">SKIP</span></td><td>Costs 4 Virtues per point. Not worth investing.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-label">Suggested Distribution</div>
+      <p><strong>Levels 2-8:</strong> Strength 5, Intelligence 5, Willpower 2</p>
+      <p><strong>Levels 9-15:</strong> Willpower 5, Intelligence 5, Endurance 2</p>
+      <p><strong>Levels 16-20:</strong> Endurance 5, Agility 5, Speed 2</p>
+      <p><strong>Levels 21+:</strong> Fill remaining attributes. Speed, then whatever needs topping off.</p>
+    </div>
+  </section>
+
+  <!-- PROGRESSION -->
+  <section class="section reveal" id="progression">
+    <h2>Level Progression</h2>
+    <p style="color:var(--text-dim);margin-bottom:1rem;">Click to expand. Each phase balances melee and magic growth.</p>
+
+    <!-- Early -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 1-5</span>
+        <span class="lv-title">Foundation &mdash; Destruction + Heavy Armor + Alchemy Basics</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Destruction to 25</span>
+          <span class="qp skill">Heavy Armor to 25</span>
+          <span class="qp skill">Alchemy to 25</span>
+          <span class="qp spell">Flare / Snowball</span>
+          <span class="qp gear">Chillrend</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Priority</span> <span class="name">Destruction + Alchemy</span> &mdash; <span class="note">Destruction for damage, Alchemy for Resist Magic potions to survive your weakness</span></li>
+          <li><span class="label">Dest 25</span> <span class="name">Apprentice perk</span> &mdash; <span class="note">access to Fireball, Frost Touch, better damage spells</span></li>
+          <li><span class="label">HA 25</span> <span class="name">Apprentice perk</span> &mdash; <span class="note">reduced armor degradation. Get hit to train it.</span></li>
+          <li><span class="label">Alch 25</span> <span class="name">Apprentice perk</span> &mdash; <span class="note">better potion quality. Brew Resist Magic, Restore Magicka, Restore Health.</span></li>
+          <li><span class="label">Conj</span> <span class="name">Summon Skeleton</span> &mdash; <span class="note">your tank while you cast from range. Breton starts at Conjuration 15.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Chorrol &mdash; "The Killing Field"</span> &mdash; <span class="note">get Chillrend early</span></li>
+          <li><span class="label">Quest</span> <span class="name">Mages Guild recommendations</span> &mdash; <span class="note">start the 7-city chain. You need Arcane University for enchanting.</span></li>
+        </ul>
+        <div class="callout warn" style="margin-top:.5rem;">
+          <div class="callout-label">Survive Your Weakness</div>
+          <p>At level 1-5 you take 1.5x magic damage. Always brew and carry <strong>Resist Magic potions</strong>. Use your summoned creature to draw aggro from enemy mages. Pop <strong>Dragon Skin</strong> for physical damage bosses.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Mid -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 6-12</span>
+        <span class="lv-title">Core Power &mdash; Heavy Armor 50 + Conjuration Upgrade</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Heavy Armor to 50</span>
+          <span class="qp skill">Destruction to 50</span>
+          <span class="qp skill">Conjuration to 50</span>
+          <span class="qp skill">Alteration to 50</span>
+          <span class="qp spell">Lightning Bolt</span>
+          <span class="qp spell">Summon Scamp</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">HA 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">95% spell effectiveness in armor. THE build-defining milestone. Your spells stop being nerfed.</span></li>
+          <li><span class="label">Dest 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">Lightning Bolt access. Shock drains enemy Magicka &mdash; shuts down mages who threaten you.</span></li>
+          <li><span class="label">Conj 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">Summon Scamp and Clannfear. Better summons = better tanks.</span></li>
+          <li><span class="label">Alt 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">stronger Shield spells. Shield + Heavy Armor = enormous damage reduction.</span></li>
+          <li><span class="label">Goal</span> <span class="name">Arcane University access</span> &mdash; <span class="note">finish Mages Guild recs. Enchanting altar is your path to erasing the Apprentice weakness.</span></li>
+          <li><span class="label">Resist</span> <span class="name">Start stacking Resist Magic gear</span> &mdash; <span class="note">any ring, amulet, or armor with Resist Magic. Target +25% by this phase.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Mid-Late -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 13-20</span>
+        <span class="lv-title">Archmage Ascension &mdash; Enchanting + Expert Spells</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Destruction to 75</span>
+          <span class="qp skill">Blade to 50</span>
+          <span class="qp skill">Mysticism to 50</span>
+          <span class="qp spell">Expert Destruction</span>
+          <span class="qp gear">Resist Magic Enchants</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Dest 75</span> <span class="name">Expert</span> &mdash; <span class="note">major elemental nukes. Custom spell damage becomes devastating.</span></li>
+          <li><span class="label">Blade 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">power attack combos improve. Reliable melee finishing.</span></li>
+          <li><span class="label">Myst 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">Detect Life, better Soul Trap duration. Feeds your enchanting.</span></li>
+          <li><span class="label">Enchant</span> <span class="name">Resist Magic on 2-3 armor pieces</span> &mdash; <span class="note">target +50% total. This is where the Apprentice weakness is fully erased.</span></li>
+          <li><span class="label">Custom</span> <span class="name">Paralyze Touch 1-2s</span> &mdash; <span class="note">Alteration Expert custom spell. Knocks enemies flat for a power attack.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Peryite's Shrine</span> &mdash; <span class="note">get Spellbreaker shield (Reflect Spell 30%).</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:.5rem;">
+          <div class="callout-label">The Weakness Disappears Here</div>
+          <p>At this phase, with Breton 50% MR + 50% from enchantments, your net magic weakness is <strong>zero</strong>. The Apprentice birthsign is now purely +100 free Magicka with no downside. You are stronger than if you had taken The Mage.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Endgame -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 21-25+</span>
+        <span class="lv-title">Endgame &mdash; Daedric Plate + Master Destruction</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Destruction to 100</span>
+          <span class="qp skill">Blade to 75+</span>
+          <span class="qp skill">Conjuration to 75+</span>
+          <span class="qp gear">Goldbrand</span>
+          <span class="qp gear">Daedric Armor</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Dest 100</span> <span class="name">Master</span> &mdash; <span class="note">master-level spells. Custom nukes can one-shot most enemies.</span></li>
+          <li><span class="label">Blade 75</span> <span class="name">Expert</span> &mdash; <span class="note">power attacks cause bleeding. Paralyze + power attack + bleed = instant kill combo.</span></li>
+          <li><span class="label">Conj 75</span> <span class="name">Expert</span> &mdash; <span class="note">Summon Dremora Lord. Your personal bodyguard devastates everything.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Boethiah Shrine (level 21+)</span> &mdash; <span class="note">get Goldbrand (25 dmg + 22 fire). Best blade in the game.</span></li>
+          <li><span class="label">Gear</span> <span class="name">Daedric Armor</span> &mdash; <span class="note">AR 79+. Enchant every piece with Resist Magic + Fortify Magicka.</span></li>
+          <li><span class="label">Goal</span> <span class="name">85%+ total Resist Magic</span> &mdash; <span class="note">you are now magic-resistant WITH +100 bonus Magicka. Build is complete.</span></li>
+        </ul>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- SPELLS -->
+  <section class="section reveal" id="spells">
+    <h2>Best Spells</h2>
+
+    <div class="spell-section">
+      <div class="spell-level"><img class="inline-icon" src="https://images.uesp.net/b/bd/OB-icon-skill-Destruction.png" alt="">Destruction &mdash; Primary Offense (Ranged Softening)</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Flare</div><div class="spell-desc">Cheap fire damage. Your bread and butter at level 1. Spam it to level Destruction and soften enemies before they reach you.</div><div class="gear-loc">&#128205; Druja &mdash; Skingrad Mages Guild &middot; Volanaro &mdash; Bruma Mages Guild</div></div><span class="spell-badge fire">Fire &middot; Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Snowball</div><div class="spell-desc">Frost damage slows enemies. Kite melee foes while your summon tanks. Great synergy with Chillrend's frost damage.</div><div class="gear-loc">&#128205; Druja &mdash; Skingrad MG &middot; Edgar &mdash; Imperial City</div></div><span class="spell-badge frost">Frost &middot; Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Fireball</div><div class="spell-desc">Solid ranged fire. Your mid-game opener. Higher cost = more Destruction XP in Remastered.</div><div class="gear-loc">&#128205; Vigge the Cautious &mdash; Skingrad MG</div></div><span class="spell-badge fire">Fire &middot; Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Lightning Bolt</div><div class="spell-desc">Best element for you. Damage + drains enemy Magicka. Shuts down enemy mages who exploit your Apprentice weakness.</div><div class="gear-loc">&#128205; Vigge the Cautious &mdash; Skingrad MG</div></div><span class="spell-badge shock">Shock &middot; Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Custom: Elemental Nuke</div><div class="spell-desc">Shock 50 + Drain Health 100 + Weakness to Magic 100%. Your endgame opener. One cast + one swing = dead.</div><div class="gear-loc">&#128205; Craft at Spellmaking Altar</div></div><span class="spell-badge custom">Custom &middot; Expert</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Alteration &mdash; Defense + Utility (Shield Spells)</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Protect</div><div class="spell-desc">Shield spell &mdash; absorbs physical damage. Cast before every fight. Stacks with heavy armor for absurd defense.</div><div class="gear-loc">&#128205; Calindil &mdash; Imperial City, Mystic Emporium</div></div><span class="spell-badge must">Must &middot; Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Aegis / Greater Shield</div><div class="spell-desc">Stronger shield at higher ranks. At Journeyman+ Alteration, these become your pre-fight buff.</div><div class="gear-loc">&#128205; Trayvond &mdash; Cheydinhal MG</div></div><span class="spell-badge good">Good &middot; Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Open Lock spells</div><div class="spell-desc">Skip Security entirely. Open Easy Lock at Apprentice, upgrade as Alteration levels.</div><div class="gear-loc">&#128205; Druja &mdash; Skingrad MG &middot; Orintur &mdash; Cheydinhal MG</div></div><span class="spell-badge good">Good &middot; Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Custom: Paralyze Touch 1-2s</div><div class="spell-desc">Knocks enemies to the ground. Follow with a power attack while they are helpless. The single best melee spell in the game.</div><div class="gear-loc">&#128205; Craft at Spellmaking Altar &mdash; requires Alteration Expert (75)</div></div><span class="spell-badge custom">Custom &middot; Expert</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Conjuration &mdash; Backup Summons</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Skeleton</div><div class="spell-desc">Your first tank. Draws aggro so you can cast safely from range. Breton starts at Conjuration 15 &mdash; you can cast this early.</div><div class="gear-loc">&#128205; Edgar &mdash; Imperial City, Edgar's Discount Spells</div></div><span class="spell-badge must">Must &middot; Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Scamp / Clannfear</div><div class="spell-desc">Upgraded summons at Journeyman. Clannfear is tanky with a charge attack. Let them draw fire while you nuke from behind.</div><div class="gear-loc">&#128205; Volanaro &mdash; Bruma MG &middot; Alberic Litte &mdash; Chorrol MG</div></div><span class="spell-badge good">Good &middot; Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Dremora Lord</div><div class="spell-desc">Endgame summon. A full-on melee powerhouse that fights alongside you. You cast, he chops.</div><div class="gear-loc">&#128205; Athragar &mdash; Arcane University (after completing Mages Guild)</div></div><span class="spell-badge must">Must &middot; Expert</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Mysticism &mdash; Utility + Soul Gems</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Soul Trap</div><div class="spell-desc">Trap a dying creature's soul in a gem. Essential for enchanting. Cast on enemies before killing them.</div><div class="gear-loc">&#128205; Calindil &mdash; Imperial City, Mystic Emporium</div></div><span class="spell-badge must">Must &middot; Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Detect Life</div><div class="spell-desc">See living creatures through walls. Invaluable in dungeons &mdash; know what is around the corner before you buff up.</div><div class="gear-loc">&#128205; Ita Rienus &mdash; Bravil MG</div></div><span class="spell-badge good">Good &middot; Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Dispel</div><div class="spell-desc">Removes magical effects from a target. Strip enemy Shield spells and buffs before swinging your blade.</div><div class="gear-loc">&#128205; Calindil &mdash; Imperial City, Mystic Emporium</div></div><span class="spell-badge good">Good &middot; Journ</span></div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Shock is Your Best Friend</div>
+      <p>As a Breton Apprentice, enemy mages are your biggest threat. Shock damage drains enemy <strong>Magicka</strong> in addition to Health. A few Lightning Bolts can completely empty an enemy mage's mana pool, removing their ability to exploit your weakness. Always lead with Shock against casters.</p>
+    </div>
+  </section>
+
+  <!-- GEAR -->
+  <section class="section reveal" id="gear">
+    <h2>Gear by Level</h2>
+
+    <div class="callout">
+      <div class="callout-label">Spell Effectiveness in Armor</div>
+      <p>Heavy armor reduces spell power. At Novice (0-24), you lose ~18%. At <strong>Journeyman (50+), you only lose 5%</strong>. Rush Heavy Armor to 50 &mdash; this is non-negotiable for a caster in plate.</p>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Early Game &mdash; Levels 1-10</div>
+      <div class="gear-row">
+        <img class="gear-img" src="https://images.uesp.net/thumb/a/ac/OBR-item-Chillrend.jpg/200px-OBR-item-Chillrend.jpg" alt="Chillrend">
+        <div class="gear-info">
+          <div><span class="gear-name">Chillrend</span> <span class="gear-slot">Blade</span></div>
+          <div class="gear-desc">Frost Damage + Weakness to Frost. Level-scaled, so get it early. Great synergy with frost Destruction spells.</div>
+          <div class="gear-loc">&#128205; Chorrol &mdash; complete "The Killing Field" quest.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <img class="gear-img" src="https://images.uesp.net/thumb/5/51/OBR-item-Umbra.jpg/200px-OBR-item-Umbra.jpg" alt="Umbra">
+        <div class="gear-info">
+          <div><span class="gear-name">Umbra</span> <span class="gear-slot">Blade + Armor Set</span></div>
+          <div class="gear-desc">28 damage + Soul Trap. Also drops full Ebony Armor set. Umbra auto-fills soul gems for enchanting &mdash; critical for this build.</div>
+          <div class="gear-loc">&#128205; Vindasel ruins (SW of Imperial City). Lure NPC to guards if needed.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#9876;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Steel / Chainmail / Dwarven Armor</span> <span class="gear-slot">Heavy Armor</span></div>
+          <div class="gear-desc">Buy or loot. Upgrade to Dwarven when found. Your armor training dummy &mdash; get hit to level Heavy Armor.</div>
+          <div class="gear-loc">&#128205; "A Fighting Chance" &mdash; Imperial City Market District.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Mid Game &mdash; Levels 10-20</div>
+      <div class="gear-row">
+        <img class="gear-img" src="https://images.uesp.net/thumb/b/ba/OBR-item-Spell_Breaker.jpg/200px-OBR-item-Spell_Breaker.jpg" alt="Spellbreaker">
+        <div class="gear-info">
+          <div><span class="gear-name">Spellbreaker</span> <span class="gear-slot">Shield</span></div>
+          <div class="gear-desc">Reflect Spell 30%. Reflects enemy magic back at them. Combined with your Resist Magic stacking, mages become trivial.</div>
+          <div class="gear-loc">&#128205; Peryite's Shrine (SE of Bravil). Requires level 10+.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128141;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Ring of Khajiiti</span> <span class="gear-slot">Ring</span></div>
+          <div class="gear-desc">Fortify Speed 10 + Chameleon 35%. Partially invisible while still acting. Amazing for positioning before a nuke.</div>
+          <div class="gear-loc">&#128205; Meridia's Shrine (west of Skingrad). Complete the Daedric quest. Requires level 10+.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <img class="gear-img" src="https://images.uesp.net/thumb/6/64/OB-item-Ebony_Armor.jpg/200px-OB-item-Ebony_Armor.jpg" alt="Ebony Armor">
+        <div class="gear-info">
+          <div><span class="gear-name">Ebony Armor</span> <span class="gear-slot">Heavy Armor</span></div>
+          <div class="gear-desc">AR 69. Appears in loot/shops around level 15. Enchant with Resist Magic to start erasing your weakness.</div>
+          <div class="gear-loc">&#128205; Random loot at level 15+. "The Best Defense" in Imperial City.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Late Game &mdash; Levels 20+</div>
+      <div class="gear-row">
+        <img class="gear-img" src="https://images.uesp.net/thumb/2/2e/OBR-item-Goldbrand.jpg/200px-OBR-item-Goldbrand.jpg" alt="Goldbrand">
+        <div class="gear-info">
+          <div><span class="gear-name">Goldbrand</span> <span class="gear-slot">Blade</span></div>
+          <div class="gear-desc">25 damage + 22 Fire Damage. The best sword in the game. Your Destruction magic softens, Goldbrand finishes.</div>
+          <div class="gear-loc">&#128205; Boethiah's Shrine (east of Cheydinhal). Requires level 20+.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <img class="gear-img" src="https://images.uesp.net/thumb/7/7a/OB-item-Daedric_Armor.jpg/200px-OB-item-Daedric_Armor.jpg" alt="Daedric Armor">
+        <div class="gear-info">
+          <div><span class="gear-name">Daedric Armor / Madness Armor</span> <span class="gear-slot">Heavy Armor</span></div>
+          <div class="gear-desc">AR 79+ (Daedric) or 81+ (Madness, Shivering Isles). Enchant every piece with Resist Magic + Fortify Magicka for the ultimate battlemage setup.</div>
+          <div class="gear-loc">&#128205; Daedric: random loot at 20+. Madness: Shivering Isles, crafted at The Crucible.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#9876;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Umbra (endgame)</span> <span class="gear-slot">Blade</span></div>
+          <div class="gear-desc">Keep Umbra in your inventory even after getting Goldbrand. The built-in Soul Trap means every kill passively fills soul gems. Switch to it for trash mobs, use Goldbrand for bosses.</div>
+          <div class="gear-loc">&#128205; Already acquired from Vindasel.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Key Accessories (Any Level)</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128141;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Mundane Ring / Resist Magic Jewelry</span></div>
+          <div class="gear-desc">Any ring or amulet with Resist Magic. Stack these to erase your Apprentice weakness. Even +10% matters early.</div>
+          <div class="gear-loc">&#128205; Random loot, vendors, or enchant your own.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128255;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Amulet of Fortify Intelligence / Willpower</span></div>
+          <div class="gear-desc">More Magicka or faster regen. With your already massive pool, Willpower (regen) is usually better.</div>
+          <div class="gear-loc">&#128205; Random loot, vendors, or enchant your own.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENCHANTING -->
+  <section class="section reveal" id="enchanting">
+    <h2>Enchanting &mdash; Erasing the Apprentice Weakness</h2>
+    <p>Enchanting is the endgame strategy that transforms this build from strong to broken. Your primary goal is stacking <strong>Resist Magic</strong> on every piece of gear until The Apprentice's 100% Weakness to Magic is completely negated &mdash; and then surpassed.</p>
+
+    <h3>Where to Enchant</h3>
+    <div class="callout">
+      <div class="callout-label">Enchanting Altars</div>
+      <p><strong>Arcane University</strong> &mdash; Chironasium building. Requires all 7 Mages Guild recommendations.</p>
+      <p><strong>Frostcrag Spire</strong> &mdash; personal tower (DLC, included in Remastered). Buy Magetallow Candles from Aurelinwae at Mystic Emporium to activate.</p>
+    </div>
+
+    <h3>The Resist Magic Stacking Plan</h3>
+    <p>Your goal: reach 100% total Resist Magic to completely neutralize the Apprentice weakness AND gain magic immunity. Here is the math:</p>
+
+    <table class="virtue-table">
+      <thead><tr><th>Source</th><th>Resist Magic</th><th>How to Get</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">Breton Racial</td><td>50%</td><td>Free, permanent</td></tr>
+        <tr><td class="attr-name">Cuirass Enchant</td><td>15-20%</td><td>Grand Soul Gem + Resist Magic spell known</td></tr>
+        <tr><td class="attr-name">Helmet Enchant</td><td>12-15%</td><td>Grand Soul Gem + Resist Magic spell known</td></tr>
+        <tr><td class="attr-name">Shield Enchant or Spellbreaker</td><td>10-15%</td><td>Enchant or use Spellbreaker (30% Reflect)</td></tr>
+        <tr><td class="attr-name">Ring Enchant</td><td>10-15%</td><td>Grand Soul Gem + Resist Magic spell known</td></tr>
+        <tr><td class="attr-name">Amulet Enchant</td><td>10-15%</td><td>Grand Soul Gem + Resist Magic spell known</td></tr>
+        <tr><td class="attr-name" style="color:var(--accent);">TOTAL</td><td style="color:var(--accent);font-weight:700;">107-130%</td><td>100% Weakness fully negated, 7-30% net Resist</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-label">You Only Need +50% From Gear</div>
+      <p>Breton racial (50%) + gear enchants (50%) = 100% total Resist Magic. The Apprentice's 100% Weakness is reduced to 0% net. Any additional Resist Magic beyond that makes you <strong>actively resistant</strong> to magic damage. At 130% total resist vs 100% weakness, you have 30% net magic resistance WITH +100 bonus Magicka.</p>
+    </div>
+
+    <h3>Best Enchantments by Slot</h3>
+    <table class="virtue-table">
+      <thead><tr><th>Slot</th><th>Primary Enchant</th><th>Alternative</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">Cuirass</td><td>Resist Magic (biggest soul = biggest enchant)</td><td>Fortify Magicka</td></tr>
+        <tr><td class="attr-name">Helmet</td><td>Resist Magic</td><td>Fortify Willpower (regen)</td></tr>
+        <tr><td class="attr-name">Gauntlets</td><td>Fortify Strength (melee damage)</td><td>Fortify Magicka</td></tr>
+        <tr><td class="attr-name">Greaves</td><td>Fortify Magicka</td><td>Fortify Speed</td></tr>
+        <tr><td class="attr-name">Boots</td><td>Fortify Speed</td><td>Resist Magic</td></tr>
+        <tr><td class="attr-name">Ring 1</td><td>Resist Magic</td><td>Fortify Intelligence</td></tr>
+        <tr><td class="attr-name">Ring 2</td><td>Fortify Willpower</td><td>Fortify Magicka</td></tr>
+        <tr><td class="attr-name">Amulet</td><td>Resist Magic</td><td>Fortify Intelligence</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Soul Gem Priority</h3>
+    <div class="callout warn">
+      <div class="callout-label">Use Grand Souls for Resist Magic</div>
+      <p>Resist Magic enchantments scale dramatically with soul quality. A Petty soul gives ~5% Resist. A Grand soul gives 15-20%. <strong>Always use Grand Soul Gems for your Resist Magic enchants</strong> on cuirass, helmet, ring, and amulet. Use Umbra's Soul Trap to passively farm Grand Souls from Liches, Xivilai, and Gloom Wraiths.</p>
+    </div>
+  </section>
+
+  <!-- COMBAT -->
+  <section class="section reveal" id="combat">
+    <h2>Combat Guide</h2>
+
+    <h3>The Armored Archmage Loop</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Summon your creature before engaging</span>
+        <div class="step-detail">Summon a Skeleton/Scamp/Dremora Lord before combat starts. They draw aggro and tank while you cast freely. This is especially important early game when your magic weakness is still active.</div>
+      </li>
+      <li>
+        <span class="step-action">Open with Destruction at range</span>
+        <div class="step-detail">Fire Lightning Bolt or Fireball as enemies approach. Against mages, always lead with Shock to drain their Magicka. Against melee enemies, use Frost to slow their approach. Get 2-3 casts off before they reach you.</div>
+      </li>
+      <li>
+        <span class="step-action">Cast Shield before they close</span>
+        <div class="step-detail">Alteration Shield spell (Protect, Aegis, Greater Shield) stacks with your heavy armor. Cast it as enemies close the gap. This makes you nearly unkillable in melee with Daedric armor + Shield spell.</div>
+      </li>
+      <li>
+        <span class="step-action">Switch to blade and melee</span>
+        <div class="step-detail">Draw Goldbrand or Chillrend and finish weakened enemies with melee. Power attacks deal massive damage to enemies you have already softened with Destruction. Enchanted blade adds fire or frost on top.</div>
+      </li>
+      <li>
+        <span class="step-action">Paralyze Touch for tough enemies</span>
+        <div class="step-detail">Custom Paralyze Touch (1-2 sec) knocks them flat. Follow immediately with a power attack while they are on the ground. This is your kill combo for anything that survives the initial barrage.</div>
+      </li>
+      <li>
+        <span class="step-action">Heal between swings with Alchemy</span>
+        <div class="step-detail">Use Restore Health and Restore Magicka potions between melee exchanges. You are an alchemist &mdash; you should always have potions. You can also cast Restoration spells if you have them, but potions are faster.</div>
+      </li>
+    </ol>
+
+    <div class="callout">
+      <div class="callout-label">Against Mages (Your Weakness)</div>
+      <p>Until you stack Resist Magic, enemy mages are dangerous. The counter strategy: <strong>1)</strong> Lead with Shock to drain their Magicka. <strong>2)</strong> Let your summon tank their spells. <strong>3)</strong> Close to melee as fast as possible &mdash; mages are squishy in melee. <strong>4)</strong> Carry Resist Magic potions (Alchemy) for emergencies. <strong>5)</strong> Use Dragon Skin (daily) for the hardest mage fights.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Fatigue Management</div>
+      <p>Power attacks and sprinting cost Fatigue. In heavy plate with 30 Agility, your Fatigue pool is small. Do not spam power attacks. Use them strategically after Paralyze or when the enemy is staggered. Carry Restore Fatigue potions or cast Minor Respite.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">The Endgame Fantasy</div>
+      <p>At level 25+ with full Daedric plate, 100%+ Resist Magic, +100 Magicka from Apprentice, Goldbrand in one hand and master Destruction in the other: you are an unstoppable arcane juggernaut. Summon a Dremora Lord, cast a custom Shock nuke, close with Goldbrand, and nothing in Cyrodiil can touch you. The "weakness" that defines this build in early game becomes your greatest strength.</p>
+    </div>
+  </section>
+
+  <!-- TIPS -->
+  <section class="section reveal" id="tips">
+    <h2>Tips &amp; Remastered Mechanics</h2>
+
+    <div class="callout tip">
+      <div class="callout-label">Willpower Quadratic Regen</div>
+      <p>In the Remastered version, Magicka regen scales <strong>quadratically</strong> with Willpower, not linearly. This means the difference between 60 and 80 Willpower is much larger than the difference between 40 and 60. Push Willpower past 80 as soon as your core stats (STR/INT) are comfortable. The regen increase is dramatic and makes sustained casting in heavy armor feel effortless.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Heavy Armor + Conjuration Duration Warning</div>
+      <p>Wearing heavy armor with low Heavy Armor skill reduces spell effectiveness, which includes <strong>Conjuration duration</strong>. If your summons disappear too quickly, it is because your spell effectiveness is being penalized by your armor. This is why rushing <strong>Heavy Armor to 50 (Journeyman)</strong> is non-negotiable. At 50+, the penalty is only 5% &mdash; your Dremora Lord stays out nearly as long as it would without armor.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Alchemy is Your Lifeline</div>
+      <p>As a Major skill, Alchemy levels naturally as you brew. Your three priority potions: <strong>Resist Magic</strong> (covers your weakness), <strong>Restore Magicka</strong> (sustain for long dungeon crawls), and <strong>Restore Health</strong> (combat healing). Pick up every ingredient you find. Brew at every alchemy station you pass. By level 15 your Alchemy should be high enough to make powerful potions.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">The Apprentice Weakness is Temporary</div>
+      <p>The biggest mistake players make with this build is thinking The Apprentice is permanently crippling. It is not. With Breton racial (50% MR), just <strong>one enchanted ring or amulet with +15-20% Resist Magic</strong> reduces your net weakness to only 30%. By mid-game, the weakness is gone. By endgame, you are magic-resistant. The early game caution is a small price to pay for +100 permanent Magicka.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Sleep to Level Up</div>
+      <p>You do not level up automatically. When the game says you should rest and meditate, find any bed (inns, your house, dungeon bedrolls) and sleep to trigger the level-up screen and spend your 12 Virtues.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Repair Hammers Are Essential</div>
+      <p>Weapons and armor degrade with use, and a broken weapon does almost no damage. As a heavy armor user, your repair costs are high. Carry <strong>Repair Hammers</strong> (buy from any blacksmith) and repair between fights. With Armorer skill at 50+, repairs become very efficient.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Efficient Enchanting Route</div>
+      <p><strong>1)</strong> Use Umbra to passively fill soul gems on every kill. <strong>2)</strong> Buy empty Grand Soul Gems from Mages Guild vendors. <strong>3)</strong> Hunt Grand-soul creatures (Liches, Xivilai, Gloom Wraiths) to fill them. <strong>4)</strong> Enchant Resist Magic on helmet, cuirass, ring, and amulet first. <strong>5)</strong> Then Fortify Magicka/Willpower on remaining slots. Each piece that adds Resist Magic makes you noticeably tankier against magic.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Do Not Steal from the Mages Guild</div>
+      <p>Getting expelled from the Mages Guild locks you out of spell vendors, the Spellmaking Altar, and the Enchanting Altar until you complete a penance quest. For this build, losing enchanting access is devastating. Steal from everyone else &mdash; just not the Mages Guild.</p>
+    </div>
+  </section>
+
+  <div class="guide-footer">
+    Oblivion Remastered &middot; Armored Archmage (Battlemage) Build Guide &middot; 2025
+    <br>
+    <a href="guides.html">All Build Guides</a> &middot; <a href="index.html">Home</a>
+  </div>
+
+</main>
+</div>
+
+<script>
+// Active nav highlighting
+const sections=document.querySelectorAll('.section');
+const navLinks=document.querySelectorAll('.sidebar a');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      const a=document.querySelector('.sidebar a[href="#'+entry.target.id+'"]');
+      if(a)a.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>observer.observe(s));
+
+// Mobile hamburger menu
+const toggle=document.querySelector('.nav-toggle');
+const links=document.querySelector('.nav-links');
+toggle.addEventListener('click',()=>links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+// Scroll reveal
+const revealObserver=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+},{rootMargin:'0px 0px -60px 0px',threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+// Level card toggle
+document.querySelectorAll('.lv-head').forEach(head=>{
+  head.addEventListener('click',()=>head.parentElement.classList.toggle('open'));
+});
+
+/* ── Universal Nav Toggle ── */
+(function(){
+  const btn=document.getElementById('unav-hamburger'),nav=document.getElementById('unav-links');
+  if(!btn||!nav)return;
+  btn.addEventListener('click',()=>{btn.classList.toggle('open');nav.classList.toggle('open')});
+  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+    btn.classList.remove('open');nav.classList.remove('open');
+  }));
+})();
+
+</script>
+</body>
+</html>

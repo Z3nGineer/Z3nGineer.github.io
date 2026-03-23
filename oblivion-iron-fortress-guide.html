@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iron Fortress (Tank Warrior) — Oblivion Remastered Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0c0a08;--bg-card:#161310;--bg-el:#1e1a16;--bg-hover:#252018;
+  --border:#302a22;--border-light:#403828;
+  --text:#e0d8c8;--text-dim:#a89878;--text-muted:#6a5a48;--white:#f0e8d8;
+  --accent:#c8a050;--accent-hover:#e0b860;--accent-dim:rgba(200,160,80,0.12);
+  --fire:#d05030;--fire-dim:rgba(208,80,48,0.12);
+  --frost:#4080c0;--frost-dim:rgba(64,128,192,0.12);
+  --shock:#8060c0;--shock-dim:rgba(128,96,192,0.12);
+  --green:#5a9040;--green-dim:rgba(90,144,64,0.1);
+  --blue:#4080b0;--blue-dim:rgba(64,128,176,0.1);
+  --red:#b03030;
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:19px;line-height:1.75;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);text-decoration:underline}
+
+.page{display:flex;max-width:1100px;margin:0 auto}
+.sidebar{width:220px;flex-shrink:0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;border-right:1px solid var(--border);background:var(--bg-card);padding:1.5rem 0;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.sidebar-badge{text-align:center;padding:0 1.25rem 1rem}
+.sidebar-badge img{width:48px;height:48px;border-radius:8px;border:1px solid var(--border)}
+.sidebar-title{font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);padding:0 1.25rem;margin-bottom:.75rem}
+.sidebar a{display:flex;align-items:center;gap:.5rem;padding:.45rem 1.25rem;font-size:.88rem;font-weight:500;color:var(--text-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s}
+.sidebar a:hover{color:var(--white);background:rgba(200,160,80,0.04);text-decoration:none}
+.sidebar a.active{color:var(--white);border-left-color:var(--accent);background:rgba(200,160,80,0.06)}
+.nav-icon{font-size:1rem;width:1.2rem;text-align:center}
+.content{flex:1;min-width:0;padding:2.5rem 2.5rem 4rem}
+@media(max-width:800px){.sidebar{display:none}.content{padding:1.5rem}}
+
+/* Hero */
+.hero-art{width:100%;margin-bottom:1.25rem;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:var(--bg-card)}
+.hero-svg{width:100%;height:auto;display:block}
+.guide-header{margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.header-row{display:flex;align-items:center;gap:1rem;margin-bottom:.5rem}
+.header-portrait{width:72px;height:72px;border-radius:8px;border:2px solid var(--border);object-fit:cover;background:var(--bg-el)}
+.header-text{flex:1}
+.breadcrumb{font-size:.78rem;color:var(--text-muted);margin-bottom:.3rem}
+.guide-header h1{font-family:'Cinzel',serif;font-size:2.2rem;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:.3rem}
+.subtitle{font-size:1rem;color:var(--text-dim)}
+.tag-row{display:flex;gap:.4rem;margin-top:.6rem;flex-wrap:wrap}
+.tag{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim);text-transform:uppercase;letter-spacing:.04em}
+.tag.fire{color:var(--fire);border-color:rgba(208,80,48,0.3);background:var(--fire-dim)}
+.tag.gold{color:var(--accent);border-color:rgba(200,160,80,0.3);background:var(--accent-dim)}
+.tag.green{color:var(--green);border-color:rgba(90,144,64,0.3);background:var(--green-dim)}
+.tag.blue{color:var(--blue);border-color:rgba(64,128,176,0.3);background:var(--blue-dim)}
+
+/* Sections */
+.section{margin-top:3rem}
+.section h2{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.section h3{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:600;color:var(--text);margin:1.5rem 0 .6rem}
+.section p{margin-bottom:1rem}
+
+/* Callouts */
+.callout{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0}
+.callout.warn{border-left-color:var(--fire)}
+.callout.tip{border-left-color:var(--green)}
+.callout-label{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem;color:var(--accent)}
+.callout.warn .callout-label{color:var(--fire)}
+.callout.tip .callout-label{color:var(--green)}
+.callout p{margin-bottom:.5rem;font-size:.95rem}.callout p:last-child{margin-bottom:0}
+
+/* Stats */
+.stats{display:flex;gap:.5rem;flex-wrap:wrap;margin:.75rem 0}
+.stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:.4rem .75rem;text-align:center;min-width:3.5rem}
+.stat-box.primary{border-color:rgba(200,160,80,0.4)}
+.stat-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
+.stat-val{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--white)}
+.stat-box.primary .stat-val{color:var(--accent)}
+
+/* Picks */
+.picks{list-style:none;margin:.5rem 0}
+.picks li{padding:.3rem 0;font-size:.95rem;display:flex;gap:.4rem;align-items:baseline}
+.picks .label{font-size:.72rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.03em;flex-shrink:0;min-width:5rem}
+.picks .name{font-weight:600;color:var(--white)}
+.picks .note{color:var(--text-dim);font-size:.88rem}
+
+/* Level cards */
+.lv-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.4rem;overflow:hidden;transition:border-color .15s}
+.lv-card:hover{border-color:var(--border-light)}
+.lv-card.spike{border-left:3px solid var(--accent)}
+.lv-head{display:flex;align-items:center;gap:.6rem;padding:.65rem 1rem;cursor:pointer;user-select:none;transition:background .1s;flex-wrap:wrap}
+.lv-head:hover{background:var(--bg-hover)}
+.lv-num{font-family:'Cinzel',serif;font-weight:900;font-size:1.3rem;color:var(--white);min-width:1.6rem;text-align:center}
+.lv-range{font-size:.72rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(200,160,80,0.2);text-transform:uppercase;letter-spacing:.04em}
+.lv-title{font-weight:600;font-size:.95rem;color:var(--text);flex:1}
+.lv-spike{font-size:.65rem;font-weight:600;color:var(--accent);background:var(--accent-dim);padding:.15rem .45rem;border-radius:4px;border:1px solid rgba(200,160,80,0.2);text-transform:uppercase}
+.lv-arrow{color:var(--text-muted);font-size:.75rem;transition:transform .2s}
+.lv-card.open .lv-arrow{transform:rotate(90deg)}
+.lv-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.lv-card.open .lv-body{max-height:1200px}
+.lv-inner{padding:0 1rem 1rem;border-top:1px solid var(--border)}
+
+/* Quick picks */
+.qp-row{display:flex;flex-wrap:wrap;gap:.3rem;margin:.75rem 0 .5rem}
+.qp{font-size:.78rem;font-weight:500;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim)}
+.qp.skill{color:var(--green);border-color:rgba(90,144,64,0.2)}
+.qp.spell{color:var(--frost);border-color:rgba(64,128,192,0.2)}
+.qp.gear{color:var(--accent);border-color:rgba(200,160,80,0.2)}
+.qp.attr{color:var(--fire);border-color:rgba(208,80,48,0.2)}
+
+/* Gear cards */
+.gear-group{margin-bottom:1.5rem}
+.gear-group-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--accent);padding-bottom:.35rem;margin-bottom:.5rem;border-bottom:1px solid rgba(200,160,80,0.15)}
+.gear-row{display:flex;gap:.75rem;padding:.6rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:.35rem;align-items:center}
+.gear-img{width:48px;height:48px;border-radius:4px;border:1px solid var(--border);object-fit:cover;flex-shrink:0;background:var(--bg-el)}
+.gear-info{flex:1}
+.gear-name{font-weight:600;color:var(--accent);font-size:.95rem}
+.gear-slot{font-size:.7rem;color:var(--text-muted);margin-left:.35rem;text-transform:uppercase}
+.gear-desc{color:var(--text-dim);font-size:.85rem;margin-top:.1rem}
+.gear-loc{font-size:.8rem;color:var(--green);margin-top:.15rem}
+
+/* Spell grid */
+.spell-section{margin-bottom:1.5rem}
+.spell-level{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--white);padding-bottom:.35rem;margin-bottom:.5rem;border-bottom:1px solid var(--border)}
+.spell-row{display:flex;justify-content:space-between;align-items:start;padding:.5rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:.35rem;gap:.75rem}
+.spell-info{flex:1}.spell-name{font-weight:600;color:var(--white);font-size:.95rem}
+.spell-desc{color:var(--text-dim);font-size:.85rem;margin-top:.1rem}
+.spell-badge{font-size:.68rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;flex-shrink:0;align-self:center}
+.spell-badge.must{color:var(--green);background:var(--green-dim);border:1px solid rgba(90,144,64,0.2)}
+.spell-badge.good{color:var(--accent);background:var(--accent-dim);border:1px solid rgba(200,160,80,0.15)}
+.spell-badge.fire{color:var(--fire);background:var(--fire-dim);border:1px solid rgba(208,80,48,0.2)}
+.spell-badge.frost{color:var(--frost);background:var(--frost-dim);border:1px solid rgba(64,128,192,0.2)}
+.spell-badge.shock{color:var(--shock);background:var(--shock-dim);border:1px solid rgba(128,96,192,0.2)}
+.spell-badge.custom{color:#c0a060;background:rgba(192,160,96,0.08);border:1px solid rgba(192,160,96,0.15)}
+
+/* Birthsign cards */
+.bs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin:1rem 0}
+@media(max-width:700px){.bs-grid{grid-template-columns:1fr}}
+.bs-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center}
+.bs-card.recommended{border-color:var(--accent);box-shadow:0 0 0 1px rgba(200,160,80,0.1)}
+.bs-card.recommended img{border-color:var(--accent)}
+.bs-card img{width:64px;height:64px;border-radius:50%;border:2px solid var(--border);margin-bottom:.5rem;background:var(--bg-el)}
+.bs-name{font-family:'Cinzel',serif;font-weight:700;font-size:1rem;color:var(--white)}
+.bs-bonus{font-size:.85rem;color:var(--green);margin-top:.2rem}
+.bs-penalty{font-size:.85rem;color:var(--fire);margin-top:.1rem}
+.bs-note{font-size:.82rem;color:var(--text-dim);margin-top:.3rem}
+
+/* Rotation */
+.step-list{list-style:none;counter-reset:step}
+.step-list li{position:relative;padding:.75rem 0 .75rem 3rem;border-left:2px solid var(--border);margin-left:.75rem;counter-increment:step}
+.step-list li::before{content:counter(step);position:absolute;left:-.75rem;top:.6rem;width:1.4rem;height:1.4rem;background:var(--bg);border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:700;font-size:.75rem;color:var(--accent)}
+.step-list li:last-child{border-left-color:transparent}
+.step-action{font-weight:600;color:var(--white)}
+.step-detail{color:var(--text-dim);font-size:.9rem;margin-top:.2rem}
+
+/* Virtues table */
+.virtue-table{width:100%;border-collapse:collapse;margin:1rem 0}
+.virtue-table th{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--border)}
+.virtue-table td{padding:.5rem .6rem;border-bottom:1px solid var(--border);font-size:.9rem}
+.virtue-table tr:hover{background:var(--bg-card)}
+.virtue-table .attr-name{font-weight:600;color:var(--white)}
+.virtue-table .priority{font-size:.7rem;font-weight:600;padding:.1rem .4rem;border-radius:3px}
+.priority.t1{color:var(--accent);background:var(--accent-dim)}
+.priority.t2{color:var(--green);background:var(--green-dim)}
+.priority.t3{color:var(--text-muted);background:rgba(200,200,200,0.04)}
+
+/* Section images */
+.section-img{width:100%;max-height:200px;object-fit:cover;object-position:center;border-radius:8px;border:1px solid var(--border);margin:1rem 0;filter:brightness(0.85)}
+.inline-icon{width:28px;height:28px;vertical-align:middle;margin-right:.3rem;border-radius:4px}
+
+/* Form image row */
+.form-img-row{display:flex;gap:.75rem;margin:1rem 0;flex-wrap:wrap}
+.form-img-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;overflow:hidden;text-align:center;flex:1;min-width:140px;max-width:200px}
+.form-img-card img{width:100%;height:120px;object-fit:cover;object-position:center top;display:block}
+.form-img-label{font-family:'Cinzel',serif;font-size:.75rem;font-weight:600;color:var(--text-dim);padding:.35rem;text-transform:uppercase;letter-spacing:.04em}
+
+.guide-footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.75rem;color:var(--text-muted);text-align:center}
+.guide-footer a{color:var(--text-dim)}
+.guide-footer a:hover{color:var(--accent)}
+
+/* Mobile nav */
+.mobile-nav{display:none;position:sticky;top:60px;z-index:100;background:rgba(12,10,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:56px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Cinzel',serif;font-size:.85rem;font-weight:700;color:var(--accent);letter-spacing:.06em}
+.nav-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s}
+.nav-links{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:rgba(12,10,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.nav-links.open{display:flex}
+.nav-links a{display:flex;align-items:center;gap:.5rem;height:44px;font-size:.9rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){.mobile-nav{display:flex}}
+
+/* ── Universal Nav ── */
+.unav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.unav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.unav-brand{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;color:var(--text);text-decoration:none;transition:color 0.3s}
+.unav-brand:hover{color:var(--accent,#c9a84c)}
+.unav-links{display:flex;gap:1.5rem;list-style:none;align-items:center}
+.unav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.3s;position:relative}
+.unav-links a:hover,.unav-links a.active{color:var(--accent,#c9a84c)}
+.unav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--accent,#c9a84c);transform:scaleX(0);transition:transform 0.3s;transform-origin:right}
+.unav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.unav-dropdown{position:relative}
+.unav-dropdown>a::after{display:none}
+.unav-dropdown>a{display:flex;align-items:center;gap:0.3rem}
+.unav-dropdown>a .dd-arrow{font-size:0.5rem;transition:transform 0.2s;margin-top:1px}
+.unav-dropdown:hover>a .dd-arrow{transform:rotate(180deg)}
+.unav-dd{
+  position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);
+  background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border);border-radius:10px;
+  min-width:200px;padding:0.5rem 0;
+  opacity:0;visibility:hidden;transform:translateX(-50%) translateY(-5px);
+  transition:opacity 0.2s,visibility 0.2s,transform 0.2s;
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+}
+.unav-dropdown:hover .unav-dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.unav-dd a{display:block;padding:0.6rem 1.2rem;font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.15s,background 0.15s;white-space:nowrap}
+.unav-dd a:hover{color:var(--accent,#c9a84c);background:rgba(201,168,76,0.06)}
+.unav-dd a::after{display:none}
+.unav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:0.5rem;z-index:1001}
+.unav-hamburger span{display:block;width:22px;height:2px;background:var(--text-dim,#aaa);margin:5px 0;transition:all 0.3s ease;border-radius:1px}
+.unav-hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.unav-hamburger.open span:nth-child(2){opacity:0}
+.unav-hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+@media(max-width:700px){
+  .unav-hamburger{display:block}
+  .unav-links{
+    display:flex;flex-direction:column;gap:0;
+    position:absolute;top:60px;left:0;right:0;
+    background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;
+    padding:0 0;
+  }
+  .unav-links.open{max-height:600px;padding:0.5rem 0}
+  .unav-links>li{list-style:none}
+  .unav-links>li>a{display:block;padding:0.8rem 2rem;font-size:0.85rem;border-bottom:1px solid var(--border)}
+  .unav-links>li:last-child>a{border-bottom:none}
+  .unav-links a::after{display:none}
+  .unav-dd{position:static;opacity:1;visibility:visible;transform:none;border:none;border-radius:0;min-width:auto;padding:0;background:none;backdrop-filter:none;box-shadow:none}
+  .unav-dd a{padding:0.7rem 2rem 0.7rem 3rem;font-size:0.8rem;border-bottom:1px solid var(--border)}
+  .unav-dropdown>a{display:none}
+  .unav-dropdown{border-bottom:none}
+}
+
+</style>
+</head>
+<body>
+<nav class="unav">
+  <div class="unav-inner">
+    <a href="index.html" class="unav-brand">Z3nGineer</a>
+    <button class="unav-hamburger" id="unav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="unav-links" id="unav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="unav-dropdown">
+        <a href="#">Projects <span class="dd-arrow">&#x25BC;</span></a>
+        <div class="unav-dd">
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+          <a href="https://crockednloaded.com">CrockedNLoaded</a>
+          <a href="guides.html">Game Guides</a>
+          <a href="CHIM.html">CHIM Modpack</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="mobile-nav" style="margin-top:60px;">
+  <span class="mobile-nav-title">Iron Fortress</span>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="#overview"><span class="nav-icon">&#9670;</span> Overview</a>
+    <a href="#firststeps"><span class="nav-icon">&#9658;</span> First Steps</a>
+    <a href="#birthsign"><span class="nav-icon">&#9733;</span> Birthsign</a>
+    <a href="#virtues"><span class="nav-icon">&#8593;</span> Leveling</a>
+    <a href="#progression"><span class="nav-icon">&#9876;</span> Progression</a>
+    <a href="#combat-mechanics"><span class="nav-icon">&#9731;</span> Combat Mechanics</a>
+    <a href="#gear"><span class="nav-icon">&#9670;</span> Gear</a>
+    <a href="#enchanting"><span class="nav-icon">&#10023;</span> Enchanting</a>
+    <a href="#combat"><span class="nav-icon">&#9889;</span> Combat Rotation</a>
+    <a href="#tips"><span class="nav-icon">&#9672;</span> Tips</a>
+  </div>
+</div>
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-badge">
+    <img src="https://images.uesp.net/thumb/d/d5/OBR-class-Warrior.png/200px-OBR-class-Warrior.png" alt="Warrior">
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">&#9670;</span> Overview</a>
+  <a href="#firststeps"><span class="nav-icon">&#9658;</span> First Steps</a>
+  <a href="#birthsign"><span class="nav-icon">&#9733;</span> Birthsign</a>
+  <a href="#virtues"><span class="nav-icon">&#8593;</span> Leveling</a>
+  <a href="#progression"><span class="nav-icon">&#9876;</span> Progression</a>
+  <a href="#combat-mechanics"><span class="nav-icon">&#9731;</span> Combat Mechanics</a>
+  <a href="#gear"><span class="nav-icon">&#9670;</span> Gear</a>
+  <a href="#enchanting"><span class="nav-icon">&#10023;</span> Enchanting</a>
+  <a href="#combat"><span class="nav-icon">&#9889;</span> Combat Rotation</a>
+  <a href="#tips"><span class="nav-icon">&#9672;</span> Tips</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="dungeonGlow" cx="50%" cy="45%" r="55%">
+            <stop offset="0%" stop-color="#3a2a18" stop-opacity="0.8"/>
+            <stop offset="50%" stop-color="#1a1208" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#0c0a08" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="reflectGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#d03030" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#d03030" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="shieldGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#c8a050" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#c8a050" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="swordBlade" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f0e0c0" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#c8a050" stop-opacity="0.5"/>
+          </linearGradient>
+          <linearGradient id="stoneWall" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#3a3228" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#1a1610" stop-opacity="0.8"/>
+          </linearGradient>
+        </defs>
+        <rect width="900" height="320" fill="url(#dungeonGlow)"/>
+
+        <!-- Stone dungeon walls — background -->
+        <g opacity="0.35">
+          <!-- Left wall -->
+          <rect x="20" y="30" width="120" height="260" fill="url(#stoneWall)" rx="2"/>
+          <line x1="40" y1="60" x2="120" y2="60" stroke="#2a2218" stroke-width="1"/>
+          <line x1="30" y1="100" x2="130" y2="100" stroke="#2a2218" stroke-width="1"/>
+          <line x1="35" y1="140" x2="125" y2="140" stroke="#2a2218" stroke-width="1"/>
+          <line x1="30" y1="180" x2="130" y2="180" stroke="#2a2218" stroke-width="1"/>
+          <line x1="40" y1="220" x2="120" y2="220" stroke="#2a2218" stroke-width="1"/>
+          <line x1="80" y1="30" x2="80" y2="60" stroke="#2a2218" stroke-width="1"/>
+          <line x1="60" y1="60" x2="60" y2="100" stroke="#2a2218" stroke-width="1"/>
+          <line x1="100" y1="100" x2="100" y2="140" stroke="#2a2218" stroke-width="1"/>
+          <line x1="70" y1="140" x2="70" y2="180" stroke="#2a2218" stroke-width="1"/>
+          <!-- Right wall -->
+          <rect x="760" y="30" width="120" height="260" fill="url(#stoneWall)" rx="2"/>
+          <line x1="780" y1="70" x2="860" y2="70" stroke="#2a2218" stroke-width="1"/>
+          <line x1="770" y1="110" x2="870" y2="110" stroke="#2a2218" stroke-width="1"/>
+          <line x1="775" y1="150" x2="865" y2="150" stroke="#2a2218" stroke-width="1"/>
+          <line x1="770" y1="190" x2="870" y2="190" stroke="#2a2218" stroke-width="1"/>
+          <line x1="780" y1="230" x2="860" y2="230" stroke="#2a2218" stroke-width="1"/>
+          <line x1="820" y1="30" x2="820" y2="70" stroke="#2a2218" stroke-width="1"/>
+          <line x1="800" y1="110" x2="800" y2="150" stroke="#2a2218" stroke-width="1"/>
+          <!-- Torch on left wall -->
+          <rect x="125" y="80" width="6" height="20" rx="1" fill="#5a4030"/>
+          <ellipse cx="128" cy="75" rx="5" ry="8" fill="#e08040" opacity="0.5"/>
+          <ellipse cx="128" cy="72" rx="3" ry="5" fill="#f0c060" opacity="0.6"/>
+          <ellipse cx="128" cy="70" rx="1.5" ry="3" fill="#f8e8a0" opacity="0.8"/>
+          <circle cx="128" cy="75" r="18" fill="#e08040" opacity="0.06"/>
+          <!-- Torch on right wall -->
+          <rect x="769" y="90" width="6" height="20" rx="1" fill="#5a4030"/>
+          <ellipse cx="772" cy="85" rx="5" ry="8" fill="#e08040" opacity="0.5"/>
+          <ellipse cx="772" cy="82" rx="3" ry="5" fill="#f0c060" opacity="0.6"/>
+          <ellipse cx="772" cy="80" rx="1.5" ry="3" fill="#f8e8a0" opacity="0.8"/>
+          <circle cx="772" cy="85" r="18" fill="#e08040" opacity="0.06"/>
+        </g>
+
+        <!-- Stone floor -->
+        <line x1="60" y1="290" x2="840" y2="290" stroke="#3a2a18" stroke-width="0.8" opacity="0.4"/>
+        <line x1="80" y1="295" x2="820" y2="295" stroke="#2a2018" stroke-width="0.5" opacity="0.3"/>
+
+        <!-- === ENEMY 1 — Left side, attacking with mace, getting reflect damage === -->
+        <g transform="translate(230,170)" opacity="0.85">
+          <!-- Body — humanoid bandit -->
+          <ellipse cx="0" cy="15" rx="14" ry="22" fill="#5a4838"/>
+          <circle cx="0" cy="-10" r="10" fill="#6a5a48"/>
+          <!-- Helmet -->
+          <path d="M-10,-15 Q-8,-24 0,-26 Q8,-24 10,-15" fill="#5a5248" stroke="#6a6258" stroke-width="0.5"/>
+          <!-- Eyes — pained -->
+          <ellipse cx="-3" cy="-11" rx="1.5" ry="1" fill="#d03030" opacity="0.6"/>
+          <ellipse cx="4" cy="-11" rx="1.5" ry="1" fill="#d03030" opacity="0.6"/>
+          <!-- Open mouth -->
+          <ellipse cx="0" cy="-5" rx="3" ry="2.5" fill="#2a1010"/>
+          <!-- Right arm swinging mace -->
+          <line x1="10" y1="2" x2="32" y2="-18" stroke="#5a4838" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="34" cy="-20" r="3" fill="#6a5a48"/>
+          <!-- Mace -->
+          <line x1="34" y1="-20" x2="50" y2="-45" stroke="#8a7a68" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="50" cy="-48" r="6" fill="#6a6058"/>
+          <circle cx="50" cy="-48" r="4" fill="#7a7068" opacity="0.5"/>
+          <!-- Spikes on mace -->
+          <line x1="50" y1="-48" x2="50" y2="-56" stroke="#8a7a68" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="50" y1="-48" x2="56" y2="-50" stroke="#8a7a68" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="50" y1="-48" x2="44" y2="-50" stroke="#8a7a68" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Left arm -->
+          <line x1="-10" y1="5" x2="-28" y2="-5" stroke="#5a4838" stroke-width="5" stroke-linecap="round"/>
+          <!-- Legs -->
+          <line x1="-5" y1="32" x2="-12" y2="60" stroke="#5a4838" stroke-width="6" stroke-linecap="round"/>
+          <line x1="5" y1="32" x2="15" y2="58" stroke="#5a4838" stroke-width="6" stroke-linecap="round"/>
+          <ellipse cx="-13" cy="62" rx="5" ry="3" fill="#4a3828"/>
+          <ellipse cx="16" cy="60" rx="5" ry="3" fill="#4a3828"/>
+
+          <!-- REFLECT DAMAGE — red lines bouncing back at attacker -->
+          <line x1="-15" y1="5" x2="-30" y2="-10" stroke="#d03030" stroke-width="2" opacity="0.7"/>
+          <line x1="-18" y1="10" x2="-38" y2="0" stroke="#d03030" stroke-width="1.5" opacity="0.6"/>
+          <line x1="-12" y1="0" x2="-25" y2="-20" stroke="#e04040" stroke-width="1.2" opacity="0.5"/>
+          <!-- Red damage sparks on attacker -->
+          <circle cx="-28" cy="-8" r="3" fill="#d03030" opacity="0.4"/>
+          <circle cx="-35" cy="2" r="2" fill="#e04040" opacity="0.35"/>
+          <circle cx="-22" cy="-18" r="2.5" fill="#d03030" opacity="0.3"/>
+          <circle cx="-30" cy="-15" r="1.5" fill="#f06060" opacity="0.4"/>
+          <!-- Reflect damage glow on body -->
+          <circle cx="-5" cy="5" r="15" fill="url(#reflectGlow)"/>
+        </g>
+
+        <!-- === ENEMY 2 — Right side, recoiling from shield bash === -->
+        <g transform="translate(670,175)" opacity="0.85">
+          <!-- Body — staggered, tilted back -->
+          <ellipse cx="0" cy="10" rx="13" ry="20" fill="#5a4030" transform="rotate(20)"/>
+          <circle cx="5" cy="-12" r="9" fill="#6a5040"/>
+          <!-- Iron helmet -->
+          <path d="M-3,-18 Q0,-25 5,-26 Q12,-24 14,-18" fill="#6a6258" stroke="#7a7268" stroke-width="0.5"/>
+          <!-- Dazed eyes — stars/swirl -->
+          <circle cx="2" cy="-13" r="1.5" fill="#f0c060" opacity="0.5"/>
+          <circle cx="8" cy="-12" r="1.5" fill="#f0c060" opacity="0.5"/>
+          <!-- Stagger impact lines radiating from head -->
+          <line x1="5" y1="-20" x2="8" y2="-30" stroke="#c8a050" stroke-width="1" opacity="0.4"/>
+          <line x1="10" y1="-18" x2="18" y2="-26" stroke="#c8a050" stroke-width="1" opacity="0.35"/>
+          <line x1="-2" y1="-20" x2="-8" y2="-28" stroke="#c8a050" stroke-width="1" opacity="0.3"/>
+          <!-- Arms flailing back -->
+          <line x1="12" y1="0" x2="30" y2="-15" stroke="#5a4030" stroke-width="5" stroke-linecap="round"/>
+          <line x1="-8" y1="2" x2="-20" y2="15" stroke="#5a4030" stroke-width="5" stroke-linecap="round"/>
+          <!-- Dropped weapon on ground -->
+          <line x1="25" y1="55" x2="50" y2="48" stroke="#8a7a68" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+          <!-- Legs buckling -->
+          <line x1="-3" y1="28" x2="-10" y2="55" stroke="#5a4030" stroke-width="6" stroke-linecap="round"/>
+          <line x1="6" y1="26" x2="18" y2="52" stroke="#5a4030" stroke-width="6" stroke-linecap="round"/>
+          <ellipse cx="-11" cy="57" rx="5" ry="3" fill="#4a3020"/>
+          <ellipse cx="19" cy="54" rx="5" ry="3" fill="#4a3020"/>
+
+          <!-- Reflect damage lines bouncing back -->
+          <line x1="15" y1="5" x2="30" y2="-5" stroke="#d03030" stroke-width="1.8" opacity="0.6"/>
+          <line x1="18" y1="12" x2="35" y2="8" stroke="#d03030" stroke-width="1.3" opacity="0.5"/>
+          <line x1="12" y1="-2" x2="28" y2="-15" stroke="#e04040" stroke-width="1" opacity="0.45"/>
+          <circle cx="28" cy="-3" r="2.5" fill="#d03030" opacity="0.35"/>
+          <circle cx="33" cy="10" r="2" fill="#e04040" opacity="0.3"/>
+        </g>
+
+        <!-- === ENEMY 3 — Behind, fallen on ground === -->
+        <g transform="translate(520,260)" opacity="0.6">
+          <ellipse cx="0" cy="0" rx="24" ry="10" fill="#4a3420"/>
+          <circle cx="-20" cy="2" r="8" fill="#4a3420"/>
+          <line x1="18" y1="-4" x2="32" y2="-8" stroke="#4a3420" stroke-width="5" stroke-linecap="round"/>
+          <line x1="16" y1="6" x2="28" y2="14" stroke="#4a3420" stroke-width="4" stroke-linecap="round"/>
+          <!-- Blood pool -->
+          <ellipse cx="5" cy="8" rx="18" ry="5" fill="#3a0808" opacity="0.35"/>
+        </g>
+
+        <!-- === THE ORC WARRIOR — center, massive, shield raised, sword ready === -->
+        <g transform="translate(450,155)" opacity="0.95">
+
+          <!-- CAPE — dark crimson, flowing behind -->
+          <path d="M-10,-5 Q-14,15 -22,40 Q-30,65 -42,85 Q-48,95 -55,100 Q-60,98 -52,88 Q-42,68 -34,45 Q-25,22 -18,5 Z" fill="#4a1818" opacity="0.8"/>
+          <path d="M5,-5 Q2,15 -5,40 Q-15,65 -28,85 Q-35,98 -45,102 Q-52,100 -40,90 Q-28,70 -18,45 Q-8,20 0,2 Z" fill="#3a1212" opacity="0.6"/>
+          <path d="M-15,20 Q-22,40 -30,60" stroke="#5a2020" stroke-width="0.6" opacity="0.4" fill="none"/>
+
+          <!-- Body — MASSIVE armored torso, Daedric heavy armor -->
+          <ellipse cx="0" cy="20" rx="24" ry="35" fill="#2a2228"/>
+          <!-- Daedric chest plate — dark with red accents -->
+          <ellipse cx="0" cy="15" rx="21" ry="28" fill="#3a3038" opacity="0.8"/>
+          <!-- Armor spikes on shoulders -->
+          <path d="M-22,0 L-32,-15 L-24,-5" fill="#2a2228" stroke="#4a3840" stroke-width="0.8"/>
+          <path d="M22,0 L32,-15 L24,-5" fill="#2a2228" stroke="#4a3840" stroke-width="0.8"/>
+          <!-- More shoulder spikes -->
+          <path d="M-25,5 L-38,-8 L-27,2" fill="#2a2228" stroke="#4a3840" stroke-width="0.6" opacity="0.7"/>
+          <path d="M25,5 L38,-8 L27,2" fill="#2a2228" stroke="#4a3840" stroke-width="0.6" opacity="0.7"/>
+          <!-- Armor detail — Daedric rune lines -->
+          <line x1="-10" y1="0" x2="-10" y2="35" stroke="#d03030" stroke-width="0.8" opacity="0.25"/>
+          <line x1="10" y1="0" x2="10" y2="35" stroke="#d03030" stroke-width="0.8" opacity="0.25"/>
+          <line x1="-16" y1="18" x2="16" y2="18" stroke="#d03030" stroke-width="0.6" opacity="0.2"/>
+          <!-- Daedric symbol on chest -->
+          <circle cx="0" cy="12" r="6" fill="none" stroke="#d03030" stroke-width="0.8" opacity="0.3"/>
+          <path d="M0,6 L0,18 M-5,12 L5,12" stroke="#d03030" stroke-width="0.6" opacity="0.25"/>
+          <!-- Belt — heavy chain -->
+          <rect x="-20" y="38" width="40" height="5" rx="2" fill="#4a3840" opacity="0.8"/>
+          <circle cx="-12" cy="40" r="2" fill="#6a5050" opacity="0.4"/>
+          <circle cx="0" cy="40" r="2.5" fill="#d03030" opacity="0.3"/>
+          <circle cx="12" cy="40" r="2" fill="#6a5050" opacity="0.4"/>
+
+          <!-- Head — Orc with Daedric helmet -->
+          <circle cx="0" cy="-18" r="14" fill="#5a7848"/>
+          <!-- Daedric helmet -->
+          <path d="M-14,-22 Q-12,-36 -6,-40 Q0,-42 6,-40 Q12,-36 14,-22" fill="#2a2228"/>
+          <!-- Helmet horns — Daedric style -->
+          <path d="M-10,-35 L-18,-55 L-8,-38" fill="#2a2228" stroke="#4a3840" stroke-width="0.8"/>
+          <path d="M10,-35 L18,-55 L8,-38" fill="#2a2228" stroke="#4a3840" stroke-width="0.8"/>
+          <!-- Helmet visor slit -->
+          <rect x="-9" y="-22" width="18" height="4" rx="1" fill="#0a0a0a"/>
+          <!-- Glowing red eyes through visor -->
+          <ellipse cx="-4" cy="-20" rx="2.5" ry="1.5" fill="#d03030" opacity="0.9"/>
+          <ellipse cx="5" cy="-20" rx="2.5" ry="1.5" fill="#d03030" opacity="0.9"/>
+          <!-- Eye glow -->
+          <circle cx="-4" cy="-20" r="4" fill="#d03030" opacity="0.08"/>
+          <circle cx="5" cy="-20" r="4" fill="#d03030" opacity="0.08"/>
+          <!-- Orc tusks visible below helmet -->
+          <line x1="-4" y1="-12" x2="-5" y2="-8" stroke="#e0d8c0" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <line x1="4" y1="-12" x2="5" y2="-8" stroke="#e0d8c0" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <!-- Jaw — green Orc skin -->
+          <path d="M-10,-14 Q-8,-8 0,-6 Q8,-8 10,-14" fill="#5a7848" opacity="0.6"/>
+
+          <!-- Legs — heavy armored greaves, wide stance -->
+          <line x1="-8" y1="48" x2="-20" y2="90" stroke="#2a2228" stroke-width="10" stroke-linecap="round"/>
+          <line x1="8" y1="48" x2="22" y2="88" stroke="#2a2228" stroke-width="10" stroke-linecap="round"/>
+          <!-- Daedric boots -->
+          <ellipse cx="-22" cy="93" rx="8" ry="5" fill="#2a2228"/>
+          <ellipse cx="24" cy="91" rx="8" ry="5" fill="#2a2228"/>
+          <!-- Boot spikes -->
+          <line x1="-28" y1="90" x2="-30" y2="85" stroke="#4a3840" stroke-width="1" opacity="0.5"/>
+          <line x1="30" y1="88" x2="32" y2="83" stroke="#4a3840" stroke-width="1" opacity="0.5"/>
+          <!-- Knee armor -->
+          <ellipse cx="-14" cy="68" rx="5" ry="4" fill="#3a3038" opacity="0.6"/>
+          <ellipse cx="15" cy="66" rx="5" ry="4" fill="#3a3038" opacity="0.6"/>
+
+          <!-- LEFT ARM — raised shield -->
+          <line x1="-16" y1="5" x2="-40" y2="-20" stroke="#2a2228" stroke-width="8" stroke-linecap="round"/>
+          <!-- Gauntlet — Daedric spiked -->
+          <circle cx="-42" cy="-22" r="5" fill="#2a2228"/>
+          <line x1="-46" y1="-26" x2="-50" y2="-30" stroke="#4a3840" stroke-width="1" opacity="0.5"/>
+
+          <!-- SHIELD — large, ornate, raised to block -->
+          <g transform="translate(-55,-10) rotate(-15)">
+            <!-- Shield body -->
+            <path d="M-20,-35 Q-22,-20 -18,0 Q-12,25 0,35 Q12,25 18,0 Q22,-20 20,-35 Q10,-40 0,-42 Q-10,-40 -20,-35 Z" fill="#3a3038"/>
+            <!-- Shield face plate -->
+            <path d="M-16,-30 Q-18,-16 -14,2 Q-8,22 0,30 Q8,22 14,2 Q18,-16 16,-30 Q8,-34 0,-36 Q-8,-34 -16,-30 Z" fill="#4a4248"/>
+            <!-- Shield boss (center) -->
+            <circle cx="0" cy="-5" r="8" fill="#5a5258" stroke="#6a6268" stroke-width="1"/>
+            <circle cx="0" cy="-5" r="4" fill="#d03030" opacity="0.4"/>
+            <circle cx="0" cy="-5" r="2" fill="#e04040" opacity="0.5"/>
+            <!-- Shield edge trim -->
+            <path d="M-20,-35 Q-22,-20 -18,0 Q-12,25 0,35 Q12,25 18,0 Q22,-20 20,-35 Q10,-40 0,-42 Q-10,-40 -20,-35 Z" fill="none" stroke="#6a5a50" stroke-width="1.5"/>
+            <!-- Daedric runes on shield -->
+            <line x1="0" y1="-25" x2="0" y2="15" stroke="#d03030" stroke-width="0.6" opacity="0.3"/>
+            <line x1="-10" y1="-5" x2="10" y2="-5" stroke="#d03030" stroke-width="0.6" opacity="0.3"/>
+            <!-- Shield gleam -->
+            <ellipse cx="-5" cy="-18" rx="4" ry="8" fill="#f0e8d0" opacity="0.06" transform="rotate(-10)"/>
+          </g>
+
+          <!-- SHIELD GLOW — golden protective aura -->
+          <circle cx="-55" cy="-10" r="40" fill="url(#shieldGlow)" opacity="0.4"/>
+
+          <!-- Shield bash impact waves -->
+          <path d="M-75,-15 Q-85,-5 -75,5" stroke="#c8a050" stroke-width="1.5" opacity="0.3" fill="none"/>
+          <path d="M-80,-20 Q-95,-5 -80,10" stroke="#c8a050" stroke-width="1.2" opacity="0.2" fill="none"/>
+          <path d="M-85,-25 Q-105,-5 -85,15" stroke="#c8a050" stroke-width="0.8" opacity="0.15" fill="none"/>
+
+          <!-- RIGHT ARM — sword held ready, not swinging -->
+          <line x1="16" y1="5" x2="38" y2="-10" stroke="#2a2228" stroke-width="8" stroke-linecap="round"/>
+          <!-- Gauntlet — Daedric -->
+          <circle cx="40" cy="-12" r="5" fill="#2a2228"/>
+          <line x1="44" y1="-16" x2="48" y2="-20" stroke="#4a3840" stroke-width="1" opacity="0.5"/>
+
+          <!-- SWORD — Goldbrand, golden fire blade -->
+          <line x1="42" y1="-15" x2="80" y2="-52" stroke="url(#swordBlade)" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- Crossguard -->
+          <line x1="38" y1="-17" x2="46" y2="-10" stroke="#c8a050" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+          <!-- Blade gleam -->
+          <line x1="55" y1="-28" x2="58" y2="-31" stroke="#f0e8d0" stroke-width="1.2" opacity="0.5"/>
+          <line x1="68" y1="-42" x2="70" y2="-44" stroke="#f0e8d0" stroke-width="0.8" opacity="0.4"/>
+          <!-- Fire on blade (Goldbrand) -->
+          <path d="M60,-33 Q58,-40 62,-45" stroke="#e08040" stroke-width="1" opacity="0.3" fill="none"/>
+          <path d="M70,-43 Q68,-50 72,-54" stroke="#d05030" stroke-width="0.8" opacity="0.25" fill="none"/>
+          <circle cx="65" cy="-38" r="2" fill="#f0a040" opacity="0.2"/>
+          <circle cx="75" cy="-48" r="1.5" fill="#e08040" opacity="0.2"/>
+        </g>
+
+        <!-- REFLECT DAMAGE EFFECT — Red energy lines bouncing off the Orc back toward enemies -->
+        <!-- Left side reflect lines -->
+        <g opacity="0.6">
+          <line x1="360" y1="140" x2="300" y2="120" stroke="#d03030" stroke-width="2" opacity="0.7">
+            <animate attributeName="opacity" values="0.7;0.3;0.7" dur="2s" repeatCount="indefinite"/>
+          </line>
+          <line x1="370" y1="155" x2="290" y2="145" stroke="#e04040" stroke-width="1.5" opacity="0.5">
+            <animate attributeName="opacity" values="0.5;0.2;0.5" dur="1.8s" repeatCount="indefinite"/>
+          </line>
+          <line x1="365" y1="130" x2="310" y2="100" stroke="#d03030" stroke-width="1.2" opacity="0.45">
+            <animate attributeName="opacity" values="0.45;0.15;0.45" dur="2.2s" repeatCount="indefinite"/>
+          </line>
+          <!-- Sparks at reflect origin -->
+          <circle cx="370" cy="145" r="4" fill="#d03030" opacity="0.3">
+            <animate attributeName="r" values="3;5;3" dur="1.5s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+        <!-- Right side reflect lines -->
+        <g opacity="0.6">
+          <line x1="540" y1="145" x2="610" y2="130" stroke="#d03030" stroke-width="2" opacity="0.7">
+            <animate attributeName="opacity" values="0.7;0.3;0.7" dur="1.9s" repeatCount="indefinite"/>
+          </line>
+          <line x1="535" y1="160" x2="620" y2="155" stroke="#e04040" stroke-width="1.5" opacity="0.5">
+            <animate attributeName="opacity" values="0.5;0.2;0.5" dur="2.1s" repeatCount="indefinite"/>
+          </line>
+          <line x1="545" y1="135" x2="600" y2="110" stroke="#d03030" stroke-width="1.2" opacity="0.45">
+            <animate attributeName="opacity" values="0.45;0.15;0.45" dur="1.7s" repeatCount="indefinite"/>
+          </line>
+          <circle cx="540" cy="150" r="4" fill="#d03030" opacity="0.3">
+            <animate attributeName="r" values="3;5;3" dur="1.6s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+
+        <!-- Damage numbers floating up (reflect damage) -->
+        <g font-family="Cinzel" font-weight="700" fill="#d03030">
+          <text x="280" y="105" font-size="11" opacity="0.5">-42</text>
+          <text x="640" y="110" font-size="10" opacity="0.45">-38</text>
+          <text x="305" y="85" font-size="9" opacity="0.35">-27</text>
+        </g>
+
+        <!-- Blood on ground -->
+        <ellipse cx="250" cy="285" rx="20" ry="4" fill="#3a0808" opacity="0.25"/>
+        <ellipse cx="650" cy="282" rx="18" ry="3" fill="#3a0808" opacity="0.2"/>
+        <circle cx="520" cy="278" r="2.5" fill="#5a1010" opacity="0.3"/>
+        <circle cx="350" cy="280" r="2" fill="#4a0808" opacity="0.25"/>
+
+        <!-- Dust/debris from shield bash -->
+        <circle cx="370" cy="170" r="3" fill="#8a7a60" opacity="0.15"/>
+        <circle cx="355" cy="165" r="2" fill="#7a6a50" opacity="0.12"/>
+        <circle cx="380" cy="180" r="2.5" fill="#8a7a60" opacity="0.1"/>
+
+        <!-- Ground details -->
+        <line x1="150" y1="288" x2="750" y2="288" stroke="#3a2a18" stroke-width="0.5" opacity="0.3"/>
+      </svg>
+    </div>
+    <div class="header-row">
+      <img class="header-portrait" src="https://images.uesp.net/thumb/6/60/OBR-icon-race-Orc.png/200px-OBR-icon-race-Orc.png" alt="Orc">
+      <div class="header-text">
+        <div class="breadcrumb">Oblivion Remastered &rsaquo; Builds &rsaquo; Iron Fortress</div>
+        <h1>Iron Fortress</h1>
+        <div class="subtitle">Orc &middot; The Warrior &middot; Block + Blade + Heavy Armor &middot; Tank Warrior</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag fire">Pure Melee</span>
+      <span class="tag gold">Tank</span>
+      <span class="tag green">Beginner-Friendly</span>
+      <span class="tag blue">Remastered 2025</span>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="section" id="overview">
+    <h2>Overview</h2>
+    <p>The Iron Fortress is the simplest and most durable build in Oblivion Remastered. An Orc in full Daedric heavy armor with a shield raised high, reflecting damage back at enemies while they beat themselves to death against you. No spells to manage, no magicka to worry about, no complicated combos. Block everything, bash them senseless, power attack when they stagger. Walk into any dungeon and walk out without a scratch.</p>
+
+    <p>The Remastered edition made this build even stronger. Retroactive Endurance HP means you can pump Strength early without losing health. The new stagger system makes Shield Bash (Block Expert at 75) a game-changing crowd control tool. And the 100% Reflect Damage cap is fully achievable with the right gear and enchantments, turning you into a walking punishment for anything that dares swing at you.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Why This Build is Perfect for New Players</div>
+      <p><strong>Zero spell management.</strong> You never need to open a spell menu. Block, bash, swing, repair, repeat. The only magic you ever touch is an Alteration Shield spell for extra armor and Restoration for healing between fights. Everything else is pure steel and muscle.</p>
+    </div>
+
+    <h3><img class="inline-icon" src="https://images.uesp.net/thumb/6/60/OBR-icon-race-Orc.png/200px-OBR-icon-race-Orc.png" alt="">Race &mdash; Orc</h3>
+    <ul class="picks">
+      <li><span class="label">Daily</span> <span class="name">Berserk</span> &mdash; <span class="note">Fortify Fatigue 200, Fortify Health 20, Fortify Strength 50 for 60 seconds. 2x damage output during duration. Drain Agility 100 (you can't dodge, but you're a tank &mdash; you weren't dodging anyway).</span></li>
+      <li><span class="label">Passive</span> <span class="name">25% Resist Magicka</span> &mdash; <span class="note">permanent magic resistance, stacks with enchantments toward cap</span></li>
+      <li><span class="label">Passive</span> <span class="name">25% Weakness to Magic</span> &mdash; <span class="note">partially offsets the resist. Net effective resist is lower, but you mitigate magic through gear and shield blocking, not resists.</span></li>
+      <li><span class="label">Skills</span> <span class="name">+10 Armorer, +5 Block, Hand to Hand, Blunt, Heavy Armor</span> &mdash; <span class="note">the most relevant starting skill bonuses for a tank build in the entire game</span></li>
+      <li><span class="label">Attributes</span> <span class="name">STR 45, END 50, WIL 30</span> &mdash; <span class="note">highest starting Endurance of any race, great Strength for melee damage</span></li>
+    </ul>
+
+    <h3>Class &mdash; Warrior (Pre-Made)</h3>
+    <ul class="picks">
+      <li><span class="label">Spec</span> <span class="name">Combat</span></li>
+      <li><span class="label">Favored</span> <span class="name">Strength, Endurance</span></li>
+      <li><span class="label">Major</span> <span class="name">Blade, Blunt, Block, Heavy Armor, Armorer, Athletics, Hand to Hand</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Custom Class Alternative</div>
+      <p>The pre-made Warrior class works great, but a custom class swapping Athletics and Hand to Hand for <strong>Restoration</strong> and <strong>Alteration</strong> gives you self-healing and Shield spells without wasting major skill slots on things you won't use. Name it "Iron Fortress" for style points. Keep Blade, Block, Heavy Armor, Armorer, and Blunt as your other majors.</p>
+    </div>
+
+    <h3>Starting Attributes (Level 1, Orc Warrior)</h3>
+    <div class="stats">
+      <div class="stat-box primary"><div class="stat-label">STR</div><div class="stat-val">50</div></div>
+      <div class="stat-box"><div class="stat-label">INT</div><div class="stat-val">30</div></div>
+      <div class="stat-box"><div class="stat-label">WIL</div><div class="stat-val">35</div></div>
+      <div class="stat-box"><div class="stat-label">AGI</div><div class="stat-val">35</div></div>
+      <div class="stat-box"><div class="stat-label">SPD</div><div class="stat-val">30</div></div>
+      <div class="stat-box primary"><div class="stat-label">END</div><div class="stat-val">55</div></div>
+      <div class="stat-box"><div class="stat-label">PER</div><div class="stat-val">30</div></div>
+      <div class="stat-box"><div class="stat-label">LCK</div><div class="stat-val">50</div></div>
+    </div>
+    <p style="font-size:.88rem;color:var(--text-dim);">Orc Warrior with The Warrior birthsign. Highest possible starting STR/END combo. Low magic stats are irrelevant &mdash; you barely cast anything.</p>
+  </section>
+
+  <!-- FIRST STEPS -->
+  <section class="section" id="firststeps">
+    <h2>First Steps After the Tutorial</h2>
+    <p>You just walked out of the Imperial City sewers with a stolen katana and Iron armor. Here's how to become an unstoppable wall:</p>
+
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Buy a full set of Heavy Armor</span>
+        <div class="step-detail">Head to the Imperial City Market District. Visit <strong>"A Fighting Chance"</strong> (Rohssan's shop) and buy the best heavy armor you can afford &mdash; Steel or Chainmail cuirass, greaves, gauntlets, and boots. You need all four armor slots filled to maximize your armor rating. Also grab a heavy <strong>shield</strong> &mdash; this is your most important piece of equipment.</div>
+      </li>
+      <li>
+        <span class="step-action">Buy Repair Hammers &mdash; lots of them</span>
+        <div class="step-detail">Buy <strong>10+ Repair Hammers</strong> from Rohssan. Your armor degrades constantly from blocking and getting hit. Repairing it gives Armorer XP, which is one of your major skills. Repair after every single fight. The Orc's +10 Armorer head start means you're already at 15 &mdash; you'll hit Apprentice (25) fast.</div>
+      </li>
+      <li>
+        <span class="step-action">Find a real weapon</span>
+        <div class="step-detail">The katana from the tutorial works initially. For an early upgrade, travel to Chorrol and complete <strong>"The Killing Field"</strong> (talk to Valus Odiil at the Grey Mare inn). Keep both sons alive. Reward: <strong>Chillrend</strong> &mdash; a fantastic frost-enchanted Blade that scales with your level. Alternatively, pick Blunt and buy a mace from any weaponsmith.</div>
+      </li>
+      <li>
+        <span class="step-action">Block everything</span>
+        <div class="step-detail">From your very first fight, hold block before attacking. Block every incoming hit. This levels your Block skill faster than anything. You want Block at 75 (Expert) as soon as possible for Shield Bash &mdash; the ability that defines this build. Even wolves and mudcrabs are Block training.</div>
+      </li>
+      <li>
+        <span class="step-action">Buy basic Restoration and Alteration spells</span>
+        <div class="step-detail">Visit <strong>Edgar's Discount Spells</strong> in the Market District. Buy <strong>Heal Minor Wounds</strong> (Restoration) and <strong>Protect</strong> (Alteration Shield spell). These are your only magic. Cast Protect before fights for bonus armor. Heal between fights. That's it &mdash; no need to invest further in magic.</div>
+      </li>
+      <li>
+        <span class="step-action">Start the Fighters Guild</span>
+        <div class="step-detail">Join the <strong>Fighters Guild</strong> in Chorrol or any city with a hall. The quests are straightforward combat missions &mdash; perfect for training your skills. The guild questline also rewards gold and decent gear. You'll also get access to free beds in every guild hall.</div>
+      </li>
+    </ol>
+
+    <div class="callout tip">
+      <div class="callout-label">Armorer is Your Secret Weapon</div>
+      <p>Most builds ignore Armorer. For the Iron Fortress, it's critical. At <strong>Armorer 50 (Journeyman)</strong>, you can repair magic items. At <strong>Armorer 75 (Expert)</strong>, your weapons and armor can be repaired to <strong>125% condition</strong>, giving them bonus effectiveness. Keep repairing everything after every fight &mdash; it's free skill XP and keeps your gear at peak performance.</p>
+    </div>
+  </section>
+
+  <!-- BIRTHSIGN -->
+  <section class="section" id="birthsign">
+    <h2>Birthsign</h2>
+    <div class="bs-grid">
+      <div class="bs-card recommended">
+        <img src="https://images.uesp.net/thumb/4/4a/OBbsign_Warrior.jpg/200px-OBbsign_Warrior.jpg" alt="The Warrior">
+        <div class="bs-name">The Warrior</div>
+        <div class="bs-bonus">+10 Strength, +10 Endurance</div>
+        <div class="bs-note">The perfect tank birthsign. Pushes Orc's already-high STR to 55 and END to 60 at level 1. More damage, more HP, more carry weight. No drawbacks. Perfectly complements the race.</div>
+        <div style="margin-top:.5rem"><span class="tag gold">Recommended</span></div>
+      </div>
+      <div class="bs-card">
+        <img src="https://images.uesp.net/thumb/a/a8/OBbsign_Lady.jpg/200px-OBbsign_Lady.jpg" alt="The Lady">
+        <div class="bs-name">The Lady</div>
+        <div class="bs-bonus">+10 Willpower, +10 Endurance</div>
+        <div class="bs-note">Extra Endurance is always good. The Willpower bonus helps with Fatigue pool (Fatigue = Strength + Willpower + Agility + Endurance). Slightly less aggressive than The Warrior but more balanced.</div>
+      </div>
+      <div class="bs-card">
+        <img src="https://images.uesp.net/thumb/6/64/OBbsign_Lord.jpg/200px-OBbsign_Lord.jpg" alt="The Lord">
+        <div class="bs-name">The Lord</div>
+        <div class="bs-bonus">Blood of the North: Restore 6 HP/sec (daily)</div>
+        <div class="bs-penalty">25% Weakness to Fire</div>
+        <div class="bs-note">The regeneration is powerful for sustained tanking. Fire weakness hurts against Daedra and fire mages, but you can offset it with enchantments. Viable alternative if you dislike potion management.</div>
+      </div>
+    </div>
+    <div class="callout warn">
+      <div class="callout-label">Avoid &mdash; The Steed</div>
+      <p>+20 Speed sounds nice since Orcs are slow, but Speed is a luxury stat. You'd be giving up +10 STR/END from The Warrior for movement speed you don't need &mdash; you're a tank, not a sprinter. Let enemies come to you.</p>
+    </div>
+  </section>
+
+  <!-- VIRTUES / LEVELING -->
+  <section class="section" id="virtues">
+    <h2>Leveling &mdash; Virtue System</h2>
+    <p>The remaster replaced the old attribute multiplier system. At each level-up you get <strong>12 Virtues</strong> to distribute freely. Max 5 per attribute, max 3 attributes per level. Luck costs 4 per point.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Retroactive Endurance &mdash; Game Changer</div>
+      <p>In the original Oblivion, HP gained per level was based on your Endurance <strong>at that level</strong>, so you had to max Endurance early or lose HP permanently. In Remastered, <strong>HP is retroactively recalculated</strong> whenever Endurance changes. This means you can safely pump Strength first for damage and catch up on Endurance later without losing a single HP. This is huge for the Iron Fortress &mdash; it means you can be aggressive early.</p>
+    </div>
+
+    <table class="virtue-table">
+      <thead><tr><th>Attribute</th><th>Priority</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">Strength</td><td><span class="priority t1">MAX FIRST</span></td><td>Melee damage + carry weight + contributes to max HP and Fatigue. Since END HP is retroactive, pump STR early for kill speed. Already at 55 with birthsign.</td></tr>
+        <tr><td class="attr-name">Endurance</td><td><span class="priority t1">MAX FIRST</span></td><td>Max HP + HP regen. Already at 60 with birthsign. Push to 100 alongside Strength. Even though it's retroactive, higher END = faster natural regen.</td></tr>
+        <tr><td class="attr-name">Agility</td><td><span class="priority t2">SECOND</span></td><td>Fatigue pool. Fatigue affects stagger resistance and power attack availability. At 35, this is low &mdash; invest after STR/END are solid.</td></tr>
+        <tr><td class="attr-name">Willpower</td><td><span class="priority t2">SECOND</span></td><td>Fatigue pool + magicka regen (irrelevant for you). Mostly matters for the Fatigue contribution. At 35, bump alongside Agility.</td></tr>
+        <tr><td class="attr-name">Speed</td><td><span class="priority t3">LATER</span></td><td>Movement speed. Orcs are slow (30 base). You'll want to bump this eventually to close gaps faster. Not urgent &mdash; enemies come to you.</td></tr>
+        <tr><td class="attr-name">Intelligence</td><td><span class="priority t3">SKIP</span></td><td>Max Magicka. You barely cast. Leave this alone &mdash; the few spells you use have tiny magicka costs.</td></tr>
+        <tr><td class="attr-name">Luck</td><td><span class="priority t3">SKIP</span></td><td>Costs 4 Virtues per point. Already at 50. Not worth the investment for a combat build.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-label">Suggested Distribution</div>
+      <p><strong>Levels 2-8:</strong> Strength 5, Endurance 5, Agility 2</p>
+      <p><strong>Levels 9-15:</strong> Strength 5, Endurance 5, Willpower 2 (cap STR/END at 100)</p>
+      <p><strong>Levels 16+:</strong> Agility 5, Willpower 5, Speed 2. Fill remaining attributes.</p>
+    </div>
+  </section>
+
+  <!-- PROGRESSION -->
+  <section class="section" id="progression">
+    <h2>Level Progression</h2>
+    <p style="color:var(--text-dim);margin-bottom:1rem;">Click to expand. Focus on the skills and goals for each phase.</p>
+
+    <!-- Early -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 1-5</span>
+        <span class="lv-title">Foundation &mdash; Block + Blade + Heavy Armor Basics</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Block to 25</span>
+          <span class="qp skill">Blade to 25</span>
+          <span class="qp skill">Heavy Armor to 25</span>
+          <span class="qp skill">Armorer to 25</span>
+          <span class="qp gear">Chillrend</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Priority</span> <span class="name">Block + Blade to Apprentice (25)</span> &mdash; <span class="note">Block Apprentice: Block while moving. Blade Apprentice: power attacks apply Weakness debuff. Both are essential.</span></li>
+          <li><span class="label">Armorer</span> <span class="name">Apprentice (25)</span> &mdash; <span class="note">Orc starts at 15 Armorer. You'll hit 25 fast by repairing after every fight. Apprentice perk: hammers last longer.</span></li>
+          <li><span class="label">HA 25</span> <span class="name">Apprentice perk</span> &mdash; <span class="note">armor degrades slower. Keep getting hit to level this &mdash; every blocked attack gives XP.</span></li>
+          <li><span class="label">Buy</span> <span class="name">Heal Minor Wounds + Protect</span> &mdash; <span class="note">Edgar's Discount Spells, Imperial City. Your only magic purchases for a while.</span></li>
+          <li><span class="label">Quest</span> <span class="name">"The Killing Field" (Chorrol)</span> &mdash; <span class="note">get Chillrend early for frost damage. Or buy a good steel/silver mace if going Blunt.</span></li>
+          <li><span class="label">Guild</span> <span class="name">Fighters Guild</span> &mdash; <span class="note">join in any city. Quests = combat training + gold + free beds.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:.5rem;">
+          <div class="callout-label">Training Tip</div>
+          <p>Find a weak enemy (mudcrab, rat) and just hold block. Let them hit your shield repeatedly. Each blocked attack levels Block AND Heavy Armor simultaneously. Two skills from one enemy. Repair your gear after for Armorer XP. Three birds, one mudcrab.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Mid -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 6-12</span>
+        <span class="lv-title">The Shield Wall &mdash; Block Expert + Shield Bash</span>
+        <span class="lv-spike">Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Block to 75</span>
+          <span class="qp skill">Heavy Armor to 50</span>
+          <span class="qp skill">Armorer to 50</span>
+          <span class="qp skill">Blade to 50</span>
+          <span class="qp gear">Escutcheon of Chorrol</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Block 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">no longer staggered by power attacks while blocking. You become a real wall.</span></li>
+          <li><span class="label">Block 75</span> <span class="name">Expert &mdash; SHIELD BASH</span> &mdash; <span class="note">THIS IS THE BUILD-DEFINING MOMENT. Hold block + attack to perform a Shield Bash that staggers enemies. In the remaster, this stagger is devastating &mdash; enemies are left wide open for a free power attack. Rush this.</span></li>
+          <li><span class="label">Armorer 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">you can now repair enchanted/magic items. Huge &mdash; no more paying blacksmiths for your Chillrend.</span></li>
+          <li><span class="label">HA 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">armor degradation slows significantly. Spell effectiveness penalty drops to 5% (irrelevant for you).</span></li>
+          <li><span class="label">Quest</span> <span class="name">"Sins of the Father" (Chorrol)</span> &mdash; <span class="note">talk to Countess Arriana Valga. Reward: Escutcheon of Chorrol &mdash; shield with Reflect Damage 25%. Your first Reflect piece.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Fighters Guild questline</span> &mdash; <span class="note">continue for gold, reputation, and combat training. The quests get harder and better.</span></li>
+        </ul>
+        <div class="callout" style="margin-top:.5rem;">
+          <div class="callout-label">Shield Bash Changes Everything</div>
+          <p>Before Block 75, combat is: block, wait for opening, attack. After Block 75, combat becomes: block, bash (enemy staggers), power attack (free damage), repeat. You control the tempo of every fight. Multiple enemies? Bash the closest, hit them while others approach, bash the next. It's the remaster's best melee mechanic.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Late -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 13-20</span>
+        <span class="lv-title">Reflect Damage &mdash; Collecting the Pieces</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Block to 100</span>
+          <span class="qp skill">Heavy Armor to 75</span>
+          <span class="qp skill">Armorer to 75</span>
+          <span class="qp gear">Reflect Damage gear</span>
+          <span class="qp gear">Ebony Armor</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Block 100</span> <span class="name">Master</span> &mdash; <span class="note">Shield Bash now has a chance to disarm opponents. Combined with stagger, enemies become completely helpless.</span></li>
+          <li><span class="label">HA 75</span> <span class="name">Expert</span> &mdash; <span class="note">armor barely degrades. You can go multiple dungeons between repairs.</span></li>
+          <li><span class="label">Arm. 75</span> <span class="name">Expert</span> &mdash; <span class="note">repair items to 125% condition. Weapons do more damage and armor gives bonus AR above base stats. This is massive for a tank.</span></li>
+          <li><span class="label">Gear</span> <span class="name">Start collecting Reflect Damage</span> &mdash; <span class="note">Escutcheon (25%) + Ring of the Iron Fist (33%) + enchanted pieces. Target: 100% total Reflect Damage.</span></li>
+          <li><span class="label">Gear</span> <span class="name">Ebony Armor</span> &mdash; <span class="note">appears in shops/loot around level 15. AR 69. Major upgrade. "The Best Defense" in Imperial City Market District stocks it.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Daedric Shrine quests</span> &mdash; <span class="note">start collecting unique rewards. Volendrung (Malacath, level 10+), Goldbrand (Boethiah, level 20+), Ring of Namira (Namira, level 5+).</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Endgame -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 20+</span>
+        <span class="lv-title">The Iron Fortress &mdash; 100% Reflect Damage + Daedric</span>
+        <span class="lv-spike">Build Complete</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp gear">Daedric Armor</span>
+          <span class="qp gear">Goldbrand</span>
+          <span class="qp gear">100% Reflect Damage</span>
+          <span class="qp skill">All combat skills 100</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Gear</span> <span class="name">Full Daedric Armor</span> &mdash; <span class="note">AR 79+. Best heavy armor in the game. Appears in loot at level 20+. Enchant every piece.</span></li>
+          <li><span class="label">Weapon</span> <span class="name">Goldbrand</span> &mdash; <span class="note">25 base damage + 22 fire damage. Best sword in the game. Boethiah's Shrine, level 20+. The fire damage ignores armor.</span></li>
+          <li><span class="label">Target</span> <span class="name">100% Reflect Damage</span> &mdash; <span class="note">every point of melee damage enemies deal to you is reflected back at them. They literally kill themselves by attacking you. See Enchanting section for how to reach this.</span></li>
+          <li><span class="label">Berserk</span> <span class="name">Use for bosses</span> &mdash; <span class="note">Orc daily power: Fortify Health 20 + Fortify Strength 50 for 60s. Pop this against Daedric Lords, Liches, and multi-enemy ambushes. The +50 Strength is absurd damage.</span></li>
+          <li><span class="label">DLC</span> <span class="name">Shivering Isles</span> &mdash; <span class="note">the entire DLC is a playground for this build. Enemies hit hard but you reflect it all back. New armor and weapons to collect.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:.5rem;">
+          <div class="callout-label">Endgame Fantasy</div>
+          <p>At this point, combat is almost passive. Walk into a room. Block. Enemies hit your shield and take reflected damage. Shield Bash the strongest one, power attack them while staggered. The rest die from hitting you. Activate Berserk if anything survives more than 10 seconds. You are the immovable object AND the unstoppable force.</p>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- COMBAT MECHANICS -->
+  <section class="section" id="combat-mechanics">
+    <h2>Combat Mechanics</h2>
+
+    <h3>Shield Bash (Block Expert, Skill 75)</h3>
+    <p>Shield Bash is performed by holding block and pressing the attack button simultaneously. In the remaster, the stagger effect is significantly more impactful than the original game. The enemy is knocked back and briefly stunned, giving you a guaranteed window for a free power attack. Against humanoid enemies, this is essentially a stun-lock &mdash; bash, power attack, block, bash again before they recover.</p>
+
+    <div class="callout">
+      <div class="callout-label">Shield Bash Timing</div>
+      <p><strong>Against single enemies:</strong> Block their attack, immediately bash, then power attack during their stagger. Repeat indefinitely. They never get another swing in.</p>
+      <p><strong>Against groups:</strong> Bash the closest enemy, power attack them, then immediately block the next attacker. Rotate between targets. Never stand in the open without your shield up.</p>
+    </div>
+
+    <h3>Power Attacks</h3>
+    <p>Hold the attack button to wind up a power attack. These deal significantly more damage but cost Fatigue and leave you briefly open. The Iron Fortress uses power attacks exclusively after Shield Bash stagger &mdash; you never power attack unless the enemy can't hit back. Standing power attack deals the most damage. Directional power attacks (forward + attack, side + attack) have unique effects at higher Blade/Blunt skill levels.</p>
+
+    <h3>Orc Berserk &mdash; Timing It Right</h3>
+    <p>Berserk is a once-per-day racial power. Fortify Health 20 + Fortify Strength 50 + Fortify Fatigue 200 for 60 seconds, but Drain Agility 100 during the effect. The Agility drain doesn't matter because you're blocking, not dodging. The +50 Strength is equivalent to roughly doubling your melee damage output. Save it for:</p>
+    <ul class="picks">
+      <li><span class="label">Bosses</span> <span class="name">Daedric Lords, Liches, Minotaur Lords</span> &mdash; <span class="note">anything with a huge HP pool that you need to kill before it overwhelms you</span></li>
+      <li><span class="label">Ambushes</span> <span class="name">3+ enemies at once</span> &mdash; <span class="note">the extra damage lets you thin the group faster, and the Fortify Health gives breathing room</span></li>
+      <li><span class="label">Speed</span> <span class="name">When you're in a hurry</span> &mdash; <span class="note">need to clear a dungeon fast? Berserk + power attacks = everything dies in one or two hits</span></li>
+    </ul>
+
+    <h3>Armor Stacking with Alteration Shield Spells</h3>
+    <p>Even as a pure melee build, the Protect spell (Alteration) adds a flat armor bonus that stacks with your heavy armor rating. At high levels, your effective armor can exceed the game's damage reduction cap. Cast Protect once before engaging enemies &mdash; it lasts 30 seconds, long enough for most fights. You don't need high Alteration skill for this; the basic Protect spell works fine.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Fatigue and Damage in Remastered</div>
+      <p>Important change from the original: in Oblivion Remastered, <strong>Fatigue no longer affects melee damage output</strong>. In the original, low Fatigue reduced your damage. Now, Fatigue only affects stagger resistance and power attack availability. This means you can spam power attacks more freely without worrying about damage penalties. Just watch your Fatigue bar to avoid being staggered &mdash; cast a Restore Fatigue spell or drink a potion if it gets low.</p>
+    </div>
+  </section>
+
+  <!-- GEAR -->
+  <section class="section" id="gear">
+    <h2>Gear by Level</h2>
+
+    <div class="callout">
+      <div class="callout-label">Armor Rating Matters More Than Anything</div>
+      <p>For the Iron Fortress, armor rating is king. Always equip the highest AR armor you can find. Don't worry about enchantments on armor until you can enchant your own &mdash; raw protection keeps you alive. At Armorer 75+, repair to 125% condition for bonus AR above the listed values.</p>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Early Game &mdash; Levels 1-10</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#9876;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Steel / Chainmail Heavy Armor</span> <span class="gear-slot">Heavy Armor</span></div>
+          <div class="gear-desc">Your starting set. Buy from shops or loot bandits. Prioritize getting all four slots filled (cuirass, greaves, gauntlets, boots) plus a shield.</div>
+          <div class="gear-loc">&#128205; "A Fighting Chance" &mdash; Imperial City Market District (Rohssan). Any Fighters Guild hall also has armor to loot.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <img class="gear-img" src="https://images.uesp.net/thumb/a/ac/OBR-item-Chillrend.jpg/200px-OBR-item-Chillrend.jpg" alt="Chillrend">
+        <div class="gear-info">
+          <div><span class="gear-name">Chillrend</span> <span class="gear-slot">Blade</span></div>
+          <div class="gear-desc">Frost Damage + Weakness to Frost. Level-scaled &mdash; get it early for the best scaling. Fantastic damage for the first 20 levels.</div>
+          <div class="gear-loc">&#128205; Chorrol &mdash; complete "The Killing Field" quest. Talk to Valus Odiil at the Grey Mare inn. Keep both sons alive.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <img class="gear-img" src="https://images.uesp.net/thumb/5/51/OBR-item-Umbra.jpg/200px-OBR-item-Umbra.jpg" alt="Umbra">
+        <div class="gear-info">
+          <div><span class="gear-name">Umbra (Sword + Ebony Armor)</span> <span class="gear-slot">Blade + Armor</span></div>
+          <div class="gear-desc">28 damage + Soul Trap. The NPC Umbra also drops a full set of Ebony Armor (AR 79). Available at level 1 if you cheese it by luring her to Imperial City guards.</div>
+          <div class="gear-loc">&#128205; Vindasel ruins, southwest of Imperial City. Extremely tough fight at low levels &mdash; use the guard exploit or come back at level 10+.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128737;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Tower Shield (any heavy)</span> <span class="gear-slot">Shield</span></div>
+          <div class="gear-desc">Your shield matters more than your weapon. A Tower Shield provides the highest AR bonus. Always keep one equipped and upgraded.</div>
+          <div class="gear-loc">&#128205; Any armorer shop. Upgrade to Dwarven/Orcish/Ebony as they appear in shops (level-dependent).</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Mid Game &mdash; Levels 10-20</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128737;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Escutcheon of Chorrol</span> <span class="gear-slot">Shield</span></div>
+          <div class="gear-desc"><strong>Reflect Damage 25%</strong> + Fortify Endurance. Your first Reflect Damage piece and the foundation of the endgame build. One quarter of all melee damage bounces back at attackers.</div>
+          <div class="gear-loc">&#128205; Chorrol &mdash; complete "Sins of the Father" quest. Talk to Countess Arriana Valga in Castle Chorrol. She asks you to investigate her son's inheritance. Follow the questline to its conclusion.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128141;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Ring of the Iron Fist</span> <span class="gear-slot">Ring</span></div>
+          <div class="gear-desc">Reflect Damage 33% + Fortify Strength. Available as random leveled loot or from specific reward lists. Stack with Escutcheon for 58% total Reflect.</div>
+          <div class="gear-loc">&#128205; Random loot in boss chests at level 12+. Also possible reward from some Fighters Guild quests. Check vendors regularly.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <img class="gear-img" src="https://images.uesp.net/thumb/6/64/OB-item-Ebony_Armor.jpg/200px-OB-item-Ebony_Armor.jpg" alt="Ebony Armor">
+        <div class="gear-info">
+          <div><span class="gear-name">Ebony Armor Set</span> <span class="gear-slot">Heavy Armor</span></div>
+          <div class="gear-desc">AR 69. Massive upgrade over Dwarven/Orcish. Black metal that looks incredible on an Orc. Appears around level 15.</div>
+          <div class="gear-loc">&#128205; Random loot at level 15+. "The Best Defense" &mdash; Imperial City Market District. Or kill Umbra at any level for a free set.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#9876;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Volendrung</span> <span class="gear-slot">Blunt (Warhammer)</span></div>
+          <div class="gear-desc">Daedric Warhammer. 30 base damage + Drain Health + Paralyze. If you went Blunt instead of Blade, this is your endgame weapon. Hits like a truck.</div>
+          <div class="gear-loc">&#128205; Malacath's Shrine (northeast of Anvil). Requires level 10+. Malacath is the Orc god &mdash; thematically perfect.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Late Game &mdash; Levels 20+</div>
+      <div class="gear-row">
+        <img class="gear-img" src="https://images.uesp.net/thumb/7/7a/OB-item-Daedric_Armor.jpg/200px-OB-item-Daedric_Armor.jpg" alt="Daedric Armor">
+        <div class="gear-info">
+          <div><span class="gear-name">Daedric Armor Set</span> <span class="gear-slot">Heavy Armor</span></div>
+          <div class="gear-desc">AR 79+. Best heavy armor in the game. Dark, spiked, intimidating. At Armorer 75+ repair to 125% for even higher AR. Enchant every piece with Reflect Damage.</div>
+          <div class="gear-loc">&#128205; Random loot at level 20+. Individual pieces appear in boss chests and high-level dungeons. Oblivion Gates are reliable sources.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <img class="gear-img" src="https://images.uesp.net/thumb/2/2e/OBR-item-Goldbrand.jpg/200px-OBR-item-Goldbrand.jpg" alt="Goldbrand">
+        <div class="gear-info">
+          <div><span class="gear-name">Goldbrand</span> <span class="gear-slot">Blade</span></div>
+          <div class="gear-desc">25 base damage + 22 Fire Damage. Best one-handed weapon in the game. The fire damage bypasses armor. With Berserk active, this sword ends fights in seconds.</div>
+          <div class="gear-loc">&#128205; Boethiah's Shrine (east of Cheydinhal, near the Morrowind border). Requires level 20+. You must win a tournament by fighting summoned combatants. Best rewards at level 21+.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128141;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Mundane Ring</span> <span class="gear-slot">Ring</span></div>
+          <div class="gear-desc">Reflect Spell 35% + Reflect Damage 35%. One of the best rings for the build. Stacks with other Reflect Damage sources to push toward 100%.</div>
+          <div class="gear-loc">&#128205; Random loot in high-level boss chests (level 18+). Also sold by Aurelinwae at Mystic Emporium (Imperial City) at higher player levels.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128255;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Spell Breaker</span> <span class="gear-slot">Shield (Alternative)</span></div>
+          <div class="gear-desc">Reflect Spell 30%. If enemy mages are giving you trouble, swap to this shield. Combined with Orc's 25% Resist Magicka, mages become trivial.</div>
+          <div class="gear-loc">&#128205; Peryite's Shrine (southeast of Bravil). Complete the Daedric quest. Requires level 10+.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Key Accessories</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128255;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Amulet of Reflection</span></div>
+          <div class="gear-desc">Reflect Damage enchantment. Stack with ring and shield to push Reflect toward cap. Enchant your own at the Arcane University for maximum values.</div>
+          <div class="gear-loc">&#128205; Random loot, vendors, or enchant your own with Grand Soul Gems at Arcane University.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128141;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Ring of Fortify Endurance / Strength</span></div>
+          <div class="gear-desc">If you don't need more Reflect Damage, Fortify STR/END rings boost your damage and HP. Enchant your own for best values.</div>
+          <div class="gear-loc">&#128205; Random loot, vendors, or enchant at Arcane University. Second ring slot if your first ring is Reflect Damage.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENCHANTING -->
+  <section class="section" id="enchanting">
+    <h2>Enchanting &mdash; Reaching 100% Reflect Damage</h2>
+    <p>The Iron Fortress endgame revolves around one number: <strong>100% Reflect Damage</strong>. When you reach this cap, every single point of physical damage dealt to you is reflected back at the attacker. Enemies literally kill themselves by swinging at you. Here's exactly how to get there.</p>
+
+    <div class="callout warn">
+      <div class="callout-label">Important — Reflect Damage Cannot Be Custom-Enchanted</div>
+      <p>Unlike most effects, <strong>Reflect Damage is disabled at the Enchanting Altar</strong>. You cannot enchant it onto gear using soul gems. You must acquire it from <strong>pre-enchanted equipment</strong>, <strong>Sigil Stones</strong> from Oblivion Gates, or <strong>spells/potions</strong>. Plan your gear around finding these specific items.</p>
+    </div>
+
+    <h3>Reaching 100% Reflect Damage</h3>
+    <p>Since you can't custom-enchant Reflect Damage, you need to collect specific pre-enchanted items and Sigil Stones. Here's a realistic equipment loadout:</p>
+
+    <table class="virtue-table">
+      <thead><tr><th>Slot</th><th>Item</th><th>Reflect %</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">Shield</td><td>Escutcheon of Chorrol</td><td>25%</td><td>Chorrol quest &ldquo;Separated at Birth&rdquo;</td></tr>
+        <tr><td class="attr-name">Ring 1</td><td>Ring of the Iron Fist</td><td>33%</td><td>Random leveled loot / vendors</td></tr>
+        <tr><td class="attr-name">Ring 2</td><td>Mundane Ring</td><td>35%</td><td>Daedric quest (Sanguine)</td></tr>
+        <tr><td class="attr-name">Amulet</td><td>Amulet of Axes</td><td>15-20%</td><td>Random leveled loot / vendors</td></tr>
+        <tr style="font-weight:600;color:var(--accent)"><td class="attr-name">Total</td><td></td><td>108-113%</td><td>Over 100% = bonus reflected</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-label">Sigil Stones as Backup</div>
+      <p>If you can't find enough pre-enchanted Reflect Damage gear, <strong>Sigil Stones from Oblivion Gates</strong> can also apply Reflect Damage directly to armor (no altar needed). Save before grabbing the stone and reload until you get a Reflect Damage stone. At level 17+, stones give the best values (~20%). This fills any gaps in your percentage.</p>
+    </div>
+
+    <h3>How to Collect Reflect Damage Gear</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Get the Escutcheon of Chorrol (25%)</span>
+        <div class="step-detail">Complete the quest <strong>&ldquo;Separated at Birth&rdquo;</strong> in Chorrol. Talk to Countess Arriana Valga in Castle Chorrol. This quest involves finding her long-lost son. The Escutcheon has both Reflect Damage and Reflect Spell &mdash; your best single item.</div>
+      </li>
+      <li>
+        <span class="step-action">Find Ring of the Iron Fist (33%)</span>
+        <div class="step-detail">This ring appears as random leveled loot in boss chests and on high-level enemies. Check vendors periodically &mdash; it can appear in jewelry shops. Save-scumming vendor inventories when they restock (every 3 days) can help.</div>
+      </li>
+      <li>
+        <span class="step-action">Get the Mundane Ring (35%)</span>
+        <div class="step-detail">Complete the Daedric quest for <strong>Sanguine</strong> (shrine west of Skingrad, requires level 8+). This ring has 35% Reflect Damage &mdash; the highest single-item source in the game.</div>
+      </li>
+      <li>
+        <span class="step-action">Farm Sigil Stones for remaining gaps</span>
+        <div class="step-detail">If you still need more percentage, close Oblivion Gates at level 17+ and save-scum for <strong>Reflect Damage Sigil Stones</strong>. Apply them directly to armor pieces. Each stone gives ~20% at max level.</div>
+      </li>
+    </ol>
+
+    <h3>Other Enchantments Worth Adding</h3>
+    <table class="virtue-table">
+      <thead><tr><th>Enchantment</th><th>Priority</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">Reflect Damage</td><td><span class="priority t1">TOP</span></td><td>The build's core. Cannot be custom-enchanted &mdash; collect pre-enchanted gear and Sigil Stones. See above.</td></tr>
+        <tr><td class="attr-name">Fortify Endurance</td><td><span class="priority t2">GOOD</span></td><td>More HP. Put this on armor pieces after maxing Reflect Damage on jewelry.</td></tr>
+        <tr><td class="attr-name">Fortify Strength</td><td><span class="priority t2">GOOD</span></td><td>More melee damage. Great on gauntlets or cuirass.</td></tr>
+        <tr><td class="attr-name">Shield (Alteration)</td><td><span class="priority t2">GOOD</span></td><td>Flat armor bonus. Stacks with your heavy armor for absurd damage reduction.</td></tr>
+        <tr><td class="attr-name">Resist Magic</td><td><span class="priority t2">GOOD</span></td><td>Stacks with Orc's 25% Resist Magicka. Covers your one weakness (spell damage).</td></tr>
+        <tr><td class="attr-name">Fortify Health</td><td><span class="priority t3">NICE</span></td><td>Raw HP is always useful. Lower priority since you already have massive health from END.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <div class="callout-label">Don't Enchant Replaceable Gear</div>
+      <p>Save your Grand Soul Gems for endgame equipment. Don't enchant Steel or Dwarven armor you'll replace at level 15. Enchant your <strong>Daedric armor</strong> and your best jewelry. Petty/Lesser/Common soul gems can be used for throwaway enchantments on mid-game gear.</p>
+    </div>
+  </section>
+
+  <!-- COMBAT ROTATION -->
+  <section class="section" id="combat">
+    <h2>Combat Rotation</h2>
+    <p>The Iron Fortress combat loop is simple and devastating. Master this sequence and nothing in the game can kill you.</p>
+
+    <h3>Standard Combat Loop</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Cast Protect (Alteration Shield spell)</span>
+        <div class="step-detail">Before engaging, cast your Shield spell. Adds flat armor on top of your heavy armor. Lasts 30 seconds &mdash; plenty for most fights. This is the only spell you use proactively. If you skipped Alteration, skip this step &mdash; your armor is still massive without it.</div>
+      </li>
+      <li>
+        <span class="step-action">Raise shield and close distance</span>
+        <div class="step-detail">Hold block and walk toward enemies. Let them come to you when possible. With 100% Reflect Damage, they're taking damage from the moment they start swinging. You're not &mdash; you're blocking.</div>
+      </li>
+      <li>
+        <span class="step-action">Block incoming attacks</span>
+        <div class="step-detail">Wait for the enemy's attack to connect with your shield. At Block 50+, you can't be staggered by regular attacks. At Block 75+, you can't be staggered by power attacks either. Every blocked attack gives Block and Heavy Armor XP.</div>
+      </li>
+      <li>
+        <span class="step-action">Shield Bash (Block 75+ required)</span>
+        <div class="step-detail">Immediately after blocking their swing, hold block + attack to Shield Bash. The enemy staggers backward and is stunned for approximately 1 second. This is your opening. In the remaster, the stagger is longer and more reliable than the original game.</div>
+      </li>
+      <li>
+        <span class="step-action">Power Attack during stagger</span>
+        <div class="step-detail">While the enemy is staggered from your bash, hold attack for a power attack. Standing power attacks deal maximum damage. With Goldbrand + Berserk, this one hit can take 60-80% of most enemies' health. They stagger again from the power attack, giving you time to re-raise your shield.</div>
+      </li>
+      <li>
+        <span class="step-action">Heal with Restoration between fights</span>
+        <div class="step-detail">Cast Heal Minor/Major Wounds between combat encounters. You don't need to heal during combat &mdash; you're blocking everything. Alternatively, use Restore Health potions if you didn't invest in Restoration. Alchemy potions are free if you pick ingredients while traveling.</div>
+      </li>
+      <li>
+        <span class="step-action">Berserk for tough fights (daily power)</span>
+        <div class="step-detail">Against bosses, Lich Kings, or groups of 4+: activate Berserk before engaging. +50 Strength doubles your damage for 60 seconds. Combined with Goldbrand's fire damage and power attacks after Shield Bash, even the toughest enemies melt. The Drain Agility penalty is irrelevant &mdash; you're blocking, not dodging.</div>
+      </li>
+    </ol>
+
+    <div class="callout tip" style="margin-top:1.25rem;">
+      <div class="callout-label">Against Multiple Enemies</div>
+      <p>Keep your shield up and keep all enemies in front of you. Back into a wall or corner to prevent flanking. Bash the closest enemy, power attack them, then immediately block the next attacker. Your Reflect Damage is doing work on every enemy that swings at you &mdash; the ones you're not directly fighting are still taking reflected damage. Let them soften themselves up while you focus-fire one target at a time.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Against Mages</div>
+      <p>Mages are your one potential weakness. Reflect Damage doesn't work against spells &mdash; you need <strong>Reflect Spell</strong> or <strong>Resist Magic</strong> for that. Options: swap to <strong>Spell Breaker</strong> shield (30% Reflect Spell), use your Orc Resist Magicka (25%), or close distance fast and Shield Bash them before they can cast. Mages have no poise &mdash; one bash and they're helpless. Sprint at them (costs Fatigue), bash, and they'll never finish a spell.</p>
+    </div>
+  </section>
+
+  <!-- TIPS -->
+  <section class="section" id="tips">
+    <h2>Remastered Tips for the Iron Fortress</h2>
+
+    <div class="callout tip">
+      <div class="callout-label">Retroactive Endurance HP &mdash; Pump STR Early</div>
+      <p>This is the single biggest change for tank builds. In the original game, you HAD to max Endurance first or permanently lose HP. In Remastered, HP is recalculated whenever your Endurance changes. This means you can safely invest in <strong>Strength first</strong> for kill speed, then catch up on Endurance later. Your total HP at any given Endurance value is always the same, regardless of when you invested. Don't waste early levels on Endurance if enemies are dying too slowly.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Sprint Uses Fatigue</div>
+      <p>The remaster added a sprint mechanic. Sprinting drains Fatigue rapidly. For a tank who relies on power attacks (which also cost Fatigue), this means you need to manage your Fatigue bar carefully. Don't sprint into combat &mdash; walk in with your shield up. Save your Fatigue for power attacks and Berserk.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Fatigue Doesn't Affect Damage Anymore</div>
+      <p>In the original Oblivion, having low Fatigue reduced your melee damage. In Remastered, <strong>Fatigue only affects stagger resistance</strong>. This is a massive buff for the Iron Fortress &mdash; even at low Fatigue, your power attacks hit just as hard. The only risk of low Fatigue is being staggered, which your shield and Block skill already prevent.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Block Expert is More Impactful in Remastered</div>
+      <p>The stagger from Shield Bash was buffed significantly in Remastered. The original game's Shield Bash was a minor inconvenience to enemies. In Remastered, it's a full stun-lock tool that leaves enemies completely unable to act for about a second. This makes Block 75 the most important milestone in the entire build. Rush it above everything else.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Armorer is More Important Than Ever</div>
+      <p>Remastered's combat is harder and gear degrades faster. The Armorer skill is your lifeline. At <strong>Expert (75)</strong>, repairing to 125% condition makes your weapons deal bonus damage and your armor provide bonus AR beyond their base stats. Always carry 10+ Repair Hammers and repair after every fight. The Orc's +10 Armorer head start means you hit these milestones faster than any other race.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">The World Levels With You</div>
+      <p>Oblivion uses <strong>level scaling</strong> &mdash; enemies get stronger as you level up. This actually benefits the Iron Fortress: stronger enemies hit harder, which means more Reflect Damage going back at them. At 100% Reflect, enemies at any level are killing themselves at the same rate relative to their own HP. The scaling works in your favor.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Sleep to Level Up</div>
+      <p>You don't level up automatically. When you see "you should rest and meditate on what you've learned," find any bed and sleep. This triggers the level-up screen where you spend Virtues. Fighters Guild halls have free beds in every city.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">The Mages Guild is Worth Joining</div>
+      <p>Even for a pure melee build, the Mages Guild gives you access to the <strong>enchanting altar</strong> at the Arcane University. While Reflect Damage itself cannot be custom-enchanted, the altar lets you add <strong>Fortify Endurance, Fortify Strength, Shield, and Resist Magic</strong> to your armor &mdash; all valuable for this build. Alternatively, use the Frostcrag Spire DLC altar. For Reflect Damage, rely on pre-enchanted gear and Sigil Stones.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Oblivion Gates = Gear Farm</div>
+      <p>Oblivion Gates spawn after certain main quest progress. They're challenging but have the best loot in the game. For the Iron Fortress, they're perfect training grounds &mdash; Daedra hit hard (more Reflect Damage returned to them), and the reward chests contain Daedric armor pieces and Grand Soul Gems. Clear every gate you find.</p>
+    </div>
+  </section>
+
+  <div class="guide-footer">
+    Oblivion Remastered &middot; Iron Fortress (Tank Warrior) Build Guide &middot; 2025
+    <br>
+    <a href="guides.html">All Build Guides</a> &middot; <a href="index.html">Home</a>
+  </div>
+
+</main>
+</div>
+
+<script>
+const sections=document.querySelectorAll('.section');const navLinks=document.querySelectorAll('.sidebar a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const a=document.querySelector('.sidebar a[href="#'+entry.target.id+'"]');if(a)a.classList.add('active')}})},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>observer.observe(s));
+
+// Scroll reveal
+const revealEls=document.querySelectorAll('.section,.gear-row,.spell-row,.lv-card,.callout,.bs-card');
+const revealObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';revealObs.unobserve(e.target)}})},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+revealEls.forEach(el=>{el.style.opacity='0';el.style.transform='translateY(16px)';el.style.transition='opacity 0.5s ease, transform 0.5s ease';revealObs.observe(el)});
+
+// Mobile hamburger menu
+const toggle=document.querySelector('.nav-toggle');
+const links=document.querySelector('.nav-links');
+toggle.addEventListener('click',()=>links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+/* ── Universal Nav Toggle ── */
+(function(){
+  const btn=document.getElementById('unav-hamburger'),nav=document.getElementById('unav-links');
+  if(!btn||!nav)return;
+  btn.addEventListener('click',()=>{btn.classList.toggle('open');nav.classList.toggle('open')});
+  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+    btn.classList.remove('open');nav.classList.remove('open');
+  }));
+})();
+
+</script>
+</body>
+</html>

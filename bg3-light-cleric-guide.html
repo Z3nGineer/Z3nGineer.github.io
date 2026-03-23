@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Light Cleric — Radiating Juggernaut · BG3 Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg-body: #0a0a0a;
+  --bg-card: #151515;
+  --bg-elevated: #1c1c1c;
+  --bg-hover: #222222;
+  --border: #2b2c2c;
+  --border-light: #3a3a3a;
+  --text: #e8e8e8;
+  --text-dim: #a0a0a0;
+  --text-muted: #707070;
+  --white: #ffffff;
+  --accent: #057af0;
+  --accent-hover: #3592ff;
+  --green: #21c513;
+  --green-dim: #199f2f;
+  --orange: #f09a18;
+  --orange-dim: rgba(240,154,24,0.15);
+  --red: #f00505;
+  --gold: #d4a043;
+  --gold-dim: rgba(212,160,67,0.12);
+  --purple: #b080d0;
+  --radiant: #f0d050;
+  --radiant-dim: rgba(240,208,80,0.12);
+}
+
+html { scroll-behavior:smooth; scrollbar-width:thin; scrollbar-color:#2b2c2c #0a0a0a; }
+
+body {
+  background: var(--bg-body);
+  color: var(--text);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 19px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration:none; }
+a:hover { color: var(--accent-hover); text-decoration:underline; }
+
+/* ── UNIVERSAL TOP NAV ── */
+.universal-nav {
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:1000;
+  height:60px;
+  background:rgba(10,10,10,0.95);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 2rem;
+}
+.unav-brand {
+  font-family:'Cinzel', serif;
+  font-size:1rem;
+  font-weight:700;
+  letter-spacing:0.12em;
+  color:var(--text);
+  text-decoration:none;
+  transition:color 0.2s;
+}
+.unav-brand:hover { color:var(--accent); text-decoration:none; }
+.unav-links {
+  display:flex;
+  gap:1.5rem;
+  align-items:center;
+}
+.unav-links > a {
+  font-size:0.88rem;
+  font-weight:500;
+  color:var(--text-dim);
+  text-decoration:none;
+  transition:color 0.15s;
+  white-space:nowrap;
+}
+.unav-links > a:hover { color:var(--white); text-decoration:none; }
+.unav-dropdown {
+  position:relative;
+}
+.unav-dropdown > a {
+  font-size:0.88rem;
+  font-weight:500;
+  color:var(--text-dim);
+  text-decoration:none;
+  transition:color 0.15s;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.unav-dropdown > a:hover { color:var(--white); text-decoration:none; }
+.unav-dropdown .dd-arrow { font-size:0.6rem; margin-left:0.2rem; }
+.unav-dd-menu {
+  display:none;
+  position:absolute;
+  top:100%;
+  right:0;
+  background:rgba(21,21,21,0.98);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:0.5rem 0;
+  min-width:180px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.5);
+  z-index:1001;
+}
+.unav-dropdown:hover .unav-dd-menu { display:block; }
+.unav-dd-menu a {
+  display:block;
+  padding:0.5rem 1.25rem;
+  font-size:0.85rem;
+  font-weight:500;
+  color:var(--text-dim);
+  text-decoration:none;
+  transition:all 0.1s;
+}
+.unav-dd-menu a:hover {
+  color:var(--white);
+  background:rgba(255,255,255,0.04);
+  text-decoration:none;
+}
+@media(max-width:800px) {
+  .unav-links { display:none; }
+}
+
+/* ── LAYOUT ── */
+.page { display:flex; max-width:1100px; margin:0 auto; gap:0; padding-top:60px; }
+
+.sidebar {
+  width:220px;
+  flex-shrink:0;
+  position:sticky;
+  top:60px;
+  height:calc(100vh - 60px);
+  overflow-y:auto;
+  border-right:1px solid var(--border);
+  background: var(--bg-card);
+  padding:1.5rem 0;
+  scrollbar-width:thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.sidebar-title {
+  font-family:'Oswald', sans-serif;
+  font-size:0.75rem;
+  font-weight:600;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  padding:0 1.25rem;
+  margin-bottom:0.75rem;
+}
+
+.sidebar a {
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  padding:0.45rem 1.25rem;
+  font-size:0.88rem;
+  font-weight:500;
+  color:var(--text-dim);
+  text-decoration:none;
+  border-left:3px solid transparent;
+  transition:all 0.15s;
+}
+
+.sidebar a:hover {
+  color:var(--white);
+  background:rgba(255,255,255,0.03);
+  text-decoration:none;
+}
+
+.sidebar a.active {
+  color:var(--white);
+  border-left-color:var(--accent);
+  background:rgba(5,122,240,0.06);
+}
+
+.sidebar .nav-icon { font-size:1rem; width:1.2rem; text-align:center; }
+
+.content {
+  flex:1;
+  min-width:0;
+  padding:2.5rem 2.5rem 4rem;
+}
+
+@media(max-width:800px) {
+  .sidebar { display:none; }
+  .content { padding:1.5rem; }
+}
+
+/* ── HEADER ── */
+.guide-header {
+  margin-bottom:2.5rem;
+  padding-bottom:1.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.guide-header .breadcrumb {
+  font-size:0.78rem;
+  color:var(--text-muted);
+  margin-bottom:0.5rem;
+  letter-spacing:0.02em;
+}
+
+.guide-header h1 {
+  font-family:'Oswald', sans-serif;
+  font-size:2.2rem;
+  font-weight:700;
+  color:var(--white);
+  line-height:1.2;
+  margin-bottom:0.4rem;
+}
+
+.guide-header .subtitle {
+  font-size:1rem;
+  color:var(--text-dim);
+  font-weight:400;
+}
+
+.tag-row { display:flex; gap:0.4rem; margin-top:0.75rem; flex-wrap:wrap; }
+.tag {
+  font-size:0.72rem;
+  font-weight:600;
+  padding:0.2rem 0.6rem;
+  border-radius:4px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.tag.green { color:var(--green); border-color:rgba(33,197,19,0.25); background:rgba(33,197,19,0.06); }
+.tag.orange { color:var(--orange); border-color:rgba(240,154,24,0.25); background:var(--orange-dim); }
+.tag.blue { color:var(--accent); border-color:rgba(5,122,240,0.25); background:rgba(5,122,240,0.06); }
+.tag.gold { color:var(--gold); border-color:rgba(212,160,67,0.25); background:var(--gold-dim); }
+
+/* ── HERO ART ── */
+.hero-art {
+  width:100%;
+  margin-bottom:1.25rem;
+  border-radius:10px;
+  border:1px solid var(--border);
+  overflow:hidden;
+  background:var(--bg-card);
+}
+.hero-svg {
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+.header-row {
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  margin-bottom:1.25rem;
+}
+.header-portrait {
+  width:80px;
+  height:80px;
+  border-radius:8px;
+  border:2px solid var(--border);
+  object-fit:cover;
+}
+.header-text { flex:1; }
+
+/* ── SECTIONS ── */
+.section { margin-top:3rem; }
+
+.section h2 {
+  font-family:'Oswald', sans-serif;
+  font-size:1.5rem;
+  font-weight:600;
+  color:var(--white);
+  margin-bottom:1rem;
+  padding-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.section h3 {
+  font-family:'Oswald', sans-serif;
+  font-size:1.15rem;
+  font-weight:500;
+  color:var(--text);
+  margin:1.5rem 0 0.6rem;
+}
+
+.section p { margin-bottom:1rem; color:var(--text); }
+
+/* ── CALLOUTS ── */
+.callout {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:6px;
+  padding:1rem 1.25rem;
+  margin:1.25rem 0;
+}
+
+.callout.warn { border-left-color:var(--orange); }
+.callout.tip { border-left-color:var(--green); }
+.callout.radiant { border-left-color:var(--radiant); }
+
+.callout-label {
+  font-family:'Oswald', sans-serif;
+  font-size:0.78rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  margin-bottom:0.25rem;
+}
+
+.callout .callout-label { color:var(--accent); }
+.callout.warn .callout-label { color:var(--orange); }
+.callout.tip .callout-label { color:var(--green); }
+.callout.radiant .callout-label { color:var(--radiant); }
+
+.callout p { margin-bottom:0.5rem; font-size:0.95rem; }
+.callout p:last-child { margin-bottom:0; }
+
+/* ── STAT BAR ── */
+.stats { display:flex; gap:0.5rem; flex-wrap:wrap; margin:0.75rem 0; }
+.stat-box {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:0.4rem 0.75rem;
+  text-align:center;
+  min-width:3.5rem;
+}
+.stat-box.primary { border-color:rgba(5,122,240,0.4); }
+.stat-label { font-size:0.65rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); }
+.stat-val { font-family:'Oswald',sans-serif; font-size:1.3rem; font-weight:600; color:var(--white); }
+.stat-box.primary .stat-val { color:var(--accent); }
+
+/* ── LEVEL CARDS ── */
+.level-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  margin-bottom:0.4rem;
+  overflow:hidden;
+  transition:border-color 0.15s;
+}
+
+.level-card:hover { border-color:var(--border-light); }
+.level-card.spike { border-left:3px solid var(--orange); }
+.level-card.here { border-color:var(--accent); box-shadow:0 0 0 1px rgba(5,122,240,0.15); }
+
+.lv-head {
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  padding:0.65rem 1rem;
+  cursor:pointer;
+  user-select:none;
+  transition:background 0.1s;
+}
+.lv-head:hover { background:var(--bg-hover); }
+
+.lv-num {
+  font-family:'Oswald',sans-serif;
+  font-weight:700;
+  font-size:1.3rem;
+  color:var(--white);
+  min-width:1.6rem;
+  text-align:center;
+}
+.level-card.here .lv-num { color:var(--accent); }
+
+.lv-badge {
+  font-size:0.68rem;
+  font-weight:600;
+  padding:0.15rem 0.5rem;
+  border-radius:4px;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.lv-badge.cleric { color:var(--radiant); background:rgba(240,208,80,0.08); border:1px solid rgba(240,208,80,0.2); }
+
+.lv-title {
+  font-weight:600;
+  font-size:0.95rem;
+  color:var(--text);
+  flex:1;
+}
+
+.lv-spike {
+  font-size:0.65rem;
+  font-weight:600;
+  color:var(--orange);
+  background:var(--orange-dim);
+  padding:0.15rem 0.45rem;
+  border-radius:4px;
+  border:1px solid rgba(240,154,24,0.2);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+
+.lv-arrow {
+  color:var(--text-muted);
+  font-size:0.75rem;
+  transition:transform 0.2s;
+}
+.level-card.open .lv-arrow { transform:rotate(90deg); }
+
+.lv-body { max-height:0; overflow:hidden; transition:max-height 0.3s ease; }
+.level-card.open .lv-body { max-height:900px; }
+.lv-inner { padding:0 1rem 1rem; border-top:1px solid var(--border); }
+
+/* Quick picks */
+.qp-row { display:flex; flex-wrap:wrap; gap:0.3rem; margin:0.75rem 0 0.5rem; }
+.qp {
+  font-size:0.78rem;
+  font-weight:500;
+  padding:0.2rem 0.6rem;
+  border-radius:4px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+}
+.qp.feature { color:var(--green); border-color:rgba(33,197,19,0.2); }
+.qp.spell { color:var(--accent); border-color:rgba(5,122,240,0.2); }
+.qp.feat { color:var(--orange); border-color:rgba(240,154,24,0.2); }
+.qp.domain { color:var(--radiant); border-color:rgba(240,208,80,0.2); }
+
+/* Pick list */
+.picks { list-style:none; margin:0.5rem 0; }
+.picks li {
+  padding:0.3rem 0 0.3rem 0;
+  font-size:0.95rem;
+  display:flex;
+  gap:0.4rem;
+  align-items:baseline;
+}
+.picks .label {
+  font-size:0.72rem;
+  font-weight:600;
+  color:var(--orange);
+  text-transform:uppercase;
+  letter-spacing:0.03em;
+  flex-shrink:0;
+  min-width:4rem;
+}
+.picks .name { font-weight:600; color:var(--white); }
+.picks .note { color:var(--text-dim); font-size:0.88rem; }
+
+/* Prep box */
+.prep {
+  background:rgba(33,197,19,0.04);
+  border:1px solid rgba(33,197,19,0.15);
+  border-radius:6px;
+  padding:0.75rem 1rem;
+  margin-top:0.75rem;
+}
+.prep-title {
+  font-family:'Oswald',sans-serif;
+  font-size:0.8rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--green);
+  margin-bottom:0.4rem;
+}
+.prep-list { list-style:none; display:flex; flex-wrap:wrap; gap:0.25rem 0.6rem; }
+.prep-list li { font-size:0.9rem; font-weight:500; color:var(--text); }
+.prep-list li::before { content:'+ '; color:var(--green-dim); }
+.prep-list li.new { color:var(--orange); }
+.prep-list li.new::before { content:'* '; color:var(--orange); }
+.prep-list li.domain { color:var(--radiant); }
+.prep-list li.domain::before { content:'@ '; color:var(--radiant); }
+.prep-note { font-size:0.78rem; color:var(--text-muted); margin-top:0.3rem; }
+
+/* ── SPELL GRID ── */
+.spell-section { margin-bottom:1.5rem; }
+.spell-level {
+  font-family:'Oswald',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  color:var(--white);
+  padding-bottom:0.35rem;
+  margin-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.spell-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:start;
+  padding:0.5rem 0.75rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:0.35rem;
+  gap:0.75rem;
+}
+.spell-info { flex:1; }
+.spell-name { font-weight:600; color:var(--white); font-size:0.95rem; }
+.spell-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.1rem; }
+.spell-badge {
+  font-size:0.68rem;
+  font-weight:600;
+  padding:0.15rem 0.5rem;
+  border-radius:4px;
+  text-transform:uppercase;
+  letter-spacing:0.03em;
+  white-space:nowrap;
+  flex-shrink:0;
+  align-self:center;
+}
+.spell-badge.must { color:var(--green); background:rgba(33,197,19,0.08); border:1px solid rgba(33,197,19,0.2); }
+.spell-badge.good { color:var(--accent); background:rgba(5,122,240,0.06); border:1px solid rgba(5,122,240,0.15); }
+.spell-badge.conc { color:var(--purple); background:rgba(176,128,208,0.06); border:1px solid rgba(176,128,208,0.15); }
+.spell-badge.free { color:var(--radiant); background:var(--radiant-dim); border:1px solid rgba(240,208,80,0.2); }
+
+/* ── ITEMS ── */
+.item-group { margin-bottom:1.5rem; }
+.item-group-title {
+  font-family:'Oswald',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  color:var(--gold);
+  padding-bottom:0.35rem;
+  margin-bottom:0.5rem;
+  border-bottom:1px solid rgba(212,160,67,0.15);
+}
+.item-row {
+  padding:0.6rem 0.75rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:0.35rem;
+}
+.item-name { font-weight:600; color:var(--gold); font-size:0.95rem; }
+.item-slot { font-size:0.7rem; color:var(--text-muted); margin-left:0.35rem; text-transform:uppercase; letter-spacing:0.03em; }
+.item-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.15rem; }
+.item-loc { font-size:0.8rem; color:var(--green-dim); margin-top:0.2rem; }
+
+/* ── ROTATION ── */
+.step-list { list-style:none; counter-reset:step; }
+.step-list li {
+  position:relative;
+  padding:0.75rem 0 0.75rem 3rem;
+  border-left:2px solid var(--border);
+  margin-left:0.75rem;
+  counter-increment:step;
+}
+.step-list li::before {
+  content:counter(step);
+  position:absolute;
+  left:-0.75rem;
+  top:0.6rem;
+  width:1.4rem;
+  height:1.4rem;
+  background:var(--bg-body);
+  border:2px solid var(--accent);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Oswald',sans-serif;
+  font-weight:600;
+  font-size:0.75rem;
+  color:var(--accent);
+}
+.step-list li:last-child { border-left-color:transparent; }
+.step-action { font-weight:600; color:var(--white); }
+.step-timing {
+  font-size:0.7rem;
+  font-weight:600;
+  padding:0.1rem 0.4rem;
+  border-radius:3px;
+  margin-left:0.4rem;
+  vertical-align:middle;
+  text-transform:uppercase;
+}
+.step-timing.pre { color:var(--text-muted); background:rgba(255,255,255,0.04); }
+.step-timing.turn { color:var(--accent); background:rgba(5,122,240,0.08); }
+.step-timing.every { color:var(--green); background:rgba(33,197,19,0.08); }
+.step-timing.react { color:var(--orange); background:var(--orange-dim); }
+.step-detail { color:var(--text-dim); font-size:0.9rem; margin-top:0.2rem; }
+
+/* ── PARTY ── */
+.party-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
+@media(max-width:600px) { .party-grid { grid-template-columns:1fr; } }
+.party-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1rem;
+}
+.party-name { font-family:'Oswald',sans-serif; font-weight:600; font-size:1.05rem; color:var(--white); }
+.party-role { font-size:0.72rem; font-weight:600; color:var(--accent); text-transform:uppercase; letter-spacing:0.04em; margin-top:0.1rem; }
+.party-desc { color:var(--text-dim); font-size:0.88rem; margin-top:0.35rem; }
+
+/* ── DOMAIN TABLE ── */
+.domain-table { width:100%; border-collapse:collapse; margin:1rem 0; }
+.domain-table th {
+  font-family:'Oswald',sans-serif;
+  font-size:0.78rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--text-muted);
+  text-align:left;
+  padding:0.6rem 0.75rem;
+  border-bottom:2px solid var(--border);
+}
+.domain-table td {
+  padding:0.6rem 0.75rem;
+  border-bottom:1px solid var(--border);
+  font-size:0.92rem;
+}
+.domain-table tr:hover { background:var(--bg-card); }
+.domain-spell { font-weight:600; color:var(--radiant); }
+
+/* ── FOOTER ── */
+.guide-footer {
+  margin-top:3rem;
+  padding-top:1rem;
+  border-top:1px solid var(--border);
+  font-size:0.8rem;
+  color:var(--text-muted);
+  text-align:center;
+}
+.guide-footer a { color:var(--text-dim); }
+.guide-footer a:hover { color:var(--accent); }
+
+/* Mobile nav */
+.mobile-nav{display:none;position:sticky;top:60px;z-index:100;background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:56px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;color:var(--radiant);letter-spacing:.06em}
+.nav-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s}
+.nav-links{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.nav-links.open{display:flex}
+.nav-links a{display:flex;align-items:center;gap:.5rem;height:44px;font-size:.9rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){.mobile-nav{display:flex}}
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity:0; transform:translateY(20px); transition:opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- UNIVERSAL TOP NAV -->
+<nav class="universal-nav">
+  <a href="index.html" class="unav-brand">Z3nGineer</a>
+  <div class="unav-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#projects">Projects</a>
+    <div class="unav-dropdown">
+      <a href="#">Pages <span class="dd-arrow">&#x25BC;</span></a>
+      <div class="unav-dd-menu">
+        <a href="omnisuite.html">OmniSuite</a>
+        <a href="heatsync.html">HeatSync</a>
+        <a href="https://crockednloaded.com">CrockedNLoaded</a>
+        <a href="guides.html">Game Guides</a>
+        <a href="CHIM.html">CHIM Modpack</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE SUB-NAV -->
+<div class="mobile-nav">
+  <span class="mobile-nav-title">Light Cleric</span>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="#overview"><span class="nav-icon">&#9672;</span> Overview</a>
+    <a href="#race"><span class="nav-icon">&#9673;</span> Race &amp; Stats</a>
+    <a href="#levels"><span class="nav-icon">&#8593;</span> Progression</a>
+    <a href="#domain"><span class="nav-icon">&#9788;</span> Light Domain</a>
+    <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+    <a href="#feats"><span class="nav-icon">&#9670;</span> Feats</a>
+    <a href="#items"><span class="nav-icon">&#9670;</span> Items</a>
+    <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+    <a href="#party"><span class="nav-icon">&#9678;</span> Party</a>
+    <a href="#honour"><span class="nav-icon">&#9760;</span> Honour Mode</a>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div style="text-align:center; padding:0 1.25rem 1rem;">
+    <svg width="48" height="48" viewBox="0 0 48 48" style="border-radius:8px; border:1px solid var(--border);">
+      <rect width="48" height="48" fill="#1a1508"/>
+      <circle cx="24" cy="24" r="16" fill="none" stroke="#f0d050" stroke-width="1.5" opacity="0.6"/>
+      <circle cx="24" cy="24" r="10" fill="#f0d050" opacity="0.15"/>
+      <circle cx="24" cy="24" r="5" fill="#f0d050" opacity="0.35"/>
+      <circle cx="24" cy="24" r="2" fill="#fff8d0" opacity="0.8"/>
+      <line x1="24" y1="4" x2="24" y2="12" stroke="#f0d050" stroke-width="1" opacity="0.4"/>
+      <line x1="24" y1="36" x2="24" y2="44" stroke="#f0d050" stroke-width="1" opacity="0.4"/>
+      <line x1="4" y1="24" x2="12" y2="24" stroke="#f0d050" stroke-width="1" opacity="0.4"/>
+      <line x1="36" y1="24" x2="44" y2="24" stroke="#f0d050" stroke-width="1" opacity="0.4"/>
+    </svg>
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">&#9672;</span> Overview</a>
+  <a href="#race"><span class="nav-icon">&#9673;</span> Race &amp; Stats</a>
+  <a href="#levels"><span class="nav-icon">&#8593;</span> Progression</a>
+  <a href="#domain"><span class="nav-icon">&#9788;</span> Light Domain</a>
+  <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+  <a href="#feats"><span class="nav-icon">&#9670;</span> Feats</a>
+  <a href="#items"><span class="nav-icon">&#9670;</span> Items</a>
+  <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+  <a href="#party"><span class="nav-icon">&#9678;</span> Party</a>
+  <a href="#honour"><span class="nav-icon">&#9760;</span> Honour Mode</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 800 260" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="radiantGlow" cx="40%" cy="40%" r="55%">
+            <stop offset="0%" stop-color="#f0d050" stop-opacity="0.25"/>
+            <stop offset="30%" stop-color="#d4a020" stop-opacity="0.12"/>
+            <stop offset="60%" stop-color="#1a1508" stop-opacity="0.05"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="fireGlow" cx="75%" cy="35%" r="30%">
+            <stop offset="0%" stop-color="#f05020" stop-opacity="0.2"/>
+            <stop offset="50%" stop-color="#a03010" stop-opacity="0.08"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="healGlow" cx="15%" cy="65%" r="20%">
+            <stop offset="0%" stop-color="#f0e880" stop-opacity="0.15"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="spiritGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#f0d050" stop-opacity="0.12"/>
+            <stop offset="100%" stop-color="#f0d050" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <!-- Background layers -->
+        <rect width="800" height="260" fill="#0a0808"/>
+        <rect width="800" height="260" fill="url(#radiantGlow)"/>
+        <rect width="800" height="260" fill="url(#fireGlow)"/>
+        <rect width="800" height="260" fill="url(#healGlow)"/>
+
+        <!-- Temple columns background -->
+        <g opacity="0.15" stroke="#d4a020" stroke-width="1" fill="none">
+          <rect x="50" y="20" width="12" height="220" rx="2"/>
+          <rect x="90" y="30" width="10" height="210" rx="2"/>
+          <rect x="700" y="15" width="12" height="225" rx="2"/>
+          <rect x="740" y="25" width="10" height="215" rx="2"/>
+        </g>
+        <!-- Temple arches -->
+        <path d="M50,20 Q80,0 110,20" stroke="#d4a020" stroke-width="0.8" opacity="0.12" fill="none"/>
+        <path d="M690,15 Q720,-5 750,15" stroke="#d4a020" stroke-width="0.8" opacity="0.12" fill="none"/>
+
+        <!-- Battlefield ground -->
+        <path d="M0,240 Q200,232 400,238 Q600,244 800,236" stroke="#3a3020" stroke-width="0.6" opacity="0.3" fill="none"/>
+        <path d="M0,248 Q200,242 400,246 Q600,250 800,244" stroke="#2a2018" stroke-width="0.5" opacity="0.2" fill="none"/>
+
+        <!-- ── CLERIC (center) ── -->
+        <g transform="translate(350,140)" opacity="0.95">
+          <!-- Radiant aura behind cleric -->
+          <circle cx="0" cy="-10" r="70" fill="#f0d050" opacity="0.03"/>
+          <circle cx="0" cy="-10" r="50" fill="#f0d050" opacity="0.05"/>
+          <circle cx="0" cy="-10" r="30" fill="#f0e880" opacity="0.06"/>
+
+          <!-- Heavy armor body -->
+          <path d="M-22,10 Q-25,-15 -18,-35 Q-10,-48 0,-52 Q10,-48 18,-35 Q25,-15 22,10 Q20,40 18,65 Q10,70 0,72 Q-10,70 -18,65 Q-20,40 -22,10 Z" fill="#6a6040"/>
+          <!-- Armor highlights -->
+          <path d="M-15,-30 Q0,-48 15,-30" fill="#8a7a55" opacity="0.5"/>
+          <path d="M-18,5 L-10,0 L0,3 L10,0 L18,5 L15,20 L-15,20 Z" fill="#7a6a48" opacity="0.4"/>
+          <!-- Chest emblem — sun -->
+          <circle cx="0" cy="-5" r="6" fill="none" stroke="#f0d050" stroke-width="1" opacity="0.6"/>
+          <circle cx="0" cy="-5" r="3" fill="#f0d050" opacity="0.2"/>
+          <line x1="0" y1="-13" x2="0" y2="-8" stroke="#f0d050" stroke-width="0.6" opacity="0.5"/>
+          <line x1="0" y1="3" x2="0" y2="-2" stroke="#f0d050" stroke-width="0.6" opacity="0.5"/>
+          <line x1="-7" y1="-5" x2="-3" y2="-5" stroke="#f0d050" stroke-width="0.6" opacity="0.5"/>
+          <line x1="3" y1="-5" x2="7" y2="-5" stroke="#f0d050" stroke-width="0.6" opacity="0.5"/>
+          <line x1="-5" y1="-10" x2="-2" y2="-8" stroke="#f0d050" stroke-width="0.5" opacity="0.4"/>
+          <line x1="5" y1="-10" x2="2" y2="-8" stroke="#f0d050" stroke-width="0.5" opacity="0.4"/>
+          <line x1="-5" y1="0" x2="-2" y2="-2" stroke="#f0d050" stroke-width="0.5" opacity="0.4"/>
+          <line x1="5" y1="0" x2="2" y2="-2" stroke="#f0d050" stroke-width="0.5" opacity="0.4"/>
+
+          <!-- Head / helm -->
+          <ellipse cx="0" cy="-60" rx="12" ry="14" fill="#6a6040"/>
+          <!-- Helm crest -->
+          <path d="M-10,-72 Q0,-82 10,-72" fill="#8a7a55" opacity="0.6"/>
+          <!-- Face -->
+          <ellipse cx="0" cy="-56" rx="8" ry="9" fill="#c8a880"/>
+          <!-- Eyes glowing gold -->
+          <ellipse cx="-3" cy="-58" rx="1.5" ry="1" fill="#f0d050" opacity="0.8"/>
+          <ellipse cx="3" cy="-58" rx="1.5" ry="1" fill="#f0d050" opacity="0.8"/>
+
+          <!-- Shield (left arm) — large, golden trim -->
+          <g transform="translate(-35,0)">
+            <path d="M-8,-30 L8,-30 L10,-25 L10,10 Q10,25 0,35 Q-10,25 -10,10 L-10,-25 Z" fill="#5a5030"/>
+            <path d="M-8,-30 L8,-30 L10,-25 L10,10 Q10,25 0,35 Q-10,25 -10,10 L-10,-25 Z" fill="none" stroke="#d4a020" stroke-width="1.2"/>
+            <!-- Shield sun emblem -->
+            <circle cx="0" cy="0" r="8" fill="none" stroke="#f0d050" stroke-width="0.8" opacity="0.5"/>
+            <circle cx="0" cy="0" r="4" fill="#f0d050" opacity="0.12"/>
+            <circle cx="0" cy="0" r="1.5" fill="#f0d050" opacity="0.3"/>
+          </g>
+
+          <!-- Right arm raised — casting Fireball -->
+          <path d="M18,-35 Q35,-50 45,-65 Q48,-70 50,-68" fill="#6a6040"/>
+          <ellipse cx="50" cy="-68" rx="5" ry="4" fill="#c8a880"/>
+
+          <!-- Mace at belt -->
+          <line x1="22" y1="20" x2="30" y2="60" stroke="#808080" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="30" cy="62" r="5" fill="#707060" opacity="0.7"/>
+          <circle cx="30" cy="62" r="3" fill="#f0d050" opacity="0.15"/>
+
+          <!-- Legs in heavy plate -->
+          <path d="M-10,65 L-12,95 L-6,95 L-5,68" fill="#5a5030"/>
+          <path d="M10,65 L12,95 L6,95 L5,68" fill="#5a5030"/>
+          <!-- Boots -->
+          <ellipse cx="-9" cy="96" rx="7" ry="3" fill="#4a4028"/>
+          <ellipse cx="9" cy="96" rx="7" ry="3" fill="#4a4028"/>
+
+          <!-- Cape flowing behind -->
+          <path d="M-18,-35 Q-30,-20 -35,10 Q-38,40 -30,70 Q-25,85 -20,90" fill="#3a1510" opacity="0.5"/>
+          <path d="M18,-35 Q30,-25 32,5 Q35,35 30,65 Q28,80 25,88" fill="#3a1510" opacity="0.4"/>
+        </g>
+
+        <!-- ── FIREBALL (upper right) ── -->
+        <g transform="translate(580,65)">
+          <circle cx="0" cy="0" r="35" fill="#f05020" opacity="0.06"/>
+          <circle cx="0" cy="0" r="25" fill="#f06030" opacity="0.12"/>
+          <circle cx="0" cy="0" r="16" fill="#f07838" opacity="0.2"/>
+          <circle cx="0" cy="0" r="10" fill="#f09040" opacity="0.35"/>
+          <circle cx="0" cy="0" r="5" fill="#f0c060" opacity="0.6"/>
+          <circle cx="0" cy="0" r="2" fill="#fff0b0" opacity="0.9"/>
+          <!-- Flame tendrils -->
+          <path d="M-10,-8 Q-18,-20 -12,-30 Q-8,-25 -6,-15" fill="#f06030" opacity="0.25"/>
+          <path d="M8,-6 Q20,-15 15,-28 Q10,-20 6,-12" fill="#f07838" opacity="0.2"/>
+          <path d="M-5,10 Q-15,22 -8,32 Q-3,24 -2,14" fill="#f05020" opacity="0.18"/>
+          <path d="M6,8 Q18,18 22,10 Q15,8 8,6" fill="#f06030" opacity="0.15"/>
+          <!-- Sparks -->
+          <circle cx="-22" cy="-18" r="1" fill="#f0c060" opacity="0.5"/>
+          <circle cx="18" cy="-22" r="0.8" fill="#f09040" opacity="0.4"/>
+          <circle cx="-15" cy="20" r="0.7" fill="#f0c060" opacity="0.35"/>
+          <circle cx="24" cy="5" r="0.9" fill="#f09040" opacity="0.45"/>
+          <!-- Trail from cleric's hand -->
+          <line x1="-180" y1="8" x2="-40" y2="0" stroke="#f0a040" stroke-width="1" opacity="0.15"/>
+          <circle cx="-60" cy="2" r="1.5" fill="#f0c060" opacity="0.3"/>
+          <circle cx="-100" cy="4" r="1" fill="#f09040" opacity="0.2"/>
+          <circle cx="-140" cy="6" r="0.8" fill="#f07838" opacity="0.15"/>
+        </g>
+
+        <!-- ── SPIRIT GUARDIANS (orbiting cleric) ── -->
+        <!-- Guardian 1 — upper left -->
+        <g transform="translate(280,80)" opacity="0.6">
+          <circle cx="0" cy="0" r="12" fill="url(#spiritGlow)"/>
+          <ellipse cx="0" cy="0" rx="6" ry="10" fill="#f0e880" opacity="0.15"/>
+          <ellipse cx="0" cy="-4" rx="3" ry="3.5" fill="#f0e880" opacity="0.2"/>
+          <circle cx="-1" cy="-5" r="0.8" fill="#fff" opacity="0.5"/>
+          <circle cx="1" cy="-5" r="0.8" fill="#fff" opacity="0.5"/>
+          <!-- Wings -->
+          <path d="M-3,-2 Q-12,-8 -14,-2 Q-10,0 -3,0" fill="#f0e880" opacity="0.12"/>
+          <path d="M3,-2 Q12,-8 14,-2 Q10,0 3,0" fill="#f0e880" opacity="0.12"/>
+        </g>
+        <!-- Guardian 2 — right -->
+        <g transform="translate(440,100)" opacity="0.5">
+          <circle cx="0" cy="0" r="12" fill="url(#spiritGlow)"/>
+          <ellipse cx="0" cy="0" rx="6" ry="10" fill="#f0e880" opacity="0.15"/>
+          <ellipse cx="0" cy="-4" rx="3" ry="3.5" fill="#f0e880" opacity="0.2"/>
+          <circle cx="-1" cy="-5" r="0.8" fill="#fff" opacity="0.5"/>
+          <circle cx="1" cy="-5" r="0.8" fill="#fff" opacity="0.5"/>
+          <path d="M-3,-2 Q-12,-8 -14,-2 Q-10,0 -3,0" fill="#f0e880" opacity="0.12"/>
+          <path d="M3,-2 Q12,-8 14,-2 Q10,0 3,0" fill="#f0e880" opacity="0.12"/>
+        </g>
+        <!-- Guardian 3 — lower -->
+        <g transform="translate(310,195)" opacity="0.45">
+          <circle cx="0" cy="0" r="12" fill="url(#spiritGlow)"/>
+          <ellipse cx="0" cy="0" rx="6" ry="10" fill="#f0e880" opacity="0.15"/>
+          <ellipse cx="0" cy="-4" rx="3" ry="3.5" fill="#f0e880" opacity="0.2"/>
+          <circle cx="-1" cy="-5" r="0.8" fill="#fff" opacity="0.5"/>
+          <circle cx="1" cy="-5" r="0.8" fill="#fff" opacity="0.5"/>
+          <path d="M-3,-2 Q-12,-8 -14,-2 Q-10,0 -3,0" fill="#f0e880" opacity="0.12"/>
+          <path d="M3,-2 Q12,-8 14,-2 Q10,0 3,0" fill="#f0e880" opacity="0.12"/>
+        </g>
+        <!-- Spirit Guardian orbit ring -->
+        <ellipse cx="350" cy="140" rx="85" ry="70" fill="none" stroke="#f0d050" stroke-width="0.5" opacity="0.1" stroke-dasharray="4 6"/>
+
+        <!-- ── ALLY receiving healing light (left) ── -->
+        <g transform="translate(130,175)" opacity="0.6">
+          <!-- Kneeling figure -->
+          <ellipse cx="0" cy="10" rx="10" ry="18" fill="#4a4a50"/>
+          <circle cx="0" cy="-10" r="7" fill="#c0a878"/>
+          <path d="M-8,5 Q-14,0 -16,-8" fill="#4a4a50" stroke="#4a4a50" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M8,5 Q14,0 16,-8" fill="#4a4a50" stroke="#4a4a50" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M-6,25 L-8,40" stroke="#4a4a50" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M6,25 L8,38" stroke="#4a4a50" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- Healing beam from cleric -->
+          <line x1="180" y1="-35" x2="0" y2="-15" stroke="#f0e880" stroke-width="1.5" opacity="0.15"/>
+          <line x1="180" y1="-35" x2="0" y2="-15" stroke="#f0d050" stroke-width="0.5" opacity="0.3"/>
+          <!-- Healing glow on ally -->
+          <circle cx="0" cy="0" r="22" fill="#f0e880" opacity="0.06"/>
+          <circle cx="0" cy="0" r="12" fill="#f0e880" opacity="0.1"/>
+          <!-- Sparkles -->
+          <circle cx="-8" cy="-18" r="0.8" fill="#f0e880" opacity="0.6"/>
+          <circle cx="6" cy="-20" r="0.6" fill="#fff8d0" opacity="0.5"/>
+          <circle cx="-10" cy="-5" r="0.5" fill="#f0e880" opacity="0.4"/>
+          <circle cx="10" cy="-8" r="0.7" fill="#f0d050" opacity="0.45"/>
+        </g>
+
+        <!-- ── UNDEAD burning from radiant damage (right) ── -->
+        <g transform="translate(620,170)" opacity="0.6">
+          <!-- Skeleton/zombie stumbling -->
+          <ellipse cx="0" cy="8" rx="8" ry="16" fill="#3a3530" transform="rotate(-10)"/>
+          <circle cx="3" cy="-10" r="6" fill="#4a4538"/>
+          <!-- Hollow eyes -->
+          <circle cx="1" cy="-11" r="1.5" fill="#0a0a0a" opacity="0.7"/>
+          <circle cx="5" cy="-11" r="1.5" fill="#0a0a0a" opacity="0.7"/>
+          <!-- Reaching arms -->
+          <path d="M-6,0 Q-18,-8 -22,-15" stroke="#3a3530" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M6,-2 Q15,-10 20,-18" stroke="#3a3530" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <!-- Legs buckling -->
+          <path d="M-3,22 L-6,38" stroke="#3a3530" stroke-width="3" stroke-linecap="round"/>
+          <path d="M3,20 L8,36" stroke="#3a3530" stroke-width="3" stroke-linecap="round"/>
+          <!-- Radiant fire consuming it -->
+          <circle cx="0" cy="0" r="20" fill="#f0d050" opacity="0.06"/>
+          <circle cx="0" cy="0" r="12" fill="#f0d050" opacity="0.1"/>
+          <path d="M-6,-12 Q-3,-25 0,-18 Q3,-28 5,-14" fill="#f0d050" opacity="0.15"/>
+          <path d="M-8,5 Q-5,-8 -2,0 Q1,-10 4,2" fill="#f0c040" opacity="0.12"/>
+          <path d="M6,-8 Q9,-18 8,-6" fill="#f0e880" opacity="0.1"/>
+          <!-- Radiant particles -->
+          <circle cx="-10" cy="-18" r="1" fill="#f0e880" opacity="0.5"/>
+          <circle cx="8" cy="-22" r="0.8" fill="#f0d050" opacity="0.4"/>
+          <circle cx="-5" cy="-25" r="0.6" fill="#fff8d0" opacity="0.35"/>
+          <circle cx="12" cy="-12" r="0.7" fill="#f0d050" opacity="0.3"/>
+        </g>
+
+        <!-- Second undead burning (far right) -->
+        <g transform="translate(700,185)" opacity="0.4">
+          <ellipse cx="0" cy="5" rx="7" ry="14" fill="#3a3530" transform="rotate(8)"/>
+          <circle cx="-2" cy="-10" r="5" fill="#4a4538"/>
+          <circle cx="0" cy="0" r="15" fill="#f0d050" opacity="0.07"/>
+          <path d="M-4,-10 Q-2,-20 1,-12 Q3,-22 4,-10" fill="#f0d050" opacity="0.12"/>
+          <circle cx="-6" cy="-16" r="0.6" fill="#f0e880" opacity="0.4"/>
+          <circle cx="5" cy="-18" r="0.5" fill="#f0d050" opacity="0.3"/>
+        </g>
+
+        <!-- Light rays from sky -->
+        <g opacity="0.08" stroke="#f0d050" stroke-width="1.5">
+          <line x1="320" y1="0" x2="340" y2="90"/>
+          <line x1="360" y1="0" x2="360" y2="80"/>
+          <line x1="400" y1="0" x2="380" y2="85"/>
+        </g>
+
+        <!-- Scattered radiant particles in air -->
+        <circle cx="200" cy="50" r="0.8" fill="#f0e880" opacity="0.3"/>
+        <circle cx="500" cy="40" r="0.6" fill="#f0d050" opacity="0.25"/>
+        <circle cx="650" cy="55" r="0.7" fill="#f0e880" opacity="0.2"/>
+        <circle cx="300" cy="35" r="0.5" fill="#fff8d0" opacity="0.2"/>
+        <circle cx="450" cy="60" r="0.6" fill="#f0d050" opacity="0.15"/>
+        <circle cx="160" cy="70" r="0.4" fill="#f0e880" opacity="0.18"/>
+        <circle cx="550" cy="30" r="0.5" fill="#f0d050" opacity="0.2"/>
+      </svg>
+    </div>
+
+    <div class="header-row">
+      <svg width="80" height="80" viewBox="0 0 80 80" class="header-portrait" style="border-radius:8px;">
+        <rect width="80" height="80" fill="#1a1508"/>
+        <circle cx="40" cy="40" r="28" fill="none" stroke="#f0d050" stroke-width="2" opacity="0.5"/>
+        <circle cx="40" cy="40" r="18" fill="#f0d050" opacity="0.1"/>
+        <circle cx="40" cy="40" r="10" fill="#f0d050" opacity="0.2"/>
+        <circle cx="40" cy="40" r="4" fill="#fff8d0" opacity="0.6"/>
+        <line x1="40" y1="8" x2="40" y2="20" stroke="#f0d050" stroke-width="1.5" opacity="0.4"/>
+        <line x1="40" y1="60" x2="40" y2="72" stroke="#f0d050" stroke-width="1.5" opacity="0.4"/>
+        <line x1="8" y1="40" x2="20" y2="40" stroke="#f0d050" stroke-width="1.5" opacity="0.4"/>
+        <line x1="60" y1="40" x2="72" y2="40" stroke="#f0d050" stroke-width="1.5" opacity="0.4"/>
+        <line x1="17" y1="17" x2="25" y2="25" stroke="#f0d050" stroke-width="1" opacity="0.3"/>
+        <line x1="63" y1="17" x2="55" y2="25" stroke="#f0d050" stroke-width="1" opacity="0.3"/>
+        <line x1="17" y1="63" x2="25" y2="55" stroke="#f0d050" stroke-width="1" opacity="0.3"/>
+        <line x1="63" y1="63" x2="55" y2="55" stroke="#f0d050" stroke-width="1" opacity="0.3"/>
+      </svg>
+      <div class="header-text">
+        <div class="breadcrumb"><a href="guides.html" style="color:var(--text-muted);">Baldur's Gate 3</a> &#8250; <a href="bg3-builds.html" style="color:var(--text-muted);">Builds</a> &#8250; Light Cleric</div>
+        <h1>Light Cleric &mdash; Radiating Juggernaut</h1>
+        <div class="subtitle">Gold Dwarf / Half-Elf &middot; Light Domain &middot; Cleric 12 &middot; #10 Ranked</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag green">Healer</span>
+      <span class="tag green">AoE Damage</span>
+      <span class="tag blue">Full Caster</span>
+      <span class="tag gold">Heavy Armor</span>
+      <span class="tag orange">Patch 8</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ OVERVIEW ═══════════════════════ -->
+  <section class="section reveal" id="overview">
+    <h2>Overview</h2>
+
+    <p>Light Cleric is the best beginner class in Baldur's Gate 3, and one of the strongest builds at every stage of the game. You get heavy armor, a shield, full spellcasting, the entire healing kit, AND the best blaster spells in the game via domain spells &mdash; Fireball, Scorching Ray, and Wall of Fire on a Cleric chassis. No other class does everything this well.</p>
+
+    <p>Spirit Guardians is the single strongest sustained-damage spell in BG3. Cast it, walk into a group of enemies, and watch them melt. Add Spiritual Weapon for free bonus-action damage every turn, Warding Flare to make enemies miss, and Radiance of the Dawn for burst AoE &mdash; and you have a frontline juggernaut that also happens to be the best healer in the party.</p>
+
+    <div class="callout radiant">
+      <div class="callout-label">Why Light Domain?</div>
+      <p>Light Domain gives Clerics something no other subclass can match: <strong>Fireball and Wall of Fire</strong> as domain spells (always prepared, free). Combined with the Cleric's base kit of Spirit Guardians + Spiritual Weapon + healing, you become a full damage dealer AND full healer simultaneously. Life Domain heals more but deals no damage. Tempest Domain has a nuke but no sustained AoE. Light does both.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Best Solo Class in BG3</div>
+      <p>If you could only pick one class for every encounter in the game &mdash; boss fights, trash mobs, traps, dialogues, honour mode &mdash; it would be Light Cleric. Heavy armor + shield means you don't die. Healing Word picks up allies. Spirit Guardians + Fireball kills everything. Guidance dominates dialogues. It has no bad levels and no bad matchups.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ RACE & STATS ═══════════════════════ -->
+  <section class="section reveal" id="race">
+    <h2>Race &amp; Ability Scores</h2>
+
+    <h3>Primary Pick &mdash; Gold Dwarf</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Dwarven Toughness</span> &mdash; <span class="note">+1 HP per level. 12 extra HP by endgame. You're a frontliner, this matters.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Dwarven Resilience</span> &mdash; <span class="note">Advantage on saving throws against poison, resistance to poison damage.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Darkvision</span> &mdash; <span class="note">12m range. Operate in darkness without torches.</span></li>
+      <li><span class="label">Racial</span> <span class="name">No STR Requirement</span> &mdash; <span class="note">Dwarves ignore heavy armor STR requirements. Dump STR freely.</span></li>
+    </ul>
+
+    <h3>Alternative &mdash; Half-Elf (High)</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Fey Ancestry</span> &mdash; <span class="note">Advantage on saves vs Charm. Common in Act 2-3.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Darkvision</span> &mdash; <span class="note">12m range.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Extra Cantrip</span> &mdash; <span class="note">High Half-Elf gets a Wizard cantrip. Take Fire Bolt for ranged damage.</span></li>
+      <li><span class="label">Note</span> <span class="note">You'll need 14 STR for heavy armor (or settle for medium). Gold Dwarf is strictly better mechanically.</span></li>
+    </ul>
+
+    <h3>Ability Scores (Point Buy)</h3>
+    <div class="stats">
+      <div class="stat-box"><div class="stat-label">STR</div><div class="stat-val">8</div></div>
+      <div class="stat-box"><div class="stat-label">DEX</div><div class="stat-val">10</div></div>
+      <div class="stat-box primary"><div class="stat-label">CON</div><div class="stat-val">16</div></div>
+      <div class="stat-box"><div class="stat-label">INT</div><div class="stat-val">10</div></div>
+      <div class="stat-box primary"><div class="stat-label">WIS</div><div class="stat-val">17</div></div>
+      <div class="stat-box"><div class="stat-label">CHA</div><div class="stat-val">8</div></div>
+    </div>
+    <p style="font-size:0.88rem; color:var(--text-dim);">Gold Dwarf: +2 CON, +1 WIS from racial. STR is a dump stat because Dwarves ignore heavy armor STR requirements. WIS 17 starts you at +3 mod and reaches 18 (+4) at level 4 with a half-feat or +1 ASI. CON 16 gives solid HP and concentration checks.</p>
+
+    <div class="callout">
+      <div class="callout-label">Half-Elf Stat Alternative</div>
+      <p>If going Half-Elf: STR 14, DEX 10, CON 14, INT 8, WIS 17, CHA 8. The 14 STR lets you wear heavy armor without speed penalty. Less HP than Gold Dwarf, but Fey Ancestry is valuable.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ LEVELS ═══════════════════════ -->
+  <section class="section reveal" id="levels">
+    <h2>Level-by-Level Progression</h2>
+    <p style="color:var(--text-dim); margin-bottom:1rem;">Click any level to expand. Pure Cleric 12 &mdash; no multiclass needed.</p>
+
+    <!-- 1 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">1</span>
+        <span class="lv-badge cleric">Cleric 1</span>
+        <span class="lv-title">Light Domain &mdash; Warding Flare</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp domain">Light Domain</span>
+          <span class="qp feature">Warding Flare</span>
+          <span class="qp spell">Guidance</span>
+          <span class="qp spell">Sacred Flame</span>
+          <span class="qp spell">Healing Word</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">Light Domain</span> &mdash; <span class="note">Burning Hands + Faerie Fire as domain spells (always prepared)</span></li>
+          <li><span class="label">Feature</span> <span class="name">Warding Flare</span> &mdash; <span class="note">reaction: impose disadvantage on an attack roll against you or an ally within 9m. WIS mod uses per long rest.</span></li>
+          <li><span class="label">Cantrips</span> <span class="name">Guidance</span>, <span class="name">Sacred Flame</span>, <span class="name">Light</span> &mdash; <span class="note">Light is free from domain</span></li>
+          <li><span class="label">Spells</span> <span class="name">Healing Word</span>, <span class="name">Bless</span>, <span class="name">Guiding Bolt</span>, <span class="name">Shield of Faith</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These Spells</div>
+          <ul class="prep-list">
+            <li class="domain">Burning Hands (domain)</li>
+            <li class="domain">Faerie Fire (domain)</li>
+            <li>Healing Word</li>
+            <li>Bless</li>
+            <li>Guiding Bolt</li>
+            <li>Shield of Faith</li>
+          </ul>
+          <div class="prep-note">@ = domain (always prepared, free) &middot; 4 prepared + 2 domain</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 2 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">2</span>
+        <span class="lv-badge cleric">Cleric 2</span>
+        <span class="lv-title">Channel Divinity &mdash; Radiance of the Dawn</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Radiance of the Dawn</span>
+          <span class="qp feature">Turn Undead</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Channel</span> <span class="name">Radiance of the Dawn</span> &mdash; <span class="note">AoE radiant damage in 9m radius. 2d10 + Cleric level. Dispels magical darkness. This is your nuke button.</span></li>
+          <li><span class="label">Channel</span> <span class="name">Turn Undead</span> &mdash; <span class="note">undead must flee. Trivializes many Act 2 encounters.</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These Spells</div>
+          <ul class="prep-list">
+            <li class="domain">Burning Hands</li>
+            <li class="domain">Faerie Fire</li>
+            <li>Healing Word</li>
+            <li>Bless</li>
+            <li>Guiding Bolt</li>
+            <li>Shield of Faith</li>
+            <li class="new">Command</li>
+          </ul>
+          <div class="prep-note">5 prepared + 2 domain</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 3 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">3</span>
+        <span class="lv-badge cleric">Cleric 3</span>
+        <span class="lv-title">Level 2 Spells &mdash; Scorching Ray + Spiritual Weapon</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp domain">Scorching Ray (domain)</span>
+          <span class="qp domain">Flaming Sphere (domain)</span>
+          <span class="qp spell">Spiritual Weapon</span>
+          <span class="qp spell">Hold Person</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Domain</span> <span class="name">Scorching Ray</span> &mdash; <span class="note">3 rays of 2d6 fire. Target one enemy or spread. High single-target burst.</span></li>
+          <li><span class="label">Domain</span> <span class="name">Flaming Sphere</span> &mdash; <span class="note">bonus action to ram each turn. Decent early AoE.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Spiritual Weapon</span> &mdash; <span class="note">bonus action attack every turn. No concentration. Lasts 10 turns. The best bonus action in the game.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Hold Person</span> &mdash; <span class="note">paralyze a humanoid. Auto-crits in melee.</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These Spells</div>
+          <ul class="prep-list">
+            <li class="domain">Burning Hands</li>
+            <li class="domain">Faerie Fire</li>
+            <li class="domain">Scorching Ray</li>
+            <li class="domain">Flaming Sphere</li>
+            <li>Healing Word</li>
+            <li>Bless</li>
+            <li>Guiding Bolt</li>
+            <li class="new">Spiritual Weapon</li>
+            <li class="new">Hold Person</li>
+          </ul>
+          <div class="prep-note">7 prepared + 4 domain &middot; * = new this level</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 4 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">4</span>
+        <span class="lv-badge cleric">Cleric 4</span>
+        <span class="lv-title">First Feat &mdash; War Caster</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">War Caster</span>
+          <span class="qp spell">Toll the Dead</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">War Caster</span> &mdash; <span class="note">advantage on concentration saves. MANDATORY. Spirit Guardians dropping = losing the fight. Also lets you cast shocking grasp as opportunity attack.</span></li>
+          <li><span class="label">Cantrip</span> <span class="name">Toll the Dead</span> &mdash; <span class="note">best Cleric damage cantrip. WIS save, 1d12 vs damaged targets.</span></li>
+        </ul>
+        <div class="callout warn" style="margin-top:0.75rem;">
+          <div class="callout-label">Why Not +2 WIS First?</div>
+          <p>Your entire build revolves around maintaining concentration on Spirit Guardians. If you lose concentration, you lose your main damage engine AND have to burn another 3rd-level slot. War Caster at 4 prevents that. You cap WIS later.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 5 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">5</span>
+        <span class="lv-badge cleric">Cleric 5</span>
+        <span class="lv-title">Spirit Guardians + Fireball &mdash; THE SPIKE</span>
+        <span class="lv-spike">&#9733;&#9733; Build Defining</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp domain">Fireball (domain)</span>
+          <span class="qp domain">Daylight (domain)</span>
+          <span class="qp spell">Spirit Guardians</span>
+          <span class="qp feature">Destroy Undead</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Domain</span> <span class="name">Fireball</span> &mdash; <span class="note">8d6 fire damage, 6m radius. The best damage spell in the game on a Cleric. Always prepared.</span></li>
+          <li><span class="label">Domain</span> <span class="name">Daylight</span> &mdash; <span class="note">free light, dispels darkness. Situational but useful in Act 2.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Spirit Guardians</span> &mdash; <span class="note">3d8 radiant damage to all enemies within 3m at the start of their turn or when they enter the area. Concentration. THIS IS YOUR BUILD.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Destroy Undead</span> &mdash; <span class="note">Turn Undead now destroys undead of CR 1/2 or lower.</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These Spells</div>
+          <ul class="prep-list">
+            <li class="domain">Burning Hands</li>
+            <li class="domain">Faerie Fire</li>
+            <li class="domain">Scorching Ray</li>
+            <li class="domain">Flaming Sphere</li>
+            <li class="domain">Fireball</li>
+            <li class="domain">Daylight</li>
+            <li>Healing Word</li>
+            <li>Bless</li>
+            <li>Spiritual Weapon</li>
+            <li class="new">Spirit Guardians</li>
+            <li>Guiding Bolt</li>
+            <li>Hold Person</li>
+          </ul>
+          <div class="prep-note">8 prepared + 6 domain</div>
+        </div>
+        <div class="callout radiant" style="margin-top:0.75rem;">
+          <div class="callout-label">The Build Comes Online</div>
+          <p>This is the level that makes Light Cleric broken. Turn 1: Spirit Guardians + Spiritual Weapon. Turn 2: walk into enemies, Guardians proc, bonus action Spiritual Weapon attack. Every subsequent turn you deal damage just by existing. If you need burst, cast Fireball with your action. You are now doing more AoE damage than a Sorcerer while wearing plate armor and healing your party.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 6 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">6</span>
+        <span class="lv-badge cleric">Cleric 6</span>
+        <span class="lv-title">Improved Warding Flare</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Improved Warding Flare</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Improved Warding Flare</span> &mdash; <span class="note">Warding Flare can now be used on allies within 9m, not just yourself. Huge defensive boost for the entire party.</span></li>
+          <li><span class="label">Channel</span> <span class="name">Second use per rest</span> &mdash; <span class="note">two Radiance of the Dawn per short rest now.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 7 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">7</span>
+        <span class="lv-badge cleric">Cleric 7</span>
+        <span class="lv-title">Wall of Fire + Guardian of Faith</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp domain">Wall of Fire (domain)</span>
+          <span class="qp domain">Guardian of Faith (domain)</span>
+          <span class="qp spell">Banishment</span>
+          <span class="qp spell">Death Ward</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Domain</span> <span class="name">Wall of Fire</span> &mdash; <span class="note">creates a wall of fire. 5d8 fire damage to anyone on the wrong side. Incredible zone control.</span></li>
+          <li><span class="label">Domain</span> <span class="name">Guardian of Faith</span> &mdash; <span class="note">spectral guardian that damages enemies in a zone. No concentration.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Banishment</span> &mdash; <span class="note">remove one enemy from the fight entirely. Trivializes boss adds.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Death Ward</span> &mdash; <span class="note">prevent one death. Cast before boss fights on your squishiest ally.</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These Spells</div>
+          <ul class="prep-list">
+            <li class="domain">All 8 domain spells</li>
+            <li>Healing Word</li>
+            <li>Bless</li>
+            <li>Spiritual Weapon</li>
+            <li>Spirit Guardians</li>
+            <li class="new">Banishment</li>
+            <li class="new">Death Ward</li>
+            <li>Hold Person</li>
+            <li>Guiding Bolt</li>
+          </ul>
+          <div class="prep-note">10 prepared + 8 domain</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 8 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">8</span>
+        <span class="lv-badge cleric">Cleric 8</span>
+        <span class="lv-title">Second Feat &mdash; Cap WIS or Resilient CON</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">+1 WIS (Resilient CON)</span>
+          <span class="qp feat">OR +2 WIS &rarr; 19</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">Resilient: Constitution</span> &mdash; <span class="note">CON save proficiency + CON 16&rarr;17. With War Caster, you nearly never lose Spirit Guardians. Best pick if WIS 17.</span></li>
+          <li><span class="label">Alt</span> <span class="name">+2 WIS &rarr; 19</span> &mdash; <span class="note">if you want higher spell DC now. But odd number is awkward &mdash; you'll round it at 12.</span></li>
+          <li><span class="label">Alt</span> <span class="name">Alert</span> &mdash; <span class="note">+5 initiative, can't be surprised. Going first means Spirit Guardians is up before enemies act.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.75rem;">
+          <div class="callout-label">Recommended: Resilient CON</div>
+          <p>War Caster (advantage) + Resilient CON (proficiency bonus to CON saves) = you almost never fail a concentration check. Your Spirit Guardians stays up the entire fight. This combination is the core of the build's reliability.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 9 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">9</span>
+        <span class="lv-badge cleric">Cleric 9</span>
+        <span class="lv-title">Level 5 Spells &mdash; Mass Cure Wounds</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Mass Cure Wounds</span>
+          <span class="qp spell">Greater Restoration</span>
+          <span class="qp spell">Flame Strike</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Spell</span> <span class="name">Mass Cure Wounds</span> &mdash; <span class="note">heal 6 creatures for 3d8 + WIS. The party-wide emergency heal.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Greater Restoration</span> &mdash; <span class="note">remove any condition &mdash; petrified, charmed, stunned. Essential for Act 3.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Flame Strike</span> &mdash; <span class="note">8d6 fire+radiant AoE column. Less damage than Fireball but radiant bypasses fire resistance.</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These Spells</div>
+          <ul class="prep-list">
+            <li class="domain">All 8 domain spells</li>
+            <li>Healing Word</li>
+            <li>Bless</li>
+            <li>Spiritual Weapon</li>
+            <li>Spirit Guardians</li>
+            <li>Banishment</li>
+            <li>Death Ward</li>
+            <li class="new">Mass Cure Wounds</li>
+            <li class="new">Greater Restoration</li>
+            <li class="new">Flame Strike</li>
+          </ul>
+          <div class="prep-note">11 prepared + 8 domain</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 10 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">10</span>
+        <span class="lv-badge cleric">Cleric 10</span>
+        <span class="lv-title">Divine Intervention</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Divine Intervention</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Divine Intervention</span> &mdash; <span class="note">once per game, call your deity. Four options: Arm Thy Servant (legendary mace), Golden Generosity (potions/scrolls), Opulent Revival (mass resurrection), Sunder the Heretical (AoE nuke). Arm Thy Servant for the mace, or save Sunder for a hard fight.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.75rem;">
+          <div class="callout-label">Best Divine Intervention Pick</div>
+          <p><strong>Arm Thy Servant</strong> gives you a legendary mace that you'll use for the rest of the game. It's permanent and always useful. The other options are powerful but one-time effects. Use Arm Thy Servant early to maximize value.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 11 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">11</span>
+        <span class="lv-badge cleric">Cleric 11</span>
+        <span class="lv-title">Level 6 Spells &mdash; Heroes' Feast + Heal</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Heroes' Feast</span>
+          <span class="qp spell">Heal</span>
+          <span class="qp spell">Planar Ally</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Spell</span> <span class="name">Heroes' Feast</span> &mdash; <span class="note">party immunity to disease, poison, and fear + HP boost. Cast before every boss.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Heal</span> &mdash; <span class="note">70 HP instant heal + removes blindness, deafness, disease. Emergency button.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Planar Ally</span> &mdash; <span class="note">summon a powerful ally. Action economy is everything.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 12 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">12</span>
+        <span class="lv-badge cleric">Cleric 12</span>
+        <span class="lv-title">Final Feat &mdash; Build Complete</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">+2 WIS &rarr; 19 or 20</span>
+          <span class="qp feat">OR Alert</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">+2 WIS</span> &mdash; <span class="note">if WIS is 17 &rarr; 19 (still +4 mod, but sets up Hag's Hair for 20). If you took +1 WIS earlier, this caps at 20 (+5 mod).</span></li>
+          <li><span class="label">Alt</span> <span class="name">Alert</span> &mdash; <span class="note">+5 initiative. Going first = Spirit Guardians is online before anyone else acts. Extremely strong if you already capped WIS.</span></li>
+          <li><span class="label">Alt</span> <span class="name">Lucky</span> &mdash; <span class="note">3 rerolls per long rest. Insurance for crucial saves.</span></li>
+        </ul>
+        <div class="callout" style="margin-top:0.75rem;">
+          <div class="callout-label">Hag's Hair</div>
+          <p>Auntie Ethel (Act 1) drops a hair that gives +1 to any ability score. Use it on WIS. With a 17 base + Hag's Hair (18) + ASI +2 at level 12 = WIS 20 (maxed). This is the optimal path if you took War Caster at 4 and Resilient CON at 8.</p>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ LIGHT DOMAIN FEATURES ═══════════════════════ -->
+  <section class="section reveal" id="domain">
+    <h2>Light Domain Features</h2>
+
+    <h3>Domain Spells (Always Prepared, Free)</h3>
+    <p>These don't count against your prepared spell limit. They're always ready.</p>
+
+    <table class="domain-table">
+      <thead><tr><th>Cleric Level</th><th>Spell 1</th><th>Spell 2</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><span class="domain-spell">Burning Hands</span></td><td><span class="domain-spell">Faerie Fire</span></td></tr>
+        <tr><td>3</td><td><span class="domain-spell">Scorching Ray</span></td><td><span class="domain-spell">Flaming Sphere</span></td></tr>
+        <tr><td>5</td><td><span class="domain-spell">Fireball</span></td><td><span class="domain-spell">Daylight</span></td></tr>
+        <tr><td>7</td><td><span class="domain-spell">Wall of Fire</span></td><td><span class="domain-spell">Guardian of Faith</span></td></tr>
+        <tr><td>9</td><td><span class="domain-spell">Flame Strike</span></td><td><span class="domain-spell">Scrying</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Warding Flare (Level 1)</h3>
+    <p>As a <strong>reaction</strong>, when a creature you can see within 9m attacks you or an ally, impose <strong>disadvantage</strong> on the attack roll. Uses equal to your WIS modifier per long rest (3-5 uses). This is essentially free Shield-like protection for the party.</p>
+
+    <h3>Improved Warding Flare (Level 6)</h3>
+    <p>Warding Flare can now protect <strong>any ally within 9m</strong>, not just yourself. This turns you into a reactive defender for the whole party.</p>
+
+    <h3>Radiance of the Dawn (Channel Divinity)</h3>
+    <p>9m radius AoE burst: <strong>2d10 + Cleric level radiant damage</strong> (CON save for half). Also dispels magical darkness. Recharges on short rest. Use this as your burst AoE when Fireball would be overkill or enemies resist fire.</p>
+
+    <div class="callout radiant">
+      <div class="callout-label">Radiant vs Fire</div>
+      <p>Many enemies in BG3 resist fire. Almost nothing resists radiant. Radiance of the Dawn and Spirit Guardians deal radiant damage, making them reliable in every encounter. Fireball is for when you need raw damage and fire resistance isn't an issue.</p>
+    </div>
+
+    <h3>Channel Divinity Uses</h3>
+    <ul class="picks">
+      <li><span class="label">Level 2</span> <span class="name">1 use per short rest</span> &mdash; <span class="note">Radiance of the Dawn OR Turn Undead</span></li>
+      <li><span class="label">Level 6</span> <span class="name">2 uses per short rest</span> &mdash; <span class="note">use both in a big fight, short rest to recharge</span></li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════════════ SPELLS ═══════════════════════ -->
+  <section class="section reveal" id="spells">
+    <h2>Spell Recommendations</h2>
+
+    <div class="callout">
+      <div class="callout-label">Spell Priority</div>
+      <p>Spirit Guardians is your #1 priority every fight. Spiritual Weapon is #2. Everything else is support or situational burst. Domain spells (Fireball, Wall of Fire) are always prepared for free &mdash; that's the Light Domain advantage.</p>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Cantrips</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Guidance</div><div class="spell-desc">+1d4 to ability checks. Cast before every dialogue, lockpick, and skill check. Best cantrip in the game.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Sacred Flame</div><div class="spell-desc">DEX save or take radiant damage. Ignores cover. Solid early, falls off later.</div></div><span class="spell-badge good">Good</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Toll the Dead</div><div class="spell-desc">WIS save. 1d12 vs already-damaged targets. Your best damage cantrip by mid-game.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Light</div><div class="spell-desc">Free from Light Domain. Illuminate dark areas.</div></div><span class="spell-badge free">Domain Free</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Level 1</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Healing Word</div><div class="spell-desc">Bonus action ranged heal. Pick up downed allies from 18m away. The single most important healing spell.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Bless</div><div class="spell-desc">+1d4 to attacks and saves for 3 allies. Concentration. Best level 1 buff spell.</div></div><span class="spell-badge conc">Conc &middot; Great</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Guiding Bolt</div><div class="spell-desc">4d6 radiant + next attack has advantage. Great opener at level 1-2.</div></div><span class="spell-badge good">Good Early</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Shield of Faith</div><div class="spell-desc">+2 AC for one creature. Concentration &mdash; conflicts with Spirit Guardians later.</div></div><span class="spell-badge conc">Conc &middot; Early</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Command</div><div class="spell-desc">Force enemy to grovel, flee, halt, or drop weapon. No concentration. Versatile control.</div></div><span class="spell-badge good">Good</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Sanctuary</div><div class="spell-desc">Enemies can't target an ally. Cast on concentrators to protect them.</div></div><span class="spell-badge good">Situational</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Level 2</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Spiritual Weapon</div><div class="spell-desc">Summon a spectral weapon. Bonus action attack every turn. No concentration. Lasts 10 turns. Cast this every fight.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Hold Person</div><div class="spell-desc">Paralyze a humanoid. Auto-crits in melee. Devastating with martial allies.</div></div><span class="spell-badge conc">Conc &middot; Great</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Aid</div><div class="spell-desc">Permanently increase 3 allies' max HP by 5 (scales with slot level). Cast before every long rest.</div></div><span class="spell-badge good">Good</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Lesser Restoration</div><div class="spell-desc">Remove poison, disease, paralysis, blindness. Keep prepared for emergencies.</div></div><span class="spell-badge good">Good</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Silence</div><div class="spell-desc">Prevent all spellcasting in an area. Shuts down enemy casters completely.</div></div><span class="spell-badge conc">Conc &middot; Niche</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Level 3</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Spirit Guardians</div><div class="spell-desc">3d8 radiant per turn to all enemies within 3m. Concentration. This single spell does more sustained damage than most classes' entire kit. #1 PRIORITY.</div></div><span class="spell-badge must">#1 Spell</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Revivify</div><div class="spell-desc">Bring a dead ally back to life with 1 HP. Keep one slot reserved for this.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Glyph of Warding</div><div class="spell-desc">Place a trap that detonates for 5d8 damage. Pre-combat setup. No concentration.</div></div><span class="spell-badge good">Good</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Level 4-6 Highlights</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Banishment</div><div class="spell-desc">Remove one enemy from the fight. Concentration. Trivializes boss adds.</div></div><span class="spell-badge conc">Conc &middot; Great</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Death Ward</div><div class="spell-desc">Prevent one death. Pre-cast on squishiest ally before boss fights.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Mass Cure Wounds</div><div class="spell-desc">Heal up to 6 creatures for 3d8+WIS. The panic button.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Greater Restoration</div><div class="spell-desc">Remove any condition. Petrified, charmed, stunned &mdash; all gone.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Heroes' Feast</div><div class="spell-desc">Party immunity to fear, poison, disease + max HP boost. Pre-boss ritual.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Heal</div><div class="spell-desc">70 HP instant. Removes blindness, deafness, disease. The big heal.</div></div><span class="spell-badge must">Must Pick</span></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ FEATS ═══════════════════════ -->
+  <section class="section reveal" id="feats">
+    <h2>Feat Picks</h2>
+
+    <div class="item-group">
+      <div class="item-group-title">Level 4 &mdash; War Caster (Mandatory)</div>
+      <div class="item-row">
+        <div><span class="item-name" style="color:var(--orange);">War Caster</span></div>
+        <div class="item-desc">Advantage on Constitution saving throws to maintain concentration. You can also use a reaction to cast Shocking Grasp as an opportunity attack. <strong>This is non-negotiable.</strong> Your entire build runs on Spirit Guardians concentration. One failed save and your damage disappears.</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Level 8 &mdash; Resilient: Constitution (Recommended)</div>
+      <div class="item-row">
+        <div><span class="item-name" style="color:var(--orange);">Resilient: Constitution</span></div>
+        <div class="item-desc">Add proficiency bonus to all CON saving throws. CON becomes 17 (from 16). Combined with War Caster's advantage, you'll pass nearly every concentration check. Minimum save DC is 10 &mdash; with proficiency + CON mod + advantage, you need about a 3 or higher on the dice.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name" style="color:var(--text-dim);">Alternative: Alert</span></div>
+        <div class="item-desc">+5 initiative, can't be surprised. Going first means Spirit Guardians is up before enemies get a turn. Strong if you're confident in your concentration saves already.</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Level 12 &mdash; +2 WIS or Alert</div>
+      <div class="item-row">
+        <div><span class="item-name" style="color:var(--orange);">+2 Wisdom</span></div>
+        <div class="item-desc">With Hag's Hair (WIS 18) + this ASI = WIS 20. Max spell save DC (17), max prepared spells, max Warding Flare uses (5). This is the clean endgame.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name" style="color:var(--text-dim);">Alternative: Lucky</span></div>
+        <div class="item-desc">3 luck points per long rest. Force rerolls on attacks, saves, or ability checks. Insurance for when RNG tries to ruin your day.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ ITEMS ═══════════════════════ -->
+  <section class="section reveal" id="items">
+    <h2>Key Items &amp; Gear</h2>
+
+    <div class="callout">
+      <div class="callout-label">Gear Philosophy</div>
+      <p>You wear the heaviest armor you can find, a shield, and the best mace available. Focus on AC, Constitution, and concentration saves. Spirit Guardians does the damage &mdash; your gear keeps you alive to maintain it.</p>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Helmet</div>
+      <div class="item-row">
+        <div><span class="item-name">Helm of Balduran</span> <span class="item-slot">Best in Slot</span></div>
+        <div class="item-desc">+1 AC, +1 saving throws, HP regeneration at start of each turn, can't be stunned, can't be crit. The best helmet in the entire game for any build.</div>
+        <div class="item-loc">&#128205; Wyrmway &mdash; defeat Ansur the dragon (Act 3, under Wyrm's Rock)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Wapira's Crown</span> <span class="item-slot">Early Game</span></div>
+        <div class="item-desc">When you heal another creature, you also gain 1d6 HP. Synergizes perfectly with Healing Word.</div>
+        <div class="item-loc">&#128205; Zhentarim Hideout, Act 1 &mdash; trade or loot</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Armor</div>
+      <div class="item-row">
+        <div><span class="item-name">Armour of Persistence</span> <span class="item-slot">Best in Slot</span></div>
+        <div class="item-desc">AC 20 (heavy). Resistance to all damage for 2 turns when reduced below 50% HP. Blade Ward as bonus action. You're a frontliner with Spirit Guardians &mdash; you WILL get hit.</div>
+        <div class="item-loc">&#128205; Dammon &mdash; Forge of the Nine, Lower City (Act 3)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Adamantine Splint Armour</span> <span class="item-slot">Mid Game</span></div>
+        <div class="item-desc">AC 18. Attackers can't crit you. Reduces all damage by 2. Craftable in Act 1.</div>
+        <div class="item-loc">&#128205; Grymforge &mdash; craft at Adamantine Forge with Splint Mould + Mithral Ore</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Shield</div>
+      <div class="item-row">
+        <div><span class="item-name">Viconia's Walking Fortress</span> <span class="item-slot">Best in Slot</span></div>
+        <div class="item-desc">+3 shield (AC +5 total). Warding Bond reaction. Advantage on saving throws vs spells. Reflects projectiles back at attacker. The single best shield in the game.</div>
+        <div class="item-loc">&#128205; Viconia DeVir &mdash; House of Grief, Lower City (Act 3). Must defeat her.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Shield of Devotion</span> <span class="item-slot">Mid Game</span></div>
+        <div class="item-desc">+2 shield (AC +4). Free Aid spell once per long rest. Solid until you get Viconia's.</div>
+        <div class="item-loc">&#128205; Quartermaster Talli, Last Light Inn (Act 2)</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Weapon</div>
+      <div class="item-row">
+        <div><span class="item-name">Devotee's Mace</span> <span class="item-slot">Best in Slot</span></div>
+        <div class="item-desc">+1 mace. When you deal damage with a spell, also heal an ally within 9m for 1d8. You're casting Spirit Guardians every turn &mdash; that's free healing every round.</div>
+        <div class="item-loc">&#128205; Stormshore Armoury, Lower City (Act 3) &mdash; purchase</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Divine Intervention Mace</span> <span class="item-slot">Alternative</span></div>
+        <div class="item-desc">Legendary mace from Arm Thy Servant divine intervention. Deals extra radiant damage.</div>
+        <div class="item-loc">&#128205; Divine Intervention (Cleric level 10) &mdash; choose Arm Thy Servant</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Accessories</div>
+      <div class="item-row">
+        <div><span class="item-name">Amulet of Greater Health</span> <span class="item-slot">Amulet</span></div>
+        <div class="item-desc">Sets Constitution to 23. Massive HP boost + huge concentration saves. Frees up stat points.</div>
+        <div class="item-loc">&#128205; House of Hope (Act 3) &mdash; in the archive</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Cloak of Protection</span> <span class="item-slot">Cloak</span></div>
+        <div class="item-desc">+1 AC, +1 saving throws. Simple and effective.</div>
+        <div class="item-loc">&#128205; Quartermaster Talli, Last Light Inn (Act 2)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Ring of Protection</span> <span class="item-slot">Ring</span></div>
+        <div class="item-desc">+1 AC, +1 saving throws.</div>
+        <div class="item-loc">&#128205; Last Light Inn (Act 2) &mdash; Mol's stash or purchase</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Crusher's Ring</span> <span class="item-slot">Ring</span></div>
+        <div class="item-desc">+3m movement speed. More movement = more enemies inside Spirit Guardians radius.</div>
+        <div class="item-loc">&#128205; Kill Crusher, Goblin Camp (Act 1)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Boots of Speed</span> <span class="item-slot">Boots</span></div>
+        <div class="item-desc">Click heels to double movement speed for 3 turns. Sprint through enemy groups with Spirit Guardians.</div>
+        <div class="item-loc">&#128205; Thulla, Myconid Colony (Act 1, Underdark)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ COMBAT ═══════════════════════ -->
+  <section class="section reveal" id="combat">
+    <h2>Combat Guide</h2>
+
+    <h3>Standard Rotation</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Pre-buff</span> <span class="step-timing pre">Before Combat</span>
+        <div class="step-detail">Heroes' Feast before boss fights. Death Ward on your squishiest ally. Aid with leftover slots from previous rest. Longstrider on everyone if available.</div>
+      </li>
+      <li>
+        <span class="step-action">Turn 1: Spirit Guardians + Spiritual Weapon</span> <span class="step-timing turn">Turn 1</span>
+        <div class="step-detail">Action: cast Spirit Guardians. Bonus action: cast Spiritual Weapon. You now have persistent AoE damage and a free bonus-action attack every turn. This is your setup &mdash; every fight starts this way.</div>
+      </li>
+      <li>
+        <span class="step-action">Turn 2: Move into enemies</span> <span class="step-timing turn">Turn 2</span>
+        <div class="step-detail">Walk directly into the largest group of enemies. Spirit Guardians procs when they start their turn in the radius OR when they first enter it. The more enemies in your aura, the more damage you do. Bonus action: Spiritual Weapon attacks.</div>
+      </li>
+      <li>
+        <span class="step-action">Maintain &amp; damage</span> <span class="step-timing every">Every Turn</span>
+        <div class="step-detail">Stay in the middle of enemies. Spirit Guardians does the work. Use your action for: Toll the Dead (free damage cantrip), Healing Word (pick up downed ally as bonus action), or Fireball (if a distant group needs nuking). Spiritual Weapon attacks every turn as bonus action.</div>
+      </li>
+      <li>
+        <span class="step-action">Radiance of the Dawn for burst</span> <span class="step-timing react">When Needed</span>
+        <div class="step-detail">When surrounded by many enemies, use Radiance of the Dawn for an AoE burst on top of Spirit Guardians. This stacks &mdash; enemies take Guardians damage at their turn start AND Radiance damage on yours.</div>
+      </li>
+      <li>
+        <span class="step-action">Emergency healing</span> <span class="step-timing react">Reactive</span>
+        <div class="step-detail">Healing Word (bonus action, 18m range) to pick up downed allies without breaking your action economy. Mass Cure Wounds or Heal for emergencies. Never drop Spirit Guardians to heal &mdash; Healing Word is a bonus action for a reason.</div>
+      </li>
+    </ol>
+
+    <div class="callout radiant">
+      <div class="callout-label">The Spirit Guardians Rule</div>
+      <p>Spirit Guardians is your #1 damage source. <strong>Never drop concentration voluntarily.</strong> Don't cast Bless, don't cast Hold Person, don't cast anything with concentration while Spirit Guardians is up. Your action should be cantrips, non-concentration spells (Fireball, Healing Word), or the Dodge action to protect your concentration. The damage from maintaining Guardians almost always outweighs any other spell you could cast.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Warding Flare Timing</div>
+      <p>Save Warding Flare for attacks against YOU specifically &mdash; you're the one maintaining Spirit Guardians, so you're the one who can't afford to take big hits. After level 6 (Improved Warding Flare), start using it to protect squishy allies who are about to take lethal damage.</p>
+    </div>
+
+    <h3>When to Cast Fireball Instead</h3>
+    <ul class="picks">
+      <li><span class="label">Scenario</span> <span class="name">Distant cluster</span> &mdash; <span class="note">enemies grouped 18m+ away that you can't reach with Guardians this turn</span></li>
+      <li><span class="label">Scenario</span> <span class="name">Opening surprise</span> &mdash; <span class="note">enemies haven't spotted you yet &mdash; Fireball opener then Spirit Guardians next turn</span></li>
+      <li><span class="label">Scenario</span> <span class="name">Explosive barrels</span> &mdash; <span class="note">fire + barrels = environmental nuke. Fireball detonates everything in range</span></li>
+      <li><span class="label">Scenario</span> <span class="name">Cleanup</span> &mdash; <span class="note">3-4 low-HP enemies grouped together. Fireball ends the fight, Guardians would take 2+ rounds</span></li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════════════ PARTY ═══════════════════════ -->
+  <section class="section reveal" id="party">
+    <h2>Recommended Party</h2>
+    <p>You're the frontline anchor: tanking, dealing AoE, and healing. Build around burst damage and control.</p>
+
+    <div class="party-grid" style="margin-top:1rem;">
+      <div class="party-card">
+        <div class="party-name">Lae'zel</div>
+        <div class="party-role">Fighter &middot; Melee DPS</div>
+        <div class="party-desc">You lock enemies in Spirit Guardians &mdash; she shreds them with Action Surge. Hold Person + her crits = instant kills. She draws some aggro, reducing hits on you.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Gale</div>
+        <div class="party-role">Wizard &middot; AoE Control</div>
+        <div class="party-desc">You handle radiant/fire AoE &mdash; he handles crowd control (Web, Slow, Hypnotic Pattern). Haste on you before combat doubles your Spirit Guardians reach per turn.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Astarion</div>
+        <div class="party-role">Rogue &middot; Burst DPS</div>
+        <div class="party-desc">Your Spirit Guardians keeps enemies clumped. Astarion picks off stragglers with Sneak Attack. He handles locks, traps, and scouting while you handle everything else.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Alt: Karlach</div>
+        <div class="party-role">Barbarian &middot; Off-Tank</div>
+        <div class="party-desc">Two frontliners means enemies have to choose who to attack. She rages and absorbs damage while your Spirit Guardians melts everything around both of you.</div>
+      </div>
+    </div>
+
+    <div class="callout tip" style="margin-top:1.25rem;">
+      <div class="callout-label">You Don't Need a Second Healer</div>
+      <p>Light Cleric handles ALL party healing. Healing Word (bonus action), Mass Cure Wounds, Heal, Revivify &mdash; you have every tool. Don't bring Shadowheart as a healer; bring her respecced as a damage dealer, or replace her entirely. You ARE the healer.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ HONOUR MODE ═══════════════════════ -->
+  <section class="section reveal" id="honour">
+    <h2>Honour Mode Tips</h2>
+
+    <div class="callout warn">
+      <div class="callout-label">Honour Mode Warning</div>
+      <p>One save. No reloads. If your party wipes, the run is over. Light Cleric is one of the safest Honour Mode picks because you can heal, tank, and deal damage simultaneously. Here's how to maximize survivability.</p>
+    </div>
+
+    <h3>Key Strategies</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Always have Death Ward active</span>
+        <div class="step-detail">Before any boss fight or dangerous encounter, cast Death Ward on yourself. You're the healer &mdash; if you die, the party follows. Death Ward prevents one lethal hit.</div>
+      </li>
+      <li>
+        <span class="step-action">Heroes' Feast every boss</span>
+        <div class="step-detail">The fear immunity alone is worth the 6th-level slot. Many Honour Mode bosses have fear effects that disable your entire party. Heroes' Feast prevents it.</div>
+      </li>
+      <li>
+        <span class="step-action">War Caster + Resilient CON are mandatory</span>
+        <div class="step-detail">In Honour Mode, enemies hit harder. Every concentration check is life or death. Take both feats. No exceptions. WIS cap is nice but surviving is better.</div>
+      </li>
+      <li>
+        <span class="step-action">Warding Flare on the killing blow</span>
+        <div class="step-detail">Save Warding Flare for attacks that would down or kill a party member. Don't waste it on chip damage. One clutch Flare can save a run.</div>
+      </li>
+      <li>
+        <span class="step-action">Radiance of the Dawn dispels darkness</span>
+        <div class="step-detail">Many Honour Mode encounters add magical darkness. Your Channel Divinity removes it AND deals damage. Don't forget this &mdash; it can turn a losing fight around.</div>
+      </li>
+      <li>
+        <span class="step-action">Keep a Revivify scroll as backup</span>
+        <div class="step-detail">If you go down, no one else can cast Revivify. Buy scrolls of Revivify and give them to Gale or another party member. Redundancy saves runs.</div>
+      </li>
+    </ol>
+
+    <div class="callout tip" style="margin-top:1.25rem;">
+      <div class="callout-label">Honour Mode Boss Order</div>
+      <p><strong>Act 1:</strong> Spirit Guardians trivializes Goblin leaders. Use Turn Undead on Withers' crypt skeletons. Fireball the Grymforge encounters.<br>
+      <strong>Act 2:</strong> Turn Undead + Radiance of the Dawn makes the Shadow Cursed Lands easy. Spirit Guardians for Ketheric.<br>
+      <strong>Act 3:</strong> Heroes' Feast before every boss. Death Ward on yourself. Viconia's Walking Fortress shield makes you nearly untouchable. Spirit Guardians + Fireball clears the Brain fight.</p>
+    </div>
+  </section>
+
+  <div class="guide-footer">
+    <p>BG3 Light Cleric &mdash; Radiating Juggernaut &middot; #10 Ranked Build &middot; Patch 8</p>
+    <p style="margin-top:0.5rem;"><a href="bg3-builds.html">All BG3 Builds</a> &nbsp;&middot;&nbsp; <a href="guides.html">Game Guides</a> &nbsp;&middot;&nbsp; <a href="index.html">Home</a></p>
+  </div>
+
+</main>
+</div>
+
+<script>
+// Highlight active sidebar link on scroll
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector('.sidebar a[href="#' + entry.target.id + '"]');
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+
+// Mobile hamburger menu
+const toggle = document.querySelector('.nav-toggle');
+const links = document.querySelector('.nav-links');
+toggle.addEventListener('click', () => links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+// Scroll reveal
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>

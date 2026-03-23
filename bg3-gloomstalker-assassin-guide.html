@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gloomstalker Assassin — Shadow Reaper · BG3 Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Crimson+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg-body: #0a0a0a;
+  --bg-card: #151515;
+  --bg-elevated: #1c1c1c;
+  --bg-hover: #222222;
+  --border: #2b2c2c;
+  --border-light: #3a3a3a;
+  --text: #e8e8e8;
+  --text-dim: #a0a0a0;
+  --text-muted: #707070;
+  --white: #ffffff;
+  --accent: #057af0;
+  --accent-hover: #3592ff;
+  --green: #21c513;
+  --green-dim: #199f2f;
+  --orange: #f09a18;
+  --orange-dim: rgba(240,154,24,0.15);
+  --red: #f00505;
+  --gold: #d4a043;
+  --gold-dim: rgba(212,160,67,0.12);
+  --purple: #b080d0;
+}
+
+html { scroll-behavior:smooth; scrollbar-width:thin; scrollbar-color:#2b2c2c #0a0a0a; }
+
+body {
+  background: var(--bg-body);
+  color: var(--text);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 19px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration:none; }
+a:hover { color: var(--accent-hover); text-decoration:underline; }
+
+/* -- LAYOUT -- */
+.page { display:flex; max-width:1100px; margin:0 auto; gap:0; }
+
+.sidebar {
+  width:220px;
+  flex-shrink:0;
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow-y:auto;
+  border-right:1px solid var(--border);
+  background: var(--bg-card);
+  padding:1.5rem 0;
+  scrollbar-width:thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.sidebar-title {
+  font-family:'Oswald', sans-serif;
+  font-size:0.75rem;
+  font-weight:600;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  padding:0 1.25rem;
+  margin-bottom:0.75rem;
+}
+
+.sidebar a {
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  padding:0.45rem 1.25rem;
+  font-size:0.88rem;
+  font-weight:500;
+  color:var(--text-dim);
+  text-decoration:none;
+  border-left:3px solid transparent;
+  transition:all 0.15s;
+}
+
+.sidebar a:hover {
+  color:var(--white);
+  background:rgba(255,255,255,0.03);
+  text-decoration:none;
+}
+
+.sidebar a.active {
+  color:var(--white);
+  border-left-color:var(--accent);
+  background:rgba(5,122,240,0.06);
+}
+
+.sidebar .nav-icon { font-size:1rem; width:1.2rem; text-align:center; }
+
+.content {
+  flex:1;
+  min-width:0;
+  padding:2.5rem 2.5rem 4rem;
+}
+
+@media(max-width:800px) {
+  .sidebar { display:none; }
+  .content { padding:1.5rem; }
+}
+
+/* -- HEADER -- */
+.guide-header {
+  margin-bottom:2.5rem;
+  padding-bottom:1.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.guide-header .breadcrumb {
+  font-size:0.78rem;
+  color:var(--text-muted);
+  margin-bottom:0.5rem;
+  letter-spacing:0.02em;
+}
+
+.guide-header h1 {
+  font-family:'Oswald', sans-serif;
+  font-size:2.2rem;
+  font-weight:700;
+  color:var(--white);
+  line-height:1.2;
+  margin-bottom:0.4rem;
+}
+
+.guide-header .subtitle {
+  font-size:1rem;
+  color:var(--text-dim);
+  font-weight:400;
+}
+
+.tag-row { display:flex; gap:0.4rem; margin-top:0.75rem; flex-wrap:wrap; }
+.tag {
+  font-size:0.72rem;
+  font-weight:600;
+  padding:0.2rem 0.6rem;
+  border-radius:4px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.tag.green { color:var(--green); border-color:rgba(33,197,19,0.25); background:rgba(33,197,19,0.06); }
+.tag.orange { color:var(--orange); border-color:rgba(240,154,24,0.25); background:var(--orange-dim); }
+.tag.blue { color:var(--accent); border-color:rgba(5,122,240,0.25); background:rgba(5,122,240,0.06); }
+.tag.red { color:var(--red); border-color:rgba(240,5,5,0.25); background:rgba(240,5,5,0.06); }
+.tag.purple { color:var(--purple); border-color:rgba(176,128,208,0.25); background:rgba(176,128,208,0.06); }
+
+/* -- HERO ART -- */
+.hero-art {
+  width:100%;
+  margin-bottom:1.25rem;
+  border-radius:10px;
+  border:1px solid var(--border);
+  overflow:hidden;
+  background:var(--bg-card);
+}
+.hero-svg {
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+.header-row {
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  margin-bottom:1.25rem;
+}
+.header-portrait {
+  width:80px;
+  height:80px;
+  border-radius:8px;
+  border:2px solid var(--border);
+  object-fit:cover;
+}
+.header-text { flex:1; }
+
+/* -- SECTIONS -- */
+.section { margin-top:3rem; }
+
+.section h2 {
+  font-family:'Oswald', sans-serif;
+  font-size:1.5rem;
+  font-weight:600;
+  color:var(--white);
+  margin-bottom:1rem;
+  padding-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.section h3 {
+  font-family:'Oswald', sans-serif;
+  font-size:1.15rem;
+  font-weight:500;
+  color:var(--text);
+  margin:1.5rem 0 0.6rem;
+}
+
+.section p { margin-bottom:1rem; color:var(--text); }
+
+/* -- CALLOUTS -- */
+.callout {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:6px;
+  padding:1rem 1.25rem;
+  margin:1.25rem 0;
+}
+
+.callout.warn { border-left-color:var(--orange); }
+.callout.tip { border-left-color:var(--green); }
+.callout.danger { border-left-color:var(--red); }
+
+.callout-label {
+  font-family:'Oswald', sans-serif;
+  font-size:0.78rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  margin-bottom:0.25rem;
+}
+
+.callout .callout-label { color:var(--accent); }
+.callout.warn .callout-label { color:var(--orange); }
+.callout.tip .callout-label { color:var(--green); }
+.callout.danger .callout-label { color:var(--red); }
+
+.callout p { margin-bottom:0.5rem; font-size:0.95rem; }
+.callout p:last-child { margin-bottom:0; }
+
+/* -- STAT BAR -- */
+.stats { display:flex; gap:0.5rem; flex-wrap:wrap; margin:0.75rem 0; }
+.stat-box {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:0.4rem 0.75rem;
+  text-align:center;
+  min-width:3.5rem;
+}
+.stat-box.primary { border-color:rgba(5,122,240,0.4); }
+.stat-label { font-size:0.65rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); }
+.stat-val { font-family:'Oswald',sans-serif; font-size:1.3rem; font-weight:600; color:var(--white); }
+.stat-box.primary .stat-val { color:var(--accent); }
+
+/* -- LEVEL CARDS -- */
+.level-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  margin-bottom:0.4rem;
+  overflow:hidden;
+  transition:border-color 0.15s;
+}
+
+.level-card:hover { border-color:var(--border-light); }
+.level-card.spike { border-left:3px solid var(--orange); }
+.level-card.here { border-color:var(--accent); box-shadow:0 0 0 1px rgba(5,122,240,0.15); }
+
+.lv-head {
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  padding:0.65rem 1rem;
+  cursor:pointer;
+  user-select:none;
+  transition:background 0.1s;
+}
+.lv-head:hover { background:var(--bg-hover); }
+
+.lv-num {
+  font-family:'Oswald',sans-serif;
+  font-weight:700;
+  font-size:1.3rem;
+  color:var(--white);
+  min-width:1.6rem;
+  text-align:center;
+}
+.level-card.here .lv-num { color:var(--accent); }
+
+.lv-badge {
+  font-size:0.68rem;
+  font-weight:600;
+  padding:0.15rem 0.5rem;
+  border-radius:4px;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.lv-badge.ranger { color:var(--green); background:rgba(33,197,19,0.08); border:1px solid rgba(33,197,19,0.2); }
+.lv-badge.rogue { color:var(--purple); background:rgba(176,128,208,0.08); border:1px solid rgba(176,128,208,0.2); }
+.lv-badge.fighter { color:var(--orange); background:var(--orange-dim); border:1px solid rgba(240,154,24,0.2); }
+
+.lv-title {
+  font-weight:600;
+  font-size:0.95rem;
+  color:var(--text);
+  flex:1;
+}
+
+.lv-spike {
+  font-size:0.65rem;
+  font-weight:600;
+  color:var(--orange);
+  background:var(--orange-dim);
+  padding:0.15rem 0.45rem;
+  border-radius:4px;
+  border:1px solid rgba(240,154,24,0.2);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+
+.lv-here {
+  font-size:0.65rem;
+  font-weight:600;
+  color:var(--accent);
+  background:rgba(5,122,240,0.1);
+  padding:0.15rem 0.45rem;
+  border-radius:4px;
+  border:1px solid rgba(5,122,240,0.25);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+
+.lv-arrow {
+  color:var(--text-muted);
+  font-size:0.75rem;
+  transition:transform 0.2s;
+}
+.level-card.open .lv-arrow { transform:rotate(90deg); }
+
+.lv-body { max-height:0; overflow:hidden; transition:max-height 0.3s ease; }
+.level-card.open .lv-body { max-height:900px; }
+.lv-inner { padding:0 1rem 1rem; border-top:1px solid var(--border); }
+
+/* Quick picks */
+.qp-row { display:flex; flex-wrap:wrap; gap:0.3rem; margin:0.75rem 0 0.5rem; }
+.qp {
+  font-size:0.78rem;
+  font-weight:500;
+  padding:0.2rem 0.6rem;
+  border-radius:4px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+}
+.qp.feature { color:var(--green); border-color:rgba(33,197,19,0.2); }
+.qp.spell { color:var(--accent); border-color:rgba(5,122,240,0.2); }
+.qp.feat { color:var(--orange); border-color:rgba(240,154,24,0.2); }
+.qp.subclass { color:var(--purple); border-color:rgba(176,128,208,0.2); }
+
+/* Pick list */
+.picks { list-style:none; margin:0.5rem 0; }
+.picks li {
+  padding:0.3rem 0 0.3rem 0;
+  font-size:0.95rem;
+  display:flex;
+  gap:0.4rem;
+  align-items:baseline;
+}
+.picks .label {
+  font-size:0.72rem;
+  font-weight:600;
+  color:var(--orange);
+  text-transform:uppercase;
+  letter-spacing:0.03em;
+  flex-shrink:0;
+  min-width:4rem;
+}
+.picks .name { font-weight:600; color:var(--white); }
+.picks .note { color:var(--text-dim); font-size:0.88rem; }
+
+/* Prep box */
+.prep {
+  background:rgba(33,197,19,0.04);
+  border:1px solid rgba(33,197,19,0.15);
+  border-radius:6px;
+  padding:0.75rem 1rem;
+  margin-top:0.75rem;
+}
+.prep-title {
+  font-family:'Oswald',sans-serif;
+  font-size:0.8rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--green);
+  margin-bottom:0.4rem;
+}
+.prep-list { list-style:none; display:flex; flex-wrap:wrap; gap:0.25rem 0.6rem; }
+.prep-list li { font-size:0.9rem; font-weight:500; color:var(--text); }
+.prep-list li::before { content:'* '; color:var(--green-dim); }
+.prep-list li.new { color:var(--orange); }
+.prep-list li.new::before { content:'+ '; color:var(--orange); }
+.prep-note { font-size:0.78rem; color:var(--text-muted); margin-top:0.3rem; }
+
+/* -- SPELL GRID -- */
+.spell-section { margin-bottom:1.5rem; }
+.spell-level {
+  font-family:'Oswald',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  color:var(--white);
+  padding-bottom:0.35rem;
+  margin-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+.spell-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:start;
+  padding:0.5rem 0.75rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:0.35rem;
+  gap:0.75rem;
+}
+.spell-info { flex:1; }
+.spell-name { font-weight:600; color:var(--white); font-size:0.95rem; }
+.spell-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.1rem; }
+.spell-badge {
+  font-size:0.68rem;
+  font-weight:600;
+  padding:0.15rem 0.5rem;
+  border-radius:4px;
+  text-transform:uppercase;
+  letter-spacing:0.03em;
+  white-space:nowrap;
+  flex-shrink:0;
+  align-self:center;
+}
+.spell-badge.must { color:var(--green); background:rgba(33,197,19,0.08); border:1px solid rgba(33,197,19,0.2); }
+.spell-badge.good { color:var(--accent); background:rgba(5,122,240,0.06); border:1px solid rgba(5,122,240,0.15); }
+.spell-badge.conc { color:var(--purple); background:rgba(176,128,208,0.06); border:1px solid rgba(176,128,208,0.15); }
+.spell-badge.free { color:var(--gold); background:var(--gold-dim); border:1px solid rgba(212,160,67,0.2); }
+
+/* -- ITEMS -- */
+.item-group { margin-bottom:1.5rem; }
+.item-group-title {
+  font-family:'Oswald',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  color:var(--gold);
+  padding-bottom:0.35rem;
+  margin-bottom:0.5rem;
+  border-bottom:1px solid rgba(212,160,67,0.15);
+}
+.item-row {
+  padding:0.6rem 0.75rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:0.35rem;
+}
+.item-name { font-weight:600; color:var(--gold); font-size:0.95rem; }
+.item-slot { font-size:0.7rem; color:var(--text-muted); margin-left:0.35rem; text-transform:uppercase; letter-spacing:0.03em; }
+.item-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.15rem; }
+.item-loc { font-size:0.8rem; color:var(--green-dim); margin-top:0.2rem; }
+
+/* -- ROTATION -- */
+.step-list { list-style:none; counter-reset:step; }
+.step-list li {
+  position:relative;
+  padding:0.75rem 0 0.75rem 3rem;
+  border-left:2px solid var(--border);
+  margin-left:0.75rem;
+  counter-increment:step;
+}
+.step-list li::before {
+  content:counter(step);
+  position:absolute;
+  left:-0.75rem;
+  top:0.6rem;
+  width:1.4rem;
+  height:1.4rem;
+  background:var(--bg-body);
+  border:2px solid var(--accent);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Oswald',sans-serif;
+  font-weight:600;
+  font-size:0.75rem;
+  color:var(--accent);
+}
+.step-list li:last-child { border-left-color:transparent; }
+.step-action { font-weight:600; color:var(--white); }
+.step-timing {
+  font-size:0.7rem;
+  font-weight:600;
+  padding:0.1rem 0.4rem;
+  border-radius:3px;
+  margin-left:0.4rem;
+  vertical-align:middle;
+  text-transform:uppercase;
+}
+.step-timing.pre { color:var(--text-muted); background:rgba(255,255,255,0.04); }
+.step-timing.turn { color:var(--accent); background:rgba(5,122,240,0.08); }
+.step-timing.every { color:var(--green); background:rgba(33,197,19,0.08); }
+
+/* -- PARTY -- */
+.party-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
+@media(max-width:600px) { .party-grid { grid-template-columns:1fr; } }
+.party-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1rem;
+}
+.party-name { font-family:'Oswald',sans-serif; font-weight:600; font-size:1.05rem; color:var(--white); }
+.party-role { font-size:0.72rem; font-weight:600; color:var(--accent); text-transform:uppercase; letter-spacing:0.04em; margin-top:0.1rem; }
+.party-desc { color:var(--text-dim); font-size:0.88rem; margin-top:0.35rem; }
+
+/* -- DAMAGE BOX -- */
+.damage-box {
+  background:rgba(240,5,5,0.04);
+  border:1px solid rgba(240,5,5,0.15);
+  border-radius:6px;
+  padding:0.75rem 1rem;
+  margin:1rem 0;
+}
+.damage-title {
+  font-family:'Oswald',sans-serif;
+  font-size:0.8rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--red);
+  margin-bottom:0.4rem;
+}
+.damage-line { font-size:0.9rem; color:var(--text); margin-bottom:0.15rem; }
+.damage-line strong { color:var(--white); }
+.damage-total { font-family:'Oswald',sans-serif; font-size:1.3rem; font-weight:700; color:var(--red); margin-top:0.4rem; }
+
+/* -- FOOTER -- */
+.guide-footer {
+  margin-top:3rem;
+  padding-top:1rem;
+  border-top:1px solid var(--border);
+  font-size:0.75rem;
+  color:var(--text-muted);
+  text-align:center;
+}
+.guide-footer a { color:var(--text-muted); }
+.guide-footer a:hover { color:var(--accent); }
+
+/* Mobile nav */
+.mobile-nav{display:none;position:sticky;top:0;z-index:100;background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:56px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;color:var(--accent);letter-spacing:.06em}
+.nav-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s}
+.nav-links{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.nav-links.open{display:flex}
+.nav-links a{display:flex;align-items:center;gap:.5rem;height:44px;font-size:.9rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){.mobile-nav{display:flex}}
+
+/* Scroll reveal */
+.reveal { opacity:0; transform:translateY(20px); transition:opacity 0.5s ease, transform 0.5s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+<div class="mobile-nav">
+  <span class="mobile-nav-title">Gloomstalker Assassin</span>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="#overview"><span class="nav-icon">&#9672;</span> Overview</a>
+    <a href="#race"><span class="nav-icon">&#9673;</span> Race &amp; Background</a>
+    <a href="#abilities"><span class="nav-icon">&#9670;</span> Ability Scores</a>
+    <a href="#levels"><span class="nav-icon">&uarr;</span> Progression</a>
+    <a href="#subclasses"><span class="nav-icon">&#10022;</span> Subclasses</a>
+    <a href="#spells"><span class="nav-icon">&#10038;</span> Spells</a>
+    <a href="#feats"><span class="nav-icon">&#9733;</span> Feats</a>
+    <a href="#gear"><span class="nav-icon">&#9670;</span> Gear</a>
+    <a href="#surprise"><span class="nav-icon">&#9760;</span> Surprise Round</a>
+    <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+    <a href="#honour"><span class="nav-icon">&#9876;</span> Honour Mode</a>
+    <a href="#party"><span class="nav-icon">&#9678;</span> Party</a>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div style="text-align:center; padding:0 1.25rem 1rem;">
+    <svg viewBox="0 0 48 48" width="48" height="48" style="border-radius:8px; border:1px solid var(--border);">
+      <rect width="48" height="48" fill="#0d0d18"/>
+      <circle cx="24" cy="20" r="10" fill="none" stroke="#6040a0" stroke-width="1.2" opacity="0.6"/>
+      <path d="M18,26 L24,14 L30,26" fill="none" stroke="#9070c0" stroke-width="1.5"/>
+      <circle cx="24" cy="20" r="3" fill="#b080d0" opacity="0.5"/>
+      <path d="M14,32 L24,28 L34,32" fill="none" stroke="#057af0" stroke-width="1"/>
+      <line x1="24" y1="28" x2="24" y2="40" stroke="#057af0" stroke-width="0.8" opacity="0.5"/>
+    </svg>
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">&#9672;</span> Overview</a>
+  <a href="#race"><span class="nav-icon">&#9673;</span> Race &amp; Background</a>
+  <a href="#abilities"><span class="nav-icon">&#9670;</span> Ability Scores</a>
+  <a href="#levels"><span class="nav-icon">&uarr;</span> Progression</a>
+  <a href="#subclasses"><span class="nav-icon">&#10022;</span> Subclasses</a>
+  <a href="#spells"><span class="nav-icon">&#10038;</span> Spells</a>
+  <a href="#feats"><span class="nav-icon">&#9733;</span> Feats</a>
+  <a href="#gear"><span class="nav-icon">&#9670;</span> Gear</a>
+  <a href="#surprise"><span class="nav-icon">&#9760;</span> Surprise Round</a>
+  <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+  <a href="#honour"><span class="nav-icon">&#9876;</span> Honour Mode</a>
+  <a href="#party"><span class="nav-icon">&#9678;</span> Party</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 800 260" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <!-- Darkness gradient -->
+          <radialGradient id="shadowVoid" cx="42%" cy="50%" r="60%">
+            <stop offset="0%" stop-color="#0a0510" stop-opacity="0.4"/>
+            <stop offset="40%" stop-color="#080412" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#020108" stop-opacity="1"/>
+          </radialGradient>
+          <!-- Piercing eye glow -->
+          <radialGradient id="eyeGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#c0f0ff" stop-opacity="0.9"/>
+            <stop offset="40%" stop-color="#60b0e0" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#2060a0" stop-opacity="0"/>
+          </radialGradient>
+          <!-- Arrow trail -->
+          <linearGradient id="arrowTrail" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#a0c0d0" stop-opacity="0"/>
+            <stop offset="60%" stop-color="#a0c0d0" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#e0f0ff" stop-opacity="0.6"/>
+          </linearGradient>
+          <!-- Shadow tendrils -->
+          <radialGradient id="tendrilGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#3020508" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#100818" stop-opacity="0"/>
+          </radialGradient>
+          <!-- Enemy alert glow -->
+          <radialGradient id="alertGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#f04040" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#a02020" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <!-- Background: deep darkness -->
+        <rect width="800" height="260" fill="#020108"/>
+        <rect width="800" height="260" fill="url(#shadowVoid)"/>
+
+        <!-- Distant trees silhouettes -->
+        <g opacity="0.12" fill="#1a1028">
+          <path d="M0,260 L0,80 Q20,60 40,80 L40,260Z"/>
+          <path d="M30,260 L35,50 Q55,20 75,50 L80,260Z"/>
+          <path d="M720,260 L725,70 Q745,40 765,70 L770,260Z"/>
+          <path d="M760,260 L760,90 Q780,65 800,90 L800,260Z"/>
+          <path d="M680,260 L690,100 Q705,75 720,100 L730,260Z"/>
+          <path d="M60,260 L70,90 Q85,65 100,90 L110,260Z"/>
+        </g>
+
+        <!-- Shadow tendrils curling from darkness -->
+        <g opacity="0.25" stroke="#3a2060" stroke-width="2" fill="none">
+          <path d="M280,200 Q260,170 290,140 Q310,120 280,100"/>
+          <path d="M300,210 Q275,185 305,155 Q325,130 300,110"/>
+          <path d="M350,220 Q340,190 355,160 Q365,135 345,115"/>
+          <path d="M420,215 Q440,185 415,155 Q400,130 425,105"/>
+          <path d="M440,210 Q465,180 445,148 Q430,125 455,100"/>
+        </g>
+        <g opacity="0.15" stroke="#5030a0" stroke-width="1" fill="none">
+          <path d="M260,220 Q240,180 270,145 Q290,115 260,85"/>
+          <path d="M460,220 Q480,175 455,140 Q440,110 470,80"/>
+        </g>
+
+        <!-- THE GLOOMSTALKER — emerging from shadow -->
+        <g transform="translate(360,128)" opacity="0.92">
+          <!-- Dark cloak billowing -->
+          <path d="M-12,60 Q-45,45 -55,20 Q-60,5 -50,-10 Q-40,-5 -35,10 Q-25,35 -10,55 Z" fill="#0a0818" opacity="0.8"/>
+          <path d="M12,60 Q45,48 58,25 Q65,8 55,-5 Q45,0 38,15 Q28,38 14,55 Z" fill="#0a0818" opacity="0.75"/>
+          <path d="M-55,20 Q-65,30 -70,55 Q-72,70 -60,72 Q-55,60 -52,40 Q-50,25 -55,20Z" fill="#08060f" opacity="0.6"/>
+          <path d="M58,25 Q68,35 75,60 Q78,75 65,75 Q60,62 55,42 Q53,28 58,25Z" fill="#08060f" opacity="0.55"/>
+
+          <!-- Body — lean, dark leather armor -->
+          <path d="M-14,-35 Q-18,-5 -16,25 Q-14,50 -10,60 L10,60 Q14,50 16,25 Q18,-5 14,-35 Z" fill="#1a1525"/>
+          <!-- Armor details -->
+          <line x1="-8" y1="-20" x2="-8" y2="30" stroke="#2a2238" stroke-width="0.8" opacity="0.6"/>
+          <line x1="8" y1="-20" x2="8" y2="30" stroke="#2a2238" stroke-width="0.8" opacity="0.6"/>
+          <line x1="-14" y1="0" x2="14" y2="0" stroke="#2a2238" stroke-width="0.6" opacity="0.4"/>
+          <line x1="-13" y1="15" x2="13" y2="15" stroke="#2a2238" stroke-width="0.6" opacity="0.4"/>
+          <!-- Belt -->
+          <rect x="-15" y="22" width="30" height="4" rx="1" fill="#2a1a10" opacity="0.8"/>
+          <rect x="-3" y="21" width="6" height="6" rx="1" fill="#4a3520" opacity="0.7"/>
+
+          <!-- Daggers at belt -->
+          <g transform="translate(-18,28) rotate(-15)">
+            <rect x="-1" y="-8" width="2" height="12" rx="0.5" fill="#808890"/>
+            <rect x="-2" y="-9" width="4" height="3" rx="0.5" fill="#3a2a18"/>
+          </g>
+          <g transform="translate(18,28) rotate(15)">
+            <rect x="-1" y="-8" width="2" height="12" rx="0.5" fill="#808890"/>
+            <rect x="-2" y="-9" width="4" height="3" rx="0.5" fill="#3a2a18"/>
+          </g>
+
+          <!-- Hood -->
+          <path d="M-16,-35 Q-20,-50 -15,-60 Q-5,-68 5,-68 Q15,-60 20,-50 Q16,-35 14,-35 Z" fill="#100c1a"/>
+          <path d="M-14,-38 Q-16,-48 -12,-56 Q-4,-62 4,-62 Q12,-56 16,-48 Q14,-38 12,-38 Z" fill="#0a0812"/>
+
+          <!-- Face — mostly hidden in shadow, piercing eyes -->
+          <ellipse cx="0" cy="-44" rx="10" ry="8" fill="#0c0a14"/>
+          <!-- Eyes — supernatural glow (Umbral Sight) -->
+          <ellipse cx="-5" cy="-46" rx="4" ry="2.5" fill="url(#eyeGlow)"/>
+          <ellipse cx="5" cy="-46" rx="4" ry="2.5" fill="url(#eyeGlow)"/>
+          <ellipse cx="-5" cy="-46" rx="2" ry="1.2" fill="#e0f8ff" opacity="0.95"/>
+          <ellipse cx="5" cy="-46" rx="2" ry="1.2" fill="#e0f8ff" opacity="0.95"/>
+          <ellipse cx="-5" cy="-46" rx="0.8" ry="0.6" fill="#ffffff"/>
+          <ellipse cx="5" cy="-46" rx="0.8" ry="0.6" fill="#ffffff"/>
+          <!-- Eye glow rays -->
+          <g opacity="0.15" stroke="#80c0e0" stroke-width="0.5" fill="none">
+            <line x1="-9" y1="-47" x2="-14" y2="-48"/>
+            <line x1="-8" y1="-44" x2="-13" y2="-43"/>
+            <line x1="9" y1="-47" x2="14" y2="-48"/>
+            <line x1="8" y1="-44" x2="13" y2="-43"/>
+          </g>
+
+          <!-- Pointed ears (Wood Elf) -->
+          <path d="M-14,-48 Q-22,-56 -26,-64 Q-22,-58 -16,-50" fill="#1a1525" opacity="0.8"/>
+          <path d="M14,-48 Q22,-56 26,-64 Q22,-58 16,-50" fill="#1a1525" opacity="0.8"/>
+
+          <!-- Left arm — drawing bow back -->
+          <path d="M-14,-20 Q-35,-25 -50,-30 Q-58,-32 -62,-30" fill="none" stroke="#1a1525" stroke-width="5" stroke-linecap="round"/>
+          <path d="M-14,-20 Q-35,-25 -50,-30 Q-58,-32 -62,-30" fill="none" stroke="#2a2238" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- Right arm — forward holding bow -->
+          <path d="M14,-20 Q35,-28 55,-32 Q70,-34 80,-32" fill="none" stroke="#1a1525" stroke-width="5" stroke-linecap="round"/>
+          <path d="M14,-20 Q35,-28 55,-32 Q70,-34 80,-32" fill="none" stroke="#2a2238" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- BOW — longbow, held forward -->
+          <path d="M78,-55 Q88,-32 78,-10" fill="none" stroke="#4a3018" stroke-width="3" stroke-linecap="round"/>
+          <path d="M78,-55 Q86,-32 78,-10" fill="none" stroke="#6a4a28" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+          <!-- Bowstring -->
+          <line x1="78" y1="-55" x2="-60" y2="-30" stroke="#c0c8d0" stroke-width="0.6" opacity="0.6"/>
+          <line x1="78" y1="-10" x2="-60" y2="-30" stroke="#c0c8d0" stroke-width="0.6" opacity="0.6"/>
+
+          <!-- Quiver on back -->
+          <rect x="5" y="-70" width="8" height="30" rx="2" fill="#2a1a10" opacity="0.7" transform="rotate(8,9,-55)"/>
+          <g transform="rotate(8,9,-55)" opacity="0.6">
+            <line x1="7" y1="-72" x2="7" y2="-80" stroke="#808080" stroke-width="1"/>
+            <line x1="9" y1="-73" x2="9" y2="-82" stroke="#808080" stroke-width="1"/>
+            <line x1="11" y1="-72" x2="11" y2="-79" stroke="#808080" stroke-width="1"/>
+            <!-- Fletching -->
+            <path d="M6,-80 L7,-78 L8,-80" fill="#607060" opacity="0.8"/>
+            <path d="M8,-82 L9,-80 L10,-82" fill="#607060" opacity="0.8"/>
+            <path d="M10,-79 L11,-77 L12,-79" fill="#607060" opacity="0.8"/>
+          </g>
+
+          <!-- Legs -->
+          <path d="M-10,60 Q-12,80 -14,100" fill="none" stroke="#1a1525" stroke-width="6" stroke-linecap="round"/>
+          <path d="M10,60 Q12,80 14,100" fill="none" stroke="#1a1525" stroke-width="6" stroke-linecap="round"/>
+          <!-- Boots -->
+          <ellipse cx="-14" cy="102" rx="5" ry="3" fill="#1a1218"/>
+          <ellipse cx="14" cy="102" rx="5" ry="3" fill="#1a1218"/>
+        </g>
+
+        <!-- ARROWS IN FLIGHT (Dread Ambusher extra attacks) -->
+        <!-- Arrow 1 — leading, almost at target -->
+        <g transform="translate(590,108) rotate(-8)">
+          <line x1="-40" y1="0" x2="0" y2="0" stroke="url(#arrowTrail)" stroke-width="1.5"/>
+          <line x1="0" y1="0" x2="22" y2="0" stroke="#c0c8d0" stroke-width="1.8"/>
+          <path d="M22,-3 L28,0 L22,3" fill="#a0a8b0"/>
+          <path d="M-38,-2 L-40,0 L-38,2" fill="#506050" opacity="0.7"/>
+          <path d="M-35,-1.5 L-37,0 L-35,1.5" fill="#506050" opacity="0.6"/>
+        </g>
+        <!-- Arrow 2 — mid flight -->
+        <g transform="translate(555,122) rotate(-5)">
+          <line x1="-35" y1="0" x2="0" y2="0" stroke="url(#arrowTrail)" stroke-width="1.2"/>
+          <line x1="0" y1="0" x2="20" y2="0" stroke="#c0c8d0" stroke-width="1.5"/>
+          <path d="M20,-2.5 L25,0 L20,2.5" fill="#a0a8b0"/>
+          <path d="M-33,-1.5 L-35,0 L-33,1.5" fill="#506050" opacity="0.6"/>
+        </g>
+        <!-- Arrow 3 — just released (Dread Ambusher bonus) -->
+        <g transform="translate(510,135) rotate(-3)">
+          <line x1="-25" y1="0" x2="0" y2="0" stroke="url(#arrowTrail)" stroke-width="1"/>
+          <line x1="0" y1="0" x2="18" y2="0" stroke="#c0c8d0" stroke-width="1.3"/>
+          <path d="M18,-2 L22,0 L18,2" fill="#a0a8b0"/>
+          <path d="M-23,-1.2 L-25,0 L-23,1.2" fill="#506050" opacity="0.5"/>
+        </g>
+        <!-- Arrow 4 — low trajectory -->
+        <g transform="translate(540,148) rotate(2)">
+          <line x1="-30" y1="0" x2="0" y2="0" stroke="url(#arrowTrail)" stroke-width="1"/>
+          <line x1="0" y1="0" x2="18" y2="0" stroke="#c0c8d0" stroke-width="1.2"/>
+          <path d="M18,-2 L22,0 L18,2" fill="#a0a8b0" opacity="0.8"/>
+        </g>
+
+        <!-- ENEMY — caught unaware, about to be hit -->
+        <g transform="translate(650,155)" opacity="0.7">
+          <!-- Alert/surprise indicator -->
+          <circle cx="0" cy="-55" r="18" fill="url(#alertGlow)"/>
+          <text x="0" y="-50" font-family="Oswald" font-size="14" font-weight="700" fill="#f04040" text-anchor="middle" opacity="0.7">!</text>
+
+          <!-- Body — armored humanoid, turned away -->
+          <ellipse cx="0" cy="5" rx="14" ry="22" fill="#2a2018"/>
+          <!-- Head -->
+          <circle cx="2" cy="-20" r="8" fill="#2a2018"/>
+          <!-- Helmet -->
+          <path d="M-6,-28 Q2,-32 10,-28 Q10,-22 2,-18 Q-6,-22 -6,-28Z" fill="#3a3028"/>
+          <!-- Shield on back (facing us, not the assassin) -->
+          <ellipse cx="-8" cy="0" rx="10" ry="14" fill="#3a3028" opacity="0.6"/>
+          <!-- Arms — one reaching for weapon -->
+          <path d="M-12,0 Q-22,-8 -28,-5" fill="none" stroke="#2a2018" stroke-width="4" stroke-linecap="round"/>
+          <path d="M12,5 Q20,0 25,8" fill="none" stroke="#2a2018" stroke-width="4" stroke-linecap="round"/>
+          <!-- Legs -->
+          <line x1="-5" y1="25" x2="-8" y2="48" stroke="#2a2018" stroke-width="5" stroke-linecap="round"/>
+          <line x1="5" y1="25" x2="8" y2="48" stroke="#2a2018" stroke-width="5" stroke-linecap="round"/>
+          <!-- Sword at hip, not yet drawn -->
+          <line x1="14" y1="5" x2="20" y2="30" stroke="#606870" stroke-width="1.5" opacity="0.5"/>
+
+          <!-- Arrow 1 about to impact — motion blur -->
+          <g opacity="0.4">
+            <line x1="-30" y1="-8" x2="-10" y2="-5" stroke="#e0f0ff" stroke-width="1.5"/>
+          </g>
+        </g>
+
+        <!-- Second enemy further right — already hit, staggering -->
+        <g transform="translate(730,165)" opacity="0.45">
+          <ellipse cx="0" cy="5" rx="12" ry="18" fill="#2a2018" transform="rotate(15)"/>
+          <circle cx="-4" cy="-16" r="7" fill="#2a2018"/>
+          <!-- Arrow stuck in chest -->
+          <line x1="-20" y1="-2" x2="2" y2="0" stroke="#808890" stroke-width="1.5"/>
+          <path d="M2,-2 L5,0 L2,2" fill="#a0a8b0" opacity="0.7"/>
+          <!-- Staggering back -->
+          <line x1="-8" y1="20" x2="-14" y2="40" stroke="#2a2018" stroke-width="4" stroke-linecap="round"/>
+          <line x1="5" y1="18" x2="12" y2="38" stroke="#2a2018" stroke-width="4" stroke-linecap="round"/>
+          <!-- Blood -->
+          <circle cx="0" cy="2" r="2" fill="#6a1515" opacity="0.4"/>
+        </g>
+
+        <!-- Magical darkness effect particles -->
+        <g opacity="0.2">
+          <circle cx="300" cy="120" r="2" fill="#6040a0"/>
+          <circle cx="320" cy="150" r="1.5" fill="#5030a0"/>
+          <circle cx="280" cy="180" r="1" fill="#7050b0"/>
+          <circle cx="420" cy="110" r="1.5" fill="#6040a0"/>
+          <circle cx="450" cy="170" r="1" fill="#5030a0"/>
+          <circle cx="340" cy="100" r="1.8" fill="#8060c0"/>
+          <circle cx="400" cy="190" r="1.2" fill="#7050b0"/>
+        </g>
+
+        <!-- Ground line -->
+        <line x1="120" y1="235" x2="780" y2="235" stroke="#1a1228" stroke-width="0.6" opacity="0.3"/>
+        <g opacity="0.15" stroke="#2a1a38" stroke-width="0.8" fill="none">
+          <path d="M200,235 Q230,225 260,235"/>
+          <path d="M600,235 Q630,225 660,235"/>
+        </g>
+      </svg>
+    </div>
+    <div class="header-row">
+      <svg viewBox="0 0 80 80" width="80" height="80" class="header-portrait" style="border:2px solid var(--border); border-radius:8px;">
+        <rect width="80" height="80" fill="#0a0818" rx="6"/>
+        <circle cx="40" cy="32" r="16" fill="none" stroke="#3a2860" stroke-width="1.5" opacity="0.5"/>
+        <ellipse cx="34" cy="30" rx="3" ry="1.8" fill="#80c0e0" opacity="0.8"/>
+        <ellipse cx="46" cy="30" rx="3" ry="1.8" fill="#80c0e0" opacity="0.8"/>
+        <path d="M25,24 Q30,16 40,14 Q50,16 55,24" fill="#100c1a" opacity="0.9"/>
+        <path d="M22,28 Q18,20 14,14" fill="none" stroke="#1a1525" stroke-width="2" opacity="0.6"/>
+        <path d="M58,28 Q62,20 66,14" fill="none" stroke="#1a1525" stroke-width="2" opacity="0.6"/>
+        <line x1="50" y1="45" x2="68" y2="38" stroke="#808890" stroke-width="1.5" opacity="0.5"/>
+        <path d="M68,36 L72,38 L68,40" fill="#a0a8b0" opacity="0.5"/>
+      </svg>
+      <div class="header-text">
+        <div class="breadcrumb"><a href="index.html">Baldur's Gate 3</a> &rsaquo; <a href="guides.html">Builds</a> &rsaquo; Gloomstalker Assassin</div>
+        <h1>Gloomstalker Assassin &mdash; Shadow Reaper</h1>
+        <div class="subtitle">Wood Elf &middot; Gloom Stalker 5 / Assassin 4 / Fighter 3 &middot; The Ambush King</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag red">Burst DPS</span>
+      <span class="tag purple">Stealth</span>
+      <span class="tag green">Ranged</span>
+      <span class="tag orange">Multiclass</span>
+      <span class="tag blue">Patch 8</span>
+    </div>
+  </div>
+
+  <!-- ==================== OVERVIEW ==================== -->
+  <section class="section reveal" id="overview">
+    <h2>Overview</h2>
+
+    <p>The Gloomstalker Assassin is BG3's undisputed ambush king. By combining the Gloom Stalker ranger's Dread Ambusher (a free extra attack plus bonus damage and movement on your first turn) with the Assassin rogue's Assassinate (automatic critical hits on surprised enemies), and the fighter's Action Surge (an entire second action), you create a character that can fire 6-8 attacks on turn one &mdash; most of them critical hits &mdash; before the enemy even knows you exist. Entire encounters end in a single round.</p>
+
+    <p>This is a Ranger 5 / Rogue 4 / Fighter 3 multiclass. You take Ranger first to 5 for Extra Attack and the Gloom Stalker subclass, then Rogue to 4 for Assassin and an ASI, then Fighter to 3 for Action Surge and a martial archetype. Every piece synergizes: Dread Ambusher gives you the extra attack, Assassinate makes them all crits, Action Surge lets you do it again, and Sneak Attack adds free damage to one of those hits.</p>
+
+    <div class="callout">
+      <div class="callout-label">Why This Multiclass Works</div>
+      <p>Each class contributes something irreplaceable. Ranger 5 gives Extra Attack + Dread Ambusher (3 attacks base). Rogue 4 gives Assassinate (auto-crit on surprised) + 2d6 Sneak Attack + an ASI. Fighter 3 gives Action Surge (repeat your entire action) + a fighting style + a subclass. The sum is far greater than any single-class build for nova damage.</p>
+    </div>
+
+    <div class="damage-box">
+      <div class="damage-title">Turn 1 Surprise Round Damage (Level 12)</div>
+      <div class="damage-line"><strong>First Action:</strong> 3 attacks (2 Extra Attack + 1 Dread Ambusher) &mdash; all auto-crit</div>
+      <div class="damage-line"><strong>Action Surge:</strong> 3 more attacks &mdash; all auto-crit</div>
+      <div class="damage-line"><strong>Dread Ambusher bonus:</strong> +1d8 on the extra attack</div>
+      <div class="damage-line"><strong>Sneak Attack:</strong> +2d6 on one attack (auto-doubled by crit)</div>
+      <div class="damage-line"><strong>With Sharpshooter:</strong> +10 damage per hit (60 flat bonus across 6 attacks)</div>
+      <div class="damage-total">150-220+ damage before the enemy acts</div>
+    </div>
+  </section>
+
+  <!-- ==================== RACE & BACKGROUND ==================== -->
+  <section class="section reveal" id="race">
+    <h2>Race &amp; Background</h2>
+
+    <h3>Primary: Wood Elf</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Fleet of Foot</span> &mdash; <span class="note">10.5m base movement (vs 9m). Crucial for positioning before combat and reaching ideal ambush spots. Stacks with Dread Ambusher's +3m first-turn bonus.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Darkvision (12m)</span> &mdash; <span class="note">See in the dark. Synergizes with Umbral Sight &mdash; you're invisible to darkvision creatures in darkness.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Perception Proficiency</span> &mdash; <span class="note">Free Perception &mdash; the most important skill in BG3 for spotting traps and hidden enemies.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Fey Ancestry</span> &mdash; <span class="note">Advantage against charm. Can't be put to sleep.</span></li>
+    </ul>
+
+    <h3>Alternative: Half-Orc</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Savage Attacks</span> &mdash; <span class="note">Extra damage die on critical hits. Since Assassinate gives you auto-crits, every surprise round hit rolls an additional weapon die. Mathematically superior for raw damage.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Relentless Endurance</span> &mdash; <span class="note">Drop to 1 HP instead of 0 once per long rest. Safety net if your alpha strike doesn't end the fight.</span></li>
+      <li><span class="label">Note</span> <span class="note">Half-Orc trades movement speed and stealth utility for more burst damage. Pick Half-Orc for Honour Mode boss nuking, Wood Elf for everything else.</span></li>
+    </ul>
+
+    <h3>Background</h3>
+    <ul class="picks">
+      <li><span class="label">Best</span> <span class="name">Criminal / Urchin</span> &mdash; <span class="note">Stealth + Sleight of Hand proficiency. Stealth is your most important skill &mdash; it determines whether Assassinate triggers.</span></li>
+      <li><span class="label">Alt</span> <span class="name">Outlander</span> &mdash; <span class="note">Athletics + Survival. If someone else handles Stealth checks for the party, this works for a more ranger-flavored character.</span></li>
+    </ul>
+  </section>
+
+  <!-- ==================== ABILITY SCORES ==================== -->
+  <section class="section reveal" id="abilities">
+    <h2>Ability Scores</h2>
+    <p>Point buy. DEX is everything &mdash; it governs your attack rolls, damage, AC, initiative, Stealth, and Dexterity saves. WIS powers your Ranger spells and Perception. CON keeps you alive when the ambush isn't enough.</p>
+
+    <div class="stats">
+      <div class="stat-box"><div class="stat-label">STR</div><div class="stat-val">8</div></div>
+      <div class="stat-box primary"><div class="stat-label">DEX</div><div class="stat-val">17</div></div>
+      <div class="stat-box"><div class="stat-label">CON</div><div class="stat-val">14</div></div>
+      <div class="stat-box"><div class="stat-label">INT</div><div class="stat-val">8</div></div>
+      <div class="stat-box primary"><div class="stat-label">WIS</div><div class="stat-val">14</div></div>
+      <div class="stat-box"><div class="stat-label">CHA</div><div class="stat-val">10</div></div>
+    </div>
+    <p style="font-size:0.88rem; color:var(--text-dim);">With racial bonuses included (+2 DEX, +1 WIS for Wood Elf in BG3's flexible system): DEX 17 starts odd so your first ASI rounds it to 18. WIS 14 gives +2 for spells and Perception. CON 14 is solid HP. Dump STR and INT &mdash; you never use them.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Why DEX 17 (Odd Number)?</div>
+      <p>Starting at 17 DEX lets you take a half-feat at level 4 (like Alert, which adds +5 initiative) and still round DEX to 18. Or take +2 DEX to hit 19, then use your Rogue ASI for Sharpshooter. Either way, you hit 20 DEX by mid-game.</p>
+    </div>
+  </section>
+
+  <!-- ==================== LEVEL PROGRESSION ==================== -->
+  <section class="section reveal" id="levels">
+    <h2>Level-by-Level Progression</h2>
+    <p style="color:var(--text-dim); margin-bottom:1rem;">Click any level to expand. The build takes Ranger 1-5 first, then Rogue 1-4, then Fighter 1-3.</p>
+
+    <!-- Level 1: Ranger 1 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">1</span>
+        <span class="lv-badge ranger">Ranger 1</span>
+        <span class="lv-title">Natural Explorer &amp; Favoured Enemy</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Natural Explorer</span>
+          <span class="qp feature">Favoured Enemy</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Natural Explorer: Urban Tracker</span> &mdash; <span class="note">Proficiency in Sleight of Hand. Alternatively Beast Tamer for Find Familiar.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Favoured Enemy: Bounty Hunter</span> &mdash; <span class="note">Proficiency in Investigation + Restraining Strike. The Investigation checks find hidden treasures.</span></li>
+          <li><span class="label">Skills</span> <span class="name">Stealth, Perception, Athletics</span> &mdash; <span class="note">Stealth is non-negotiable. Perception from Elf racial. Athletics for shoving.</span></li>
+          <li><span class="label">Armor</span> <span class="name">Light Armor + Shield</span> &mdash; <span class="note">Wear studded leather. No shield &mdash; you need a free hand or two-hand weapon.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 2: Ranger 2 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">2</span>
+        <span class="lv-badge ranger">Ranger 2</span>
+        <span class="lv-title">Fighting Style &amp; Spellcasting</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Archery (+2 ranged)</span>
+          <span class="qp spell">Ensnaring Strike</span>
+          <span class="qp spell">Goodberry</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Style</span> <span class="name">Archery</span> &mdash; <span class="note">+2 to ranged attack rolls. This is mandatory &mdash; it offsets Sharpshooter's -5 penalty later. If going melee, take Two-Weapon Fighting or Defence.</span></li>
+          <li><span class="label">Spells</span> <span class="name">Ensnaring Strike</span> &mdash; <span class="note">Bonus action, restrains target on hit. Good for when you don't one-shot something.</span></li>
+          <li><span class="label">Spells</span> <span class="name">Goodberry</span> &mdash; <span class="note">10 healing berries. Cast before long rest with leftover slots.</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These Spells</div>
+          <ul class="prep-list">
+            <li>Ensnaring Strike</li>
+            <li>Goodberry</li>
+          </ul>
+          <div class="prep-note">2 spell slots at Ranger 2</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Level 3: Ranger 3 (GLOOM STALKER!) -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">3</span>
+        <span class="lv-badge ranger">Ranger 3</span>
+        <span class="lv-title">Gloom Stalker &mdash; Dread Ambusher</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp subclass">Gloom Stalker</span>
+          <span class="qp feature">Dread Ambusher</span>
+          <span class="qp feature">Umbral Sight</span>
+          <span class="qp feature">Superior Darkvision</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">Gloom Stalker</span> &mdash; <span class="note">The core of the build. Everything revolves around the first turn of combat.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Dread Ambusher</span> &mdash; <span class="note">+3m movement on first turn and one extra attack that deals an additional 1d8 damage. This extra attack stacks with Extra Attack.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Umbral Sight</span> &mdash; <span class="note">You are invisible to creatures that rely on darkvision in darkness. Effectively permanent advantage on Stealth in dark areas.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Superior Darkvision</span> &mdash; <span class="note">24m darkvision range. You see everything; nothing sees you.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Disguise Self (free)</span> &mdash; <span class="note">Free from Gloom Stalker. Useful for dialogue and infiltration.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.75rem;">
+          <div class="callout-label">Dread Ambusher in Practice</div>
+          <p>Dread Ambusher fires automatically on your first combat turn. At this level you get 2 attacks on turn 1 (1 normal + 1 Dread Ambusher). After you get Extra Attack at Ranger 5, that becomes 3 attacks on turn 1. The extra 1d8 only applies to the Dread Ambusher attack.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Level 4: Ranger 4 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">4</span>
+        <span class="lv-badge ranger">Ranger 4</span>
+        <span class="lv-title">First Feat</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">+2 DEX &rarr; 19 or Sharpshooter</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat A</span> <span class="name">+2 DEX &rarr; 19</span> &mdash; <span class="note">If you started 17 DEX. Gets you closer to the 20 cap.</span></li>
+          <li><span class="label">Feat B</span> <span class="name">Sharpshooter</span> &mdash; <span class="note">If going ranged. -5 attack / +10 damage per hit. The Archery fighting style offsets the penalty. This is your biggest damage boost.</span></li>
+          <li><span class="label">Note</span> <span class="note">Take whichever you didn't take here with your Rogue ASI at character level 8.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 5: Ranger 5 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">5</span>
+        <span class="lv-badge ranger">Ranger 5</span>
+        <span class="lv-title">Extra Attack &amp; Level 2 Spells</span>
+        <span class="lv-spike">&#9733;&#9733; Build Defining</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Extra Attack</span>
+          <span class="qp spell">Pass Without Trace</span>
+          <span class="qp spell">Spike Growth</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Extra Attack</span> &mdash; <span class="note">2 attacks per action. Combined with Dread Ambusher, you get 3 attacks on turn 1. Combined with Action Surge later, that's 6.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Pass Without Trace</span> &mdash; <span class="note">+10 Stealth for the entire party. This is how you guarantee surprise. The single most important spell for this build.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Spike Growth</span> &mdash; <span class="note">Area denial. 2d4 per 1.5m of movement. Enemies that try to flee your ambush take massive damage.</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These Spells</div>
+          <ul class="prep-list">
+            <li class="new">Pass Without Trace</li>
+            <li class="new">Spike Growth</li>
+            <li>Ensnaring Strike</li>
+            <li>Goodberry</li>
+          </ul>
+          <div class="prep-note">3 spell slots at Ranger 5 &middot; Pass Without Trace is always prepped</div>
+        </div>
+        <div class="callout" style="margin-top:0.75rem;">
+          <div class="callout-label">Why We Stop Ranger at 5</div>
+          <p>Ranger 5 gives Extra Attack &mdash; the biggest power spike. Ranger 6+ only gives marginal benefits (Favoured Enemy improvement, land speed). The Rogue and Fighter levels give you far more: Assassinate, Sneak Attack, Action Surge, and another subclass. Don't keep going Ranger.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Level 6: Rogue 1 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">6</span>
+        <span class="lv-badge rogue">Rogue 1</span>
+        <span class="lv-title">Sneak Attack &amp; Expertise</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Sneak Attack 1d6</span>
+          <span class="qp feature">Expertise x2</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Sneak Attack (1d6)</span> &mdash; <span class="note">Extra 1d6 damage once per turn when you have advantage or an ally adjacent. You always have advantage from stealth/surprise.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Expertise</span> &mdash; <span class="note">Double proficiency in 2 skills. Pick Stealth and Perception. Your Stealth becomes absurd.</span></li>
+          <li><span class="label">Note</span> <span class="note">Sneak Attack is once per turn, not once per round. This matters if you get opportunity attacks.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 7: Rogue 2 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">7</span>
+        <span class="lv-badge rogue">Rogue 2</span>
+        <span class="lv-title">Cunning Action</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Cunning Action: Hide</span>
+          <span class="qp feature">Cunning Action: Dash</span>
+          <span class="qp feature">Cunning Action: Disengage</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Cunning Action: Hide</span> &mdash; <span class="note">Bonus action Hide. Re-stealth mid-combat for advantage on your next attack. This is how you maintain Sneak Attack every round.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Cunning Action: Dash</span> &mdash; <span class="note">Bonus action Dash. Double movement to reposition.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Cunning Action: Disengage</span> &mdash; <span class="note">Bonus action Disengage. Retreat without opportunity attacks.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 8: Rogue 3 (ASSASSIN!) -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">8</span>
+        <span class="lv-badge rogue">Rogue 3</span>
+        <span class="lv-title">Assassin &mdash; Assassinate</span>
+        <span class="lv-spike">&#9733;&#9733; Build Defining</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp subclass">Assassin</span>
+          <span class="qp feature">Assassinate: Ambush</span>
+          <span class="qp feature">Assassinate: Initiative</span>
+          <span class="qp feature">Sneak Attack 2d6</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">Assassin</span> &mdash; <span class="note">The second pillar of the build. Turns your ambushes into massacre rounds.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Assassinate: Ambush</span> &mdash; <span class="note">You have advantage on attack rolls against creatures that haven't taken a turn yet. If you surprise them, any hit is an automatic critical hit.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Assassinate: Initiative</span> &mdash; <span class="note">+5 bonus to Initiative rolls (stacks with Alert). You need to go first for Assassinate to work.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Sneak Attack 2d6</span> &mdash; <span class="note">Upgraded from 1d6. Auto-doubled to 4d6 on surprise crits.</span></li>
+        </ul>
+        <div class="callout danger" style="margin-top:0.75rem;">
+          <div class="callout-label">Critical: Assassinate Only Works on Surprised Enemies</div>
+          <p>The auto-crit part of Assassinate ONLY triggers against enemies with the Surprised condition. You get advantage against anyone who hasn't acted, but the auto-crit requires actual surprise. This is why Pass Without Trace and high Stealth are non-negotiable. If even one party member fails their Stealth check, surprise can fail for the whole encounter.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Level 9: Rogue 4 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">9</span>
+        <span class="lv-badge rogue">Rogue 4</span>
+        <span class="lv-title">Second Feat</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">Sharpshooter or +2 DEX</span>
+          <span class="qp feat">Alert</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat A</span> <span class="name">Sharpshooter</span> &mdash; <span class="note">If you took +2 DEX at Ranger 4. The -5/+10 trade is the biggest ranged damage increase in the game.</span></li>
+          <li><span class="label">Feat B</span> <span class="name">+2 DEX &rarr; 20</span> &mdash; <span class="note">If you took Sharpshooter at Ranger 4. Cap DEX for maximum accuracy and damage.</span></li>
+          <li><span class="label">Feat C</span> <span class="name">Alert</span> &mdash; <span class="note">+5 Initiative, can't be surprised. Guarantees you act first. Combined with Assassinate: Initiative, you have +10 to initiative. Consider this if DEX is already 20.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.75rem;">
+          <div class="callout-label">Recommended Feat Path</div>
+          <p>Level 4 (Ranger): Sharpshooter. Level 9 (Rogue): +2 DEX to 20. This gives you the massive +10 damage per hit early when it matters most, then caps your accuracy at 20 DEX. Alert is amazing but you already have +5 from Assassinate: Initiative.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Level 10: Fighter 1 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">10</span>
+        <span class="lv-badge fighter">Fighter 1</span>
+        <span class="lv-title">Second Wind &amp; Fighting Style</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Second Wind</span>
+          <span class="qp feature">Fighting Style: Defence</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Second Wind</span> &mdash; <span class="note">Bonus action heal 1d10 + Fighter level. Free healing.</span></li>
+          <li><span class="label">Style</span> <span class="name">Defence</span> &mdash; <span class="note">+1 AC while wearing armor. You already have Archery from Ranger, so pick Defence for survivability. Alternatively, Two-Weapon Fighting if dual-wielding.</span></li>
+          <li><span class="label">Note</span> <span class="note">CON save proficiency and heavy armor proficiency from Fighter 1, though you won't use heavy armor (disadvantage on Stealth).</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 11: Fighter 2 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">11</span>
+        <span class="lv-badge fighter">Fighter 2</span>
+        <span class="lv-title">Action Surge</span>
+        <span class="lv-spike">&#9733;&#9733; Build Defining</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Action Surge</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Action Surge</span> &mdash; <span class="note">Once per short rest, gain an additional action on your turn. This means 3 MORE attacks (2 Extra Attack + 1 Dread Ambusher on the surge action). Total turn 1 attacks: 6. All auto-crit if surprised.</span></li>
+        </ul>
+        <div class="callout" style="margin-top:0.75rem;">
+          <div class="callout-label">The Math: 6 Attacks, All Crits</div>
+          <p>Action 1: Attack + Extra Attack + Dread Ambusher = 3 attacks. Action Surge: Attack + Extra Attack + Dread Ambusher = 3 attacks. Total: 6 attacks. Every single one is a critical hit against surprised enemies. Add Sharpshooter (+10 each) and Sneak Attack (2d6 doubled to 4d6). This is the most damage any build in BG3 can deal in a single turn.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Level 12: Fighter 3 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">12</span>
+        <span class="lv-badge fighter">Fighter 3</span>
+        <span class="lv-title">Martial Archetype &mdash; Build Complete</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp subclass">Battle Master or Champion</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Option A</span> <span class="name">Battle Master</span> &mdash; <span class="note">Precision Attack (+1d8 to hit) patches Sharpshooter misses. Riposte gives a reaction attack. Trip Attack knocks prone for melee allies. Best for tactical play.</span></li>
+          <li><span class="label">Option B</span> <span class="name">Champion</span> &mdash; <span class="note">Improved Critical &mdash; crit on 19-20. After the surprise round, you still crit more often. Simpler to play. Slightly worse than Battle Master in most scenarios.</span></li>
+          <li><span class="label">Recommend</span> <span class="name">Battle Master</span> &mdash; <span class="note">Take Precision Attack, Riposte, and Trip Attack as your 3 maneuvers. Superiority dice (4d8) refresh on short rest.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.75rem;">
+          <div class="callout-label">Build Complete</div>
+          <p>At level 12 you have: 3 attacks on turn 1 (Extra Attack + Dread Ambusher), doubled to 6 with Action Surge. Assassinate auto-crits. 2d6 Sneak Attack. Sharpshooter +10 per hit. Expertise in Stealth. Pass Without Trace. Battle Master maneuvers. You are the deadliest single-turn damage dealer in BG3.</p>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ==================== SUBCLASSES ==================== -->
+  <section class="section reveal" id="subclasses">
+    <h2>Subclass Breakdown</h2>
+
+    <h3>Gloom Stalker (Ranger)</h3>
+    <p>The Gloom Stalker is the engine of your first turn. Every feature is designed for ambush combat.</p>
+    <ul class="picks">
+      <li><span class="label">Core</span> <span class="name">Dread Ambusher</span> &mdash; <span class="note">On your first turn of combat: +3m movement and one additional weapon attack that deals an extra 1d8 damage. This triggers every combat, not just surprise rounds. The extra attack works with Action Surge &mdash; you get it on each action.</span></li>
+      <li><span class="label">Core</span> <span class="name">Umbral Sight</span> &mdash; <span class="note">While in darkness, you are invisible to creatures that rely on darkvision. This is effectively permanent advantage on Stealth checks in dark environments. Most BG3 dungeons, caves, and night encounters qualify.</span></li>
+      <li><span class="label">Core</span> <span class="name">Superior Darkvision</span> &mdash; <span class="note">24m darkvision range (double normal). You can attack from maximum bow range while remaining invisible via Umbral Sight.</span></li>
+      <li><span class="label">Spell</span> <span class="name">Disguise Self</span> &mdash; <span class="note">Free cast. Change appearance for dialogue, infiltration, or RP. Doesn't cost a spell slot.</span></li>
+    </ul>
+
+    <h3>Assassin (Rogue)</h3>
+    <p>The Assassin converts your stealth advantage into raw killing power. The entire subclass rewards going first.</p>
+    <ul class="picks">
+      <li><span class="label">Core</span> <span class="name">Assassinate: Ambush</span> &mdash; <span class="note">Advantage on attacks against creatures that haven't taken a turn. If the target is Surprised, hits are automatic critical hits. This doubles ALL damage dice: weapon dice, Sneak Attack dice, Dread Ambusher dice, even Ensnaring Strike dice.</span></li>
+      <li><span class="label">Core</span> <span class="name">Assassinate: Initiative</span> &mdash; <span class="note">+5 to Initiative. Combined with high DEX (already +5), you're looking at +10 to initiative before any other bonuses. You will almost always go first.</span></li>
+      <li><span class="label">Feature</span> <span class="name">Assassin's Alacrity</span> &mdash; <span class="note">At Rogue 3, you restore your full movement speed when Assassinate triggers. Ensures you can reposition even after moving to attack position.</span></li>
+    </ul>
+
+    <h3>Battle Master (Fighter) &mdash; Recommended</h3>
+    <ul class="picks">
+      <li><span class="label">Maneuver</span> <span class="name">Precision Attack</span> &mdash; <span class="note">Add a Superiority Die to an attack roll. Turns Sharpshooter misses into hits. Use this when you roll just below the target's AC.</span></li>
+      <li><span class="label">Maneuver</span> <span class="name">Riposte</span> &mdash; <span class="note">When an enemy misses you, make a weapon attack as a reaction. Free extra Sneak Attack opportunity (different turn).</span></li>
+      <li><span class="label">Maneuver</span> <span class="name">Trip Attack</span> &mdash; <span class="note">Add Superiority Die damage and knock prone on a failed STR save. Gives your melee allies advantage.</span></li>
+    </ul>
+
+    <h3>Champion (Fighter) &mdash; Alternative</h3>
+    <ul class="picks">
+      <li><span class="label">Feature</span> <span class="name">Improved Critical</span> &mdash; <span class="note">Critical hit on 19-20. After the surprise round ends, you still crit 10% of the time instead of 5%. Combined with Killer's Sweetheart ring (auto-crit once per long rest), this extends your crit potential into subsequent rounds.</span></li>
+      <li><span class="label">Note</span> <span class="note">Champion is simpler but mathematically weaker than Battle Master in most situations. Take it if you prefer a hands-off playstyle.</span></li>
+    </ul>
+  </section>
+
+  <!-- ==================== SPELLS ==================== -->
+  <section class="section reveal" id="spells">
+    <h2>Ranger Spells</h2>
+
+    <div class="callout">
+      <div class="callout-label">Half-Caster Reality</div>
+      <p>You only have Ranger spell slots (maxing at level 2 spells with Ranger 5). You're not a caster &mdash; your spells are utility and setup tools. Pass Without Trace is mandatory; everything else is gravy.</p>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Level 1 Spells</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Ensnaring Strike</div><div class="spell-desc">Bonus action. Next hit restrains the target (STR save). Great follow-up when a target survives your burst. Restrained = advantage for all allies.</div></div><span class="spell-badge good">Good</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Goodberry</div><div class="spell-desc">Create 10 healing berries. Cast with remaining spell slots before each long rest. Free healing.</div></div><span class="spell-badge good">Good</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Longstrider</div><div class="spell-desc">+10ft movement, no concentration, lasts until long rest. Cast on yourself and allies at the start of each day.</div></div><span class="spell-badge good">Good</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Hunter's Mark</div><div class="spell-desc">Bonus action, +1d6 per hit against a marked target. Concentration. Good sustained damage but competes with Pass Without Trace for concentration.</div></div><span class="spell-badge conc">Conc</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Cure Wounds</div><div class="spell-desc">Touch heal. Emergency only &mdash; you'd rather be attacking.</div></div><span class="spell-badge good">Situational</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Level 2 Spells</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Pass Without Trace</div><div class="spell-desc">+10 Stealth for your entire party. Concentration, 1 hour. This is the spell that makes the build work. With Expertise in Stealth + this spell, your party Stealth checks are nearly impossible to fail. Guarantees surprise.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Spike Growth</div><div class="spell-desc">20ft radius of thorns. 2d4 piercing per 5ft of movement. Excellent area denial after your opening burst &mdash; enemies that flee your kill zone take massive damage.</div></div><span class="spell-badge conc">Conc &middot; Great</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Silence</div><div class="spell-desc">15ft radius of silence. Prevents spellcasting in the area. Drop it on an enemy caster after your ambush.</div></div><span class="spell-badge conc">Conc &middot; Good</span></div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Spell Slot Management</div>
+      <p>You only have 3 spell slots (Ranger 5). Slot 1 is always Pass Without Trace before any ambush. Use your remaining 1-2 slots on Spike Growth or Ensnaring Strike during combat. Cast Goodberry or Longstrider with any leftover slots before long rest.</p>
+    </div>
+  </section>
+
+  <!-- ==================== FEATS ==================== -->
+  <section class="section reveal" id="feats">
+    <h2>Feat Selection</h2>
+    <p>You get 2 feats (Ranger 4 and Rogue 4). Both should maximize your first-turn damage output.</p>
+
+    <h3>Tier 1: Must-Have</h3>
+    <ul class="picks">
+      <li><span class="label">Core</span> <span class="name">Sharpshooter</span> &mdash; <span class="note">-5 to hit, +10 damage. With Archery (+2) and advantage from Assassinate, the -5 penalty barely matters. +10 flat damage on each of your 6 surprise round attacks is +60 total. Non-negotiable for ranged builds.</span></li>
+      <li><span class="label">Core</span> <span class="name">+2 DEX (to cap at 20)</span> &mdash; <span class="note">Caps your most important stat. +1 to hit, +1 damage, +1 AC, +1 initiative, +1 Stealth. Use your other feat slot for this.</span></li>
+    </ul>
+
+    <h3>Tier 2: Excellent (If DEX Is Already 20)</h3>
+    <ul class="picks">
+      <li><span class="label">Great</span> <span class="name">Alert</span> &mdash; <span class="note">+5 Initiative and cannot be surprised. Guarantees you act first. With Assassinate: Initiative (+5), high DEX (+5), and Alert (+5), you have +15 to initiative. You will literally never go second. The "cannot be surprised" clause is also great insurance.</span></li>
+      <li><span class="label">Great</span> <span class="name">Lucky</span> &mdash; <span class="note">3 luck points per long rest. Re-roll an attack, save, or ability check. Use on critical Stealth checks or when Sharpshooter causes a miss on a high-value target.</span></li>
+    </ul>
+
+    <h3>Tier 3: Melee Variant</h3>
+    <ul class="picks">
+      <li><span class="label">Melee</span> <span class="name">Great Weapon Master</span> &mdash; <span class="note">-5/+10 for melee heavy weapons. If you're playing a melee Gloomstalker with greatswords instead of bows, this replaces Sharpshooter. Less common but viable.</span></li>
+      <li><span class="label">Melee</span> <span class="name">Savage Attacker</span> &mdash; <span class="note">Roll weapon damage twice and take the higher. Consistent damage increase, especially good when critting with multiple dice.</span></li>
+    </ul>
+  </section>
+
+  <!-- ==================== GEAR ==================== -->
+  <section class="section reveal" id="gear">
+    <h2>Equipment &mdash; Act by Act</h2>
+
+    <div class="callout warn">
+      <div class="callout-label">Gear Priority</div>
+      <p>DEX-based builds want: ranged weapon damage > Stealth bonuses > initiative bonuses > AC. Don't wear medium/heavy armor &mdash; the Stealth disadvantage can cost you Assassinate triggers.</p>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Act 1</div>
+      <div class="item-row">
+        <div><span class="item-name">Gloves of Archery</span> <span class="item-slot">Gloves</span></div>
+        <div class="item-desc">+2 damage with ranged weapon attacks. Gives longbow proficiency (you already have it). Flat +2 per hit stacks with Sharpshooter.</div>
+        <div class="item-loc">Found in a locked chest in the Blighted Village cellar, near the Zhentarim hideout entrance.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">The Caustic Band</span> <span class="item-slot">Ring</span></div>
+        <div class="item-desc">+2 acid damage on weapon attacks. Extra damage on every hit, including all 6 surprise round attacks.</div>
+        <div class="item-loc">Sold by Derryth Bonecloak in the Myconid Colony (Underdark).</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Haste Helm</span> <span class="item-slot">Helmet</span></div>
+        <div class="item-desc">Gain 3 turns of Momentum (movement speed boost) at the start of combat. Helps you reach ambush position faster.</div>
+        <div class="item-loc">Blighted Village, cellar chest.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Titanstring Bow</span> <span class="item-slot">Weapon</span></div>
+        <div class="item-desc">Adds your STR modifier to damage. Not ideal for DEX builds unless you use Elixir of Hill Giant Strength (STR 21).</div>
+        <div class="item-loc">Sold by Brem in the Zhentarim Hideout (Waukeen's Rest).</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Spidersilk Armour</span> <span class="item-slot">Armor</span></div>
+        <div class="item-desc">Light armor, +1 to Stealth checks. Advantage on Constitution saves. Perfect early-game stealth armor.</div>
+        <div class="item-loc">Dropped by Minthara in the Goblin Camp (if you fight her).</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Act 2</div>
+      <div class="item-row">
+        <div><span class="item-name">Gontr Mael</span> <span class="item-slot">Weapon</span></div>
+        <div class="item-desc">Legendary longbow. +1d4 radiant on every hit. Can cast Celestial Haste. Guiding Bolt on crit. One of the best bows in the game before Act 3.</div>
+        <div class="item-loc">Dropped by the Steel Watch Titan in the Steel Watch Foundry (technically Act 3, but available mid-game).</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Cloak of Displacement</span> <span class="item-slot">Cloak</span></div>
+        <div class="item-desc">Attackers have disadvantage on attack rolls against you until they hit. Resets each turn. Keeps you alive after the surprise round ends.</div>
+        <div class="item-loc">Sold by Quartermaster Talli at the Last Light Inn.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Shadow of Menzoberranzan</span> <span class="item-slot">Helmet</span></div>
+        <div class="item-desc">Cast Shroud Self to become Invisible. Free combat opener &mdash; attack from invisibility for guaranteed advantage.</div>
+        <div class="item-loc">Reward from Nere in the Grymforge, or loot from the Myconid Colony.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Ring of Evasion</span> <span class="item-slot">Ring</span></div>
+        <div class="item-desc">Succeed on a failed DEX save (3 charges per long rest). Insurance against AoE damage.</div>
+        <div class="item-loc">Sold by Araj Oblodra at Moonrise Towers.</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Act 3 &mdash; Endgame</div>
+      <div class="item-row">
+        <div><span class="item-name">Deadshot</span> <span class="item-slot">Weapon</span></div>
+        <div class="item-desc">+2 longbow. On crit: target must make a CON save or be Stunned. Your entire surprise round is crits &mdash; every hit can stun. The best ranged weapon in BG3.</div>
+        <div class="item-loc">Found in the Murder Tribunal area during the Investigate the Murders questline (Act 3).</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Killer's Sweetheart</span> <span class="item-slot">Ring</span></div>
+        <div class="item-desc">When you kill a creature, your next attack is an automatic critical hit. Once per long rest. Extends your crit chain beyond the surprise round &mdash; kill one target, crit the next.</div>
+        <div class="item-loc">Found inside the Self-Same Trial in the Gauntlet of Shar (Act 2).</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Helldusk Armour</span> <span class="item-slot">Armor</span></div>
+        <div class="item-desc">21 AC, fire resistance, can't be burned, Fly ability. Despite being heavy armor, you can wear it without Stealth disadvantage if you use the Fly spell to approach from above instead of sneaking.</div>
+        <div class="item-loc">Looted from Raphael after defeating him in the House of Hope (Act 3).</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Bhaalist Armour</span> <span class="item-slot">Armor</span></div>
+        <div class="item-desc">Targets that damage you become Vulnerable to Piercing (your arrows). Aura of Murder reduces enemy HP by 2 per turn. Dark Assassin-themed.</div>
+        <div class="item-loc">Rewarded by Sarevok in the Murder Tribunal if you side with him (Act 3).</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Helm of Balduran</span> <span class="item-slot">Helmet</span></div>
+        <div class="item-desc">+1 AC, +1 saves, regenerate 2 HP per turn, can't be stunned, can't be crit. Best helmet in BG3.</div>
+        <div class="item-loc">Wyrmway &mdash; defeat Ansur the dragon beneath Wyrm's Rock (Act 3).</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Elixir of Hill Giant Strength</div>
+      <p>If you use the Titanstring Bow or any STR-scaling weapon, drink an Elixir of Hill Giant Strength (sets STR to 21) before combat. This works because you dumped STR to 8 &mdash; the elixir replaces your stat entirely. Alchemist Derryth or ingredient crafting can supply these.</p>
+    </div>
+  </section>
+
+  <!-- ==================== THE SURPRISE ROUND ==================== -->
+  <section class="section reveal" id="surprise">
+    <h2>The Surprise Round &mdash; How It Actually Works</h2>
+
+    <p>Surprise is the single most important mechanic for this build. Understanding exactly how it works in BG3 (which differs from tabletop D&D) is the difference between one-shotting encounters and having a mediocre build.</p>
+
+    <h3>How Surprise Works in BG3</h3>
+    <ul class="picks">
+      <li><span class="label">Step 1</span> <span class="name">Initiate from Stealth</span> &mdash; <span class="note">Your party must be in stealth (not just you) when combat begins. Turn-based mode lets you position everyone precisely.</span></li>
+      <li><span class="label">Step 2</span> <span class="name">Stealth vs Passive Perception</span> &mdash; <span class="note">Each party member's Stealth check is compared against every enemy's Passive Perception. If all party members beat all enemies, the enemies are Surprised.</span></li>
+      <li><span class="label">Step 3</span> <span class="name">Surprised Condition</span> &mdash; <span class="note">Surprised enemies skip their first turn entirely. They can't move, act, or react. Your entire party gets a free round of actions.</span></li>
+      <li><span class="label">Step 4</span> <span class="name">Assassinate Triggers</span> &mdash; <span class="note">Against Surprised enemies, your Assassinate feature turns every hit into an automatic critical. This doubles all damage dice.</span></li>
+    </ul>
+
+    <h3>How to Guarantee Surprise</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Cast Pass Without Trace</span> <span class="step-timing pre">Before Combat</span>
+        <div class="step-detail">+10 to Stealth for every party member within range. This alone makes surprise nearly guaranteed against most enemies. Cast it before entering any dangerous area.</div>
+      </li>
+      <li>
+        <span class="step-action">Separate from the party</span> <span class="step-timing pre">Before Combat</span>
+        <div class="step-detail">Ungroup your character from the party (click the chain icon). Send yourself ahead to scout alone. If your heavy-armor companions have low Stealth, leave them far behind the encounter and only bring them in after surprise triggers. Alternatively: have everyone in stealth but only YOU initiate combat.</div>
+      </li>
+      <li>
+        <span class="step-action">Use darkness and elevation</span> <span class="step-timing pre">Positioning</span>
+        <div class="step-detail">Umbral Sight makes you invisible in darkness to darkvision creatures. Stay in unlit areas. Elevation provides a bonus to ranged attacks. Position on high ground before firing.</div>
+      </li>
+      <li>
+        <span class="step-action">Attack to initiate</span> <span class="step-timing turn">Turn 1</span>
+        <div class="step-detail">Your first attack from stealth initiates combat. All enemies that failed to detect you are Surprised. Dread Ambusher and Assassinate both trigger on this first turn. Fire all 6 attacks (Action + Action Surge) before the enemy gets a turn.</div>
+      </li>
+    </ol>
+
+    <div class="callout danger">
+      <div class="callout-label">Common Surprise Killers</div>
+      <p><strong>Party member detected:</strong> If ONE companion fails their Stealth check, enemies near that companion may not be Surprised. Use solo initiation to avoid this.<br>
+      <strong>See Invisibility / Truesight:</strong> Some Act 3 enemies can see through stealth. Silence or line-of-sight breaking is needed.<br>
+      <strong>Conversation-initiated combat:</strong> If combat starts from dialogue, there's no surprise. Always attack from stealth, not from conversation.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Solo Initiation Trick</div>
+      <p>Unchain your character. Have the party wait around a corner or behind a wall. Sneak into position alone. Attack to start combat. Only YOUR Stealth matters for determining surprise on the enemies YOU can see. Your party members enter combat normally on their turns. This is the most reliable way to guarantee Assassinate triggers.</p>
+    </div>
+  </section>
+
+  <!-- ==================== COMBAT ==================== -->
+  <section class="section reveal" id="combat">
+    <h2>Combat Guide</h2>
+
+    <h3>The Alpha Strike (Surprise Round)</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Cast Pass Without Trace</span> <span class="step-timing pre">Before Combat</span>
+        <div class="step-detail">Lasts 10 turns. Cast it before entering any area with enemies. +10 Stealth to the entire party.</div>
+      </li>
+      <li>
+        <span class="step-action">Enter Turn-Based Mode &amp; Stealth</span> <span class="step-timing pre">Before Combat</span>
+        <div class="step-detail">Press Shift+Space for turn-based mode. Press C to enter stealth. Position yourself on high ground with clear line of sight to the priority target. Unchain from party if needed.</div>
+      </li>
+      <li>
+        <span class="step-action">First Action: 3 Attacks (all auto-crit)</span> <span class="step-timing turn">Turn 1</span>
+        <div class="step-detail">Attack (1) + Extra Attack (2) + Dread Ambusher (3). All hits auto-crit against Surprised enemies. Use Sharpshooter on every attack &mdash; you have advantage so the -5 barely matters. Apply Sneak Attack to the first hit for maximum crit damage.</div>
+      </li>
+      <li>
+        <span class="step-action">Action Surge: 3 More Attacks (all auto-crit)</span> <span class="step-timing turn">Turn 1</span>
+        <div class="step-detail">Activate Action Surge. Attack again: Attack (4) + Extra Attack (5) + Dread Ambusher (6). Dread Ambusher triggers again on the second action. Enemies are still Surprised &mdash; still auto-crit. The target should be dead. If not, the second target should be.</div>
+      </li>
+      <li>
+        <span class="step-action">Bonus Action: Hide or Disengage</span> <span class="step-timing turn">End of Turn 1</span>
+        <div class="step-detail">If any enemies survived: Cunning Action: Hide to re-enter stealth (bonus action). This gives you advantage on attacks next turn. If you need to reposition, use Cunning Action: Dash or Disengage.</div>
+      </li>
+    </ol>
+
+    <h3>After the Surprise Round</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Cunning Action: Hide each turn</span> <span class="step-timing every">Every Turn</span>
+        <div class="step-detail">Bonus action Hide &rarr; attack with advantage &rarr; Sneak Attack triggers. This is your sustained DPS loop. 2 attacks per turn (Extra Attack), one of which gets 2d6 Sneak Attack.</div>
+      </li>
+      <li>
+        <span class="step-action">Use Battle Master maneuvers</span> <span class="step-timing every">As Needed</span>
+        <div class="step-detail">Precision Attack when Sharpshooter would miss. Trip Attack to knock enemies prone for melee allies. Riposte when an enemy misses you in melee.</div>
+      </li>
+      <li>
+        <span class="step-action">Spike Growth for area denial</span> <span class="step-timing turn">Reactive</span>
+        <div class="step-detail">If enemies are clustering or trying to flee, cast Spike Growth. 2d4 per 5ft of movement shreds anything moving through it.</div>
+      </li>
+    </ol>
+
+    <div class="callout">
+      <div class="callout-label">Target Priority</div>
+      <p><strong>Boss/elite first:</strong> Your surprise round can kill or nearly kill any single target in the game. Focus your 6 attacks on the most dangerous enemy.<br>
+      <strong>Casters second:</strong> Enemy spellcasters can heal, buff, or CC your party. Kill them before they act.<br>
+      <strong>Mobs last:</strong> Your party handles cleanup. You already eliminated the threat.</p>
+    </div>
+  </section>
+
+  <!-- ==================== HONOUR MODE ==================== -->
+  <section class="section reveal" id="honour">
+    <h2>Honour Mode Tips</h2>
+
+    <p>Honour Mode adds Legendary Actions to boss enemies, meaning they can act out of turn even when Surprised. Your alpha strike is still devastating, but you need to account for these changes.</p>
+
+    <div class="callout danger">
+      <div class="callout-label">Legendary Actions Change Everything</div>
+      <p>In Honour Mode, bosses gain Legendary Actions that let them respond even during your turn. Some bosses can break free of Surprised status early. Your alpha strike still deals massive damage, but don't assume the boss will sit there for all 6 attacks. Be prepared for a counter-attack.</p>
+    </div>
+
+    <h3>Key Adjustments for Honour Mode</h3>
+    <ul class="picks">
+      <li><span class="label">Prep</span> <span class="name">Always have a backup plan</span> &mdash; <span class="note">If your alpha strike doesn't kill the boss, you need to survive their Legendary Action. Keep Cloak of Displacement or Mirror Image active. Position behind cover.</span></li>
+      <li><span class="label">Prep</span> <span class="name">Party coordination</span> &mdash; <span class="note">Have your party ready to follow up immediately. A War Cleric's Spirit Guardians, a Wizard's Haste on you, or a Bard's Cutting Words can all ensure the boss goes down on round 1 even with Legendary Actions.</span></li>
+      <li><span class="label">Tactic</span> <span class="name">Silence on caster bosses</span> &mdash; <span class="note">Cast Silence on spellcasting bosses before your ambush (have a party member cast it). Even if they get a Legendary Action, they can't cast spells in the Silence zone.</span></li>
+      <li><span class="label">Tactic</span> <span class="name">Elevation abuse</span> &mdash; <span class="note">Position on unreachable high ground (ladders, Misty Step up). Melee bosses can't reach you even with Legendary movement. You can continue shooting with impunity.</span></li>
+      <li><span class="label">Tactic</span> <span class="name">Save scum your surprise</span> &mdash; <span class="note">Honour Mode has a single save file. Quicksave before initiating. If surprise fails, reload. The Stealth roll is determined on initiation, so a reload and repositioning can change the outcome.</span></li>
+    </ul>
+
+    <h3>Honour Mode Boss Encounters</h3>
+    <ul class="picks">
+      <li><span class="label">Act 1</span> <span class="name">Phase Spider Matriarch</span> &mdash; <span class="note">Can teleport as a Legendary Action. Position your party to cover all teleport destinations. Alpha strike should kill her before she ports.</span></li>
+      <li><span class="label">Act 2</span> <span class="name">Ketheric Thorm</span> &mdash; <span class="note">Has 2 phases. Save Action Surge for phase 2 if possible. His Legendary Action is a devastating AoE &mdash; spread your party out.</span></li>
+      <li><span class="label">Act 3</span> <span class="name">Orin the Red</span> &mdash; <span class="note">Unstoppable as a Legendary Action &mdash; she can't be incapacitated. Focus on raw damage. Your 6-attack alpha strike is the best opener against her.</span></li>
+      <li><span class="label">Act 3</span> <span class="name">Raphael</span> &mdash; <span class="note">Extremely high HP + Legendary Actions. Focus on disabling his minions first, then concentrate fire. Spike Growth on the battlefield limits his movement.</span></li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">Elixir Stacking</div>
+      <p>Elixirs persist through long rest and are cheap. Elixir of Bloodlust (extra action on kill) can give you a THIRD action on your surprise turn if you kill a target. That's 9 attacks total. Combine with Hill Giant Strength elixir on a STR weapon for even more damage.</p>
+    </div>
+  </section>
+
+  <!-- ==================== PARTY ==================== -->
+  <section class="section reveal" id="party">
+    <h2>Recommended Party</h2>
+    <p>You handle burst damage and scouting. Your party needs a healer, a controller, and a damage followup.</p>
+
+    <div class="party-grid" style="margin-top:1rem;">
+      <div class="party-card">
+        <div class="party-name">Shadowheart</div>
+        <div class="party-role">Cleric &middot; Healer &amp; Support</div>
+        <div class="party-desc">Spirit Guardians + your ambush = nothing survives turn 1. She heals, buffs, and handles anything you didn't kill. Can also cast Silence on caster enemies before your ambush.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Gale</div>
+        <div class="party-role">Wizard &middot; AoE &amp; Control</div>
+        <div class="party-desc">Haste on you before combat doubles your effectiveness. Fireball/Ice Storm cleans up anything your alpha strike didn't kill. Web/Hold Person for crowd control. His Stealth is low &mdash; keep him back and let him enter after you initiate.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Lae'zel</div>
+        <div class="party-role">Fighter &middot; Frontline &amp; Cleanup</div>
+        <div class="party-desc">Action Surge on her turn too &mdash; double the burst. She holds the frontline after your surprise round ends. Battle Master maneuvers combo with your Trip Attack knockdowns.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Alt: Karlach</div>
+        <div class="party-role">Barbarian &middot; Tank</div>
+        <div class="party-desc">Reckless Attack + Rage absorbs all aggro after you dump damage and hide. She draws attacks while you pick enemies off from stealth. Her low Stealth doesn't matter &mdash; unchain her before initiating.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="guide-footer">
+    <p>BG3 Gloomstalker Assassin &mdash; Shadow Reaper Build Guide &middot; Wood Elf &middot; Patch 8</p>
+    <p style="margin-top:0.5rem;"><a href="guides.html">All Build Guides</a> &middot; <a href="index.html">Home</a></p>
+  </div>
+
+</main>
+</div>
+
+<script>
+// Highlight active sidebar link on scroll
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector('.sidebar a[href="#' + entry.target.id + '"]');
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+
+// Mobile hamburger menu
+const toggle = document.querySelector('.nav-toggle');
+const links = document.querySelector('.nav-links');
+toggle.addEventListener('click', () => links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+// Scroll reveal animation
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>

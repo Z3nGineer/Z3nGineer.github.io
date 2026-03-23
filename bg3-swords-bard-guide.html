@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swords Bard Archer — BG3 Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg-body: #0a0a0a;
+  --bg-card: #151515;
+  --bg-elevated: #1c1c1c;
+  --bg-hover: #222222;
+  --border: #2b2c2c;
+  --border-light: #3a3a3a;
+  --text: #e8e8e8;
+  --text-dim: #a0a0a0;
+  --text-muted: #707070;
+  --white: #ffffff;
+  --accent: #057af0;
+  --accent-hover: #3592ff;
+  --green: #21c513;
+  --green-dim: #199f2f;
+  --orange: #f09a18;
+  --orange-dim: rgba(240,154,24,0.15);
+  --red: #f00505;
+  --gold: #d4a043;
+  --gold-dim: rgba(212,160,67,0.12);
+  --purple: #b080d0;
+  --violet: #9060c0;
+  --violet-dim: rgba(144,96,192,0.12);
+}
+
+html { scroll-behavior:smooth; scrollbar-width:thin; scrollbar-color:#2b2c2c #0a0a0a; }
+
+body {
+  background: var(--bg-body);
+  color: var(--text);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 19px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration:none; }
+a:hover { color: var(--accent-hover); text-decoration:underline; }
+
+/* ── UNIVERSAL TOP NAV ── */
+.top-nav {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  background:rgba(10,10,10,0.88); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); height:60px;
+}
+.top-nav-inner {
+  max-width:1100px; margin:0 auto; display:flex; align-items:center;
+  justify-content:space-between; padding:0 2rem; height:60px;
+}
+.top-nav-brand {
+  font-family:'Cinzel',serif; font-size:0.9rem; font-weight:700;
+  letter-spacing:0.15em; color:var(--text); text-decoration:none; transition:color 0.3s;
+}
+.top-nav-brand:hover { color:var(--accent); text-decoration:none; }
+.top-nav-links { display:flex; gap:1.5rem; list-style:none; align-items:center; }
+.top-nav-links a {
+  font-size:0.8rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--text-muted); text-decoration:none; transition:color 0.3s; position:relative;
+}
+.top-nav-links a:hover { color:var(--accent); text-decoration:none; }
+.top-nav-links a::after {
+  content:''; position:absolute; bottom:-4px; left:0; right:0; height:1px;
+  background:var(--accent); transform:scaleX(0); transition:transform 0.3s; transform-origin:right;
+}
+.top-nav-links a:hover::after { transform:scaleX(1); transform-origin:left; }
+
+/* Top nav dropdown */
+.tn-dropdown { position:relative; }
+.tn-dropdown > a::after { display:none; }
+.tn-dropdown > a { display:flex; align-items:center; gap:0.3rem; }
+.tn-dropdown > a .dd-arrow { font-size:0.5rem; transition:transform 0.2s; margin-top:1px; }
+.tn-dropdown:hover > a .dd-arrow { transform:rotate(180deg); }
+.tn-dd-menu {
+  position:absolute; top:calc(100% + 8px); left:50%; transform:translateX(-50%) translateY(6px);
+  background:rgba(21,21,21,0.95); backdrop-filter:blur(16px); border:1px solid var(--border);
+  border-radius:8px; padding:0.4rem 0; min-width:160px;
+  opacity:0; visibility:hidden; transition:all 0.2s; z-index:1001;
+  box-shadow:0 8px 24px rgba(0,0,0,0.5);
+}
+.tn-dropdown:hover .tn-dd-menu { opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+.tn-dd-menu a {
+  display:block; padding:0.6rem 1.2rem; font-size:0.75rem; font-weight:500;
+  letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted);
+  text-decoration:none; transition:color 0.15s, background 0.15s; white-space:nowrap;
+}
+.tn-dd-menu a:hover { color:var(--accent); background:rgba(5,122,240,0.06); text-decoration:none; }
+.tn-dd-menu a::after { display:none; }
+
+/* Top nav hamburger (mobile) */
+.tn-hamburger {
+  display:none; background:none; border:none; cursor:pointer; padding:0.5rem;
+  flex-direction:column; gap:5px;
+}
+.tn-hamburger span { display:block; width:22px; height:2px; background:var(--text); transition:all 0.3s; }
+
+@media(max-width:800px) {
+  .tn-hamburger { display:flex; }
+  .top-nav-links {
+    display:flex; flex-direction:column; gap:0;
+    position:absolute; top:60px; left:0; right:0;
+    background:rgba(10,10,10,0.95); backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    max-height:0; overflow:hidden; transition:max-height 0.35s ease;
+  }
+  .top-nav-links.open { max-height:600px; padding:0.5rem 0; }
+  .top-nav-links > li { list-style:none; }
+  .top-nav-links > li > a { display:block; padding:0.8rem 2rem; font-size:0.85rem; border-bottom:1px solid var(--border); }
+  .top-nav-links > li:last-child > a { border-bottom:none; }
+  .top-nav-links a::after { display:none; }
+  .tn-dd-menu {
+    position:static; opacity:1; visibility:visible; transform:none; border:none; border-radius:0;
+    min-width:auto; padding:0; background:none; backdrop-filter:none; box-shadow:none;
+  }
+  .tn-dd-menu a { padding:0.7rem 2rem 0.7rem 3rem; font-size:0.8rem; border-bottom:1px solid var(--border); }
+  .tn-dropdown > a { display:none; }
+}
+
+/* ── LAYOUT ── */
+.page { display:flex; max-width:1100px; margin:0 auto; gap:0; padding-top:60px; }
+
+.sidebar {
+  width:220px; flex-shrink:0; position:sticky; top:60px; height:calc(100vh - 60px);
+  overflow-y:auto; border-right:1px solid var(--border); background:var(--bg-card);
+  padding:1.5rem 0; scrollbar-width:thin; scrollbar-color:var(--border) transparent;
+}
+
+.sidebar-title {
+  font-family:'Oswald', sans-serif; font-size:0.75rem; font-weight:600;
+  letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted);
+  padding:0 1.25rem; margin-bottom:0.75rem;
+}
+
+.sidebar a {
+  display:flex; align-items:center; gap:0.5rem; padding:0.45rem 1.25rem;
+  font-size:0.88rem; font-weight:500; color:var(--text-dim); text-decoration:none;
+  border-left:3px solid transparent; transition:all 0.15s;
+}
+.sidebar a:hover { color:var(--white); background:rgba(255,255,255,0.03); text-decoration:none; }
+.sidebar a.active { color:var(--white); border-left-color:var(--accent); background:rgba(5,122,240,0.06); }
+.sidebar .nav-icon { font-size:1rem; width:1.2rem; text-align:center; }
+
+.content { flex:1; min-width:0; padding:2.5rem 2.5rem 4rem; }
+
+@media(max-width:800px) {
+  .sidebar { display:none; }
+  .content { padding:1.5rem; }
+}
+
+/* ── HEADER ── */
+.guide-header { margin-bottom:2.5rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border); }
+.guide-header .breadcrumb { font-size:0.78rem; color:var(--text-muted); margin-bottom:0.5rem; letter-spacing:0.02em; }
+.guide-header h1 {
+  font-family:'Oswald', sans-serif; font-size:2.2rem; font-weight:700;
+  color:var(--white); line-height:1.2; margin-bottom:0.4rem;
+}
+.guide-header .subtitle { font-size:1rem; color:var(--text-dim); font-weight:400; }
+.tag-row { display:flex; gap:0.4rem; margin-top:0.75rem; flex-wrap:wrap; }
+.tag {
+  font-size:0.72rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:4px;
+  background:var(--bg-elevated); border:1px solid var(--border); color:var(--text-dim);
+  text-transform:uppercase; letter-spacing:0.04em;
+}
+.tag.green { color:var(--green); border-color:rgba(33,197,19,0.25); background:rgba(33,197,19,0.06); }
+.tag.orange { color:var(--orange); border-color:rgba(240,154,24,0.25); background:var(--orange-dim); }
+.tag.blue { color:var(--accent); border-color:rgba(5,122,240,0.25); background:rgba(5,122,240,0.06); }
+.tag.purple { color:var(--purple); border-color:rgba(176,128,208,0.25); background:rgba(176,128,208,0.06); }
+.tag.violet { color:var(--violet); border-color:rgba(144,96,192,0.25); background:var(--violet-dim); }
+
+/* ── HERO ART ── */
+.hero-art { width:100%; margin-bottom:1.25rem; border-radius:10px; border:1px solid var(--border); overflow:hidden; background:var(--bg-card); }
+.hero-svg { width:100%; height:auto; display:block; }
+
+.header-row { display:flex; align-items:center; gap:1rem; margin-bottom:1.25rem; }
+.header-portrait { width:80px; height:80px; border-radius:8px; border:2px solid var(--border); object-fit:cover; background:var(--bg-elevated); display:flex; align-items:center; justify-content:center; }
+.header-text { flex:1; }
+
+/* ── SECTIONS ── */
+.section { margin-top:3rem; }
+.section h2 {
+  font-family:'Oswald', sans-serif; font-size:1.5rem; font-weight:600; color:var(--white);
+  margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border);
+}
+.section h3 {
+  font-family:'Oswald', sans-serif; font-size:1.15rem; font-weight:500;
+  color:var(--text); margin:1.5rem 0 0.6rem;
+}
+.section p { margin-bottom:1rem; color:var(--text); }
+
+/* ── CALLOUTS ── */
+.callout {
+  background:var(--bg-card); border:1px solid var(--border); border-left:3px solid var(--accent);
+  border-radius:6px; padding:1rem 1.25rem; margin:1.25rem 0;
+}
+.callout.warn { border-left-color:var(--orange); }
+.callout.tip { border-left-color:var(--green); }
+.callout-label {
+  font-family:'Oswald', sans-serif; font-size:0.78rem; font-weight:600;
+  text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.25rem;
+}
+.callout .callout-label { color:var(--accent); }
+.callout.warn .callout-label { color:var(--orange); }
+.callout.tip .callout-label { color:var(--green); }
+.callout p { margin-bottom:0.5rem; font-size:0.95rem; }
+.callout p:last-child { margin-bottom:0; }
+
+/* ── STAT BAR ── */
+.stats { display:flex; gap:0.5rem; flex-wrap:wrap; margin:0.75rem 0; }
+.stat-box {
+  background:var(--bg-card); border:1px solid var(--border); border-radius:6px;
+  padding:0.4rem 0.75rem; text-align:center; min-width:3.5rem;
+}
+.stat-box.primary { border-color:rgba(5,122,240,0.4); }
+.stat-label { font-size:0.65rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); }
+.stat-val { font-family:'Oswald',sans-serif; font-size:1.3rem; font-weight:600; color:var(--white); }
+.stat-box.primary .stat-val { color:var(--accent); }
+
+/* ── LEVEL CARDS ── */
+.level-card {
+  background:var(--bg-card); border:1px solid var(--border); border-radius:8px;
+  margin-bottom:0.4rem; overflow:hidden; transition:border-color 0.15s;
+}
+.level-card:hover { border-color:var(--border-light); }
+.level-card.spike { border-left:3px solid var(--orange); }
+.level-card.here { border-color:var(--accent); box-shadow:0 0 0 1px rgba(5,122,240,0.15); }
+
+.lv-head {
+  display:flex; align-items:center; gap:0.6rem; padding:0.65rem 1rem;
+  cursor:pointer; user-select:none; transition:background 0.1s;
+}
+.lv-head:hover { background:var(--bg-hover); }
+.lv-num { font-family:'Oswald',sans-serif; font-weight:700; font-size:1.3rem; color:var(--white); min-width:1.6rem; text-align:center; }
+.level-card.here .lv-num { color:var(--accent); }
+
+.lv-badge {
+  font-size:0.68rem; font-weight:600; padding:0.15rem 0.5rem; border-radius:4px;
+  text-transform:uppercase; letter-spacing:0.04em;
+}
+.lv-badge.bard { color:var(--purple); background:rgba(176,128,208,0.08); border:1px solid rgba(176,128,208,0.2); }
+.lv-badge.fighter { color:var(--orange); background:var(--orange-dim); border:1px solid rgba(240,154,24,0.2); }
+
+.lv-title { font-weight:600; font-size:0.95rem; color:var(--text); flex:1; }
+
+.lv-spike {
+  font-size:0.65rem; font-weight:600; color:var(--orange); background:var(--orange-dim);
+  padding:0.15rem 0.45rem; border-radius:4px; border:1px solid rgba(240,154,24,0.2);
+  letter-spacing:0.04em; text-transform:uppercase;
+}
+.lv-here {
+  font-size:0.65rem; font-weight:600; color:var(--accent); background:rgba(5,122,240,0.1);
+  padding:0.15rem 0.45rem; border-radius:4px; border:1px solid rgba(5,122,240,0.25);
+  letter-spacing:0.04em; text-transform:uppercase;
+}
+
+.lv-arrow { color:var(--text-muted); font-size:0.75rem; transition:transform 0.2s; }
+.level-card.open .lv-arrow { transform:rotate(90deg); }
+.lv-body { max-height:0; overflow:hidden; transition:max-height 0.3s ease; }
+.level-card.open .lv-body { max-height:1200px; }
+.lv-inner { padding:0 1rem 1rem; border-top:1px solid var(--border); }
+
+/* Quick picks */
+.qp-row { display:flex; flex-wrap:wrap; gap:0.3rem; margin:0.75rem 0 0.5rem; }
+.qp {
+  font-size:0.78rem; font-weight:500; padding:0.2rem 0.6rem; border-radius:4px;
+  background:var(--bg-elevated); border:1px solid var(--border); color:var(--text-dim);
+}
+.qp.feature { color:var(--green); border-color:rgba(33,197,19,0.2); }
+.qp.spell { color:var(--accent); border-color:rgba(5,122,240,0.2); }
+.qp.feat { color:var(--orange); border-color:rgba(240,154,24,0.2); }
+.qp.class { color:var(--purple); border-color:rgba(176,128,208,0.2); }
+
+/* Pick list */
+.picks { list-style:none; margin:0.5rem 0; }
+.picks li {
+  padding:0.3rem 0; font-size:0.95rem; display:flex; gap:0.4rem; align-items:baseline;
+}
+.picks .label {
+  font-size:0.72rem; font-weight:600; color:var(--orange); text-transform:uppercase;
+  letter-spacing:0.03em; flex-shrink:0; min-width:4rem;
+}
+.picks .name { font-weight:600; color:var(--white); }
+.picks .note { color:var(--text-dim); font-size:0.88rem; }
+
+/* Prep box */
+.prep {
+  background:rgba(176,128,208,0.04); border:1px solid rgba(176,128,208,0.15);
+  border-radius:6px; padding:0.75rem 1rem; margin-top:0.75rem;
+}
+.prep-title {
+  font-family:'Oswald',sans-serif; font-size:0.8rem; font-weight:600;
+  text-transform:uppercase; letter-spacing:0.06em; color:var(--purple); margin-bottom:0.4rem;
+}
+.prep-list { list-style:none; display:flex; flex-wrap:wrap; gap:0.25rem 0.6rem; }
+.prep-list li { font-size:0.9rem; font-weight:500; color:var(--text); }
+.prep-list li::before { content:'- '; color:var(--purple); }
+.prep-list li.new { color:var(--orange); }
+.prep-list li.new::before { content:'* '; color:var(--orange); }
+.prep-note { font-size:0.78rem; color:var(--text-muted); margin-top:0.3rem; }
+
+/* ── SPELL GRID ── */
+.spell-section { margin-bottom:1.5rem; }
+.spell-level {
+  font-family:'Oswald',sans-serif; font-size:1rem; font-weight:500; color:var(--white);
+  padding-bottom:0.35rem; margin-bottom:0.5rem; border-bottom:1px solid var(--border);
+}
+.spell-row {
+  display:flex; justify-content:space-between; align-items:start;
+  padding:0.5rem 0.75rem; background:var(--bg-card); border:1px solid var(--border);
+  border-radius:6px; margin-bottom:0.35rem; gap:0.75rem;
+}
+.spell-info { flex:1; }
+.spell-name { font-weight:600; color:var(--white); font-size:0.95rem; }
+.spell-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.1rem; }
+.spell-badge {
+  font-size:0.68rem; font-weight:600; padding:0.15rem 0.5rem; border-radius:4px;
+  text-transform:uppercase; letter-spacing:0.03em; white-space:nowrap; flex-shrink:0; align-self:center;
+}
+.spell-badge.must { color:var(--green); background:rgba(33,197,19,0.08); border:1px solid rgba(33,197,19,0.2); }
+.spell-badge.good { color:var(--accent); background:rgba(5,122,240,0.06); border:1px solid rgba(5,122,240,0.15); }
+.spell-badge.conc { color:var(--purple); background:rgba(176,128,208,0.06); border:1px solid rgba(176,128,208,0.15); }
+.spell-badge.secret { color:var(--gold); background:var(--gold-dim); border:1px solid rgba(212,160,67,0.2); }
+
+/* ── ITEMS ── */
+.item-group { margin-bottom:1.5rem; }
+.item-group-title {
+  font-family:'Oswald',sans-serif; font-size:1rem; font-weight:500; color:var(--gold);
+  padding-bottom:0.35rem; margin-bottom:0.5rem; border-bottom:1px solid rgba(212,160,67,0.15);
+}
+.item-row {
+  padding:0.6rem 0.75rem; background:var(--bg-card); border:1px solid var(--border);
+  border-radius:6px; margin-bottom:0.35rem;
+}
+.item-name { font-weight:600; color:var(--gold); font-size:0.95rem; }
+.item-slot { font-size:0.7rem; color:var(--text-muted); margin-left:0.35rem; text-transform:uppercase; letter-spacing:0.03em; }
+.item-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.15rem; }
+.item-loc { font-size:0.8rem; color:var(--green-dim); margin-top:0.2rem; }
+
+/* ── ROTATION ── */
+.step-list { list-style:none; counter-reset:step; }
+.step-list li {
+  position:relative; padding:0.75rem 0 0.75rem 3rem;
+  border-left:2px solid var(--border); margin-left:0.75rem; counter-increment:step;
+}
+.step-list li::before {
+  content:counter(step); position:absolute; left:-0.75rem; top:0.6rem;
+  width:1.4rem; height:1.4rem; background:var(--bg-body); border:2px solid var(--accent);
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-family:'Oswald',sans-serif; font-weight:600; font-size:0.75rem; color:var(--accent);
+}
+.step-list li:last-child { border-left-color:transparent; }
+.step-action { font-weight:600; color:var(--white); }
+.step-timing {
+  font-size:0.7rem; font-weight:600; padding:0.1rem 0.4rem; border-radius:3px;
+  margin-left:0.4rem; vertical-align:middle; text-transform:uppercase;
+}
+.step-timing.pre { color:var(--text-muted); background:rgba(255,255,255,0.04); }
+.step-timing.turn { color:var(--accent); background:rgba(5,122,240,0.08); }
+.step-timing.every { color:var(--green); background:rgba(33,197,19,0.08); }
+
+/* ── PARTY ── */
+.party-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
+@media(max-width:600px) { .party-grid { grid-template-columns:1fr; } }
+.party-card { background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:1rem; }
+.party-name { font-family:'Oswald',sans-serif; font-weight:600; font-size:1.05rem; color:var(--white); }
+.party-role { font-size:0.72rem; font-weight:600; color:var(--accent); text-transform:uppercase; letter-spacing:0.04em; margin-top:0.1rem; }
+.party-desc { color:var(--text-dim); font-size:0.88rem; margin-top:0.35rem; }
+
+/* ── FLOURISH TABLE ── */
+.flourish-table { width:100%; border-collapse:collapse; margin:1rem 0; }
+.flourish-table th {
+  font-family:'Oswald',sans-serif; font-size:0.78rem; font-weight:600; text-transform:uppercase;
+  letter-spacing:0.06em; color:var(--text-muted); text-align:left; padding:0.6rem 0.75rem;
+  border-bottom:2px solid var(--border);
+}
+.flourish-table td { padding:0.6rem 0.75rem; border-bottom:1px solid var(--border); font-size:0.92rem; }
+.flourish-table tr:hover { background:var(--bg-card); }
+.flourish-name { font-weight:600; color:var(--white); }
+.flourish-tier { font-size:0.7rem; font-weight:600; color:var(--purple); margin-left:0.4rem; padding:0.1rem 0.35rem; background:rgba(176,128,208,0.08); border-radius:3px; }
+
+/* ── FOOTER ── */
+.guide-footer {
+  margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border);
+  font-size:0.78rem; color:var(--text-muted); text-align:center;
+}
+.guide-footer a { color:var(--text-dim); }
+.guide-footer a:hover { color:var(--accent); }
+.footer-links { display:flex; gap:1.5rem; justify-content:center; margin-bottom:0.5rem; }
+
+/* Mobile nav */
+.mobile-nav {
+  display:none; position:sticky; top:60px; z-index:100;
+  background:rgba(10,10,10,0.95); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border); padding:0 1.25rem; height:56px;
+  align-items:center; justify-content:space-between;
+}
+.mobile-nav-title { font-family:'Oswald',sans-serif; font-size:0.85rem; font-weight:600; color:var(--purple); letter-spacing:0.06em; }
+.mob-toggle { display:flex; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:0.5rem; }
+.mob-toggle span { display:block; width:22px; height:2px; background:var(--text); transition:all 0.3s; }
+.mob-links {
+  display:none; position:absolute; top:56px; left:0; right:0; flex-direction:column;
+  background:rgba(10,10,10,0.95); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border); padding:1rem 2rem; gap:0;
+}
+.mob-links.open { display:flex; }
+.mob-links a {
+  display:flex; align-items:center; gap:0.5rem; height:44px; font-size:0.9rem;
+  font-weight:500; color:var(--text-dim); text-decoration:none; transition:color 0.15s;
+}
+.mob-links a:hover { color:var(--white); text-decoration:none; }
+@media(max-width:800px) { .mobile-nav { display:flex; } }
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity:0; transform:translateY(20px); transition:opacity 0.5s ease, transform 0.5s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ══════ UNIVERSAL TOP NAV ══════ -->
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="top-nav-brand">Z3nGineer</a>
+    <button class="tn-hamburger" id="tn-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="top-nav-links" id="tn-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li class="tn-dropdown">
+        <a href="#">Pages <span class="dd-arrow">&#x25BC;</span></a>
+        <div class="tn-dd-menu">
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+          <a href="https://crockednloaded.com">CrockedNLoaded</a>
+          <a href="guides.html">Game Guides</a>
+          <a href="CHIM.html">CHIM Modpack</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ══════ MOBILE SUB-NAV ══════ -->
+<div class="mobile-nav">
+  <span class="mobile-nav-title">Swords Bard Archer</span>
+  <button class="mob-toggle" aria-label="Section Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="mob-links">
+    <a href="#overview"><span class="nav-icon">&#9674;</span> Overview</a>
+    <a href="#levels"><span class="nav-icon">&#8593;</span> Progression</a>
+    <a href="#flourishes"><span class="nav-icon">&#9733;</span> Blade Flourishes</a>
+    <a href="#secrets"><span class="nav-icon">&#10038;</span> Magical Secrets</a>
+    <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+    <a href="#feats"><span class="nav-icon">&#9670;</span> Feats</a>
+    <a href="#items"><span class="nav-icon">&#9670;</span> Gear</a>
+    <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+    <a href="#support"><span class="nav-icon">&#9673;</span> Support</a>
+    <a href="#honour"><span class="nav-icon">&#9760;</span> Honour Mode</a>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ══════ SIDEBAR ══════ -->
+<nav class="sidebar">
+  <div style="text-align:center; padding:0 1.25rem 1rem;">
+    <svg width="48" height="48" viewBox="0 0 48 48" style="border-radius:8px; border:1px solid var(--border);">
+      <rect width="48" height="48" fill="#1a1228"/>
+      <circle cx="24" cy="18" r="8" fill="none" stroke="#b080d0" stroke-width="1.5" opacity="0.7"/>
+      <path d="M16,38 L24,26 L32,38" fill="none" stroke="#b080d0" stroke-width="1.5" opacity="0.7"/>
+      <circle cx="24" cy="18" r="3" fill="#b080d0" opacity="0.5"/>
+      <path d="M20,14 L24,8 L28,14" fill="none" stroke="#d4a043" stroke-width="1" opacity="0.6"/>
+    </svg>
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">&#9674;</span> Overview</a>
+  <a href="#levels"><span class="nav-icon">&#8593;</span> Progression</a>
+  <a href="#flourishes"><span class="nav-icon">&#9733;</span> Blade Flourishes</a>
+  <a href="#secrets"><span class="nav-icon">&#10038;</span> Magical Secrets</a>
+  <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+  <a href="#feats"><span class="nav-icon">&#9670;</span> Feats</a>
+  <a href="#items"><span class="nav-icon">&#9670;</span> Gear</a>
+  <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+  <a href="#support"><span class="nav-icon">&#9673;</span> Support</a>
+  <a href="#honour"><span class="nav-icon">&#9760;</span> Honour Mode</a>
+</nav>
+
+<!-- ══════ CONTENT ══════ -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header reveal">
+    <div class="hero-art">
+      <svg viewBox="0 0 800 260" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="bardGlow" cx="40%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="#2a1a3a" stop-opacity="0.8"/>
+            <stop offset="50%" stop-color="#1a1028" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="arrowGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#b080d0" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#b080d0" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="bowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#c8a050"/>
+            <stop offset="50%" stop-color="#8a6a30"/>
+            <stop offset="100%" stop-color="#c8a050"/>
+          </linearGradient>
+          <radialGradient id="inspGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#d4a043" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#d4a043" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="noteSoft">
+            <feGaussianBlur stdDeviation="0.5"/>
+          </filter>
+        </defs>
+        <rect width="800" height="260" fill="url(#bardGlow)"/>
+
+        <!-- Stars / particles -->
+        <circle cx="80" cy="25" r="1.2" fill="#c8c0d8" opacity="0.6"/>
+        <circle cx="160" cy="40" r="0.8" fill="#c8c0d8" opacity="0.4"/>
+        <circle cx="320" cy="15" r="1" fill="#c8c0d8" opacity="0.5"/>
+        <circle cx="500" cy="28" r="0.7" fill="#c8c0d8" opacity="0.35"/>
+        <circle cx="620" cy="18" r="1.1" fill="#c8c0d8" opacity="0.5"/>
+        <circle cx="720" cy="35" r="0.9" fill="#c8c0d8" opacity="0.45"/>
+        <circle cx="250" cy="30" r="0.6" fill="#d0c0e0" opacity="0.3"/>
+        <circle cx="680" cy="50" r="0.8" fill="#d0c0e0" opacity="0.35"/>
+
+        <!-- Musical flourish trails (behind bard) -->
+        <g opacity="0.25" fill="none" stroke="#b080d0" stroke-width="0.8">
+          <path d="M200,180 Q180,140 220,120 Q260,100 240,70"/>
+          <path d="M210,175 Q195,145 230,128 Q265,110 250,80"/>
+          <path d="M460,90 Q500,70 540,85 Q580,100 600,75"/>
+        </g>
+
+        <!-- Floating musical notes (left side) -->
+        <g transform="translate(180,80)" opacity="0.5">
+          <!-- Eighth note -->
+          <ellipse cx="0" cy="0" rx="4" ry="3" fill="#b080d0" transform="rotate(-20)"/>
+          <line x1="3.5" y1="-1" x2="3.5" y2="-18" stroke="#b080d0" stroke-width="1.2"/>
+          <path d="M3.5,-18 Q8,-16 7,-12" stroke="#b080d0" stroke-width="1.2" fill="none"/>
+        </g>
+        <g transform="translate(155,55)" opacity="0.35">
+          <!-- Quarter note -->
+          <ellipse cx="0" cy="0" rx="3.5" ry="2.5" fill="#9060c0" transform="rotate(-15)"/>
+          <line x1="3" y1="-1" x2="3" y2="-15" stroke="#9060c0" stroke-width="1"/>
+        </g>
+        <g transform="translate(230,50)" opacity="0.4">
+          <!-- Double eighth -->
+          <ellipse cx="0" cy="0" rx="3" ry="2.2" fill="#b080d0" transform="rotate(-20)"/>
+          <line x1="2.5" y1="-1" x2="2.5" y2="-14" stroke="#b080d0" stroke-width="1"/>
+          <ellipse cx="10" cy="3" rx="3" ry="2.2" fill="#b080d0" transform="rotate(-20)"/>
+          <line x1="12.5" y1="2" x2="12.5" y2="-12" stroke="#b080d0" stroke-width="1"/>
+          <line x1="2.5" y1="-14" x2="12.5" y2="-12" stroke="#b080d0" stroke-width="1.2"/>
+        </g>
+
+        <!-- Bardic Inspiration d8 die (floating, upper right) -->
+        <g transform="translate(600,65)" opacity="0.55">
+          <circle cx="0" cy="0" r="18" fill="url(#inspGlow)"/>
+          <!-- Octagon shape for d8 -->
+          <polygon points="0,-16 11,-11 16,0 11,11 0,16 -11,11 -16,0 -11,-11" fill="rgba(212,160,67,0.08)" stroke="#d4a043" stroke-width="1"/>
+          <polygon points="0,-12 8,-8 12,0 8,8 0,12 -8,8 -12,0 -8,-8" fill="none" stroke="#d4a043" stroke-width="0.6" opacity="0.5"/>
+          <!-- Number 8 on die -->
+          <text x="0" y="5" font-family="Oswald,sans-serif" font-size="12" font-weight="700" fill="#d4a043" text-anchor="middle" opacity="0.8">8</text>
+        </g>
+
+        <!-- Second floating d8 (smaller, left) -->
+        <g transform="translate(140,115)" opacity="0.3">
+          <circle cx="0" cy="0" r="12" fill="url(#inspGlow)"/>
+          <polygon points="0,-10 7,-7 10,0 7,7 0,10 -7,7 -10,0 -7,-7" fill="rgba(212,160,67,0.06)" stroke="#d4a043" stroke-width="0.8"/>
+          <text x="0" y="4" font-family="Oswald,sans-serif" font-size="9" font-weight="700" fill="#d4a043" text-anchor="middle" opacity="0.7">8</text>
+        </g>
+
+        <!-- THE BARD — half-elf, center, dynamic archery pose -->
+        <g transform="translate(350,140)" opacity="0.92">
+          <!-- Flowing cloak / cape -->
+          <path d="M-8,-40 Q-30,-20 -45,10 Q-55,35 -48,65 Q-42,75 -35,70 Q-30,55 -28,30 Q-25,5 -10,-25 Z" fill="#1a1030" opacity="0.7"/>
+          <path d="M-8,-40 Q-25,-22 -38,5 Q-45,28 -38,55 Q-35,60 -30,55 Q-28,38 -22,18 Q-18,-5 -8,-30 Z" fill="#251840" opacity="0.5"/>
+          <!-- Cloak edge shimmer -->
+          <path d="M-48,65 Q-42,75 -35,70" stroke="#b080d0" stroke-width="0.6" opacity="0.3" fill="none"/>
+
+          <!-- Legs -->
+          <line x1="-8" y1="42" x2="-16" y2="80" stroke="#2a2035" stroke-width="7" stroke-linecap="round"/>
+          <line x1="5" y1="42" x2="14" y2="78" stroke="#2a2035" stroke-width="7" stroke-linecap="round"/>
+          <!-- Boots -->
+          <ellipse cx="-18" cy="82" rx="7" ry="3.5" fill="#1a1520"/>
+          <ellipse cx="16" cy="80" rx="7" ry="3.5" fill="#1a1520"/>
+
+          <!-- Torso — dynamic, slight twist (aiming right) -->
+          <ellipse cx="0" cy="15" rx="18" ry="28" fill="#2a1a38"/>
+          <!-- Chest detail / leather armor -->
+          <path d="M-12,0 L0,-8 L12,0" fill="none" stroke="#3a2850" stroke-width="1" opacity="0.5"/>
+          <path d="M-10,8 L0,2 L10,8" fill="none" stroke="#3a2850" stroke-width="0.8" opacity="0.4"/>
+          <!-- Belt -->
+          <rect x="-14" y="32" width="28" height="4" rx="2" fill="#4a3020" opacity="0.7"/>
+          <rect x="-2" y="31" width="4" height="6" rx="1" fill="#c8a050" opacity="0.5"/>
+
+          <!-- Quiver on back -->
+          <rect x="8" y="-30" width="6" height="40" rx="2" fill="#3a2818" transform="rotate(8,11,-10)" opacity="0.6"/>
+          <!-- Arrow feathers poking out -->
+          <line x1="10" y1="-32" x2="8" y2="-38" stroke="#c0b0a0" stroke-width="1" opacity="0.4"/>
+          <line x1="12" y1="-33" x2="12" y2="-40" stroke="#c0b0a0" stroke-width="1" opacity="0.4"/>
+          <line x1="14" y1="-32" x2="16" y2="-39" stroke="#c0b0a0" stroke-width="1" opacity="0.4"/>
+
+          <!-- Head -->
+          <ellipse cx="2" cy="-42" rx="12" ry="14" fill="#c8a880"/>
+          <!-- Hair — long, flowing half-elf -->
+          <path d="M-10,-52 Q-16,-42 -18,-30 Q-20,-20 -22,-10" stroke="#3a2818" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <path d="M10,-54 Q14,-48 15,-40 Q16,-32 14,-24" stroke="#3a2818" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <ellipse cx="2" cy="-52" rx="13" ry="6" fill="#3a2818"/>
+          <!-- Pointed ears (half-elf) -->
+          <path d="M-12,-44 L-20,-52 L-14,-46" fill="#c8a880"/>
+          <path d="M16,-44 L24,-50 L18,-45" fill="#c8a880"/>
+          <!-- Eyes (focused, aiming) -->
+          <ellipse cx="-3" cy="-43" rx="2.5" ry="1.8" fill="#2a1a38"/>
+          <ellipse cx="7" cy="-43" rx="2.5" ry="1.8" fill="#2a1a38"/>
+          <ellipse cx="-2.5" cy="-43" rx="1" ry="0.9" fill="#b080d0" opacity="0.7"/>
+          <ellipse cx="7.5" cy="-43" rx="1" ry="0.9" fill="#b080d0" opacity="0.7"/>
+          <!-- Slight smirk -->
+          <path d="M-1,-36 Q3,-34 7,-36" stroke="#8a6a50" stroke-width="0.7" fill="none" opacity="0.6"/>
+
+          <!-- LEFT ARM — holding bow, extended forward-left -->
+          <line x1="-14" y1="0" x2="-50" y2="-20" stroke="#c8a880" stroke-width="5" stroke-linecap="round"/>
+          <!-- Hand gripping bow -->
+          <ellipse cx="-52" cy="-21" rx="4" ry="3.5" fill="#c8a880"/>
+
+          <!-- THE BOW — large longbow held in left hand -->
+          <path d="M-52,-65 Q-48,-40 -52,-21 Q-48,0 -52,25" stroke="url(#bowGrad)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <!-- Bow inner curve -->
+          <path d="M-52,-65 Q-50,-42 -52,-21 Q-50,2 -52,25" stroke="#a08040" stroke-width="1" fill="none" opacity="0.3" stroke-linecap="round"/>
+          <!-- Bowstring -->
+          <line x1="-52" y1="-65" x2="-52" y2="25" stroke="#e0d8c0" stroke-width="0.8" opacity="0.6"/>
+          <!-- Bowstring pulled back to right hand -->
+          <line x1="-52" y1="-20" x2="20" y2="-15" stroke="#e0d8c0" stroke-width="0.7" opacity="0.5"/>
+          <!-- Bow decorative wrapping -->
+          <g stroke="#d4a043" stroke-width="0.6" opacity="0.4">
+            <line x1="-54" y1="-25" x2="-50" y2="-23"/>
+            <line x1="-54" y1="-17" x2="-50" y2="-15"/>
+            <line x1="-54" y1="0" x2="-50" y2="2"/>
+          </g>
+          <!-- Bow rune glow -->
+          <circle cx="-52" cy="-21" r="4" fill="#b080d0" opacity="0.06"/>
+
+          <!-- RIGHT ARM — drawing bowstring back -->
+          <line x1="10" y1="0" x2="20" y2="-15" stroke="#c8a880" stroke-width="5" stroke-linecap="round"/>
+          <!-- Right hand at anchor point (near cheek) -->
+          <ellipse cx="21" cy="-16" rx="3.5" ry="3" fill="#c8a880"/>
+
+          <!-- ARROW nocked — glowing with magic -->
+          <line x1="-52" y1="-20" x2="22" y2="-16" stroke="#8a6a30" stroke-width="1.8"/>
+          <!-- Arrowhead -->
+          <polygon points="-56,-20 -52,-23 -52,-17" fill="#c0c0c0"/>
+          <!-- Arrow magic glow -->
+          <circle cx="-40" cy="-19" r="6" fill="#b080d0" opacity="0.08"/>
+          <circle cx="-40" cy="-19" r="3" fill="#b080d0" opacity="0.15"/>
+
+          <!-- Fletching -->
+          <line x1="18" y1="-18" x2="22" y2="-14" stroke="#c05030" stroke-width="1.5" opacity="0.6"/>
+          <line x1="16" y1="-19" x2="20" y2="-13" stroke="#c05030" stroke-width="1.5" opacity="0.5"/>
+        </g>
+
+        <!-- ARROWS IN FLIGHT — three arrows already fired, trailing magic -->
+        <!-- Arrow 1 — furthest, upper right -->
+        <g transform="translate(580,80) rotate(-12)">
+          <line x1="0" y1="0" x2="35" y2="0" stroke="#8a6a30" stroke-width="1.5"/>
+          <polygon points="-4,0 0,-2.5 0,2.5" fill="#c0c0c0"/>
+          <line x1="30" y1="-2" x2="35" y2="1" stroke="#c05030" stroke-width="1.2" opacity="0.5"/>
+          <line x1="30" y1="2" x2="35" y2="-1" stroke="#c05030" stroke-width="1.2" opacity="0.5"/>
+          <!-- Magic trail -->
+          <circle cx="10" cy="0" r="4" fill="url(#arrowGlow)"/>
+          <circle cx="18" cy="0" r="3" fill="#b080d0" opacity="0.1"/>
+          <path d="M35,0 Q42,3 50,1 Q58,-2 65,0" stroke="#b080d0" stroke-width="0.6" opacity="0.2" fill="none"/>
+          <!-- Sparkle -->
+          <circle cx="5" cy="-2" r="1" fill="#d0b0e0" opacity="0.5"/>
+          <circle cx="15" cy="2" r="0.8" fill="#d0b0e0" opacity="0.35"/>
+        </g>
+
+        <!-- Arrow 2 — middle -->
+        <g transform="translate(540,115) rotate(-8)">
+          <line x1="0" y1="0" x2="32" y2="0" stroke="#8a6a30" stroke-width="1.5"/>
+          <polygon points="-4,0 0,-2.5 0,2.5" fill="#c0c0c0"/>
+          <line x1="28" y1="-2" x2="32" y2="1" stroke="#c05030" stroke-width="1.2" opacity="0.5"/>
+          <circle cx="8" cy="0" r="5" fill="url(#arrowGlow)"/>
+          <path d="M32,0 Q40,2 48,-1 Q56,2 62,0" stroke="#b080d0" stroke-width="0.6" opacity="0.25" fill="none"/>
+          <!-- Musical note attached to trail -->
+          <g transform="translate(48,-6)" opacity="0.35">
+            <ellipse cx="0" cy="0" rx="2.5" ry="1.8" fill="#b080d0" transform="rotate(-15)"/>
+            <line x1="2" y1="-0.5" x2="2" y2="-9" stroke="#b080d0" stroke-width="0.8"/>
+          </g>
+          <circle cx="4" cy="2" r="0.8" fill="#d0b0e0" opacity="0.4"/>
+        </g>
+
+        <!-- Arrow 3 — lower, just released -->
+        <g transform="translate(480,145) rotate(-5)">
+          <line x1="0" y1="0" x2="30" y2="0" stroke="#8a6a30" stroke-width="1.8"/>
+          <polygon points="-5,0 0,-3 0,3" fill="#c0c0c0"/>
+          <line x1="26" y1="-2" x2="30" y2="1" stroke="#c05030" stroke-width="1.3" opacity="0.55"/>
+          <line x1="25" y1="2" x2="30" y2="-1" stroke="#c05030" stroke-width="1.3" opacity="0.5"/>
+          <circle cx="6" cy="0" r="6" fill="url(#arrowGlow)"/>
+          <circle cx="12" cy="0" r="3.5" fill="#b080d0" opacity="0.12"/>
+          <!-- Fresh sparkle burst -->
+          <circle cx="-2" cy="-3" r="1.2" fill="#d0b0e0" opacity="0.6"/>
+          <circle cx="-4" cy="2" r="0.9" fill="#d0b0e0" opacity="0.45"/>
+          <circle cx="2" cy="4" r="0.7" fill="#d0b0e0" opacity="0.35"/>
+        </g>
+
+        <!-- Magical flourish swirls around bard (performance energy) -->
+        <g opacity="0.2" fill="none" stroke="#b080d0" stroke-width="1">
+          <path d="M310,100 Q300,80 320,70 Q340,60 330,45"/>
+          <path d="M385,85 Q400,65 395,50 Q390,35 405,25"/>
+          <circle cx="320" cy="68" r="2" fill="#b080d0" opacity="0.4"/>
+          <circle cx="398" cy="48" r="1.5" fill="#b080d0" opacity="0.3"/>
+        </g>
+
+        <!-- Floating musical notes (right side, from arrows) -->
+        <g transform="translate(640,100)" opacity="0.3">
+          <ellipse cx="0" cy="0" rx="3" ry="2" fill="#b080d0" transform="rotate(-18)"/>
+          <line x1="2.5" y1="-0.8" x2="2.5" y2="-12" stroke="#b080d0" stroke-width="0.8"/>
+          <path d="M2.5,-12 Q6,-10 5.5,-7" stroke="#b080d0" stroke-width="0.8" fill="none"/>
+        </g>
+        <g transform="translate(670,70)" opacity="0.25">
+          <ellipse cx="0" cy="0" rx="2.5" ry="1.8" fill="#9060c0" transform="rotate(-12)"/>
+          <line x1="2" y1="-0.5" x2="2" y2="-10" stroke="#9060c0" stroke-width="0.7"/>
+        </g>
+
+        <!-- Colorful magical flourish sparks -->
+        <circle cx="290" cy="90" r="2" fill="#d4a043" opacity="0.3"/>
+        <circle cx="420" cy="75" r="1.5" fill="#b080d0" opacity="0.35"/>
+        <circle cx="550" cy="60" r="2" fill="#057af0" opacity="0.2"/>
+        <circle cx="610" cy="130" r="1.8" fill="#d4a043" opacity="0.25"/>
+        <circle cx="500" cy="50" r="1.2" fill="#21c513" opacity="0.15"/>
+        <circle cx="340" cy="55" r="1" fill="#f09a18" opacity="0.2"/>
+
+        <!-- Ground line -->
+        <line x1="150" y1="230" x2="700" y2="230" stroke="#3a2850" stroke-width="0.6" opacity="0.3"/>
+        <g opacity="0.25" stroke="#6040a0" stroke-width="0.8" fill="none">
+          <path d="M250,230 Q280,220 320,230"/>
+          <path d="M450,230 Q480,222 510,230"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="header-row">
+      <div class="header-portrait">
+        <svg width="72" height="72" viewBox="0 0 72 72">
+          <rect width="72" height="72" rx="6" fill="#1a1228"/>
+          <circle cx="36" cy="28" r="12" fill="none" stroke="#b080d0" stroke-width="1.5" opacity="0.5"/>
+          <path d="M24,56 L36,40 L48,56" fill="none" stroke="#b080d0" stroke-width="1.5" opacity="0.5"/>
+          <circle cx="36" cy="28" r="5" fill="#b080d0" opacity="0.3"/>
+          <path d="M30,22 L36,14 L42,22" fill="none" stroke="#d4a043" stroke-width="1.2" opacity="0.5"/>
+          <line x1="22" y1="44" x2="14" y2="38" stroke="#c8a050" stroke-width="1" opacity="0.4"/>
+          <line x1="50" y1="44" x2="58" y2="38" stroke="#c8a050" stroke-width="1" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="header-text">
+        <div class="breadcrumb"><a href="guides.html" style="color:var(--text-muted)">Baldur's Gate 3</a> &#8250; <a href="guides.html" style="color:var(--text-muted)">Builds</a> &#8250; Swords Bard</div>
+        <h1>Swords Bard Archer</h1>
+        <div class="subtitle">Half-Elf &middot; College of Swords Bard 10 / Fighter 2 &middot; Dazzling Bowmaster</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag purple">Ranged DPS</span>
+      <span class="tag blue">Full Caster</span>
+      <span class="tag green">Support</span>
+      <span class="tag orange">Patch 8</span>
+      <span class="tag">#7 Ranked</span>
+    </div>
+  </div>
+
+  <!-- ══════ OVERVIEW ══════ -->
+  <section class="section reveal" id="overview">
+    <h2>Overview</h2>
+
+    <p>The Swords Bard Archer is the most versatile character in Baldur's Gate 3. You are a full caster with 5th-level spell slots, a martial combatant with Extra Attack and Blade Flourishes that work at range, a face character with maxed Charisma for every dialogue check, and a support pillar handing out Bardic Inspiration and healing. No other build in the game does all four at this level.</p>
+
+    <p>College of Swords gives you medium armor, martial weapon proficiency, and Blade Flourishes &mdash; special maneuvers that add your Bardic Inspiration die to attacks. The critical insight: <strong>Blade Flourishes work with ranged weapons</strong>. You fire arrows enhanced with magical flourishes while staying safely out of melee. Fighter 2 gives Action Surge for nova turns: four attacks plus a leveled spell in one round.</p>
+
+    <div class="callout">
+      <div class="callout-label">Why Bard 10 / Fighter 2?</div>
+      <p>Bard 10 is the sweet spot. You get 5th-level spells, Magical Secrets (steal the best spells from any class list), Extra Attack, and an upgraded d10 Bardic Inspiration die. Fighter 2 gives Action Surge &mdash; a second full action once per short rest. This is the single strongest feature you can get in two levels. Combined, you have more options on any given turn than any other build in the game.</p>
+    </div>
+
+    <h3>Race &mdash; High Half-Elf (Recommended)</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Civil Militia</span> &mdash; <span class="note">Shield + martial weapon proficiency (backup option)</span></li>
+      <li><span class="label">Racial</span> <span class="name">Darkvision</span> &mdash; <span class="note">12m. No disadvantage in dark dungeons.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Fey Ancestry</span> &mdash; <span class="note">Advantage on saves vs Charm. Can't be put to sleep.</span></li>
+      <li><span class="label">Cantrip</span> <span class="name">Fire Bolt</span> &mdash; <span class="note">Free wizard cantrip from High Half-Elf. Solid ranged filler.</span></li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">Alternative: Wood Elf</div>
+      <p>Wood Elf gives +1.5m movement (10.5m base), Stealth proficiency, and Darkvision. Great for kiting and repositioning. You lose the free cantrip but gain the fastest base speed in the game. Pick Wood Elf if you want maximum mobility, Half-Elf if you want the extra cantrip.</p>
+    </div>
+
+    <h3>Ability Scores (Point Buy)</h3>
+    <div class="stats">
+      <div class="stat-box"><div class="stat-label">STR</div><div class="stat-val">8</div></div>
+      <div class="stat-box primary"><div class="stat-label">DEX</div><div class="stat-val">16</div></div>
+      <div class="stat-box"><div class="stat-label">CON</div><div class="stat-val">14</div></div>
+      <div class="stat-box"><div class="stat-label">INT</div><div class="stat-val">8</div></div>
+      <div class="stat-box"><div class="stat-label">WIS</div><div class="stat-val">10</div></div>
+      <div class="stat-box primary"><div class="stat-label">CHA</div><div class="stat-val">16</div></div>
+    </div>
+    <p style="font-size:0.88rem; color:var(--text-dim);">Point buy with racial bonuses: +2 CHA, +1 DEX. DEX 16 is your attack/damage stat for bows. CHA 16 is your spellcasting modifier, Bardic Inspiration recharge, and face skills. CON 14 for HP and concentration saves. WIS 10 keeps Wisdom saves passable. Dump STR and INT.</p>
+
+    <div class="callout">
+      <div class="callout-label">DEX vs CHA Priority</div>
+      <p>Both start at 16. DEX powers your attacks and AC. CHA powers your spell DC, Inspiration dice count, and every social check. At level 4 you'll take +2 CHA to hit 18 (your face role is critical from Act 1). At level 8 you take Sharpshooter instead of +2 DEX &mdash; the -5/+10 damage matters more than a +1 to hit. DEX stays at 16 and that's fine because Sharpshooter makes up the difference.</p>
+    </div>
+  </section>
+
+  <!-- ══════ LEVEL PROGRESSION ══════ -->
+  <section class="section reveal" id="levels">
+    <h2>Level-by-Level Progression</h2>
+    <p style="color:var(--text-dim); margin-bottom:1rem;">Click any level to expand. Bard 1&ndash;10 first, then Fighter 1&ndash;2. Tags show picks at a glance.</p>
+
+    <!-- LVL 1 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">1</span>
+        <span class="lv-badge bard">Bard 1</span>
+        <span class="lv-title">Song of Rest, Bardic Inspiration</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Vicious Mockery</span>
+          <span class="qp spell">Healing Word</span>
+          <span class="qp spell">Thunderwave</span>
+          <span class="qp spell">Faerie Fire</span>
+          <span class="qp feature">Bardic Inspiration d6</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Cantrips</span> <span class="name">Vicious Mockery</span>, <span class="name">Blade Ward</span></li>
+          <li><span class="label">Spells</span> <span class="name">Healing Word</span> &mdash; <span class="note">bonus action heal, the best heal in the game</span></li>
+          <li><span class="label">Spells</span> <span class="name">Thunderwave</span> &mdash; <span class="note">AoE + knockback for emergencies</span></li>
+          <li><span class="label">Spells</span> <span class="name">Faerie Fire</span> &mdash; <span class="note">advantage on attacks for entire party, outstanding</span></li>
+          <li><span class="label">Spells</span> <span class="name">Dissonant Whispers</span> &mdash; <span class="note">solid single-target psychic + flee</span></li>
+          <li><span class="label">Feature</span> <span class="name">Bardic Inspiration</span> &mdash; <span class="note">d6, CHA mod uses per long rest. Give allies +d6 to rolls.</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Known Spells &mdash; 4</div>
+          <ul class="prep-list">
+            <li>Healing Word</li>
+            <li>Thunderwave</li>
+            <li>Faerie Fire</li>
+            <li>Dissonant Whispers</li>
+          </ul>
+          <div class="prep-note">Bards learn spells permanently (no prep). Use a shortbow until College of Swords at 3.</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- LVL 2 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">2</span>
+        <span class="lv-badge bard">Bard 2</span>
+        <span class="lv-title">Jack of All Trades, Song of Rest</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Jack of All Trades</span>
+          <span class="qp feature">Song of Rest</span>
+          <span class="qp spell">Hold Person</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Jack of All Trades</span> &mdash; <span class="note">+half proficiency to all ability checks you're not proficient in. Insanely good for Initiative rolls.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Song of Rest</span> &mdash; <span class="note">party heals on short rest</span></li>
+          <li><span class="label">New Spell</span> <span class="name">Hold Person</span> &mdash; <span class="note">paralyze humanoids, auto-crit in melee. Works on most Act 1 enemies.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- LVL 3 — POWER SPIKE -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">3</span>
+        <span class="lv-badge bard">Bard 3</span>
+        <span class="lv-title">College of Swords</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp class">College of Swords</span>
+          <span class="qp feature">Blade Flourishes</span>
+          <span class="qp feature">Fighting Style: Archery</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">College of Swords</span> &mdash; <span class="note">medium armor, martial weapons, Blade Flourishes</span></li>
+          <li><span class="label">Style</span> <span class="name">Archery (+2 to hit)</span> &mdash; <span class="note">the best fighting style in the game. Stacks with everything.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Blade Flourish: Defensive</span> &mdash; <span class="note">+Inspiration die to AC until next turn</span></li>
+          <li><span class="label">Feature</span> <span class="name">Blade Flourish: Slashing</span> &mdash; <span class="note">+Inspiration die damage to target + nearby enemy</span></li>
+          <li><span class="label">Feature</span> <span class="name">Blade Flourish: Mobile</span> &mdash; <span class="note">+Inspiration die damage + extra movement</span></li>
+          <li><span class="label">Note</span> <span class="note">All three Flourishes work with ranged attacks. This is the core of the build.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.5rem;">
+          <div class="callout-label">Critical: Blade Flourish + Ranged</div>
+          <p>Unlike tabletop 5e, BG3 lets Blade Flourishes work with ANY weapon attack, including bows and crossbows. You get +d6 damage on arrow hits, +AC from Defensive Flourish while at range, and extra movement from Mobile Flourish to kite. This single interaction makes the entire build work.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- LVL 4 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">4</span>
+        <span class="lv-badge bard">Bard 4</span>
+        <span class="lv-title">First Feat &mdash; +2 CHA</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">+2 CHA &#8594; 18</span>
+          <span class="qp spell">Minor Illusion</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">+2 CHA &#8594; 18</span> &mdash; <span class="note">+4 mod. Higher spell DC, better Inspiration. You're the party face &mdash; CHA first.</span></li>
+          <li><span class="label">Cantrip</span> <span class="name">Minor Illusion</span> &mdash; <span class="note">lure enemies into ambush positions</span></li>
+          <li><span class="label">New Spell</span> <span class="name">Glyph of Warding</span> &mdash; <span class="note">pre-combat AoE trap, extremely strong with surprise rounds</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- LVL 5 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">5</span>
+        <span class="lv-badge bard">Bard 5</span>
+        <span class="lv-title">Bardic Inspiration d8, 3rd-Level Spells</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Inspiration d8</span>
+          <span class="qp feature">Font of Inspiration</span>
+          <span class="qp spell">Hypnotic Pattern</span>
+          <span class="qp spell">Fear</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Bardic Inspiration d8</span> &mdash; <span class="note">bigger die = bigger Flourish damage and AC</span></li>
+          <li><span class="label">Feature</span> <span class="name">Font of Inspiration</span> &mdash; <span class="note">Inspiration recharges on SHORT rest. Game-changing. You never run out.</span></li>
+          <li><span class="label">New Spell</span> <span class="name">Hypnotic Pattern</span> &mdash; <span class="note">best crowd control at this level. Incapacitates an entire room.</span></li>
+          <li><span class="label">Swap</span> <span class="name">Dissonant Whispers &#8594; Fear</span> &mdash; <span class="note">Fear is AoE and scales better into Act 2</span></li>
+        </ul>
+        <div class="callout" style="margin-top:0.5rem;">
+          <div class="callout-label">Font of Inspiration</div>
+          <p>This is the reason Bard 5 is mandatory. Before this, you have CHA mod (4) Inspiration dice per LONG rest. After, they recharge on short rest. You can Flourish almost every combat and still hand out Inspiration to allies.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- LVL 6 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">6</span>
+        <span class="lv-badge bard">Bard 6</span>
+        <span class="lv-title">Extra Attack + Countercharm</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Extra Attack</span>
+          <span class="qp feature">Countercharm</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Extra Attack</span> &mdash; <span class="note">two bow attacks per action. Doubles your sustained damage.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Countercharm</span> &mdash; <span class="note">advantage on saves vs Frightened/Charmed for nearby allies</span></li>
+          <li><span class="label">New Spell</span> <span class="name">Greater Invisibility</span> &mdash; <span class="note">attack with advantage while invisible. Doesn't break on attack.</span></li>
+          <li><span class="label">Note</span> <span class="note">Your first attack each turn triggers Blade Flourish. Second attack is normal. Two Flourished attacks per turn requires Action Surge (Fighter 2).</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- LVL 7 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">7</span>
+        <span class="lv-badge bard">Bard 7</span>
+        <span class="lv-title">4th-Level Spells</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Dimension Door</span>
+          <span class="qp spell">Polymorph</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">New Spell</span> <span class="name">Dimension Door</span> &mdash; <span class="note">teleport 150ft + bring an ally. Repositioning, escape, skip puzzles.</span></li>
+          <li><span class="label">Swap</span> <span class="name">Thunderwave &#8594; Polymorph</span> &mdash; <span class="note">turn an enemy into a sheep, or turn an ally into a dinosaur. Win-win.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- LVL 8 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">8</span>
+        <span class="lv-badge bard">Bard 8</span>
+        <span class="lv-title">Second Feat &mdash; Sharpshooter</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">Sharpshooter</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">Sharpshooter</span> &mdash; <span class="note">-5 to hit, +10 damage per arrow. With Archery style (+2) and Faerie Fire (advantage), the -5 penalty is negligible. This doubles your damage output.</span></li>
+          <li><span class="label">Note</span> <span class="note">Sharpshooter also removes the penalty for shooting at long range and the penalty for shooting into melee. Pure upside in BG3.</span></li>
+        </ul>
+        <div class="callout warn" style="margin-top:0.5rem;">
+          <div class="callout-label">Accuracy Stack</div>
+          <p>Archery (+2) + Faerie Fire (advantage) + Song of the Harper amulet (+1d4) = you almost never miss even with the -5 penalty. Always toggle Sharpshooter ON once you have these. The only time to toggle it OFF is against very high AC enemies without advantage.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- LVL 9 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">9</span>
+        <span class="lv-badge bard">Bard 9</span>
+        <span class="lv-title">5th-Level Spells</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Hold Monster</span>
+          <span class="qp spell">Greater Restoration</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">New Spell</span> <span class="name">Hold Monster</span> &mdash; <span class="note">Hold Person but works on everything, including bosses. Paralyze + auto-crits.</span></li>
+          <li><span class="label">New Spell</span> <span class="name">Greater Restoration</span> &mdash; <span class="note">remove any condition. Required for certain Act 3 encounters.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- LVL 10 — POWER SPIKE -->
+    <div class="level-card spike here">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">10</span>
+        <span class="lv-badge bard">Bard 10</span>
+        <span class="lv-title">Magical Secrets + Inspiration d10</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-here">Capstone</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Magical Secrets</span>
+          <span class="qp feature">Inspiration d10</span>
+          <span class="qp spell">Haste (stolen)</span>
+          <span class="qp spell">Counterspell (stolen)</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Magical Secrets</span> &mdash; <span class="note">learn 2 spells from ANY class list. The most powerful feature in 5e.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Bardic Inspiration d10</span> &mdash; <span class="note">your Flourishes now add d10 damage/AC. Defensive Flourish can give +10 AC on a good roll.</span></li>
+          <li><span class="label">Secret</span> <span class="name">Haste</span> &mdash; <span class="note">+1 action, +2 AC, double speed. Self-cast for 3 attacks + bonus action per turn. The best buff in the game.</span></li>
+          <li><span class="label">Secret</span> <span class="name">Counterspell</span> &mdash; <span class="note">reaction to negate any spell. Your CHA mod makes the check trivial. Non-negotiable in Act 3.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.5rem;">
+          <div class="callout-label">Why These Secrets?</div>
+          <p>Haste on yourself = 3 attacks per turn (2 from Extra Attack + 1 from Haste action), all at range with Sharpshooter. That's 3d8+39 damage (avg 52.5) before Flourish dice. Counterspell is the other must-have because you cast it with CHA, making your counter checks the best in the party. Other strong options: Spirit Guardians (if you want to go melee sometimes) or Fireball (raw AoE damage).</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- LVL 11 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">11</span>
+        <span class="lv-badge fighter">Fighter 1</span>
+        <span class="lv-title">Second Wind, Heavy Armor</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Second Wind</span>
+          <span class="qp feature">Heavy Armor Prof</span>
+          <span class="qp feature">CON Save Prof</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Second Wind</span> &mdash; <span class="note">bonus action self-heal (1d10+1). Free HP when you need it.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Heavy Armor Proficiency</span> &mdash; <span class="note">you can wear plate now, but medium armor + DEX 16 is usually fine</span></li>
+          <li><span class="label">Feature</span> <span class="name">CON Save Proficiency</span> &mdash; <span class="note">concentration checks become much easier. Keeps Haste running.</span></li>
+          <li><span class="label">Note</span> <span class="note">No new Fighting Style &mdash; you already have Archery from College of Swords. Take Defence (+1 AC) if offered as a second choice in your BG3 version.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- LVL 12 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">12</span>
+        <span class="lv-badge fighter">Fighter 2</span>
+        <span class="lv-title">Action Surge</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Action Surge</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Action Surge</span> &mdash; <span class="note">one additional action per short rest. The best 2-level dip in the game.</span></li>
+          <li><span class="label">Nova</span> <span class="note">With Haste: Action (2 attacks) + Haste Action (1 attack) + Action Surge (2 attacks) = 5 Sharpshooter arrows in one turn. Add a Flourish and a bonus action spell. Nothing survives.</span></li>
+        </ul>
+        <div class="callout" style="margin-top:0.5rem;">
+          <div class="callout-label">Action Surge + Spells</div>
+          <p>Action Surge gives a full action. You can use it to cast a leveled spell (Hypnotic Pattern, Hold Monster) AND still make your normal attacks. Or fire 4 Sharpshooter arrows in one turn. This flexibility is why the build is #7 ranked &mdash; you always have the perfect answer.</p>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ══════ BLADE FLOURISHES ══════ -->
+  <section class="section reveal" id="flourishes">
+    <h2>College of Swords: Blade Flourishes</h2>
+
+    <p>Blade Flourishes are the signature feature of College of Swords. When you take the Attack action, you can expend one Bardic Inspiration die to add it to the weapon damage roll plus trigger a special effect. In BG3, these work with ranged weapons &mdash; making them core to this archer build.</p>
+
+    <table class="flourish-table">
+      <thead>
+        <tr><th>Flourish</th><th>Effect</th><th>Best Use</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="flourish-name">Defensive Flourish</span></td>
+          <td>Add Inspiration die to damage AND to your AC until next turn.</td>
+          <td>Default choice. +d10 AC while staying at range makes you nearly untouchable. Use every combat.</td>
+        </tr>
+        <tr>
+          <td><span class="flourish-name">Slashing Flourish</span></td>
+          <td>Add Inspiration die to damage against the target AND deal the same bonus damage to a second enemy within 1.5m of the target.</td>
+          <td>When enemies are clustered. The splash damage is free &mdash; great against groups.</td>
+        </tr>
+        <tr>
+          <td><span class="flourish-name">Mobile Flourish</span></td>
+          <td>Add Inspiration die to damage and push the target back up to 6m. You can also move up to the target without provoking opportunity attacks.</td>
+          <td>Push enemies off cliffs, into hazards, or away from squishy allies. The free movement helps reposition.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-label">Flourish Economy</div>
+      <p>After Bard 5 (Font of Inspiration), your Inspiration dice recharge on short rest. You get CHA mod (4-5) dice per rest. Use Defensive Flourish on your first attack each combat for the AC bonus, then save remaining dice for allies who need Inspiration checks or for Slashing Flourish in multi-target fights. You'll never run dry.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Ranged Flourish Interaction</div>
+      <p>Mobile Flourish with a bow fires a magically-enhanced arrow that pushes the target back. You don't need to be in melee. Slashing Flourish with a bow sends a flourish of magical energy that hits a second target near the first. These are not melee-only abilities despite the name &mdash; BG3 specifically allows them with ranged weapons.</p>
+    </div>
+  </section>
+
+  <!-- ══════ MAGICAL SECRETS ══════ -->
+  <section class="section reveal" id="secrets">
+    <h2>Magical Secrets</h2>
+
+    <p>At Bard 10, you learn two spells from <strong>any class list</strong>. This is the single most powerful feature in 5th edition D&D. You're cherry-picking the absolute best spells that other classes had to build around. Here are your options, ranked.</p>
+
+    <div class="spell-section">
+      <div class="spell-level">Tier 1 &mdash; Must Pick (Take Both)</div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Haste</div>
+          <div class="spell-desc">+1 action, +2 AC, double movement, advantage on DEX saves. 10 turns, concentration. Self-cast: 3 attacks/turn with Sharpshooter. This is your primary combat buff and the reason Swords Bard is top-tier.</div>
+        </div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Counterspell</div>
+          <div class="spell-desc">Reaction: negate a spell being cast within 18m. Auto-succeeds on spells level 3 or lower. For higher, roll CHA check (your best stat). Absolute requirement for Act 3 boss fights.</div>
+        </div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Tier 2 &mdash; Strong Alternatives</div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Spirit Guardians</div>
+          <div class="spell-desc">3d8 radiant AoE around you each round. If you ever wade into melee (it happens), this is the best sustained damage spell in the game. Requires concentration &mdash; conflicts with Haste.</div>
+        </div>
+        <span class="spell-badge good">Strong</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Fireball</div>
+          <div class="spell-desc">8d6 fire in a 6m radius. The gold standard AoE nuke. Take this over Counterspell only if another party member already has Counterspell.</div>
+        </div>
+        <span class="spell-badge good">Strong</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Pass Without Trace</div>
+          <div class="spell-desc">+10 Stealth for entire party. Guarantees surprise rounds in most encounters. Amazing if nobody else has it.</div>
+        </div>
+        <span class="spell-badge good">Strong</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Tier 3 &mdash; Situational</div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Destructive Wave</div>
+          <div class="spell-desc">5d6 thunder + 5d6 radiant + prone in a huge AoE. Nuclear option for melee-range bards. Only pick if you're doing a hybrid melee/ranged build.</div>
+        </div>
+        <span class="spell-badge conc">Niche</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Conjure Elemental</div>
+          <div class="spell-desc">Summon a powerful elemental that fights for you. Good action economy but concentration competes with Haste.</div>
+        </div>
+        <span class="spell-badge conc">Niche</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ FULL SPELL LIST ══════ -->
+  <section class="section reveal" id="spells">
+    <h2>Full Spell List (Ranked)</h2>
+    <p style="color:var(--text-dim); margin-bottom:1rem;">Bards learn spells permanently &mdash; no daily preparation. You can swap one spell per level-up. These are listed in priority order within each tier.</p>
+
+    <div class="spell-section">
+      <div class="spell-level">Cantrips</div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Vicious Mockery</div><div class="spell-desc">Psychic damage + disadvantage on next attack. Use when you can't shoot (rarely).</div></div>
+        <span class="spell-badge good">Core</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Minor Illusion</div><div class="spell-desc">Lure enemies into position for ambush. Free advantage setup.</div></div>
+        <span class="spell-badge good">Core</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Blade Ward</div><div class="spell-desc">Resistance to physical damage for 2 turns. Emergency button.</div></div>
+        <span class="spell-badge conc">Niche</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">1st Level</div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Healing Word</div><div class="spell-desc">Bonus action ranged heal. Revive downed allies from 18m away. The best heal in the game because of the action economy.</div></div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Faerie Fire</div><div class="spell-desc">Advantage on attacks against all targets in the area. No save needed to reveal invisible enemies. Outstanding Act 1&ndash;3.</div></div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">2nd Level</div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Hold Person</div><div class="spell-desc">Paralyze a humanoid. All attacks auto-hit, melee attacks auto-crit. Devastating combo with your melee allies.</div></div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Heat Metal</div><div class="spell-desc">Automatic damage to any enemy wearing metal armor + disadvantage on attacks. No save for the damage. Melts armored enemies.</div></div>
+        <span class="spell-badge good">Strong</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">3rd Level</div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Hypnotic Pattern</div><div class="spell-desc">Incapacitate every enemy in a huge area. One failed WIS save and they do nothing for 2 turns. Best crowd control available.</div></div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Fear</div><div class="spell-desc">Cone AoE frighten. Enemies drop what they're holding and flee. Good in corridors.</div></div>
+        <span class="spell-badge good">Strong</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Glyph of Warding</div><div class="spell-desc">Place a magical trap. Pre-combat setup for massive burst damage on turn 1.</div></div>
+        <span class="spell-badge good">Strong</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">4th Level</div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Greater Invisibility</div><div class="spell-desc">Attack with advantage, enemies have disadvantage against you. Doesn't break on attack. 10 turns, concentration. Amazing on yourself or a rogue ally.</div></div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Polymorph</div><div class="spell-desc">Turn enemy into a sheep (remove from combat) or turn an ally into a T-rex (157 HP tank). Incredibly flexible.</div></div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Dimension Door</div><div class="spell-desc">Teleport 150ft and bring a friend. Repositioning, escape, puzzle-solving.</div></div>
+        <span class="spell-badge good">Strong</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">5th Level</div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Hold Monster</div><div class="spell-desc">Hold Person but works on any creature. Paralyze bosses for auto-crits. Your best single-target shutdown.</div></div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Greater Restoration</div><div class="spell-desc">Remove petrification, curses, ability damage. Required for specific Act 2&ndash;3 encounters.</div></div>
+        <span class="spell-badge good">Strong</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Magical Secrets (Any Class)</div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Haste</div><div class="spell-desc">The best self-buff in the game. +1 action, +2 AC, double speed. 3 attacks per turn with Sharpshooter.</div></div>
+        <span class="spell-badge secret">Secret</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Counterspell</div><div class="spell-desc">Negate enemy spells as a reaction. CHA-based check means you rarely fail. Required for endgame.</div></div>
+        <span class="spell-badge secret">Secret</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ FEATS ══════ -->
+  <section class="section reveal" id="feats">
+    <h2>Feat Picks</h2>
+
+    <p>You get two feats total: one at Bard 4 and one at Bard 8. Both are locked in &mdash; there's no flexibility here because both choices are objectively correct for this build.</p>
+
+    <div class="item-group">
+      <div class="item-group-title">Level 4 &mdash; Bard 4</div>
+      <div class="item-row">
+        <div><span class="item-name">Ability Score Improvement: +2 CHA &#8594; 18</span></div>
+        <div class="item-desc">Increases spell save DC by 1, grants an extra Bardic Inspiration die per rest, and boosts every Charisma skill check. You're the party face &mdash; CHA is priority #1. Sharpshooter at 4 is a trap because your to-hit is too low to offset -5 without Archery + advantage sources.</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Level 8 &mdash; Bard 8</div>
+      <div class="item-row">
+        <div><span class="item-name">Sharpshooter</span></div>
+        <div class="item-desc">-5 to hit, +10 damage on every ranged weapon attack. By level 8 you have Archery (+2), Faerie Fire (advantage), and possibly +1 weapons &mdash; the accuracy math works. Also removes long range and cover penalties. This feat is the difference between "good ranged damage" and "best damage in the party."</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Why Not Alert or Lucky?</div>
+      <p>Alert is great on other builds but Bards already add half proficiency to Initiative via Jack of All Trades. You're already going early. Lucky is universally strong but you need both CHA and Sharpshooter more. If you somehow got a third feat (Hag Hair, etc.), take +2 CHA to cap at 20.</p>
+    </div>
+  </section>
+
+  <!-- ══════ GEAR ══════ -->
+  <section class="section reveal" id="items">
+    <h2>Best-in-Slot Gear</h2>
+    <p style="color:var(--text-dim); margin-bottom:1rem;">Listed by slot with location. Prioritize the weapon &mdash; everything else is secondary.</p>
+
+    <div class="item-group">
+      <div class="item-group-title">Weapons</div>
+      <div class="item-row">
+        <div><span class="item-name">Gontr Mael</span> <span class="item-slot">Longbow &middot; Legendary</span></div>
+        <div class="item-desc">1d8+2 piercing. Radiating Orb on hit (stacking -1 to attack rolls on enemies). Celestial Haste once per long rest. +1d4 radiant damage. The best ranged weapon in BG3 &mdash; the Radiating Orb stacks make enemies unable to hit you after 2-3 arrows.</div>
+        <div class="item-loc">&#128205; Steel Watch Foundry &mdash; defeat the Steel Watcher Titan (Act 3)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Titanstring Bow</span> <span class="item-slot">Longbow &middot; Rare</span></div>
+        <div class="item-desc">Add STR modifier to damage. Normally useless for DEX builds, but equip Giant Strength gear (Gauntlets of Hill Giant Strength) and it adds +5 damage per arrow. Strong midgame option.</div>
+        <div class="item-loc">&#128205; Sold by merchant Brem in Zhentarim Hideout (Act 1)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Darkfire Shortbow</span> <span class="item-slot">Shortbow &middot; Rare</span></div>
+        <div class="item-desc">Grants Haste once per long rest + resistance to fire and cold. Excellent Act 2 weapon &mdash; the free Haste saves you a spell slot and concentration.</div>
+        <div class="item-loc">&#128205; Sold by Dammon at Last Light Inn (Act 2)</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Armor</div>
+      <div class="item-row">
+        <div><span class="item-name">Bhaalist Armour</span> <span class="item-slot">Medium Armor &middot; Legendary</span></div>
+        <div class="item-desc">AC 14 + DEX (max 2). Enemies that hit you in melee receive Bane (1d4 penalty to attacks and saves). Aura of Murder: nearby enemies are Vulnerable to Piercing damage &mdash; your arrows deal double damage.</div>
+        <div class="item-loc">&#128205; Murder Tribunal &mdash; become an Unholy Assassin (Act 3, evil path)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Yuan-Ti Scale Mail</span> <span class="item-slot">Medium Armor &middot; Rare</span></div>
+        <div class="item-desc">AC 15 + DEX (max 2). No Stealth disadvantage. Initiative +1. Good all-around medium armor for the neutral/good path.</div>
+        <div class="item-loc">&#128205; Sold by merchant in Rivington (Act 3)</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Head</div>
+      <div class="item-row">
+        <div><span class="item-name">Hat of Fire Acuity</span> <span class="item-slot">Helmet &middot; Very Rare</span></div>
+        <div class="item-desc">When you deal fire damage, gain Arcane Acuity (stacking +1 to spell attack rolls and spell save DC). Pair with a Fire cantrip or Elixir of Fire to stack DC for Hold Monster and Hypnotic Pattern.</div>
+        <div class="item-loc">&#128205; Grymforge &mdash; reward from Philomeen's quest (Act 1)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Helm of Balduran</span> <span class="item-slot">Helmet &middot; Legendary</span></div>
+        <div class="item-desc">+1 AC, +1 saves, HP regen, can't be stunned or crit. The best helmet in the game, no contest.</div>
+        <div class="item-loc">&#128205; Wyrmway &mdash; defeat Ansur (Act 3)</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Accessories</div>
+      <div class="item-row">
+        <div><span class="item-name">Birthright</span> <span class="item-slot">Helmet &middot; Very Rare</span></div>
+        <div class="item-desc">+2 CHA. If you're at 18 CHA, this pushes you to 20 &mdash; +5 mod for spell DC and extra Inspiration die.</div>
+        <div class="item-loc">&#128205; Sold by Helsik, Devil's Fee (Act 3)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Amulet of Greater Health</span> <span class="item-slot">Amulet</span></div>
+        <div class="item-desc">Set CON to 23. Massive HP boost + automatic concentration save success on low damage.</div>
+        <div class="item-loc">&#128205; House of Hope &mdash; behind a locked display (Act 3)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Killer's Sweetheart</span> <span class="item-slot">Ring</span></div>
+        <div class="item-desc">Once per long rest, your next attack is a guaranteed critical hit after you kill an enemy. Fire a Sharpshooter crit for massive burst.</div>
+        <div class="item-loc">&#128205; Self-Same Trial, Gauntlet of Shar (Act 2)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Gloves of Dexterity</span> <span class="item-slot">Gloves &middot; Very Rare</span></div>
+        <div class="item-desc">Set DEX to 18. Frees up your point buy &mdash; dump DEX to 8 at character creation and put those points into CON/WIS. Huge efficiency gain.</div>
+        <div class="item-loc">&#128205; Sold by A'jak'nir Jeera, Creche Y'llek (Act 1)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Boots of Speed</span> <span class="item-slot">Boots</span></div>
+        <div class="item-desc">Click Heels: double movement speed for 3 turns. Free kiting.</div>
+        <div class="item-loc">&#128205; Sold by Thulla, Myconid Colony (Act 1)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Cloak of Displacement</span> <span class="item-slot">Cloak &middot; Rare</span></div>
+        <div class="item-desc">Attackers have disadvantage against you until you take damage. Resets each turn. Stacks beautifully with Defensive Flourish AC bonus.</div>
+        <div class="item-loc">&#128205; Sold by Quartermaster Talli, Last Light Inn (Act 2)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ COMBAT ══════ -->
+  <section class="section reveal" id="combat">
+    <h2>Combat Guide</h2>
+
+    <h3>Standard Turn</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Pre-buff with Haste</span> <span class="step-timing pre">Before Combat</span>
+        <div class="step-detail">Cast Haste on yourself (or have an ally cast it). This is always your first action in any serious fight. Lasts 10 turns &mdash; long enough for any encounter.</div>
+      </li>
+      <li>
+        <span class="step-action">Open with Faerie Fire or Hypnotic Pattern</span> <span class="step-timing turn">Turn 1</span>
+        <div class="step-detail">If the enemy group is clustered, open with Hypnotic Pattern to incapacitate them. If they're spread out, Faerie Fire gives your whole party advantage. Use your Haste action to attack after.</div>
+      </li>
+      <li>
+        <span class="step-action">Attack with Defensive Flourish</span> <span class="step-timing every">Every Turn</span>
+        <div class="step-detail">First attack: toggle Defensive Flourish ON. Fire your Sharpshooter arrow for 1d8 + DEX + 10 + d10 (Flourish) damage. Gain the d10 as bonus AC. Second attack: normal Sharpshooter arrow. Haste attack: third arrow. You deal ~55 damage per turn sustainably.</div>
+      </li>
+      <li>
+        <span class="step-action">Bonus action: Healing Word or Bardic Inspiration</span> <span class="step-timing every">As Needed</span>
+        <div class="step-detail">Pick up downed allies with Healing Word (bonus action, 18m range). Or hand out Bardic Inspiration to your rogue/fighter before their turn.</div>
+      </li>
+    </ol>
+
+    <h3>Nova Turn (Boss Fights)</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Haste active, begin nova</span> <span class="step-timing turn">Turn 1</span>
+        <div class="step-detail">Ensure Haste is running. If not, cast it first and attack with your remaining actions.</div>
+      </li>
+      <li>
+        <span class="step-action">Attack action: 2 Sharpshooter arrows (Flourish on first)</span> <span class="step-timing turn">Action</span>
+        <div class="step-detail">First arrow: Slashing Flourish if enemies are close together, Defensive Flourish otherwise. Second arrow: straight Sharpshooter.</div>
+      </li>
+      <li>
+        <span class="step-action">Haste action: 1 Sharpshooter arrow</span> <span class="step-timing turn">Haste</span>
+        <div class="step-detail">Third arrow from Haste. Pure damage.</div>
+      </li>
+      <li>
+        <span class="step-action">Action Surge: 2 more Sharpshooter arrows OR a leveled spell</span> <span class="step-timing turn">Surge</span>
+        <div class="step-detail">Option A: 2 more arrows for 5 total Sharpshooter attacks in one turn (avg ~85 damage). Option B: Hold Monster on the boss, then let your melee allies auto-crit it to death. Read the situation.</div>
+      </li>
+      <li>
+        <span class="step-action">Bonus action: Healing Word or Second Wind</span> <span class="step-timing turn">Bonus</span>
+        <div class="step-detail">Keep an ally alive or top yourself off. You still have a bonus action even on nova turns.</div>
+      </li>
+    </ol>
+
+    <div class="callout tip" style="margin-top:1.25rem;">
+      <div class="callout-label">Damage Math: Nova Turn</div>
+      <p>5 arrows &times; (1d8 + 3 DEX + 10 Sharpshooter) = 5 &times; 17.5 avg = <strong>87.5 damage</strong> in one turn. Add Flourish die (5.5 avg) and Gontr Mael's +1d4 radiant per hit (2.5 avg) = <strong>~127 damage</strong>. Against a Vulnerable target (Bhaalist Armour), this doubles the piercing component. No other build delivers this much burst at range while also being a full caster.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Concentration Management</div>
+      <p>Haste requires concentration. If you lose it, you lose a full turn (Haste Lethargy). Prioritize: CON save proficiency from Fighter 1, War Caster (if you have a 3rd feat source), Amulet of Greater Health, and positioning out of enemy range. Defensive Flourish + ranged positioning = enemies rarely hit you = you rarely make concentration saves.</p>
+    </div>
+  </section>
+
+  <!-- ══════ SUPPORT ROLE ══════ -->
+  <section class="section reveal" id="support">
+    <h2>Support Role</h2>
+
+    <p>What makes this build #7 in the game rather than just "good archer" is that you're a full support character simultaneously. You deal top-tier ranged damage AND provide the following to your party every single fight:</p>
+
+    <h3>Bardic Inspiration</h3>
+    <p>CHA mod (4-5) d10 dice per short rest. Hand them to allies before critical attack rolls, saving throws, or ability checks. A d10 Inspiration to your rogue's Sneak Attack roll or your fighter's crucial saving throw changes outcomes. In dialogue, it's +d10 to any Persuasion/Deception/Intimidation check.</p>
+
+    <h3>Healing</h3>
+    <p>Healing Word is a bonus action with 18m range. You never have to stop attacking to heal. Pick up downed allies from across the battlefield while maintaining full offensive pressure. This is the #1 reason every party wants a Bard.</p>
+
+    <h3>Crowd Control</h3>
+    <p>Hypnotic Pattern, Hold Person/Monster, Fear, Polymorph. You have the best crowd control spell list in the game outside of a dedicated Wizard. The difference is you can CC the biggest threat AND then shoot everything else dead. Wizards just CC.</p>
+
+    <h3>Face Skills</h3>
+    <p>Expertise in Persuasion + Deception with 18-20 CHA + Jack of All Trades on everything else. You pass almost every social check in the game. This alone justifies the build for story-focused players.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">The Versatility Advantage</div>
+      <p>On any given turn you can: deal 50+ ranged damage, heal an ally, CC a group of enemies, buff a party member, counterspell an enemy caster, or teleport someone out of danger. No other build in BG3 has this many options available simultaneously. This is why the Swords Bard is the Swiss army knife of the game.</p>
+    </div>
+
+    <h3>Recommended Party</h3>
+    <div class="party-grid" style="margin-top:1rem;">
+      <div class="party-card">
+        <div class="party-name">Lae'zel</div>
+        <div class="party-role">Fighter &middot; Melee DPS / Tank</div>
+        <div class="party-desc">You Hold Person/Monster the boss &mdash; she crits it to death with Action Surge. Give her Bardic Inspiration before big turns. She handles melee while you stay at range.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Shadowheart</div>
+        <div class="party-role">Cleric &middot; Primary Healer</div>
+        <div class="party-desc">Spirit Guardians + your ranged damage covers both AoE and single target. She can Bless the party while you maintain Haste. Two concentration buffs running simultaneously.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Astarion</div>
+        <div class="party-role">Rogue &middot; Burst / Skills</div>
+        <div class="party-desc">Your Faerie Fire gives him permanent advantage for Sneak Attack. Greater Invisibility on him is even better. Two skill-monkeys in one party means you never fail checks.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Alt: Gale</div>
+        <div class="party-role">Wizard &middot; AoE / Control</div>
+        <div class="party-desc">Double caster composition. You CC one group, he nukes another. He can provide Haste if you want to concentrate on something else. Swap for Lae'zel if you prefer caster-heavy.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ HONOUR MODE ══════ -->
+  <section class="section reveal" id="honour">
+    <h2>Honour Mode Tips</h2>
+
+    <p>Honour Mode gives bosses Legendary Actions and raises overall difficulty. The Swords Bard Archer is one of the safest Honour Mode builds because you operate at range, have full spellcasting for emergencies, and can Counterspell boss abilities.</p>
+
+    <div class="callout warn">
+      <div class="callout-label">Legendary Action Economy</div>
+      <p>Honour Mode bosses get Legendary Actions that let them act on your turns. This makes concentration more vulnerable and melee more dangerous. Stay at maximum bow range (18m), use Defensive Flourish every turn for the AC bonus, and keep Counterspell ready. You are the safest damage dealer in the party.</p>
+    </div>
+
+    <h3>Key Honour Mode Strategies</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Always open with Hypnotic Pattern</span>
+        <div class="step-detail">In Honour Mode, action economy is everything. Removing 2-3 enemies from the fight on turn 1 is worth more than any amount of damage. Even if the boss saves, the adds won't.</div>
+      </li>
+      <li>
+        <span class="step-action">Save Action Surge for emergencies</span>
+        <div class="step-detail">Don't blow Action Surge on turn 1 for damage. Save it for: emergency Counterspell + attack, or a clutch Hold Monster when the boss uses a Legendary Action you need to counter.</div>
+      </li>
+      <li>
+        <span class="step-action">Stack Radiating Orb (Gontr Mael)</span>
+        <div class="step-detail">Each arrow hit applies Radiating Orb (-1 to attack rolls, stacking). After 3-4 arrows, the boss has -3 to -4 on attacks. Combined with Defensive Flourish AC bonus, the boss literally can't hit you.</div>
+      </li>
+      <li>
+        <span class="step-action">Position at max range, always</span>
+        <div class="step-detail">18m longbow range means most melee enemies can't reach you in one turn. Dash away if they close. Mobile Flourish pushes them back. You should almost never take damage.</div>
+      </li>
+      <li>
+        <span class="step-action">Keep Healing Word for downed allies</span>
+        <div class="step-detail">In Honour Mode, death saves are brutal. Healing Word is bonus action + 18m range. You can revive someone AND still do full damage on the same turn. This alone saves Honour Mode runs.</div>
+      </li>
+    </ol>
+
+    <div class="callout tip">
+      <div class="callout-label">Honour Mode Boss Combo</div>
+      <p>Turn 1: Haste (if not pre-cast) + Faerie Fire. Turn 2: Hold Monster on boss + 2 Sharpshooter arrows (one Flourished). Your melee allies auto-crit the paralyzed boss. Turn 3: Action Surge for 5 arrows into the boss, Counterspell if it tries to escape. Most Honour Mode bosses die in 2-3 rounds with this rotation.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="guide-footer">
+    <div class="footer-links">
+      <a href="guides.html">All Game Guides</a>
+      <a href="index.html">Home</a>
+    </div>
+    BG3 Swords Bard Archer Build Guide &middot; Half-Elf &middot; College of Swords 10 / Fighter 2 &middot; Patch 8
+  </div>
+
+</main>
+</div>
+
+<script>
+// Universal top nav hamburger
+const tnHamburger = document.getElementById('tn-hamburger');
+const tnLinks = document.getElementById('tn-links');
+if (tnHamburger && tnLinks) {
+  tnHamburger.addEventListener('click', () => tnLinks.classList.toggle('open'));
+  tnLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => tnLinks.classList.remove('open')));
+}
+
+// Mobile sub-nav hamburger
+const mobToggle = document.querySelector('.mob-toggle');
+const mobLinks = document.querySelector('.mob-links');
+if (mobToggle && mobLinks) {
+  mobToggle.addEventListener('click', () => mobLinks.classList.toggle('open'));
+  mobLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobLinks.classList.remove('open')));
+}
+
+// Highlight active sidebar link on scroll
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector('.sidebar a[href="#' + entry.target.id + '"]');
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+
+// Level card toggle
+document.querySelectorAll('.lv-head').forEach(h => {
+  h.addEventListener('click', () => h.parentElement.classList.toggle('open'));
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+reveals.forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>

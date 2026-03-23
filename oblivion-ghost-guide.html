@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Ghost — 100% Chameleon Build — Oblivion Remastered</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0c0a08;--bg-card:#161310;--bg-el:#1e1a16;--bg-hover:#252018;
+  --border:#302a22;--border-light:#403828;
+  --text:#e0d8c8;--text-dim:#a89878;--text-muted:#6a5a48;--white:#f0e8d8;
+  --accent:#c8a050;--accent-hover:#e0b860;--accent-dim:rgba(200,160,80,0.12);
+  --fire:#d05030;--fire-dim:rgba(208,80,48,0.12);
+  --frost:#4080c0;--frost-dim:rgba(64,128,192,0.12);
+  --shock:#8060c0;--shock-dim:rgba(128,96,192,0.12);
+  --green:#5a9040;--green-dim:rgba(90,144,64,0.1);
+  --blue:#4080b0;--blue-dim:rgba(64,128,176,0.1);
+  --red:#b03030;
+  --ghost:#6090b0;--ghost-dim:rgba(96,144,176,0.1);
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:19px;line-height:1.75;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);text-decoration:underline}
+
+.page{display:flex;max-width:1100px;margin:0 auto}
+.sidebar{width:220px;flex-shrink:0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;border-right:1px solid var(--border);background:var(--bg-card);padding:1.5rem 0;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.sidebar-badge{text-align:center;padding:0 1.25rem 1rem}
+.sidebar-badge img{width:48px;height:48px;border-radius:8px;border:1px solid var(--border)}
+.sidebar-title{font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);padding:0 1.25rem;margin-bottom:.75rem}
+.sidebar a{display:flex;align-items:center;gap:.5rem;padding:.45rem 1.25rem;font-size:.88rem;font-weight:500;color:var(--text-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s}
+.sidebar a:hover{color:var(--white);background:rgba(200,160,80,0.04);text-decoration:none}
+.sidebar a.active{color:var(--white);border-left-color:var(--accent);background:rgba(200,160,80,0.06)}
+.nav-icon{font-size:1rem;width:1.2rem;text-align:center}
+.content{flex:1;min-width:0;padding:2.5rem 2.5rem 4rem}
+@media(max-width:800px){.sidebar{display:none}.content{padding:1.5rem}}
+
+/* Hero */
+.hero-art{width:100%;margin-bottom:1.25rem;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:var(--bg-card)}
+.hero-svg{width:100%;height:auto;display:block}
+.guide-header{margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.header-row{display:flex;align-items:center;gap:1rem;margin-bottom:.5rem}
+.header-portrait{width:72px;height:72px;border-radius:8px;border:2px solid var(--border);object-fit:cover;background:var(--bg-el)}
+.header-text{flex:1}
+.breadcrumb{font-size:.78rem;color:var(--text-muted);margin-bottom:.3rem}
+.guide-header h1{font-family:'Cinzel',serif;font-size:2.2rem;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:.3rem}
+.subtitle{font-size:1rem;color:var(--text-dim)}
+.tag-row{display:flex;gap:.4rem;margin-top:.6rem;flex-wrap:wrap}
+.tag{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim);text-transform:uppercase;letter-spacing:.04em}
+.tag.fire{color:var(--fire);border-color:rgba(208,80,48,0.3);background:var(--fire-dim)}
+.tag.gold{color:var(--accent);border-color:rgba(200,160,80,0.3);background:var(--accent-dim)}
+.tag.green{color:var(--green);border-color:rgba(90,144,64,0.3);background:var(--green-dim)}
+.tag.blue{color:var(--blue);border-color:rgba(64,128,176,0.3);background:var(--blue-dim)}
+.tag.ghost{color:var(--ghost);border-color:rgba(96,144,176,0.3);background:var(--ghost-dim)}
+
+/* Sections */
+.section{margin-top:3rem}
+.section h2{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.section h3{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:600;color:var(--text);margin:1.5rem 0 .6rem}
+.section p{margin-bottom:1rem}
+
+/* Callouts */
+.callout{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0}
+.callout.warn{border-left-color:var(--fire)}
+.callout.tip{border-left-color:var(--green)}
+.callout-label{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem;color:var(--accent)}
+.callout.warn .callout-label{color:var(--fire)}
+.callout.tip .callout-label{color:var(--green)}
+.callout p{margin-bottom:.5rem;font-size:.95rem}.callout p:last-child{margin-bottom:0}
+
+/* Stats */
+.stats{display:flex;gap:.5rem;flex-wrap:wrap;margin:.75rem 0}
+.stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:.4rem .75rem;text-align:center;min-width:3.5rem}
+.stat-box.primary{border-color:rgba(200,160,80,0.4)}
+.stat-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
+.stat-val{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--white)}
+.stat-box.primary .stat-val{color:var(--accent)}
+
+/* Picks */
+.picks{list-style:none;margin:.5rem 0}
+.picks li{padding:.3rem 0;font-size:.95rem;display:flex;gap:.4rem;align-items:baseline}
+.picks .label{font-size:.72rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.03em;flex-shrink:0;min-width:5rem}
+.picks .name{font-weight:600;color:var(--white)}
+.picks .note{color:var(--text-dim);font-size:.88rem}
+
+/* Level cards */
+.lv-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.4rem;overflow:hidden;transition:border-color .15s}
+.lv-card:hover{border-color:var(--border-light)}
+.lv-card.spike{border-left:3px solid var(--accent)}
+.lv-head{display:flex;align-items:center;gap:.6rem;padding:.65rem 1rem;cursor:pointer;user-select:none;transition:background .1s;flex-wrap:wrap}
+.lv-head:hover{background:var(--bg-hover)}
+.lv-num{font-family:'Cinzel',serif;font-weight:900;font-size:1.3rem;color:var(--white);min-width:1.6rem;text-align:center}
+.lv-range{font-size:.72rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(200,160,80,0.2);text-transform:uppercase;letter-spacing:.04em}
+.lv-title{font-weight:600;font-size:.95rem;color:var(--text);flex:1}
+.lv-spike{font-size:.65rem;font-weight:600;color:var(--accent);background:var(--accent-dim);padding:.15rem .45rem;border-radius:4px;border:1px solid rgba(200,160,80,0.2);text-transform:uppercase}
+.lv-arrow{color:var(--text-muted);font-size:.75rem;transition:transform .2s}
+.lv-card.open .lv-arrow{transform:rotate(90deg)}
+.lv-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.lv-card.open .lv-body{max-height:1200px}
+.lv-inner{padding:0 1rem 1rem;border-top:1px solid var(--border)}
+
+/* Quick picks */
+.qp-row{display:flex;flex-wrap:wrap;gap:.3rem;margin:.75rem 0 .5rem}
+.qp{font-size:.78rem;font-weight:500;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim)}
+.qp.skill{color:var(--green);border-color:rgba(90,144,64,0.2)}
+.qp.spell{color:var(--frost);border-color:rgba(64,128,192,0.2)}
+.qp.gear{color:var(--accent);border-color:rgba(200,160,80,0.2)}
+.qp.attr{color:var(--fire);border-color:rgba(208,80,48,0.2)}
+
+/* Gear cards */
+.gear-group{margin-bottom:1.5rem}
+.gear-group-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--accent);padding-bottom:.35rem;margin-bottom:.5rem;border-bottom:1px solid rgba(200,160,80,0.15)}
+.gear-row{display:flex;gap:.75rem;padding:.6rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:.35rem;align-items:center}
+.gear-img{width:48px;height:48px;border-radius:4px;border:1px solid var(--border);object-fit:cover;flex-shrink:0;background:var(--bg-el)}
+.gear-info{flex:1}
+.gear-name{font-weight:600;color:var(--accent);font-size:.95rem}
+.gear-slot{font-size:.7rem;color:var(--text-muted);margin-left:.35rem;text-transform:uppercase}
+.gear-desc{color:var(--text-dim);font-size:.85rem;margin-top:.1rem}
+.gear-loc{font-size:.8rem;color:var(--green);margin-top:.15rem}
+
+/* Spell grid */
+.spell-section{margin-bottom:1.5rem}
+.spell-level{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--white);padding-bottom:.35rem;margin-bottom:.5rem;border-bottom:1px solid var(--border)}
+.spell-row{display:flex;justify-content:space-between;align-items:start;padding:.5rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:.35rem;gap:.75rem}
+.spell-info{flex:1}.spell-name{font-weight:600;color:var(--white);font-size:.95rem}
+.spell-desc{color:var(--text-dim);font-size:.85rem;margin-top:.1rem}
+.spell-badge{font-size:.68rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;flex-shrink:0;align-self:center}
+.spell-badge.must{color:var(--green);background:var(--green-dim);border:1px solid rgba(90,144,64,0.2)}
+.spell-badge.good{color:var(--accent);background:var(--accent-dim);border:1px solid rgba(200,160,80,0.15)}
+.spell-badge.fire{color:var(--fire);background:var(--fire-dim);border:1px solid rgba(208,80,48,0.2)}
+.spell-badge.frost{color:var(--frost);background:var(--frost-dim);border:1px solid rgba(64,128,192,0.2)}
+.spell-badge.shock{color:var(--shock);background:var(--shock-dim);border:1px solid rgba(128,96,192,0.2)}
+.spell-badge.custom{color:#c0a060;background:rgba(192,160,96,0.08);border:1px solid rgba(192,160,96,0.15)}
+
+/* Birthsign cards */
+.bs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin:1rem 0}
+@media(max-width:700px){.bs-grid{grid-template-columns:1fr}}
+.bs-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center}
+.bs-card.recommended{border-color:var(--accent);box-shadow:0 0 0 1px rgba(200,160,80,0.1)}
+.bs-card img{width:64px;height:64px;border-radius:50%;border:2px solid var(--border);margin-bottom:.5rem;background:var(--bg-el)}
+.bs-card.recommended img{border-color:var(--accent)}
+.bs-name{font-family:'Cinzel',serif;font-weight:700;font-size:1rem;color:var(--white)}
+.bs-bonus{font-size:.85rem;color:var(--green);margin-top:.2rem}
+.bs-penalty{font-size:.85rem;color:var(--fire);margin-top:.1rem}
+.bs-note{font-size:.82rem;color:var(--text-dim);margin-top:.3rem}
+
+/* Rotation */
+.step-list{list-style:none;counter-reset:step}
+.step-list li{position:relative;padding:.75rem 0 .75rem 3rem;border-left:2px solid var(--border);margin-left:.75rem;counter-increment:step}
+.step-list li::before{content:counter(step);position:absolute;left:-.75rem;top:.6rem;width:1.4rem;height:1.4rem;background:var(--bg);border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:700;font-size:.75rem;color:var(--accent)}
+.step-list li:last-child{border-left-color:transparent}
+.step-action{font-weight:600;color:var(--white)}
+.step-detail{color:var(--text-dim);font-size:.9rem;margin-top:.2rem}
+
+/* Virtues table */
+.virtue-table{width:100%;border-collapse:collapse;margin:1rem 0}
+.virtue-table th{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--border)}
+.virtue-table td{padding:.5rem .6rem;border-bottom:1px solid var(--border);font-size:.9rem}
+.virtue-table tr:hover{background:var(--bg-card)}
+.virtue-table .attr-name{font-weight:600;color:var(--white)}
+.virtue-table .priority{font-size:.7rem;font-weight:600;padding:.1rem .4rem;border-radius:3px}
+.priority.t1{color:var(--accent);background:var(--accent-dim)}
+.priority.t2{color:var(--green);background:var(--green-dim)}
+.priority.t3{color:var(--text-muted);background:rgba(200,200,200,0.04)}
+
+/* Section images */
+.section-img{width:100%;max-height:200px;object-fit:cover;object-position:center;border-radius:8px;border:1px solid var(--border);margin:1rem 0;filter:brightness(0.85)}
+.inline-icon{width:28px;height:28px;vertical-align:middle;margin-right:.3rem;border-radius:4px}
+
+.guide-footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.75rem;color:var(--text-muted);text-align:center}
+.guide-footer a{color:var(--text-muted)}
+.guide-footer a:hover{color:var(--accent)}
+
+/* Mobile nav */
+.mobile-nav{display:none;position:sticky;top:60px;z-index:100;background:rgba(12,10,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:56px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Cinzel',serif;font-size:.85rem;font-weight:700;color:var(--accent);letter-spacing:.06em}
+.nav-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s}
+.nav-links{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:rgba(12,10,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.nav-links.open{display:flex}
+.nav-links a{display:flex;align-items:center;gap:.5rem;height:44px;font-size:.9rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){.mobile-nav{display:flex}}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── Universal Nav ── */
+.unav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.unav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.unav-brand{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;color:var(--text);text-decoration:none;transition:color 0.3s}
+.unav-brand:hover{color:var(--accent,#c9a84c)}
+.unav-links{display:flex;gap:1.5rem;list-style:none;align-items:center}
+.unav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.3s;position:relative}
+.unav-links a:hover,.unav-links a.active{color:var(--accent,#c9a84c)}
+.unav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--accent,#c9a84c);transform:scaleX(0);transition:transform 0.3s;transform-origin:right}
+.unav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.unav-dropdown{position:relative}
+.unav-dropdown>a::after{display:none}
+.unav-dropdown>a{display:flex;align-items:center;gap:0.3rem}
+.unav-dropdown>a .dd-arrow{font-size:0.5rem;transition:transform 0.2s;margin-top:1px}
+.unav-dropdown:hover>a .dd-arrow{transform:rotate(180deg)}
+.unav-dd{
+  position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);
+  background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border);border-radius:10px;
+  min-width:200px;padding:0.5rem 0;
+  opacity:0;visibility:hidden;transform:translateX(-50%) translateY(-5px);
+  transition:opacity 0.2s,visibility 0.2s,transform 0.2s;
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+}
+.unav-dropdown:hover .unav-dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.unav-dd a{display:block;padding:0.6rem 1.2rem;font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.15s,background 0.15s;white-space:nowrap}
+.unav-dd a:hover{color:var(--accent,#c9a84c);background:rgba(201,168,76,0.06)}
+.unav-dd a::after{display:none}
+.unav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:0.5rem;z-index:1001}
+.unav-hamburger span{display:block;width:22px;height:2px;background:var(--text-dim,#aaa);margin:5px 0;transition:all 0.3s ease;border-radius:1px}
+.unav-hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.unav-hamburger.open span:nth-child(2){opacity:0}
+.unav-hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+@media(max-width:700px){
+  .unav-hamburger{display:block}
+  .unav-links{
+    display:flex;flex-direction:column;gap:0;
+    position:absolute;top:60px;left:0;right:0;
+    background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;
+    padding:0 0;
+  }
+  .unav-links.open{max-height:600px;padding:0.5rem 0}
+  .unav-links>li{list-style:none}
+  .unav-links>li>a{display:block;padding:0.8rem 2rem;font-size:0.85rem;border-bottom:1px solid var(--border)}
+  .unav-links>li:last-child>a{border-bottom:none}
+  .unav-links a::after{display:none}
+  .unav-dd{position:static;opacity:1;visibility:visible;transform:none;border:none;border-radius:0;min-width:auto;padding:0;background:none;backdrop-filter:none;box-shadow:none}
+  .unav-dd a{padding:0.7rem 2rem 0.7rem 3rem;font-size:0.8rem;border-bottom:1px solid var(--border)}
+  .unav-dropdown>a{display:none}
+  .unav-dropdown{border-bottom:none}
+}
+
+</style>
+</head>
+<body>
+<nav class="unav">
+  <div class="unav-inner">
+    <a href="index.html" class="unav-brand">Z3nGineer</a>
+    <button class="unav-hamburger" id="unav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="unav-links" id="unav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="unav-dropdown">
+        <a href="#">Projects <span class="dd-arrow">&#x25BC;</span></a>
+        <div class="unav-dd">
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+          <a href="https://crockednloaded.com">CrockedNLoaded</a>
+          <a href="guides.html">Game Guides</a>
+          <a href="CHIM.html">CHIM Modpack</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="mobile-nav" style="margin-top:60px;">
+  <span class="mobile-nav-title">The Ghost</span>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="#overview"><span class="nav-icon">&#9826;</span> Overview</a>
+    <a href="#firststeps"><span class="nav-icon">&#9654;</span> First Steps</a>
+    <a href="#birthsign"><span class="nav-icon">&#9733;</span> Birthsign</a>
+    <a href="#virtues"><span class="nav-icon">&uarr;</span> Leveling</a>
+    <a href="#progression"><span class="nav-icon">&#9876;</span> Progression</a>
+    <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+    <a href="#gear"><span class="nav-icon">&#9670;</span> Gear</a>
+    <a href="#enchanting"><span class="nav-icon">&#10023;</span> Enchanting</a>
+    <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+    <a href="#tips"><span class="nav-icon">&#128161;</span> Tips</a>
+  </div>
+</div>
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-badge">
+    <img src="https://images.uesp.net/thumb/1/15/OBR-icon-race-Breton.png/200px-OBR-icon-race-Breton.png" alt="Breton">
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">&#9826;</span> Overview</a>
+  <a href="#firststeps"><span class="nav-icon">&#9654;</span> First Steps</a>
+  <a href="#birthsign"><span class="nav-icon">&#9733;</span> Birthsign</a>
+  <a href="#virtues"><span class="nav-icon">&uarr;</span> Leveling</a>
+  <a href="#progression"><span class="nav-icon">&#9876;</span> Progression</a>
+  <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+  <a href="#gear"><span class="nav-icon">&#9670;</span> Gear</a>
+  <a href="#enchanting"><span class="nav-icon">&#10023;</span> Enchanting</a>
+  <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+  <a href="#tips"><span class="nav-icon">&#128161;</span> Tips</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="ambientGlow" cx="50%" cy="50%" r="65%">
+            <stop offset="0%" stop-color="#1a2a3a" stop-opacity="0.8"/>
+            <stop offset="60%" stop-color="#0e1620" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#0c0a08" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="ghostGlow" cx="50%" cy="40%" r="40%">
+            <stop offset="0%" stop-color="#6090b0" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#6090b0" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="shimmer1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#80c0e0" stop-opacity="0.3"/>
+            <stop offset="50%" stop-color="#6090b0" stop-opacity="0.05"/>
+            <stop offset="100%" stop-color="#80c0e0" stop-opacity="0.2"/>
+          </linearGradient>
+          <linearGradient id="daggerBlade" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#e0e8f0" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#8090a0" stop-opacity="0.3"/>
+          </linearGradient>
+          <filter id="ghostBlur">
+            <feGaussianBlur stdDeviation="2" />
+          </filter>
+          <filter id="shimmerAnim">
+            <feGaussianBlur stdDeviation="1.5"/>
+          </filter>
+        </defs>
+        <rect width="900" height="260" fill="url(#ambientGlow)"/>
+
+        <!-- Dungeon columns in background -->
+        <g opacity="0.15">
+          <rect x="100" y="40" width="20" height="200" rx="3" fill="#3a3a3a"/>
+          <rect x="780" y="40" width="20" height="200" rx="3" fill="#3a3a3a"/>
+          <rect x="200" y="60" width="16" height="180" rx="3" fill="#2a2a2a"/>
+          <rect x="700" y="55" width="16" height="185" rx="3" fill="#2a2a2a"/>
+        </g>
+
+        <!-- Oblivion gate faint background -->
+        <g transform="translate(750,120)" opacity="0.12">
+          <ellipse cx="0" cy="0" rx="40" ry="55" fill="none" stroke="#d05030" stroke-width="1.5"/>
+          <circle cx="0" cy="0" r="8" fill="#d05030" opacity="0.2"/>
+        </g>
+
+        <!-- Unaware guard patrol - right side -->
+        <g transform="translate(680,175)" opacity="0.5">
+          <ellipse cx="0" cy="20" rx="14" ry="24" fill="#5a5248"/>
+          <circle cx="0" cy="-8" r="9" fill="#6a6058"/>
+          <!-- Helmet -->
+          <ellipse cx="0" cy="-14" rx="10" ry="5" fill="#6a6058"/>
+          <path d="M-6,-16 Q0,-22 6,-16" fill="#5a5248"/>
+          <!-- Torch in hand -->
+          <line x1="14" y1="5" x2="22" y2="-15" stroke="#6a5030" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="22" cy="-18" r="6" fill="#e08040" opacity="0.4"/>
+          <circle cx="22" cy="-18" r="3" fill="#f0c060" opacity="0.6"/>
+          <!-- Legs -->
+          <line x1="-5" y1="40" x2="-8" y2="60" stroke="#5a5248" stroke-width="6" stroke-linecap="round"/>
+          <line x1="5" y1="40" x2="10" y2="58" stroke="#5a5248" stroke-width="6" stroke-linecap="round"/>
+          <!-- "?" thought bubble -->
+          <text x="0" y="-30" font-size="14" fill="#a89878" text-anchor="middle" opacity="0.5">?</text>
+        </g>
+
+        <!-- Sleeping guard - left side -->
+        <g transform="translate(180,215)" opacity="0.45">
+          <ellipse cx="0" cy="0" rx="22" ry="10" fill="#5a5248"/>
+          <circle cx="-18" cy="-2" r="8" fill="#6a6058"/>
+          <!-- Helmet askew -->
+          <ellipse cx="-22" cy="-6" rx="6" ry="4" fill="#6a6058" transform="rotate(-20,-22,-6)"/>
+          <!-- Z's -->
+          <text x="-8" y="-18" font-size="10" fill="#6090b0" opacity="0.4" font-family="Cinzel">z</text>
+          <text x="0" y="-26" font-size="8" fill="#6090b0" opacity="0.3" font-family="Cinzel">z</text>
+          <text x="6" y="-32" font-size="6" fill="#6090b0" opacity="0.2" font-family="Cinzel">z</text>
+        </g>
+
+        <!-- Treasure chest behind ghost -->
+        <g transform="translate(380,220)" opacity="0.4">
+          <rect x="-15" y="-10" width="30" height="18" rx="3" fill="#5a4020"/>
+          <rect x="-15" y="-10" width="30" height="6" rx="3" fill="#6a5030"/>
+          <rect x="-2" y="-6" width="4" height="4" rx="1" fill="#c8a050" opacity="0.6"/>
+          <!-- Gold coins spilling -->
+          <circle cx="18" cy="5" r="3" fill="#c8a050" opacity="0.35"/>
+          <circle cx="22" cy="3" r="2.5" fill="#c8a050" opacity="0.3"/>
+          <circle cx="14" cy="7" r="2" fill="#c8a050" opacity="0.25"/>
+        </g>
+
+        <!-- === THE GHOST — center, translucent figure === -->
+        <!-- Outer ghostly aura -->
+        <circle cx="450" cy="130" r="80" fill="url(#ghostGlow)"/>
+
+        <!-- Ghost body — blurred outer shell for translucency -->
+        <g transform="translate(450,130)" filter="url(#ghostBlur)" opacity="0.25">
+          <ellipse cx="0" cy="20" rx="20" ry="30" fill="#6090b0"/>
+          <circle cx="0" cy="-12" r="12" fill="#6090b0"/>
+          <line x1="-6" y1="42" x2="-14" y2="72" stroke="#6090b0" stroke-width="8" stroke-linecap="round"/>
+          <line x1="6" y1="42" x2="18" y2="68" stroke="#6090b0" stroke-width="8" stroke-linecap="round"/>
+          <line x1="14" y1="5" x2="40" y2="-10" stroke="#6090b0" stroke-width="6" stroke-linecap="round"/>
+          <line x1="-14" y1="5" x2="-38" y2="-15" stroke="#6090b0" stroke-width="6" stroke-linecap="round"/>
+        </g>
+
+        <!-- Ghost body — solid inner, semi-transparent -->
+        <g transform="translate(450,130)" opacity="0.55">
+          <!-- Body -->
+          <ellipse cx="0" cy="20" rx="16" ry="26" fill="#3a4a58"/>
+          <!-- Light armor detail -->
+          <ellipse cx="0" cy="16" rx="13" ry="18" fill="#4a5a68" opacity="0.6"/>
+          <line x1="-6" y1="5" x2="-6" y2="32" stroke="#5a6a78" stroke-width="0.6" opacity="0.4"/>
+          <line x1="6" y1="5" x2="6" y2="32" stroke="#5a6a78" stroke-width="0.6" opacity="0.4"/>
+          <!-- Belt -->
+          <rect x="-12" y="32" width="24" height="3" rx="1.5" fill="#4a5a68" opacity="0.5"/>
+
+          <!-- Head — hooded -->
+          <circle cx="0" cy="-10" r="10" fill="#3a4a58"/>
+          <!-- Hood -->
+          <path d="M-14,-8 Q-10,-28 0,-32 Q10,-28 14,-8 Q8,-16 0,-18 Q-8,-16 -14,-8 Z" fill="#2a3a48"/>
+          <!-- Hood shadow over face -->
+          <ellipse cx="0" cy="-12" rx="8" ry="5" fill="#1a2a38" opacity="0.7"/>
+          <!-- Glowing eyes — faint -->
+          <ellipse cx="-3" cy="-12" rx="2" ry="1" fill="#6090b0" opacity="0.8"/>
+          <ellipse cx="4" cy="-12" rx="2" ry="1" fill="#6090b0" opacity="0.8"/>
+
+          <!-- Legs — crouched stride -->
+          <line x1="-5" y1="42" x2="-14" y2="65" stroke="#3a4a58" stroke-width="7" stroke-linecap="round"/>
+          <line x1="5" y1="42" x2="16" y2="62" stroke="#3a4a58" stroke-width="7" stroke-linecap="round"/>
+          <!-- Boots -->
+          <ellipse cx="-15" cy="67" rx="5" ry="3" fill="#2a3a48"/>
+          <ellipse cx="17" cy="64" rx="5" ry="3" fill="#2a3a48"/>
+
+          <!-- RIGHT ARM — dagger raised for backstab -->
+          <line x1="12" y1="5" x2="32" y2="-18" stroke="#3a4a58" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="34" cy="-20" r="3" fill="#4a5a68"/>
+          <!-- Dagger — right hand -->
+          <line x1="36" y1="-22" x2="52" y2="-48" stroke="url(#daggerBlade)" stroke-width="2" stroke-linecap="round"/>
+          <!-- Crossguard -->
+          <line x1="33" y1="-24" x2="38" y2="-19" stroke="#6090b0" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+          <!-- Blade gleam -->
+          <line x1="42" y1="-32" x2="44" y2="-35" stroke="#c0d8e8" stroke-width="0.8" opacity="0.6"/>
+          <line x1="48" y1="-42" x2="49" y2="-44" stroke="#c0d8e8" stroke-width="0.6" opacity="0.4"/>
+
+          <!-- LEFT ARM — dagger low, reverse grip -->
+          <line x1="-12" y1="8" x2="-34" y2="-8" stroke="#3a4a58" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="-36" cy="-10" r="3" fill="#4a5a68"/>
+          <!-- Dagger — left hand, reverse grip -->
+          <line x1="-38" y1="-12" x2="-48" y2="8" stroke="url(#daggerBlade)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="-39" y1="-14" x2="-34" y2="-10" stroke="#6090b0" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+        </g>
+
+        <!-- Shimmer particles around the ghost -->
+        <g>
+          <circle cx="420" cy="100" r="1.5" fill="#80c0e0" opacity="0.5"/>
+          <circle cx="480" cy="90" r="1" fill="#6090b0" opacity="0.4"/>
+          <circle cx="435" cy="80" r="1.2" fill="#80c0e0" opacity="0.35"/>
+          <circle cx="465" cy="75" r="0.8" fill="#a0d0f0" opacity="0.3"/>
+          <circle cx="410" cy="120" r="1.3" fill="#6090b0" opacity="0.4"/>
+          <circle cx="490" cy="115" r="1.1" fill="#80c0e0" opacity="0.35"/>
+          <circle cx="440" cy="170" r="0.9" fill="#6090b0" opacity="0.3"/>
+          <circle cx="460" cy="165" r="1.4" fill="#80c0e0" opacity="0.25"/>
+          <circle cx="425" cy="145" r="0.7" fill="#a0d0f0" opacity="0.4"/>
+          <circle cx="475" cy="140" r="1" fill="#6090b0" opacity="0.35"/>
+          <!-- Shimmer streaks — translucency effect -->
+          <line x1="430" y1="95" x2="435" y2="85" stroke="#80c0e0" stroke-width="0.5" opacity="0.3"/>
+          <line x1="470" y1="100" x2="473" y2="88" stroke="#6090b0" stroke-width="0.5" opacity="0.25"/>
+          <line x1="445" y1="160" x2="448" y2="150" stroke="#80c0e0" stroke-width="0.5" opacity="0.2"/>
+          <line x1="455" y1="85" x2="458" y2="75" stroke="#a0d0f0" stroke-width="0.5" opacity="0.3"/>
+        </g>
+
+        <!-- Chameleon magic runes circling the ghost -->
+        <g opacity="0.2" fill="none" stroke="#6090b0" stroke-width="0.8">
+          <circle cx="400" cy="130" r="7"/><path d="M400,123 L400,137 M393,130 L407,130"/>
+          <circle cx="500" cy="120" r="6"/><path d="M495,114 L505,126 M505,114 L495,126"/>
+          <circle cx="420" cy="80" r="5"/><path d="M420,75 L420,85"/>
+          <circle cx="480" cy="170" r="5.5"/><path d="M475,165 L485,175"/>
+        </g>
+
+        <!-- Victim NPC — sitting at desk, unaware, about to be backstabbed -->
+        <g transform="translate(560,170)" opacity="0.6">
+          <!-- Chair -->
+          <rect x="-8" y="10" width="16" height="20" rx="2" fill="#4a3020"/>
+          <rect x="-10" y="-10" width="20" height="22" rx="2" fill="#5a4030"/>
+          <!-- NPC sitting -->
+          <ellipse cx="0" cy="0" rx="10" ry="15" fill="#6a5a48"/>
+          <circle cx="0" cy="-18" r="7" fill="#8a7a68"/>
+          <!-- Reading a book -->
+          <rect x="10" y="-5" width="12" height="16" rx="1" fill="#4a3020" transform="rotate(10,16,3)"/>
+          <line x1="12" y1="-2" x2="20" y2="0" stroke="#6a5030" stroke-width="0.5" opacity="0.5"/>
+          <line x1="12" y1="2" x2="20" y2="4" stroke="#6a5030" stroke-width="0.5" opacity="0.5"/>
+        </g>
+
+        <!-- Ground line -->
+        <line x1="80" y1="240" x2="820" y2="240" stroke="#3a2a18" stroke-width="0.5" opacity="0.3"/>
+
+        <!-- Shadow pools from ghost — barely there -->
+        <ellipse cx="450" cy="236" rx="30" ry="4" fill="#1a2a3a" opacity="0.15"/>
+
+        <!-- Stolen goods on ground -->
+        <g transform="translate(300,232)" opacity="0.3">
+          <circle cx="0" cy="0" r="3" fill="#c8a050" opacity="0.4"/>
+          <circle cx="6" cy="-1" r="2.5" fill="#c8a050" opacity="0.35"/>
+          <rect x="12" y="-4" width="6" height="8" rx="1" fill="#4a6060" opacity="0.4"/>
+        </g>
+      </svg>
+    </div>
+    <div class="header-row">
+      <img class="header-portrait" src="https://images.uesp.net/thumb/1/15/OBR-icon-race-Breton.png/200px-OBR-icon-race-Breton.png" alt="Breton">
+      <div class="header-text">
+        <div class="breadcrumb">Oblivion Remastered &#8250; Builds &#8250; The Ghost</div>
+        <h1>The Ghost</h1>
+        <div class="subtitle">Breton &middot; The Mage &middot; 100% Chameleon &middot; Permanent Invisibility</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag ghost">100% Chameleon</span>
+      <span class="tag gold">Stealth</span>
+      <span class="tag green">S-Tier</span>
+      <span class="tag blue">Remastered 2025</span>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="section reveal" id="overview">
+    <h2>Overview</h2>
+    <p>The Ghost is the most powerful build in Oblivion Remastered, full stop. By stacking 100% Chameleon across five enchanted armor pieces, you become <strong>permanently undetectable</strong> &mdash; not just invisible, but completely removed from the AI's awareness. You can walk up to any enemy, any NPC, any boss, and deliver a guaranteed sneak attack. With the remastered 8x dagger multiplier from Agility, every single hit is a one-shot kill on most enemies.</p>
+
+    <p>Unlike Invisibility, Chameleon <strong>does not break when you attack, cast spells, open doors, loot containers, or interact with objects</strong>. At 100%, enemies will never detect you. You are a permanent ghost in the world &mdash; combat becomes a formality, dungeons become loot runs, and every fight starts and ends on your terms.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Why 100% Chameleon is S-Tier</div>
+      <p><strong>Permanent undetectability.</strong> No spell to maintain, no timer, no magicka cost. Just walk through the entire game killing everything with impunity. Every hit is a sneak attack. Every dungeon is trivial. Every quest that requires stealth is automatic. The Dark Brotherhood and Thieves Guild become effortless. Even the Arena can be cheesed.</p>
+    </div>
+
+    <h3>Race &mdash; Breton</h3>
+    <ul class="picks">
+      <li><span class="label">Passive</span> <span class="name">50% Magic Resistance</span> &mdash; <span class="note">best defensive racial; AoE spells and traps barely scratch you</span></li>
+      <li><span class="label">Passive</span> <span class="name">+50 Magicka</span> &mdash; <span class="note">fuels your Illusion and Conjuration spells before Chameleon gear</span></li>
+      <li><span class="label">Daily</span> <span class="name">Dragon Skin</span> &mdash; <span class="note">50% physical damage shield for 60 seconds &mdash; emergency button for early game</span></li>
+      <li><span class="label">Skills</span> <span class="name">+10 Conjuration, Mysticism, Restoration</span> &middot; <span class="name">+5 Alchemy, Alteration, Illusion</span></li>
+    </ul>
+
+    <h3>Class &mdash; Custom: "The Ghost"</h3>
+    <ul class="picks">
+      <li><span class="label">Spec</span> <span class="name">Stealth</span></li>
+      <li><span class="label">Favored</span> <span class="name">Intelligence, Agility</span></li>
+      <li><span class="label">Major</span> <span class="name">Alchemy, Blade, Conjuration, Destruction, Illusion, Light Armor, Sneak</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Why Stealth Specialization?</div>
+      <p><strong>+10 Sneak, +5 Agility &amp; Speed</strong> from Stealth spec. In the remaster, Agility governs dagger damage and the sneak attack multiplier. High Agility = higher dagger damage = bigger one-shots. The entire build revolves around Sneak + Blade (daggers) + Chameleon, so Stealth spec is the only choice.</p>
+    </div>
+
+    <h3>Target Attributes</h3>
+    <div class="stats">
+      <div class="stat-box"><div class="stat-label">STR</div><div class="stat-val">40</div></div>
+      <div class="stat-box primary"><div class="stat-label">INT</div><div class="stat-val">75</div></div>
+      <div class="stat-box"><div class="stat-label">WIL</div><div class="stat-val">55</div></div>
+      <div class="stat-box primary"><div class="stat-label">AGI</div><div class="stat-val">75</div></div>
+      <div class="stat-box"><div class="stat-label">SPD</div><div class="stat-val">55</div></div>
+      <div class="stat-box"><div class="stat-label">END</div><div class="stat-val">45</div></div>
+      <div class="stat-box"><div class="stat-label">PER</div><div class="stat-val">40</div></div>
+      <div class="stat-box"><div class="stat-label">LCK</div><div class="stat-val">60</div></div>
+    </div>
+    <p style="font-size:.88rem;color:var(--text-dim);">Breton with The Mage birthsign. INT for magicka pool (spells before Chameleon gear is complete), AGI for dagger damage and sneak multiplier. Everything else is secondary &mdash; once you hit 100% Chameleon, stats barely matter.</p>
+  </section>
+
+  <!-- FIRST STEPS -->
+  <section class="section reveal" id="firststeps">
+    <h2>First Steps After the Tutorial</h2>
+    <p>Your early game is about setting up the foundations: faction membership for quest rewards, Grand Soul Gems for enchanting, and closing Oblivion Gates for Sigil Stones. Here is the exact order.</p>
+
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Join the Dark Brotherhood</span>
+        <div class="step-detail">Sleep in any inn after killing an innocent NPC (easiest: a beggar in the Waterfront at night, or use a Frenzy spell on a civilian and let guards handle it, then claim the kill). Lucien Lachance visits you in your sleep. Accept his offer. The Brotherhood questline gives you the <strong>Blade of Woe</strong> immediately and eventually <strong>Shadowhush armor</strong> and other stealth gear. This is your primary early questline.</div>
+      </li>
+      <li>
+        <span class="step-action">Join the Thieves Guild</span>
+        <div class="step-detail">Read one of the "Gray Fox" wanted posters in any city, then find the beggar <strong>Armand Christophe</strong> at midnight in the Imperial City Waterfront Garden. Complete the initiation quest. The Thieves Guild gives you <strong>fencing contacts</strong> for stolen goods and eventually the <strong>Gray Cowl of Nocturnal</strong> &mdash; one of the best items in the game.</div>
+      </li>
+      <li>
+        <span class="step-action">Buy Starter Spells &mdash; Imperial City</span>
+        <div class="step-detail">Visit <strong>Edgar's Discount Spells</strong> for cheap Illusion spells (especially Chameleon). Visit <strong>Mystic Emporium</strong> for Soul Trap. Buy a <strong>dagger</strong> from any weaponsmith &mdash; you need Blade skill gains from the start. Buy <strong>Flare</strong> and <strong>Snowball</strong> for Destruction leveling.</div>
+      </li>
+      <li>
+        <span class="step-action">Start Collecting Grand Soul Gems</span>
+        <div class="step-detail">You need at least <strong>5 Grand Soul Gems filled with Grand Souls</strong> to enchant your five Chameleon pieces. Buy empty Grand Soul Gems from Mages Guild vendors (Calindil at Mystic Emporium, Rindir at Rindir's Staffs). Learn the <strong>Soul Trap</strong> spell and start filling them by killing Grand-soul creatures (Xivilai, Liches, Gloom Wraiths, Minotaur Lords). Alternatively, close Oblivion Gates for Sigil Stones with Chameleon.</div>
+      </li>
+      <li>
+        <span class="step-action">Join the Mages Guild</span>
+        <div class="step-detail">Visit any Mages Guild hall and start collecting <strong>recommendations from all 7 cities</strong>. You need Arcane University access for the Enchanting Altar. Do one recommendation per city visit &mdash; they're quick sidequests. This can be done alongside Dark Brotherhood contracts.</div>
+      </li>
+      <li>
+        <span class="step-action">Start Closing Oblivion Gates (Main Quest)</span>
+        <div class="step-detail">Progress the main quest until Oblivion Gates start appearing (after Kvatch). Each gate you close rewards a random <strong>Sigil Stone</strong>. At level 17+, Sigil Stones can roll <strong>20% Chameleon</strong> &mdash; this is the fastest path to 100%. Save before grabbing the Sigil Stone and reload until you get Chameleon.</div>
+      </li>
+    </ol>
+
+    <div class="callout warn">
+      <div class="callout-label">Critical &mdash; Don't Rush the Main Quest</div>
+      <p>Oblivion Gates with <strong>Transcendent Sigil Stones</strong> (the best tier, including 20% Chameleon) only appear at <strong>level 17+</strong>. If you close gates before level 17, the Sigil Stones will be weaker and give less than 20% Chameleon per piece. Level up first, then farm gates. You need exactly 5 pieces at 20% each, or you'll need more gear slots.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Alternative &mdash; Enchanting at the Arcane University</div>
+      <p>If you have Arcane University access and Grand Soul Gems filled with Grand Souls, you can enchant your own gear with Chameleon using the <strong>Enchanting Altar</strong>. You need to know a Chameleon spell first (buy from Bravil Mages Guild &mdash; Ita Rienus sells it). Grand Souls give <strong>20% Chameleon per piece</strong> on armor. This is more reliable than farming Sigil Stone RNG.</p>
+    </div>
+  </section>
+
+  <!-- BIRTHSIGN -->
+  <section class="section reveal" id="birthsign">
+    <h2>Birthsign</h2>
+    <div class="bs-grid">
+      <div class="bs-card recommended">
+        <img src="https://images.uesp.net/thumb/c/c7/OBbsign_Mage.jpg/200px-OBbsign_Mage.jpg" alt="The Mage">
+        <div class="bs-name">The Mage</div>
+        <div class="bs-bonus">+50 Magicka</div>
+        <div class="bs-note">Total +100 Magicka with Breton racial. Fuels your Illusion and Conjuration until Chameleon is online. No drawbacks. Best overall pick.</div>
+        <div style="margin-top:.5rem"><span class="tag gold">Recommended</span></div>
+      </div>
+      <div class="bs-card">
+        <img src="https://images.uesp.net/thumb/5/5f/OBbsign_Shadow.jpg/200px-OBbsign_Shadow.jpg" alt="The Shadow">
+        <div class="bs-name">The Shadow</div>
+        <div class="bs-bonus">Invisibility (60 sec, 1/day)</div>
+        <div class="bs-note">Thematic pick. Free daily Invisibility for early game stealth before Chameleon gear. Becomes redundant once you hit 100%.</div>
+      </div>
+      <div class="bs-card">
+        <img src="https://images.uesp.net/thumb/0/0b/OBbsign_Thief.jpg/200px-OBbsign_Thief.jpg" alt="The Thief">
+        <div class="bs-name">The Thief</div>
+        <div class="bs-bonus">+10 Agility, +10 Speed, +10 Luck</div>
+        <div class="bs-note">Strong stat spread for a Stealth build. More Agility = more dagger damage in the remaster. Good alternative if you prefer raw stats over Magicka.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Why The Mage Over The Thief?</div>
+      <p>Before your 100% Chameleon gear is complete (levels 1-17), you're a fragile stealth character who relies on <strong>Invisibility spells, Chameleon spells, and Conjuration summons</strong> to survive. All of these cost Magicka. The +100 Magicka from Breton + The Mage means you can cast multiple Invisibility spells per fight, summon a skeleton to tank, and still have mana for Destruction. Once Chameleon gear is online, Magicka becomes less critical &mdash; but you still want it for Conjuration summons and AoE Destruction.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Avoid &mdash; The Apprentice</div>
+      <p>+100 Magicka but <strong>100% Weakness to Magic</strong>. Negates your Breton 50% resist and makes you take extra magic damage. Even with 100% Chameleon, AoE spells and traps still hit you. Don't take it.</p>
+    </div>
+  </section>
+
+  <!-- VIRTUES / LEVELING -->
+  <section class="section reveal" id="virtues">
+    <h2>Leveling &mdash; Virtue System</h2>
+    <p>The remaster replaced the old attribute multiplier system. At each level-up you get <strong>12 Virtues</strong> to distribute freely. Max 5 per attribute, max 3 attributes per level. Luck costs 4 per point. For The Ghost, your priority is getting to level 17 ASAP for Transcendent Sigil Stones, while building Agility for dagger damage.</p>
+
+    <table class="virtue-table">
+      <thead><tr><th>Attribute</th><th>Priority</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">Agility</td><td><span class="priority t1">MAX FIRST</span></td><td>Governs dagger damage in Remastered. Also boosts Sneak, Marksman, and the sneak attack multiplier. This is your primary damage stat.</td></tr>
+        <tr><td class="attr-name">Intelligence</td><td><span class="priority t1">MAX FIRST</span></td><td>Max Magicka pool. You need mana for Illusion, Conjuration, and Destruction before and after Chameleon gear.</td></tr>
+        <tr><td class="attr-name">Speed</td><td><span class="priority t2">SECOND</span></td><td>Movement speed. Faster repositioning for sneak attacks. Also governs Athletics and Light Armor.</td></tr>
+        <tr><td class="attr-name">Willpower</td><td><span class="priority t2">SECOND</span></td><td>Magicka regen (quadratic scaling). Important for sustained casting. Push to 65+ eventually.</td></tr>
+        <tr><td class="attr-name">Endurance</td><td><span class="priority t3">LATER</span></td><td>Health pool. Less critical since enemies can't hit what they can't see. HP is retroactive in the remaster, so investing later is fine.</td></tr>
+        <tr><td class="attr-name">Strength</td><td><span class="priority t3">SKIP</span></td><td>Melee damage for swords/axes. Daggers scale off Agility in Remastered. Only useful for carry weight.</td></tr>
+        <tr><td class="attr-name">Luck</td><td><span class="priority t3">SKIP</span></td><td>Costs 4 Virtues per point. Start at 50-60 and leave it. Not worth the investment.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-label">Suggested Distribution</div>
+      <p><strong>Levels 2-10:</strong> Agility 5, Intelligence 5, Speed 2</p>
+      <p><strong>Levels 11-17:</strong> Agility 5, Willpower 5, Endurance 2</p>
+      <p><strong>Levels 18+:</strong> Max Intelligence, then fill Speed and remaining attributes.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Level Fast &mdash; Sleep Often</div>
+      <p>You want to reach level 17 as efficiently as possible for Transcendent Sigil Stones. Your Major Skills (Sneak, Blade, Illusion, etc.) all level by using them. <strong>Sneak everywhere</strong> &mdash; even in town. <strong>Cast Chameleon spells</strong> while walking around. <strong>Stab rats</strong> with your dagger. Every action levels you. Sleep in beds frequently to trigger level-ups.</p>
+    </div>
+  </section>
+
+  <!-- PROGRESSION -->
+  <section class="section reveal" id="progression">
+    <h2>Level Progression</h2>
+    <p style="color:var(--text-dim);margin-bottom:1rem;">Click to expand. The build has two distinct phases: before 100% Chameleon and after.</p>
+
+    <!-- Phase 1 -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 1-5</span>
+        <span class="lv-title">Shadow Apprentice &mdash; Sneak + Illusion Foundation</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Sneak to 25</span>
+          <span class="qp skill">Illusion to 25</span>
+          <span class="qp skill">Blade to 25</span>
+          <span class="qp spell">Chameleon</span>
+          <span class="qp gear">Blade of Woe</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Priority</span> <span class="name">Sneak to 25</span> &mdash; <span class="note">Apprentice perk unlocks. Start sneaking everywhere &mdash; even in town. Walk behind NPCs.</span></li>
+          <li><span class="label">Illusion</span> <span class="name">Spam Chameleon spell</span> &mdash; <span class="note">cast it while walking around to level Illusion. Buy it from Ita Rienus in Bravil MG.</span></li>
+          <li><span class="label">Blade</span> <span class="name">Use daggers exclusively</span> &mdash; <span class="note">daggers level Blade skill. Iron/Steel dagger from any shop. Get the Blade of Woe from Dark Brotherhood immediately.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Dark Brotherhood &mdash; join + first contracts</span> &mdash; <span class="note">get Blade of Woe, Shrouded Armor, and Sanctuary access (safe house + vendor)</span></li>
+          <li><span class="label">Quest</span> <span class="name">Thieves Guild &mdash; join + first jobs</span> &mdash; <span class="note">fencing contacts for stolen loot. You'll be stealing a LOT.</span></li>
+          <li><span class="label">Buy</span> <span class="name">Soul Trap spell</span> &mdash; <span class="note">from any Mages Guild vendor. You need this to start filling soul gems.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:.5rem;">
+          <div class="callout-label">Sneak XP Exploit</div>
+          <p>Find a sleeping NPC and walk into them while crouching. The game constantly checks your Sneak vs. their detection, giving you rapid skill gains. Do this while AFK for massive Sneak leveling.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 6-10</span>
+        <span class="lv-title">Phantom &mdash; Mages Guild + Soul Gem Farming</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Sneak to 50</span>
+          <span class="qp skill">Illusion to 50</span>
+          <span class="qp skill">Conjuration to 25</span>
+          <span class="qp gear">Grand Soul Gems</span>
+          <span class="qp attr">AGI 55+</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Sneak 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">you can now sneak at full walking speed without being detected. Major quality-of-life.</span></li>
+          <li><span class="label">Illusion 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">better Chameleon and Invisibility spells available. Also unlocks Paralyze at Expert.</span></li>
+          <li><span class="label">Conj 25</span> <span class="name">Summon Skeleton</span> &mdash; <span class="note">your tank before Chameleon is online. Summon + sneak attack while the enemy is distracted.</span></li>
+          <li><span class="label">Goal</span> <span class="name">Mages Guild recommendations</span> &mdash; <span class="note">complete all 7 to unlock the Arcane University enchanting altar. Critical for the build.</span></li>
+          <li><span class="label">Farm</span> <span class="name">Grand Soul Gems</span> &mdash; <span class="note">buy empty ones from Calindil (Mystic Emporium) and Rindir (Imperial City). Fill by killing Xivilai/Liches with Soul Trap active.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Continue Dark Brotherhood</span> &mdash; <span class="note">each contract rewards gold and stealth gear. The questline is perfectly suited to a stealth character.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 11-16</span>
+        <span class="lv-title">Wraith &mdash; Preparing for 100% Chameleon</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Sneak to 75</span>
+          <span class="qp skill">Blade to 50</span>
+          <span class="qp skill">Light Armor to 50</span>
+          <span class="qp gear">5x Grand Soul Gems</span>
+          <span class="qp spell">Invisibility</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Sneak 75</span> <span class="name">Expert</span> &mdash; <span class="note">Expert perk further reduces detection. Even without Chameleon, you're nearly undetectable in darkness.</span></li>
+          <li><span class="label">Blade 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">access to better dagger perks. Power attacks become more effective.</span></li>
+          <li><span class="label">LA 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">Light Armor Journeyman = 95% spell effectiveness. You'll enchant light armor for Chameleon.</span></li>
+          <li><span class="label">Goal</span> <span class="name">5 filled Grand Soul Gems OR Arcane University access</span> &mdash; <span class="note">you need one of these ready by level 17.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Main Quest &mdash; progress to Oblivion Gates</span> &mdash; <span class="note">at level 17 gates will drop Transcendent Sigil Stones. Don't close them yet &mdash; save them.</span></li>
+          <li><span class="label">Daedric</span> <span class="name">Mehrunes' Razor (level 10+)</span> &mdash; <span class="note">Silus Vesuius quest, Mehrunes Dagon shrine. Dagger with instant kill chance. Perfect Ghost weapon.</span></li>
+        </ul>
+        <div class="callout" style="margin-top:.5rem;">
+          <div class="callout-label">Get Your Enchanting Pieces Ready</div>
+          <p>Before level 17, acquire <strong>5 unenchanted light armor pieces</strong>: helmet, cuirass, gauntlets, greaves, boots. Or use: ring, amulet, hood, robe, shield. Any 5 equippable slots work. Glass armor is ideal (high AR, light, looks great).</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Phase 4 - THE MOMENT -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 17</span>
+        <span class="lv-title">Ascension &mdash; 100% Chameleon Comes Online</span>
+        <span class="lv-spike">BUILD COMPLETE</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp gear">5x 20% Chameleon</span>
+          <span class="qp gear">Sigil Stones OR Enchant</span>
+          <span class="qp skill">Permanent Ghost Mode</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Method A</span> <span class="name">Sigil Stones</span> &mdash; <span class="note">close 5 Oblivion Gates. Save before grabbing each Sigil Stone. Reload until you get Chameleon. Apply to 5 armor pieces.</span></li>
+          <li><span class="label">Method B</span> <span class="name">Arcane University</span> &mdash; <span class="note">enchant 5 pieces with Chameleon effect using Grand Soul Gems (Grand souls). Need to know a Chameleon spell first.</span></li>
+          <li><span class="label">Result</span> <span class="name">5 x 20% = 100% Chameleon</span> &mdash; <span class="note">PERMANENT UNDETECTABILITY. The game is now yours.</span></li>
+          <li><span class="label">Combat</span> <span class="name">Every hit is a sneak attack</span> &mdash; <span class="note">6x sneak multiplier with blades, 8x with daggers (Agility perk). One-shot most enemies.</span></li>
+          <li><span class="label">Stealth</span> <span class="name">Walk through any quest</span> &mdash; <span class="note">lockpick, steal, talk to NPCs, open doors &mdash; nothing breaks your stealth.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:.5rem;">
+          <div class="callout-label">The World is Yours</div>
+          <p>With 100% Chameleon, you can literally walk up to the final boss of the main quest and one-shot them with a dagger sneak attack. Every guild questline becomes trivial. Every dungeon is a loot run. You can steal from shops while the shopkeeper watches (they can't see you). You can pickpocket anyone. The game is fundamentally broken &mdash; and it's glorious.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Phase 5 -->
+    <div class="lv-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 18-30+</span>
+        <span class="lv-title">Reaper &mdash; Optimization + DLC Content</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Sneak 100</span>
+          <span class="qp skill">Blade 100</span>
+          <span class="qp gear">Mehrunes' Razor</span>
+          <span class="qp gear">Gray Cowl</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Sneak 100</span> <span class="name">Master</span> &mdash; <span class="note">overkill with 100% Chameleon, but the perks still boost your sneak attack damage.</span></li>
+          <li><span class="label">Blade 100</span> <span class="name">Master</span> &mdash; <span class="note">maximum dagger damage. Master perk power attacks cause paralysis on hit.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Finish Thieves Guild</span> &mdash; <span class="note">Gray Cowl of Nocturnal. Permanent Detect Life + Feather + separate identity for crimes.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Shivering Isles DLC</span> &mdash; <span class="note">entire expansion is trivial with 100% Chameleon. Walk through everything.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Knights of the Nine DLC</span> &mdash; <span class="note">Crusader's Relics are nice but unnecessary. Do it for the story.</span></li>
+        </ul>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- SPELLS -->
+  <section class="section reveal" id="spells">
+    <h2>Best Spells</h2>
+
+    <div class="spell-section">
+      <div class="spell-level">Illusion &mdash; Your Core School</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Chameleon</div><div class="spell-desc">Partial invisibility that does NOT break on action. Your defining spell before gear is complete. Cast repeatedly for Illusion XP. At 50% Chameleon spell + 50% gear, you're already very hard to detect.</div><div class="gear-loc">&#128205; Ita Rienus &mdash; Bravil Mages Guild</div></div><span class="spell-badge must">Must &middot; Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Shadow Shape (Invisibility)</div><div class="spell-desc">Full invisibility &mdash; breaks on ANY action (attack, open door, interact). Use for repositioning and escape before Chameleon gear is complete. Useless after 100%.</div><div class="gear-loc">&#128205; Ita Rienus &mdash; Bravil Mages Guild</div></div><span class="spell-badge good">Good &middot; Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Alluring Gaze / Beguiling Touch</div><div class="spell-desc">Charm NPC to boost disposition. At 100% Chameleon, NPCs can't see you &mdash; but you can still initiate dialogue, and Charm makes persuasion trivial.</div><div class="gear-loc">&#128205; Delphine Jend &mdash; Bravil MG &middot; Selena Orania &mdash; Bruma MG</div></div><span class="spell-badge good">Good &middot; Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Silence</div><div class="spell-desc">Prevents enemies from casting spells. Useful against mages who use AoE that can still damage you even if they can't see you.</div><div class="gear-loc">&#128205; Any Illusion vendor at Expert rank</div></div><span class="spell-badge good">Good &middot; Expert</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Conjuration &mdash; Your Tank and Distraction</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Skeleton</div><div class="spell-desc">Your early-game tank. Summon before engaging &mdash; enemies attack the skeleton while you backstab them. Essential at levels 1-16.</div><div class="gear-loc">&#128205; Calindil &mdash; Mystic Emporium, Imperial City &middot; Alberic Litte &mdash; Chorrol MG</div></div><span class="spell-badge must">Must &middot; Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Scamp</div><div class="spell-desc">Tougher than skeleton. Casts fire at range, drawing enemy attention away from you. Good distraction summon.</div><div class="gear-loc">&#128205; Athragar &mdash; Chorrol MG &middot; Vigge the Cautious &mdash; Skingrad MG</div></div><span class="spell-badge good">Good &middot; Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Dremora</div><div class="spell-desc">Endgame summon. A full Dremora warrior tanks and deals massive damage while you backstab everything.</div><div class="gear-loc">&#128205; Volanaro &mdash; Bruma MG (Expert Conjuration required)</div></div><span class="spell-badge good">Good &middot; Expert</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Destruction &mdash; AoE Cleanup</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Flare</div><div class="spell-desc">Cheap fire damage. Use to level Destruction early and finish off enemies that survived your sneak attack (rare at 100%).</div><div class="gear-loc">&#128205; Druja &mdash; Skingrad MG &middot; Edgar Vautrine &mdash; Imperial City</div></div><span class="spell-badge fire">Fire &middot; Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Fireball</div><div class="spell-desc">AoE fire damage. Useful for clearing groups of weak enemies (rats, goblins) when you don't want to stab each one individually.</div><div class="gear-loc">&#128205; Vigge the Cautious &mdash; Skingrad MG</div></div><span class="spell-badge fire">Fire &middot; Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Lightning Bolt</div><div class="spell-desc">Shock damage + drains enemy Magicka. Best element for shutting down mages who use AoE spells that bypass stealth.</div><div class="gear-loc">&#128205; Vigge the Cautious &mdash; Skingrad MG</div></div><span class="spell-badge shock">Shock &middot; Journ</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Utility</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Soul Trap</div><div class="spell-desc">Captures souls in empty soul gems when the target dies. Cast before your killing blow. Essential for filling Grand Soul Gems for enchanting.</div><div class="gear-loc">&#128205; Mysticism vendors in most Mages Guild halls</div></div><span class="spell-badge must">Must &middot; Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Heal Minor Wounds / Major Wounds</div><div class="spell-desc">You still need heals for traps, fall damage, and AoE. Spam Minor Wounds to level Restoration. Always carry a heal.</div><div class="gear-loc">&#128205; Starting spell (Minor) &middot; Any Chapel healer or MG vendor (Major)</div></div><span class="spell-badge must">Must &middot; Novice+</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Open Lock (Easy &rarr; Hard)</div><div class="spell-desc">Open locks with magic instead of lockpicks. Saves lockpicks for when it matters. Level up the spell as your Alteration grows.</div><div class="gear-loc">&#128205; Druja &mdash; Skingrad MG &middot; Trayvond &mdash; Cheydinhal MG</div></div><span class="spell-badge good">Good &middot; Appr</span></div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Shopping Route for The Ghost</div>
+      <p><strong>1. Bravil Mages Guild</strong> &mdash; Chameleon, Invisibility, Charm (Ita Rienus). This is your most important shop.</p>
+      <p><strong>2. Imperial City</strong> &mdash; Soul Trap, Summon Skeleton, cheap Illusion spells (Mystic Emporium + Edgar's Discount Spells)</p>
+      <p><strong>3. Skingrad Mages Guild</strong> &mdash; Destruction spells for AoE and leveling (Druja, Vigge)</p>
+      <p><strong>4. Chorrol / Bruma MG</strong> &mdash; Conjuration summons (Athragar, Volanaro)</p>
+    </div>
+  </section>
+
+  <!-- GEAR -->
+  <section class="section reveal" id="gear">
+    <h2>Gear</h2>
+
+    <div class="callout">
+      <div class="callout-label">The 5-Piece Chameleon Set</div>
+      <p>Your endgame gear is any 5 equippable items each enchanted with <strong>20% Chameleon</strong>. The specific armor doesn't matter &mdash; what matters is hitting exactly 100%. Below are the recommended pieces and how to acquire them.</p>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Chameleon Armor (5 Pieces &mdash; 20% Each)</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#129694;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Chameleon Hood/Helmet</span> <span class="gear-slot">Head</span></div>
+          <div class="gear-desc">20% Chameleon. Use any unenchanted Light Armor helmet &mdash; Glass or Chainmail. Enchant with Grand Soul Gem or apply a Chameleon Sigil Stone.</div>
+          <div class="gear-loc">&#128205; Enchant at Arcane University, or apply Transcendent Sigil Stone from Oblivion Gate (level 17+).</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#129526;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Chameleon Cuirass</span> <span class="gear-slot">Chest</span></div>
+          <div class="gear-desc">20% Chameleon. Glass Cuirass is the best light armor base. High armor rating while staying in Light Armor skill category.</div>
+          <div class="gear-loc">&#128205; Glass armor appears in shops/loot at level 15+. Enchant or apply Sigil Stone.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#129503;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Chameleon Gauntlets</span> <span class="gear-slot">Hands</span></div>
+          <div class="gear-desc">20% Chameleon. Any unenchanted light armor gauntlets. Leather gauntlets work if you haven't found Glass yet.</div>
+          <div class="gear-loc">&#128205; Buy from armorer shops. Enchant at Arcane University or apply Sigil Stone.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#129406;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Chameleon Greaves</span> <span class="gear-slot">Legs</span></div>
+          <div class="gear-desc">20% Chameleon. Any unenchanted light armor greaves. Glass Greaves are ideal.</div>
+          <div class="gear-loc">&#128205; Buy or loot. Enchant at Arcane University or apply Sigil Stone.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128095;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Chameleon Boots</span> <span class="gear-slot">Feet</span></div>
+          <div class="gear-desc">20% Chameleon. Any unenchanted light armor boots. Complete your 5th piece to hit 100%.</div>
+          <div class="gear-loc">&#128205; Buy or loot. Enchant at Arcane University or apply Sigil Stone.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Weapons &mdash; Daggers for Maximum Sneak Damage</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128481;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Blade of Woe</span> <span class="gear-slot">Dagger</span></div>
+          <div class="gear-desc">Absorb Health on strike. Your first real weapon. Given by Lucien Lachance when you join the Dark Brotherhood. Perfectly themed for the build.</div>
+          <div class="gear-loc">&#128205; Dark Brotherhood &mdash; given immediately upon joining. Sleep after killing an innocent NPC.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128481;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Mehrunes' Razor</span> <span class="gear-slot">Dagger</span></div>
+          <div class="gear-desc">The ultimate Ghost weapon. Has a <strong>chance to instantly kill</strong> any target on hit (Daedric Banishing effect). Combined with guaranteed sneak attacks, you are a one-hit assassination machine. The instant kill works on bosses, daedra, even quest-essential NPCs (in some cases).</div>
+          <div class="gear-loc">&#128205; Mehrunes Dagon shrine quest. Requires level 10+. Located in the mountains west of Cheydinhal. The quest involves clearing Sundercliff Watch, a multi-level dungeon. The Razor is your reward.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#9876;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Sufferthorn</span> <span class="gear-slot">Dagger</span></div>
+          <div class="gear-desc">Damage Health + Damage Agility on strike. A solid mid-game dagger with decent base damage. Great before Mehrunes' Razor.</div>
+          <div class="gear-loc">&#128205; Dark Brotherhood quest reward &mdash; complete the "Scheduled for Execution" contract.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Key Accessories</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128081;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Gray Cowl of Nocturnal</span> <span class="gear-slot">Head (Special)</span></div>
+          <div class="gear-desc">Detect Life 120ft + Feather 200pts + creates a separate criminal identity. Any crimes committed while wearing it are attributed to "The Gray Fox," not you. Stacks with your Chameleon helm (swap as needed).</div>
+          <div class="gear-loc">&#128205; Thieves Guild final quest reward. Complete the entire questline.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128141;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Ring of Khajiiti</span> <span class="gear-slot">Ring</span></div>
+          <div class="gear-desc">Chameleon 35% + Fortify Speed 10. If you use this as one of your 5 pieces, you only need ~13% on four other pieces, giving you more flexibility.</div>
+          <div class="gear-loc">&#128205; Meridia's Shrine quest. Located west of Skingrad. Requires level 10+.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#128141;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Amulet of Chameleon / Fortify Sneak</span> <span class="gear-slot">Amulet</span></div>
+          <div class="gear-desc">Can enchant an unenchanted amulet with Chameleon if using it as one of your 5 pieces. Or enchant with Fortify Sneak / Fortify Agility for extra damage.</div>
+          <div class="gear-loc">&#128205; Buy plain silver/gold amulets from jewelers. Enchant at Arcane University.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Flexible Slot Allocation</div>
+      <p>You don't have to use all 5 armor slots. You can mix armor + jewelry + clothing. For example: <strong>Ring of Khajiiti (35%)</strong> + an enchanted amulet (20%) + three armor pieces (15% each) = 100%. Or: five armor pieces at 20% each for the simplest setup. Just hit 100% total.</p>
+    </div>
+  </section>
+
+  <!-- ENCHANTING -->
+  <section class="section reveal" id="enchanting">
+    <h2>Enchanting &mdash; Reaching 100% Chameleon</h2>
+    <p>This section explains exactly how to enchant your gear for 100% Chameleon. There are two methods: <strong>Sigil Stones</strong> from Oblivion Gates, or <strong>Enchanting at the Arcane University</strong>. Both work. The Sigil Stone method is faster if you're lucky; the Enchanting method is more reliable.</p>
+
+    <h3>Method 1: Sigil Stones (Faster, RNG-Based)</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Reach Level 17+</span>
+        <div class="step-detail">Transcendent Sigil Stones (the highest tier) only appear at level 17 and above. These give <strong>20% Chameleon</strong> when applied to armor. Lower-level Sigil Stones give less (5-15%), requiring more pieces.</div>
+      </li>
+      <li>
+        <span class="step-action">Progress the Main Quest until Oblivion Gates open</span>
+        <div class="step-detail">After completing the Kvatch quest, Oblivion Gates begin appearing near cities. Each gate contains a tower with a Sigil Stone at the top. You must fight through Daedra to reach it.</div>
+      </li>
+      <li>
+        <span class="step-action">Save before grabbing the Sigil Stone</span>
+        <div class="step-detail">The Sigil Stone's enchantment is randomly determined when you pick it up. <strong>Save your game</strong> right before touching it. If you don't get Chameleon, reload and try again. This is the core farming loop.</div>
+      </li>
+      <li>
+        <span class="step-action">Apply Chameleon Sigil Stones to 5 armor pieces</span>
+        <div class="step-detail">Open your inventory, select the Sigil Stone, and apply it to an unenchanted armor piece. Each Transcendent Chameleon Sigil Stone adds <strong>20% Chameleon</strong>. Do this 5 times across 5 pieces = 100%.</div>
+      </li>
+      <li>
+        <span class="step-action">Equip all 5 pieces &mdash; become The Ghost</span>
+        <div class="step-detail">Once all 5 pieces are equipped, your active effects will show <strong>Chameleon 100%</strong>. You are now permanently undetectable. Congratulations.</div>
+      </li>
+    </ol>
+
+    <h3>Method 2: Arcane University Enchanting (Reliable, Resource-Intensive)</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Complete all 7 Mages Guild recommendations</span>
+        <div class="step-detail">Visit each city's Mages Guild hall and complete their recommendation quest. Once all 7 are done, you gain access to the Arcane University in the Imperial City &mdash; including the <strong>Enchanting Altar</strong> in the Chironasium building.</div>
+      </li>
+      <li>
+        <span class="step-action">Learn a Chameleon spell</span>
+        <div class="step-detail">You must already know a spell with the Chameleon effect to enchant it onto armor. Buy <strong>Chameleon</strong> from <strong>Ita Rienus</strong> in the Bravil Mages Guild. Requires Illusion Journeyman (skill 50+).</div>
+      </li>
+      <li>
+        <span class="step-action">Acquire 5 Grand Soul Gems filled with Grand Souls</span>
+        <div class="step-detail"><strong>Grand Souls</strong> come from the most powerful creatures: Xivilai, Liches, Gloom Wraiths, Minotaur Lords. Cast <strong>Soul Trap</strong> on them before they die (or use a weapon with Soul Trap, like Umbra). You need a Grand Soul Gem in your inventory &mdash; the soul will auto-fill the appropriately sized gem. Buy empty Grand Soul Gems from Calindil at the Mystic Emporium.</div>
+      </li>
+      <li>
+        <span class="step-action">Enchant each armor piece with Chameleon</span>
+        <div class="step-detail">At the Enchanting Altar, select your unenchanted armor piece, choose the Chameleon effect, and use a filled Grand Soul Gem. With a Grand Soul, each piece gets <strong>20% Chameleon</strong>. Repeat for all 5 pieces.</div>
+      </li>
+      <li>
+        <span class="step-action">Equip and verify</span>
+        <div class="step-detail">Check your Active Effects in the magic menu. It should show <strong>Chameleon 100%</strong>. If it shows less, you used a smaller soul or missed a piece. Fix and re-enchant.</div>
+      </li>
+    </ol>
+
+    <h3>Sigil Stone Mechanics</h3>
+    <table class="virtue-table">
+      <thead><tr><th>Player Level</th><th>Stone Tier</th><th>Chameleon %</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">1-4</td><td>Churl</td><td>5%</td></tr>
+        <tr><td class="attr-name">5-8</td><td>Subjacent</td><td>8%</td></tr>
+        <tr><td class="attr-name">9-12</td><td>Latent</td><td>12%</td></tr>
+        <tr><td class="attr-name">13-16</td><td>Ascendant</td><td>15%</td></tr>
+        <tr><td class="attr-name">17+</td><td><span style="color:var(--accent);font-weight:600;">Transcendent</span></td><td><span style="color:var(--accent);font-weight:600;">20%</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <div class="callout-label">Don't Close Gates Before Level 17</div>
+      <p>Each Oblivion Gate can only be closed once. If you close them at level 10, you get Ascendant stones (15% max). You'd need <strong>7 pieces</strong> to hit 100%, which means sacrificing your weapon or ring slots. Wait until level 17 for Transcendent stones and you only need 5 pieces. Be patient.</p>
+    </div>
+
+    <h3>Soul Gem Tiers</h3>
+    <table class="virtue-table">
+      <thead><tr><th>Soul Gem</th><th>Chameleon %</th><th>Best Source</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">Petty</td><td>4%</td><td>Rats, mudcrabs, deer</td></tr>
+        <tr><td class="attr-name">Lesser</td><td>7%</td><td>Wolves, skeletons, imps</td></tr>
+        <tr><td class="attr-name">Common</td><td>10%</td><td>Bears, trolls, ogres</td></tr>
+        <tr><td class="attr-name">Greater</td><td>15%</td><td>Spriggans, will-o-wisps, minotaurs</td></tr>
+        <tr><td class="attr-name">Grand</td><td><span style="color:var(--accent);font-weight:600;">20%</span></td><td>Liches, Xivilai, Gloom Wraiths &mdash; or buy pre-filled from vendors</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-label">Pro Tip &mdash; Umbra for Easy Soul Farming</div>
+      <p>The sword <strong>Umbra</strong> has built-in Soul Trap. Every kill automatically fills a soul gem in your inventory. Get it at level 1 from Vindasel ruins (southwest of Imperial City). Carry empty Grand Soul Gems and use Umbra to kill Grand-soul creatures. Even though you're a dagger build, keep Umbra in your inventory for soul farming.</p>
+    </div>
+  </section>
+
+  <!-- COMBAT -->
+  <section class="section reveal" id="combat">
+    <h2>Combat &mdash; The Sneak Attack Loop</h2>
+    <p>Once you have 100% Chameleon, combat is fundamentally different from any other build. There is no "rotation" &mdash; there is only the backstab. Every single hit is a sneak attack because enemies never detect you.</p>
+
+    <h3>The Ghost Kill Loop</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Walk up to the enemy (don't even crouch)</span>
+        <div class="step-detail">At 100% Chameleon, you don't need to crouch. You can walk at full speed directly toward any enemy and you will <strong>not be detected</strong>. The game treats you as permanently hidden. However, crouching activates the sneak attack multiplier UI indicator, so crouch right before striking.</div>
+      </li>
+      <li>
+        <span class="step-action">Crouch and draw your dagger</span>
+        <div class="step-detail">Enter sneak mode (crouch). You'll see the sneak eye indicator appear as "hidden" &mdash; it will always be hidden. Draw your dagger (Blade of Woe early, Mehrunes' Razor late). Position yourself behind the enemy for a backstab if possible, though positioning doesn't matter at 100% Chameleon.</div>
+      </li>
+      <li>
+        <span class="step-action">Strike &mdash; 8x Dagger Sneak Attack</span>
+        <div class="step-detail">In Oblivion Remastered, <strong>daggers deal 8x sneak attack damage</strong> (compared to 6x for other melee weapons). With Mehrunes' Razor (base 14) and high Agility, a single sneak attack can deal <strong>100+ damage</strong> before enchantment effects. Most enemies die in one hit.</div>
+      </li>
+      <li>
+        <span class="step-action">If the enemy survives &mdash; just hit them again</span>
+        <div class="step-detail">Here's the broken part: <strong>Chameleon does not break on attack</strong>. After your first strike, you remain at 100% Chameleon. The enemy takes damage, looks around confused, and goes back to "searching." Your next hit is ALSO a sneak attack. Repeat until dead.</div>
+      </li>
+      <li>
+        <span class="step-action">For groups &mdash; summon + backstab each one</span>
+        <div class="step-detail">Against multiple enemies, summon a Dremora or Scamp first. The enemies focus on your summon while you walk behind each one and deliver guaranteed sneak attacks. Efficient, effortless, elegant.</div>
+      </li>
+      <li>
+        <span class="step-action">For bosses &mdash; Mehrunes' Razor instant kill</span>
+        <div class="step-detail">Mehrunes' Razor has a chance to <strong>instantly kill</strong> on each hit. Since you can hit bosses endlessly with sneak attacks (they never fight back), just keep stabbing until the instant kill procs. Even without the proc, 8x dagger damage kills most bosses in 2-3 hits.</div>
+      </li>
+    </ol>
+
+    <div class="callout">
+      <div class="callout-label">Damage Breakdown</div>
+      <p><strong>Mehrunes' Razor base damage:</strong> 14</p>
+      <p><strong>8x dagger sneak multiplier:</strong> 14 x 8 = 112 damage per hit</p>
+      <p><strong>With Agility 80+ and Blade 75+:</strong> ~140-160+ damage per sneak attack</p>
+      <p><strong>Plus Daedric Banishing:</strong> Chance for instant kill on top of all that damage</p>
+      <p>Most enemies in Oblivion have 100-300 HP. You one-shot or two-shot everything.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Threats That Still Hurt You</div>
+      <p><strong>AoE spells and traps</strong> still do damage even though enemies can't target you. Fire traps in Ayleid ruins, poison gas in dungeons, and AoE Destruction spells from mages will still hit. Your 50% Breton Magic Resistance helps, but carry Restore Health potions. Also: <strong>falling damage</strong> is still real. You're invisible, not invincible.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">The Arena Cheese</div>
+      <p>You can complete the entire <strong>Arena questline</strong> with 100% Chameleon. Enter the arena, crouch, and backstab your opponent. They won't fight back. Every match is a free win. The Grand Champion fight is just another backstab. It's hilarious.</p>
+    </div>
+  </section>
+
+  <!-- TIPS -->
+  <section class="section reveal" id="tips">
+    <h2>Tips &mdash; Remastered Changes</h2>
+
+    <div class="callout">
+      <div class="callout-label">Agility Governs Daggers (New in Remastered)</div>
+      <p>In the original Oblivion, Strength governed all melee damage. In the remaster, <strong>Agility governs dagger damage</strong> specifically. This makes Agility your most important damage stat. Stack it with Virtues. A Ghost with 80+ Agility deals significantly more sneak attack damage than one with 50 Agility.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Virtue System &mdash; No More Efficient Leveling</div>
+      <p>The old "sleep at the right time, train the right skills" micromanagement is gone. The Virtue system gives you <strong>12 free attribute points per level-up</strong>. Endurance HP is retroactive. You can invest purely in Agility and Intelligence early without fear of permanently gimping your health pool. Just play the game.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Chameleon vs. Invisibility</div>
+      <p><strong>Chameleon</strong> makes you partially transparent and reduces detection. At 100%, enemies cannot detect you at all. It <strong>never breaks</strong> &mdash; you can attack, interact, cast spells, and remain hidden. <strong>Invisibility</strong> makes you fully transparent but <strong>breaks on any action</strong>. For this build, Chameleon is strictly superior. Invisibility is only useful before you have your Chameleon gear.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">You Can Still Talk to NPCs</div>
+      <p>At 100% Chameleon, NPCs can't see you, but you can still <strong>initiate conversation</strong> by walking up and pressing activate. They'll talk to you normally. Shopkeepers still sell to you. Quest givers still give quests. You just look like a shimmering ghost to them. Merchants don't care about your metaphysical state &mdash; gold is gold.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Save Before Enchanting</div>
+      <p><strong>Always save before applying Sigil Stones or using the Enchanting Altar.</strong> Enchantments are permanent &mdash; you cannot remove or replace them. If you accidentally enchant the wrong piece or get the wrong effect, reload. Grand Soul Gems are rare and expensive. Don't waste them.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Crime is Free</div>
+      <p>At 100% Chameleon, you can steal anything in plain sight. Shopkeeper watching? Doesn't matter &mdash; they can't detect you. You can empty every shop, every house, every guild hall. Combine with the <strong>Gray Cowl of Nocturnal</strong> for a separate criminal identity, so if guards somehow catch you (they won't), the bounty goes to "The Gray Fox."</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Repair Hammers Still Matter</div>
+      <p>Your daggers and armor still degrade with use. Carry <strong>Repair Hammers</strong> and repair between fights. A broken dagger does almost no damage, which means your sneak attack might not one-shot. Keep your gear maintained. Buy hammers from any blacksmith &mdash; they're cheap.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Alchemy for Free Potions</div>
+      <p>Even without investing in Alchemy, you can make <strong>Restore Health</strong> and <strong>Restore Magicka</strong> potions from common ingredients. Pick up everything. You'll need heals for traps and environmental damage. <strong>Poison</strong> potions are also excellent &mdash; apply Damage Health poisons to your dagger for even more burst on sneak attacks.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">The Build is Modular</div>
+      <p>If 100% Chameleon feels "too easy" and you want more challenge, try running <strong>80% Chameleon</strong> (4 pieces). Enemies will occasionally detect you in well-lit areas or at very close range, adding tension. You can also swap one Chameleon piece for a different enchant (Fortify Agility, Fortify Blade, Resist Magic) for a more balanced setup.</p>
+    </div>
+  </section>
+
+  <div class="guide-footer">
+    Oblivion Remastered &middot; The Ghost &mdash; 100% Chameleon Build Guide &middot; 2025
+    <br>
+    <a href="guides.html">All Build Guides</a> &nbsp;&middot;&nbsp; <a href="index.html">Home</a>
+  </div>
+
+</main>
+</div>
+
+<script>
+// Active nav highlighting
+const sections=document.querySelectorAll('.section');const navLinks=document.querySelectorAll('.sidebar a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const a=document.querySelector('.sidebar a[href="#'+entry.target.id+'"]');if(a)a.classList.add('active')}})},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>observer.observe(s));
+
+// Mobile hamburger menu
+const toggle=document.querySelector('.nav-toggle');
+const links=document.querySelector('.nav-links');
+toggle.addEventListener('click',()=>links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+// Scroll reveal
+const reveals=document.querySelectorAll('.reveal');
+const revealObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');revealObserver.unobserve(entry.target)}})},{rootMargin:'0px 0px -60px 0px',threshold:0.1});
+reveals.forEach(el=>revealObserver.observe(el));
+
+/* ── Universal Nav Toggle ── */
+(function(){
+  const btn=document.getElementById('unav-hamburger'),nav=document.getElementById('unav-links');
+  if(!btn||!nav)return;
+  btn.addEventListener('click',()=>{btn.classList.toggle('open');nav.classList.toggle('open')});
+  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+    btn.classList.remove('open');nav.classList.remove('open');
+  }));
+})();
+
+</script>
+</body>
+</html>

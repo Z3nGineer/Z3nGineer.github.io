@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Hand Monk — Quivering Palm · BG3 Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg-body: #0a0a0a;
+  --bg-card: #151515;
+  --bg-elevated: #1c1c1c;
+  --bg-hover: #222222;
+  --border: #2b2c2c;
+  --border-light: #3a3a3a;
+  --text: #e8e8e8;
+  --text-dim: #a0a0a0;
+  --text-muted: #707070;
+  --white: #ffffff;
+  --accent: #057af0;
+  --accent-hover: #3592ff;
+  --green: #21c513;
+  --green-dim: #199f2f;
+  --orange: #f09a18;
+  --orange-dim: rgba(240,154,24,0.15);
+  --red: #f00505;
+  --gold: #d4a043;
+  --gold-dim: rgba(212,160,67,0.12);
+  --purple: #b080d0;
+  --ki: #40c8ff;
+  --ki-dim: rgba(64,200,255,0.12);
+  --ki-glow: rgba(64,200,255,0.25);
+}
+
+html { scroll-behavior:smooth; scrollbar-width:thin; scrollbar-color:#2b2c2c #0a0a0a; }
+
+body {
+  background: var(--bg-body);
+  color: var(--text);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 19px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration:none; }
+a:hover { color: var(--accent-hover); text-decoration:underline; }
+
+/* ── UNIVERSAL TOP NAV ── */
+.top-nav {
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:1000;
+  background:rgba(10,10,10,0.92);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.top-nav-inner {
+  max-width:1100px;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 2rem;
+}
+.top-nav-brand {
+  font-family:'Cinzel',serif;
+  font-size:0.9rem;
+  font-weight:700;
+  letter-spacing:0.15em;
+  color:var(--text);
+  text-decoration:none;
+  transition:color 0.3s;
+}
+.top-nav-brand:hover { color:var(--accent); text-decoration:none; }
+.top-nav-links {
+  display:flex;
+  gap:1.8rem;
+  align-items:center;
+  list-style:none;
+}
+.top-nav-links a {
+  font-size:0.8rem;
+  font-weight:500;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  text-decoration:none;
+  transition:color 0.2s;
+  position:relative;
+}
+.top-nav-links a:hover { color:var(--white); text-decoration:none; }
+.top-nav-links a::after {
+  content:'';
+  position:absolute;
+  bottom:-4px;left:0;right:0;
+  height:1px;
+  background:var(--accent);
+  transform:scaleX(0);
+  transition:transform 0.3s;
+  transform-origin:right;
+}
+.top-nav-links a:hover::after { transform:scaleX(1); transform-origin:left; }
+
+/* Dropdown */
+.nav-dropdown { position:relative; }
+.nav-dropdown > a { cursor:pointer; }
+.nav-dropdown-menu {
+  display:none;
+  position:absolute;
+  top:calc(100% + 12px);
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(21,21,21,0.97);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:0.5rem 0;
+  min-width:180px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.5);
+  z-index:1001;
+}
+.nav-dropdown:hover .nav-dropdown-menu { display:block; }
+.nav-dropdown-menu a {
+  display:block;
+  padding:0.4rem 1.2rem;
+  font-size:0.78rem;
+  letter-spacing:0.06em;
+  white-space:nowrap;
+}
+.nav-dropdown-menu a::after { display:none; }
+
+@media(max-width:800px) {
+  .top-nav-links { display:none; }
+}
+
+/* ── PAGE SUB-NAV ── */
+.sub-nav {
+  position:sticky;
+  top:60px;
+  z-index:200;
+  background:rgba(10,10,10,0.95);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:44px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.sub-nav::-webkit-scrollbar { display:none; }
+.sub-nav-links {
+  display:flex;
+  gap:1.6rem;
+  padding:0 2rem;
+  white-space:nowrap;
+}
+.sub-nav-links a {
+  font-size:0.78rem;
+  font-weight:500;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  text-decoration:none;
+  transition:color 0.15s;
+  padding:0.6rem 0;
+  border-bottom:2px solid transparent;
+}
+.sub-nav-links a:hover { color:var(--white); text-decoration:none; }
+.sub-nav-links a.active { color:var(--accent); border-bottom-color:var(--accent); }
+
+@media(max-width:800px) {
+  .sub-nav { justify-content:flex-start; }
+  .sub-nav-links { gap:1rem; padding:0 1rem; }
+}
+
+/* ── LAYOUT ── */
+.page { display:flex; max-width:1100px; margin:0 auto; gap:0; padding-top:104px; }
+
+.sidebar {
+  width:220px;
+  flex-shrink:0;
+  position:sticky;
+  top:104px;
+  height:calc(100vh - 104px);
+  overflow-y:auto;
+  border-right:1px solid var(--border);
+  background: var(--bg-card);
+  padding:1.5rem 0;
+  scrollbar-width:thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.sidebar-title {
+  font-family:'Oswald', sans-serif;
+  font-size:0.75rem;
+  font-weight:600;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  padding:0 1.25rem;
+  margin-bottom:0.75rem;
+}
+
+.sidebar a {
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  padding:0.45rem 1.25rem;
+  font-size:0.88rem;
+  font-weight:500;
+  color:var(--text-dim);
+  text-decoration:none;
+  border-left:3px solid transparent;
+  transition:all 0.15s;
+}
+
+.sidebar a:hover {
+  color:var(--white);
+  background:rgba(255,255,255,0.03);
+  text-decoration:none;
+}
+
+.sidebar a.active {
+  color:var(--white);
+  border-left-color:var(--accent);
+  background:rgba(5,122,240,0.06);
+}
+
+.sidebar .nav-icon { font-size:1rem; width:1.2rem; text-align:center; }
+
+.content {
+  flex:1;
+  min-width:0;
+  padding:2.5rem 2.5rem 4rem;
+}
+
+@media(max-width:800px) {
+  .sidebar { display:none; }
+  .content { padding:1.5rem; }
+  .page { padding-top:104px; }
+}
+
+/* ── HEADER ── */
+.guide-header {
+  margin-bottom:2.5rem;
+  padding-bottom:1.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.guide-header .breadcrumb {
+  font-size:0.78rem;
+  color:var(--text-muted);
+  margin-bottom:0.5rem;
+  letter-spacing:0.02em;
+}
+
+.guide-header h1 {
+  font-family:'Oswald', sans-serif;
+  font-size:2.2rem;
+  font-weight:700;
+  color:var(--white);
+  line-height:1.2;
+  margin-bottom:0.4rem;
+}
+
+.guide-header .subtitle {
+  font-size:1rem;
+  color:var(--text-dim);
+  font-weight:400;
+}
+
+.tag-row { display:flex; gap:0.4rem; margin-top:0.75rem; flex-wrap:wrap; }
+.tag {
+  font-size:0.72rem;
+  font-weight:600;
+  padding:0.2rem 0.6rem;
+  border-radius:4px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.tag.green { color:var(--green); border-color:rgba(33,197,19,0.25); background:rgba(33,197,19,0.06); }
+.tag.orange { color:var(--orange); border-color:rgba(240,154,24,0.25); background:var(--orange-dim); }
+.tag.blue { color:var(--accent); border-color:rgba(5,122,240,0.25); background:rgba(5,122,240,0.06); }
+.tag.ki { color:var(--ki); border-color:var(--ki-glow); background:var(--ki-dim); }
+
+/* ── HERO ART ── */
+.hero-art {
+  width:100%;
+  margin-bottom:1.25rem;
+  border-radius:10px;
+  border:1px solid var(--border);
+  overflow:hidden;
+  background:var(--bg-card);
+}
+.hero-svg {
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+.header-row {
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  margin-bottom:1.25rem;
+}
+.header-portrait {
+  width:80px;
+  height:80px;
+  border-radius:8px;
+  border:2px solid var(--border);
+  object-fit:cover;
+}
+.header-text { flex:1; }
+
+/* ── SECTIONS ── */
+.section { margin-top:3rem; }
+
+.section h2 {
+  font-family:'Oswald', sans-serif;
+  font-size:1.5rem;
+  font-weight:600;
+  color:var(--white);
+  margin-bottom:1rem;
+  padding-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.section h3 {
+  font-family:'Oswald', sans-serif;
+  font-size:1.15rem;
+  font-weight:500;
+  color:var(--text);
+  margin:1.5rem 0 0.6rem;
+}
+
+.section p { margin-bottom:1rem; color:var(--text); }
+
+/* ── CALLOUTS ── */
+.callout {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:6px;
+  padding:1rem 1.25rem;
+  margin:1.25rem 0;
+}
+
+.callout.warn { border-left-color:var(--orange); }
+.callout.tip { border-left-color:var(--green); }
+.callout.ki { border-left-color:var(--ki); }
+
+.callout-label {
+  font-family:'Oswald', sans-serif;
+  font-size:0.78rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  margin-bottom:0.25rem;
+}
+
+.callout .callout-label { color:var(--accent); }
+.callout.warn .callout-label { color:var(--orange); }
+.callout.tip .callout-label { color:var(--green); }
+.callout.ki .callout-label { color:var(--ki); }
+
+.callout p { margin-bottom:0.5rem; font-size:0.95rem; }
+.callout p:last-child { margin-bottom:0; }
+
+/* ── STAT BAR ── */
+.stats { display:flex; gap:0.5rem; flex-wrap:wrap; margin:0.75rem 0; }
+.stat-box {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:0.4rem 0.75rem;
+  text-align:center;
+  min-width:3.5rem;
+}
+.stat-box.primary { border-color:rgba(5,122,240,0.4); }
+.stat-label { font-size:0.65rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); }
+.stat-val { font-family:'Oswald',sans-serif; font-size:1.3rem; font-weight:600; color:var(--white); }
+.stat-box.primary .stat-val { color:var(--accent); }
+
+/* ── LEVEL CARDS ── */
+.level-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  margin-bottom:0.4rem;
+  overflow:hidden;
+  transition:border-color 0.15s;
+}
+
+.level-card:hover { border-color:var(--border-light); }
+.level-card.spike { border-left:3px solid var(--orange); }
+.level-card.here { border-color:var(--accent); box-shadow:0 0 0 1px rgba(5,122,240,0.15); }
+
+.lv-head {
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  padding:0.65rem 1rem;
+  cursor:pointer;
+  user-select:none;
+  transition:background 0.1s;
+}
+.lv-head:hover { background:var(--bg-hover); }
+
+.lv-num {
+  font-family:'Oswald',sans-serif;
+  font-weight:700;
+  font-size:1.3rem;
+  color:var(--white);
+  min-width:1.6rem;
+  text-align:center;
+}
+.level-card.here .lv-num { color:var(--accent); }
+
+.lv-badge {
+  font-size:0.68rem;
+  font-weight:600;
+  padding:0.15rem 0.5rem;
+  border-radius:4px;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.lv-badge.monk { color:var(--ki); background:var(--ki-dim); border:1px solid var(--ki-glow); }
+.lv-badge.rogue { color:var(--orange); background:var(--orange-dim); border:1px solid rgba(240,154,24,0.2); }
+
+.lv-title {
+  font-weight:600;
+  font-size:0.95rem;
+  color:var(--text);
+  flex:1;
+}
+
+.lv-spike {
+  font-size:0.65rem;
+  font-weight:600;
+  color:var(--orange);
+  background:var(--orange-dim);
+  padding:0.15rem 0.45rem;
+  border-radius:4px;
+  border:1px solid rgba(240,154,24,0.2);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+
+.lv-here {
+  font-size:0.65rem;
+  font-weight:600;
+  color:var(--accent);
+  background:rgba(5,122,240,0.1);
+  padding:0.15rem 0.45rem;
+  border-radius:4px;
+  border:1px solid rgba(5,122,240,0.25);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+
+.lv-arrow {
+  color:var(--text-muted);
+  font-size:0.75rem;
+  transition:transform 0.2s;
+}
+.level-card.open .lv-arrow { transform:rotate(90deg); }
+
+.lv-body { max-height:0; overflow:hidden; transition:max-height 0.3s ease; }
+.level-card.open .lv-body { max-height:900px; }
+.lv-inner { padding:0 1rem 1rem; border-top:1px solid var(--border); }
+
+/* Quick picks */
+.qp-row { display:flex; flex-wrap:wrap; gap:0.3rem; margin:0.75rem 0 0.5rem; }
+.qp {
+  font-size:0.78rem;
+  font-weight:500;
+  padding:0.2rem 0.6rem;
+  border-radius:4px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+}
+.qp.feature { color:var(--green); border-color:rgba(33,197,19,0.2); }
+.qp.spell { color:var(--accent); border-color:rgba(5,122,240,0.2); }
+.qp.feat { color:var(--orange); border-color:rgba(240,154,24,0.2); }
+.qp.ki { color:var(--ki); border-color:var(--ki-glow); }
+
+/* Pick list */
+.picks { list-style:none; margin:0.5rem 0; }
+.picks li {
+  padding:0.3rem 0 0.3rem 0;
+  font-size:0.95rem;
+  display:flex;
+  gap:0.4rem;
+  align-items:baseline;
+}
+.picks .label {
+  font-size:0.72rem;
+  font-weight:600;
+  color:var(--orange);
+  text-transform:uppercase;
+  letter-spacing:0.03em;
+  flex-shrink:0;
+  min-width:4rem;
+}
+.picks .name { font-weight:600; color:var(--white); }
+.picks .note { color:var(--text-dim); font-size:0.88rem; }
+
+/* ── ITEMS ── */
+.item-group { margin-bottom:1.5rem; }
+.item-group-title {
+  font-family:'Oswald',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  color:var(--gold);
+  padding-bottom:0.35rem;
+  margin-bottom:0.5rem;
+  border-bottom:1px solid rgba(212,160,67,0.15);
+}
+.item-row {
+  padding:0.6rem 0.75rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:0.35rem;
+}
+.item-name { font-weight:600; color:var(--gold); font-size:0.95rem; }
+.item-slot { font-size:0.7rem; color:var(--text-muted); margin-left:0.35rem; text-transform:uppercase; letter-spacing:0.03em; }
+.item-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.15rem; }
+.item-loc { font-size:0.8rem; color:var(--green-dim); margin-top:0.2rem; }
+
+/* ── ROTATION ── */
+.step-list { list-style:none; counter-reset:step; }
+.step-list li {
+  position:relative;
+  padding:0.75rem 0 0.75rem 3rem;
+  border-left:2px solid var(--border);
+  margin-left:0.75rem;
+  counter-increment:step;
+}
+.step-list li::before {
+  content:counter(step);
+  position:absolute;
+  left:-0.75rem;
+  top:0.6rem;
+  width:1.4rem;
+  height:1.4rem;
+  background:var(--bg-body);
+  border:2px solid var(--accent);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Oswald',sans-serif;
+  font-weight:600;
+  font-size:0.75rem;
+  color:var(--accent);
+}
+.step-list li:last-child { border-left-color:transparent; }
+.step-action { font-weight:600; color:var(--white); }
+.step-timing {
+  font-size:0.7rem;
+  font-weight:600;
+  padding:0.1rem 0.4rem;
+  border-radius:3px;
+  margin-left:0.4rem;
+  vertical-align:middle;
+  text-transform:uppercase;
+}
+.step-timing.pre { color:var(--text-muted); background:rgba(255,255,255,0.04); }
+.step-timing.turn { color:var(--accent); background:rgba(5,122,240,0.08); }
+.step-timing.every { color:var(--green); background:rgba(33,197,19,0.08); }
+.step-timing.bonus { color:var(--ki); background:var(--ki-dim); }
+.step-detail { color:var(--text-dim); font-size:0.9rem; margin-top:0.2rem; }
+
+/* ── PARTY ── */
+.party-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
+@media(max-width:600px) { .party-grid { grid-template-columns:1fr; } }
+.party-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1rem;
+}
+.party-name { font-family:'Oswald',sans-serif; font-weight:600; font-size:1.05rem; color:var(--white); }
+.party-role { font-size:0.72rem; font-weight:600; color:var(--accent); text-transform:uppercase; letter-spacing:0.04em; margin-top:0.1rem; }
+.party-desc { color:var(--text-dim); font-size:0.88rem; margin-top:0.35rem; }
+
+/* ── TECHNIQUE TABLE ── */
+.tech-table { width:100%; border-collapse:collapse; margin:1rem 0; }
+.tech-table th {
+  font-family:'Oswald',sans-serif;
+  font-size:0.78rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--text-muted);
+  text-align:left;
+  padding:0.6rem 0.75rem;
+  border-bottom:2px solid var(--border);
+}
+.tech-table td {
+  padding:0.6rem 0.75rem;
+  border-bottom:1px solid var(--border);
+  font-size:0.92rem;
+}
+.tech-table tr:hover { background:var(--bg-card); }
+.tech-name { font-weight:600; color:var(--white); }
+
+/* ── COMPARISON TABLE ── */
+.cmp-table { width:100%; border-collapse:collapse; margin:1rem 0; }
+.cmp-table th {
+  font-family:'Oswald',sans-serif;
+  font-size:0.78rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--text-muted);
+  text-align:left;
+  padding:0.6rem 0.75rem;
+  border-bottom:2px solid var(--border);
+}
+.cmp-table td {
+  padding:0.6rem 0.75rem;
+  border-bottom:1px solid var(--border);
+  font-size:0.92rem;
+}
+.cmp-table tr:hover { background:var(--bg-card); }
+.cmp-winner { color:var(--green); font-weight:600; }
+
+/* ── FOOTER ── */
+.guide-footer {
+  margin-top:3rem;
+  padding-top:1.5rem;
+  border-top:1px solid var(--border);
+  font-size:0.8rem;
+  color:var(--text-muted);
+  text-align:center;
+}
+.guide-footer a { color:var(--text-dim); }
+.guide-footer a:hover { color:var(--accent); }
+.footer-links { display:flex; gap:1.5rem; justify-content:center; margin-bottom:0.5rem; }
+
+/* ── MOBILE NAV ── */
+.mobile-nav{display:none;position:fixed;top:60px;left:0;right:0;z-index:100;background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:44px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;color:var(--accent);letter-spacing:.06em}
+.nav-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s}
+.mob-links{display:none;position:absolute;top:44px;left:0;right:0;flex-direction:column;background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.mob-links.open{display:flex}
+.mob-links a{display:flex;align-items:center;gap:.5rem;height:44px;font-size:.9rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.mob-links a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){.mobile-nav{display:flex}}
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity:0; transform:translateY(20px); transition:opacity 0.5s ease, transform 0.5s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ═══ UNIVERSAL TOP NAV ═══ -->
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="top-nav-brand">Z3nGineer</a>
+    <ul class="top-nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li class="nav-dropdown">
+        <a>Pages &#9662;</a>
+        <div class="nav-dropdown-menu">
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+          <a href="https://crockednloaded.com">CrockedNLoaded</a>
+          <a href="guides.html">Game Guides</a>
+          <a href="CHIM.html">CHIM Modpack</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══ PAGE SUB-NAV ═══ -->
+<div class="sub-nav">
+  <div class="sub-nav-links">
+    <a href="#overview">Overview</a>
+    <a href="#race">Race</a>
+    <a href="#abilities">Abilities</a>
+    <a href="#levels">Progression</a>
+    <a href="#ki">Ki Points</a>
+    <a href="#techniques">Open Hand</a>
+    <a href="#stunning">Stunning Strike</a>
+    <a href="#quivering">Quivering Palm</a>
+    <a href="#tavern">Tavern Brawler</a>
+    <a href="#gear">Gear</a>
+    <a href="#combat">Combat</a>
+    <a href="#honour">Honour Mode</a>
+    <a href="#party">Party</a>
+  </div>
+</div>
+
+<!-- ═══ MOBILE HAMBURGER ═══ -->
+<div class="mobile-nav">
+  <span class="mobile-nav-title">Open Hand Monk</span>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="mob-links">
+    <a href="#overview">Overview</a>
+    <a href="#race">Race</a>
+    <a href="#levels">Progression</a>
+    <a href="#ki">Ki Points</a>
+    <a href="#techniques">Open Hand</a>
+    <a href="#stunning">Stunning Strike</a>
+    <a href="#quivering">Quivering Palm</a>
+    <a href="#gear">Gear</a>
+    <a href="#combat">Combat</a>
+    <a href="#honour">Honour Mode</a>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div style="text-align:center; padding:0 1.25rem 1rem;">
+    <svg viewBox="0 0 48 48" width="48" height="48" style="border-radius:8px; border:1px solid var(--border);">
+      <rect width="48" height="48" fill="#151515"/>
+      <circle cx="24" cy="24" r="14" fill="none" stroke="#40c8ff" stroke-width="1.5" opacity="0.6"/>
+      <path d="M24 14 L20 22 L16 30 M24 14 L28 22 L32 30" stroke="#40c8ff" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle cx="24" cy="20" r="4" fill="#40c8ff" opacity="0.3"/>
+      <circle cx="24" cy="20" r="2" fill="#40c8ff" opacity="0.6"/>
+    </svg>
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">&#9674;</span> Overview</a>
+  <a href="#race"><span class="nav-icon">&#9673;</span> Race</a>
+  <a href="#abilities"><span class="nav-icon">&#9670;</span> Abilities</a>
+  <a href="#levels"><span class="nav-icon">&#8593;</span> Progression</a>
+  <a href="#ki"><span class="nav-icon">&#10038;</span> Ki Points</a>
+  <a href="#techniques"><span class="nav-icon">&#9656;</span> Open Hand</a>
+  <a href="#stunning"><span class="nav-icon">&#9889;</span> Stunning Strike</a>
+  <a href="#quivering"><span class="nav-icon">&#9760;</span> Quivering Palm</a>
+  <a href="#tavern"><span class="nav-icon">&#9733;</span> Tavern Brawler</a>
+  <a href="#gear"><span class="nav-icon">&#9670;</span> Gear</a>
+  <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+  <a href="#honour"><span class="nav-icon">&#9888;</span> Honour Mode</a>
+  <a href="#party"><span class="nav-icon">&#9678;</span> Party</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="kiGlow" cx="50%" cy="50%" r="60%">
+            <stop offset="0%" stop-color="#40c8ff" stop-opacity="0.15"/>
+            <stop offset="40%" stop-color="#2080c0" stop-opacity="0.08"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="palmGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ff4040" stop-opacity="0.5"/>
+            <stop offset="30%" stop-color="#ff2020" stop-opacity="0.3"/>
+            <stop offset="60%" stop-color="#ff0000" stop-opacity="0.1"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="kiBlast" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#40c8ff" stop-opacity="0.6"/>
+            <stop offset="40%" stop-color="#2090d0" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="mountainGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1a2a3a" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0.2"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Sky -->
+        <rect width="800" height="280" fill="#060810"/>
+        <rect width="800" height="280" fill="url(#kiGlow)"/>
+
+        <!-- Stars -->
+        <circle cx="80" cy="25" r="1" fill="#c8d8e8" opacity="0.6"/>
+        <circle cx="150" cy="40" r="0.8" fill="#c8d8e8" opacity="0.4"/>
+        <circle cx="250" cy="18" r="1.2" fill="#c8d8e8" opacity="0.5"/>
+        <circle cx="550" cy="30" r="0.9" fill="#c8d8e8" opacity="0.55"/>
+        <circle cx="650" cy="15" r="1.1" fill="#c8d8e8" opacity="0.45"/>
+        <circle cx="720" cy="45" r="0.7" fill="#c8d8e8" opacity="0.35"/>
+        <circle cx="350" cy="12" r="0.6" fill="#c8d8e8" opacity="0.3"/>
+        <circle cx="480" cy="22" r="0.8" fill="#c8d8e8" opacity="0.4"/>
+
+        <!-- Mountains / Monastery backdrop -->
+        <path d="M0,220 L60,140 L100,165 L160,100 L220,145 L260,120 L320,160 L360,90 L400,130 L440,155 L500,105 L540,140 L600,80 L660,130 L700,150 L740,110 L800,160 L800,280 L0,280 Z" fill="url(#mountainGrad)" opacity="0.7"/>
+        <path d="M0,240 L80,190 L140,210 L200,175 L260,200 L340,170 L400,195 L480,165 L540,190 L600,175 L680,200 L740,180 L800,210 L800,280 L0,280 Z" fill="#0c1018" opacity="0.8"/>
+
+        <!-- Monastery silhouette on peak -->
+        <g transform="translate(360,68)" opacity="0.4">
+          <rect x="-20" y="0" width="40" height="25" fill="#1a2030"/>
+          <path d="M-25,0 L0,-18 L25,0" fill="#1a2030"/>
+          <rect x="-3" y="8" width="6" height="17" fill="#0a0a0a" opacity="0.6"/>
+          <rect x="-30" y="10" width="10" height="15" fill="#1a2030"/>
+          <path d="M-32,10 L-25,2 L-18,10" fill="#1a2030"/>
+          <rect x="20" y="10" width="10" height="15" fill="#1a2030"/>
+          <path d="M18,10 L25,2 L32,10" fill="#1a2030"/>
+        </g>
+
+        <!-- Ground plane -->
+        <rect x="0" y="230" width="800" height="50" fill="#0a0c10" opacity="0.9"/>
+        <line x1="100" y1="235" x2="700" y2="235" stroke="#1a2838" stroke-width="0.5" opacity="0.5"/>
+
+        <!-- ═══ MONK FIGURE — center, martial stance ═══ -->
+        <g transform="translate(380,135)" opacity="0.95">
+          <!-- Ki aura -->
+          <ellipse cx="0" cy="20" rx="55" ry="70" fill="none" stroke="#40c8ff" stroke-width="0.5" opacity="0.15"/>
+          <ellipse cx="0" cy="20" rx="40" ry="55" fill="none" stroke="#40c8ff" stroke-width="0.6" opacity="0.2"/>
+          <ellipse cx="0" cy="20" rx="25" ry="38" fill="#40c8ff" opacity="0.02"/>
+
+          <!-- Ki particles floating around monk -->
+          <circle cx="-35" cy="-20" r="1.5" fill="#40c8ff" opacity="0.5"><animate attributeName="cy" values="-20;-28;-20" dur="3s" repeatCount="indefinite"/></circle>
+          <circle cx="30" cy="-10" r="1.2" fill="#40c8ff" opacity="0.4"><animate attributeName="cy" values="-10;-18;-10" dur="2.5s" repeatCount="indefinite"/></circle>
+          <circle cx="-20" cy="5" r="1" fill="#40c8ff" opacity="0.35"><animate attributeName="cy" values="5;-3;5" dur="2.8s" repeatCount="indefinite"/></circle>
+          <circle cx="22" cy="-30" r="0.8" fill="#40c8ff" opacity="0.3"><animate attributeName="cy" values="-30;-38;-30" dur="3.2s" repeatCount="indefinite"/></circle>
+          <circle cx="-42" cy="15" r="1" fill="#40c8ff" opacity="0.25"><animate attributeName="cy" values="15;8;15" dur="2.6s" repeatCount="indefinite"/></circle>
+          <circle cx="40" cy="10" r="0.9" fill="#40c8ff" opacity="0.3"><animate attributeName="cy" values="10;3;10" dur="3.4s" repeatCount="indefinite"/></circle>
+
+          <!-- Flowing robes (lower) -->
+          <path d="M-12,40 Q-18,60 -25,90 Q-28,98 -16,95 L-8,60 Z" fill="#1a2030" opacity="0.8"/>
+          <path d="M12,40 Q18,60 25,90 Q28,98 16,95 L8,60 Z" fill="#1a2030" opacity="0.8"/>
+          <path d="M-8,42 Q-5,70 -10,92 Q-3,96 4,92 Q0,70 2,42 Z" fill="#1a2535" opacity="0.7"/>
+          <!-- Robe fabric flow lines -->
+          <path d="M-14,55 Q-10,65 -18,80" stroke="#253545" stroke-width="0.5" fill="none" opacity="0.5"/>
+          <path d="M14,55 Q10,65 18,80" stroke="#253545" stroke-width="0.5" fill="none" opacity="0.5"/>
+
+          <!-- Legs in wide stance -->
+          <line x1="-5" y1="38" x2="-18" y2="88" stroke="#2a3040" stroke-width="8" stroke-linecap="round"/>
+          <line x1="5" y1="38" x2="18" y2="88" stroke="#2a3040" stroke-width="8" stroke-linecap="round"/>
+          <!-- Feet -->
+          <ellipse cx="-20" cy="90" rx="6" ry="3" fill="#2a3040"/>
+          <ellipse cx="20" cy="90" rx="6" ry="3" fill="#2a3040"/>
+
+          <!-- Torso -->
+          <path d="M-14,5 Q-16,22 -12,40 L12,40 Q16,22 14,5 Z" fill="#1a2535"/>
+          <!-- Sash/belt -->
+          <path d="M-14,32 Q0,35 14,32 Q12,38 0,40 Q-12,38 -14,32 Z" fill="#40c8ff" opacity="0.2"/>
+          <line x1="-12" y1="34" x2="12" y2="34" stroke="#40c8ff" stroke-width="1" opacity="0.35"/>
+
+          <!-- Upper robe / gi with wrap -->
+          <path d="M-14,5 L-10,5 L2,25 L-12,25 Z" fill="#1e2a3a" opacity="0.6"/>
+          <path d="M14,5 L10,5 L-2,25 L12,25 Z" fill="#1a2535" opacity="0.6"/>
+
+          <!-- RIGHT ARM — extended forward, Quivering Palm hand -->
+          <line x1="10" y1="10" x2="42" y2="-8" stroke="#c8a080" stroke-width="5" stroke-linecap="round"/>
+          <line x1="42" y1="-8" x2="62" y2="-18" stroke="#c8a080" stroke-width="4.5" stroke-linecap="round"/>
+          <!-- Open palm (right hand) -->
+          <ellipse cx="65" cy="-20" rx="7" ry="5.5" fill="#c8a080" transform="rotate(-25,65,-20)"/>
+          <!-- Fingers spread -->
+          <line x1="70" y1="-24" x2="76" y2="-30" stroke="#c8a080" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="72" y1="-22" x2="79" y2="-26" stroke="#c8a080" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="72" y1="-19" x2="79" y2="-20" stroke="#c8a080" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="70" y1="-16" x2="76" y2="-14" stroke="#c8a080" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="60" y1="-16" x2="56" y2="-12" stroke="#c8a080" stroke-width="1.3" stroke-linecap="round"/>
+
+          <!-- QUIVERING PALM ENERGY on right hand -->
+          <circle cx="68" cy="-22" r="15" fill="url(#palmGlow)"/>
+          <circle cx="68" cy="-22" r="10" fill="#ff2020" opacity="0.08"/>
+          <circle cx="68" cy="-22" r="6" fill="#ff4040" opacity="0.12"/>
+          <circle cx="68" cy="-22" r="3" fill="#ff6060" opacity="0.25"/>
+          <!-- Death energy crackle -->
+          <path d="M68,-22 L78,-30 L74,-26 L82,-32" stroke="#ff4040" stroke-width="0.8" opacity="0.4" fill="none"><animate attributeName="opacity" values="0.4;0.1;0.4" dur="1.5s" repeatCount="indefinite"/></path>
+          <path d="M68,-22 L58,-32 L62,-28 L56,-35" stroke="#ff3030" stroke-width="0.7" opacity="0.3" fill="none"><animate attributeName="opacity" values="0.3;0.1;0.3" dur="1.8s" repeatCount="indefinite"/></path>
+          <path d="M68,-22 L72,-36 L70,-30 L74,-40" stroke="#ff5050" stroke-width="0.6" opacity="0.35" fill="none"><animate attributeName="opacity" values="0.35;0.08;0.35" dur="1.3s" repeatCount="indefinite"/></path>
+
+          <!-- LEFT ARM — pulled back, fist cocked (Flurry of Blows) -->
+          <line x1="-10" y1="10" x2="-32" y2="2" stroke="#c8a080" stroke-width="5" stroke-linecap="round"/>
+          <line x1="-32" y1="2" x2="-42" y2="8" stroke="#c8a080" stroke-width="4.5" stroke-linecap="round"/>
+          <!-- Clenched fist -->
+          <ellipse cx="-44" cy="9" rx="5.5" ry="5" fill="#c8a080"/>
+          <!-- Ki glow on left fist -->
+          <circle cx="-44" cy="9" r="9" fill="#40c8ff" opacity="0.08"/>
+          <circle cx="-44" cy="9" r="5" fill="#40c8ff" opacity="0.12"/>
+
+          <!-- FLURRY OF BLOWS — motion blur afterimages (left arm) -->
+          <g opacity="0.15">
+            <line x1="-10" y1="10" x2="-38" y2="-10" stroke="#40c8ff" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="-42" cy="-12" r="4" fill="#40c8ff"/>
+          </g>
+          <g opacity="0.08">
+            <line x1="-10" y1="10" x2="-35" y2="-20" stroke="#40c8ff" stroke-width="3.5" stroke-linecap="round"/>
+            <circle cx="-38" cy="-22" r="3.5" fill="#40c8ff"/>
+          </g>
+          <g opacity="0.05">
+            <line x1="-10" y1="10" x2="-28" y2="-28" stroke="#40c8ff" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="-30" cy="-30" r="3" fill="#40c8ff"/>
+          </g>
+
+          <!-- Head -->
+          <ellipse cx="0" cy="-8" rx="11" ry="13" fill="#c8a080"/>
+          <!-- Hair (Githyanki topknot style) -->
+          <path d="M-8,-20 Q-4,-28 0,-30 Q4,-28 8,-20" fill="#2a1810" opacity="0.9"/>
+          <path d="M0,-30 Q2,-36 0,-40 Q-2,-36 0,-30" fill="#2a1810" opacity="0.7"/>
+          <!-- Brow and facial features -->
+          <line x1="-6" y1="-12" x2="-2" y2="-13" stroke="#9a7a58" stroke-width="1.2" opacity="0.6"/>
+          <line x1="2" y1="-13" x2="6" y2="-12" stroke="#9a7a58" stroke-width="1.2" opacity="0.6"/>
+          <!-- Eyes — focused, intense -->
+          <ellipse cx="-4" cy="-9" rx="2" ry="1.2" fill="#1a1a2a"/>
+          <ellipse cx="4" cy="-9" rx="2" ry="1.2" fill="#1a1a2a"/>
+          <circle cx="-4" cy="-9" r="0.7" fill="#40c8ff" opacity="0.6"/>
+          <circle cx="4" cy="-9" r="0.7" fill="#40c8ff" opacity="0.6"/>
+          <!-- Nose, mouth -->
+          <line x1="0" y1="-7" x2="0" y2="-3" stroke="#a08868" stroke-width="0.8" opacity="0.4"/>
+          <path d="M-2,-1 Q0,0 2,-1" stroke="#8a6a50" stroke-width="0.6" opacity="0.5" fill="none"/>
+
+          <!-- Githyanki ear points -->
+          <path d="M-11,-10 L-16,-16 L-12,-8" fill="#c8a080" opacity="0.8"/>
+          <path d="M11,-10 L16,-16 L12,-8" fill="#c8a080" opacity="0.8"/>
+
+          <!-- Neck -->
+          <rect x="-4" y="1" width="8" height="5" fill="#c8a080" rx="2"/>
+        </g>
+
+        <!-- ═══ ENEMY BEING STRUCK — right side ═══ -->
+        <g transform="translate(560,160)" opacity="0.7">
+          <!-- Ki explosion on enemy -->
+          <circle cx="-20" cy="0" r="25" fill="url(#kiBlast)"/>
+          <circle cx="-20" cy="0" r="16" fill="#40c8ff" opacity="0.06"/>
+          <circle cx="-20" cy="0" r="8" fill="#40c8ff" opacity="0.1"/>
+
+          <!-- Impact lines radiating -->
+          <g stroke="#40c8ff" stroke-width="0.8" opacity="0.3">
+            <line x1="-20" y1="0" x2="-40" y2="-20"/>
+            <line x1="-20" y1="0" x2="-10" y2="-25"/>
+            <line x1="-20" y1="0" x2="5" y2="-15"/>
+            <line x1="-20" y1="0" x2="-38" y2="15"/>
+            <line x1="-20" y1="0" x2="-5" y2="22"/>
+          </g>
+
+          <!-- Enemy body recoiling -->
+          <ellipse cx="5" cy="5" rx="14" ry="22" fill="#2a2018" transform="rotate(15,5,5)"/>
+          <!-- Head snapping back -->
+          <circle cx="12" cy="-18" r="7" fill="#2a2018"/>
+          <!-- Arms flailing -->
+          <line x1="15" y1="-8" x2="32" y2="-22" stroke="#2a2018" stroke-width="3" stroke-linecap="round"/>
+          <line x1="-5" y1="-5" x2="-22" y2="-15" stroke="#2a2018" stroke-width="3" stroke-linecap="round"/>
+          <!-- Legs -->
+          <line x1="0" y1="22" x2="-8" y2="45" stroke="#2a2018" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="10" y1="20" x2="18" y2="42" stroke="#2a2018" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- Weapon flying away -->
+          <line x1="32" y1="-22" x2="50" y2="-40" stroke="#606060" stroke-width="1.5" opacity="0.4"/>
+          <line x1="48" y1="-38" x2="54" y2="-42" stroke="#606060" stroke-width="1" opacity="0.3"/>
+
+          <!-- Stun stars -->
+          <g fill="#40c8ff" opacity="0.4">
+            <polygon points="12,-30 14,-27 17,-28 14,-25 16,-22 13,-24 12,-21 11,-24 8,-22 10,-25 7,-28 10,-27" transform="scale(0.6) translate(15,-50)"><animate attributeName="opacity" values="0.4;0.15;0.4" dur="1s" repeatCount="indefinite"/></polygon>
+            <polygon points="12,-30 14,-27 17,-28 14,-25 16,-22 13,-24 12,-21 11,-24 8,-22 10,-25 7,-28 10,-27" transform="scale(0.5) translate(50,-60)"><animate attributeName="opacity" values="0.3;0.1;0.3" dur="1.2s" repeatCount="indefinite"/></polygon>
+          </g>
+        </g>
+
+        <!-- ═══ SECOND ENEMY — left side, being pushed back by Open Hand ═══ -->
+        <g transform="translate(200,175)" opacity="0.55">
+          <!-- Body pushed/falling -->
+          <ellipse cx="0" cy="0" rx="12" ry="20" fill="#2a2018" transform="rotate(-20)"/>
+          <circle cx="-8" cy="-18" r="6.5" fill="#2a2018"/>
+          <!-- Arms -->
+          <line x1="-12" y1="-10" x2="-28" y2="-18" stroke="#2a2018" stroke-width="2.8" stroke-linecap="round"/>
+          <line x1="8" y1="-6" x2="20" y2="-16" stroke="#2a2018" stroke-width="2.8" stroke-linecap="round"/>
+          <!-- Legs flying up (knocked prone) -->
+          <line x1="-5" y1="15" x2="-14" y2="32" stroke="#2a2018" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="5" y1="12" x2="16" y2="28" stroke="#2a2018" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- Push force lines -->
+          <g stroke="#40c8ff" stroke-width="0.6" opacity="0.25">
+            <line x1="30" y1="-5" x2="15" y2="-2"/>
+            <line x1="28" y1="5" x2="13" y2="5"/>
+            <line x1="30" y1="15" x2="15" y2="10"/>
+          </g>
+        </g>
+
+        <!-- Ambient ki mist at ground -->
+        <ellipse cx="380" cy="238" rx="120" ry="8" fill="#40c8ff" opacity="0.03"/>
+        <ellipse cx="380" cy="235" rx="80" ry="5" fill="#40c8ff" opacity="0.04"/>
+
+        <!-- Ground detail -->
+        <g opacity="0.3" stroke="#1a2838" stroke-width="0.6" fill="none">
+          <path d="M280,240 L278,232 L282,240"/>
+          <path d="M480,238 L478,230 L482,238"/>
+          <path d="M350,240 L352,233 L354,240"/>
+          <path d="M430,239 L428,231 L432,239"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="header-row">
+      <svg viewBox="0 0 80 80" width="80" height="80" class="header-portrait" style="border-radius:8px; border:2px solid var(--border); background:#151515;">
+        <circle cx="40" cy="40" r="28" fill="none" stroke="#40c8ff" stroke-width="1.5" opacity="0.4"/>
+        <path d="M40 20 L34 32 L28 44 M40 20 L46 32 L52 44" stroke="#40c8ff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <circle cx="40" cy="28" r="6" fill="#40c8ff" opacity="0.2"/>
+        <circle cx="40" cy="28" r="3" fill="#40c8ff" opacity="0.5"/>
+        <text x="40" y="66" text-anchor="middle" font-family="Oswald" font-size="8" fill="#40c8ff" opacity="0.6">MONK</text>
+      </svg>
+      <div class="header-text">
+        <div class="breadcrumb"><a href="guides.html" style="color:var(--text-muted)">Baldur's Gate 3</a> &#8250; <a href="bg3-builds.html" style="color:var(--text-muted)">Builds</a> &#8250; Open Hand Monk</div>
+        <h1>Open Hand Monk &mdash; Quivering Palm</h1>
+        <div class="subtitle">Githyanki &middot; Way of the Open Hand 9 / Thief Rogue 3 &middot; #9 Ranked Build</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag ki">Martial Arts</span>
+      <span class="tag green">Melee DPS</span>
+      <span class="tag orange">Stunning Strike</span>
+      <span class="tag blue">Patch 8</span>
+    </div>
+  </div>
+
+  <!-- ═══════════ OVERVIEW ═══════════ -->
+  <section class="section reveal" id="overview">
+    <h2>Overview</h2>
+
+    <p>Open Hand Monk is the ultimate melee martial artist in Baldur's Gate 3. You get more attacks per turn than any other build in the game, Stunning Strike shuts down bosses for an entire round, and at Monk 9 you unlock <strong>Quivering Palm</strong> &mdash; an instant-kill ability that forces a CON save or reduces the target to 0 HP. Multiclassing into Thief Rogue 3 gives you a second bonus action, meaning you can Flurry of Blows <em>twice per turn</em> for a total of 6+ attacks.</p>
+
+    <div class="callout ki">
+      <div class="callout-label">Why Open Hand + Thief?</div>
+      <p>Open Hand Techniques add a free rider to every Flurry of Blows hit &mdash; push enemies back, knock them prone, or prevent reactions (no save). Thief Rogue's Fast Hands gives a second bonus action, letting you Flurry twice. That's 2 main attacks + 4 Flurry hits = <strong>6 attacks per turn</strong>, each one threatening a Stunning Strike or Open Hand effect. No other build gets this many chances to lock enemies down.</p>
+    </div>
+
+    <p>The build comes online in stages: Monk 1-4 is solid, Monk 5 (Extra Attack + Stunning Strike) is a massive spike, Monk 9 (Quivering Palm) is the peak, then Thief 1-3 adds the second bonus action. You're a relentless striker who controls the battlefield through sheer volume of hits and crowd control.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Playstyle Summary</div>
+      <p>Dash into melee &rarr; Stunning Strike the biggest threat &rarr; Flurry of Blows (push/prone everything) &rarr; Flurry again (Thief bonus action) &rarr; enemies are stunned, prone, or dead. On boss turns, Quivering Palm for the instant kill. You are the action economy.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ RACE ═══════════ -->
+  <section class="section reveal" id="race">
+    <h2>Race Selection</h2>
+
+    <h3>Best: Githyanki</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Medium Armour Proficiency</span> &mdash; <span class="note">Wear medium armour in early game before Unarmoured Defence catches up. Huge early survivability.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Greatsword Proficiency</span> &mdash; <span class="note">Irrelevant for unarmed, but useful if you want a versatile weapon early.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Githyanki Psionics: Jump</span> &mdash; <span class="note">Free Misty Step at level 5. Incredible for a melee build &mdash; teleport to backline targets.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Astral Knowledge</span> &mdash; <span class="note">Free skill proficiency after every long rest. Pick whatever you need.</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Alternative: Wood Elf</div>
+      <p>+1.5m movement speed (10.5m base vs 9m) and Darkvision 12m. Fleet of Foot stacks with Monk's Unarmoured Movement for the fastest character in the game &mdash; 18m+ movement by level 6. Better for a pure DEX monk if you don't want Tavern Brawler. Wood Half-Elf also works (same speed + shield proficiency + Darkvision).</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Why Not Human?</div>
+      <p>Humans get +1 to all stats and Civil Militia (shield/light armour proficiency), but you don't need shields or armour. The Githyanki jump ability alone is worth more than any Human feature for a melee monk.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ ABILITY SCORES ═══════════ -->
+  <section class="section reveal" id="abilities">
+    <h2>Ability Scores</h2>
+
+    <h3>Tavern Brawler Build (Recommended)</h3>
+    <div class="stats">
+      <div class="stat-box primary"><div class="stat-label">STR</div><div class="stat-val">16</div></div>
+      <div class="stat-box"><div class="stat-label">DEX</div><div class="stat-val">14</div></div>
+      <div class="stat-box"><div class="stat-label">CON</div><div class="stat-val">14</div></div>
+      <div class="stat-box"><div class="stat-label">INT</div><div class="stat-val">8</div></div>
+      <div class="stat-box primary"><div class="stat-label">WIS</div><div class="stat-val">16</div></div>
+      <div class="stat-box"><div class="stat-label">CHA</div><div class="stat-val">8</div></div>
+    </div>
+    <p style="font-size:0.88rem; color:var(--text-dim);">Githyanki point buy. STR 16 (base 14 + Githyanki +2). WIS 16 (base 15 + Githyanki +1). Tavern Brawler at level 4 adds STR to unarmed attack AND damage, then push STR to 20 at Monk 8. Final: STR 20, WIS 16.</p>
+
+    <h3>Pure DEX Build (Alternative)</h3>
+    <div class="stats">
+      <div class="stat-box primary"><div class="stat-label">STR</div><div class="stat-val">10</div></div>
+      <div class="stat-box primary"><div class="stat-label">DEX</div><div class="stat-val">17</div></div>
+      <div class="stat-box"><div class="stat-label">CON</div><div class="stat-val">14</div></div>
+      <div class="stat-box"><div class="stat-label">INT</div><div class="stat-val">8</div></div>
+      <div class="stat-box primary"><div class="stat-label">WIS</div><div class="stat-val">16</div></div>
+      <div class="stat-box"><div class="stat-label">CHA</div><div class="stat-val">8</div></div>
+    </div>
+    <p style="font-size:0.88rem; color:var(--text-dim);">Wood Elf variant. DEX 17 to hit 18 at level 4 (+2 ASI), then 20 at Monk 8. Higher AC from DEX + Unarmoured Defence, slightly less damage than Tavern Brawler but more well-rounded.</p>
+
+    <div class="callout warn">
+      <div class="callout-label">WIS 16 is Non-Negotiable</div>
+      <p>WIS powers your Stunning Strike DC, Quivering Palm DC, and Unarmoured Defence AC. Every point of WIS below 16 makes your save-or-suck abilities less reliable. Do not dump WIS. A monk with low WIS is just a fighter with less HP.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ LEVEL PROGRESSION ═══════════ -->
+  <section class="section reveal" id="levels">
+    <h2>Level-by-Level Progression</h2>
+    <p style="color:var(--text-dim); margin-bottom:1rem;">Monk 1&ndash;9 first for Quivering Palm, then Thief Rogue 1&ndash;3. Click any level to expand.</p>
+
+    <!-- LV 1 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">1</span>
+        <span class="lv-badge monk">Monk 1</span>
+        <span class="lv-title">Martial Arts &amp; Unarmoured Defence</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Martial Arts</span>
+          <span class="qp feature">Unarmoured Defence</span>
+          <span class="qp ki">Flurry of Blows</span>
+          <span class="qp ki">Patient Defence</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Martial Arts</span> &mdash; <span class="note">Use DEX for unarmed/monk weapons. Unarmed damage = 1d4. Bonus action unarmed strike after Attack.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Unarmoured Defence</span> &mdash; <span class="note">AC = 10 + DEX mod + WIS mod (14 DEX + 16 WIS = AC 15). Wear Githyanki medium armour until this overtakes it.</span></li>
+          <li><span class="label">Ki</span> <span class="name">Flurry of Blows</span> &mdash; <span class="note">1 ki: bonus action for 2 unarmed strikes. Your bread and butter.</span></li>
+          <li><span class="label">Ki</span> <span class="name">Patient Defence</span> &mdash; <span class="note">1 ki: bonus action Dodge. Situational but lifesaving.</span></li>
+          <li><span class="label">Note</span> <span class="note">You have 2 Ki Points at level 1. Ki restores on short rest.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- LV 2 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">2</span>
+        <span class="lv-badge monk">Monk 2</span>
+        <span class="lv-title">Unarmoured Movement &amp; Step of the Wind</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Unarmoured Movement</span>
+          <span class="qp ki">Step of the Wind</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Unarmoured Movement</span> &mdash; <span class="note">+3m movement speed while unarmoured. Stacks each level. You're now faster than everyone.</span></li>
+          <li><span class="label">Ki</span> <span class="name">Step of the Wind: Dash/Disengage</span> &mdash; <span class="note">1 ki: bonus action Dash or Disengage + jump distance doubled. Chase down archers, escape bad positioning.</span></li>
+          <li><span class="label">Note</span> <span class="note">3 Ki Points total. Consider short resting after every 2-3 fights.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- LV 3 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">3</span>
+        <span class="lv-badge monk">Monk 3</span>
+        <span class="lv-title">Way of the Open Hand</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Open Hand Technique</span>
+          <span class="qp ki">Flurry: Push</span>
+          <span class="qp ki">Flurry: Prone</span>
+          <span class="qp ki">Flurry: No Reactions</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">Way of the Open Hand</span> &mdash; <span class="note">Every Flurry of Blows hit now has a free rider effect. No save, no extra ki cost.</span></li>
+          <li><span class="label">Technique</span> <span class="name">Push 5m</span> &mdash; <span class="note">Shove enemies off cliffs, into hazards, or away from squishies. No save.</span></li>
+          <li><span class="label">Technique</span> <span class="name">Knock Prone</span> &mdash; <span class="note">Target falls prone. All melee attacks against it have advantage. No save.</span></li>
+          <li><span class="label">Technique</span> <span class="name">Prevent Reactions</span> &mdash; <span class="note">Target can't use reactions (no opportunity attacks). Free escape for you and allies.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.75rem;">
+          <div class="callout-label">Open Hand is Now Online</div>
+          <p>Flurry of Blows is no longer just damage &mdash; it's crowd control. Knock the boss prone so your whole party attacks with advantage. Push the mage off a cliff for an instant kill. Prevent reactions so your rogue can freely reposition.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- LV 4 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">4</span>
+        <span class="lv-badge monk">Monk 4</span>
+        <span class="lv-title">Tavern Brawler / ASI</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">Tavern Brawler</span>
+          <span class="qp feature">Slow Fall</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat &#10003;</span> <span class="name">Tavern Brawler</span> &mdash; <span class="note">Add STR modifier to unarmed attack rolls AND damage. +1 STR (17 total). Your unarmed attacks now hit harder than most weapons.</span></li>
+          <li><span class="label">Alt Feat</span> <span class="name">+2 DEX &rarr; 18</span> &mdash; <span class="note">If running DEX build. +4 modifier to attacks, damage, AC, and initiative.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Slow Fall</span> &mdash; <span class="note">Reaction: reduce falling damage. Niche but occasionally prevents death.</span></li>
+        </ul>
+        <div class="callout warn" style="margin-top:0.75rem;">
+          <div class="callout-label">Tavern Brawler in BG3</div>
+          <p>In BG3 specifically, Tavern Brawler adds your STR modifier <strong>twice</strong> to unarmed damage (once from the feat, once from the normal modifier). This is why STR monks outdamage DEX monks. With STR 17, each unarmed hit does 1d6+6 at this level. At STR 20, that becomes 1d8+10.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- LV 5 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">5</span>
+        <span class="lv-badge monk">Monk 5</span>
+        <span class="lv-title">Extra Attack &amp; Stunning Strike</span>
+        <span class="lv-spike">&#9733; MAJOR SPIKE</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Extra Attack</span>
+          <span class="qp ki">Stunning Strike</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Extra Attack</span> &mdash; <span class="note">2 attacks per Attack action. Combined with Flurry of Blows = 4 attacks per turn.</span></li>
+          <li><span class="label">Ki</span> <span class="name">Stunning Strike</span> &mdash; <span class="note">After hitting: target must CON save or be Stunned until end of your next turn. The most powerful single ability in the game.</span></li>
+          <li><span class="label">Note</span> <span class="note">5 Ki Points. Unarmed damage die increases to 1d6.</span></li>
+        </ul>
+        <div class="callout ki" style="margin-top:0.75rem;">
+          <div class="callout-label">Everything Changes at Level 5</div>
+          <p>This is the build's breakpoint. You now have 4 attacks per turn (2 main + 2 Flurry), each one capable of triggering Stunning Strike. A stunned target auto-fails STR and DEX saves, all attacks against it have advantage, and it loses its turn. You can stun-lock a boss for the entire fight.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- LV 6 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">6</span>
+        <span class="lv-badge monk">Monk 6</span>
+        <span class="lv-title">Ki-Empowered Strikes &amp; Manifestation</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Ki-Empowered Strikes</span>
+          <span class="qp feature">Open Hand: Manifestation of Body</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Ki-Empowered Strikes</span> &mdash; <span class="note">Unarmed strikes count as magical. Bypasses resistance to non-magical damage (common in Act 2-3).</span></li>
+          <li><span class="label">Feature</span> <span class="name">Manifestation of Body</span> &mdash; <span class="note">Open Hand level 6 feature. Adds an extra effect to your Flurry of Blows attacks &mdash; additional damage or healing on hit.</span></li>
+          <li><span class="label">Note</span> <span class="note">6 Ki Points. +1.5m Unarmoured Movement (total +4.5m).</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- LV 7 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">7</span>
+        <span class="lv-badge monk">Monk 7</span>
+        <span class="lv-title">Evasion &amp; Stillness of Mind</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Evasion</span>
+          <span class="qp feature">Stillness of Mind</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Evasion</span> &mdash; <span class="note">DEX saves: success = 0 damage, fail = half damage. You basically ignore Fireball, Lightning Bolt, etc.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Stillness of Mind</span> &mdash; <span class="note">Action: end Charmed or Frightened on yourself. Niche but important vs mind flayers.</span></li>
+          <li><span class="label">Note</span> <span class="note">7 Ki Points. Unarmed damage die stays 1d6.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- LV 8 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">8</span>
+        <span class="lv-badge monk">Monk 8</span>
+        <span class="lv-title">Second Feat &mdash; +2 STR &rarr; 20</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">+2 STR &rarr; 20</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat &#10003;</span> <span class="name">+2 STR &rarr; 20</span> &mdash; <span class="note">Cap STR at 20. With Tavern Brawler, each unarmed hit now does 1d8+10 damage. Your fists hit harder than most greatswords.</span></li>
+          <li><span class="label">Alt Feat</span> <span class="name">+2 DEX &rarr; 20</span> &mdash; <span class="note">DEX build version. Max DEX for attack/damage/AC/initiative.</span></li>
+          <li><span class="label">Note</span> <span class="note">8 Ki Points. +1.5m Unarmoured Movement (total +6m).</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- LV 9 -->
+    <div class="level-card spike here">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">9</span>
+        <span class="lv-badge monk">Monk 9</span>
+        <span class="lv-title">Quivering Palm</span>
+        <span class="lv-spike">&#9733; BUILD PEAK</span>
+        <span class="lv-here">&#9733; You Are Here</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp ki">Quivering Palm</span>
+          <span class="qp feature">Unarmed d8</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Quivering Palm</span> &mdash; <span class="note">On hit: target must CON save or drop to 0 HP. Instant kill. On success, takes 10d10 necrotic. Costs 4 Ki Points.</span></li>
+          <li><span class="label">Note</span> <span class="note">9 Ki Points. Unarmed damage die increases to 1d8. This is the reason you go Monk 9 before multiclassing.</span></li>
+        </ul>
+        <div class="callout ki" style="margin-top:0.75rem;">
+          <div class="callout-label">The Instant Kill</div>
+          <p>Quivering Palm targets <strong>CON save</strong> (DC = 8 + proficiency + WIS mod). With WIS 16 and proficiency +4, that's DC 15. Failed save = dead. Passed save = 10d10 necrotic damage (avg 55). Either way, the target is having a bad day. Stack this with Stunning Strike first &mdash; stunned targets have disadvantage on CON saves in some interpretations, and regardless, you soften them up with your other 5 attacks.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- LV 10 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">10</span>
+        <span class="lv-badge rogue">Rogue 1</span>
+        <span class="lv-title">Sneak Attack &amp; Expertise</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Sneak Attack 1d6</span>
+          <span class="qp feature">Expertise</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Sneak Attack 1d6</span> &mdash; <span class="note">Once per turn, add 1d6 damage when you have advantage (stunned targets = advantage). Small but free.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Expertise</span> &mdash; <span class="note">Double proficiency on 2 skills. Pick Stealth + Athletics (Athletics powers shoves).</span></li>
+          <li><span class="label">Note</span> <span class="note">Rogue dip begins. You lose nothing from Monk because Monk 10-12 features are weak compared to what Thief gives you.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- LV 11 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">11</span>
+        <span class="lv-badge rogue">Rogue 2</span>
+        <span class="lv-title">Cunning Action</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Cunning Action: Hide</span>
+          <span class="qp feature">Cunning Action: Dash</span>
+          <span class="qp feature">Cunning Action: Disengage</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Cunning Action</span> &mdash; <span class="note">Bonus action Hide/Dash/Disengage. You already have Step of the Wind for Dash/Disengage, so Hide is the new tool &mdash; attack from stealth for advantage = guaranteed Sneak Attack.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- LV 12 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">12</span>
+        <span class="lv-badge rogue">Rogue 3</span>
+        <span class="lv-title">Thief &mdash; Fast Hands (Second Bonus Action)</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Thief: Fast Hands</span>
+          <span class="qp feature">Second Story Work</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">Thief &mdash; Fast Hands</span> &mdash; <span class="note">You get a SECOND bonus action. Use it for a second Flurry of Blows. 2 main attacks + 2 Flurry + 2 Flurry = 6 attacks per turn. Each one can Stunning Strike.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Second Story Work</span> &mdash; <span class="note">Resistance to falling damage. Stacks with Slow Fall.</span></li>
+          <li><span class="label">Sneak</span> <span class="name">Sneak Attack 2d6</span> &mdash; <span class="note">Increased to 2d6. Not the main draw, but free damage is free damage.</span></li>
+        </ul>
+        <div class="callout ki" style="margin-top:0.75rem;">
+          <div class="callout-label">The Final Form</div>
+          <p>Your full turn: Attack (2 hits) &rarr; Flurry of Blows (2 hits + Open Hand effects) &rarr; Flurry of Blows again via Fast Hands (2 hits + Open Hand effects). That's <strong>6 attacks per turn</strong>, 4 of which trigger Open Hand Techniques (push/prone/no reactions), and any of them can spend ki on Stunning Strike. With Haste from a party member, you get 7 attacks. This is the highest attack volume in BG3.</p>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ KI POINTS ═══════════ -->
+  <section class="section reveal" id="ki">
+    <h2>Ki Points &mdash; Resource Management</h2>
+
+    <p>Ki is your fuel. Every special ability costs ki, and you get a number of ki points equal to your Monk level (max 9 with this build). Ki restores on <strong>short rest</strong>, not long rest &mdash; this is huge. You should be short resting after every 2-3 encounters to stay topped off.</p>
+
+    <table class="tech-table">
+      <thead><tr><th>Ability</th><th>Ki Cost</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td class="tech-name">Flurry of Blows</td><td>1</td><td style="color:var(--green)">Use Every Turn</td></tr>
+        <tr><td class="tech-name">Stunning Strike</td><td>1 per hit</td><td style="color:var(--green)">Use on Big Targets</td></tr>
+        <tr><td class="tech-name">Quivering Palm</td><td>4</td><td style="color:var(--orange)">Boss Killer Only</td></tr>
+        <tr><td class="tech-name">Patient Defence</td><td>1</td><td style="color:var(--text-dim)">Emergency Only</td></tr>
+        <tr><td class="tech-name">Step of the Wind</td><td>1</td><td style="color:var(--text-dim)">Situational</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <div class="callout-label">Don't Blow All Ki on Stunning Strike</div>
+      <p>It's tempting to Stunning Strike every hit, but at 1 ki per attempt you'll burn through 9 ki in 2 turns. The optimal play: Stunning Strike once or twice on the scariest target, Flurry of Blows (1 ki for 2 hits + Open Hand effects) on everything else. Save 4 ki for Quivering Palm against bosses. Short rest frequently.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Short Rest is Your Best Friend</div>
+      <p>BG3 gives you 2 short rests per long rest. Each one fully restores all 9 Ki Points. Plan your fights around this: burn ki freely in the first 2-3 fights, short rest, burn again, short rest, then long rest. You effectively have 27 Ki Points per long rest.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ OPEN HAND TECHNIQUES ═══════════ -->
+  <section class="section reveal" id="techniques">
+    <h2>Open Hand Techniques</h2>
+
+    <p>Every time you hit with Flurry of Blows, you choose one of three effects. These are <strong>free</strong> &mdash; no extra ki cost, no save required (except the initial attack roll). With Thief's second bonus action, you trigger these effects 4 times per turn.</p>
+
+    <table class="tech-table">
+      <thead><tr><th>Technique</th><th>Effect</th><th>Best Used</th></tr></thead>
+      <tbody>
+        <tr><td class="tech-name">Push 5m</td><td style="color:var(--text)">Shove the target 5 metres in any direction</td><td style="color:var(--text-dim)">Cliffs, chasms, hazard surfaces, away from squishies</td></tr>
+        <tr><td class="tech-name">Knock Prone</td><td style="color:var(--text)">Target falls prone (can't move, melee has advantage)</td><td style="color:var(--text-dim)">Before your party's turn &mdash; everyone attacks with advantage</td></tr>
+        <tr><td class="tech-name">Prevent Reactions</td><td style="color:var(--text)">Target can't use reactions until end of your next turn</td><td style="color:var(--text-dim)">Disabling opportunity attacks, counterspell, sentinel</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-label">Combo: Prone + Party Follow-Up</div>
+      <p>Knock an enemy prone with your first Flurry, then all your remaining attacks (and your party's melee attacks) have advantage. If Lae'zel or Karlach goes after you in initiative, they get advantage on every single attack. This is better than Stunning Strike in many cases because it costs nothing extra.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Environmental Kills</div>
+      <p>Push is an instant kill near ledges. The Underdark, Grymforge, Moonrise Towers, and the final act all have fights near cliffs. One Flurry hit pushes a full-HP enemy to their death. No save. No ki cost beyond the Flurry itself. Map awareness turns you into the deadliest character in the game.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ STUNNING STRIKE ═══════════ -->
+  <section class="section reveal" id="stunning">
+    <h2>Stunning Strike</h2>
+
+    <p>The single most powerful ability in BG3. After landing a melee hit, spend 1 ki to force a <strong>CON save</strong> (DC = 8 + proficiency + WIS mod). On failure, the target is <strong>Stunned</strong> until the end of your next turn.</p>
+
+    <h3>What Stunned Does</h3>
+    <ul class="picks">
+      <li><span class="label">Effect</span> <span class="name">Can't move or take actions</span> &mdash; <span class="note">The target loses its entire turn. Boss fights become trivial.</span></li>
+      <li><span class="label">Effect</span> <span class="name">Auto-fail STR and DEX saves</span> &mdash; <span class="note">Your wizard's Hold Person, Fireball, etc. all auto-hit or deal max effect.</span></li>
+      <li><span class="label">Effect</span> <span class="name">Attacks against have advantage</span> &mdash; <span class="note">Your entire party crits on 19-20 with advantage. Assassin rogues auto-crit.</span></li>
+      <li><span class="label">Effect</span> <span class="name">Lasts until end of YOUR next turn</span> &mdash; <span class="note">This means the entire party gets a full round of free attacks with advantage.</span></li>
+    </ul>
+
+    <div class="callout ki">
+      <div class="callout-label">Stun-Locking Bosses</div>
+      <p>With 6 attacks per turn, you have 6 chances to land Stunning Strike. Even if the boss has +8 CON save, the math is in your favour: land one Stun, then next turn your party unloads while you Stun again. Bosses in BG3 don't have legendary resistances (except Honour Mode) &mdash; they just fail and lose their turn. Repeat until dead.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Targets that Resist</div>
+      <p>High-CON enemies (Stone Golems, undead, some demons) will save more often. Against these, rely on Open Hand pushes/prone instead. Don't burn all your ki on Stunning Strike attempts against a target with +10 CON save &mdash; push it off a cliff instead.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ QUIVERING PALM ═══════════ -->
+  <section class="section reveal" id="quivering">
+    <h2>Quivering Palm &mdash; Instant Kill</h2>
+
+    <p>The crown jewel of the Open Hand Monk. Unlocked at Monk 9, Quivering Palm costs 4 Ki Points and triggers on a successful unarmed hit. The target must make a <strong>CON save</strong> (same DC as Stunning Strike). On a failed save, the target drops to <strong>0 HP</strong>. On a success, they take <strong>10d10 necrotic damage</strong> (average 55).</p>
+
+    <h3>The Math</h3>
+    <div class="stats">
+      <div class="stat-box primary"><div class="stat-label">DC</div><div class="stat-val">15</div></div>
+      <div class="stat-box"><div class="stat-label">Cost</div><div class="stat-val">4 Ki</div></div>
+      <div class="stat-box"><div class="stat-label">Fail</div><div class="stat-val">0 HP</div></div>
+      <div class="stat-box"><div class="stat-label">Pass</div><div class="stat-val">55 avg</div></div>
+    </div>
+    <p style="font-size:0.88rem; color:var(--text-dim);">DC = 8 + 4 (proficiency) + 3 (WIS mod) = 15. Most enemies in Act 2 have +3 to +6 CON save. A +5 CON save means they need to roll 10+ on a d20 = 55% chance to die instantly.</p>
+
+    <div class="callout ki">
+      <div class="callout-label">Optimal Quivering Palm Usage</div>
+      <p>1. Stun the boss first with a regular Stunning Strike (1 ki).<br>
+      2. On your next turn, open with Quivering Palm on the stunned target.<br>
+      3. If Quivering Palm fails the kill, the 10d10 necrotic still chunks them, and you have 5 more attacks to finish the job.<br>
+      4. Save Quivering Palm for fights that matter &mdash; 4 ki is nearly half your pool.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Honour Mode Warning</div>
+      <p>In Honour Mode, bosses get Legendary Resistance (auto-pass one save). They will burn it on Quivering Palm. This means you need to bait out Legendary Resistance with Stunning Strike first (cheaper at 1 ki), THEN use Quivering Palm after it's gone. See the Honour Mode section below.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ TAVERN BRAWLER VS DEX ═══════════ -->
+  <section class="section reveal" id="tavern">
+    <h2>Tavern Brawler vs DEX Monk</h2>
+
+    <p>The great debate. Both work, but Tavern Brawler is mathematically superior for damage in BG3 due to how the feat interacts with unarmed strikes.</p>
+
+    <table class="cmp-table">
+      <thead><tr><th>Category</th><th>STR + Tavern Brawler</th><th>Pure DEX</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--text-dim)">Unarmed Damage (Lv 9)</td><td class="cmp-winner">1d8+10 (avg 14.5)</td><td>1d8+5 (avg 9.5)</td></tr>
+        <tr><td style="color:var(--text-dim)">Attack Bonus (Lv 9)</td><td class="cmp-winner">+9 (+5 STR, +4 prof)</td><td>+9 (+5 DEX, +4 prof)</td></tr>
+        <tr><td style="color:var(--text-dim)">AC (Unarmoured)</td><td>15 (10+2 DEX+3 WIS)</td><td class="cmp-winner">17 (10+5 DEX+3 WIS) — note: can be 18 with WIS 18</td></tr>
+        <tr><td style="color:var(--text-dim)">Initiative</td><td>+2</td><td class="cmp-winner">+5</td></tr>
+        <tr><td style="color:var(--text-dim)">DEX Saves</td><td>+2</td><td class="cmp-winner">+5</td></tr>
+        <tr><td style="color:var(--text-dim)">DPR (6 attacks)</td><td class="cmp-winner">87 avg</td><td>57 avg</td></tr>
+        <tr><td style="color:var(--text-dim)">Survivability</td><td>Lower AC, more reliant on Stunning</td><td class="cmp-winner">Higher AC, better saves, more consistent</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-label">Verdict</div>
+      <p><strong>Tavern Brawler</strong> for maximum damage. The +5 extra damage per hit across 6 attacks is +30 DPR &mdash; that's an entire extra character's worth of damage. The lower AC is offset by Stunning Strike keeping enemies from attacking you at all. If they can't take their turn, your AC doesn't matter.</p>
+      <p><strong>Pure DEX</strong> for a safer, more well-rounded character. Better AC, better saves, better initiative. Recommended for Honour Mode if you're not comfortable with the aggressive Tavern Brawler playstyle.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ GEAR ═══════════ -->
+  <section class="section reveal" id="gear">
+    <h2>Gear Recommendations</h2>
+
+    <div class="item-group">
+      <div class="item-group-title">Best-in-Slot (Act 3)</div>
+
+      <div class="item-row">
+        <div class="item-name">Gloves of Soul Catching <span class="item-slot">Gloves</span></div>
+        <div class="item-desc">+1d10 Force damage on unarmed hits. On hit: heal 10 HP or gain advantage on attacks until end of turn. Set CON to 20. <strong>The single best item for monks in the entire game.</strong></div>
+        <div class="item-loc">Location: House of Hope, reward from the quest &mdash; you must help the NPC escape.</div>
+      </div>
+
+      <div class="item-row">
+        <div class="item-name">Helldusk Armour <span class="item-slot">Armour</span></div>
+        <div class="item-desc">AC 21, can't be burned, fire damage to attackers, proficiency not required. Yes, monks can wear this &mdash; it's so good it's worth losing Unarmoured Defence for the flat AC 21 + fire shield.</div>
+        <div class="item-loc">Location: House of Hope, Raphael's vault.</div>
+      </div>
+
+      <div class="item-row">
+        <div class="item-name">Boots of Speed <span class="item-slot">Boots</span></div>
+        <div class="item-desc">Click Heels: double movement speed for 3 turns + opportunity attacks against you have disadvantage. Bonus action to activate &mdash; use before combat or on turns you don't need Flurry.</div>
+        <div class="item-loc">Location: Underdark, Grymforge vendor or looted.</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Accessories</div>
+
+      <div class="item-row">
+        <div class="item-name">Ring of Regeneration <span class="item-slot">Ring</span></div>
+        <div class="item-desc">Heal 1d4 HP at the start of each turn. Passive sustain that keeps you in fights longer without spending actions healing.</div>
+        <div class="item-loc">Location: Act 3, sold by vendors in the Lower City.</div>
+      </div>
+
+      <div class="item-row">
+        <div class="item-name">Amulet of Greater Health <span class="item-slot">Amulet</span></div>
+        <div class="item-desc">Sets CON to 23 (+6 modifier). Massive HP boost. If you also have Gloves of Soul Catching setting CON to 20, this overrides it with 23.</div>
+        <div class="item-loc">Location: House of Hope, Raphael's vault.</div>
+      </div>
+
+      <div class="item-row">
+        <div class="item-name">Crusher's Ring <span class="item-slot">Ring</span></div>
+        <div class="item-desc">+3m movement speed. Stacks with Unarmoured Movement and Boots of Speed. More movement = more enemies you can reach.</div>
+        <div class="item-loc">Location: Act 1, Goblin Camp &mdash; loot from Crusher or win the toe contest.</div>
+      </div>
+
+      <div class="item-row">
+        <div class="item-name">Covert Cowl <span class="item-slot">Helmet</span></div>
+        <div class="item-desc">While obscured, gain +1 to ranged and melee attacks. Invisible after killing while obscured &mdash; synergy with Thief's Hide bonus action.</div>
+        <div class="item-loc">Location: Act 2, found in the Shadow-Cursed Lands.</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Early Game (Act 1-2)</div>
+
+      <div class="item-row">
+        <div class="item-name">Bracers of Defence <span class="item-slot">Gloves</span></div>
+        <div class="item-desc">+2 AC while not wearing armour or shield. Use these until you get Gloves of Soul Catching in Act 3.</div>
+        <div class="item-loc">Location: Various &mdash; Act 1 vendors or chests.</div>
+      </div>
+
+      <div class="item-row">
+        <div class="item-name">Shadow of Menzoberranzan <span class="item-slot">Helmet</span></div>
+        <div class="item-desc">Shrouded in Shadow: become Invisible for 2 turns. Great for positioning before opening with Stunning Strike.</div>
+        <div class="item-loc">Location: Underdark, looted from the Minotaur area near the Myconid Colony.</div>
+      </div>
+
+      <div class="item-row">
+        <div class="item-name">Linebreaker Boots <span class="item-slot">Boots</span></div>
+        <div class="item-desc">Gain Wrath (bonus damage) for 2 turns after Dashing. Synergizes with Step of the Wind: Dash to open combat with bonus damage on all attacks.</div>
+        <div class="item-loc">Location: Act 2, various vendors.</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Gloves of Soul Catching Changes Everything</div>
+      <p>This one item transforms the build. +1d10 damage per hit across 6 attacks = +33 average DPR. The heal-10-HP-per-hit option means you're unkillable in melee. And it sets CON to 20, fixing your HP problem. Rush the House of Hope as early as possible in Act 3.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ COMBAT ═══════════ -->
+  <section class="section reveal" id="combat">
+    <h2>Combat Rotation</h2>
+
+    <h3>Full Rotation (Level 12, Thief Online)</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Position &amp; Open</span> <span class="step-timing turn">Turn 1</span>
+        <div class="step-detail">Use your massive movement (15m+) to reach the most dangerous enemy. If you can't reach, Step of the Wind: Dash or use Githyanki Jump to teleport.</div>
+      </li>
+      <li>
+        <span class="step-action">Stunning Strike on the priority target</span> <span class="step-timing turn">Action</span>
+        <div class="step-detail">Attack action (2 hits). Spend 1 ki on the first hit for Stunning Strike. If it lands, the boss is out. If it misses the save, try again on the second hit. 2 chances to stun for 2 ki.</div>
+      </li>
+      <li>
+        <span class="step-action">Flurry of Blows #1</span> <span class="step-timing bonus">Bonus Action</span>
+        <div class="step-detail">1 ki for 2 unarmed strikes. Choose Open Hand Technique on each hit: Prone for advantage, Push for environmental kills, or Prevent Reactions for safe repositioning. If target is already stunned, just deal damage.</div>
+      </li>
+      <li>
+        <span class="step-action">Flurry of Blows #2 (Thief)</span> <span class="step-timing bonus">2nd Bonus Action</span>
+        <div class="step-detail">Your Thief second bonus action. Another Flurry of Blows (1 ki, 2 hits). More Open Hand effects. You've now attacked 6 times this turn, stunned or knocked prone 1+ enemies, and dealt 80-100+ damage.</div>
+      </li>
+      <li>
+        <span class="step-action">Quivering Palm (Boss Fights Only)</span> <span class="step-timing turn">Priority Target</span>
+        <div class="step-detail">Instead of Stunning Strike, use Quivering Palm on your first successful hit against a boss. 4 ki for instant kill or 55 avg damage. Only use on targets you need dead immediately.</div>
+      </li>
+    </ol>
+
+    <h3>Trash Mob Rotation (Ki Conservation)</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Attack action (2 hits)</span> <span class="step-timing turn">Action</span>
+        <div class="step-detail">Just swing. Don't spend ki on Stunning Strike against weak enemies.</div>
+      </li>
+      <li>
+        <span class="step-action">Flurry of Blows</span> <span class="step-timing bonus">Bonus Action</span>
+        <div class="step-detail">1 ki for 2 hits + Open Hand push/prone. Push weakened enemies off ledges for instant kills.</div>
+      </li>
+      <li>
+        <span class="step-action">Save second bonus action</span> <span class="step-timing bonus">2nd Bonus Action</span>
+        <div class="step-detail">Either Flurry again if there are many targets, or save ki. 4 attacks per turn without spending extra ki is enough for trash.</div>
+      </li>
+    </ol>
+
+    <div class="callout ki">
+      <div class="callout-label">Ki Budget Per Fight</div>
+      <p><strong>Easy fight:</strong> 1-2 ki (one Flurry, maybe a Step of the Wind). 4 attacks total.<br>
+      <strong>Medium fight:</strong> 3-4 ki (one Stun + two Flurries). 6 attacks total.<br>
+      <strong>Boss fight:</strong> 6-8 ki (Quivering Palm + Stun + two Flurries). 6 attacks, one potential instant kill.<br>
+      Short rest after 2-3 fights to reset all 9 ki.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ HONOUR MODE ═══════════ -->
+  <section class="section reveal" id="honour">
+    <h2>Honour Mode Tips</h2>
+
+    <p>Honour Mode adds Legendary Actions/Resistances to bosses. This directly impacts monks because bosses can auto-pass your Stunning Strike and Quivering Palm saves. Here's how to adapt.</p>
+
+    <div class="callout warn">
+      <div class="callout-label">Legendary Resistance</div>
+      <p>Bosses get 1-3 Legendary Resistances that let them auto-pass any saving throw. Your job is to <strong>bait these out cheaply</strong>. Stunning Strike costs 1 ki &mdash; burn through their resistances with 1-ki Stuns before spending 4 ki on Quivering Palm. Never lead with Quivering Palm against a boss with Legendary Resistance up.</p>
+    </div>
+
+    <h3>Honour Mode Strategy</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Bait Legendary Resistance</span> <span class="step-timing turn">Turn 1</span>
+        <div class="step-detail">Open with Stunning Strike on your first hit. Boss burns a Legendary Resistance. Hit again, Stun again. Another Legendary Resistance burned. You've spent 2 ki to remove 2 of their auto-passes.</div>
+      </li>
+      <li>
+        <span class="step-action">Party burns the last resistance</span> <span class="step-timing turn">Team</span>
+        <div class="step-detail">Have your caster throw a save-or-suck spell (Hold Person, Banishment). Boss uses last Legendary Resistance. Resistances are now gone.</div>
+      </li>
+      <li>
+        <span class="step-action">Quivering Palm</span> <span class="step-timing turn">Turn 2+</span>
+        <div class="step-detail">Now use Quivering Palm. No more auto-passes. They roll normally against your DC 15+. Failed save = dead boss. Even on a success, 55 necrotic damage.</div>
+      </li>
+    </ol>
+
+    <div class="callout tip">
+      <div class="callout-label">Honour Mode Gear Priority</div>
+      <p>Prioritize survivability: Helldusk Armour (AC 21) and Gloves of Soul Catching (heal 10 per hit) make you nearly unkillable. In Honour Mode you can't reload &mdash; one death ends the run. The monk's weakness is HP and AC, so plug those gaps with gear.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Honour Mode Legendary Actions</div>
+      <p>Some Honour Mode bosses get extra actions between turns. This means stunned targets might still act via Legendary Actions even while stunned. The workaround: Open Hand prone (costs no save, just happens) still works even against Legendary Action users, because prone applies disadvantage to their attacks. Stack prone + stun for maximum lockdown.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ PARTY ═══════════ -->
+  <section class="section reveal" id="party">
+    <h2>Recommended Party</h2>
+    <p>You're the melee lockdown specialist. Build around follow-up damage and a healer to keep you standing.</p>
+
+    <div class="party-grid" style="margin-top:1rem;">
+      <div class="party-card">
+        <div class="party-name">Shadowheart</div>
+        <div class="party-role">Cleric &middot; Healer / Support</div>
+        <div class="party-desc">Spirit Guardians while you stun-lock targets in melee range. Heals you when Wild Shape &mdash; er, Tavern Brawler fists fail to one-shot. Bless raises your attack rolls for more Stunning Strike attempts.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Gale</div>
+        <div class="party-role">Wizard &middot; AoE / Haste Bot</div>
+        <div class="party-desc">Haste on you = 7 attacks per turn. He drops AoE on stunned/prone targets that auto-fail DEX saves. Counterspell protects you from enemy casters. The ideal partner for a monk.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Lae'zel</div>
+        <div class="party-role">Fighter &middot; Sustained DPS</div>
+        <div class="party-desc">You knock enemies prone, she attacks with advantage on all hits. Action Surge for burst damage on stunned bosses. Two frontliners means enemies can't focus either of you down.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Alt: Astarion</div>
+        <div class="party-role">Rogue &middot; Burst DPS</div>
+        <div class="party-desc">Stunned targets = automatic Sneak Attack with advantage. Assassin subclass auto-crits on surprised targets. He handles traps, locks, and scouting so you don't need to.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="guide-footer">
+    <div class="footer-links">
+      <a href="guides.html">All Game Guides</a>
+      <a href="bg3-builds.html">BG3 Builds</a>
+      <a href="index.html">Home</a>
+    </div>
+    <p>Open Hand Monk &mdash; Quivering Palm &middot; BG3 Build Guide &middot; Patch 8 &middot; &copy; 2026 Z3nGineer</p>
+  </div>
+
+</main>
+</div>
+
+<script>
+// Highlight active sidebar link on scroll
+const sections = document.querySelectorAll('.section');
+const sidebarLinks = document.querySelectorAll('.sidebar a');
+const subNavLinks = document.querySelectorAll('.sub-nav-links a');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      sidebarLinks.forEach(l => l.classList.remove('active'));
+      subNavLinks.forEach(l => l.classList.remove('active'));
+      const sideActive = document.querySelector('.sidebar a[href="#' + id + '"]');
+      const subActive = document.querySelector('.sub-nav-links a[href="#' + id + '"]');
+      if (sideActive) sideActive.classList.add('active');
+      if (subActive) subActive.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+
+// Mobile hamburger menu
+const toggle = document.querySelector('.nav-toggle');
+const mobLinks = document.querySelector('.mob-links');
+if (toggle && mobLinks) {
+  toggle.addEventListener('click', () => mobLinks.classList.toggle('open'));
+  mobLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobLinks.classList.remove('open')));
+}
+
+// Scroll reveal
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Holy Crusader (Paladin) — Oblivion Remastered Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0c0a08;--bg-card:#161310;--bg-el:#1e1a16;--bg-hover:#252018;
+  --border:#302a22;--border-light:#403828;
+  --text:#e0d8c8;--text-dim:#a89878;--text-muted:#6a5a48;--white:#f0e8d8;
+  --accent:#c8a050;--accent-hover:#e0b860;--accent-dim:rgba(200,160,80,0.12);
+  --fire:#d05030;--fire-dim:rgba(208,80,48,0.12);
+  --frost:#4080c0;--frost-dim:rgba(64,128,192,0.12);
+  --shock:#8060c0;--shock-dim:rgba(128,96,192,0.12);
+  --green:#5a9040;--green-dim:rgba(90,144,64,0.1);
+  --blue:#4080b0;--blue-dim:rgba(64,128,176,0.1);
+  --red:#b03030;
+  --holy:#e8d070;--holy-dim:rgba(232,208,112,0.1);
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:19px;line-height:1.75;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);text-decoration:underline}
+
+.page{display:flex;max-width:1100px;margin:0 auto}
+.sidebar{width:220px;flex-shrink:0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;border-right:1px solid var(--border);background:var(--bg-card);padding:1.5rem 0;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.sidebar-badge{text-align:center;padding:0 1.25rem 1rem}
+.sidebar-badge img{width:48px;height:48px;border-radius:8px;border:1px solid var(--border)}
+.sidebar-title{font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);padding:0 1.25rem;margin-bottom:.75rem}
+.sidebar a{display:flex;align-items:center;gap:.5rem;padding:.45rem 1.25rem;font-size:.88rem;font-weight:500;color:var(--text-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s}
+.sidebar a:hover{color:var(--white);background:rgba(200,160,80,0.04);text-decoration:none}
+.sidebar a.active{color:var(--white);border-left-color:var(--accent);background:rgba(200,160,80,0.06)}
+.nav-icon{font-size:1rem;width:1.2rem;text-align:center}
+.content{flex:1;min-width:0;padding:2.5rem 2.5rem 4rem}
+@media(max-width:800px){.sidebar{display:none}.content{padding:1.5rem}}
+
+/* Hero */
+.hero-art{width:100%;margin-bottom:1.25rem;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:var(--bg-card)}
+.hero-svg{width:100%;height:auto;display:block}
+.guide-header{margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.header-row{display:flex;align-items:center;gap:1rem;margin-bottom:.5rem}
+.header-portrait{width:72px;height:72px;border-radius:8px;border:2px solid var(--border);object-fit:cover;background:var(--bg-el)}
+.header-text{flex:1}
+.breadcrumb{font-size:.78rem;color:var(--text-muted);margin-bottom:.3rem}
+.guide-header h1{font-family:'Cinzel',serif;font-size:2.2rem;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:.3rem}
+.subtitle{font-size:1rem;color:var(--text-dim)}
+.tag-row{display:flex;gap:.4rem;margin-top:.6rem;flex-wrap:wrap}
+.tag{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim);text-transform:uppercase;letter-spacing:.04em}
+.tag.fire{color:var(--fire);border-color:rgba(208,80,48,0.3);background:var(--fire-dim)}
+.tag.gold{color:var(--accent);border-color:rgba(200,160,80,0.3);background:var(--accent-dim)}
+.tag.green{color:var(--green);border-color:rgba(90,144,64,0.3);background:var(--green-dim)}
+.tag.blue{color:var(--blue);border-color:rgba(64,128,176,0.3);background:var(--blue-dim)}
+.tag.holy{color:var(--holy);border-color:rgba(232,208,112,0.3);background:var(--holy-dim)}
+
+/* Sections */
+.section{margin-top:3rem}
+.section h2{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.section h3{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:600;color:var(--text);margin:1.5rem 0 .6rem}
+.section p{margin-bottom:1rem}
+
+/* Callouts */
+.callout{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0}
+.callout.warn{border-left-color:var(--fire)}
+.callout.tip{border-left-color:var(--green)}
+.callout.holy{border-left-color:var(--holy)}
+.callout-label{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem;color:var(--accent)}
+.callout.warn .callout-label{color:var(--fire)}
+.callout.tip .callout-label{color:var(--green)}
+.callout.holy .callout-label{color:var(--holy)}
+.callout p{margin-bottom:.5rem;font-size:.95rem}.callout p:last-child{margin-bottom:0}
+
+/* Stats */
+.stats{display:flex;gap:.5rem;flex-wrap:wrap;margin:.75rem 0}
+.stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:.4rem .75rem;text-align:center;min-width:3.5rem}
+.stat-box.primary{border-color:rgba(200,160,80,0.4)}
+.stat-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
+.stat-val{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--white)}
+.stat-box.primary .stat-val{color:var(--accent)}
+
+/* Picks */
+.picks{list-style:none;margin:.5rem 0}
+.picks li{padding:.3rem 0;font-size:.95rem;display:flex;gap:.4rem;align-items:baseline}
+.picks .label{font-size:.72rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.03em;flex-shrink:0;min-width:5rem}
+.picks .name{font-weight:600;color:var(--white)}
+.picks .note{color:var(--text-dim);font-size:.88rem}
+
+/* Level cards */
+.lv-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.4rem;overflow:hidden;transition:border-color .15s}
+.lv-card:hover{border-color:var(--border-light)}
+.lv-card.spike{border-left:3px solid var(--accent)}
+.lv-head{display:flex;align-items:center;gap:.6rem;padding:.65rem 1rem;cursor:pointer;user-select:none;transition:background .1s;flex-wrap:wrap}
+.lv-head:hover{background:var(--bg-hover)}
+.lv-num{font-family:'Cinzel',serif;font-weight:900;font-size:1.3rem;color:var(--white);min-width:1.6rem;text-align:center}
+.lv-range{font-size:.72rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(200,160,80,0.2);text-transform:uppercase;letter-spacing:.04em}
+.lv-title{font-weight:600;font-size:.95rem;color:var(--text);flex:1}
+.lv-spike{font-size:.65rem;font-weight:600;color:var(--accent);background:var(--accent-dim);padding:.15rem .45rem;border-radius:4px;border:1px solid rgba(200,160,80,0.2);text-transform:uppercase}
+.lv-arrow{color:var(--text-muted);font-size:.75rem;transition:transform .2s}
+.lv-card.open .lv-arrow{transform:rotate(90deg)}
+.lv-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.lv-card.open .lv-body{max-height:1200px}
+.lv-inner{padding:0 1rem 1rem;border-top:1px solid var(--border)}
+
+/* Quick picks */
+.qp-row{display:flex;flex-wrap:wrap;gap:.3rem;margin:.75rem 0 .5rem}
+.qp{font-size:.78rem;font-weight:500;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim)}
+.qp.skill{color:var(--green);border-color:rgba(90,144,64,0.2)}
+.qp.spell{color:var(--frost);border-color:rgba(64,128,192,0.2)}
+.qp.gear{color:var(--accent);border-color:rgba(200,160,80,0.2)}
+.qp.attr{color:var(--fire);border-color:rgba(208,80,48,0.2)}
+.qp.holy{color:var(--holy);border-color:rgba(232,208,112,0.2)}
+
+/* Gear cards */
+.gear-group{margin-bottom:1.5rem}
+.gear-group-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--accent);padding-bottom:.35rem;margin-bottom:.5rem;border-bottom:1px solid rgba(200,160,80,0.15)}
+.gear-row{display:flex;gap:.75rem;padding:.6rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:.35rem;align-items:center}
+.gear-img{width:48px;height:48px;border-radius:4px;border:1px solid var(--border);object-fit:cover;flex-shrink:0;background:var(--bg-el)}
+.gear-info{flex:1}
+.gear-name{font-weight:600;color:var(--accent);font-size:.95rem}
+.gear-slot{font-size:.7rem;color:var(--text-muted);margin-left:.35rem;text-transform:uppercase}
+.gear-desc{color:var(--text-dim);font-size:.85rem;margin-top:.1rem}
+.gear-loc{font-size:.8rem;color:var(--green);margin-top:.15rem}
+
+/* Spell grid */
+.spell-section{margin-bottom:1.5rem}
+.spell-level{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--white);padding-bottom:.35rem;margin-bottom:.5rem;border-bottom:1px solid var(--border)}
+.spell-row{display:flex;justify-content:space-between;align-items:start;padding:.5rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:.35rem;gap:.75rem}
+.spell-info{flex:1}.spell-name{font-weight:600;color:var(--white);font-size:.95rem}
+.spell-desc{color:var(--text-dim);font-size:.85rem;margin-top:.1rem}
+.spell-badge{font-size:.68rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;flex-shrink:0;align-self:center}
+.spell-badge.must{color:var(--green);background:var(--green-dim);border:1px solid rgba(90,144,64,0.2)}
+.spell-badge.good{color:var(--accent);background:var(--accent-dim);border:1px solid rgba(200,160,80,0.15)}
+.spell-badge.fire{color:var(--fire);background:var(--fire-dim);border:1px solid rgba(208,80,48,0.2)}
+.spell-badge.frost{color:var(--frost);background:var(--frost-dim);border:1px solid rgba(64,128,192,0.2)}
+.spell-badge.shock{color:var(--shock);background:var(--shock-dim);border:1px solid rgba(128,96,192,0.2)}
+.spell-badge.custom{color:#c0a060;background:rgba(192,160,96,0.08);border:1px solid rgba(192,160,96,0.15)}
+.spell-badge.holy{color:var(--holy);background:var(--holy-dim);border:1px solid rgba(232,208,112,0.2)}
+
+/* Birthsign cards */
+.bs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin:1rem 0}
+@media(max-width:700px){.bs-grid{grid-template-columns:1fr}}
+.bs-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center}
+.bs-card.recommended{border-color:var(--accent);box-shadow:0 0 0 1px rgba(200,160,80,0.1)}
+.bs-card img{width:64px;height:64px;border-radius:50%;border:2px solid var(--border);margin-bottom:.5rem;background:var(--bg-el)}
+.bs-card.recommended img{border-color:var(--accent)}
+.bs-name{font-family:'Cinzel',serif;font-weight:700;font-size:1rem;color:var(--white)}
+.bs-bonus{font-size:.85rem;color:var(--green);margin-top:.2rem}
+.bs-penalty{font-size:.85rem;color:var(--fire);margin-top:.1rem}
+.bs-note{font-size:.82rem;color:var(--text-dim);margin-top:.3rem}
+
+/* Rotation */
+.step-list{list-style:none;counter-reset:step}
+.step-list li{position:relative;padding:.75rem 0 .75rem 3rem;border-left:2px solid var(--border);margin-left:.75rem;counter-increment:step}
+.step-list li::before{content:counter(step);position:absolute;left:-.75rem;top:.6rem;width:1.4rem;height:1.4rem;background:var(--bg);border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:700;font-size:.75rem;color:var(--accent)}
+.step-list li:last-child{border-left-color:transparent}
+.step-action{font-weight:600;color:var(--white)}
+.step-detail{color:var(--text-dim);font-size:.9rem;margin-top:.2rem}
+
+/* Virtues table */
+.virtue-table{width:100%;border-collapse:collapse;margin:1rem 0}
+.virtue-table th{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--border)}
+.virtue-table td{padding:.5rem .6rem;border-bottom:1px solid var(--border);font-size:.9rem}
+.virtue-table tr:hover{background:var(--bg-card)}
+.virtue-table .attr-name{font-weight:600;color:var(--white)}
+.virtue-table .priority{font-size:.7rem;font-weight:600;padding:.1rem .4rem;border-radius:3px}
+.priority.t1{color:var(--accent);background:var(--accent-dim)}
+.priority.t2{color:var(--green);background:var(--green-dim)}
+.priority.t3{color:var(--text-muted);background:rgba(200,200,200,0.04)}
+
+/* Section images */
+.section-img{width:100%;max-height:200px;object-fit:cover;object-position:center;border-radius:8px;border:1px solid var(--border);margin:1rem 0;filter:brightness(0.85)}
+.inline-icon{width:28px;height:28px;vertical-align:middle;margin-right:.3rem;border-radius:4px}
+
+/* Form image row */
+.form-img-row{display:flex;gap:.75rem;margin:1rem 0;flex-wrap:wrap}
+.form-img-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;overflow:hidden;text-align:center;flex:1;min-width:140px;max-width:200px}
+.form-img-card img{width:100%;height:120px;object-fit:cover;object-position:center top;display:block}
+.form-img-label{font-family:'Cinzel',serif;font-size:.75rem;font-weight:600;color:var(--text-dim);padding:.35rem;text-transform:uppercase;letter-spacing:.04em}
+
+.guide-footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.75rem;color:var(--text-muted);text-align:center}
+.guide-footer a{color:var(--text-dim)}
+.guide-footer a:hover{color:var(--accent)}
+
+/* Mobile nav */
+.mobile-nav{display:none;position:sticky;top:60px;z-index:100;background:rgba(12,10,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:56px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Cinzel',serif;font-size:.85rem;font-weight:700;color:var(--accent);letter-spacing:.06em}
+.nav-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s}
+.nav-links{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:rgba(12,10,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.nav-links.open{display:flex}
+.nav-links a{display:flex;align-items:center;gap:.5rem;height:44px;font-size:.9rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){.mobile-nav{display:flex}}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── Universal Nav ── */
+.unav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.unav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.unav-brand{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;color:var(--text);text-decoration:none;transition:color 0.3s}
+.unav-brand:hover{color:var(--accent,#c9a84c)}
+.unav-links{display:flex;gap:1.5rem;list-style:none;align-items:center}
+.unav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.3s;position:relative}
+.unav-links a:hover,.unav-links a.active{color:var(--accent,#c9a84c)}
+.unav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--accent,#c9a84c);transform:scaleX(0);transition:transform 0.3s;transform-origin:right}
+.unav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.unav-dropdown{position:relative}
+.unav-dropdown>a::after{display:none}
+.unav-dropdown>a{display:flex;align-items:center;gap:0.3rem}
+.unav-dropdown>a .dd-arrow{font-size:0.5rem;transition:transform 0.2s;margin-top:1px}
+.unav-dropdown:hover>a .dd-arrow{transform:rotate(180deg)}
+.unav-dd{
+  position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);
+  background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border);border-radius:10px;
+  min-width:200px;padding:0.5rem 0;
+  opacity:0;visibility:hidden;transform:translateX(-50%) translateY(-5px);
+  transition:opacity 0.2s,visibility 0.2s,transform 0.2s;
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+}
+.unav-dropdown:hover .unav-dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.unav-dd a{display:block;padding:0.6rem 1.2rem;font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.15s,background 0.15s;white-space:nowrap}
+.unav-dd a:hover{color:var(--accent,#c9a84c);background:rgba(201,168,76,0.06)}
+.unav-dd a::after{display:none}
+.unav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:0.5rem;z-index:1001}
+.unav-hamburger span{display:block;width:22px;height:2px;background:var(--text-dim,#aaa);margin:5px 0;transition:all 0.3s ease;border-radius:1px}
+.unav-hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.unav-hamburger.open span:nth-child(2){opacity:0}
+.unav-hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+@media(max-width:700px){
+  .unav-hamburger{display:block}
+  .unav-links{
+    display:flex;flex-direction:column;gap:0;
+    position:absolute;top:60px;left:0;right:0;
+    background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;
+    padding:0 0;
+  }
+  .unav-links.open{max-height:600px;padding:0.5rem 0}
+  .unav-links>li{list-style:none}
+  .unav-links>li>a{display:block;padding:0.8rem 2rem;font-size:0.85rem;border-bottom:1px solid var(--border)}
+  .unav-links>li:last-child>a{border-bottom:none}
+  .unav-links a::after{display:none}
+  .unav-dd{position:static;opacity:1;visibility:visible;transform:none;border:none;border-radius:0;min-width:auto;padding:0;background:none;backdrop-filter:none;box-shadow:none}
+  .unav-dd a{padding:0.7rem 2rem 0.7rem 3rem;font-size:0.8rem;border-bottom:1px solid var(--border)}
+  .unav-dropdown>a{display:none}
+  .unav-dropdown{border-bottom:none}
+}
+
+</style>
+</head>
+<body>
+<nav class="unav">
+  <div class="unav-inner">
+    <a href="index.html" class="unav-brand">Z3nGineer</a>
+    <button class="unav-hamburger" id="unav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="unav-links" id="unav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="unav-dropdown">
+        <a href="#">Projects <span class="dd-arrow">&#x25BC;</span></a>
+        <div class="unav-dd">
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+          <a href="https://crockednloaded.com">CrockedNLoaded</a>
+          <a href="guides.html">Game Guides</a>
+          <a href="CHIM.html">CHIM Modpack</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="mobile-nav" style="margin-top:60px;">
+  <span class="mobile-nav-title">Holy Crusader</span>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="#overview"><span class="nav-icon">&#x2726;</span> Overview</a>
+    <a href="#firststeps"><span class="nav-icon">&#x25BA;</span> First Steps</a>
+    <a href="#birthsign"><span class="nav-icon">&#x2605;</span> Birthsign</a>
+    <a href="#virtues"><span class="nav-icon">&uarr;</span> Leveling</a>
+    <a href="#progression"><span class="nav-icon">&#x2694;</span> Progression</a>
+    <a href="#restoration"><span class="nav-icon">&#x2721;</span> Restoration</a>
+    <a href="#mechanics"><span class="nav-icon">&#x2699;</span> Combat Mechanics</a>
+    <a href="#gear"><span class="nav-icon">&#x25C6;</span> Gear</a>
+    <a href="#combat"><span class="nav-icon">&#x26A1;</span> Combat Loop</a>
+    <a href="#tips"><span class="nav-icon">&#x2728;</span> Tips</a>
+  </div>
+</div>
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-badge">
+    <img src="https://images.uesp.net/thumb/6/66/OBR-class-Crusader.png/200px-OBR-class-Crusader.png" alt="Crusader">
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">&#x2726;</span> Overview</a>
+  <a href="#firststeps"><span class="nav-icon">&#x25BA;</span> First Steps</a>
+  <a href="#birthsign"><span class="nav-icon">&#x2605;</span> Birthsign</a>
+  <a href="#virtues"><span class="nav-icon">&uarr;</span> Leveling</a>
+  <a href="#progression"><span class="nav-icon">&#x2694;</span> Progression</a>
+  <a href="#restoration"><span class="nav-icon">&#x2721;</span> Restoration</a>
+  <a href="#mechanics"><span class="nav-icon">&#x2699;</span> Combat Mechanics</a>
+  <a href="#gear"><span class="nav-icon">&#x25C6;</span> Gear</a>
+  <a href="#combat"><span class="nav-icon">&#x26A1;</span> Combat Loop</a>
+  <a href="#tips"><span class="nav-icon">&#x2728;</span> Tips</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <!-- Holy radial glow behind paladin -->
+          <radialGradient id="holyGlow" cx="45%" cy="45%" r="55%">
+            <stop offset="0%" stop-color="#e8d070" stop-opacity="0.35"/>
+            <stop offset="30%" stop-color="#c8a050" stop-opacity="0.15"/>
+            <stop offset="60%" stop-color="#5a4020" stop-opacity="0.06"/>
+            <stop offset="100%" stop-color="#0c0a08" stop-opacity="0"/>
+          </radialGradient>
+          <!-- Turn Undead wave gradient -->
+          <radialGradient id="turnWave" cx="40%" cy="50%" r="60%">
+            <stop offset="0%" stop-color="#f0d860" stop-opacity="0.5"/>
+            <stop offset="40%" stop-color="#e8c840" stop-opacity="0.25"/>
+            <stop offset="70%" stop-color="#c8a030" stop-opacity="0.08"/>
+            <stop offset="100%" stop-color="#c8a030" stop-opacity="0"/>
+          </radialGradient>
+          <!-- Mace metal gradient -->
+          <linearGradient id="maceHead" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#d0c0a0" stop-opacity="0.9"/>
+            <stop offset="50%" stop-color="#a09070" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#706050" stop-opacity="0.7"/>
+          </linearGradient>
+          <!-- Armor gleam -->
+          <linearGradient id="armorGleam" x1="0%" y1="0%" x2="50%" y2="100%">
+            <stop offset="0%" stop-color="#e0d0b0" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#8a7a60" stop-opacity="0.3"/>
+          </linearGradient>
+          <!-- Chapel window glow -->
+          <radialGradient id="windowGlow" cx="50%" cy="30%" r="50%">
+            <stop offset="0%" stop-color="#e8d070" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#e8d070" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="900" height="320" fill="#0c0a08"/>
+
+        <!-- === CHAPEL ARCHITECTURE — background === -->
+        <g opacity="0.2">
+          <!-- Left column -->
+          <rect x="60" y="30" width="18" height="260" rx="3" fill="#4a3828"/>
+          <rect x="55" y="25" width="28" height="12" rx="2" fill="#5a4838"/>
+          <rect x="55" y="280" width="28" height="12" rx="2" fill="#5a4838"/>
+          <!-- Right column -->
+          <rect x="822" y="30" width="18" height="260" rx="3" fill="#4a3828"/>
+          <rect x="817" y="25" width="28" height="12" rx="2" fill="#5a4838"/>
+          <rect x="817" y="280" width="28" height="12" rx="2" fill="#5a4838"/>
+          <!-- Pointed arch connecting columns -->
+          <path d="M78,30 Q450,-80 822,30" fill="none" stroke="#5a4838" stroke-width="3"/>
+          <path d="M78,35 Q450,-75 822,35" fill="none" stroke="#4a3828" stroke-width="2"/>
+          <!-- Inner arch -->
+          <path d="M120,50 Q450,-40 780,50" fill="none" stroke="#4a3828" stroke-width="1.5"/>
+          <!-- Rose window -->
+          <circle cx="450" cy="10" r="30" fill="none" stroke="#5a4838" stroke-width="2"/>
+          <circle cx="450" cy="10" r="22" fill="url(#windowGlow)"/>
+          <circle cx="450" cy="10" r="15" fill="none" stroke="#6a5838" stroke-width="1"/>
+          <line x1="450" y1="-20" x2="450" y2="40" stroke="#5a4838" stroke-width="1"/>
+          <line x1="420" y1="10" x2="480" y2="10" stroke="#5a4838" stroke-width="1"/>
+          <line x1="429" y1="-11" x2="471" y2="31" stroke="#5a4838" stroke-width="0.8"/>
+          <line x1="471" y1="-11" x2="429" y2="31" stroke="#5a4838" stroke-width="0.8"/>
+          <!-- Side arched windows -->
+          <g transform="translate(140,80)">
+            <rect x="-12" y="0" width="24" height="80" rx="2" fill="#2a2018"/>
+            <path d="M-12,0 Q0,-18 12,0" fill="#2a2018" stroke="#5a4838" stroke-width="1"/>
+            <rect x="-10" y="5" width="20" height="70" rx="1" fill="#3a2a18" opacity="0.5"/>
+            <circle cx="0" cy="-5" r="6" fill="#e8d070" opacity="0.08"/>
+          </g>
+          <g transform="translate(760,80)">
+            <rect x="-12" y="0" width="24" height="80" rx="2" fill="#2a2018"/>
+            <path d="M-12,0 Q0,-18 12,0" fill="#2a2018" stroke="#5a4838" stroke-width="1"/>
+            <rect x="-10" y="5" width="20" height="70" rx="1" fill="#3a2a18" opacity="0.5"/>
+            <circle cx="0" cy="-5" r="6" fill="#e8d070" opacity="0.08"/>
+          </g>
+          <!-- Floor tiles -->
+          <line x1="80" y1="295" x2="820" y2="295" stroke="#3a2a18" stroke-width="0.8"/>
+          <line x1="200" y1="295" x2="200" y2="310" stroke="#3a2a18" stroke-width="0.5"/>
+          <line x1="350" y1="295" x2="350" y2="310" stroke="#3a2a18" stroke-width="0.5"/>
+          <line x1="500" y1="295" x2="500" y2="310" stroke="#3a2a18" stroke-width="0.5"/>
+          <line x1="650" y1="295" x2="650" y2="310" stroke="#3a2a18" stroke-width="0.5"/>
+        </g>
+
+        <!-- === TURN UNDEAD WAVE — golden divine light expanding outward === -->
+        <g opacity="0.75">
+          <!-- Concentric wave arcs emanating from paladin's left hand -->
+          <ellipse cx="380" cy="170" rx="160" ry="90" fill="url(#turnWave)" opacity="0.3"/>
+          <!-- Wave rings -->
+          <path d="M220,170 Q300,100 380,95 Q460,100 540,170" fill="none" stroke="#e8d070" stroke-width="2" opacity="0.25"/>
+          <path d="M200,185 Q290,110 380,105 Q470,110 560,185" fill="none" stroke="#e8d070" stroke-width="1.5" opacity="0.18"/>
+          <path d="M180,200 Q280,120 380,115 Q480,120 580,200" fill="none" stroke="#e8d070" stroke-width="1" opacity="0.12"/>
+          <!-- Divine light particles in wave -->
+          <circle cx="280" cy="140" r="2" fill="#f0e080" opacity="0.5"/>
+          <circle cx="320" cy="125" r="1.5" fill="#e8d070" opacity="0.45"/>
+          <circle cx="350" cy="115" r="1.8" fill="#f0e080" opacity="0.4"/>
+          <circle cx="250" cy="160" r="1.2" fill="#e8d070" opacity="0.35"/>
+          <circle cx="480" cy="130" r="1.6" fill="#f0e080" opacity="0.4"/>
+          <circle cx="510" cy="145" r="1.3" fill="#e8d070" opacity="0.35"/>
+          <circle cx="300" cy="150" r="2.2" fill="#f8e890" opacity="0.3"/>
+          <circle cx="440" cy="120" r="1.4" fill="#f0e080" opacity="0.38"/>
+        </g>
+
+        <!-- === HOLY GOLDEN RADIANCE behind paladin === -->
+        <circle cx="420" cy="155" r="120" fill="url(#holyGlow)"/>
+        <!-- Light rays radiating outward -->
+        <g opacity="0.12" stroke="#e8d070" stroke-width="1.5" stroke-linecap="round">
+          <line x1="420" y1="155" x2="420" y2="30"/>
+          <line x1="420" y1="155" x2="310" y2="55"/>
+          <line x1="420" y1="155" x2="530" y2="55"/>
+          <line x1="420" y1="155" x2="260" y2="120"/>
+          <line x1="420" y1="155" x2="580" y2="120"/>
+          <line x1="420" y1="155" x2="250" y2="180"/>
+          <line x1="420" y1="155" x2="590" y2="180"/>
+          <line x1="420" y1="155" x2="310" y2="250"/>
+          <line x1="420" y1="155" x2="530" y2="250"/>
+        </g>
+
+        <!-- === UNDEAD ENEMY 1 — Skeleton cowering left, being pushed back === -->
+        <g transform="translate(170,195)" opacity="0.8">
+          <!-- Body recoiling from holy light -->
+          <ellipse cx="0" cy="10" rx="14" ry="22" fill="#6a6860" transform="rotate(-20)"/>
+          <!-- Skull -->
+          <circle cx="-8" cy="-14" r="10" fill="#8a8878"/>
+          <!-- Empty eye sockets -->
+          <ellipse cx="-11" cy="-16" rx="3" ry="2.5" fill="#1a1810"/>
+          <ellipse cx="-5" cy="-16" rx="3" ry="2.5" fill="#1a1810"/>
+          <!-- Jaw open in agony -->
+          <path d="M-14,-8 Q-8,-3 -2,-8" fill="#1a1810" stroke="#7a7868" stroke-width="0.8"/>
+          <!-- Arms raised defensively -->
+          <line x1="-10" y1="0" x2="-30" y2="-18" stroke="#7a7868" stroke-width="4" stroke-linecap="round"/>
+          <line x1="-30" y1="-18" x2="-35" y2="-25" stroke="#7a7868" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="5" y1="-2" x2="-10" y2="-25" stroke="#7a7868" stroke-width="4" stroke-linecap="round"/>
+          <!-- Ribs visible -->
+          <line x1="-8" y1="2" x2="6" y2="4" stroke="#8a8878" stroke-width="1" opacity="0.5"/>
+          <line x1="-7" y1="8" x2="5" y2="10" stroke="#8a8878" stroke-width="1" opacity="0.5"/>
+          <line x1="-6" y1="14" x2="4" y2="16" stroke="#8a8878" stroke-width="1" opacity="0.5"/>
+          <!-- Legs stumbling backward -->
+          <line x1="-5" y1="28" x2="-18" y2="55" stroke="#7a7868" stroke-width="5" stroke-linecap="round"/>
+          <line x1="5" y1="25" x2="-8" y2="55" stroke="#7a7868" stroke-width="5" stroke-linecap="round"/>
+          <!-- Holy light burn marks -->
+          <circle cx="-2" cy="5" r="6" fill="#e8d070" opacity="0.1"/>
+          <circle cx="-8" cy="-10" r="4" fill="#e8d070" opacity="0.08"/>
+          <!-- Disintegration particles flying off -->
+          <circle cx="-25" cy="-30" r="1.5" fill="#9a9888" opacity="0.4"/>
+          <circle cx="-35" cy="-20" r="1" fill="#8a8878" opacity="0.35"/>
+          <circle cx="-20" cy="-35" r="0.8" fill="#7a7868" opacity="0.3"/>
+          <circle cx="-15" cy="-28" r="1.2" fill="#9a9888" opacity="0.3"/>
+        </g>
+
+        <!-- === UNDEAD ENEMY 2 — Zombie fleeing right === -->
+        <g transform="translate(680,185)" opacity="0.75">
+          <!-- Hunched rotting body turning away -->
+          <ellipse cx="0" cy="15" rx="16" ry="25" fill="#4a5040" transform="rotate(15)"/>
+          <!-- Head turning away from light -->
+          <circle cx="10" cy="-10" r="11" fill="#5a6050"/>
+          <!-- Sunken features -->
+          <ellipse cx="14" cy="-12" rx="2.5" ry="2" fill="#2a3020"/>
+          <ellipse cx="8" cy="-12" rx="2.5" ry="2" fill="#2a3020"/>
+          <!-- Open mouth moaning -->
+          <ellipse cx="12" cy="-4" rx="4" ry="3" fill="#2a2820"/>
+          <!-- Torn flesh patches -->
+          <path d="M-5,5 Q0,2 5,5 Q2,8 -2,8 Z" fill="#6a4040" opacity="0.5"/>
+          <!-- Arms raised shielding face -->
+          <line x1="10" y1="2" x2="28" y2="-15" stroke="#4a5040" stroke-width="5" stroke-linecap="round"/>
+          <line x1="28" y1="-15" x2="32" y2="-22" stroke="#5a6050" stroke-width="3" stroke-linecap="round"/>
+          <line x1="-8" y1="5" x2="8" y2="-18" stroke="#4a5040" stroke-width="5" stroke-linecap="round"/>
+          <!-- Stumbling legs -->
+          <line x1="-4" y1="35" x2="10" y2="60" stroke="#4a5040" stroke-width="6" stroke-linecap="round"/>
+          <line x1="6" y1="33" x2="22" y2="58" stroke="#4a5040" stroke-width="6" stroke-linecap="round"/>
+          <!-- Feet -->
+          <ellipse cx="12" cy="62" rx="6" ry="3" fill="#3a4030"/>
+          <ellipse cx="24" cy="60" rx="6" ry="3" fill="#3a4030"/>
+          <!-- Golden burn from holy wave -->
+          <circle cx="0" cy="10" r="8" fill="#e8d070" opacity="0.08"/>
+        </g>
+
+        <!-- === UNDEAD ENEMY 3 — Ghost/Wraith dissolving, upper left === -->
+        <g transform="translate(240,120)" opacity="0.5">
+          <!-- Translucent ghostly form -->
+          <ellipse cx="0" cy="0" rx="18" ry="30" fill="#506878" opacity="0.3"/>
+          <ellipse cx="0" cy="-5" rx="14" ry="22" fill="#607888" opacity="0.2"/>
+          <!-- Ghost face — agonized -->
+          <circle cx="0" cy="-18" r="10" fill="#607888" opacity="0.25"/>
+          <ellipse cx="-3" cy="-20" rx="2" ry="3" fill="#90b0c0" opacity="0.4"/>
+          <ellipse cx="4" cy="-20" rx="2" ry="3" fill="#90b0c0" opacity="0.4"/>
+          <ellipse cx="0" cy="-13" rx="3" ry="4" fill="#405060" opacity="0.3"/>
+          <!-- Wispy trailing form dissolving -->
+          <path d="M-10,20 Q-15,35 -20,45" stroke="#506878" stroke-width="2" opacity="0.2" fill="none"/>
+          <path d="M10,20 Q15,35 18,42" stroke="#506878" stroke-width="1.5" opacity="0.15" fill="none"/>
+          <path d="M0,25 Q-5,40 -8,50" stroke="#506878" stroke-width="1" opacity="0.12" fill="none"/>
+          <!-- Holy light burning through it -->
+          <circle cx="0" cy="0" r="12" fill="#e8d070" opacity="0.06"/>
+          <!-- Dissipation particles -->
+          <circle cx="-15" cy="-25" r="1.5" fill="#607888" opacity="0.25"/>
+          <circle cx="12" cy="-28" r="1" fill="#506878" opacity="0.2"/>
+          <circle cx="-20" cy="-15" r="0.8" fill="#607888" opacity="0.15"/>
+        </g>
+
+        <!-- === THE PALADIN / HOLY CRUSADER — center, mace raised high === -->
+        <g transform="translate(420,155)" opacity="0.95">
+          <!-- CAPE — flowing behind, white and gold -->
+          <path d="M-10,-5 Q-15,15 -22,40 Q-30,70 -40,95 Q-45,108 -55,115 Q-60,112 -50,100 Q-38,75 -30,50 Q-22,25 -15,5 Z" fill="#d0c8b0" opacity="0.45"/>
+          <path d="M5,-5 Q0,15 -8,40 Q-18,70 -28,95 Q-35,108 -45,115 Q-52,112 -40,100 Q-30,75 -20,50 Q-10,20 -2,2 Z" fill="#b0a890" opacity="0.3"/>
+          <!-- Cape gold trim -->
+          <path d="M-55,115 Q-48,118 -45,115 Q-40,120 -35,112" stroke="#c8a050" stroke-width="0.8" opacity="0.4" fill="none"/>
+          <!-- Cape inner highlight -->
+          <path d="M-12,20 Q-20,45 -30,70" stroke="#c8a050" stroke-width="0.5" opacity="0.25" fill="none"/>
+
+          <!-- Body — gleaming Crusader armor, broad and proud -->
+          <ellipse cx="0" cy="20" rx="22" ry="32" fill="url(#armorGleam)"/>
+          <!-- Chest plate with embossed cross -->
+          <ellipse cx="0" cy="14" rx="18" ry="24" fill="#a09080" opacity="0.6"/>
+          <!-- Crusader Cross emblem on chest -->
+          <rect x="-2" y="2" width="4" height="20" rx="1" fill="#c8a050" opacity="0.5"/>
+          <rect x="-8" y="9" width="16" height="4" rx="1" fill="#c8a050" opacity="0.5"/>
+          <!-- Armor plate lines -->
+          <line x1="-14" y1="8" x2="-14" y2="32" stroke="#b0a090" stroke-width="0.8" opacity="0.4"/>
+          <line x1="14" y1="8" x2="14" y2="32" stroke="#b0a090" stroke-width="0.8" opacity="0.4"/>
+          <!-- Pauldrons — large, ornate -->
+          <ellipse cx="-20" cy="2" rx="10" ry="7" fill="#a09080" opacity="0.7"/>
+          <ellipse cx="20" cy="2" rx="10" ry="7" fill="#a09080" opacity="0.7"/>
+          <!-- Gold pauldron trim -->
+          <path d="M-30,2 Q-20,-5 -10,2" fill="none" stroke="#c8a050" stroke-width="1" opacity="0.4"/>
+          <path d="M10,2 Q20,-5 30,2" fill="none" stroke="#c8a050" stroke-width="1" opacity="0.4"/>
+          <!-- Belt -->
+          <rect x="-18" y="36" width="36" height="5" rx="2" fill="#8a7040" opacity="0.7"/>
+          <!-- Belt buckle — ornate cross -->
+          <rect x="-4" y="36" width="8" height="5" rx="1" fill="#c8a050" opacity="0.5"/>
+          <line x1="0" y1="36" x2="0" y2="41" stroke="#e8d070" stroke-width="0.8" opacity="0.4"/>
+          <line x1="-3" y1="38.5" x2="3" y2="38.5" stroke="#e8d070" stroke-width="0.8" opacity="0.4"/>
+
+          <!-- Head — great helm with cross visor -->
+          <circle cx="0" cy="-18" r="13" fill="#a09080"/>
+          <!-- Helm top ridge -->
+          <path d="M-10,-28 Q0,-34 10,-28" fill="#a09080" stroke="#b0a090" stroke-width="1"/>
+          <!-- Visor slit — T-shaped cross -->
+          <rect x="-8" y="-20" width="16" height="2.5" rx="0.5" fill="#1a1810"/>
+          <rect x="-1.5" y="-20" width="3" height="10" rx="0.5" fill="#1a1810"/>
+          <!-- Eyes glowing gold through visor -->
+          <ellipse cx="-4" cy="-19" rx="2" ry="1" fill="#e8d070" opacity="0.8"/>
+          <ellipse cx="4" cy="-19" rx="2" ry="1" fill="#e8d070" opacity="0.8"/>
+          <!-- Gold band around helm -->
+          <path d="M-13,-18 Q-14,-25 -10,-28" fill="none" stroke="#c8a050" stroke-width="1.2" opacity="0.5"/>
+          <path d="M13,-18 Q14,-25 10,-28" fill="none" stroke="#c8a050" stroke-width="1.2" opacity="0.5"/>
+          <!-- Helm cheek guards -->
+          <path d="M-12,-14 L-14,-8 L-10,-6" fill="#9a8a70" opacity="0.5"/>
+          <path d="M12,-14 L14,-8 L10,-6" fill="#9a8a70" opacity="0.5"/>
+
+          <!-- Legs — armored, standing wide -->
+          <line x1="-8" y1="44" x2="-16" y2="82" stroke="#8a7a68" stroke-width="9" stroke-linecap="round"/>
+          <line x1="8" y1="44" x2="18" y2="80" stroke="#8a7a68" stroke-width="9" stroke-linecap="round"/>
+          <!-- Knee guards -->
+          <circle cx="-12" cy="62" r="4" fill="#9a8a78" opacity="0.5"/>
+          <circle cx="13" cy="60" r="4" fill="#9a8a78" opacity="0.5"/>
+          <!-- Greaves gold trim -->
+          <line x1="-18" y1="70" x2="-14" y2="70" stroke="#c8a050" stroke-width="1" opacity="0.3"/>
+          <line x1="16" y1="68" x2="20" y2="68" stroke="#c8a050" stroke-width="1" opacity="0.3"/>
+          <!-- Boots — heavy armored -->
+          <ellipse cx="-18" cy="85" rx="8" ry="5" fill="#7a6a58"/>
+          <ellipse cx="20" cy="83" rx="8" ry="5" fill="#7a6a58"/>
+
+          <!-- RIGHT ARM — MACE RAISED HIGH OVERHEAD -->
+          <line x1="14" y1="4" x2="32" y2="-30" stroke="#8a7a68" stroke-width="7" stroke-linecap="round"/>
+          <!-- Forearm -->
+          <line x1="32" y1="-30" x2="25" y2="-55" stroke="#8a7a68" stroke-width="6" stroke-linecap="round"/>
+          <!-- Gauntlet -->
+          <circle cx="24" cy="-57" r="5" fill="#9a8a78"/>
+          <!-- MACE — shaft going up -->
+          <line x1="22" y1="-60" x2="15" y2="-100" stroke="#7a6a58" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- Mace head — flanged -->
+          <circle cx="14" cy="-104" r="10" fill="url(#maceHead)"/>
+          <!-- Flanges -->
+          <line x1="14" y1="-114" x2="14" y2="-118" stroke="#b0a080" stroke-width="3" stroke-linecap="round"/>
+          <line x1="4" y1="-104" x2="0" y2="-104" stroke="#b0a080" stroke-width="3" stroke-linecap="round"/>
+          <line x1="24" y1="-104" x2="28" y2="-104" stroke="#b0a080" stroke-width="3" stroke-linecap="round"/>
+          <line x1="7" y1="-111" x2="4" y2="-114" stroke="#b0a080" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="21" y1="-111" x2="24" y2="-114" stroke="#b0a080" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="7" y1="-97" x2="4" y2="-94" stroke="#b0a080" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="21" y1="-97" x2="24" y2="-94" stroke="#b0a080" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Mace holy glow -->
+          <circle cx="14" cy="-104" r="18" fill="#e8d070" opacity="0.08"/>
+          <circle cx="14" cy="-104" r="12" fill="#f0e080" opacity="0.05"/>
+          <!-- Gleam on mace -->
+          <circle cx="10" cy="-108" r="2" fill="#f0e8d0" opacity="0.5"/>
+          <circle cx="18" cy="-100" r="1.5" fill="#f0e8d0" opacity="0.3"/>
+
+          <!-- LEFT ARM — extended forward, casting Turn Undead -->
+          <line x1="-14" y1="4" x2="-38" y2="-15" stroke="#8a7a68" stroke-width="7" stroke-linecap="round"/>
+          <!-- Forearm reaching out -->
+          <line x1="-38" y1="-15" x2="-55" y2="-25" stroke="#8a7a68" stroke-width="6" stroke-linecap="round"/>
+          <!-- Gauntlet — open palm -->
+          <circle cx="-57" cy="-27" r="5" fill="#9a8a78"/>
+          <!-- Open fingers radiating divine light -->
+          <line x1="-59" y1="-29" x2="-64" y2="-35" stroke="#9a8a78" stroke-width="2" stroke-linecap="round"/>
+          <line x1="-57" y1="-32" x2="-60" y2="-39" stroke="#9a8a78" stroke-width="2" stroke-linecap="round"/>
+          <line x1="-55" y1="-32" x2="-56" y2="-40" stroke="#9a8a78" stroke-width="2" stroke-linecap="round"/>
+          <line x1="-53" y1="-30" x2="-52" y2="-37" stroke="#9a8a78" stroke-width="1.8" stroke-linecap="round"/>
+
+          <!-- DIVINE LIGHT FROM PALM — Turn Undead spell -->
+          <circle cx="-58" cy="-34" r="22" fill="#e8d070" opacity="0.12"/>
+          <circle cx="-58" cy="-34" r="15" fill="#f0e080" opacity="0.18"/>
+          <circle cx="-58" cy="-34" r="9" fill="#f8e890" opacity="0.3"/>
+          <circle cx="-58" cy="-34" r="5" fill="#fffce0" opacity="0.6"/>
+          <circle cx="-58" cy="-34" r="2.5" fill="#fffff0" opacity="0.9"/>
+          <!-- Divine tendrils -->
+          <path d="M-58,-34 Q-70,-48 -75,-60" stroke="#e8d070" stroke-width="1.5" opacity="0.3" fill="none"/>
+          <path d="M-58,-34 Q-65,-50 -60,-65" stroke="#f0e080" stroke-width="1.2" opacity="0.25" fill="none"/>
+          <path d="M-58,-34 Q-50,-50 -55,-62" stroke="#e8d070" stroke-width="1" opacity="0.2" fill="none"/>
+          <path d="M-58,-34 Q-75,-40 -85,-50" stroke="#f0e080" stroke-width="1" opacity="0.15" fill="none"/>
+          <!-- Holy sparks -->
+          <circle cx="-72" cy="-55" r="1.5" fill="#f0e080" opacity="0.5"/>
+          <circle cx="-62" cy="-60" r="1.2" fill="#fffce0" opacity="0.4"/>
+          <circle cx="-55" cy="-58" r="1" fill="#f8e890" opacity="0.35"/>
+          <circle cx="-78" cy="-48" r="0.8" fill="#f0e080" opacity="0.3"/>
+          <circle cx="-50" cy="-50" r="1.3" fill="#e8d070" opacity="0.3"/>
+        </g>
+
+        <!-- === UNDEAD ENEMY 4 — Vampire cowering far right === -->
+        <g transform="translate(760,210)" opacity="0.65">
+          <!-- Vampire body hunched, shielding from light -->
+          <ellipse cx="0" cy="5" rx="15" ry="22" fill="#4a3040" transform="rotate(10)"/>
+          <!-- Head — pale, fanged, in pain -->
+          <circle cx="5" cy="-18" r="9" fill="#8a7a80"/>
+          <!-- Glowing red eyes squinting -->
+          <ellipse cx="2" cy="-19" rx="1.8" ry="1" fill="#c03030" opacity="0.6"/>
+          <ellipse cx="8" cy="-18" rx="1.8" ry="1" fill="#c03030" opacity="0.6"/>
+          <!-- Mouth open showing fangs -->
+          <path d="M2,-12 Q5,-9 8,-12" fill="#2a1520" stroke="#6a5a60" stroke-width="0.6"/>
+          <line x1="3" y1="-12" x2="3.5" y2="-9.5" stroke="#d0d0c0" stroke-width="0.6"/>
+          <line x1="7" y1="-12" x2="6.5" y2="-9.5" stroke="#d0d0c0" stroke-width="0.6"/>
+          <!-- Dark cloak -->
+          <path d="M-12,0 Q-18,15 -22,30 Q-25,40 -20,45" fill="#2a1828" opacity="0.6"/>
+          <path d="M15,-5 Q20,10 22,25 Q24,35 20,40" fill="#2a1828" opacity="0.5"/>
+          <!-- Arms raised defensively -->
+          <line x1="-8" y1="0" x2="-22" y2="-15" stroke="#6a5a60" stroke-width="4" stroke-linecap="round"/>
+          <line x1="10" y1="-5" x2="20" y2="-20" stroke="#6a5a60" stroke-width="4" stroke-linecap="round"/>
+          <!-- Legs stumbling -->
+          <line x1="-5" y1="22" x2="5" y2="48" stroke="#4a3040" stroke-width="5" stroke-linecap="round"/>
+          <line x1="6" y1="20" x2="18" y2="46" stroke="#4a3040" stroke-width="5" stroke-linecap="round"/>
+          <!-- Smoke/burn from holy light -->
+          <path d="M0,-5 Q-3,-15 -5,-22" stroke="#8a7a70" stroke-width="1" opacity="0.2" fill="none"/>
+          <path d="M5,0 Q8,-10 6,-18" stroke="#8a7a70" stroke-width="0.8" opacity="0.15" fill="none"/>
+        </g>
+
+        <!-- Floating holy motes throughout scene -->
+        <g opacity="0.4">
+          <circle cx="350" cy="80" r="1.5" fill="#f0e080"/>
+          <circle cx="480" cy="65" r="1.2" fill="#e8d070"/>
+          <circle cx="300" cy="100" r="1" fill="#f8e890"/>
+          <circle cx="530" cy="90" r="1.3" fill="#f0e080"/>
+          <circle cx="400" cy="50" r="0.8" fill="#fffce0"/>
+          <circle cx="460" cy="45" r="1.1" fill="#e8d070"/>
+          <circle cx="340" cy="60" r="0.9" fill="#f0e080"/>
+          <circle cx="500" cy="55" r="0.7" fill="#f8e890"/>
+          <circle cx="370" cy="260" r="1" fill="#e8d070" opacity="0.3"/>
+          <circle cx="440" cy="270" r="0.8" fill="#f0e080" opacity="0.25"/>
+          <circle cx="500" cy="265" r="1.2" fill="#e8d070" opacity="0.2"/>
+        </g>
+
+        <!-- Fallen bones on ground — previously slain undead -->
+        <g opacity="0.3">
+          <!-- Bone pile left -->
+          <line x1="120" y1="278" x2="145" y2="282" stroke="#9a9888" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="128" y1="275" x2="140" y2="288" stroke="#8a8878" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="135" cy="280" r="5" fill="#9a9888" opacity="0.3"/>
+          <!-- Bone pile right -->
+          <line x1="620" y1="280" x2="645" y2="276" stroke="#9a9888" stroke-width="2" stroke-linecap="round"/>
+          <line x1="630" y1="273" x2="638" y2="285" stroke="#8a8878" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="635" cy="278" r="4" fill="#9a9888" opacity="0.25"/>
+        </g>
+
+        <!-- Ground line -->
+        <line x1="80" y1="295" x2="820" y2="295" stroke="#3a2a18" stroke-width="0.5" opacity="0.3"/>
+      </svg>
+    </div>
+    <div class="header-row">
+      <img class="header-portrait" src="https://images.uesp.net/thumb/1/15/OBR-icon-race-Breton.png/200px-OBR-icon-race-Breton.png" alt="Breton">
+      <div class="header-text">
+        <div class="breadcrumb">Oblivion Remastered &rsaquo; Builds &rsaquo; Holy Crusader</div>
+        <h1>Holy Crusader</h1>
+        <div class="subtitle">Breton &middot; The Lady &middot; Blunt + Blade + Restoration + Heavy Armor</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag holy">Paladin</span>
+      <span class="tag gold">Crusader</span>
+      <span class="tag green">Tank</span>
+      <span class="tag fire">Undead Slayer</span>
+      <span class="tag blue">Remastered 2025</span>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="section reveal" id="overview">
+    <h2>Overview</h2>
+    <p>The Holy Crusader is Oblivion's ultimate warrior-priest. A Breton paladin clad in gleaming heavy armor, wielding divine Restoration magic and bone-crushing blunt weapons to purge the undead from Cyrodiil. Turn Undead trivializes roughly 40% of the game's dungeon content &mdash; every vampire lair, zombie-infested ruin, skeleton crypt, lich fortress, and ghost haunt becomes a cakewalk when your enemies flee in terror at the sight of your outstretched hand.</p>
+    <p>This isn't a glass cannon. With 50% innate magic resistance, heavy armor, Shield spells, and on-demand healing, the Holy Crusader stands in the thick of combat where other builds crumble. Blunt Expert's Silence power attack shuts down enemy mages. Block Expert's Shield Bash staggers melee fighters. And when the Knights of the Nine DLC gear comes online, you become an unstoppable divine engine of destruction.</p>
+
+    <div class="callout holy">
+      <div class="callout-label">Why This Build Dominates</div>
+      <p><strong>Turn Undead</strong> is the most underrated spell school in the game. Vampires, zombies, liches, skeleton champions, ghosts, wraiths &mdash; all of them flee from a single spell. While they run, you heal, reposition, and pick them off one by one. In a game where roughly 40% of enemies are undead, this alone makes the build elite.</p>
+    </div>
+
+    <h3><img class="inline-icon" src="https://images.uesp.net/thumb/1/15/OBR-icon-race-Breton.png/200px-OBR-icon-race-Breton.png" alt="">Race &mdash; Breton</h3>
+    <ul class="picks">
+      <li><span class="label">Passive</span> <span class="name">50% Magic Resistance</span> &mdash; <span class="note">best defensive racial in the game, permanent. Enemy spells do half damage.</span></li>
+      <li><span class="label">Passive</span> <span class="name">+50 Magicka</span> &mdash; <span class="note">permanent bonus to mana pool. Lets you cast more Restoration spells per fight.</span></li>
+      <li><span class="label">Daily</span> <span class="name">Dragon Skin</span> &mdash; <span class="note">50% physical damage shield for 60 seconds. Emergency button for tough fights.</span></li>
+      <li><span class="label">Skills</span> <span class="name">+10 Conjuration, Mysticism, Restoration</span> &middot; <span class="name">+5 Alchemy, Alteration, Illusion</span></li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">Why Breton Over Imperial or Redguard?</div>
+      <p>Imperial gives +10 Blade and a Charm power, but no magic resistance. Redguard has Adrenaline Rush but negative Magicka &mdash; terrible for a caster hybrid. The Breton's 50% MR + 50 bonus Magicka is unmatched for a paladin who needs to cast Restoration spells constantly while tanking hits in heavy armor.</p>
+    </div>
+
+    <h3>Class &mdash; Custom Crusader</h3>
+    <ul class="picks">
+      <li><span class="label">Spec</span> <span class="name">Combat</span> &mdash; <span class="note">favors melee skill leveling speed</span></li>
+      <li><span class="label">Favored</span> <span class="name">Strength, Willpower</span></li>
+      <li><span class="label">Major</span> <span class="name">Blunt, Blade, Block, Heavy Armor, Restoration, Alteration, Athletics</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Why Both Blade AND Blunt?</div>
+      <p><strong>Blunt Expert</strong> (skill 75) gives <strong>Silence on power attacks</strong> &mdash; shuts down mages completely. <strong>Blade</strong> gives you access to silver weapons for ghosts/wraiths (which resist blunt) and the Crusader's Sword. Having both as major skills means total weapon flexibility &mdash; pull out whatever the situation demands.</p>
+    </div>
+
+    <h3>Starting Attributes</h3>
+    <div class="stats">
+      <div class="stat-box primary"><div class="stat-label">STR</div><div class="stat-val">45</div></div>
+      <div class="stat-box"><div class="stat-label">INT</div><div class="stat-val">50</div></div>
+      <div class="stat-box primary"><div class="stat-label">WIL</div><div class="stat-val">60</div></div>
+      <div class="stat-box"><div class="stat-label">AGI</div><div class="stat-val">35</div></div>
+      <div class="stat-box"><div class="stat-label">SPD</div><div class="stat-val">30</div></div>
+      <div class="stat-box"><div class="stat-label">END</div><div class="stat-val">40</div></div>
+      <div class="stat-box"><div class="stat-label">PER</div><div class="stat-val">40</div></div>
+      <div class="stat-box"><div class="stat-label">LCK</div><div class="stat-val">50</div></div>
+    </div>
+    <p style="font-size:.88rem;color:var(--text-dim);">Breton with The Lady birthsign (+10 WIL, +10 END). Willpower starts at 60 for strong early magicka regen. Strength and Endurance are priority Virtue investments.</p>
+  </section>
+
+  <!-- FIRST STEPS -->
+  <section class="section reveal" id="firststeps">
+    <h2>First Steps After the Tutorial</h2>
+    <p>The moment you leave the sewers, you have one mission: become a walking chapel. Here's exactly what to do:</p>
+
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Buy Turn Undead immediately</span>
+        <div class="step-detail">Go to the <strong>Imperial City Temple District</strong>. Visit any Great Chapel (Chapel of Akatosh, Talos, etc.). Chapel healers sell <strong>Turn Undead</strong> (Restoration, Novice-rank). This single spell transforms 40% of the game's dungeons from dangerous to trivial. Also buy <strong>Heal Minor Wounds</strong> if you don't already have it.</div>
+      </li>
+      <li>
+        <span class="step-action">Get starting Heavy Armor and a Blunt weapon</span>
+        <div class="step-detail">Visit <strong>"A Fighting Chance"</strong> in the Imperial City Market District. Buy an iron or steel mace and any heavy armor you can afford. A mace + shield is your bread and butter &mdash; block, bash, smash. Also grab a <strong>silver shortsword</strong> for ghosts.</div>
+      </li>
+      <li>
+        <span class="step-action">Clear undead dungeons for easy XP and loot</span>
+        <div class="step-detail">With Turn Undead, you can safely clear undead-heavy dungeons that would be suicide for other builds at level 1. <strong>Vilverin</strong> (right outside the sewers exit) has undead. <strong>Ayleid ruins</strong> along the road are full of zombies and skeletons. Cast Turn Undead, watch them flee, pick them off one by one. Free loot, free skill XP.</div>
+      </li>
+      <li>
+        <span class="step-action">Visit Chorrol for the Escutcheon</span>
+        <div class="step-detail">Travel to Chorrol and do the quest <strong>"Sins of the Father"</strong> (talk to Countess Arriana Valga in Castle Chorrol). Reward: <strong>Escutcheon of Chorrol</strong> &mdash; a heavy shield with Reflect Damage. Your shield until Crusader's Relics.</div>
+      </li>
+      <li>
+        <span class="step-action">Start Knights of the Nine questline (level 1+)</span>
+        <div class="step-detail">Visit any Chapel and pray at the altar, or look for the <strong>"Prophet"</strong> NPC wandering the Imperial City. This starts the Knights of the Nine DLC questline, which rewards the <strong>Crusader's Relics</strong> &mdash; a full armor set + mace + sword + shield, all with holy enchantments. You can start this at any level. The sooner, the better.</div>
+      </li>
+    </ol>
+
+    <div class="callout tip">
+      <div class="callout-label">Spam Restoration While Traveling</div>
+      <p>While walking between cities, constantly cast <strong>Heal Minor Wounds</strong> on yourself to level Restoration. Even at full health, the spell still gives skill XP. In the remaster, higher-cost spells give more XP, so upgrade to Heal Major Wounds as soon as you can afford it. Every step you take should be accompanied by a cast.</p>
+    </div>
+  </section>
+
+  <!-- BIRTHSIGN -->
+  <section class="section reveal" id="birthsign">
+    <h2>Birthsign</h2>
+    <div class="bs-grid">
+      <div class="bs-card recommended">
+        <img src="https://images.uesp.net/thumb/a/a8/OBbsign_Lady.jpg/200px-OBbsign_Lady.jpg" alt="The Lady">
+        <div class="bs-name">The Lady</div>
+        <div class="bs-bonus">+10 Willpower, +10 Endurance</div>
+        <div class="bs-note">Patches Breton's -10 END racial weakness. Willpower boosts magicka regen (quadratic scaling) for sustained Restoration casting. Endurance means more HP from level 1. The paladin's birthsign.</div>
+        <div style="margin-top:.5rem"><span class="tag gold">Recommended</span></div>
+      </div>
+      <div class="bs-card">
+        <img src="https://images.uesp.net/thumb/e/e1/OBbsign_Warrior.jpg/200px-OBbsign_Warrior.jpg" alt="The Warrior">
+        <div class="bs-name">The Warrior</div>
+        <div class="bs-bonus">+10 Strength, +10 Endurance</div>
+        <div class="bs-note">Maximum physical power. Stronger melee hits and more HP, but sacrifices magicka regen. Good if you lean melee-heavy and potion-heal.</div>
+      </div>
+      <div class="bs-card">
+        <img src="https://images.uesp.net/thumb/c/c7/OBbsign_Mage.jpg/200px-OBbsign_Mage.jpg" alt="The Mage">
+        <div class="bs-name">The Mage</div>
+        <div class="bs-bonus">+50 Magicka</div>
+        <div class="bs-note">Massive spell pool (+100 total with racial). Lets you cast more Turn Undead / heals before going dry. Best for casting-focused paladin.</div>
+      </div>
+    </div>
+    <div class="callout warn">
+      <div class="callout-label">Avoid &mdash; The Apprentice</div>
+      <p>+100 Magicka but <strong>100% Weakness to Magic</strong>. Your 50% Breton resistance gets completely negated, and you take extra magic damage. Catastrophic for a frontline tank build. Never take this.</p>
+    </div>
+  </section>
+
+  <!-- VIRTUES / LEVELING -->
+  <section class="section reveal" id="virtues">
+    <h2>Leveling &mdash; Virtue System</h2>
+    <p>The remaster replaced the old attribute multiplier system. At each level-up you get <strong>12 Virtues</strong> to distribute freely. Max 5 per attribute, max 3 attributes per level. Luck costs 4 per point. The Holy Crusader needs BOTH physical stats (Strength for melee damage) AND Willpower (for magicka regen to fuel Restoration). This dual dependency makes Virtue allocation critical.</p>
+
+    <table class="virtue-table">
+      <thead><tr><th>Attribute</th><th>Priority</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">Strength</td><td><span class="priority t1">MAX FIRST</span></td><td>Blunt and Blade damage scales directly with Strength. Also increases carry weight and contributes to max HP. You're a melee build &mdash; this comes first.</td></tr>
+        <tr><td class="attr-name">Willpower</td><td><span class="priority t1">MAX FIRST</span></td><td>Magicka regen uses quadratic scaling in the remaster &mdash; every point of Willpower gives exponentially more regen. Essential for sustaining Turn Undead + heals in long dungeon clears.</td></tr>
+        <tr><td class="attr-name">Endurance</td><td><span class="priority t2">SECOND</span></td><td>Health per level + HP regen. Retroactive in the remaster, so not as urgent to rush, but still needed. The Lady birthsign gives you a head start.</td></tr>
+        <tr><td class="attr-name">Intelligence</td><td><span class="priority t2">SECOND</span></td><td>Max magicka pool. With Breton racial +50, you have a solid base. Bump this after STR and WIL are comfortable.</td></tr>
+        <tr><td class="attr-name">Agility</td><td><span class="priority t3">LATER</span></td><td>Fatigue pool for power attacks. Needed eventually but not urgent early.</td></tr>
+        <tr><td class="attr-name">Speed</td><td><span class="priority t3">LATER</span></td><td>Movement speed. Heavy armor makes you slow &mdash; bump this when other stats are healthy.</td></tr>
+        <tr><td class="attr-name">Luck</td><td><span class="priority t3">SKIP</span></td><td>Costs 4 Virtues per point. Not worth the investment when you need STR, WIL, and END.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-label">Suggested Distribution</div>
+      <p><strong>Levels 2&ndash;8:</strong> Strength 5, Willpower 5, Endurance 2</p>
+      <p><strong>Levels 9&ndash;15:</strong> Strength 5, Willpower 5, Intelligence 2</p>
+      <p><strong>Levels 16+:</strong> Fill Endurance, then Speed, then Agility. Top off whatever needs it.</p>
+    </div>
+
+    <div class="callout holy">
+      <div class="callout-label">Willpower Quadratic Regen &mdash; Why It Matters</div>
+      <p>In the remaster, magicka regen scales <strong>quadratically</strong> with Willpower &mdash; meaning the jump from 70 to 80 WIL gives FAR more regen than 40 to 50. For a paladin who casts Turn Undead, Shield, and heals every single fight, this is the difference between running dry mid-dungeon and being self-sustaining forever. Push Willpower aggressively.</p>
+    </div>
+  </section>
+
+  <!-- PROGRESSION -->
+  <section class="section reveal" id="progression">
+    <h2>Level Progression</h2>
+    <p style="color:var(--text-dim);margin-bottom:1rem;">Click to expand. Focus on the skills and goals for each phase.</p>
+
+    <!-- Early -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 1&ndash;5</span>
+        <span class="lv-title">Novice Templar &mdash; Turn Undead + Block Foundation</span>
+        <span class="lv-spike">Foundation</span>
+        <span class="lv-arrow">&#x25B8;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Turn Undead</span>
+          <span class="qp skill">Block to 25</span>
+          <span class="qp skill">Blunt to 25</span>
+          <span class="qp skill">Heavy Armor to 25</span>
+          <span class="qp skill">Restoration to 25</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Priority</span> <span class="name">Buy Turn Undead + Heal</span> &mdash; <span class="note">your two most important spells for the entire game. Get them immediately.</span></li>
+          <li><span class="label">Blunt 25</span> <span class="name">Apprentice perk</span> &mdash; <span class="note">power attacks apply Weakness debuff to enemies. Maces hit even harder.</span></li>
+          <li><span class="label">Block 25</span> <span class="name">Apprentice perk</span> &mdash; <span class="note">reduced stamina drain when blocking. You can block more before getting staggered.</span></li>
+          <li><span class="label">HA 25</span> <span class="name">Apprentice perk</span> &mdash; <span class="note">reduced armor degradation. You burn through fewer repair hammers.</span></li>
+          <li><span class="label">Rest 25</span> <span class="name">Apprentice perk</span> &mdash; <span class="note">access to Heal Major Wounds and stronger Turn Undead variants.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Clear undead dungeons</span> &mdash; <span class="note">Vilverin, Ayleid ruins, any crypt. Turn Undead makes these trivial. Free loot and XP.</span></li>
+          <li><span class="label">Quest</span> <span class="name">"Sins of the Father" (Chorrol)</span> &mdash; <span class="note">get the Escutcheon of Chorrol shield early.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:.5rem;">
+          <div class="callout-label">Silver Weapons for Ghosts</div>
+          <p>Ghosts and wraiths resist normal weapons. Buy a <strong>silver shortsword</strong> from any weapon shop and keep it in your inventory. Switch to it when you encounter translucent enemies. Turn Undead still works on them &mdash; they'll flee, giving you time to switch weapons.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Mid -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 6&ndash;12</span>
+        <span class="lv-title">Knight Errant &mdash; Block Expert + Blunt Expert</span>
+        <span class="lv-spike">Power Spike</span>
+        <span class="lv-arrow">&#x25B8;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Block to 75</span>
+          <span class="qp skill">Blunt to 75</span>
+          <span class="qp skill">Heavy Armor to 50</span>
+          <span class="qp skill">Restoration to 50</span>
+          <span class="qp spell">Absorb Health</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Block 75</span> <span class="name">Expert &mdash; Shield Bash</span> &mdash; <span class="note">THE game-changer. Bash with your shield to stagger enemies, interrupting their attacks. Melee enemies become trivial &mdash; bash, power attack, repeat.</span></li>
+          <li><span class="label">Blunt 75</span> <span class="name">Expert &mdash; Silence</span> &mdash; <span class="note">power attacks now Silence enemies for several seconds. Enemy mages can't cast. Combined with your 50% MR, mage encounters become a joke.</span></li>
+          <li><span class="label">HA 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">95% spell effectiveness in armor. Your heals and Turn Undead now fire at near-full power.</span></li>
+          <li><span class="label">Rest 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">access to Absorb Health touch spells. Drain enemy HP to heal yourself in melee. Incredible sustain.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Knights of the Nine</span> &mdash; <span class="note">start if you haven't. The Crusader's Relics questline is available at any level &mdash; the gear scales with you.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Molag Bal Shrine (level 17+)</span> &mdash; <span class="note">plan for later &mdash; the Mace of Molag Bal is the best blunt weapon in the game.</span></li>
+        </ul>
+        <div class="callout holy" style="margin-top:.5rem;">
+          <div class="callout-label">The Build Comes Online Here</div>
+          <p>At Block Expert + Blunt Expert, you have answers for everything. Undead? Turn Undead. Mages? Silence power attack. Melee fighters? Shield Bash stagger. Nothing can touch you. This is the power spike that makes the Holy Crusader feel godlike.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Late -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 13&ndash;20</span>
+        <span class="lv-title">Crusader Knight &mdash; Crusader's Relics or Daedric Gear</span>
+        <span class="lv-arrow">&#x25B8;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp gear">Crusader's Relics</span>
+          <span class="qp skill">Restoration to 75</span>
+          <span class="qp skill">Alteration to 50</span>
+          <span class="qp gear">Mace of Molag Bal</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Gear</span> <span class="name">Crusader's Relics</span> &mdash; <span class="note">complete Knights of the Nine for the full set: Mace, Sword, Shield, Cuirass, Greaves, Gauntlets, Boots, Helmet. All enchanted with holy effects. This is your endgame gear unless you want Daedric.</span></li>
+          <li><span class="label">Rest 75</span> <span class="name">Expert</span> &mdash; <span class="note">access to Fortify Attribute spells and Greater Turn Undead. Even powerful liches flee.</span></li>
+          <li><span class="label">Alt 50</span> <span class="name">Journeyman</span> &mdash; <span class="note">better Shield spells. Stack with heavy armor for insane damage reduction.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Molag Bal Shrine (level 17+)</span> &mdash; <span class="note">get the Mace of Molag Bal &mdash; 26 damage + Absorb Strength. Best mace in the game.</span></li>
+          <li><span class="label">Craft</span> <span class="name">Custom Fortify Strength</span> &mdash; <span class="note">at Spellmaking altar, create Fortify Strength +50 for 30s. Cast before boss fights for devastating melee damage.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Endgame -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 20+</span>
+        <span class="lv-title">Divine Champion &mdash; Self-Sustaining Powerhouse</span>
+        <span class="lv-spike">Endgame</span>
+        <span class="lv-arrow">&#x25B8;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp gear">Daedric Armor</span>
+          <span class="qp skill">All combat skills 75+</span>
+          <span class="qp spell">Greater Turn Undead</span>
+          <span class="qp spell">Absorb Health</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Gear</span> <span class="name">Daedric Heavy Armor</span> &mdash; <span class="note">starts appearing at level 20+. Highest AR in the game. Enchant with Fortify Willpower and Fortify Magicka for the ultimate paladin setup. Alternative to Crusader's Relics if you want raw defense.</span></li>
+          <li><span class="label">Sustain</span> <span class="name">Self-healing loop</span> &mdash; <span class="note">with maxed Willpower, your magicka regen is fast enough that you never run dry. Cast heals between every swing. You are functionally immortal against anything that isn't a one-shot.</span></li>
+          <li><span class="label">Blade 75</span> <span class="name">Expert</span> &mdash; <span class="note">power attacks cause bleeding. With Crusader's Sword, every hit is devastating.</span></li>
+          <li><span class="label">DLC</span> <span class="name">Shivering Isles</span> &mdash; <span class="note">Dawnfang/Duskfang is a strong Blade option. Saints &amp; Seducers content has additional undead encounters.</span></li>
+          <li><span class="label">Status</span> <span class="name">Unkillable</span> &mdash; <span class="note">50% MR + heavy armor + Shield spell + constant healing + Turn Undead crowd control + Shield Bash stagger + Silence on mages. Nothing threatens you.</span></li>
+        </ul>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- RESTORATION MASTERY -->
+  <section class="section reveal" id="restoration">
+    <h2>Restoration Mastery</h2>
+    <p>Restoration is the backbone of this build. Not just for healing &mdash; Turn Undead, Absorb spells, and Fortify Attribute make this school the most versatile in the game for a paladin.</p>
+
+    <h3>Turn Undead &mdash; Your Signature Spell</h3>
+    <div class="callout holy">
+      <div class="callout-label">~40% of All Dungeon Content Trivialized</div>
+      <p>The following enemy types are ALL affected by Turn Undead: <strong>Skeletons</strong> (all variants), <strong>Zombies</strong> (all variants), <strong>Ghosts</strong>, <strong>Wraiths</strong>, <strong>Gloom Wraiths</strong>, <strong>Liches</strong>, <strong>Nether Liches</strong>, and <strong>Vampires</strong> (all variants). These enemies populate Ayleid ruins, forts, caves, and most faction questlines. One cast and they flee for 30+ seconds while you heal, reposition, or pick them off.</p>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Turn Undead Progression</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Turn Undead</div><div class="spell-desc">Forces undead up to level 5 to flee for 30 seconds. Your bread and butter from level 1. Cast, they run, you win.</div><div class="gear-loc">Buy from any Chapel Healer (Imperial City, Anvil, Cheydinhal, etc.)</div></div><span class="spell-badge holy">Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Turn Lesser Undead</div><div class="spell-desc">Affects undead up to level 9. Covers skeleton champions and stronger zombies.</div><div class="gear-loc">Chapel Healers or Restoration trainers at Apprentice rank</div></div><span class="spell-badge holy">Apprentice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Turn Undead (Journeyman)</div><div class="spell-desc">Affects undead up to level 14. Covers most vampires and weaker liches.</div><div class="gear-loc">Chapel Healers or Restoration trainers at Journeyman rank</div></div><span class="spell-badge holy">Journeyman</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Turn Greater Undead</div><div class="spell-desc">Affects undead up to level 20. Even powerful liches and master vampires flee. Nothing undead can stand before you.</div><div class="gear-loc">Expert-rank Restoration vendors or craft at Spellmaking Altar</div></div><span class="spell-badge holy">Expert</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Healing Spells</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Heal Minor Wounds</div><div class="spell-desc">Free starting spell. Cast constantly to level Restoration AND stay alive. Your first 25 Restoration skill levels come from spamming this.</div><div class="gear-loc">Starting spell &mdash; you already have it</div></div><span class="spell-badge must">Free &middot; Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Heal Major Wounds</div><div class="spell-desc">Stronger heal. Your primary in-combat heal from Apprentice onward. Pairs with Shield Bash &mdash; bash to stagger, heal during the stagger window.</div><div class="gear-loc">Any Chapel Healer, Druja (Skingrad MG), Alberic Litte (Chorrol MG)</div></div><span class="spell-badge must">Must &middot; Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Absorb Health (Touch)</div><div class="spell-desc">Drain enemy HP to heal yourself. The ultimate paladin spell &mdash; damage AND sustain in one cast. Touch range means you're already in melee.</div><div class="gear-loc">Restoration Journeyman vendors, or craft at Spellmaking Altar</div></div><span class="spell-badge must">Must &middot; Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Custom: Efficient Heal</div><div class="spell-desc">Restore Health 30pts/sec for 3 seconds (90 HP total). Better magicka-to-healing ratio than any vendor spell. Craft this ASAP.</div><div class="gear-loc">Craft at Spellmaking Altar &mdash; Arcane University or Frostcrag Spire</div></div><span class="spell-badge custom">Custom &middot; Appr+</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Fortify &amp; Utility</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Fortify Strength (Self)</div><div class="spell-desc">+50 Strength for 30 seconds. Cast before boss fights for massive melee damage boost. Devastating with Mace of Molag Bal.</div><div class="gear-loc">Craft at Spellmaking Altar (requires knowing a Fortify spell)</div></div><span class="spell-badge custom">Custom &middot; Expert</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Fortify Endurance (Self)</div><div class="spell-desc">+50 Endurance for 30 seconds. Emergency HP boost. Cast when you're about to take heavy damage.</div><div class="gear-loc">Craft at Spellmaking Altar</div></div><span class="spell-badge custom">Custom &middot; Expert</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Minor Respite</div><div class="spell-desc">Restore Fatigue 15pts. Fatigue fuels power attacks and sprinting in the remaster. Keep it topped up for Shield Bash + power attack combos.</div><div class="gear-loc">Any Chapel Healer</div></div><span class="spell-badge good">Good &middot; Novice</span></div>
+    </div>
+  </section>
+
+  <!-- COMBAT MECHANICS -->
+  <section class="section reveal" id="mechanics">
+    <h2>Combat Mechanics</h2>
+    <p>The Holy Crusader has a specific answer for every enemy type. Understanding the Expert-rank perks for Blunt and Block is what elevates this build from "good" to "broken."</p>
+
+    <h3>Blunt Expert &mdash; Silence on Power Attacks</h3>
+    <div class="callout holy">
+      <div class="callout-label">Mage Killer</div>
+      <p>At Blunt skill 75 (Expert), your <strong>power attacks Silence the target</strong> for several seconds. Silenced enemies cannot cast any spells &mdash; no healing, no damage, no summons. Combined with your innate 50% Magic Resistance, enemy mages go from being the most dangerous threat in the game to being helpless sacks of HP. One power attack and they're muted. Follow up with normal swings while they flail uselessly.</p>
+    </div>
+
+    <h3>Block Expert &mdash; Shield Bash</h3>
+    <div class="callout">
+      <div class="callout-label">Melee Dominance</div>
+      <p>At Block skill 75 (Expert), you can <strong>Shield Bash</strong> by attacking while blocking. This staggers the enemy, interrupting their attack and leaving them open for a counter-attack. Against melee enemies, the loop is: block their swing, Shield Bash to stagger, power attack while staggered, repeat. They never get a clean hit on you. In the remaster, Shield Bash is significantly stronger than in the original game.</p>
+    </div>
+
+    <h3>Dual Weapon Skills &mdash; Blade + Blunt</h3>
+    <table class="virtue-table">
+      <thead><tr><th>Weapon</th><th>Use Case</th><th>Expert Perk</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">Mace / Warhammer (Blunt)</td><td>Default weapon. Living enemies, mages, anything with HP.</td><td><span class="priority t1">Silence</span> &mdash; shuts down casters</td></tr>
+        <tr><td class="attr-name">Silver Sword (Blade)</td><td>Ghosts, Wraiths, Gloom Wraiths. They resist normal/blunt weapons.</td><td><span class="priority t2">Bleed</span> &mdash; power attacks cause bleeding damage</td></tr>
+        <tr><td class="attr-name">Crusader's Sword (Blade)</td><td>Holy enchanted weapon from KotN. Extra damage to undead.</td><td><span class="priority t2">Bleed</span> &mdash; plus holy enchantment stacks</td></tr>
+        <tr><td class="attr-name">Crusader's Mace (Blunt)</td><td>Holy enchanted mace from KotN. Your primary undead smasher.</td><td><span class="priority t1">Silence</span> &mdash; plus holy enchantment</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-label">Weapon Swap Strategy</div>
+      <p>Keep a <strong>blunt weapon</strong> as your main hand for the Silence perk. Swap to a <strong>silver blade</strong> when you encounter ghosts or wraiths (they resist blunt). The hotkey system lets you bind weapons to number keys &mdash; set Mace to 1 and Silver Sword to 2 for instant swaps mid-combat.</p>
+    </div>
+  </section>
+
+  <!-- GEAR -->
+  <section class="section reveal" id="gear">
+    <h2>Gear by Level</h2>
+
+    <div class="callout">
+      <div class="callout-label">Spell Effectiveness in Armor</div>
+      <p>Wearing armor reduces spell power. At Heavy Armor Novice (0-24), you lose ~18%. At <strong>Journeyman (50+), you only lose 5%</strong> &mdash; totally worth it. Rush Heavy Armor to 50 so your heals and Turn Undead fire at near full strength.</p>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Crusader's Relics &mdash; Knights of the Nine DLC</div>
+      <div class="callout holy">
+        <div class="callout-label">The Pilgrimage</div>
+        <p>The Knights of the Nine questline is the defining quest for this build. You must complete the <strong>Pilgrimage of the Nine Divines</strong> (visit all 9 wayshrines scattered across Cyrodiil), then recover each Relic from a separate dungeon. The relics <strong>scale to your level when you pick them up</strong>, so doing this at level 15-20 gives the best versions. But even low-level versions are strong.</p>
+        <p>To start: visit any Great Chapel and pray at the altar, or find the Prophet NPC in Anvil. The questline requires an <strong>infamy of 0</strong> &mdash; you cannot have committed crimes. If your infamy is above 0, the Pilgrimage resets it.</p>
+      </div>
+
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--holy)">&#x2694;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Mace of the Crusader</span> <span class="gear-slot">Blunt</span></div>
+          <div class="gear-desc">Holy damage enchantment + Turn Undead on strike. Every hit forces undead to flee. Your signature weapon.</div>
+          <div class="gear-loc">Knights of the Nine &mdash; recovered during "The Shrine of the Crusader" quest</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--holy)">&#x2694;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Sword of the Crusader</span> <span class="gear-slot">Blade</span></div>
+          <div class="gear-desc">Fire Damage + Damage Willpower. Devastating against living enemies and mages. Switch to this when Silence isn't needed.</div>
+          <div class="gear-loc">Knights of the Nine &mdash; recovered from Underpall Cave</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--holy)">&#x1F6E1;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Shield of the Crusader</span> <span class="gear-slot">Shield</span></div>
+          <div class="gear-desc">Reflect Spell + Shield enchantment. Combined with Breton 50% MR, magic becomes nearly harmless.</div>
+          <div class="gear-loc">Knights of the Nine &mdash; recovered during "Wisdom of the Ages" quest</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--holy)">&#x1F6E1;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Crusader's Armor Set</span> <span class="gear-slot">Heavy Armor (Full)</span></div>
+          <div class="gear-desc">Cuirass, Greaves, Gauntlets, Boots, Helmet. Each piece has unique enchantments (Resist Magic, Fortify Health, Fortify Restoration, etc.). The full set together makes you a walking fortress.</div>
+          <div class="gear-loc">Knights of the Nine &mdash; various pieces recovered throughout the questline. Helm is rewarded at the Priory.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Early Game &mdash; Levels 1&ndash;10 (Before Relics)</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#x1F6E1;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Escutcheon of Chorrol</span> <span class="gear-slot">Shield</span></div>
+          <div class="gear-desc">Reflect Damage 20%. Your best early shield. Solid until Crusader's Shield or Spellbreaker.</div>
+          <div class="gear-loc">Chorrol &mdash; complete "Sins of the Father" quest for the Countess.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#x2694;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Steel / Iron Mace</span> <span class="gear-slot">Blunt</span></div>
+          <div class="gear-desc">Your starting blunt weapon. Cheap, effective, gets the job done until you find something better. Upgrade to Dwarven or Elven mace when available.</div>
+          <div class="gear-loc">"A Fighting Chance" &mdash; Imperial City Market District. Any blacksmith.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#x2694;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Silver Shortsword / Longsword</span> <span class="gear-slot">Blade</span></div>
+          <div class="gear-desc">Essential for ghosts and wraiths that resist normal weapons. Keep one in your inventory at all times.</div>
+          <div class="gear-loc">Any weapon shop. Also dropped by Silver Hand NPCs and found in Fighter's Guild halls.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#x2699;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Steel / Chainmail Heavy Armor</span> <span class="gear-slot">Heavy Armor</span></div>
+          <div class="gear-desc">Buy or loot. Upgrade to Dwarven when you find it (AR ~50). Train Heavy Armor by getting hit &mdash; every blocked attack gives XP.</div>
+          <div class="gear-loc">"A Fighting Chance" or "The Best Defense" in Imperial City Market District.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Alternative Endgame Gear</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#x2694;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Mace of Molag Bal</span> <span class="gear-slot">Blunt (Daedric)</span></div>
+          <div class="gear-desc">26 damage + Absorb Strength 5pts. The strongest mace in the game. Every hit makes the enemy weaker and you stronger. Devastating with Blunt Expert Silence.</div>
+          <div class="gear-loc">Molag Bal's Shrine (west of Imperial City, along the Gold Road). Requires level 17+. Complete "The Cursed" quest.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <img class="gear-img" src="https://images.uesp.net/thumb/b/ba/OBR-item-Spell_Breaker.jpg/200px-OBR-item-Spell_Breaker.jpg" alt="Spellbreaker">
+        <div class="gear-info">
+          <div><span class="gear-name">Spellbreaker</span> <span class="gear-slot">Shield (Daedric)</span></div>
+          <div class="gear-desc">Reflect Spell 30%. Combined with your Breton 50% MR, enemy mages destroy themselves. Best shield if you skip Knights of the Nine.</div>
+          <div class="gear-loc">Peryite's Shrine (southeast of Bravil). Complete the Daedric quest. Requires level 10+.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <img class="gear-img" src="https://images.uesp.net/thumb/7/7a/OB-item-Daedric_Armor.jpg/200px-OB-item-Daedric_Armor.jpg" alt="Daedric Armor">
+        <div class="gear-info">
+          <div><span class="gear-name">Daedric Heavy Armor</span> <span class="gear-slot">Heavy Armor</span></div>
+          <div class="gear-desc">Highest AR in the game (79+). Higher raw defense than Crusader's Relics, but no holy enchantments. Enchant with Fortify Willpower + Fortify Magicka for the ultimate paladin setup.</div>
+          <div class="gear-loc">Random loot at level 20+. "The Best Defense" in Imperial City Market District stocks it.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Key Accessories</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#x1F48D;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Ring of Fortify Willpower</span></div>
+          <div class="gear-desc">More magicka regen. Stack with your already high Willpower for near-infinite sustain. The most important enchantment for this build.</div>
+          <div class="gear-loc">Random loot or enchant your own at Arcane University.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">&#x1F4FF;</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Amulet of Fortify Restoration / Resist Magic</span></div>
+          <div class="gear-desc">Fortify Restoration makes your heals and Turn Undead stronger. Resist Magic stacks with Breton 50% to approach immunity.</div>
+          <div class="gear-loc">Random loot, vendor, or enchant at Arcane University.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMBAT LOOP -->
+  <section class="section reveal" id="combat">
+    <h2>Combat Loop</h2>
+
+    <h3>Against Undead (~40% of encounters)</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Cast Turn Undead</span>
+        <div class="step-detail">Open with Turn Undead. All affected undead flee in terror for 30 seconds. If there's a pack, this scatters them &mdash; you fight one at a time instead of being swarmed.</div>
+      </li>
+      <li>
+        <span class="step-action">Switch weapon if needed</span>
+        <div class="step-detail">Ghosts/wraiths? Silver sword. Skeletons/zombies? Mace or Crusader's Mace. The enemy is running &mdash; you have time to hotkey swap.</div>
+      </li>
+      <li>
+        <span class="step-action">Chase and power attack</span>
+        <div class="step-detail">Run after the fleeing undead and deliver power attacks while their backs are turned. They can't fight back. Free damage.</div>
+      </li>
+      <li>
+        <span class="step-action">Heal and repeat</span>
+        <div class="step-detail">Cast Heal Major Wounds or Absorb Health between kills. Re-cast Turn Undead if the duration expires. Move to the next target.</div>
+      </li>
+    </ol>
+
+    <h3>Against Mages</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Close distance quickly</span>
+        <div class="step-detail">Your 50% MR absorbs their spells as you approach. Cast an Alteration Shield buff while running in.</div>
+      </li>
+      <li>
+        <span class="step-action">Blunt power attack &mdash; Silence</span>
+        <div class="step-detail">One power attack with any blunt weapon at Expert rank Silences the mage. They can't cast for several seconds. This is your kill window.</div>
+      </li>
+      <li>
+        <span class="step-action">Follow up with normal attacks</span>
+        <div class="step-detail">Mages have low HP and no armor. Two or three normal mace swings while they're Silenced finishes the fight.</div>
+      </li>
+    </ol>
+
+    <h3>Against Melee Fighters</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Block their opening attack</span>
+        <div class="step-detail">Raise your shield as they swing. Your heavy armor + Shield spell absorbs the hit.</div>
+      </li>
+      <li>
+        <span class="step-action">Shield Bash to stagger</span>
+        <div class="step-detail">At Block Expert (75), Shield Bash interrupts and staggers the enemy. They stumble back, unable to act for a moment.</div>
+      </li>
+      <li>
+        <span class="step-action">Power attack during stagger</span>
+        <div class="step-detail">Immediately follow the Bash with a blunt power attack. The Silence effect doesn't matter against non-casters, but the raw damage is enormous.</div>
+      </li>
+      <li>
+        <span class="step-action">Heal &mdash; Cast Restoration between exchanges</span>
+        <div class="step-detail">Between their swing attempts, quickly cast Heal Major Wounds or Absorb Health Touch. You out-sustain any melee enemy.</div>
+      </li>
+      <li>
+        <span class="step-action">Alteration Shield buff if HP drops low</span>
+        <div class="step-detail">If you're taking too much damage, cast an Alteration Shield spell for flat damage reduction that stacks with your armor. With both active, you're nearly invincible.</div>
+      </li>
+    </ol>
+
+    <div class="callout tip" style="margin-top:1.25rem;">
+      <div class="callout-label">Dragon Skin for Emergencies</div>
+      <p>Your Breton daily power &mdash; 50% physical damage absorption for 60 seconds. Save this for boss fights, Oblivion Gate sigil stone runs, or when you're swarmed by 4+ enemies. Combined with heavy armor + Shield spell + Dragon Skin, you take almost zero physical damage for a full minute.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Fatigue Management</div>
+      <p>Power attacks and sprinting cost Fatigue. If Fatigue is depleted, you can be staggered through your block. Keep <strong>Minor Respite</strong> (Restore Fatigue) on a hotkey. Don't spam power attacks &mdash; use them after Shield Bash or Turn Undead when the enemy can't retaliate.</p>
+    </div>
+  </section>
+
+  <!-- TIPS -->
+  <section class="section reveal" id="tips">
+    <h2>Remastered Tips</h2>
+
+    <div class="callout holy">
+      <div class="callout-label">Willpower Quadratic Regen is Essential</div>
+      <p>This cannot be overstated. In the original Oblivion, magicka regen was linear. In the remaster, it's <strong>quadratic</strong>. A paladin with 100 Willpower regenerates magicka DRAMATICALLY faster than one with 60. This is the difference between "I need to rest after every fight" and "I can clear an entire dungeon without stopping." Prioritize Willpower in your Virtue allocation.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Block Expert Shield Bash is Stronger in the Remaster</div>
+      <p>Shield Bash was mediocre in the original game. In the remaster, it's been buffed significantly &mdash; longer stagger duration, more reliable interrupts, and it works against power attacks. This makes Block one of the best combat skills in the game, and it's a major skill for this build. Use it constantly.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Endurance HP is Retroactive</div>
+      <p>In the original game, HP gained per level was based on your Endurance AT THAT LEVEL &mdash; if you didn't max END early, you permanently lost HP. In the remaster, <strong>Endurance HP is fully retroactive</strong>. You get the HP you "should have" no matter when you raise END. This means you can safely prioritize Strength and Willpower early without losing max HP.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Blade + Blunt Both as Major = Total Flexibility</div>
+      <p>Most builds lock into one weapon type. By having both Blade and Blunt as major skills, you can pull out whatever the situation demands. Mace for Silence on mages. Silver sword for ghosts. Crusader's Sword for fire damage. Crusader's Mace for Turn Undead on hit. You're never stuck with the wrong weapon.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Sleep to Level Up</div>
+      <p>Unlike most RPGs, you don't level up automatically. When the game says "you should rest and meditate on what you've learned," you need to <strong>sleep in any bed</strong> to trigger the level-up screen and spend your Virtues. Any bed works &mdash; inns, your house, bedrolls in dungeons.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Knights of the Nine &mdash; Infamy Requirement</div>
+      <p>The Knights of the Nine questline requires <strong>0 infamy</strong> to start. If you've committed crimes (theft, murder, assault), your infamy may be above 0. The <strong>Pilgrimage of the Nine Divines</strong> (visiting all 9 wayshrines) resets your infamy to 0. But if you gain infamy AFTER completing the questline, the Crusader's Relics will be unequippable until you do another Pilgrimage. Play as a righteous paladin &mdash; it's not just roleplay, it's mechanically enforced.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Repair Your Gear</div>
+      <p>Weapons and armor degrade with use. Carry <strong>Repair Hammers</strong> (buy from any blacksmith) and repair between fights. A broken mace does almost no damage, and broken armor provides almost no AR. Stock up &mdash; they're cheap and weightless.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Alchemy for Free Potions</div>
+      <p>Even without investing skill points, Alchemy lets you make <strong>Restore Health</strong> and <strong>Restore Magicka</strong> potions from common ingredients. Pick up every ingredient you find. Buy a <strong>Mortar and Pestle</strong> from any alchemist. Free potions supplement your Restoration magic for long dungeon crawls.</p>
+    </div>
+  </section>
+
+  <div class="guide-footer">
+    <p>Oblivion Remastered &middot; Holy Crusader (Paladin) Build Guide &middot; 2025</p>
+    <p style="margin-top:.5rem;"><a href="guides.html">All Build Guides</a> &middot; <a href="index.html">Home</a></p>
+  </div>
+
+</main>
+</div>
+
+<script>
+// Active nav highlighting on scroll
+const sections=document.querySelectorAll('.section');
+const navLinks=document.querySelectorAll('.sidebar a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const a=document.querySelector('.sidebar a[href="#'+entry.target.id+'"]');if(a)a.classList.add('active')}})},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>observer.observe(s));
+
+// Mobile hamburger menu
+const toggle=document.querySelector('.nav-toggle');
+const links=document.querySelector('.nav-links');
+toggle.addEventListener('click',()=>links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+// Scroll reveal animation
+const revealObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');revealObserver.unobserve(entry.target)}})},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+/* ── Universal Nav Toggle ── */
+(function(){
+  const btn=document.getElementById('unav-hamburger'),nav=document.getElementById('unav-links');
+  if(!btn||!nav)return;
+  btn.addEventListener('click',()=>{btn.classList.toggle('open');nav.classList.toggle('open')});
+  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+    btn.classList.remove('open');nav.classList.remove('open');
+  }));
+})();
+
+</script>
+</body>
+</html>

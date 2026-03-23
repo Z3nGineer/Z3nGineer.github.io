@@ -1,0 +1,2034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bladesinger Wizard — The Arcane Dancer · BG3 Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Crimson+Pro:wght@400;500;600&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg-body: #0a0a0a;
+  --bg-card: #151515;
+  --bg-elevated: #1c1c1c;
+  --bg-hover: #222222;
+  --border: #2b2c2c;
+  --border-light: #3a3a3a;
+  --text: #e8e8e8;
+  --text-dim: #a0a0a0;
+  --text-muted: #707070;
+  --white: #ffffff;
+  --accent: #057af0;
+  --accent-hover: #3592ff;
+  --green: #21c513;
+  --green-dim: #199f2f;
+  --orange: #f09a18;
+  --orange-dim: rgba(240,154,24,0.15);
+  --red: #f00505;
+  --gold: #d4a043;
+  --gold-dim: rgba(212,160,67,0.12);
+  --purple: #b080d0;
+  --arcane: #60c0ff;
+  --arcane-dim: rgba(96,192,255,0.12);
+}
+
+html { scroll-behavior:smooth; scrollbar-width:thin; scrollbar-color:#2b2c2c #0a0a0a; }
+
+body {
+  background: var(--bg-body);
+  color: var(--text);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 19px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration:none; }
+a:hover { color: var(--accent-hover); text-decoration:underline; }
+
+/* ── UNIVERSAL TOP NAV ── */
+.top-nav {
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:1000;
+  height:60px;
+  background:rgba(10,10,10,0.94);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 2rem;
+}
+
+.top-nav-brand {
+  font-family:'Cinzel', serif;
+  font-size:0.88rem;
+  font-weight:700;
+  letter-spacing:0.1em;
+  color:var(--text);
+  text-decoration:none;
+  transition:color 0.2s;
+}
+.top-nav-brand:hover { color:var(--accent); text-decoration:none; }
+
+.top-nav-links {
+  display:flex;
+  align-items:center;
+  gap:0;
+  list-style:none;
+}
+.top-nav-links a {
+  font-size:0.76rem;
+  font-weight:600;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  padding:0 1rem;
+  height:60px;
+  display:flex;
+  align-items:center;
+  position:relative;
+  transition:color 0.15s, background 0.15s;
+  text-decoration:none;
+}
+.top-nav-links a:hover { color:var(--white); background:rgba(255,255,255,0.03); text-decoration:none; }
+.top-nav-links a::after {
+  content:'';
+  position:absolute;
+  bottom:0; left:1rem; right:1rem;
+  height:2px;
+  background:var(--accent);
+  transform:scaleX(0);
+  transition:transform 0.2s;
+}
+.top-nav-links a:hover::after { transform:scaleX(1); }
+
+/* Dropdown */
+.nav-dropdown { position:relative; }
+.nav-dropdown > a::after { display:none; }
+.nav-dropdown > a .drop-arrow { font-size:0.55rem; margin-left:0.3rem; opacity:0.5; }
+.nav-dropdown-menu {
+  display:none;
+  position:absolute;
+  top:100%;
+  right:0;
+  min-width:200px;
+  background:rgba(18,18,18,0.97);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:0.4rem 0;
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+}
+.nav-dropdown:hover .nav-dropdown-menu { display:block; }
+.nav-dropdown-menu a {
+  display:flex;
+  align-items:center;
+  height:40px;
+  padding:0 1.2rem;
+  font-size:0.78rem;
+  font-weight:500;
+  color:var(--text-dim);
+  text-transform:none;
+  letter-spacing:0.01em;
+}
+.nav-dropdown-menu a:hover { color:var(--white); background:rgba(255,255,255,0.04); }
+.nav-dropdown-menu a::after { display:none; }
+
+@media(max-width:800px) {
+  .top-nav { padding:0 1rem; }
+  .top-nav-links a { padding:0 0.6rem; font-size:0.7rem; }
+  .top-nav-links .hide-mobile { display:none; }
+}
+
+/* ── PAGE SUB-NAV ── */
+.sub-nav {
+  position:sticky;
+  top:60px;
+  z-index:900;
+  background:rgba(15,15,15,0.95);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  gap:0;
+  padding:0 2rem;
+  height:44px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.sub-nav::-webkit-scrollbar { display:none; }
+.sub-nav a {
+  font-size:0.76rem;
+  font-weight:600;
+  letter-spacing:0.03em;
+  color:var(--text-muted);
+  padding:0 0.9rem;
+  height:44px;
+  display:flex;
+  align-items:center;
+  white-space:nowrap;
+  position:relative;
+  transition:color 0.15s;
+  text-decoration:none;
+  gap:0.35rem;
+}
+.sub-nav a:hover { color:var(--white); text-decoration:none; }
+.sub-nav a.active { color:var(--accent); }
+.sub-nav a::after {
+  content:'';
+  position:absolute;
+  bottom:0; left:0.5rem; right:0.5rem;
+  height:2px;
+  background:var(--accent);
+  transform:scaleX(0);
+  transition:transform 0.2s;
+}
+.sub-nav a.active::after, .sub-nav a:hover::after { transform:scaleX(1); }
+
+.sub-nav .nav-icon { font-size:0.85rem; }
+
+@media(max-width:800px) {
+  .sub-nav { padding:0 1rem; }
+}
+
+/* ── LAYOUT ── */
+.page { display:flex; max-width:1100px; margin:0 auto; gap:0; padding-top:104px; }
+
+.sidebar {
+  width:220px;
+  flex-shrink:0;
+  position:sticky;
+  top:104px;
+  height:calc(100vh - 104px);
+  overflow-y:auto;
+  border-right:1px solid var(--border);
+  background: var(--bg-card);
+  padding:1.5rem 0;
+  scrollbar-width:thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.sidebar-title {
+  font-family:'Oswald', sans-serif;
+  font-size:0.75rem;
+  font-weight:600;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  padding:0 1.25rem;
+  margin-bottom:0.75rem;
+}
+
+.sidebar a {
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  padding:0.45rem 1.25rem;
+  font-size:0.88rem;
+  font-weight:500;
+  color:var(--text-dim);
+  text-decoration:none;
+  border-left:3px solid transparent;
+  transition:all 0.15s;
+}
+
+.sidebar a:hover {
+  color:var(--white);
+  background:rgba(255,255,255,0.03);
+  text-decoration:none;
+}
+
+.sidebar a.active {
+  color:var(--white);
+  border-left-color:var(--accent);
+  background:rgba(5,122,240,0.06);
+}
+
+.sidebar .nav-icon { font-size:1rem; width:1.2rem; text-align:center; }
+
+.content {
+  flex:1;
+  min-width:0;
+  padding:2.5rem 2.5rem 4rem;
+}
+
+@media(max-width:800px) {
+  .sidebar { display:none; }
+  .content { padding:1.5rem; }
+}
+
+/* ── HEADER ── */
+.guide-header {
+  margin-bottom:2.5rem;
+  padding-bottom:1.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.guide-header .breadcrumb {
+  font-size:0.78rem;
+  color:var(--text-muted);
+  margin-bottom:0.5rem;
+  letter-spacing:0.02em;
+}
+
+.guide-header h1 {
+  font-family:'Oswald', sans-serif;
+  font-size:2.2rem;
+  font-weight:700;
+  color:var(--white);
+  line-height:1.2;
+  margin-bottom:0.4rem;
+}
+
+.guide-header .subtitle {
+  font-size:1rem;
+  color:var(--text-dim);
+  font-weight:400;
+}
+
+.tag-row { display:flex; gap:0.4rem; margin-top:0.75rem; flex-wrap:wrap; }
+.tag {
+  font-size:0.72rem;
+  font-weight:600;
+  padding:0.2rem 0.6rem;
+  border-radius:4px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.tag.green { color:var(--green); border-color:rgba(33,197,19,0.25); background:rgba(33,197,19,0.06); }
+.tag.orange { color:var(--orange); border-color:rgba(240,154,24,0.25); background:var(--orange-dim); }
+.tag.blue { color:var(--accent); border-color:rgba(5,122,240,0.25); background:rgba(5,122,240,0.06); }
+.tag.red { color:var(--red); border-color:rgba(240,5,5,0.25); background:rgba(240,5,5,0.06); }
+.tag.gold { color:var(--gold); border-color:rgba(212,160,67,0.25); background:var(--gold-dim); }
+.tag.arcane { color:var(--arcane); border-color:rgba(96,192,255,0.25); background:var(--arcane-dim); }
+
+/* ── HERO ART ── */
+.hero-art {
+  width:100%;
+  margin-bottom:1.25rem;
+  border-radius:10px;
+  border:1px solid var(--border);
+  overflow:hidden;
+  background:var(--bg-card);
+}
+.hero-svg {
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+/* ── HEADER ROW ── */
+.header-row {
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  margin-bottom:1.25rem;
+}
+.header-portrait {
+  width:80px;
+  height:80px;
+  border-radius:8px;
+  border:2px solid var(--border);
+  object-fit:cover;
+}
+.header-text { flex:1; }
+
+/* ── SECTIONS ── */
+.section { margin-top:3rem; }
+
+.section h2 {
+  font-family:'Oswald', sans-serif;
+  font-size:1.5rem;
+  font-weight:600;
+  color:var(--white);
+  margin-bottom:1rem;
+  padding-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.section h3 {
+  font-family:'Oswald', sans-serif;
+  font-size:1.15rem;
+  font-weight:500;
+  color:var(--text);
+  margin:1.5rem 0 0.6rem;
+}
+
+.section p { margin-bottom:1rem; color:var(--text); }
+
+/* ── CALLOUTS ── */
+.callout {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:6px;
+  padding:1rem 1.25rem;
+  margin:1.25rem 0;
+}
+
+.callout.warn { border-left-color:var(--orange); }
+.callout.tip { border-left-color:var(--green); }
+
+.callout-label {
+  font-family:'Oswald', sans-serif;
+  font-size:0.78rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  margin-bottom:0.25rem;
+}
+
+.callout .callout-label { color:var(--accent); }
+.callout.warn .callout-label { color:var(--orange); }
+.callout.tip .callout-label { color:var(--green); }
+
+.callout p { margin-bottom:0.5rem; font-size:0.95rem; }
+.callout p:last-child { margin-bottom:0; }
+
+/* ── STAT BAR ── */
+.stats { display:flex; gap:0.5rem; flex-wrap:wrap; margin:0.75rem 0; }
+.stat-box {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:0.4rem 0.75rem;
+  text-align:center;
+  min-width:3.5rem;
+}
+.stat-box.primary { border-color:rgba(5,122,240,0.4); }
+.stat-label { font-size:0.65rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); }
+.stat-val { font-family:'Oswald',sans-serif; font-size:1.3rem; font-weight:600; color:var(--white); }
+.stat-box.primary .stat-val { color:var(--accent); }
+
+/* ── LEVEL CARDS ── */
+.level-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  margin-bottom:0.4rem;
+  overflow:hidden;
+  transition:border-color 0.15s;
+}
+
+.level-card:hover { border-color:var(--border-light); }
+.level-card.spike { border-left:3px solid var(--orange); }
+.level-card.here { border-color:var(--accent); box-shadow:0 0 0 1px rgba(5,122,240,0.15); }
+
+.lv-head {
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  padding:0.65rem 1rem;
+  cursor:pointer;
+  user-select:none;
+  transition:background 0.1s;
+}
+.lv-head:hover { background:var(--bg-hover); }
+
+.lv-num {
+  font-family:'Oswald',sans-serif;
+  font-weight:700;
+  font-size:1.3rem;
+  color:var(--white);
+  min-width:1.6rem;
+  text-align:center;
+}
+.level-card.here .lv-num { color:var(--accent); }
+
+.lv-badge {
+  font-size:0.68rem;
+  font-weight:600;
+  padding:0.15rem 0.5rem;
+  border-radius:4px;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.lv-badge.wizard { color:var(--arcane); background:var(--arcane-dim); border:1px solid rgba(96,192,255,0.2); }
+.lv-badge.fighter { color:var(--orange); background:var(--orange-dim); border:1px solid rgba(240,154,24,0.2); }
+
+.lv-title {
+  font-weight:600;
+  font-size:0.95rem;
+  color:var(--text);
+  flex:1;
+}
+
+.lv-spike {
+  font-size:0.65rem;
+  font-weight:600;
+  color:var(--orange);
+  background:var(--orange-dim);
+  padding:0.15rem 0.45rem;
+  border-radius:4px;
+  border:1px solid rgba(240,154,24,0.2);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+
+.lv-here {
+  font-size:0.65rem;
+  font-weight:600;
+  color:var(--accent);
+  background:rgba(5,122,240,0.1);
+  padding:0.15rem 0.45rem;
+  border-radius:4px;
+  border:1px solid rgba(5,122,240,0.25);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+
+.lv-arrow {
+  color:var(--text-muted);
+  font-size:0.75rem;
+  transition:transform 0.2s;
+}
+.level-card.open .lv-arrow { transform:rotate(90deg); }
+
+.lv-body { max-height:0; overflow:hidden; transition:max-height 0.3s ease; }
+.level-card.open .lv-body { max-height:900px; }
+.lv-inner { padding:0 1rem 1rem; border-top:1px solid var(--border); }
+
+/* Quick picks */
+.qp-row { display:flex; flex-wrap:wrap; gap:0.3rem; margin:0.75rem 0 0.5rem; }
+.qp {
+  font-size:0.78rem;
+  font-weight:500;
+  padding:0.2rem 0.6rem;
+  border-radius:4px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+}
+.qp.feature { color:var(--green); border-color:rgba(33,197,19,0.2); }
+.qp.spell { color:var(--accent); border-color:rgba(5,122,240,0.2); }
+.qp.feat { color:var(--orange); border-color:rgba(240,154,24,0.2); }
+.qp.meta { color:var(--purple); border-color:rgba(176,128,208,0.2); }
+.qp.arcane { color:var(--arcane); border-color:rgba(96,192,255,0.2); }
+
+/* Pick list */
+.picks { list-style:none; margin:0.5rem 0; }
+.picks li {
+  padding:0.3rem 0 0.3rem 0;
+  font-size:0.95rem;
+  display:flex;
+  gap:0.4rem;
+  align-items:baseline;
+}
+.picks .label {
+  font-size:0.72rem;
+  font-weight:600;
+  color:var(--orange);
+  text-transform:uppercase;
+  letter-spacing:0.03em;
+  flex-shrink:0;
+  min-width:4rem;
+}
+.picks .name { font-weight:600; color:var(--white); }
+.picks .note { color:var(--text-dim); font-size:0.88rem; }
+
+/* Prep box */
+.prep {
+  background:rgba(33,197,19,0.04);
+  border:1px solid rgba(33,197,19,0.15);
+  border-radius:6px;
+  padding:0.75rem 1rem;
+  margin-top:0.75rem;
+}
+.prep-title {
+  font-family:'Oswald',sans-serif;
+  font-size:0.8rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--green);
+  margin-bottom:0.4rem;
+}
+.prep-list { list-style:none; display:flex; flex-wrap:wrap; gap:0.25rem 0.6rem; }
+.prep-list li { font-size:0.9rem; font-weight:500; color:var(--text); }
+.prep-list li::before { content:'&#8226; '; color:var(--green-dim); }
+.prep-list li.new { color:var(--orange); }
+.prep-list li.new::before { content:'&#9733; '; color:var(--orange); }
+.prep-note { font-size:0.78rem; color:var(--text-muted); margin-top:0.3rem; }
+
+/* ── SPELL GRID ── */
+.spell-section { margin-bottom:1.5rem; }
+.spell-level {
+  font-family:'Oswald',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  color:var(--white);
+  padding-bottom:0.35rem;
+  margin-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+.spell-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:start;
+  padding:0.5rem 0.75rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:0.35rem;
+  gap:0.75rem;
+}
+.spell-info { flex:1; }
+.spell-name { font-weight:600; color:var(--white); font-size:0.95rem; }
+.spell-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.1rem; }
+.spell-badge {
+  font-size:0.68rem;
+  font-weight:600;
+  padding:0.15rem 0.5rem;
+  border-radius:4px;
+  text-transform:uppercase;
+  letter-spacing:0.03em;
+  white-space:nowrap;
+  flex-shrink:0;
+  align-self:center;
+}
+.spell-badge.must { color:var(--green); background:rgba(33,197,19,0.08); border:1px solid rgba(33,197,19,0.2); }
+.spell-badge.good { color:var(--accent); background:rgba(5,122,240,0.06); border:1px solid rgba(5,122,240,0.15); }
+.spell-badge.conc { color:var(--purple); background:rgba(176,128,208,0.06); border:1px solid rgba(176,128,208,0.15); }
+.spell-badge.free { color:var(--gold); background:var(--gold-dim); border:1px solid rgba(212,160,67,0.2); }
+
+/* ── ITEMS ── */
+.item-group { margin-bottom:1.5rem; }
+.item-group-title {
+  font-family:'Oswald',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  color:var(--gold);
+  padding-bottom:0.35rem;
+  margin-bottom:0.5rem;
+  border-bottom:1px solid rgba(212,160,67,0.15);
+}
+.item-row {
+  padding:0.6rem 0.75rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:0.35rem;
+}
+.item-name { font-weight:600; color:var(--gold); font-size:0.95rem; }
+.item-slot { font-size:0.7rem; color:var(--text-muted); margin-left:0.35rem; text-transform:uppercase; letter-spacing:0.03em; }
+.item-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.15rem; }
+.item-loc { font-size:0.8rem; color:var(--green-dim); margin-top:0.2rem; }
+
+/* ── ROTATION / STEP LIST ── */
+.step-list { list-style:none; counter-reset:step; }
+.step-list li {
+  position:relative;
+  padding:0.75rem 0 0.75rem 3rem;
+  border-left:2px solid var(--border);
+  margin-left:0.75rem;
+  counter-increment:step;
+}
+.step-list li::before {
+  content:counter(step);
+  position:absolute;
+  left:-0.75rem;
+  top:0.6rem;
+  width:1.4rem;
+  height:1.4rem;
+  background:var(--bg-body);
+  border:2px solid var(--accent);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Oswald',sans-serif;
+  font-weight:600;
+  font-size:0.75rem;
+  color:var(--accent);
+}
+.step-list li:last-child { border-left-color:transparent; }
+.step-action { font-weight:600; color:var(--white); }
+.step-timing {
+  font-size:0.7rem;
+  font-weight:600;
+  padding:0.1rem 0.4rem;
+  border-radius:3px;
+  margin-left:0.4rem;
+  vertical-align:middle;
+  text-transform:uppercase;
+}
+.step-timing.pre { color:var(--text-muted); background:rgba(255,255,255,0.04); }
+.step-timing.turn { color:var(--accent); background:rgba(5,122,240,0.08); }
+.step-timing.every { color:var(--green); background:rgba(33,197,19,0.08); }
+.step-timing.bonus { color:var(--orange); background:var(--orange-dim); }
+.step-detail { color:var(--text-dim); font-size:0.9rem; margin-top:0.2rem; }
+
+/* ── PARTY ── */
+.party-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
+@media(max-width:600px) { .party-grid { grid-template-columns:1fr; } }
+.party-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1rem;
+}
+.party-name { font-family:'Oswald',sans-serif; font-weight:600; font-size:1.05rem; color:var(--white); }
+.party-role { font-size:0.72rem; font-weight:600; color:var(--accent); text-transform:uppercase; letter-spacing:0.04em; margin-top:0.1rem; }
+.party-desc { color:var(--text-dim); font-size:0.88rem; margin-top:0.35rem; }
+
+/* ── AC MATH TABLE ── */
+.ac-table { width:100%; border-collapse:collapse; margin:1rem 0; }
+.ac-table th {
+  font-family:'Oswald',sans-serif;
+  font-size:0.78rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--text-muted);
+  text-align:left;
+  padding:0.6rem 0.75rem;
+  border-bottom:2px solid var(--border);
+}
+.ac-table td {
+  padding:0.6rem 0.75rem;
+  border-bottom:1px solid var(--border);
+  font-size:0.92rem;
+}
+.ac-table tr:hover { background:var(--bg-card); }
+.ac-source { font-weight:600; color:var(--white); }
+.ac-val { font-family:'Oswald',sans-serif; font-weight:600; color:var(--arcane); }
+
+/* ── MECHANIC BOX ── */
+.mechanic-box {
+  background:var(--bg-card);
+  border:1px solid rgba(96,192,255,0.2);
+  border-radius:8px;
+  padding:1.25rem;
+  margin:1.25rem 0;
+}
+.mechanic-title {
+  font-family:'Oswald',sans-serif;
+  font-size:1.1rem;
+  font-weight:600;
+  color:var(--arcane);
+  margin-bottom:0.5rem;
+}
+.mechanic-box p { font-size:0.92rem; margin-bottom:0.6rem; }
+.mechanic-box p:last-child { margin-bottom:0; }
+
+/* ── FOOTER ── */
+.guide-footer {
+  margin-top:3rem;
+  padding-top:1rem;
+  border-top:1px solid var(--border);
+  font-size:0.82rem;
+  color:var(--text-muted);
+  text-align:center;
+}
+.guide-footer a { color:var(--text-dim); }
+.guide-footer a:hover { color:var(--accent); }
+
+/* ── MOBILE NAV (hamburger for sub-nav) ── */
+.mobile-nav{display:none;position:sticky;top:60px;z-index:800;background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:48px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;color:var(--accent);letter-spacing:.06em}
+.nav-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s}
+.mobile-links{display:none;position:absolute;top:48px;left:0;right:0;flex-direction:column;background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.mobile-links.open{display:flex}
+.mobile-links a{display:flex;align-items:center;gap:.5rem;height:44px;font-size:.9rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.mobile-links a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){
+  .mobile-nav{display:flex}
+  .sub-nav{display:none}
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.visible {
+  opacity:1;
+  transform:translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ UNIVERSAL TOP NAV ═══════════ -->
+<nav class="top-nav">
+  <a href="index.html" class="top-nav-brand">Z3NGINEER</a>
+  <div class="top-nav-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#projects" class="hide-mobile">Projects</a>
+    <div class="nav-dropdown">
+      <a href="#">Pages <span class="drop-arrow">&#9662;</span></a>
+      <div class="nav-dropdown-menu">
+        <a href="omnisuite.html">OmniSuite</a>
+        <a href="heatsync.html">HeatSync</a>
+        <a href="https://crockednloaded.com">CrockedNLoaded</a>
+        <a href="guides.html">Game Guides</a>
+        <a href="CHIM.html">CHIM Modpack</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════ PAGE SUB-NAV ═══════════ -->
+<nav class="sub-nav" id="subnav">
+  <a href="#overview"><span class="nav-icon">&#9672;</span> Overview</a>
+  <a href="#race"><span class="nav-icon">&#9775;</span> Race</a>
+  <a href="#abilities"><span class="nav-icon">&#9670;</span> Abilities</a>
+  <a href="#levels"><span class="nav-icon">&#8593;</span> Progression</a>
+  <a href="#bladesong"><span class="nav-icon">&#9835;</span> Bladesong</a>
+  <a href="#extra-attack"><span class="nav-icon">&#9876;</span> Extra Attack</a>
+  <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+  <a href="#feats"><span class="nav-icon">&#9733;</span> Feats</a>
+  <a href="#items"><span class="nav-icon">&#9670;</span> Gear</a>
+  <a href="#ac-math"><span class="nav-icon">&#9711;</span> AC Math</a>
+  <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+  <a href="#honour"><span class="nav-icon">&#9760;</span> Honour</a>
+</nav>
+
+<!-- ═══════════ MOBILE SECTION NAV ═══════════ -->
+<div class="mobile-nav">
+  <span class="mobile-nav-title">Bladesinger Wizard</span>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="mobile-links">
+    <a href="#overview"><span class="nav-icon">&#9672;</span> Overview</a>
+    <a href="#race"><span class="nav-icon">&#9775;</span> Race</a>
+    <a href="#abilities"><span class="nav-icon">&#9670;</span> Abilities</a>
+    <a href="#levels"><span class="nav-icon">&#8593;</span> Progression</a>
+    <a href="#bladesong"><span class="nav-icon">&#9835;</span> Bladesong</a>
+    <a href="#extra-attack"><span class="nav-icon">&#9876;</span> Extra Attack</a>
+    <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+    <a href="#feats"><span class="nav-icon">&#9733;</span> Feats</a>
+    <a href="#items"><span class="nav-icon">&#9670;</span> Gear</a>
+    <a href="#ac-math"><span class="nav-icon">&#9711;</span> AC Math</a>
+    <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+    <a href="#honour"><span class="nav-icon">&#9760;</span> Honour</a>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div style="text-align:center; padding:0 1.25rem 1rem;">
+    <svg viewBox="0 0 48 48" width="48" height="48" style="border-radius:8px; border:1px solid var(--border);">
+      <rect width="48" height="48" fill="#0a1225"/>
+      <path d="M24 10 L28 22 L24 18 L20 22 Z" fill="#60c0ff" opacity="0.8"/>
+      <path d="M24 22 L30 40 L24 46 L18 40 Z" fill="#60c0ff" opacity="0.4"/>
+      <circle cx="24" cy="22" r="7" fill="none" stroke="#60c0ff" stroke-width="1" opacity="0.5"/>
+      <path d="M18 28 Q24 20 30 28" fill="none" stroke="#fff" stroke-width="0.8" opacity="0.3"/>
+      <circle cx="20" cy="16" r="1.5" fill="#60c0ff" opacity="0.6"/>
+      <circle cx="28" cy="16" r="1.5" fill="#60c0ff" opacity="0.6"/>
+    </svg>
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">&#9672;</span> Overview</a>
+  <a href="#race"><span class="nav-icon">&#9775;</span> Race &amp; Background</a>
+  <a href="#abilities"><span class="nav-icon">&#9670;</span> Ability Scores</a>
+  <a href="#levels"><span class="nav-icon">&#8593;</span> Progression</a>
+  <a href="#bladesong"><span class="nav-icon">&#9835;</span> Bladesong</a>
+  <a href="#extra-attack"><span class="nav-icon">&#9876;</span> Extra Attack</a>
+  <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+  <a href="#feats"><span class="nav-icon">&#9733;</span> Feats</a>
+  <a href="#items"><span class="nav-icon">&#9670;</span> Gear</a>
+  <a href="#ac-math"><span class="nav-icon">&#9711;</span> AC Math</a>
+  <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+  <a href="#honour"><span class="nav-icon">&#9760;</span> Honour Mode</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="arcaneGlow" cx="40%" cy="45%" r="55%">
+            <stop offset="0%" stop-color="#2080d0" stop-opacity="0.45"/>
+            <stop offset="35%" stop-color="#104080" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="shieldGlow" cx="65%" cy="40%" r="30%">
+            <stop offset="0%" stop-color="#60c0ff" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="bladesongAura" cx="38%" cy="50%" r="45%">
+            <stop offset="0%" stop-color="#4090ff" stop-opacity="0.15"/>
+            <stop offset="50%" stop-color="#2060c0" stop-opacity="0.08"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="rapierBlade" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#c0d0e0"/>
+            <stop offset="40%" stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#a0b0c0"/>
+          </linearGradient>
+          <linearGradient id="arcaneTrail" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#60c0ff" stop-opacity="0"/>
+            <stop offset="40%" stop-color="#80d0ff" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#60c0ff" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="robeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#1a2548"/>
+            <stop offset="100%" stop-color="#0e1530"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="strongGlow">
+            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="softGlow">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Background layers -->
+        <rect width="800" height="300" fill="#0a0a0a"/>
+        <rect width="800" height="300" fill="url(#arcaneGlow)"/>
+        <rect width="800" height="300" fill="url(#shieldGlow)" opacity="0.5"/>
+        <rect width="800" height="300" fill="url(#bladesongAura)"/>
+
+        <!-- Background arcane rune circle on the ground -->
+        <g transform="translate(310,260)" opacity="0.2">
+          <ellipse cx="0" cy="0" rx="120" ry="25" fill="none" stroke="#60c0ff" stroke-width="0.8">
+            <animate attributeName="rx" values="118;122;118" dur="4s" repeatCount="indefinite"/>
+          </ellipse>
+          <ellipse cx="0" cy="0" rx="95" ry="18" fill="none" stroke="#4080d0" stroke-width="0.5"/>
+          <!-- Rune marks around circle -->
+          <line x1="-110" y1="-5" x2="-90" y2="-5" stroke="#60c0ff" stroke-width="0.6"/>
+          <line x1="90" y1="-5" x2="110" y2="-5" stroke="#60c0ff" stroke-width="0.6"/>
+          <line x1="-50" y1="-20" x2="-40" y2="-18" stroke="#60c0ff" stroke-width="0.6"/>
+          <line x1="40" y1="-18" x2="50" y2="-20" stroke="#60c0ff" stroke-width="0.6"/>
+        </g>
+
+        <!-- Musical note magical effects floating in air -->
+        <g filter="url(#glow)" opacity="0.6">
+          <text x="180" y="60" fill="#60c0ff" font-size="14" font-family="serif" opacity="0.5"><animate attributeName="y" values="60;50;60" dur="3.5s" repeatCount="indefinite"/>&#9835;</text>
+          <text x="230" y="45" fill="#80d0ff" font-size="11" font-family="serif" opacity="0.4"><animate attributeName="y" values="45;38;45" dur="2.8s" repeatCount="indefinite"/>&#9834;</text>
+          <text x="400" y="35" fill="#60c0ff" font-size="12" font-family="serif" opacity="0.35"><animate attributeName="y" values="35;28;35" dur="3.2s" repeatCount="indefinite"/>&#9833;</text>
+          <text x="350" y="55" fill="#a0d8ff" font-size="10" font-family="serif" opacity="0.4"><animate attributeName="y" values="55;48;55" dur="2.5s" repeatCount="indefinite"/>&#9835;</text>
+          <text x="155" y="100" fill="#80d0ff" font-size="9" font-family="serif" opacity="0.3"><animate attributeName="y" values="100;92;100" dur="3s" repeatCount="indefinite"/>&#9834;</text>
+        </g>
+
+        <!-- Arcane particles swirling around the Bladesinger -->
+        <g filter="url(#glow)" opacity="0.65">
+          <circle cx="260" cy="80" r="2.5" fill="#60c0ff"><animate attributeName="cy" values="80;70;80" dur="2.8s" repeatCount="indefinite"/></circle>
+          <circle cx="240" cy="110" r="3" fill="#80d0ff"><animate attributeName="cx" values="240;230;240" dur="3s" repeatCount="indefinite"/></circle>
+          <circle cx="350" cy="90" r="2" fill="#a0d8ff"><animate attributeName="cy" values="90;82;90" dur="2.2s" repeatCount="indefinite"/></circle>
+          <circle cx="280" cy="140" r="3.5" fill="#4090d0"><animate attributeName="cx" values="280;272;280" dur="3.5s" repeatCount="indefinite"/></circle>
+          <circle cx="370" cy="120" r="2" fill="#60c0ff"><animate attributeName="cy" values="120;112;120" dur="2.6s" repeatCount="indefinite"/></circle>
+          <circle cx="220" cy="145" r="2.8" fill="#80d0ff"><animate attributeName="cx" values="220;228;220" dur="3.2s" repeatCount="indefinite"/></circle>
+          <circle cx="330" cy="60" r="1.8" fill="#a0d8ff"><animate attributeName="cy" values="60;52;60" dur="2.4s" repeatCount="indefinite"/></circle>
+          <circle cx="385" cy="70" r="1.5" fill="#60c0ff"><animate attributeName="cx" values="385;392;385" dur="2.7s" repeatCount="indefinite"/></circle>
+        </g>
+
+        <!-- INT RUNE ARMOR GLOW around the Bladesinger body -->
+        <g filter="url(#softGlow)" opacity="0.35">
+          <ellipse cx="300" cy="155" rx="42" ry="65" fill="none" stroke="#60c0ff" stroke-width="1.5">
+            <animate attributeName="stroke-opacity" values="0.4;0.7;0.4" dur="2s" repeatCount="indefinite"/>
+          </ellipse>
+          <!-- Rune symbols on the armor glow -->
+          <text x="268" y="120" fill="#60c0ff" font-size="8" font-family="serif" opacity="0.6">&#x2721;</text>
+          <text x="322" y="130" fill="#60c0ff" font-size="7" font-family="serif" opacity="0.5">&#x2726;</text>
+          <text x="275" y="180" fill="#60c0ff" font-size="7" font-family="serif" opacity="0.5">&#x2727;</text>
+          <text x="320" y="190" fill="#60c0ff" font-size="8" font-family="serif" opacity="0.6">&#x2721;</text>
+        </g>
+
+        <!-- THE BLADESINGER — elven figure in graceful acrobatic mid-dance pose -->
+        <g transform="translate(300,160)" opacity="0.95">
+          <!-- Flowing battle robes — billowing with movement -->
+          <path d="M-5,25 Q-25,45 -40,85 Q-45,100 -30,105 Q-20,95 -15,70 Q-10,50 -5,35 Z" fill="url(#robeGrad)" opacity="0.7"/>
+          <path d="M5,25 Q20,50 35,85 Q40,100 25,108 Q15,95 12,70 Q10,50 5,35 Z" fill="url(#robeGrad)" opacity="0.7"/>
+          <!-- Robe inner fabric -->
+          <path d="M-2,28 Q-18,48 -30,80 Q-32,90 -22,92 Q-15,82 -10,60 Q-8,45 -2,32 Z" fill="#1e2e50" opacity="0.5"/>
+          <!-- Robe trim — glowing arcane edges -->
+          <path d="M-40,85 Q-45,100 -30,105" fill="none" stroke="#60c0ff" stroke-width="0.8" opacity="0.4"/>
+          <path d="M35,85 Q40,100 25,108" fill="none" stroke="#60c0ff" stroke-width="0.8" opacity="0.4"/>
+
+          <!-- Legs — mid-dance stance, one leg extended -->
+          <path d="M-8,30 L-15,65 L-22,95 L-14,98" fill="#2a3555" opacity="0.8"/>
+          <path d="M8,30 L20,55 L35,75 L28,80" fill="#2a3555" opacity="0.8"/>
+          <!-- Dance-pose foot -->
+          <path d="M-22,93 L-10,97 L-8,100 L-26,98 Z" fill="#2a3555"/>
+          <path d="M32,73 L42,72 L44,77 L30,79 Z" fill="#2a3555"/>
+
+          <!-- Torso — light battle robes, not heavy armor -->
+          <path d="M-22,-10 Q-25,5 -22,28 Q-18,35 0,38 Q18,35 22,28 Q25,5 22,-10 Q12,-22 0,-24 Q-12,-22 -22,-10 Z" fill="#1a2a48"/>
+          <!-- Chest detail — arcane embroidery -->
+          <path d="M-12,-5 Q0,-10 12,-5 Q14,8 8,18 Q0,22 -8,18 Q-14,8 -12,-5 Z" fill="#223558" opacity="0.6"/>
+          <!-- Arcane rune on chest -->
+          <circle cx="0" cy="6" r="5" fill="none" stroke="#60c0ff" stroke-width="0.8" opacity="0.5">
+            <animate attributeName="stroke-opacity" values="0.3;0.7;0.3" dur="2.5s" repeatCount="indefinite"/>
+          </circle>
+          <line x1="-3" y1="3" x2="3" y2="9" stroke="#60c0ff" stroke-width="0.5" opacity="0.5"/>
+          <line x1="3" y1="3" x2="-3" y2="9" stroke="#60c0ff" stroke-width="0.5" opacity="0.5"/>
+
+          <!-- Shoulders — light pauldrons -->
+          <ellipse cx="-24" cy="-14" rx="10" ry="7" fill="#1e2e50"/>
+          <ellipse cx="24" cy="-14" rx="10" ry="7" fill="#1e2e50"/>
+
+          <!-- Head — elven features, pointed ears -->
+          <ellipse cx="0" cy="-38" rx="11" ry="13" fill="#c8a882"/>
+          <!-- Elven ears -->
+          <path d="M-11,-42 L-20,-50 L-14,-38" fill="#c8a882"/>
+          <path d="M11,-42 L20,-50 L14,-38" fill="#c8a882"/>
+          <!-- Hair flowing with dance movement -->
+          <path d="M-10,-50 Q-5,-56 5,-52 Q10,-50 12,-44 Q15,-50 18,-55 Q12,-60 0,-62 Q-12,-60 -18,-52 Q-15,-46 -10,-50 Z" fill="#1a1a30" opacity="0.9"/>
+          <path d="M-12,-48 Q-18,-45 -25,-50 Q-22,-55 -15,-52" fill="#1a1a30" opacity="0.6"/>
+          <!-- Eyes — focused, arcane glow -->
+          <ellipse cx="-4" cy="-40" rx="2" ry="1.5" fill="#60c0ff" opacity="0.7"/>
+          <ellipse cx="4" cy="-40" rx="2" ry="1.5" fill="#60c0ff" opacity="0.7"/>
+          <!-- Eyebrows -->
+          <path d="M-7,-43 Q-4,-45 -1,-43" stroke="#1a1a30" stroke-width="0.8" fill="none"/>
+          <path d="M1,-43 Q4,-45 7,-43" stroke="#1a1a30" stroke-width="0.8" fill="none"/>
+
+          <!-- LEFT ARM — extended, casting Shield spell -->
+          <path d="M-24,-8 Q-40,-15 -55,-8 Q-62,0 -58,8" fill="#c8a882" opacity="0.9"/>
+          <!-- Open palm for Shield -->
+          <ellipse cx="-58" cy="6" rx="5" ry="6" fill="#c8a882"/>
+          <!-- Fingers splayed -->
+          <line x1="-62" y1="2" x2="-66" y2="-2" stroke="#c8a882" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="-63" y1="5" x2="-68" y2="4" stroke="#c8a882" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="-62" y1="8" x2="-67" y2="10" stroke="#c8a882" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="-60" y1="11" x2="-64" y2="15" stroke="#c8a882" stroke-width="1.5" stroke-linecap="round"/>
+
+          <!-- RIGHT ARM — extended back, holding rapier, arcane light trailing -->
+          <path d="M24,-10 Q38,-25 50,-38 Q54,-42 52,-35" fill="#c8a882" opacity="0.9"/>
+          <!-- Hand gripping rapier -->
+          <ellipse cx="52" cy="-37" rx="4" ry="4.5" fill="#c8a882"/>
+
+          <!-- RAPIER — trailing behind in dance arc -->
+          <g transform="translate(52,-37) rotate(-135)">
+            <!-- Rapier blade — thin and elegant -->
+            <rect x="-1.5" y="-75" width="3" height="62" fill="url(#rapierBlade)" rx="0.5"/>
+            <line x1="0" y1="-75" x2="0" y2="-13" stroke="#ffffff" stroke-width="0.4" opacity="0.5"/>
+            <!-- Blade tip -->
+            <path d="M-1.5,-75 L0,-82 L1.5,-75 Z" fill="#e0e8f0"/>
+            <!-- Swept hilt guard -->
+            <ellipse cx="0" cy="-12" rx="8" ry="3" fill="#b0b8c0"/>
+            <path d="M-6,-12 Q-8,-6 0,-4 Q8,-6 6,-12" fill="none" stroke="#b0b8c0" stroke-width="1"/>
+            <!-- Grip -->
+            <rect x="-2" y="-10" width="4" height="14" fill="#2a1a10" rx="1"/>
+            <!-- Pommel -->
+            <circle cx="0" cy="6" r="3" fill="#60c0ff" opacity="0.6"/>
+          </g>
+
+          <!-- ARCANE LIGHT TRAIL from rapier tip — sweeping arc -->
+          <g filter="url(#strongGlow)">
+            <path d="M80,-90 Q60,-110 30,-105 Q0,-95 -20,-70 Q-35,-50 -40,-25" stroke="url(#arcaneTrail)" stroke-width="3" fill="none" opacity="0.7">
+              <animate attributeName="stroke-opacity" values="0.5;0.8;0.5" dur="2s" repeatCount="indefinite"/>
+            </path>
+            <path d="M78,-88 Q55,-108 25,-100 Q-5,-90 -22,-65 Q-38,-45 -42,-22" stroke="#60c0ff" stroke-width="1" fill="none" opacity="0.3"/>
+            <!-- Arcane sparks along the trail -->
+            <circle cx="60" cy="-100" r="2.5" fill="#80d0ff" opacity="0.6"><animate attributeName="r" values="2;3.5;2" dur="1s" repeatCount="indefinite"/></circle>
+            <circle cx="30" cy="-102" r="2" fill="#a0e0ff" opacity="0.5"/>
+            <circle cx="0" cy="-90" r="2.5" fill="#60c0ff" opacity="0.5"/>
+            <circle cx="-25" cy="-60" r="2" fill="#80d0ff" opacity="0.4"/>
+            <circle cx="-38" cy="-30" r="1.8" fill="#60c0ff" opacity="0.35"/>
+          </g>
+        </g>
+
+        <!-- SHIELD SPELL — hexagonal barrier deflecting an attack on the left side -->
+        <g transform="translate(230,150)" filter="url(#strongGlow)">
+          <!-- Shield barrier — translucent hexagonal panels -->
+          <g opacity="0.6">
+            <polygon points="-10,-35 10,-35 20,-18 10,0 -10,0 -20,-18" fill="rgba(96,192,255,0.08)" stroke="#60c0ff" stroke-width="1.2">
+              <animate attributeName="stroke-opacity" values="0.5;0.9;0.5" dur="1.5s" repeatCount="indefinite"/>
+            </polygon>
+            <polygon points="10,-35 30,-35 40,-18 30,0 10,0 0,-18" fill="rgba(96,192,255,0.06)" stroke="#60c0ff" stroke-width="0.8" opacity="0.7"/>
+            <polygon points="-10,0 10,0 20,17 10,35 -10,35 -20,17" fill="rgba(96,192,255,0.06)" stroke="#60c0ff" stroke-width="0.8" opacity="0.7"/>
+            <polygon points="-30,-35 -10,-35 -0,-18 -10,0 -30,0 -40,-18" fill="rgba(96,192,255,0.05)" stroke="#60c0ff" stroke-width="0.6" opacity="0.5"/>
+            <polygon points="-30,0 -10,0 0,17 -10,35 -30,35 -40,17" fill="rgba(96,192,255,0.04)" stroke="#60c0ff" stroke-width="0.5" opacity="0.4"/>
+          </g>
+          <!-- Impact flash where attack is being deflected -->
+          <circle cx="-15" cy="-12" r="8" fill="#60c0ff" opacity="0.3">
+            <animate attributeName="r" values="6;10;6" dur="1.2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.2;0.4;0.2" dur="1.2s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Deflection sparks -->
+          <g stroke="#80d0ff" stroke-width="1" opacity="0.5" fill="none">
+            <line x1="-15" y1="-12" x2="-35" y2="-25"/>
+            <line x1="-15" y1="-12" x2="-40" y2="-8"/>
+            <line x1="-15" y1="-12" x2="-30" y2="5"/>
+            <line x1="-15" y1="-12" x2="-25" y2="-30"/>
+          </g>
+        </g>
+
+        <!-- ENEMIES being held back by crowd control — left side -->
+        <g transform="translate(120,195)" opacity="0.55">
+          <!-- Enemy 1 — frozen/held, reaching forward -->
+          <ellipse cx="0" cy="-10" rx="14" ry="20" fill="#1a1515"/>
+          <circle cx="5" cy="-30" r="9" fill="#1a1515"/>
+          <!-- Arms reaching toward Bladesinger but frozen -->
+          <path d="M14,-10 Q30,-20 45,-18" stroke="#1a1515" stroke-width="5" stroke-linecap="round"/>
+          <path d="M12,-5 Q28,0 42,5" stroke="#1a1515" stroke-width="4" stroke-linecap="round"/>
+          <!-- Hold person glow around enemy -->
+          <ellipse cx="5" cy="-10" rx="22" ry="30" fill="none" stroke="#60c0ff" stroke-width="0.8" opacity="0.4">
+            <animate attributeName="stroke-opacity" values="0.2;0.5;0.2" dur="2s" repeatCount="indefinite"/>
+          </ellipse>
+          <!-- Legs frozen mid-stride -->
+          <path d="M-5,10 Q-10,30 -18,42" stroke="#1a1515" stroke-width="5" stroke-linecap="round"/>
+          <path d="M5,10 Q12,28 20,38" stroke="#1a1515" stroke-width="5" stroke-linecap="round"/>
+        </g>
+
+        <!-- Enemy 2 — stumbling back from crowd control -->
+        <g transform="translate(80,200)" opacity="0.4">
+          <ellipse cx="0" cy="-5" rx="11" ry="16" fill="#1a1515" transform="rotate(-15)"/>
+          <circle cx="-5" cy="-22" r="8" fill="#1a1515"/>
+          <path d="M-12,-2 Q-25,-10 -30,-5" stroke="#1a1515" stroke-width="4" stroke-linecap="round"/>
+          <path d="M-8,12 Q-15,25 -20,35" stroke="#1a1515" stroke-width="4" stroke-linecap="round"/>
+          <path d="M5,12 Q0,28 -5,38" stroke="#1a1515" stroke-width="4" stroke-linecap="round"/>
+        </g>
+
+        <!-- Enemy 3 — far right, also held -->
+        <g transform="translate(620,200)" opacity="0.45">
+          <ellipse cx="0" cy="-8" rx="13" ry="18" fill="#1a1515"/>
+          <circle cx="-2" cy="-28" r="9" fill="#1a1515"/>
+          <path d="M-14,-5 Q-28,-12 -38,-8" stroke="#1a1515" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M-10,10 Q-15,28 -22,40" stroke="#1a1515" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M8,10 Q15,25 18,38" stroke="#1a1515" stroke-width="4.5" stroke-linecap="round"/>
+          <!-- Hold glow -->
+          <ellipse cx="0" cy="-8" rx="20" ry="28" fill="none" stroke="#60c0ff" stroke-width="0.7" opacity="0.35">
+            <animate attributeName="stroke-opacity" values="0.2;0.4;0.2" dur="2.2s" repeatCount="indefinite"/>
+          </ellipse>
+        </g>
+
+        <!-- Incoming attack being deflected by Shield (arrow/spell bolt) -->
+        <g transform="translate(170,140)" opacity="0.6">
+          <!-- Spell bolt approaching shield -->
+          <line x1="-40" y1="-10" x2="40" y2="5" stroke="#ff6040" stroke-width="2.5"/>
+          <circle cx="-40" cy="-10" r="4" fill="#ff6040" opacity="0.6"/>
+          <circle cx="-35" cy="-9" r="2" fill="#ffa080" opacity="0.4"/>
+          <!-- Impact scatter -->
+          <circle cx="42" cy="6" r="5" fill="#60c0ff" opacity="0.4">
+            <animate attributeName="opacity" values="0.3;0.5;0.3" dur="0.8s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+
+        <!-- Ground line -->
+        <line x1="50" y1="270" x2="750" y2="270" stroke="#303030" stroke-width="0.6" opacity="0.3"/>
+
+        <!-- Subtle ground debris -->
+        <g opacity="0.2">
+          <ellipse cx="180" cy="265" rx="3" ry="1.5" fill="#404040"/>
+          <ellipse cx="420" cy="268" rx="4" ry="2" fill="#353535"/>
+          <ellipse cx="580" cy="266" rx="2.5" ry="1.5" fill="#404040"/>
+          <ellipse cx="650" cy="268" rx="3" ry="1.5" fill="#353535"/>
+        </g>
+      </svg>
+    </div>
+    <div class="header-row">
+      <svg viewBox="0 0 80 80" width="80" height="80" class="header-portrait" style="border-radius:8px; border:2px solid var(--border); background:#151515;">
+        <rect width="80" height="80" fill="#0a1225"/>
+        <path d="M40 12 L46 26 L40 20 L34 26 Z" fill="#60c0ff" opacity="0.8"/>
+        <path d="M40 26 L50 56 L40 68 L30 56 Z" fill="#60c0ff" opacity="0.4"/>
+        <circle cx="40" cy="30" r="10" fill="none" stroke="#60c0ff" stroke-width="1.5" opacity="0.5"/>
+        <path d="M34 22 Q40 16 46 22" fill="none" stroke="#fff" stroke-width="1" opacity="0.3"/>
+        <circle cx="36" cy="20" r="2" fill="#60c0ff" opacity="0.5"/>
+        <circle cx="44" cy="20" r="2" fill="#60c0ff" opacity="0.5"/>
+        <path d="M40 12 L40 6 M35 14 L31 10 M45 14 L49 10" stroke="#60c0ff" stroke-width="0.8" opacity="0.4"/>
+      </svg>
+      <div class="header-text">
+        <div class="breadcrumb">Baldur's Gate 3 &#8250; Builds &#8250; Bladesinger Wizard</div>
+        <h1>Bladesinger Wizard &mdash; The Arcane Dancer</h1>
+        <div class="subtitle">High Elf &middot; Bladesinger Wizard 10 / Fighter 2 &middot; Patch 8 Meta</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag arcane">Bladesinger</span>
+      <span class="tag green">Melee + Full Caster</span>
+      <span class="tag gold">25+ AC</span>
+      <span class="tag blue">Extra Attack + Cantrip</span>
+      <span class="tag orange">Patch 8</span>
+    </div>
+  </div>
+
+  <!-- ═══════════ OVERVIEW ═══════════ -->
+  <section class="section reveal" id="overview">
+    <h2>Overview</h2>
+
+    <p>The Bladesinger Wizard is the new meta Wizard build in Baldur's Gate 3 as of Patch 8, replacing Abjuration as the top-tier arcane option. Bladesong adds your Intelligence modifier to AC and Concentration saving throws, making you absurdly tanky for a Wizard. At level 6, Extra Attack lets you swing a weapon AND cast a cantrip in the same Attack action. You are a full 6th-level spell caster who fights in melee, wears no heavy armor, and still hits 25+ AC while maintaining concentration on Haste or Shadow Blade.</p>
+
+    <div class="callout">
+      <div class="callout-label">Why It Replaced Abjuration</div>
+      <p><strong>Abjuration Ward</strong> gave you temporary HP. <strong>Bladesong</strong> gives you +INT to AC (up to +5), +INT to Concentration saves, +10 movement speed, and advantage on Acrobatics. That is better defense, better mobility, and better concentration all in one feature. Add Extra Attack at Wizard 6 &mdash; which Abjuration never gets &mdash; and you have a Wizard who can fight in melee AND cast a full cantrip each turn. Abjuration has no answer to that combination.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">The Fantasy</div>
+      <p>You are an elven warrior-mage who dances through combat with a rapier in one hand and arcane power in the other. Bladesong makes you untouchable (25+ AC with Shield), Extra Attack lets you stab someone and Booming Blade them in the same action, and you still have full access to Fireball, Haste, Counterspell, and Wall of Force. No other class in BG3 combines this level of melee competence with the full Wizard spell list.</p>
+    </div>
+
+    <h3>Core Synergies</h3>
+    <ul class="picks">
+      <li><span class="label">AC</span> <span class="name">Bladesong + DEX + INT</span> &mdash; <span class="note">Unarmored base of 10 + DEX + INT (Bladesong) + Shield reaction = 25-30 AC. Untouchable.</span></li>
+      <li><span class="label">Attack</span> <span class="name">Extra Attack (Bladesinger)</span> &mdash; <span class="note">One weapon attack + one cantrip (Booming Blade) in the same Attack action. Unique to Bladesinger.</span></li>
+      <li><span class="label">Conc</span> <span class="name">INT to Concentration</span> &mdash; <span class="note">Bladesong adds INT to CON saves for concentration. With War Caster, you almost never drop Haste/Shadow Blade.</span></li>
+      <li><span class="label">Spells</span> <span class="name">Full Wizard Spell List</span> &mdash; <span class="note">You are still a full Wizard. Fireball, Counterspell, Wall of Force, Haste &mdash; every tool in the game.</span></li>
+    </ul>
+  </section>
+
+  <!-- ═══════════ RACE & BACKGROUND ═══════════ -->
+  <section class="section reveal" id="race">
+    <h2>Race &amp; Background</h2>
+
+    <h3>Best Race: High Elf</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Longsword/Shortsword/Longbow Proficiency</span> &mdash; <span class="note">Gives you martial weapon proficiency for rapier-tier weapons without a multiclass dip. Essential for early melee.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Extra Cantrip</span> &mdash; <span class="note">One free cantrip from any class. Take a utility option since you already have plenty of damage cantrips.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Darkvision + Fey Ancestry</span> &mdash; <span class="note">12m Darkvision for Act 2 darkness. Fey Ancestry prevents sleep and grants advantage vs charm.</span></li>
+    </ul>
+
+    <h3>Alternative: Githyanki</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Medium Armor + Sword Proficiency</span> &mdash; <span class="note">Greatsword and medium armor proficiency. You will not use heavy armor (breaks Bladesong), but medium armor gives an early-game AC option before your INT is maxed.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Misty Step (free)</span> &mdash; <span class="note">Free once per long rest. Saves a prepared spell slot for the best repositioning tool in the game.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Githyanki Psionics</span> &mdash; <span class="note">Mage Hand for free at level 1, Jump at level 3. Extra utility without spell slots.</span></li>
+    </ul>
+
+    <h3>Alternative: Wood Elf</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Extra Movement Speed</span> &mdash; <span class="note">1.5m extra base speed stacks with Bladesong's +10 feet. You become the fastest character in the game.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Elf Weapon Training</span> &mdash; <span class="note">Same weapon proficiencies as High Elf. Rapier access from level 1.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Mask of the Wild</span> &mdash; <span class="note">Stealth proficiency for scouting. Useful for a character who can Misty Step into position.</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Other Viable Races</div>
+      <p><strong>Half-Elf (High)</strong> &mdash; Extra cantrip + Darkvision + Fey Ancestry + two extra skill proficiencies. More versatile but slightly less thematic. <strong>Human</strong> &mdash; Carrying capacity and Civil Militia (shield proficiency), but you cannot use shields during Bladesong anyway.</p>
+    </div>
+
+    <h3>Background</h3>
+    <p>Pick <strong>Sage</strong> for Arcana and History proficiency &mdash; fits the scholar-warrior archetype and you use INT for both. <strong>Noble</strong> is an alternative for History and Persuasion if you want social skills, though your CHA will be low.</p>
+  </section>
+
+  <!-- ═══════════ ABILITY SCORES ═══════════ -->
+  <section class="section reveal" id="abilities">
+    <h2>Ability Scores</h2>
+
+    <div class="stats">
+      <div class="stat-box"><div class="stat-label">STR</div><div class="stat-val">8</div></div>
+      <div class="stat-box primary"><div class="stat-label">DEX</div><div class="stat-val">16</div></div>
+      <div class="stat-box"><div class="stat-label">CON</div><div class="stat-val">14</div></div>
+      <div class="stat-box primary"><div class="stat-label">INT</div><div class="stat-val">17</div></div>
+      <div class="stat-box"><div class="stat-label">WIS</div><div class="stat-val">10</div></div>
+      <div class="stat-box"><div class="stat-label">CHA</div><div class="stat-val">8</div></div>
+    </div>
+    <p style="font-size:0.88rem; color:var(--text-dim);">Point buy. INT is your spellcasting modifier AND adds to AC during Bladesong &mdash; it does double duty. DEX 16 gives +3 to AC, attack rolls with finesse weapons, initiative, and DEX saves. CON 14 for HP and concentration baseline. INT 17 so you can round up to 18 with a half-feat at level 4.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Why INT is Everything</div>
+      <p>Intelligence fuels your spell save DC, spell attack bonus, AND your AC during Bladesong. Every +1 INT is +1 AC, +1 to concentration saves, and better spells. Going from INT 16 to 20 is literally +2 AC, +2 to all concentration saves, and +2 spell DC. No other class benefits this much from a single ability score. Max INT first, always.</p>
+    </div>
+
+    <h3>Feat Priority for Ability Scores</h3>
+    <ul class="picks">
+      <li><span class="label">Level 4</span> <span class="name">War Caster</span> &mdash; <span class="note">Advantage on concentration saves. Combined with Bladesong's +INT to concentration, you basically never drop Haste or Shadow Blade. This is the #1 feat for Bladesinger, no contest.</span></li>
+      <li><span class="label">Level 8</span> <span class="name">+2 INT &rarr; 20</span> &mdash; <span class="note">Or take Resilient (CON) if you started with odd CON. Maxing INT = +5 AC from Bladesong, highest possible spell DC.</span></li>
+      <li><span class="label">Level 12</span> <span class="name">Alert</span> &mdash; <span class="note">+5 initiative. Going first means Bladesong is up before anyone attacks you. Combined with DEX 16, you act first almost every fight.</span></li>
+    </ul>
+  </section>
+
+  <!-- ═══════════ LEVEL PROGRESSION ═══════════ -->
+  <section class="section reveal" id="levels">
+    <h2>Level-by-Level Progression</h2>
+    <p style="color:var(--text-dim); margin-bottom:1rem;">Click any level to expand. Start Wizard, take 10 levels, then dip Fighter 2 for Action Surge. Alternatively, go pure Wizard 12 for 6th-level spells.</p>
+
+    <!-- Level 1 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">1</span>
+        <span class="lv-badge wizard">Wizard 1</span>
+        <span class="lv-title">Arcane Recovery &amp; Cantrips</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Arcane Recovery</span>
+          <span class="qp spell">Shield</span>
+          <span class="qp spell">Magic Missile</span>
+          <span class="qp spell">Find Familiar</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Arcane Recovery</span> &mdash; <span class="note">Recover spell slots on short rest. Invaluable for a class that burns slots on Shield reactions.</span></li>
+          <li><span class="label">Cantrips</span> <span class="name">Booming Blade, Fire Bolt, Minor Illusion</span> &mdash; <span class="note">Booming Blade is core for melee. Fire Bolt for ranged. Minor Illusion for utility.</span></li>
+          <li><span class="label">Spells</span> <span class="name">Shield, Magic Missile, Find Familiar</span> &mdash; <span class="note">Shield is mandatory from level 1. Find Familiar gives advantage on attacks via Help action.</span></li>
+          <li><span class="label">Note</span> <span class="name">Use ranged spells early</span> &mdash; <span class="note">You are fragile at level 1. Stay back and use Fire Bolt until you get Bladesong at level 2.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 2 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">2</span>
+        <span class="lv-badge wizard">Wizard 2</span>
+        <span class="lv-title">Bladesong Subclass</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp arcane">Bladesong</span>
+          <span class="qp feature">Light Armor Prof</span>
+          <span class="qp spell">Misty Step</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">Bladesong</span> &mdash; <span class="note">THE feature. Bonus action to activate. Adds INT mod to AC, CON saves for concentration, +10 movement speed, advantage on Acrobatics. Lasts 1 minute. 2 uses per short rest. Ends if you use two-handed weapons, heavy armor, or a shield.</span></li>
+          <li><span class="label">Profic.</span> <span class="name">Light Armor + One-Handed Melee</span> &mdash; <span class="note">Bladesinger grants light armor and one-handed melee weapon proficiency. With Elf racial, you have rapier access.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Misty Step</span> &mdash; <span class="note">Bonus action teleport 18m. Reposition in or out of melee instantly.</span></li>
+        </ul>
+        <p style="font-size:0.88rem; color:var(--text-dim); margin-top:0.5rem;">This is where the build comes online. With INT 17 (+3), your AC during Bladesong is 10 + 3 (DEX) + 3 (INT) = 16, plus Shield reaction for 21. Already respectable at level 2.</p>
+      </div></div>
+    </div>
+
+    <!-- Level 3 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">3</span>
+        <span class="lv-badge wizard">Wizard 3</span>
+        <span class="lv-title">2nd-Level Spells</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Shadow Blade</span>
+          <span class="qp spell">Mirror Image</span>
+          <span class="qp spell">Hold Person</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Spell</span> <span class="name">Shadow Blade</span> &mdash; <span class="note">Creates a 2d8 psychic finesse weapon. Uses your spell attack bonus (+5 at this level). Advantage in dim light. This becomes your primary weapon for most of the game.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Mirror Image</span> &mdash; <span class="note">Three illusory duplicates absorb attacks. NOT concentration. Stack this on top of Bladesong AC for near-immunity to physical attacks.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Hold Person</span> &mdash; <span class="note">Paralyzed enemies = auto-crit in melee. You are a melee character with this spell. Devastating.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 4 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">4</span>
+        <span class="lv-badge wizard">Wizard 4</span>
+        <span class="lv-title">War Caster Feat</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">War Caster</span>
+          <span class="qp spell">Counterspell</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">War Caster</span> &mdash; <span class="note">Advantage on concentration saves. With Bladesong's +INT to concentration AND War Caster advantage, you will pass DC 10 concentration checks 99% of the time. Also lets you cast spells with hands full (rapier in hand).</span></li>
+          <li><span class="label">Spell</span> <span class="name">Counterspell</span> &mdash; <span class="note">Negate enemy spells as a reaction. The most powerful reaction in the game besides Shield.</span></li>
+        </ul>
+        <p style="font-size:0.88rem; color:var(--text-dim); margin-top:0.5rem;">After this level, your concentration is nearly unbreakable. Shadow Blade or Haste will stay up through most combats without issue.</p>
+      </div></div>
+    </div>
+
+    <!-- Level 5 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">5</span>
+        <span class="lv-badge wizard">Wizard 5</span>
+        <span class="lv-title">3rd-Level Spells</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Fireball</span>
+          <span class="qp spell">Haste</span>
+          <span class="qp spell">Slow</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Spell</span> <span class="name">Fireball</span> &mdash; <span class="note">8d6 fire in a 6m radius. The best AoE damage spell in the game. Clear entire rooms.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Haste</span> &mdash; <span class="note">Extra action, +2 AC, double movement. Cast on yourself for an extra Attack action (four attacks total with Extra Attack at level 6) or on your party's damage dealer.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Slow</span> &mdash; <span class="note">Halves enemy speed, -2 AC, no reactions, lose action or bonus action. Devastating AoE debuff that does not require concentration... wait, it does. But your concentration is unbreakable anyway.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 6 -->
+    <div class="level-card spike here">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">6</span>
+        <span class="lv-badge wizard">Wizard 6</span>
+        <span class="lv-title">Extra Attack (Bladesinger)</span>
+        <span class="lv-spike">&#9733; Major Spike</span>
+        <span class="lv-here">Build Online</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp arcane">Extra Attack</span>
+          <span class="qp feature">Cantrip in Attack Action</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Extra Attack (Bladesinger)</span> &mdash; <span class="note">When you take the Attack action, you can attack twice. ONE of those attacks can be replaced with casting a cantrip. This means: Attack + Booming Blade in the same action. Booming Blade itself includes a melee attack, so you effectively get two weapon attacks + Booming Blade bonus damage.</span></li>
+          <li><span class="label">Combo</span> <span class="name">Shadow Blade + Booming Blade</span> &mdash; <span class="note">Attack with Shadow Blade (2d8) + cast Booming Blade with rapier (1d8 + 1d8 thunder + 2d8 if they move). Massive single-target output for a full caster.</span></li>
+        </ul>
+        <p style="font-size:0.88rem; color:var(--text-dim); margin-top:0.5rem;">This is the defining moment. No other Wizard subclass gets Extra Attack. You are now a melee fighter with the full Wizard spell list. The build is fully online.</p>
+      </div></div>
+    </div>
+
+    <!-- Level 7 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">7</span>
+        <span class="lv-badge wizard">Wizard 7</span>
+        <span class="lv-title">4th-Level Spells</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Greater Invisibility</span>
+          <span class="qp spell">Dimension Door</span>
+          <span class="qp spell">Polymorph</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Spell</span> <span class="name">Greater Invisibility</span> &mdash; <span class="note">Invisible while attacking and casting. Advantage on all attacks, disadvantage on all attacks against you. Stacks with Bladesong AC for truly untouchable status.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Dimension Door</span> &mdash; <span class="note">Teleport 150ft and bring an ally. Emergency escape or aggressive repositioning.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Polymorph</span> &mdash; <span class="note">Turn an enemy into a sheep or turn your dying ally into a giant ape with 157 HP. The most versatile spell in the game.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 8 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">8</span>
+        <span class="lv-badge wizard">Wizard 8</span>
+        <span class="lv-title">ASI &mdash; INT 20</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">+2 INT &rarr; 20</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">ASI</span> <span class="name">Intelligence +2 &rarr; 20</span> &mdash; <span class="note">Your AC during Bladesong is now 10 + 3 (DEX) + 5 (INT) = 18 base, 23 with Shield. Spell DC rises to 17. Concentration saves get +5 from Bladesong.</span></li>
+          <li><span class="label">Alt</span> <span class="name">Resilient (CON)</span> &mdash; <span class="note">If you want even more concentration security. Adds proficiency bonus to CON saves. With War Caster + Bladesong + Resilient, you literally cannot fail DC 10 concentration checks.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 9 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">9</span>
+        <span class="lv-badge wizard">Wizard 9</span>
+        <span class="lv-title">5th-Level Spells</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Wall of Force</span>
+          <span class="qp spell">Conjure Elemental</span>
+          <span class="qp spell">Hold Monster</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Spell</span> <span class="name">Wall of Force</span> &mdash; <span class="note">Impenetrable dome or wall. Splits encounters in half. The single most impactful spell in Honour Mode. No save, no escape, no Counterspell.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Hold Monster</span> &mdash; <span class="note">Hold Person but works on everything. Paralyzed = auto-crit in melee. With your melee attacks, this is devastating.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Conjure Elemental</span> &mdash; <span class="note">Summon a powerful elemental that acts independently. Extra damage and battlefield control on top of your own attacks.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 10 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">10</span>
+        <span class="lv-badge wizard">Wizard 10</span>
+        <span class="lv-title">Song of Defense</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp arcane">Song of Defense</span>
+          <span class="qp feat">Alert</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Song of Defense</span> &mdash; <span class="note">While Bladesong is active, you can expend spell slots to reduce damage taken. Spend a 1st-level slot to reduce damage by 5, 2nd-level by 10, etc. Emergency damage mitigation when Shield is not enough.</span></li>
+          <li><span class="label">Feat</span> <span class="name">Alert</span> &mdash; <span class="note">+5 initiative, cannot be surprised. You go first, activate Bladesong, and your AC is up before anyone can attack you.</span></li>
+        </ul>
+        <p style="font-size:0.88rem; color:var(--text-dim); margin-top:0.5rem;">Song of Defense is your emergency button. If something hits through your 25+ AC and Shield, you can burn a low-level slot to absorb the hit. It makes you even harder to kill.</p>
+      </div></div>
+    </div>
+
+    <!-- Level 11 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">11</span>
+        <span class="lv-badge fighter">Fighter 1</span>
+        <span class="lv-title">Fighting Style &amp; Second Wind</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Defense Fighting Style</span>
+          <span class="qp feature">Second Wind</span>
+          <span class="qp feature">CON Save Prof</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Style</span> <span class="name">Defense</span> &mdash; <span class="note">+1 AC while wearing armor. With Mage Armor or light armor, your base AC goes up by 1. More AC on the already-highest-AC character.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Second Wind</span> &mdash; <span class="note">Bonus action heal 1d10 + Fighter level. Emergency self-heal without spending a spell slot.</span></li>
+          <li><span class="label">Profic.</span> <span class="name">CON Save Proficiency</span> &mdash; <span class="note">If you did not start Fighter, you do NOT get this from multiclassing. You get STR and CON saves from starting Wizard. But you DO get heavy armor proficiency and all weapon proficiency from the Fighter dip.</span></li>
+        </ul>
+        <div class="callout warn">
+          <div class="callout-label">Multiclass Warning</div>
+          <p>This 2-level Fighter dip costs you 6th-level Wizard spells (like Chain Lightning and Globe of Invulnerability). If you prefer the full spell list, go pure Wizard 12 instead. Action Surge is incredible, but 6th-level spells are also incredible. Both paths are viable.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Level 12 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">12</span>
+        <span class="lv-badge fighter">Fighter 2</span>
+        <span class="lv-title">Action Surge</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Action Surge</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Action Surge</span> &mdash; <span class="note">One additional action per short rest. Use it to cast TWO full spells in one turn (e.g., Fireball + Fireball, or Hold Monster + full Attack action with Extra Attack). The most broken feature in BG3 for spellcasters.</span></li>
+          <li><span class="label">Combo</span> <span class="name">Hold Monster &rarr; Action Surge &rarr; Attack x2</span> &mdash; <span class="note">Hold Monster (action 1) &rarr; Action Surge &rarr; Attack + Booming Blade on paralyzed target (action 2) = guaranteed crits. Delete bosses.</span></li>
+        </ul>
+        <p style="font-size:0.88rem; color:var(--text-dim); margin-top:0.5rem;">Action Surge once per short rest is worth more than 6th-level spells for burst potential. Two full actions means double Fireball, or spell + full melee combo. This is why Fighter 2 is the go-to multiclass for Wizards.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ BLADESONG MECHANICS ═══════════ -->
+  <section class="section reveal" id="bladesong">
+    <h2>Bladesong Mechanics</h2>
+
+    <p>Bladesong is the heart of this build. Understanding exactly what it does and how to maintain it is critical to playing a Bladesinger correctly.</p>
+
+    <div class="mechanic-box">
+      <div class="mechanic-title">Activating Bladesong</div>
+      <p><strong>Action cost:</strong> Bonus action to activate.<br>
+      <strong>Duration:</strong> 1 minute (10 rounds in combat).<br>
+      <strong>Uses:</strong> 2 per short rest. You will have it up for every fight as long as you short rest between encounters.<br>
+      <strong>Free hand:</strong> You must have one hand free or be wielding a one-handed weapon. No shields, no two-handed weapons.</p>
+    </div>
+
+    <div class="mechanic-box">
+      <div class="mechanic-title">What Bladesong Gives You</div>
+      <p><strong>+INT modifier to AC</strong> &mdash; At INT 20, this is +5 AC. This stacks with Mage Armor, DEX, and Shield. It is the single largest AC boost available to any Wizard.</p>
+      <p><strong>+INT modifier to Concentration saves</strong> &mdash; At INT 20, +5 to CON saves for concentration. Combined with War Caster (advantage) and proficiency bonus (+4 at level 10), your concentration save is effectively +9 with advantage. You pass DC 10 checks with 99.75% reliability.</p>
+      <p><strong>+10 feet movement speed</strong> &mdash; Extra mobility for positioning in and out of melee. Combined with Wood Elf racial, you can reach any target on the battlefield.</p>
+      <p><strong>Advantage on Acrobatics checks</strong> &mdash; Prevents enemies from shoving you. A Bladesinger in Bladesong is extremely hard to knock prone.</p>
+    </div>
+
+    <div class="mechanic-box">
+      <div class="mechanic-title">What Ends Bladesong</div>
+      <p><strong>Heavy armor:</strong> Equipping heavy armor immediately ends Bladesong. Use Mage Armor, light armor, or no armor.<br>
+      <strong>Shield:</strong> Equipping a shield ends Bladesong. One-handed weapon + free hand only.<br>
+      <strong>Two-handed weapon:</strong> Using a two-handed weapon (greatsword, longbow) ends Bladesong. Stick to rapiers, shortswords, or Shadow Blade.<br>
+      <strong>Incapacitated:</strong> Being stunned, paralyzed, or unconscious ends Bladesong.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">The Shield Spell is NOT a Shield</div>
+      <p>The <strong>Shield</strong> reaction spell (+5 AC until your next turn) is perfectly compatible with Bladesong. It is not the same as equipping a physical shield. You should cast Shield on almost every attack that would hit you. With Bladesong + Shield, you hit 25+ AC at level 8.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ EXTRA ATTACK + CANTRIP ═══════════ -->
+  <section class="section reveal" id="extra-attack">
+    <h2>Extra Attack + Cantrip Combo</h2>
+
+    <p>Bladesinger's Extra Attack at Wizard 6 is unique among all subclasses in BG3. When you take the Attack action, you attack twice, but one of those attacks can be replaced with casting a cantrip. This is what makes Bladesinger a true melee/caster hybrid.</p>
+
+    <div class="mechanic-box">
+      <div class="mechanic-title">How It Works</div>
+      <p><strong>Attack action:</strong> Make two attacks. ONE can be replaced by a cantrip.<br>
+      <strong>Best combo:</strong> Attack with Shadow Blade (2d8 psychic) + Booming Blade with rapier (weapon damage + 1d8 thunder + 2d8 if target moves).<br>
+      <strong>Why Booming Blade:</strong> It includes a melee weapon attack as part of the cantrip, so you effectively make two weapon swings and get bonus thunder damage. If the target tries to chase you or reposition, the extra 2d8 thunder triggers.</p>
+    </div>
+
+    <h3>Damage Breakdown (Level 6, INT 20)</h3>
+    <ul class="picks">
+      <li><span class="label">Hit 1</span> <span class="name">Shadow Blade Attack</span> &mdash; <span class="note">2d8 + 3 (DEX) psychic = 12 avg. Advantage in dim light.</span></li>
+      <li><span class="label">Hit 2</span> <span class="name">Booming Blade (rapier)</span> &mdash; <span class="note">1d8 + 3 (DEX) piercing + 1d8 thunder = 12 avg. If target moves: +2d8 thunder (9 avg).</span></li>
+      <li><span class="label">Total</span> <span class="name">24 avg per round</span> &mdash; <span class="note">33 if Booming Blade rider triggers. Without any spell slot expenditure beyond Shadow Blade upkeep.</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">With Haste</div>
+      <p>If you cast Haste on yourself, you get an extra action that allows one weapon attack. That's three attacks per turn: Shadow Blade + Booming Blade + Haste attack. Add the +2 AC from Haste on top of Bladesong AC. The tradeoff is Haste requires concentration instead of Shadow Blade &mdash; use a real rapier instead.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ SPELL SELECTION ═══════════ -->
+  <section class="section reveal" id="spells">
+    <h2>Spell Selection</h2>
+
+    <div class="spell-section">
+      <div class="spell-level">Cantrips</div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Booming Blade</div>
+          <div class="spell-desc">Melee weapon attack + 1d8 thunder damage. Extra 2d8 if target moves. Core of your Extra Attack combo.</div>
+        </div>
+        <span class="spell-badge must">Must-Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Fire Bolt</div>
+          <div class="spell-desc">1d10 fire ranged attack. Your fallback when you cannot reach melee or need to hit from range.</div>
+        </div>
+        <span class="spell-badge good">Recommended</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Minor Illusion</div>
+          <div class="spell-desc">Create a distraction to lure enemies into position. Free crowd control without a spell slot.</div>
+        </div>
+        <span class="spell-badge good">Recommended</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">1st Level</div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Shield</div>
+          <div class="spell-desc">Reaction: +5 AC until your next turn. Cast this every time an attack would hit you. Non-negotiable.</div>
+        </div>
+        <span class="spell-badge must">Must-Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Mage Armor</div>
+          <div class="spell-desc">Base AC becomes 13 + DEX. Cast before combat, lasts all day. Your armor until you find Elven Chain.</div>
+        </div>
+        <span class="spell-badge must">Must-Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Find Familiar</div>
+          <div class="spell-desc">Summon a familiar that uses Help action to give you advantage on attacks. Owl is best (flyby).</div>
+        </div>
+        <span class="spell-badge good">Recommended</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Magic Missile</div>
+          <div class="spell-desc">Auto-hit 3d4+3 force damage. Guaranteed damage for finishing low-HP enemies or breaking concentration.</div>
+        </div>
+        <span class="spell-badge good">Recommended</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">2nd Level</div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Shadow Blade</div>
+          <div class="spell-desc">2d8 psychic finesse weapon, advantage in dim light/darkness. Concentration. Your primary melee weapon for most of the game.</div>
+        </div>
+        <span class="spell-badge must">Must-Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Mirror Image</div>
+          <div class="spell-desc">Three decoys absorb attacks. NOT concentration &mdash; stacks with Shadow Blade/Haste freely.</div>
+        </div>
+        <span class="spell-badge must">Must-Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Misty Step</div>
+          <div class="spell-desc">Bonus action 18m teleport. Reposition for free. Get in, get out, reach archers on ledges.</div>
+        </div>
+        <span class="spell-badge must">Must-Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Hold Person</div>
+          <div class="spell-desc">Paralyzed humanoid = auto-crit in melee. You are the melee character who can both cast and capitalize on this.</div>
+        </div>
+        <span class="spell-badge conc">Concentration</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">3rd Level</div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Counterspell</div>
+          <div class="spell-desc">Negate any enemy spell as a reaction. Auto-succeeds vs spells of 3rd level or lower, INT check for higher.</div>
+        </div>
+        <span class="spell-badge must">Must-Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Fireball</div>
+          <div class="spell-desc">8d6 fire in a 6m radius. The gold standard of AoE damage. Use when melee is not the answer.</div>
+        </div>
+        <span class="spell-badge must">Must-Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Haste</div>
+          <div class="spell-desc">Extra action, +2 AC, doubled speed. Self-cast for three attacks/turn, or buff your party's Sorcadin.</div>
+        </div>
+        <span class="spell-badge conc">Concentration</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Slow</div>
+          <div class="spell-desc">-2 AC, halved speed, no reactions, lose action or bonus action. Hits up to 6 targets. AoE debuff.</div>
+        </div>
+        <span class="spell-badge conc">Concentration</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">4th Level</div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Greater Invisibility</div>
+          <div class="spell-desc">Invisible while attacking. Advantage on all your attacks, disadvantage on all attacks against you. Insane with melee.</div>
+        </div>
+        <span class="spell-badge conc">Concentration</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Polymorph</div>
+          <div class="spell-desc">Turn enemy into sheep (no save if HP is low enough) or ally into Giant Ape (157 HP). Most versatile spell.</div>
+        </div>
+        <span class="spell-badge must">Must-Have</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">5th Level</div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Wall of Force</div>
+          <div class="spell-desc">Impenetrable barrier. No save, no escape, cannot be Counterspelled. Splits every hard fight in half.</div>
+        </div>
+        <span class="spell-badge must">Must-Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Hold Monster</div>
+          <div class="spell-desc">Hold Person but works on everything. Paralyzed = auto-crit with your melee attacks. Boss killer.</div>
+        </div>
+        <span class="spell-badge conc">Concentration</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Conjure Elemental</div>
+          <div class="spell-desc">Summon a powerful elemental. Extra body on the field for damage and tanking while you do Bladesinger things.</div>
+        </div>
+        <span class="spell-badge conc">Concentration</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FEATS ═══════════ -->
+  <section class="section reveal" id="feats">
+    <h2>Feat Picks</h2>
+
+    <h3>Priority Order</h3>
+    <ul class="picks">
+      <li><span class="label">1st</span> <span class="name">War Caster</span> &mdash; <span class="note">Advantage on concentration saves. Spell with occupied hands. This is mandatory &mdash; your entire build depends on maintaining concentration on Shadow Blade or Haste while fighting in melee.</span></li>
+      <li><span class="label">2nd</span> <span class="name">+2 INT &rarr; 20</span> &mdash; <span class="note">Max your primary stat. +5 AC from Bladesong, highest spell DC, best concentration bonus. Everything scales off INT.</span></li>
+      <li><span class="label">3rd</span> <span class="name">Alert</span> &mdash; <span class="note">+5 initiative, can't be surprised. Going first means Bladesong is always active before enemies attack. With DEX 16 (+3) and Alert (+5), you have +8 initiative. You go first in almost every fight.</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Alternative Feat: Resilient (CON)</div>
+      <p>If you feel your concentration is already strong enough with War Caster + Bladesong, Resilient (CON) adds proficiency bonus (+4) to all CON saves. This helps against poison, exhaustion, and other CON-based effects beyond just concentration. Take this instead of Alert if you find yourself failing important CON saves.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Feats to Avoid</div>
+      <p><strong>Great Weapon Master:</strong> Bladesong ends if you use two-handed weapons. Incompatible.<br>
+      <strong>Shield Master:</strong> You cannot use a shield during Bladesong. Incompatible.<br>
+      <strong>Heavy Armor Master:</strong> Heavy armor ends Bladesong. Incompatible.<br>
+      <strong>Dual Wielder:</strong> You need a free hand for Bladesong and spellcasting. Incompatible.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ GEAR ═══════════ -->
+  <section class="section reveal" id="items">
+    <h2>Gear</h2>
+
+    <div class="item-group">
+      <div class="item-group-title">Weapons</div>
+      <div class="item-row">
+        <div class="item-name">Markoheshkir <span class="item-slot">Main Hand (Staff)</span></div>
+        <div class="item-desc">Legendary quarterstaff. Grants a free 6th-level spell per long rest (Blight, Chain Lightning, etc.) and Arcane Battery (free spell once per long rest). The best weapon for any Wizard. Wieldable one-handed for Bladesong.</div>
+        <div class="item-loc">Act 3 &mdash; Ramazith's Tower, Sorcerous Sundries vault.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Rapier +2 / +3 <span class="item-slot">Main Hand</span></div>
+        <div class="item-desc">Finesse melee weapon, 1d8+DEX. Use for Booming Blade in your Extra Attack combo. Swap between Markoheshkir (spellcasting) and rapier (melee combo) depending on the situation.</div>
+        <div class="item-loc">Various vendors and loot throughout all acts.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Phalar Aluve <span class="item-slot">Main Hand</span></div>
+        <div class="item-desc">Rare longsword from the Underdark. Sing ability gives allies +1d4 to attack rolls or enemies -1d4 to saves in an AoE. Incredible support weapon that works with Bladesong.</div>
+        <div class="item-loc">Act 1 &mdash; Underdark, lodged in a rock near the Selunite Outpost.</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Armor</div>
+      <div class="item-row">
+        <div class="item-name">Robe of the Weave <span class="item-slot">Chest</span></div>
+        <div class="item-desc">+2 AC, +1 spell save DC, +1 spell attack roll. Best-in-slot for Bladesinger. The +2 AC stacks with everything. No armor type restriction &mdash; it is a robe.</div>
+        <div class="item-loc">Act 3 &mdash; Ramazith's Tower, upper floor.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Elven Chain <span class="item-slot">Chest</span></div>
+        <div class="item-desc">Medium armor, AC 14 + DEX (max 2). Gives +2 compared to Mage Armor at DEX 16. Good midgame option, but Robe of the Weave outclasses it in Act 3. Note: Bladesong works with medium armor in BG3, only heavy armor breaks it.</div>
+        <div class="item-loc">Act 2 &mdash; Various loot sources.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Potent Robe <span class="item-slot">Chest</span></div>
+        <div class="item-desc">Adds CHA modifier to cantrip damage. Since your CHA is low, this is better on a Sorcerer or Warlock companion. Listed for awareness only.</div>
+        <div class="item-loc">Act 2 &mdash; Reward from Alfira questline.</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Accessories</div>
+      <div class="item-row">
+        <div class="item-name">Cloak of Protection <span class="item-slot">Cloak</span></div>
+        <div class="item-desc">+1 AC and +1 saving throws. Simple, effective, universal. More AC on the already-high stack.</div>
+        <div class="item-loc">Act 2 &mdash; Quartermaster at Last Light Inn, or various vendors.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Ring of Protection <span class="item-slot">Ring</span></div>
+        <div class="item-desc">+1 AC and +1 saving throws. Stacks with Cloak of Protection for +2 AC / +2 saves total.</div>
+        <div class="item-loc">Act 2 &mdash; Last Light Inn vendor, or Act 3 loot.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Boots of Speed <span class="item-slot">Boots</span></div>
+        <div class="item-desc">Click Heels: double movement speed for 3 turns as a bonus action. Stacks with Bladesong +10 speed and Haste. You cross the entire battlefield in one turn.</div>
+        <div class="item-loc">Act 1 &mdash; Blighted Village, inside the locked cellar.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Amulet of Greater Health <span class="item-slot">Amulet</span></div>
+        <div class="item-desc">Sets CON to 23. Your HP and CON saves skyrocket. Concentration becomes literally unbreakable with this + Bladesong + War Caster.</div>
+        <div class="item-loc">Act 3 &mdash; House of Hope, taken from the Archive.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Gloves of Dexterity <span class="item-slot">Gloves</span></div>
+        <div class="item-desc">Sets DEX to 18. If you started with DEX 16, this bumps your AC by +1 and improves initiative by +1. Frees up ability score points at character creation.</div>
+        <div class="item-loc">Act 1 &mdash; Blighted Village, A'jak'nir Jeera (Crche trader).</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Hat of Storm Scion's Power <span class="item-slot">Helmet</span></div>
+        <div class="item-desc">Adds INT modifier to weapon damage. With INT 20, that is +5 damage on every melee hit. Massive for a melee Wizard.</div>
+        <div class="item-loc">Act 3 &mdash; Stormshore Tabernacle, or loot drop.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ AC MATH BREAKDOWN ═══════════ -->
+  <section class="section reveal" id="ac-math">
+    <h2>AC Math Breakdown</h2>
+
+    <p>The Bladesinger achieves the highest AC of any Wizard build in BG3. Here is exactly how the numbers stack up at level 10 with best-in-slot gear.</p>
+
+    <table class="ac-table">
+      <thead>
+        <tr><th>Source</th><th>AC Bonus</th><th>Running Total</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="ac-source">Base AC (unarmored)</td><td class="ac-val">10</td><td>10</td></tr>
+        <tr><td class="ac-source">DEX modifier (+3)</td><td class="ac-val">+3</td><td>13</td></tr>
+        <tr><td class="ac-source">Mage Armor (replaces base)</td><td class="ac-val">13 + DEX</td><td>16</td></tr>
+        <tr><td class="ac-source">Bladesong (INT mod, +5)</td><td class="ac-val">+5</td><td>21</td></tr>
+        <tr><td class="ac-source">Robe of the Weave</td><td class="ac-val">+2</td><td>23</td></tr>
+        <tr><td class="ac-source">Cloak of Protection</td><td class="ac-val">+1</td><td>24</td></tr>
+        <tr><td class="ac-source">Ring of Protection</td><td class="ac-val">+1</td><td>25</td></tr>
+        <tr><td class="ac-source">Defense Fighting Style (Fighter dip)</td><td class="ac-val">+1</td><td>26</td></tr>
+        <tr><td class="ac-source">Shield spell (reaction)</td><td class="ac-val">+5</td><td style="font-weight:700; color:var(--arcane);">31</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-label">31 AC Explained</div>
+      <p>With all buffs active and Shield cast as a reaction, you reach <strong>31 AC</strong>. Most enemies in BG3 have +8 to +12 attack bonus. At 31 AC, an enemy with +12 needs to roll a 19 or 20 to hit you &mdash; that's a 10% chance. Against most enemies with +8, only a natural 20 hits. You are effectively immune to weapon attacks. Even without Shield, 26 AC is unhittable by most Act 1 and Act 2 enemies.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">AC Limitations</div>
+      <p>AC does not protect against saving throw effects (Fireball, Hold Person, etc.). This is why Counterspell and high saves matter. AC also does not work against attacks that auto-hit (Magic Missile). Keep Shield ready for most attacks, and Counterspell ready for spells.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ COMBAT ROTATION ═══════════ -->
+  <section class="section reveal" id="combat">
+    <h2>Combat Rotation</h2>
+
+    <h3>Standard Combat Flow</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Activate Bladesong</span> <span class="step-timing bonus">Bonus Action</span>
+        <div class="step-detail">Always activate Bladesong at the start of every combat. +5 AC, +5 concentration, +10 speed. 2 uses per short rest, lasts the whole fight.</div>
+      </li>
+      <li>
+        <span class="step-action">Cast Shadow Blade or Haste</span> <span class="step-timing turn">Turn 1 Action</span>
+        <div class="step-detail">If no Shadow Blade is active, cast it (concentration). If you prefer the +2 AC and extra action, cast Haste on yourself and use a physical rapier for melee. Choose one concentration spell and commit.</div>
+      </li>
+      <li>
+        <span class="step-action">Extra Attack: Weapon + Booming Blade</span> <span class="step-timing every">Every Turn</span>
+        <div class="step-detail">Attack with Shadow Blade or rapier, then cast Booming Blade with your second attack. Two melee hits per action. If Hasted, make a third weapon attack with the Haste action.</div>
+      </li>
+      <li>
+        <span class="step-action">Shield (reaction) when attacked</span> <span class="step-timing every">Every Turn</span>
+        <div class="step-detail">If an attack roll would hit you, cast Shield as a reaction for +5 AC until your next turn. At high levels, this makes you effectively untouchable.</div>
+      </li>
+      <li>
+        <span class="step-action">Counterspell when enemy casts</span> <span class="step-timing every">As Needed</span>
+        <div class="step-detail">Watch for enemy spellcasters. Counterspell negates their spell entirely. If you already used Shield this round, prioritize based on threat level.</div>
+      </li>
+    </ol>
+
+    <h3>Burst Combo (Action Surge)</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Hold Monster (action 1)</span> <span class="step-timing turn">Action</span>
+        <div class="step-detail">Target the biggest threat. Paralyzed = auto-crit within 3m. WIS save, but your DC is 17+ so most enemies fail.</div>
+      </li>
+      <li>
+        <span class="step-action">Action Surge</span> <span class="step-timing turn">Free</span>
+        <div class="step-detail">Use your Fighter 2 Action Surge for a second full action this turn.</div>
+      </li>
+      <li>
+        <span class="step-action">Extra Attack on paralyzed target</span> <span class="step-timing turn">Action 2</span>
+        <div class="step-detail">Attack + Booming Blade, both auto-crit on paralyzed target. All damage dice doubled. Shadow Blade crits for 4d8 psychic. Booming Blade crits for extra thunder dice. Devastating single-target burst.</div>
+      </li>
+    </ol>
+
+    <h3>AoE Combo</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Wall of Force (action 1)</span> <span class="step-timing turn">Action</span>
+        <div class="step-detail">Dome half the enemies. No save, no escape. Now you fight 3 enemies instead of 6.</div>
+      </li>
+      <li>
+        <span class="step-action">Action Surge &rarr; Fireball (action 2)</span> <span class="step-timing turn">Action</span>
+        <div class="step-detail">Fireball the group that is NOT inside the Wall of Force dome. 8d6 fire damage to the remaining enemies.</div>
+      </li>
+      <li>
+        <span class="step-action">Melee cleanup next turn</span> <span class="step-timing every">Following Turns</span>
+        <div class="step-detail">With half the enemies dead from Fireball and the other half trapped, walk up and Extra Attack the survivors.</div>
+      </li>
+    </ol>
+
+    <div class="callout tip">
+      <div class="callout-label">When to Cast vs When to Attack</div>
+      <p><strong>Cast</strong> when: AoE situations (Fireball), control is needed (Hold Monster, Wall of Force), or buffing (Haste on an ally). <strong>Attack</strong> when: single target, Shadow Blade is active, target is already debuffed/paralyzed, or you need consistent damage. The flexibility to do both is what makes Bladesinger the best Wizard subclass.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ HONOUR MODE ═══════════ -->
+  <section class="section reveal" id="honour">
+    <h2>Honour Mode Tips</h2>
+
+    <p>Honour Mode has one save, legendary actions on bosses, and harder enemy AI. The Bladesinger thrives here because high AC prevents the random deaths that end Honour runs, and the full Wizard spell list gives you answers to every encounter.</p>
+
+    <h3>Key Rules</h3>
+    <ul class="picks">
+      <li><span class="label">Rule</span> <span class="name">Always have Shield prepared</span> &mdash; <span class="note">Your #1 survival tool. Never unprepare it, never forget to cast it.</span></li>
+      <li><span class="label">Rule</span> <span class="name">Bladesong before combat starts</span> &mdash; <span class="note">If you know a fight is coming, activate Bladesong out of combat. It lasts 1 minute &mdash; plenty of time to initiate.</span></li>
+      <li><span class="label">Rule</span> <span class="name">Counterspell every dangerous spell</span> &mdash; <span class="note">In Honour Mode, one enemy Fireball or Hold Person can end your run. Always save your reaction for Counterspell against casters.</span></li>
+      <li><span class="label">Rule</span> <span class="name">Wall of Force splits every hard fight</span> &mdash; <span class="note">Fight 6 enemies as two groups of 3. This is the single most impactful strategy in Honour Mode.</span></li>
+      <li><span class="label">Rule</span> <span class="name">Mirror Image is free defense</span> &mdash; <span class="note">Not concentration. Cast it before Bladesong and Shadow Blade. Three free misses before enemies even touch your AC.</span></li>
+      <li><span class="label">Rule</span> <span class="name">Short rest after every fight</span> &mdash; <span class="note">Bladesong has 2 uses per short rest. Short resting resets it. Never enter a fight without Bladesong available.</span></li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">Recommended Party for Honour Mode</div>
+      <p><strong>You (Bladesinger):</strong> Front line / AC tank, control, Counterspell, off-damage, flex caster.<br>
+      <strong>Shadowheart (Life/Tempest Cleric):</strong> Primary healer, Spirit Guardians, buff spells, Warding Bond on you.<br>
+      <strong>Astarion (Thief Rogue):</strong> Two bonus actions, massive sneak attack burst, lockpicking, utility.<br>
+      <strong>Karlach (Berserker Barbarian):</strong> Rage tank, Reckless Attack for damage. She draws aggro, you control the battlefield.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Honour Mode Boss Tip</div>
+      <p>Legendary actions let bosses break Hold Person and similar effects after one round. Against bosses, use Wall of Force to isolate adds, then focus the boss with melee + Action Surge burst. Do not rely on paralysis lasting multiple rounds &mdash; get your crits in the first round and have a backup plan.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <div class="guide-footer">
+    <p>BG3 Bladesinger Wizard &mdash; The Arcane Dancer Build Guide &middot; Wizard 10 / Fighter 2 &middot; Patch 8 (2026)</p>
+    <p style="margin-top:0.5rem;">
+      <a href="guides.html">All Game Guides</a> &middot; <a href="index.html">Z3NGINEER Home</a>
+    </p>
+  </div>
+
+</main>
+</div>
+
+<script>
+// Highlight active sidebar link on scroll
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.sidebar a');
+const subNavLinks = document.querySelectorAll('.sub-nav a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(l => l.classList.remove('active'));
+      subNavLinks.forEach(l => l.classList.remove('active'));
+      const sideActive = document.querySelector('.sidebar a[href="#' + id + '"]');
+      const subActive = document.querySelector('.sub-nav a[href="#' + id + '"]');
+      if (sideActive) sideActive.classList.add('active');
+      if (subActive) subActive.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+
+// Mobile hamburger menu
+const toggle = document.querySelector('.nav-toggle');
+const mobileLinks = document.querySelector('.mobile-links');
+toggle.addEventListener('click', () => mobileLinks.classList.toggle('open'));
+mobileLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileLinks.classList.remove('open')));
+
+// Scroll reveal
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>

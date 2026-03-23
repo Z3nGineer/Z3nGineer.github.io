@@ -1,0 +1,2034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oathbreaker Paladin — The Fallen Champion · BG3 Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg-body: #0a0a0a;
+  --bg-card: #151515;
+  --bg-elevated: #1c1c1c;
+  --bg-hover: #222222;
+  --border: #2b2c2c;
+  --border-light: #3a3a3a;
+  --text: #e8e8e8;
+  --text-dim: #a0a0a0;
+  --text-muted: #707070;
+  --white: #ffffff;
+  --accent: #057af0;
+  --accent-hover: #3592ff;
+  --green: #21c513;
+  --green-dim: #199f2f;
+  --orange: #f09a18;
+  --orange-dim: rgba(240,154,24,0.15);
+  --red: #f00505;
+  --gold: #d4a043;
+  --gold-dim: rgba(212,160,67,0.12);
+  --purple: #b080d0;
+  --necrotic: #39ff14;
+  --necrotic-dim: rgba(57,255,20,0.12);
+  --dread: #8b0000;
+  --dread-dim: rgba(139,0,0,0.12);
+}
+
+html { scroll-behavior:smooth; scrollbar-width:thin; scrollbar-color:#2b2c2c #0a0a0a; }
+
+body {
+  background: var(--bg-body);
+  color: var(--text);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 19px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration:none; }
+a:hover { color: var(--accent-hover); text-decoration:underline; }
+
+/* ── UNIVERSAL TOP NAV ── */
+.top-nav {
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:1000;
+  height:60px;
+  background:rgba(8,8,8,0.88);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.top-nav-inner {
+  max-width:1100px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 2rem;
+  height:60px;
+}
+.top-nav-brand {
+  font-family:'Cinzel',serif;
+  font-size:0.9rem;
+  font-weight:700;
+  letter-spacing:0.15em;
+  color:var(--text);
+  text-decoration:none;
+  transition:color 0.3s;
+}
+.top-nav-brand:hover { color:var(--accent); text-decoration:none; }
+.top-nav-links {
+  display:flex;
+  gap:1.5rem;
+  list-style:none;
+  align-items:center;
+}
+.top-nav-links a {
+  font-size:0.8rem;
+  font-weight:500;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  text-decoration:none;
+  transition:color 0.3s;
+  position:relative;
+}
+.top-nav-links a:hover, .top-nav-links a.active { color:var(--accent); text-decoration:none; }
+.top-nav-links a::after {
+  content:'';
+  position:absolute;
+  bottom:-4px;
+  left:0;right:0;
+  height:1px;
+  background:var(--accent);
+  transform:scaleX(0);
+  transition:transform 0.3s;
+  transform-origin:right;
+}
+.top-nav-links a:hover::after { transform:scaleX(1); transform-origin:left; }
+
+/* Dropdown */
+.top-dropdown { position:relative; }
+.top-dropdown > a::after { display:none; }
+.top-dropdown > a { display:flex; align-items:center; gap:0.3rem; }
+.top-dropdown > a .dd-arrow { font-size:0.5rem; transition:transform 0.2s; margin-top:1px; }
+.top-dropdown:hover > a .dd-arrow { transform:rotate(180deg); }
+.dd-menu {
+  position:absolute;
+  top:calc(100% + 12px);
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(8,8,8,0.95);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border);
+  border-radius:10px;
+  min-width:200px;
+  padding:0.5rem 0;
+  opacity:0;
+  visibility:hidden;
+  transform:translateX(-50%) translateY(-5px);
+  transition:opacity 0.2s, visibility 0.2s, transform 0.2s;
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+}
+.top-dropdown:hover .dd-menu { opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+.dd-menu a {
+  display:block;
+  padding:0.6rem 1.2rem;
+  font-size:0.75rem;
+  font-weight:500;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  text-decoration:none;
+  transition:color 0.15s, background 0.15s;
+  white-space:nowrap;
+}
+.dd-menu a:hover { color:var(--accent); background:rgba(5,122,240,0.06); text-decoration:none; }
+.dd-menu a::after { display:none; }
+
+.top-nav-hamburger {
+  display:none;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:0.5rem;
+}
+.top-nav-hamburger span {
+  display:block;
+  width:22px;
+  height:2px;
+  background:var(--text-dim);
+  margin:5px 0;
+  transition:all 0.3s;
+  border-radius:1px;
+}
+.top-nav-hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.top-nav-hamburger.open span:nth-child(2){opacity:0}
+.top-nav-hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+.top-nav-mobile {
+  display:none;
+  position:absolute;
+  top:60px;
+  left:0;right:0;
+  background:rgba(8,8,8,0.95);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:1rem 2rem;
+  flex-direction:column;
+  gap:0;
+}
+.top-nav-mobile.open { display:flex; }
+.top-nav-mobile a {
+  display:block;
+  padding:0.6rem 0;
+  font-size:0.85rem;
+  font-weight:500;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  text-decoration:none;
+  transition:color 0.15s;
+}
+.top-nav-mobile a:hover { color:var(--accent); text-decoration:none; }
+.top-nav-mobile .mob-divider {
+  height:1px;
+  background:var(--border);
+  margin:0.3rem 0;
+}
+
+@media(max-width:800px) {
+  .top-nav-links { display:none; }
+  .top-nav-hamburger { display:block; }
+}
+
+/* ── PAGE SUB-NAV ── */
+.sub-nav {
+  position:sticky;
+  top:60px;
+  z-index:999;
+  background:rgba(10,10,10,0.92);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.sub-nav::-webkit-scrollbar { display:none; }
+.sub-nav-inner {
+  max-width:1100px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  gap:0;
+  padding:0 1rem;
+  height:44px;
+}
+.sub-nav a {
+  font-size:0.78rem;
+  font-weight:500;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  text-decoration:none;
+  padding:0.6rem 0.75rem;
+  white-space:nowrap;
+  transition:color 0.15s;
+  position:relative;
+}
+.sub-nav a:hover { color:var(--white); text-decoration:none; }
+.sub-nav a.active { color:var(--accent); }
+.sub-nav a.active::after {
+  content:'';
+  position:absolute;
+  bottom:0;
+  left:0.75rem;
+  right:0.75rem;
+  height:2px;
+  background:var(--accent);
+  border-radius:1px;
+}
+
+/* ── LAYOUT ── */
+.page { display:flex; max-width:1100px; margin:0 auto; gap:0; padding-top:104px; }
+
+.sidebar {
+  width:220px;
+  flex-shrink:0;
+  position:sticky;
+  top:104px;
+  height:calc(100vh - 104px);
+  overflow-y:auto;
+  border-right:1px solid var(--border);
+  background: var(--bg-card);
+  padding:1.5rem 0;
+  scrollbar-width:thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.sidebar-title {
+  font-family:'Oswald', sans-serif;
+  font-size:0.75rem;
+  font-weight:600;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  padding:0 1.25rem;
+  margin-bottom:0.75rem;
+}
+
+.sidebar a {
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  padding:0.45rem 1.25rem;
+  font-size:0.88rem;
+  font-weight:500;
+  color:var(--text-dim);
+  text-decoration:none;
+  border-left:3px solid transparent;
+  transition:all 0.15s;
+}
+
+.sidebar a:hover {
+  color:var(--white);
+  background:rgba(255,255,255,0.03);
+  text-decoration:none;
+}
+
+.sidebar a.active {
+  color:var(--white);
+  border-left-color:var(--accent);
+  background:rgba(5,122,240,0.06);
+}
+
+.sidebar .nav-icon { font-size:1rem; width:1.2rem; text-align:center; }
+
+.content {
+  flex:1;
+  min-width:0;
+  padding:2.5rem 2.5rem 4rem;
+}
+
+@media(max-width:800px) {
+  .sidebar { display:none; }
+  .content { padding:1.5rem; }
+  .page { padding-top:104px; }
+}
+
+/* ── HEADER ── */
+.guide-header {
+  margin-bottom:2.5rem;
+  padding-bottom:1.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.guide-header .breadcrumb {
+  font-size:0.78rem;
+  color:var(--text-muted);
+  margin-bottom:0.5rem;
+  letter-spacing:0.02em;
+}
+
+.guide-header h1 {
+  font-family:'Oswald', sans-serif;
+  font-size:2.2rem;
+  font-weight:700;
+  color:var(--white);
+  line-height:1.2;
+  margin-bottom:0.4rem;
+}
+
+.guide-header .subtitle {
+  font-size:1rem;
+  color:var(--text-dim);
+  font-weight:400;
+}
+
+.tag-row { display:flex; gap:0.4rem; margin-top:0.75rem; flex-wrap:wrap; }
+.tag {
+  font-size:0.72rem;
+  font-weight:600;
+  padding:0.2rem 0.6rem;
+  border-radius:4px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.tag.green { color:var(--green); border-color:rgba(33,197,19,0.25); background:rgba(33,197,19,0.06); }
+.tag.orange { color:var(--orange); border-color:rgba(240,154,24,0.25); background:var(--orange-dim); }
+.tag.blue { color:var(--accent); border-color:rgba(5,122,240,0.25); background:rgba(5,122,240,0.06); }
+.tag.purple { color:var(--purple); border-color:rgba(176,128,208,0.25); background:rgba(176,128,208,0.06); }
+.tag.red { color:var(--red); border-color:rgba(240,5,5,0.25); background:rgba(240,5,5,0.06); }
+.tag.gold { color:var(--gold); border-color:rgba(212,160,67,0.25); background:var(--gold-dim); }
+
+/* ── HERO ART ── */
+.hero-art {
+  width:100%;
+  margin-bottom:1.25rem;
+  border-radius:10px;
+  border:1px solid var(--border);
+  overflow:hidden;
+  background:var(--bg-card);
+}
+.hero-svg {
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+.header-row {
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  margin-bottom:1.25rem;
+}
+.header-portrait {
+  width:80px;
+  height:80px;
+  border-radius:8px;
+  border:2px solid var(--border);
+  object-fit:cover;
+}
+.header-text { flex:1; }
+
+/* ── SECTIONS ── */
+.section { margin-top:3rem; }
+
+.section h2 {
+  font-family:'Oswald', sans-serif;
+  font-size:1.5rem;
+  font-weight:600;
+  color:var(--white);
+  margin-bottom:1rem;
+  padding-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.section h3 {
+  font-family:'Oswald', sans-serif;
+  font-size:1.15rem;
+  font-weight:500;
+  color:var(--text);
+  margin:1.5rem 0 0.6rem;
+}
+
+.section p { margin-bottom:1rem; color:var(--text); }
+
+/* ── CALLOUTS ── */
+.callout {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:6px;
+  padding:1rem 1.25rem;
+  margin:1.25rem 0;
+}
+
+.callout.warn { border-left-color:var(--orange); }
+.callout.tip { border-left-color:var(--green); }
+.callout.dread { border-left-color:var(--dread); }
+
+.callout-label {
+  font-family:'Oswald', sans-serif;
+  font-size:0.78rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  margin-bottom:0.25rem;
+}
+
+.callout .callout-label { color:var(--accent); }
+.callout.warn .callout-label { color:var(--orange); }
+.callout.tip .callout-label { color:var(--green); }
+.callout.dread .callout-label { color:var(--dread); }
+
+.callout p { margin-bottom:0.5rem; font-size:0.95rem; }
+.callout p:last-child { margin-bottom:0; }
+
+/* ── STAT BAR ── */
+.stats { display:flex; gap:0.5rem; flex-wrap:wrap; margin:0.75rem 0; }
+.stat-box {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:0.4rem 0.75rem;
+  text-align:center;
+  min-width:3.5rem;
+}
+.stat-box.primary { border-color:rgba(5,122,240,0.4); }
+.stat-label { font-size:0.65rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); }
+.stat-val { font-family:'Oswald',sans-serif; font-size:1.3rem; font-weight:600; color:var(--white); }
+.stat-box.primary .stat-val { color:var(--accent); }
+
+/* ── LEVEL CARDS ── */
+.level-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  margin-bottom:0.4rem;
+  overflow:hidden;
+  transition:border-color 0.15s;
+}
+
+.level-card:hover { border-color:var(--border-light); }
+.level-card.spike { border-left:3px solid var(--orange); }
+.level-card.here { border-color:var(--accent); box-shadow:0 0 0 1px rgba(5,122,240,0.15); }
+
+.lv-head {
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  padding:0.65rem 1rem;
+  cursor:pointer;
+  user-select:none;
+  transition:background 0.1s;
+  flex-wrap:wrap;
+}
+.lv-head:hover { background:var(--bg-hover); }
+
+.lv-num {
+  font-family:'Oswald',sans-serif;
+  font-weight:700;
+  font-size:1.3rem;
+  color:var(--white);
+  min-width:1.6rem;
+  text-align:center;
+}
+.level-card.here .lv-num { color:var(--accent); }
+
+.lv-badge {
+  font-size:0.68rem;
+  font-weight:600;
+  padding:0.15rem 0.5rem;
+  border-radius:4px;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.lv-badge.paladin { color:var(--gold); background:var(--gold-dim); border:1px solid rgba(212,160,67,0.2); }
+.lv-badge.oathbreaker { color:var(--dread); background:var(--dread-dim); border:1px solid rgba(139,0,0,0.3); }
+.lv-badge.sorcerer { color:var(--purple); background:rgba(176,128,208,0.08); border:1px solid rgba(176,128,208,0.2); }
+
+.lv-title {
+  font-weight:600;
+  font-size:0.95rem;
+  color:var(--text);
+  flex:1;
+}
+
+.lv-spike {
+  font-size:0.65rem;
+  font-weight:600;
+  color:var(--orange);
+  background:var(--orange-dim);
+  padding:0.15rem 0.45rem;
+  border-radius:4px;
+  border:1px solid rgba(240,154,24,0.2);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+
+.lv-here {
+  font-size:0.65rem;
+  font-weight:600;
+  color:var(--accent);
+  background:rgba(5,122,240,0.1);
+  padding:0.15rem 0.45rem;
+  border-radius:4px;
+  border:1px solid rgba(5,122,240,0.25);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+
+.lv-arrow {
+  color:var(--text-muted);
+  font-size:0.75rem;
+  transition:transform 0.2s;
+}
+.level-card.open .lv-arrow { transform:rotate(90deg); }
+
+.lv-body { max-height:0; overflow:hidden; transition:max-height 0.3s ease; }
+.level-card.open .lv-body { max-height:900px; }
+.lv-inner { padding:0 1rem 1rem; border-top:1px solid var(--border); }
+
+/* Quick picks */
+.qp-row { display:flex; flex-wrap:wrap; gap:0.3rem; margin:0.75rem 0 0.5rem; }
+.qp {
+  font-size:0.78rem;
+  font-weight:500;
+  padding:0.2rem 0.6rem;
+  border-radius:4px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+}
+.qp.feature { color:var(--green); border-color:rgba(33,197,19,0.2); }
+.qp.spell { color:var(--accent); border-color:rgba(5,122,240,0.2); }
+.qp.feat { color:var(--orange); border-color:rgba(240,154,24,0.2); }
+.qp.smite { color:var(--gold); border-color:rgba(212,160,67,0.2); }
+.qp.dark { color:var(--dread); border-color:rgba(139,0,0,0.25); }
+.qp.necrotic { color:var(--necrotic); border-color:rgba(57,255,20,0.2); }
+
+/* Pick list */
+.picks { list-style:none; margin:0.5rem 0; }
+.picks li {
+  padding:0.3rem 0 0.3rem 0;
+  font-size:0.95rem;
+  display:flex;
+  gap:0.4rem;
+  align-items:baseline;
+}
+.picks .label {
+  font-size:0.72rem;
+  font-weight:600;
+  color:var(--orange);
+  text-transform:uppercase;
+  letter-spacing:0.03em;
+  flex-shrink:0;
+  min-width:4rem;
+}
+.picks .name { font-weight:600; color:var(--white); }
+.picks .note { color:var(--text-dim); font-size:0.88rem; }
+
+/* Prep box */
+.prep {
+  background:rgba(33,197,19,0.04);
+  border:1px solid rgba(33,197,19,0.15);
+  border-radius:6px;
+  padding:0.75rem 1rem;
+  margin-top:0.75rem;
+}
+.prep-title {
+  font-family:'Oswald',sans-serif;
+  font-size:0.8rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--green);
+  margin-bottom:0.4rem;
+}
+.prep-list { list-style:none; display:flex; flex-wrap:wrap; gap:0.25rem 0.6rem; }
+.prep-list li { font-size:0.9rem; font-weight:500; color:var(--text); }
+.prep-list li::before { content:'* '; color:var(--green-dim); }
+.prep-list li.new { color:var(--orange); }
+.prep-list li.new::before { content:'+ '; color:var(--orange); }
+.prep-note { font-size:0.78rem; color:var(--text-muted); margin-top:0.3rem; }
+
+/* ── SPELL GRID ── */
+.spell-section { margin-bottom:1.5rem; }
+.spell-level {
+  font-family:'Oswald',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  color:var(--white);
+  padding-bottom:0.35rem;
+  margin-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+.spell-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:start;
+  padding:0.5rem 0.75rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:0.35rem;
+  gap:0.75rem;
+}
+.spell-info { flex:1; }
+.spell-name { font-weight:600; color:var(--white); font-size:0.95rem; }
+.spell-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.1rem; }
+.spell-badge {
+  font-size:0.68rem;
+  font-weight:600;
+  padding:0.15rem 0.5rem;
+  border-radius:4px;
+  text-transform:uppercase;
+  letter-spacing:0.03em;
+  white-space:nowrap;
+  flex-shrink:0;
+  align-self:center;
+}
+.spell-badge.must { color:var(--green); background:rgba(33,197,19,0.08); border:1px solid rgba(33,197,19,0.2); }
+.spell-badge.good { color:var(--accent); background:rgba(5,122,240,0.06); border:1px solid rgba(5,122,240,0.15); }
+.spell-badge.conc { color:var(--purple); background:rgba(176,128,208,0.06); border:1px solid rgba(176,128,208,0.15); }
+.spell-badge.free { color:var(--gold); background:var(--gold-dim); border:1px solid rgba(212,160,67,0.2); }
+.spell-badge.oath { color:var(--dread); background:var(--dread-dim); border:1px solid rgba(139,0,0,0.25); }
+
+/* ── ITEMS ── */
+.item-group { margin-bottom:1.5rem; }
+.item-group-title {
+  font-family:'Oswald',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  color:var(--gold);
+  padding-bottom:0.35rem;
+  margin-bottom:0.5rem;
+  border-bottom:1px solid rgba(212,160,67,0.15);
+}
+.item-row {
+  padding:0.6rem 0.75rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:0.35rem;
+}
+.item-name { font-weight:600; color:var(--gold); font-size:0.95rem; }
+.item-slot { font-size:0.7rem; color:var(--text-muted); margin-left:0.35rem; text-transform:uppercase; letter-spacing:0.03em; }
+.item-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.15rem; }
+.item-loc { font-size:0.8rem; color:var(--green-dim); margin-top:0.2rem; }
+
+/* ── ROTATION ── */
+.step-list { list-style:none; counter-reset:step; }
+.step-list li {
+  position:relative;
+  padding:0.75rem 0 0.75rem 3rem;
+  border-left:2px solid var(--border);
+  margin-left:0.75rem;
+  counter-increment:step;
+}
+.step-list li::before {
+  content:counter(step);
+  position:absolute;
+  left:-0.75rem;
+  top:0.6rem;
+  width:1.4rem;
+  height:1.4rem;
+  background:var(--bg-body);
+  border:2px solid var(--accent);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Oswald',sans-serif;
+  font-weight:600;
+  font-size:0.75rem;
+  color:var(--accent);
+}
+.step-list li:last-child { border-left-color:transparent; }
+.step-action { font-weight:600; color:var(--white); }
+.step-timing {
+  font-size:0.7rem;
+  font-weight:600;
+  padding:0.1rem 0.4rem;
+  border-radius:3px;
+  margin-left:0.4rem;
+  vertical-align:middle;
+  text-transform:uppercase;
+}
+.step-timing.pre { color:var(--text-muted); background:rgba(255,255,255,0.04); }
+.step-timing.turn { color:var(--accent); background:rgba(5,122,240,0.08); }
+.step-timing.every { color:var(--green); background:rgba(33,197,19,0.08); }
+.step-timing.bonus { color:var(--orange); background:var(--orange-dim); }
+
+/* ── PARTY ── */
+.party-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
+@media(max-width:600px) { .party-grid { grid-template-columns:1fr; } }
+.party-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1rem;
+}
+.party-name { font-family:'Oswald',sans-serif; font-weight:600; font-size:1.05rem; color:var(--white); }
+.party-role { font-size:0.72rem; font-weight:600; color:var(--accent); text-transform:uppercase; letter-spacing:0.04em; margin-top:0.1rem; }
+.party-desc { color:var(--text-dim); font-size:0.88rem; margin-top:0.35rem; }
+
+/* ── OATH TRIGGER TABLE ── */
+.oath-table { width:100%; border-collapse:collapse; margin:1rem 0; }
+.oath-table th {
+  font-family:'Oswald',sans-serif;
+  font-size:0.78rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--text-muted);
+  text-align:left;
+  padding:0.6rem 0.75rem;
+  border-bottom:2px solid var(--border);
+}
+.oath-table td {
+  padding:0.6rem 0.75rem;
+  border-bottom:1px solid var(--border);
+  font-size:0.92rem;
+}
+.oath-table tr:hover { background:var(--bg-card); }
+.oath-act { font-weight:600; color:var(--dread); }
+.oath-trigger { color:var(--text); }
+
+/* ── FOOTER ── */
+.guide-footer {
+  margin-top:3rem;
+  padding-top:1.5rem;
+  border-top:1px solid var(--border);
+  font-size:0.8rem;
+  color:var(--text-muted);
+  text-align:center;
+}
+.guide-footer a { color:var(--text-dim); }
+.guide-footer a:hover { color:var(--accent); }
+.footer-links { display:flex; gap:1.5rem; justify-content:center; margin-bottom:0.5rem; }
+
+/* Mobile nav */
+.mobile-nav{display:none;position:sticky;top:60px;z-index:100;background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:56px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;color:var(--accent);letter-spacing:.06em}
+.nav-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s}
+.nav-links-mobile{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.nav-links-mobile.open{display:flex}
+.nav-links-mobile a{display:flex;align-items:center;gap:.5rem;height:44px;font-size:.9rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.nav-links-mobile a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){.mobile-nav{display:flex}}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity:1;
+  transform:translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ UNIVERSAL TOP NAV ═══════════ -->
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="top-nav-brand">Z3NGINEER</a>
+    <button class="top-nav-hamburger" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.top-nav-mobile').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="top-nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li class="top-dropdown">
+        <a href="#">Pages <span class="dd-arrow">&#9662;</span></a>
+        <div class="dd-menu">
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+          <a href="https://crockednloaded.com">CrockedNLoaded</a>
+          <a href="guides.html">Game Guides</a>
+          <a href="CHIM.html">CHIM Modpack</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="top-nav-mobile">
+    <a href="index.html">Home</a>
+    <a href="index.html#projects">Projects</a>
+    <div class="mob-divider"></div>
+    <a href="omnisuite.html">OmniSuite</a>
+    <a href="heatsync.html">HeatSync</a>
+    <a href="https://crockednloaded.com">CrockedNLoaded</a>
+    <a href="guides.html">Game Guides</a>
+    <a href="CHIM.html">CHIM Modpack</a>
+  </div>
+</nav>
+
+<!-- ═══════════ PAGE SUB-NAV ═══════════ -->
+<nav class="sub-nav">
+  <div class="sub-nav-inner">
+    <a href="#overview">Overview</a>
+    <a href="#race">Race</a>
+    <a href="#abilities">Abilities</a>
+    <a href="#levels">Progression</a>
+    <a href="#oath-break">Break Oath</a>
+    <a href="#features">Features</a>
+    <a href="#spells">Spells</a>
+    <a href="#feats">Feats</a>
+    <a href="#items">Gear</a>
+    <a href="#combat">Combat</a>
+    <a href="#honour">Honour Mode</a>
+    <a href="#party">Party</a>
+  </div>
+</nav>
+
+<!-- ═══════════ MOBILE SECTION NAV ═══════════ -->
+<div class="mobile-nav">
+  <span class="mobile-nav-title">Oathbreaker Paladin</span>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links-mobile">
+    <a href="#overview"><span class="nav-icon">&#9670;</span> Overview</a>
+    <a href="#race"><span class="nav-icon">&#9673;</span> Race</a>
+    <a href="#abilities"><span class="nav-icon">&#9671;</span> Abilities</a>
+    <a href="#levels"><span class="nav-icon">&#8593;</span> Progression</a>
+    <a href="#oath-break"><span class="nav-icon">&#9760;</span> Break Oath</a>
+    <a href="#features"><span class="nav-icon">&#9733;</span> Features</a>
+    <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+    <a href="#feats"><span class="nav-icon">&#9830;</span> Feats</a>
+    <a href="#items"><span class="nav-icon">&#9670;</span> Gear</a>
+    <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+    <a href="#honour"><span class="nav-icon">&#9760;</span> Honour Mode</a>
+    <a href="#party"><span class="nav-icon">&#9673;</span> Party</a>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div style="text-align:center; padding:0 1.25rem 1rem;">
+    <svg viewBox="0 0 48 48" width="48" height="48" style="border-radius:8px; border:1px solid var(--border);">
+      <rect width="48" height="48" fill="#0a0808"/>
+      <path d="M24 10 L30 22 L24 18 L18 22 Z" fill="#8b0000" opacity="0.9"/>
+      <path d="M24 22 L30 38 L24 44 L18 38 Z" fill="#8b0000" opacity="0.5"/>
+      <line x1="18" y1="16" x2="30" y2="16" stroke="#555" stroke-width="1.5" opacity="0.6"/>
+      <line x1="24" y1="10" x2="24" y2="22" stroke="#555" stroke-width="1.5" opacity="0.4"/>
+      <circle cx="24" cy="22" r="5" fill="none" stroke="#39ff14" stroke-width="1" opacity="0.5"/>
+    </svg>
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">&#9670;</span> Overview</a>
+  <a href="#race"><span class="nav-icon">&#9673;</span> Race</a>
+  <a href="#abilities"><span class="nav-icon">&#9671;</span> Abilities</a>
+  <a href="#levels"><span class="nav-icon">&#8593;</span> Progression</a>
+  <a href="#oath-break"><span class="nav-icon">&#9760;</span> Break Oath</a>
+  <a href="#features"><span class="nav-icon">&#9733;</span> Features</a>
+  <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+  <a href="#feats"><span class="nav-icon">&#9830;</span> Feats</a>
+  <a href="#items"><span class="nav-icon">&#9670;</span> Gear</a>
+  <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+  <a href="#honour"><span class="nav-icon">&#9760;</span> Honour Mode</a>
+  <a href="#party"><span class="nav-icon">&#9673;</span> Party</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="darkAura" cx="40%" cy="50%" r="55%">
+            <stop offset="0%" stop-color="#1a0a00" stop-opacity="0.6"/>
+            <stop offset="40%" stop-color="#0d0505" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="necroGlow" cx="42%" cy="45%" r="40%">
+            <stop offset="0%" stop-color="#39ff14" stop-opacity="0.25"/>
+            <stop offset="50%" stop-color="#1a8a0a" stop-opacity="0.1"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="hateAura" cx="40%" cy="80%" r="45%">
+            <stop offset="0%" stop-color="#8b0000" stop-opacity="0.3"/>
+            <stop offset="60%" stop-color="#4a0000" stop-opacity="0.1"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="darkBlade" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#505050"/>
+            <stop offset="40%" stop-color="#303030"/>
+            <stop offset="100%" stop-color="#1a1a1a"/>
+          </linearGradient>
+          <linearGradient id="necroEnergy" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#39ff14" stop-opacity="0.8"/>
+            <stop offset="50%" stop-color="#20aa0a" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#39ff14" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="necroBloom">
+            <feGaussianBlur stdDeviation="5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="dreadBloom">
+            <feGaussianBlur stdDeviation="8" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Background layers -->
+        <rect width="800" height="300" fill="#050505"/>
+        <rect width="800" height="300" fill="url(#darkAura)"/>
+        <rect width="800" height="300" fill="url(#necroGlow)" opacity="0.5"/>
+        <rect width="800" height="300" fill="url(#hateAura)"/>
+
+        <!-- Dark swirling mist at ground level -->
+        <g opacity="0.3">
+          <ellipse cx="400" cy="275" rx="380" ry="30" fill="#1a0a1a"/>
+          <ellipse cx="350" cy="270" rx="200" ry="18" fill="#0d050d" opacity="0.6"/>
+          <ellipse cx="500" cy="278" rx="150" ry="12" fill="#1a0a1a" opacity="0.4"/>
+        </g>
+
+        <!-- Necrotic energy particles floating upward -->
+        <g filter="url(#glow)" opacity="0.6">
+          <circle cx="280" cy="100" r="2.5" fill="#39ff14"><animate attributeName="cy" values="100;80;100" dur="3s" repeatCount="indefinite"/></circle>
+          <circle cx="340" cy="70" r="2" fill="#50ff30"><animate attributeName="cy" values="70;55;70" dur="2.5s" repeatCount="indefinite"/></circle>
+          <circle cx="310" cy="130" r="3" fill="#39ff14"><animate attributeName="cx" values="310;300;310" dur="3.5s" repeatCount="indefinite"/></circle>
+          <circle cx="360" cy="90" r="1.8" fill="#80ff60"><animate attributeName="cy" values="90;78;90" dur="2.2s" repeatCount="indefinite"/></circle>
+          <circle cx="250" cy="140" r="2.2" fill="#39ff14"><animate attributeName="cx" values="250;240;250" dur="2.8s" repeatCount="indefinite"/></circle>
+          <circle cx="380" cy="120" r="1.5" fill="#50ff30"><animate attributeName="cy" values="120;108;120" dur="3.2s" repeatCount="indefinite"/></circle>
+          <circle cx="220" cy="80" r="2" fill="#39ff14"><animate attributeName="cy" values="80;68;80" dur="2.6s" repeatCount="indefinite"/></circle>
+          <circle cx="400" cy="60" r="1.5" fill="#80ff60"><animate attributeName="cx" values="400;408;400" dur="2.4s" repeatCount="indefinite"/></circle>
+        </g>
+
+        <!-- Aura of Hate circle on ground -->
+        <ellipse cx="320" cy="260" r="120" fill="none" stroke="#8b0000" stroke-width="1.5" opacity="0.35" filter="url(#dreadBloom)">
+          <animate attributeName="rx" values="115;125;115" dur="4s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="320" cy="260" r="90" fill="none" stroke="#8b0000" stroke-width="0.8" opacity="0.2">
+          <animate attributeName="rx" values="85;95;85" dur="3s" repeatCount="indefinite"/>
+        </ellipse>
+
+        <!-- THE FALLEN PALADIN -->
+        <g transform="translate(320,155)" opacity="0.95">
+          <!-- Dark cape, tattered and flowing -->
+          <path d="M12,-18 Q35,-22 60,5 Q80,35 90,95 Q92,115 75,120 Q60,110 55,80 Q50,45 38,15 Q28,-5 12,-12 Z" fill="#0d0505" opacity="0.7"/>
+          <path d="M15,-15 Q32,-18 50,0 Q62,22 68,55 Q72,78 58,85 Q50,72 52,50 Q55,28 42,8 Q32,-6 15,-10 Z" fill="#1a0808" opacity="0.5"/>
+          <!-- Cape tattered edges -->
+          <path d="M80,100 L85,108 L78,105 L82,115 L74,110 L76,120" stroke="#0d0505" stroke-width="1.5" fill="none" opacity="0.5"/>
+
+          <!-- Corrupted plate armor legs -->
+          <path d="M-15,55 L-20,100 L-10,103 L-5,60" fill="#2a2020"/>
+          <path d="M10,55 L15,100 L25,97 L18,53" fill="#2a2020"/>
+          <!-- Dark knee spikes -->
+          <path d="M-18,72 L-26,65 L-14,70" fill="#1a0a0a"/>
+          <path d="M18,70 L26,63 L16,68" fill="#1a0a0a"/>
+          <!-- Corrupted sabatons -->
+          <path d="M-24,98 L-8,101 L-5,105 L-28,103 Z" fill="#2a2020"/>
+          <path d="M12,96 L28,95 L32,100 L10,102 Z" fill="#2a2020"/>
+
+          <!-- Dark plate torso with corruption veins -->
+          <path d="M-28,-12 Q-32,12 -28,48 Q-25,58 0,60 Q25,58 28,48 Q32,12 28,-12 Q15,-25 0,-27 Q-15,-25 -28,-12 Z" fill="#2a1a1a"/>
+          <!-- Corruption veins on armor -->
+          <g stroke="#39ff14" stroke-width="0.6" fill="none" opacity="0.35">
+            <path d="M-15,0 Q-8,10 -12,25 Q-8,35 -5,45"/>
+            <path d="M15,0 Q8,10 12,25 Q8,35 5,45"/>
+            <path d="M0,-10 Q3,5 -2,20 Q2,30 0,40"/>
+          </g>
+          <!-- Dark chest plate -->
+          <path d="M-18,-8 Q-5,-12 12,-8 Q15,5 10,22 Q0,26 -10,22 Q-15,5 -18,-8 Z" fill="#352020" opacity="0.5"/>
+
+          <!-- BROKEN HOLY SYMBOL on breastplate -->
+          <g opacity="0.5">
+            <line x1="0" y1="0" x2="0" y2="18" stroke="#555" stroke-width="1.5"/>
+            <line x1="-7" y1="7" x2="7" y2="7" stroke="#555" stroke-width="1.5"/>
+            <!-- Crack through the symbol -->
+            <path d="M-3,2 L1,8 L-2,14 L2,18" stroke="#8b0000" stroke-width="1" fill="none"/>
+            <!-- Broken pieces falling -->
+            <rect x="5" y="12" width="3" height="2" fill="#555" transform="rotate(25 6 13)" opacity="0.4"/>
+            <rect x="-8" y="14" width="2" height="3" fill="#555" transform="rotate(-15 -7 15)" opacity="0.3"/>
+          </g>
+
+          <!-- Spiked pauldrons -->
+          <ellipse cx="-30" cy="-15" rx="14" ry="10" fill="#2a1a1a"/>
+          <path d="M-38,-22 L-42,-35 L-35,-20" fill="#1a0a0a"/>
+          <path d="M-25,-22 L-22,-32 L-22,-18" fill="#1a0a0a"/>
+          <ellipse cx="30" cy="-15" rx="14" ry="10" fill="#2a1a1a"/>
+          <path d="M38,-22 L42,-35 L35,-20" fill="#1a0a0a"/>
+          <path d="M25,-22 L22,-32 L22,-18" fill="#1a0a0a"/>
+
+          <!-- Gorget with dark runes -->
+          <path d="M-18,-20 Q0,-25 18,-20 Q15,-16 0,-18 Q-15,-16 -18,-20 Z" fill="#352020"/>
+
+          <!-- Head helm — dark with glowing eyes -->
+          <ellipse cx="0" cy="-38" rx="14" ry="16" fill="#1a1010"/>
+          <!-- Horned helm -->
+          <path d="M-10,-52 Q-15,-68 -8,-72" stroke="#2a1a1a" stroke-width="3" fill="none"/>
+          <path d="M10,-52 Q15,-68 8,-72" stroke="#2a1a1a" stroke-width="3" fill="none"/>
+          <!-- Horn tips -->
+          <circle cx="-8" cy="-72" r="1.5" fill="#8b0000" opacity="0.6"/>
+          <circle cx="8" cy="-72" r="1.5" fill="#8b0000" opacity="0.6"/>
+          <!-- Visor slit with necrotic glow -->
+          <path d="M-8,-40 L8,-40" stroke="#0a0a0a" stroke-width="2.5"/>
+          <ellipse cx="-4" cy="-40" rx="2.5" ry="1.2" fill="#39ff14" opacity="0.7" filter="url(#glow)"/>
+          <ellipse cx="4" cy="-40" rx="2.5" ry="1.2" fill="#39ff14" opacity="0.7" filter="url(#glow)"/>
+
+          <!-- Left arm holding dark greatsword low -->
+          <path d="M-30,-10 Q-42,-2 -45,15 Q-46,22 -40,25 L-34,18 Q-36,8 -28,2" fill="#2a1a1a"/>
+          <ellipse cx="-41" cy="22" rx="6" ry="5" fill="#352020"/>
+
+          <!-- Right arm raised, channeling Animate Dead -->
+          <path d="M28,-12 Q42,-25 40,-48 Q39,-55 34,-53 L32,-42 Q34,-30 27,-18" fill="#2a1a1a"/>
+          <ellipse cx="38" cy="-52" rx="6" ry="5" fill="#352020"/>
+
+          <!-- Necrotic energy from raised hand -->
+          <g filter="url(#necroBloom)" opacity="0.8">
+            <circle cx="38" cy="-60" r="8" fill="#39ff14" opacity="0.3">
+              <animate attributeName="r" values="7;10;7" dur="1.5s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="38" cy="-60" r="4" fill="#80ff60" opacity="0.4">
+              <animate attributeName="r" values="3;5;3" dur="1s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Energy tendrils reaching to undead -->
+            <path d="M42,-58 Q55,-50 80,-45 Q120,-38 160,-50" stroke="#39ff14" stroke-width="1.5" fill="none" opacity="0.5">
+              <animate attributeName="opacity" values="0.5;0.8;0.5" dur="2s" repeatCount="indefinite"/>
+            </path>
+            <path d="M40,-62 Q60,-65 100,-70 Q140,-72 180,-60" stroke="#50ff30" stroke-width="1" fill="none" opacity="0.3">
+              <animate attributeName="opacity" values="0.3;0.6;0.3" dur="2.5s" repeatCount="indefinite"/>
+            </path>
+            <path d="M44,-56 Q65,-40 110,-30 Q145,-25 170,-35" stroke="#39ff14" stroke-width="1" fill="none" opacity="0.4"/>
+          </g>
+
+          <!-- DARK GREATSWORD — Spear of Night style -->
+          <g transform="translate(-42,22) rotate(70)">
+            <!-- Dark blade -->
+            <rect x="-4" y="-90" width="8" height="75" fill="url(#darkBlade)" rx="1"/>
+            <!-- Necrotic runes along blade -->
+            <g stroke="#39ff14" stroke-width="0.5" fill="none" opacity="0.4">
+              <path d="M-1,-80 L1,-75 L-1,-70"/>
+              <path d="M1,-60 L-1,-55 L1,-50"/>
+              <path d="M-1,-40 L1,-35 L-1,-30"/>
+            </g>
+            <!-- Blade edge glow -->
+            <line x1="-4" y1="-88" x2="-4" y2="-15" stroke="#39ff14" stroke-width="0.5" opacity="0.2"/>
+            <!-- Blade tip -->
+            <path d="M-4,-90 L0,-100 L4,-90 Z" fill="#303030"/>
+            <!-- Skull crossguard -->
+            <ellipse cx="0" cy="-13" rx="5" ry="4" fill="#3a3a3a"/>
+            <circle cx="-2" cy="-14" r="1" fill="#39ff14" opacity="0.5"/>
+            <circle cx="2" cy="-14" r="1" fill="#39ff14" opacity="0.5"/>
+            <path d="M-3,-11 Q0,-9 3,-11" stroke="#2a2a2a" stroke-width="0.8" fill="none"/>
+            <rect x="-12" y="-14" width="24" height="3.5" fill="#2a1a1a" rx="1"/>
+            <!-- Dark grip -->
+            <rect x="-3" y="-10" width="6" height="16" fill="#1a0a0a" rx="1"/>
+            <!-- Pommel skull -->
+            <circle cx="0" cy="8" r="4.5" fill="#2a2a2a"/>
+            <circle cx="-1.5" cy="7" r="1" fill="#8b0000" opacity="0.4"/>
+            <circle cx="1.5" cy="7" r="1" fill="#8b0000" opacity="0.4"/>
+          </g>
+        </g>
+
+        <!-- UNDEAD MINION 1 — skeletal warrior (left) -->
+        <g transform="translate(530,190)" opacity="0.7">
+          <!-- Necrotic glow around undead -->
+          <circle cx="0" cy="0" r="30" fill="#39ff14" opacity="0.04" filter="url(#glow)"/>
+          <!-- Skeleton body -->
+          <ellipse cx="0" cy="0" rx="8" ry="14" fill="#3a3530" opacity="0.8"/>
+          <!-- Rib cage lines -->
+          <g stroke="#4a4540" stroke-width="0.8" opacity="0.6">
+            <path d="M-5,-5 Q0,-3 5,-5"/>
+            <path d="M-5,-1 Q0,1 5,-1"/>
+            <path d="M-4,3 Q0,5 4,3"/>
+          </g>
+          <!-- Skull -->
+          <circle cx="0" cy="-20" r="7" fill="#4a4540"/>
+          <circle cx="-2.5" cy="-21" r="1.5" fill="#39ff14" opacity="0.6"/>
+          <circle cx="2.5" cy="-21" r="1.5" fill="#39ff14" opacity="0.6"/>
+          <path d="M-2,-17 Q0,-15 2,-17" stroke="#2a2520" stroke-width="0.8" fill="none"/>
+          <!-- Arms with rusty sword -->
+          <path d="M-8,-5 Q-18,-8 -22,0" stroke="#4a4540" stroke-width="2" stroke-linecap="round"/>
+          <path d="M8,-5 Q18,-8 22,0" stroke="#4a4540" stroke-width="2" stroke-linecap="round"/>
+          <!-- Sword in right hand -->
+          <rect x="20" y="-15" width="2" height="20" fill="#606060" transform="rotate(-10 20 -5)"/>
+          <!-- Skeleton legs -->
+          <path d="M-3,14 L-6,35" stroke="#4a4540" stroke-width="2" stroke-linecap="round"/>
+          <path d="M3,14 L6,35" stroke="#4a4540" stroke-width="2" stroke-linecap="round"/>
+          <!-- Aura of Hate effect on this minion -->
+          <circle cx="0" cy="0" r="22" fill="none" stroke="#8b0000" stroke-width="0.8" opacity="0.3">
+            <animate attributeName="r" values="20;25;20" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.3;0.15;0.3" dur="3s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+
+        <!-- UNDEAD MINION 2 — spectral wraith (right) -->
+        <g transform="translate(600,160)" opacity="0.55">
+          <circle cx="0" cy="0" r="25" fill="#39ff14" opacity="0.03" filter="url(#glow)"/>
+          <!-- Ghostly body -->
+          <path d="M0,-15 Q-12,-5 -10,15 Q-8,30 -15,40 Q-5,35 0,40 Q5,35 15,40 Q8,30 10,15 Q12,-5 0,-15 Z" fill="#1a2a1a" opacity="0.6"/>
+          <!-- Wraith face -->
+          <ellipse cx="0" cy="-18" rx="8" ry="10" fill="#1a2a1a" opacity="0.7"/>
+          <ellipse cx="-3" cy="-19" rx="2" ry="2.5" fill="#39ff14" opacity="0.5"/>
+          <ellipse cx="3" cy="-19" rx="2" ry="2.5" fill="#39ff14" opacity="0.5"/>
+          <path d="M-2,-14 Q0,-11 2,-14" fill="#0a0a0a" opacity="0.6"/>
+          <!-- Ghostly arms reaching out -->
+          <path d="M-10,-5 Q-25,-10 -30,0" stroke="#1a2a1a" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+          <path d="M10,-5 Q25,-10 30,0" stroke="#1a2a1a" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+          <!-- Floating particles -->
+          <circle cx="-8" cy="-25" r="1" fill="#39ff14" opacity="0.4">
+            <animate attributeName="cy" values="-25;-30;-25" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="10" cy="-22" r="0.8" fill="#50ff30" opacity="0.3">
+            <animate attributeName="cy" values="-22;-28;-22" dur="1.8s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Aura of Hate glow -->
+          <circle cx="0" cy="0" r="20" fill="none" stroke="#8b0000" stroke-width="0.6" opacity="0.25">
+            <animate attributeName="r" values="18;23;18" dur="2.5s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+
+        <!-- UNDEAD MINION 3 — skeleton archer (far right) -->
+        <g transform="translate(670,200)" opacity="0.5">
+          <ellipse cx="0" cy="0" rx="6" ry="11" fill="#3a3530" opacity="0.7"/>
+          <circle cx="0" cy="-15" r="5.5" fill="#4a4540"/>
+          <circle cx="-2" cy="-16" r="1.2" fill="#39ff14" opacity="0.5"/>
+          <circle cx="2" cy="-16" r="1.2" fill="#39ff14" opacity="0.5"/>
+          <!-- Bow -->
+          <path d="M-12,-8 Q-18,0 -12,8" stroke="#5a4a30" stroke-width="1.5" fill="none"/>
+          <line x1="-12" y1="-8" x2="-12" y2="8" stroke="#888" stroke-width="0.5"/>
+          <path d="M6,-3 L-6,0" stroke="#4a4540" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M-6,-3 L-16,2" stroke="#4a4540" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M-2,11 L-4,30" stroke="#4a4540" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M2,11 L4,30" stroke="#4a4540" stroke-width="1.5" stroke-linecap="round"/>
+        </g>
+
+        <!-- Dark corruption effects radiating from paladin -->
+        <g filter="url(#dreadBloom)" opacity="0.25">
+          <path d="M320,155 Q280,120 220,110" stroke="#8b0000" stroke-width="2" fill="none"/>
+          <path d="M320,155 Q360,110 400,90" stroke="#8b0000" stroke-width="1.5" fill="none"/>
+          <path d="M320,155 Q250,140 190,150" stroke="#8b0000" stroke-width="1" fill="none"/>
+          <path d="M320,155 Q380,140 440,130" stroke="#8b0000" stroke-width="1" fill="none"/>
+        </g>
+
+        <!-- Ground line -->
+        <line x1="80" y1="265" x2="720" y2="265" stroke="#2a2a2a" stroke-width="0.6" opacity="0.4"/>
+
+        <!-- Dark divine corruption runes in sky -->
+        <g opacity="0.15">
+          <circle cx="150" cy="40" r="15" fill="none" stroke="#8b0000" stroke-width="0.8"/>
+          <path d="M150,28 L150,52 M138,40 L162,40" stroke="#8b0000" stroke-width="0.6"/>
+          <path d="M143,33 L157,47 M157,33 L143,47" stroke="#8b0000" stroke-width="0.4"/>
+        </g>
+        <g opacity="0.1">
+          <circle cx="680" cy="50" r="12" fill="none" stroke="#39ff14" stroke-width="0.6"/>
+          <path d="M674,44 L686,56 M686,44 L674,56" stroke="#39ff14" stroke-width="0.4"/>
+        </g>
+      </svg>
+    </div>
+    <div class="header-row">
+      <svg viewBox="0 0 80 80" width="80" height="80" class="header-portrait" style="border-radius:8px; border:2px solid var(--border); background:#0a0808;">
+        <rect width="80" height="80" fill="#0a0808"/>
+        <path d="M40 12 L50 28 L40 22 L30 28 Z" fill="#8b0000" opacity="0.9"/>
+        <path d="M40 28 L52 56 L40 68 L28 56 Z" fill="#8b0000" opacity="0.5"/>
+        <circle cx="40" cy="32" r="8" fill="none" stroke="#39ff14" stroke-width="1.5" opacity="0.5"/>
+        <line x1="34" y1="22" x2="46" y2="22" stroke="#555" stroke-width="1.5" opacity="0.5"/>
+        <path d="M36,20 L33,12 M44,20 L47,12" stroke="#2a1a1a" stroke-width="1.5" fill="none" opacity="0.6"/>
+        <circle cx="37" cy="30" r="1.5" fill="#39ff14" opacity="0.5"/>
+        <circle cx="43" cy="30" r="1.5" fill="#39ff14" opacity="0.5"/>
+      </svg>
+      <div class="header-text">
+        <div class="breadcrumb">Baldur's Gate 3 &#8250; Builds &#8250; Oathbreaker Paladin</div>
+        <h1>Oathbreaker Paladin &mdash; The Fallen Champion</h1>
+        <div class="subtitle">Half-Orc &middot; Oathbreaker Paladin 12 &middot; #5 Ranked Build (Deltia's #2)</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag red">#5 Overall</span>
+      <span class="tag gold">Nova Damage</span>
+      <span class="tag green">Frontline</span>
+      <span class="tag blue">Summon Army</span>
+      <span class="tag orange">Patch 8</span>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="section reveal" id="overview">
+    <h2>Overview</h2>
+
+    <p>The Oathbreaker Paladin is the dark side of BG3's deadliest class. You get everything that makes Paladin dominant &mdash; Divine Smite, Extra Attack, heavy armor, Aura of Protection &mdash; plus the Oathbreaker's unique <strong>Aura of Hate</strong>, which adds your Charisma modifier to melee damage for you, your undead summons, and any fiends in range. With Animate Dead raising a small army and every one of them getting +5 damage per hit from your aura, the Oathbreaker commands the highest sustained damage output of any pure Paladin build.</p>
+
+    <div class="callout dread">
+      <div class="callout-label">Why Oathbreaker</div>
+      <p><strong>Aura of Hate</strong> adds +CHA modifier (up to +5) to ALL melee damage rolls for you, your undead, and fiends within the aura. That's +5 on every single hit. With 3 undead from Animate Dead each attacking once per turn, that's +15 free damage per round from your summons alone &mdash; before your own attacks. Combined with Divine Smite burst and Extra Attack, this is the highest single-target and sustained damage pure Paladin build in BG3.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">The Math</div>
+      <p>Your turn: Greatsword (2d6+5 STR +5 Aura of Hate +10 GWM = ~27 avg) x2 attacks = ~54 weapon damage. Add two 3rd-level Divine Smites (4d8 each = 18 avg each) = 36 radiant. Total: <strong>~90 damage per round</strong> from you alone. Your three skeletons add another ~36 damage per round with Aura of Hate. On crit turns with Half-Orc Savage Attacks, a single smite hit can exceed 60 damage.</p>
+    </div>
+
+    <h3>Core Synergies</h3>
+    <ul class="picks">
+      <li><span class="label">Aura</span> <span class="name">Aura of Hate</span> &mdash; <span class="note">+CHA mod to melee damage for you, undead, and fiends. The backbone of this build.</span></li>
+      <li><span class="label">Smite</span> <span class="name">Divine Smite</span> &mdash; <span class="note">2d8&ndash;5d8 radiant per hit. Paladin's signature burst, still fully available.</span></li>
+      <li><span class="label">Summon</span> <span class="name">Animate Dead</span> &mdash; <span class="note">Oathbreaker domain spell. Raise skeletons/zombies that benefit from Aura of Hate.</span></li>
+      <li><span class="label">Capstone</span> <span class="name">Dread Lord</span> &mdash; <span class="note">Level 11 aura. Frightens enemies, grants extra necrotic damage on your attacks.</span></li>
+    </ul>
+  </section>
+
+  <!-- RACE & BACKGROUND -->
+  <section class="section reveal" id="race">
+    <h2>Race &amp; Background</h2>
+
+    <h3>Best Race: Half-Orc</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Savage Attacks</span> &mdash; <span class="note">On a crit, roll one extra weapon damage die. Since you're swinging a greatsword with GWM, crits from this build are catastrophic. Pairs beautifully with smite crit fishing.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Relentless Endurance</span> &mdash; <span class="note">Drop to 1 HP instead of 0 once per long rest. You're the frontline tank &mdash; this is insurance.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Darkvision</span> &mdash; <span class="note">12m range. Critical for Act 2's Shadow Curse, where you'll be fighting in near-total darkness.</span></li>
+    </ul>
+
+    <h3>Alternative: Zariel Tiefling</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Searing Smite (free)</span> &mdash; <span class="note">Free smite spell at level 3. Extra fire damage stacks with Divine Smite and Aura of Hate.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Branding Smite (free)</span> &mdash; <span class="note">Free at level 5. More smite fuel without spending your limited Paladin slots.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Fire Resistance</span> &mdash; <span class="note">Halves fire damage. Thematic for a dark paladin, and practical against many BG3 enemies.</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Other Viable Races</div>
+      <p><strong>Dragonborn (Red/Gold)</strong> &mdash; fire breath AoE + fire resistance, no feat competition. <strong>Shield Dwarf</strong> &mdash; extra HP, poison resistance, very tanky. <strong>Human</strong> &mdash; carrying capacity bonus helps when you're in heavy armor with a greatsword and loot.</p>
+    </div>
+
+    <h3>Background</h3>
+    <p>Pick <strong>Soldier</strong> for Athletics (shove/grapple) and Intimidation (dark paladin fantasy + high CHA). Alternatively, <strong>Noble</strong> gives you History and Persuasion for a more silver-tongued fallen knight. Either way, your 16+ CHA makes you an excellent party face.</p>
+  </section>
+
+  <!-- ABILITY SCORES -->
+  <section class="section reveal" id="abilities">
+    <h2>Ability Scores</h2>
+
+    <div class="stats">
+      <div class="stat-box primary"><div class="stat-label">STR</div><div class="stat-val">17</div></div>
+      <div class="stat-box"><div class="stat-label">DEX</div><div class="stat-val">10</div></div>
+      <div class="stat-box"><div class="stat-label">CON</div><div class="stat-val">14</div></div>
+      <div class="stat-box"><div class="stat-label">INT</div><div class="stat-val">8</div></div>
+      <div class="stat-box"><div class="stat-label">WIS</div><div class="stat-val">10</div></div>
+      <div class="stat-box primary"><div class="stat-label">CHA</div><div class="stat-val">16</div></div>
+    </div>
+    <p style="font-size:0.88rem; color:var(--text-dim);">Point buy. STR 17 because you round it to 18 with the Paladin Level 4 ASI (+1 STR / +1 CHA) or take a half-feat. CHA 16 is mandatory &mdash; it powers Aura of Hate, Aura of Protection, spell save DC, and Lay on Hands. CON 14 for HP and concentration saves.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">CHA Is Your God Stat</div>
+      <p>Charisma does more for Oathbreaker than any other Paladin subclass. It simultaneously powers: (1) Aura of Hate melee damage bonus for you AND your undead, (2) Aura of Protection saving throw bonus for the whole party, (3) your spell save DC for Command, Hold Person, Fear, (4) social skill checks. Every point of CHA is multiplied across your entire army. Reaching CHA 20 by level 8 is the single biggest power spike in this build.</p>
+    </div>
+
+    <h3>Feat Priority for Ability Scores</h3>
+    <ul class="picks">
+      <li><span class="label">Level 4</span> <span class="name">Great Weapon Master</span> &mdash; <span class="note">+10 damage per hit, -5 attack. The -5 penalty is offset by advantage from Vow of Enmity or allies using Faerie Fire.</span></li>
+      <li><span class="label">Level 8</span> <span class="name">+2 CHA &rarr; 18</span> &mdash; <span class="note">Better aura for you and your army, better DC, better saves for the party.</span></li>
+      <li><span class="label">Level 12</span> <span class="name">+2 CHA &rarr; 20</span> &mdash; <span class="note">Cap CHA. +5 Aura of Hate, +5 Aura of Protection. Your undead army hits like trucks.</span></li>
+    </ul>
+  </section>
+
+  <!-- LEVEL PROGRESSION -->
+  <section class="section reveal" id="levels">
+    <h2>Level-by-Level Progression</h2>
+    <p style="color:var(--text-dim); margin-bottom:1rem;">Click any level to expand. Start as any Paladin oath &mdash; you'll break it in Act 1 to become an Oathbreaker. Pure Paladin 12 for maximum aura strength and Dread Lord capstone.</p>
+
+    <!-- Level 1 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">1</span>
+        <span class="lv-badge paladin">Paladin 1</span>
+        <span class="lv-title">Divine Sense &amp; Lay on Hands</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Lay on Hands</span>
+          <span class="qp feature">Divine Sense</span>
+          <span class="qp feature">Heavy Armor</span>
+          <span class="qp feature">All Weapons</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Lay on Hands</span> &mdash; <span class="note">Heal 5 HP per charge. Your emergency heal and disease/poison cure.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Divine Sense</span> &mdash; <span class="note">Reveals celestials, fiends, and undead nearby. Situational but thematic.</span></li>
+          <li><span class="label">Profic.</span> <span class="name">Heavy Armor + All Weapons + Shields</span> &mdash; <span class="note">Full martial proficiencies from level 1. Grab a greatsword.</span></li>
+          <li><span class="label">Oath</span> <span class="name">Pick Any Oath</span> &mdash; <span class="note">Choose Devotion, Ancients, or Vengeance. You will break this oath in Act 1. Vengeance is recommended &mdash; its oath tenets are easiest to violate early.</span></li>
+        </ul>
+        <p style="font-size:0.88rem; color:var(--text-dim); margin-top:0.5rem;">Starting as Paladin is mandatory for heavy armor, martial weapons, and CON save proficiency. You cannot start as Oathbreaker &mdash; you must break your oath through in-game actions.</p>
+      </div></div>
+    </div>
+
+    <!-- Level 2 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">2</span>
+        <span class="lv-badge paladin">Paladin 2</span>
+        <span class="lv-title">Divine Smite &amp; Fighting Style</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp smite">Divine Smite</span>
+          <span class="qp feature">Great Weapon Fighting</span>
+          <span class="qp spell">Thunderous Smite</span>
+          <span class="qp spell">Wrathful Smite</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Divine Smite</span> &mdash; <span class="note">THE core feature. Spend a spell slot on hit for 2d8 radiant (+1d8 per slot level above 1st, +1d8 vs undead). No action cost.</span></li>
+          <li><span class="label">Style</span> <span class="name">Great Weapon Fighting</span> &mdash; <span class="note">Reroll 1s and 2s on two-handed weapon dice. Best style for greatsword builds.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Wrathful Smite</span> &mdash; <span class="note">Frightens on hit. Targets must save or be frightened &mdash; disadvantage on attacks. Great crowd control.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Thunderous Smite</span> &mdash; <span class="note">Pushes targets on hit. Excellent for knocking enemies off cliffs or into hazards.</span></li>
+        </ul>
+        <p style="font-size:0.88rem; color:var(--text-dim); margin-top:0.5rem;">This is when you break your oath. See the "How to Break Your Oath" section below for specific triggers. Once broken, the Oathbreaker Knight appears at your camp.</p>
+      </div></div>
+    </div>
+
+    <!-- Level 3 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">3</span>
+        <span class="lv-badge oathbreaker">Oathbreaker 3</span>
+        <span class="lv-title">Oathbreaker Unlocked &mdash; Spellcasting Wraith &amp; Domain Spells</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp dark">Spellcasting Wraith</span>
+          <span class="qp spell">Hellish Rebuke</span>
+          <span class="qp spell">Inflict Wounds</span>
+          <span class="qp necrotic">Control Undead</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Channel</span> <span class="name">Spellcasting Wraith</span> &mdash; <span class="note">Summon a powerful wraith that can attack and cast spells. It benefits from Aura of Hate once you get it. This is one of the best Channel Divinity options in BG3.</span></li>
+          <li><span class="label">Channel</span> <span class="name">Control Undead</span> &mdash; <span class="note">Take control of an enemy undead. In Act 2 (Shadow Cursed Lands), this lets you steal powerful undead enemies to fight for you.</span></li>
+          <li><span class="label">Oath</span> <span class="name">Hellish Rebuke</span> &mdash; <span class="note">Reaction spell: when hit, deal 2d10 fire to attacker. Free retaliation damage as a frontliner.</span></li>
+          <li><span class="label">Oath</span> <span class="name">Inflict Wounds</span> &mdash; <span class="note">3d10 necrotic on a melee spell attack. Massive single-target burst when you can't smite (no weapon hit needed).</span></li>
+        </ul>
+        <p style="font-size:0.88rem; color:var(--text-dim); margin-top:0.5rem;">The Oathbreaker subclass unlocks immediately upon breaking your oath. Spellcasting Wraith alone is one of the best summons in the game at this level.</p>
+      </div></div>
+    </div>
+
+    <!-- Level 4 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">4</span>
+        <span class="lv-badge oathbreaker">Oathbreaker 4</span>
+        <span class="lv-title">Feat: Great Weapon Master</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">Great Weapon Master</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">Great Weapon Master</span> &mdash; <span class="note">+10 damage / -5 attack on every hit with a heavy weapon. On kill or crit, get a bonus action melee attack. This is the single biggest damage feat in BG3 and it's non-negotiable for this build.</span></li>
+          <li><span class="label">Bonus</span> <span class="name">GWM Cleave</span> &mdash; <span class="note">When you kill or crit, you get a bonus action attack. With smite crits, you'll trigger this constantly. Three attacks in one turn = three smites.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 5 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">5</span>
+        <span class="lv-badge oathbreaker">Oathbreaker 5</span>
+        <span class="lv-title">Extra Attack &amp; 2nd-Level Slots</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Extra Attack</span>
+          <span class="qp spell">Darkness</span>
+          <span class="qp spell">Crown of Madness</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Extra Attack</span> &mdash; <span class="note">Two attacks per Attack action. Doubles your smite potential. This is when the build truly comes online &mdash; two GWM + smite hits per turn is devastating.</span></li>
+          <li><span class="label">Oath</span> <span class="name">Darkness</span> &mdash; <span class="note">Oathbreaker domain spell. Creates magical darkness. Enemies can't see you, you can attack from within with advantage if you have Devil's Sight (or Elixir of Darkvision).</span></li>
+          <li><span class="label">Oath</span> <span class="name">Crown of Madness</span> &mdash; <span class="note">Turn enemies against each other. Concentration but useful for disabling a dangerous target.</span></li>
+          <li><span class="label">Slots</span> <span class="name">2nd-Level Spell Slots</span> &mdash; <span class="note">Stronger smites (3d8 base). Your burst damage jumps significantly.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 6 -->
+    <div class="level-card here">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">6</span>
+        <span class="lv-badge oathbreaker">Oathbreaker 6</span>
+        <span class="lv-title">Aura of Protection</span>
+        <span class="lv-here">Core Online</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Aura of Protection</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Aura</span> <span class="name">Aura of Protection</span> &mdash; <span class="note">+CHA mod to ALL saving throws for you and allies within 3m (10ft). At CHA 16, that's +3 to every save for your whole frontline. The single best defensive feature in BG3.</span></li>
+        </ul>
+        <p style="font-size:0.88rem; color:var(--text-dim); margin-top:0.5rem;">This is the reason every Paladin build goes to at least level 6. Aura of Protection is arguably the best feature in the entire game &mdash; it makes your whole party significantly harder to crowd control or kill.</p>
+      </div></div>
+    </div>
+
+    <!-- Level 7 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">7</span>
+        <span class="lv-badge oathbreaker">Oathbreaker 7</span>
+        <span class="lv-title">Aura of Hate</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp dark">Aura of Hate</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Aura</span> <span class="name">Aura of Hate</span> &mdash; <span class="note">+CHA modifier to melee weapon damage for you, undead allies, and fiend allies within 3m. At CHA 16, +3 damage per hit; at CHA 20, +5. This applies to EVERY melee attack from every affected creature.</span></li>
+          <li><span class="label">Math</span> <span class="name">Army Damage</span> &mdash; <span class="note">3 Animate Dead skeletons each get +3 to +5 per hit. Your Spellcasting Wraith gets it too. You personally stack it with GWM for +15 per hit (GWM +10, Aura +5). The damage scaling is absurd.</span></li>
+        </ul>
+        <div class="callout dread" style="margin-top:0.75rem;">
+          <div class="callout-label">Why Pure Paladin</div>
+          <p>If you multiclass out before level 7, you never get Aura of Hate. This single feature is the entire reason to play Oathbreaker over Sorcadin. A Sorcadin has more spell slots for smites, but an Oathbreaker has a permanent +5 damage per hit for their entire army. Over a full adventuring day, the Oathbreaker's sustained damage output exceeds the Sorcadin's.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Level 8 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">8</span>
+        <span class="lv-badge oathbreaker">Oathbreaker 8</span>
+        <span class="lv-title">Feat: +2 CHA &rarr; 18</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">+2 CHA</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">+2 Charisma &rarr; 18</span> &mdash; <span class="note">Aura of Hate goes from +3 to +4. Aura of Protection goes from +3 to +4. Spell save DC improves. Every summon in your army deals 1 more damage per hit. Massive multiplied value.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 9 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">9</span>
+        <span class="lv-badge oathbreaker">Oathbreaker 9</span>
+        <span class="lv-title">3rd-Level Slots &amp; Animate Dead</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp necrotic">Animate Dead</span>
+          <span class="qp spell">Bestow Curse</span>
+          <span class="qp spell">Revivify</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Oath</span> <span class="name">Animate Dead</span> &mdash; <span class="note">Oathbreaker domain spell. Raise a skeleton or zombie. They persist until killed and benefit from Aura of Hate. Cast at higher slots for multiple undead. THE signature Oathbreaker spell.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Bestow Curse</span> &mdash; <span class="note">Curse a target with various debuffs. Excellent for boss fights &mdash; choose the option that gives them disadvantage on saves to set up your party's crowd control.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Revivify</span> &mdash; <span class="note">Bring an ally back to life. Essential utility that every Paladin should prepare.</span></li>
+          <li><span class="label">Slots</span> <span class="name">3rd-Level Slots</span> &mdash; <span class="note">4d8 Divine Smites. Your burst damage peaks here &mdash; 3rd-level smites are the optimal damage-per-slot ratio.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 10 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">10</span>
+        <span class="lv-badge oathbreaker">Oathbreaker 10</span>
+        <span class="lv-title">Aura of Courage</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Aura of Courage</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Aura</span> <span class="name">Aura of Courage</span> &mdash; <span class="note">You and allies within 3m are immune to being Frightened. Ironic for the dark paladin, but incredibly useful in Act 3 where many enemies use fear effects.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 11 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">11</span>
+        <span class="lv-badge oathbreaker">Oathbreaker 11</span>
+        <span class="lv-title">Improved Divine Smite</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp smite">Improved Divine Smite</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Improved Divine Smite</span> &mdash; <span class="note">All your melee weapon attacks deal an additional 1d8 radiant damage automatically, no spell slot required. This is free damage on every single hit, forever. Combined with GWM, Aura of Hate, and STR, each hit now deals roughly 2d6+5+5+10+1d8 = ~30 damage before optional smites.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 12 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">12</span>
+        <span class="lv-badge oathbreaker">Oathbreaker 12</span>
+        <span class="lv-title">Feat: +2 CHA &rarr; 20 (Capstone)</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">+2 CHA &rarr; 20</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">+2 Charisma &rarr; 20</span> &mdash; <span class="note">Aura of Hate now +5 per hit for your entire army. Aura of Protection +5 to all saves. Spell DC 17. This is the final form &mdash; an unkillable frontliner commanding a necrotic army that each hit for bonus +5 damage.</span></li>
+          <li><span class="label">Alt</span> <span class="name">Sentinel</span> &mdash; <span class="note">If you already have CHA 20 from items (e.g., Birthright), take Sentinel instead. Reaction attacks when enemies attack your allies + enemies can't Disengage from you. Protects your squishy backliners.</span></li>
+        </ul>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- HOW TO BREAK YOUR OATH -->
+  <section class="section reveal" id="oath-break">
+    <h2>How to Break Your Oath</h2>
+
+    <p>You cannot choose Oathbreaker at character creation. You must take any Paladin oath (Devotion, Ancients, or Vengeance) and then perform an action that violates your oath's tenets. Once broken, the Oathbreaker Knight appears at your camp. He offers to restore your oath for 1,000 gold &mdash; decline to stay Oathbreaker permanently.</p>
+
+    <div class="callout warn">
+      <div class="callout-label">Important</div>
+      <p>You can break your oath at ANY level after taking your subclass at Paladin 1. The earliest opportunity is in the Nautiloid prologue. Breaking your oath is permanent unless you pay the Oathbreaker Knight to restore it. If you change your mind later, it costs <strong>1,000 gold</strong> per restoration.</p>
+    </div>
+
+    <h3>Easiest Triggers by Oath</h3>
+    <table class="oath-table">
+      <thead>
+        <tr><th>Oath</th><th>Trigger</th><th>Location</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="oath-act">Devotion</td><td class="oath-trigger">Kill an innocent NPC (any civilian or prisoner)</td><td>Nautiloid &mdash; kill the mind-controlled NPCs, or Emerald Grove &mdash; side with the goblins</td></tr>
+        <tr><td class="oath-act">Devotion</td><td class="oath-trigger">Lie in a dialogue check while under oath</td><td>Various Act 1 dialogues &mdash; lie to Zevlor or Kagha</td></tr>
+        <tr><td class="oath-act">Ancients</td><td class="oath-trigger">Destroy nature or side with those who corrupt it</td><td>Emerald Grove &mdash; side with goblins to raid the grove, or kill the Owlbear</td></tr>
+        <tr><td class="oath-act">Ancients</td><td class="oath-trigger">Let innocents die when you could save them</td><td>Emerald Grove &mdash; let the tiefling refugees die</td></tr>
+        <tr><td class="oath-act">Vengeance</td><td class="oath-trigger">Show mercy to a truly evil creature</td><td>Goblin Camp &mdash; spare Minthara, or free Sazza the goblin prisoner</td></tr>
+        <tr><td class="oath-act">Vengeance</td><td class="oath-trigger">Let a villain escape when you could punish them</td><td>Blighted Village &mdash; let the goblins go free, Zhentarim Hideout &mdash; spare the bandits</td></tr>
+        <tr><td class="oath-act">Any Oath</td><td class="oath-trigger">Kill a companion or ally NPC</td><td>Kill any companion in camp (easiest: Lae'zel while she sleeps)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-label">Fastest Method</div>
+      <p>Take <strong>Oath of Vengeance</strong> and free <strong>Sazza</strong> the goblin prisoner in the Emerald Grove. This is available within the first 30 minutes of gameplay and reliably triggers the oath break. Alternatively, take Oath of Devotion and kill any unarmed NPC in the grove.</p>
+    </div>
+  </section>
+
+  <!-- OATHBREAKER FEATURES -->
+  <section class="section reveal" id="features">
+    <h2>Oathbreaker Features</h2>
+
+    <h3>Spellcasting Wraith (Channel Divinity)</h3>
+    <ul class="picks">
+      <li><span class="label">Type</span> <span class="name">Channel Divinity &mdash; Action</span> &mdash; <span class="note">Summon a powerful wraith. It has its own turn, multiattack, and life drain. Benefits from Aura of Hate. One of the strongest summons available at level 3.</span></li>
+      <li><span class="label">Scaling</span> <span class="name">Aura of Hate synergy</span> &mdash; <span class="note">The wraith's melee attacks gain +CHA mod from Aura of Hate. At CHA 20, your wraith deals +5 on every hit, making it deal real damage throughout the game.</span></li>
+      <li><span class="label">Tactics</span> <span class="name">Positioning</span> &mdash; <span class="note">Keep the wraith within 3m of you to benefit from Aura of Hate. It can also tank hits and apply Life Drain to heal itself.</span></li>
+    </ul>
+
+    <h3>Control Undead (Channel Divinity)</h3>
+    <ul class="picks">
+      <li><span class="label">Type</span> <span class="name">Channel Divinity &mdash; Action</span> &mdash; <span class="note">Target an undead creature. If it fails a WIS save, it becomes your ally. Incredible in Act 2 where powerful undead enemies are everywhere.</span></li>
+      <li><span class="label">Best Use</span> <span class="name">Act 2 Shadow Cursed Lands</span> &mdash; <span class="note">Control powerful undead like Shadow Mastiffs, Ghasts, or even Shadow-cursed Undead to fight for you. They all benefit from Aura of Hate.</span></li>
+    </ul>
+
+    <h3>Aura of Hate (Level 7)</h3>
+    <ul class="picks">
+      <li><span class="label">Range</span> <span class="name">3m (10ft) radius</span> &mdash; <span class="note">Passive aura. Adds CHA modifier to melee weapon damage for you, undead allies, and fiend allies within range.</span></li>
+      <li><span class="label">Stacking</span> <span class="name">Stacks with everything</span> &mdash; <span class="note">GWM (+10) + STR (+5) + Aura of Hate (+5) + Improved Divine Smite (1d8) = each hit deals ~25 before weapon dice. This is the highest per-hit base damage in BG3.</span></li>
+    </ul>
+
+    <h3>Dread Lord (Level 11 &mdash; BG3 Implementation)</h3>
+    <ul class="picks">
+      <li><span class="label">Note</span> <span class="name">Improved Divine Smite</span> &mdash; <span class="note">In BG3 Patch 8, Paladin 11 grants Improved Divine Smite: +1d8 radiant damage on all melee hits passively. This replaces the tabletop Dread Lord feature but is extremely powerful as free, unlimited damage.</span></li>
+    </ul>
+  </section>
+
+  <!-- SPELLS -->
+  <section class="section reveal" id="spells">
+    <h2>Spells</h2>
+
+    <div class="spell-section">
+      <div class="spell-level">Oathbreaker Domain Spells (Always Prepared)</div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Hellish Rebuke</div>
+          <div class="spell-desc">Reaction: deal 2d10 fire damage to an attacker. Scales with slot level. Free value as a frontliner who gets hit often.</div>
+        </div>
+        <span class="spell-badge oath">Oath</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Inflict Wounds</div>
+          <div class="spell-desc">3d10 necrotic on melee spell attack. Highest single-target 1st-level damage in BG3. Use when you need burst without weapon attacks.</div>
+        </div>
+        <span class="spell-badge oath">Oath</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Darkness</div>
+          <div class="spell-desc">Create magical darkness. Enemies inside can't see, giving you advantage on attacks. Combine with Devil's Sight Elixir for disgusting results.</div>
+        </div>
+        <span class="spell-badge oath">Oath</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Crown of Madness</div>
+          <div class="spell-desc">Target attacks its allies on a failed WIS save. Concentration. Situational but hilarious when it works on a big enemy.</div>
+        </div>
+        <span class="spell-badge oath">Oath</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Animate Dead</div>
+          <div class="spell-desc">Raise a skeleton or zombie. They persist until killed. All benefit from Aura of Hate. Cast at higher slots for multiple undead. THE Oathbreaker spell.</div>
+        </div>
+        <span class="spell-badge oath">Oath</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Bestow Curse</div>
+          <div class="spell-desc">Curse a target with debuffs. Choose disadvantage on STR/DEX saves to set up your party, or extra necrotic damage on your hits.</div>
+        </div>
+        <span class="spell-badge oath">Oath</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Must-Prepare Paladin Spells</div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Shield of Faith</div>
+          <div class="spell-desc">+2 AC as a bonus action. Concentration but makes you extremely tanky in heavy armor. AC 20+ with a shield, or 18+ with a greatsword.</div>
+        </div>
+        <span class="spell-badge must">Must</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Bless</div>
+          <div class="spell-desc">+1d4 to attack rolls and saving throws for 3 allies. Concentration. The best 1st-level buff in BG3. Offsets GWM's -5 penalty.</div>
+        </div>
+        <span class="spell-badge must">Must</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Command</div>
+          <div class="spell-desc">Force an enemy to grovel (prone), halt, flee, or drop their weapon. No concentration. Excellent crowd control at any level.</div>
+        </div>
+        <span class="spell-badge must">Must</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Revivify</div>
+          <div class="spell-desc">Bring a dead ally back to life with 1 HP. Always have this prepared. Always.</div>
+        </div>
+        <span class="spell-badge must">Must</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Wrathful Smite</div>
+          <div class="spell-desc">Extra 1d6 psychic on hit + target must save or be Frightened. Frightened enemies have disadvantage on attacks and can't approach you.</div>
+        </div>
+        <span class="spell-badge good">Good</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Thunderous Smite</div>
+          <div class="spell-desc">Extra 2d6 thunder on hit + push target 3m on failed save. Excellent for environmental kills (cliffs, chasms, lava).</div>
+        </div>
+        <span class="spell-badge good">Good</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info">
+          <div class="spell-name">Blinding Smite</div>
+          <div class="spell-desc">3d8 radiant + blind target on failed CON save. Blinded enemies attack at disadvantage and you attack them at advantage. Devastating.</div>
+        </div>
+        <span class="spell-badge good">Good</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATS -->
+  <section class="section reveal" id="feats">
+    <h2>Feats</h2>
+
+    <h3>Level 4 &mdash; Great Weapon Master</h3>
+    <ul class="picks">
+      <li><span class="label">Effect</span> <span class="name">+10 damage / -5 attack</span> &mdash; <span class="note">Toggle on for heavy weapons. The -5 attack penalty sounds bad, but Bless (+1d4), advantage (from Darkness or allies), and high STR offset it. The +10 damage is multiplicative with Extra Attack and GWM bonus action attacks.</span></li>
+      <li><span class="label">Effect</span> <span class="name">Bonus action attack on kill/crit</span> &mdash; <span class="note">Kill an enemy or land a critical hit &rarr; free bonus action melee attack. With Half-Orc Savage Attacks and smite crits, you'll trigger this regularly.</span></li>
+    </ul>
+
+    <h3>Level 8 &mdash; +2 Charisma (18)</h3>
+    <ul class="picks">
+      <li><span class="label">Why</span> <span class="name">Multiplied value</span> &mdash; <span class="note">Every point of CHA improves damage for you AND every undead summon (Aura of Hate), improves saves for your entire party (Aura of Protection), and improves your spell DCs. No other ASI provides this much value.</span></li>
+    </ul>
+
+    <h3>Level 12 &mdash; +2 Charisma (20) or Sentinel</h3>
+    <ul class="picks">
+      <li><span class="label">Option A</span> <span class="name">CHA 20</span> &mdash; <span class="note">If you haven't capped CHA from gear yet, always take this. +5 to everything that matters.</span></li>
+      <li><span class="label">Option B</span> <span class="name">Sentinel</span> &mdash; <span class="note">If CHA is already 20 from items (Birthright, Mirror of Loss). Reaction attacks when enemies hit your allies. Enemies can't Disengage from you. Perfect for protecting your backline while your undead army flanks.</span></li>
+      <li><span class="label">Option C</span> <span class="name">Alert</span> &mdash; <span class="note">+5 initiative, can't be surprised. Going first means your Aura of Hate is active before enemies act, and you can set up Animate Dead before combat starts properly.</span></li>
+    </ul>
+  </section>
+
+  <!-- GEAR -->
+  <section class="section reveal" id="items">
+    <h2>Gear</h2>
+
+    <div class="item-group">
+      <div class="item-group-title">Act 1 Gear</div>
+      <div class="item-row">
+        <div class="item-name">Sword of Justice <span class="item-slot">Greatsword</span></div>
+        <div class="item-desc">+1 greatsword that can cast Shield of Faith once per long rest. Excellent early weapon &mdash; the free Shield of Faith lets you save spell slots for smites.</div>
+        <div class="item-loc">Anders in the Toll House, west of Blighted Village. Kill him or persuade him.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Blooded Greataxe <span class="item-slot">Greataxe</span></div>
+        <div class="item-desc">1d12 base damage, +1d4 when below 50% HP. Solid alternative if you prefer axes. The bonus damage when bloodied fits the dark paladin theme.</div>
+        <div class="item-loc">Various vendors in Act 1 &mdash; check the Goblin Camp or Zhentarim traders.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Adamantine Splint Armour <span class="item-slot">Heavy Armor</span></div>
+        <div class="item-desc">AC 18, reduces all incoming damage by 1, crits against you become normal hits. Best armor in Act 1 by far.</div>
+        <div class="item-loc">Craft in the Adamantine Forge (Grymforge). Requires Splint Armour Mould + Mithral Ore.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Crusher's Ring <span class="item-slot">Ring</span></div>
+        <div class="item-desc">+3m movement speed. Crucial for a melee build &mdash; you need to reach enemies to hit them. Free from Act 1.</div>
+        <div class="item-loc">Goblin Camp &mdash; kill Crusher or beat him in the foot contest.</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Act 2 Gear</div>
+      <div class="item-row">
+        <div class="item-name">Shar's Spear of Evening <span class="item-slot">Spear (Versatile)</span></div>
+        <div class="item-desc">+1 weapon, Advantage on saving throws. The thematic dark paladin weapon. Pairs perfectly with Oathbreaker's dark divine aesthetic. Use with a shield for +2 AC.</div>
+        <div class="item-loc">Nightsong encounter in the Shadowfell &mdash; side with Shadowheart to kill the Nightsong.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Reaper's Embrace <span class="item-slot">Heavy Armor</span></div>
+        <div class="item-desc">AC 19, grants Howl of the Dead (AoE fear), prevents being moved against your will. Excellent dark paladin armor with crowd control utility.</div>
+        <div class="item-loc">Act 2 &mdash; Ketheric Thorm's general in Moonrise Towers.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Vivacious Cloak <span class="item-slot">Cloak</span></div>
+        <div class="item-desc">Gain 7 temporary HP when you cast a spell in melee range. Triggers off smite spells, Shield of Faith, Bless &mdash; free survivability.</div>
+        <div class="item-loc">Last Light Inn &mdash; sold by Quartermaster Talli.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Shadow-Cloaked Ring <span class="item-slot">Ring</span></div>
+        <div class="item-desc">While obscured, gain +1d4 to attack rolls. In Darkness (your oath spell), you're always obscured. Effectively permanent Bless on yourself.</div>
+        <div class="item-loc">Found in the Shadow-Cursed Lands or sold by Act 2 vendors.</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Act 3 Gear (Endgame)</div>
+      <div class="item-row">
+        <div class="item-name">Balduran's Giantslayer <span class="item-slot">Greatsword</span></div>
+        <div class="item-desc">+3, doubles STR modifier on damage, advantage on attacks vs Large+ creatures, Giant Form action. THE best greatsword in BG3. Doubles your STR bonus means +10 instead of +5 from STR alone.</div>
+        <div class="item-loc">Wyrmway under Wyrm's Rock Fortress &mdash; defeat the trials of Balduran.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Nyrulna <span class="item-slot">Trident</span></div>
+        <div class="item-desc">+3, returns when thrown, 3d4 thunder AoE on hit, grants movement speed. Alternative to Giantslayer &mdash; better AoE, worse single-target.</div>
+        <div class="item-loc">Circus of the Last Days in Rivington &mdash; Akabi the djinni's rigged wheel (steal from him or pass checks).</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Helldusk Armour <span class="item-slot">Heavy Armor</span></div>
+        <div class="item-desc">AC 21, fire resistance, Infernal Retribution (burn attackers for 2d6), proficiency not required, can't be forcefully moved. Best armor in BG3.</div>
+        <div class="item-loc">House of Hope &mdash; loot from Raphael's vault in the upper floors.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Bhaalist Armour <span class="item-slot">Medium Armor (Alternative)</span></div>
+        <div class="item-desc">On kill, gain HP equal to remaining HP of the killed target. With GWM cleave kills, you're constantly healing to full. Disgusting sustain for the dark paladin.</div>
+        <div class="item-loc">Murder Tribunal in the Bhaalist Temple &mdash; complete the Bhaal storyline (evil path).</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Helldusk Gloves <span class="item-slot">Gloves</span></div>
+        <div class="item-desc">+1d6 fire damage on weapon attacks, Rays of Fire cantrip, STR saving throw bonus. Extra damage that stacks with everything.</div>
+        <div class="item-loc">House of Hope &mdash; Haarlep's chamber or Raphael's vault.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Amulet of Greater Health <span class="item-slot">Amulet</span></div>
+        <div class="item-desc">Sets CON to 23 (+6 modifier). Massive HP boost and concentration save improvement. Frees up point buy to dump CON.</div>
+        <div class="item-loc">House of Hope &mdash; one of the vaults.</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Birthright <span class="item-slot">Helmet</span></div>
+        <div class="item-desc">+2 CHA. If this brings you to CHA 20, you can take Sentinel as your Level 12 feat instead of +2 CHA ASI.</div>
+        <div class="item-loc">Act 3 &mdash; looted from Enver Gortash in Wyrm's Rock Fortress.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMBAT -->
+  <section class="section reveal" id="combat">
+    <h2>Combat Rotation</h2>
+
+    <h3>Pre-Combat Setup</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Cast Animate Dead</span> <span class="step-timing pre">Pre-Combat</span>
+        <div class="step-detail">Raise 1&ndash;3 skeletons before every major fight. They persist until killed, so maintain your army between encounters. Use corpses from previous fights.</div>
+      </li>
+      <li>
+        <span class="step-action">Position Aura Range</span> <span class="step-timing pre">Pre-Combat</span>
+        <div class="step-detail">Keep your undead within 3m of you. Aura of Hate only works within range. Group your skeletons near you before initiating combat.</div>
+      </li>
+      <li>
+        <span class="step-action">Summon Spellcasting Wraith</span> <span class="step-timing turn">Turn 1</span>
+        <div class="step-detail">Channel Divinity to summon your wraith. It gets its own turn, benefits from Aura of Hate, and can tank/deal significant damage.</div>
+      </li>
+    </ol>
+
+    <h3>Turn-by-Turn Rotation</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Bless (if not already active)</span> <span class="step-timing turn">Turn 1</span>
+        <div class="step-detail">Bless yourself + 2 allies. The +1d4 to attacks offsets GWM's -5 penalty. Concentration, so only cast once.</div>
+      </li>
+      <li>
+        <span class="step-action">Move to priority target</span> <span class="step-timing every">Every Turn</span>
+        <div class="step-detail">Close to melee range. Target the highest-threat enemy. Your undead should follow if within aura range.</div>
+      </li>
+      <li>
+        <span class="step-action">Attack x2 with GWM + Divine Smite</span> <span class="step-timing every">Every Turn</span>
+        <div class="step-detail">Both attacks deal: 2d6 (greatsword) + 5 (STR) + 5 (Aura of Hate) + 10 (GWM) + smite dice. Save your highest slots for crits or priority kills.</div>
+      </li>
+      <li>
+        <span class="step-action">GWM Bonus Attack (on kill/crit)</span> <span class="step-timing bonus">Bonus</span>
+        <div class="step-detail">If you killed or crit, swing again as a bonus action. Third smite opportunity. This is where the overkill happens.</div>
+      </li>
+      <li>
+        <span class="step-action">Hellish Rebuke (reaction)</span> <span class="step-timing every">Reaction</span>
+        <div class="step-detail">When an enemy hits you (they will, you're the frontliner), Hellish Rebuke fires back for 2d10 fire. Free damage on the enemy's turn.</div>
+      </li>
+    </ol>
+
+    <h3>Nova Round (Boss Kill)</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Command: Grovel (bonus action)</span> <span class="step-timing bonus">Bonus</span>
+        <div class="step-detail">Force the boss prone. Prone targets give advantage on melee attacks within 3m. Sets up your crits.</div>
+      </li>
+      <li>
+        <span class="step-action">Attack #1: 3rd-level Smite</span> <span class="step-timing turn">Action</span>
+        <div class="step-detail">Greatsword + GWM + Aura of Hate + 4d8 Divine Smite. With advantage from prone, high crit chance. If it crits: 2d6+1d6(savage)+5+5+10+8d8 = ~60+ damage.</div>
+      </li>
+      <li>
+        <span class="step-action">Attack #2: 3rd-level Smite</span> <span class="step-timing turn">Action</span>
+        <div class="step-detail">Same again. Two 3rd-level smites in one turn = 8d8 radiant + all modifiers. Boss melts. Total nova: ~100+ damage in one turn from you alone.</div>
+      </li>
+    </ol>
+
+    <div class="callout tip">
+      <div class="callout-label">Smite Economy</div>
+      <p>You only have 9 spell slots at level 12 (4/3/2). Don't smite on every hit &mdash; save your 3rd-level slots for crits or bosses. Use 1st-level smites for trash mobs. Your Aura of Hate + GWM already deal enough base damage to kill most enemies without smiting. Let your undead army handle the fodder while you save resources for the big fights.</p>
+    </div>
+  </section>
+
+  <!-- HONOUR MODE -->
+  <section class="section reveal" id="honour">
+    <h2>Honour Mode Tips</h2>
+
+    <div class="callout warn">
+      <div class="callout-label">Honour Mode Warning</div>
+      <p>Honour Mode bosses have Legendary Actions and much higher stats. Your smite slots are limited and precious. The Oathbreaker's advantage in Honour Mode is <strong>action economy</strong> &mdash; your undead army gives you 3&ndash;4 extra attacks per round that don't cost any resources.</p>
+    </div>
+
+    <ul class="picks">
+      <li><span class="label">Tip 1</span> <span class="name">Animate Dead before EVERY boss fight</span> &mdash; <span class="note">Your skeletons are free meat shields that draw enemy attacks AND deal real damage with Aura of Hate. Even if they die, they absorbed hits meant for your party.</span></li>
+      <li><span class="label">Tip 2</span> <span class="name">Smite only on crits in Honour</span> &mdash; <span class="note">Your base damage with GWM + Aura of Hate is already ~25 per hit. Save smites for crits where the dice double. A 3rd-level crit smite with Half-Orc Savage Attacks does 8d8+1d6 = ~40 extra damage.</span></li>
+      <li><span class="label">Tip 3</span> <span class="name">Aura of Protection is your survival</span> &mdash; <span class="note">+5 to all saves for your frontline. In Honour Mode, enemies have higher DCs. This aura is the difference between your party making saves or getting wiped. Position carefully.</span></li>
+      <li><span class="label">Tip 4</span> <span class="name">Control Undead is broken in Act 2</span> &mdash; <span class="note">Shadow-Cursed Lands are full of powerful undead. Use Control Undead to steal enemy Shadow Mastiffs or Ghasts. They all benefit from Aura of Hate. You can have a small army of controlled undead + raised dead.</span></li>
+      <li><span class="label">Tip 5</span> <span class="name">Hellish Rebuke is free value</span> &mdash; <span class="note">You're the frontliner. You WILL get hit. Hellish Rebuke punishes enemies for targeting you. In Honour Mode, this free reaction damage adds up significantly over a fight.</span></li>
+      <li><span class="label">Tip 6</span> <span class="name">Don't waste Channel Divinity early</span> &mdash; <span class="note">You have one Channel Divinity per short rest. Spellcasting Wraith is usually the better choice over Control Undead unless there's a very strong undead enemy to steal. Plan your CD usage per fight.</span></li>
+    </ul>
+  </section>
+
+  <!-- PARTY -->
+  <section class="section reveal" id="party">
+    <h2>Recommended Party</h2>
+
+    <div class="party-grid">
+      <div class="party-card">
+        <div class="party-name">Shadowheart</div>
+        <div class="party-role">Cleric &middot; Healer &amp; Support</div>
+        <div class="party-desc">Spirit Guardians + Bless + healing. She handles concentration buffs/debuffs so you can focus on smiting. Her heals keep you alive on the frontline. Also thematically perfect &mdash; two dark divine casters serving different dark powers.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Astarion</div>
+        <div class="party-role">Rogue &middot; Sneak Attack Damage</div>
+        <div class="party-desc">Flanking with your undead gives Astarion easy Sneak Attack. He handles traps, locks, and stealth. His burst damage complements your smite nova rounds. Together you can delete any single target in one round.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Gale</div>
+        <div class="party-role">Wizard &middot; AoE &amp; Control</div>
+        <div class="party-desc">Fireball, Hold Person, Haste (on you for 3 attacks + smites). His crowd control sets up your melee superiority. Hold Person = guaranteed crits = doubled smite dice. Cast Haste on you for the most devastating turns possible.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Alt: Lae'zel</div>
+        <div class="party-role">Fighter &middot; Second Frontliner</div>
+        <div class="party-desc">Two GWM frontliners with Action Surge is absurd burst. She draws attacks, your Aura of Protection covers her saves. She benefits from Aura of Protection's +5 saves while standing near you. Swap for Gale if you want pure aggression.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="guide-footer">
+    <div class="footer-links">
+      <a href="guides.html">All Guides</a>
+      <a href="index.html">Home</a>
+    </div>
+    BG3 Oathbreaker Paladin &mdash; The Fallen Champion Build Guide &middot; Pure Paladin 12 &middot; Patch 8 (2026)
+  </div>
+
+</main>
+</div>
+
+<script>
+// Scroll reveal
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { rootMargin: '-10% 0px -10% 0px' });
+revealElements.forEach(el => revealObserver.observe(el));
+
+// Highlight active sidebar link on scroll
+const sections = document.querySelectorAll('.section');
+const sidebarLinks = document.querySelectorAll('.sidebar a');
+const subnavLinks = document.querySelectorAll('.sub-nav a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      sidebarLinks.forEach(l => l.classList.remove('active'));
+      subnavLinks.forEach(l => l.classList.remove('active'));
+      const activeSidebar = document.querySelector('.sidebar a[href="#' + id + '"]');
+      const activeSubnav = document.querySelector('.sub-nav a[href="#' + id + '"]');
+      if (activeSidebar) activeSidebar.classList.add('active');
+      if (activeSubnav) activeSubnav.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+
+// Mobile hamburger menu (page section nav)
+const toggle = document.querySelector('.nav-toggle');
+const mobileLinks = document.querySelector('.nav-links-mobile');
+if (toggle && mobileLinks) {
+  toggle.addEventListener('click', () => mobileLinks.classList.toggle('open'));
+  mobileLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileLinks.classList.remove('open')));
+}
+
+// Close top nav mobile menu when clicking links
+const topMobileNav = document.querySelector('.top-nav-mobile');
+if (topMobileNav) {
+  topMobileNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      topMobileNav.classList.remove('open');
+      document.querySelector('.top-nav-hamburger').classList.remove('open');
+    });
+  });
+}
+</script>
+</body>
+</html>

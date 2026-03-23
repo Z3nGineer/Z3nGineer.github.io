@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sorcadin — Divine Tempest · BG3 Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Crimson+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg-body: #0a0a0a;
+  --bg-card: #151515;
+  --bg-elevated: #1c1c1c;
+  --bg-hover: #222222;
+  --border: #2b2c2c;
+  --border-light: #3a3a3a;
+  --text: #e8e8e8;
+  --text-dim: #a0a0a0;
+  --text-muted: #707070;
+  --white: #ffffff;
+  --accent: #057af0;
+  --accent-hover: #3592ff;
+  --green: #21c513;
+  --green-dim: #199f2f;
+  --orange: #f09a18;
+  --orange-dim: rgba(240,154,24,0.15);
+  --red: #f00505;
+  --gold: #d4a043;
+  --gold-dim: rgba(212,160,67,0.12);
+  --purple: #b080d0;
+}
+
+html { scroll-behavior:smooth; scrollbar-width:thin; scrollbar-color:#2b2c2c #0a0a0a; }
+
+body {
+  background: var(--bg-body);
+  color: var(--text);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 19px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration:none; }
+a:hover { color: var(--accent-hover); text-decoration:underline; }
+
+/* ── LAYOUT ── */
+.page { display:flex; max-width:1100px; margin:0 auto; gap:0; }
+
+.sidebar {
+  width:220px;
+  flex-shrink:0;
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow-y:auto;
+  border-right:1px solid var(--border);
+  background: var(--bg-card);
+  padding:1.5rem 0;
+  scrollbar-width:thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.sidebar-title {
+  font-family:'Oswald', sans-serif;
+  font-size:0.75rem;
+  font-weight:600;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  padding:0 1.25rem;
+  margin-bottom:0.75rem;
+}
+
+.sidebar a {
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  padding:0.45rem 1.25rem;
+  font-size:0.88rem;
+  font-weight:500;
+  color:var(--text-dim);
+  text-decoration:none;
+  border-left:3px solid transparent;
+  transition:all 0.15s;
+}
+
+.sidebar a:hover {
+  color:var(--white);
+  background:rgba(255,255,255,0.03);
+  text-decoration:none;
+}
+
+.sidebar a.active {
+  color:var(--white);
+  border-left-color:var(--accent);
+  background:rgba(5,122,240,0.06);
+}
+
+.sidebar .nav-icon { font-size:1rem; width:1.2rem; text-align:center; }
+
+.content {
+  flex:1;
+  min-width:0;
+  padding:2.5rem 2.5rem 4rem;
+}
+
+@media(max-width:800px) {
+  .sidebar { display:none; }
+  .content { padding:1.5rem; }
+}
+
+/* ── HEADER ── */
+.guide-header {
+  margin-bottom:2.5rem;
+  padding-bottom:1.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.guide-header .breadcrumb {
+  font-size:0.78rem;
+  color:var(--text-muted);
+  margin-bottom:0.5rem;
+  letter-spacing:0.02em;
+}
+
+.guide-header h1 {
+  font-family:'Oswald', sans-serif;
+  font-size:2.2rem;
+  font-weight:700;
+  color:var(--white);
+  line-height:1.2;
+  margin-bottom:0.4rem;
+}
+
+.guide-header .subtitle {
+  font-size:1rem;
+  color:var(--text-dim);
+  font-weight:400;
+}
+
+.tag-row { display:flex; gap:0.4rem; margin-top:0.75rem; flex-wrap:wrap; }
+.tag {
+  font-size:0.72rem;
+  font-weight:600;
+  padding:0.2rem 0.6rem;
+  border-radius:4px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.tag.green { color:var(--green); border-color:rgba(33,197,19,0.25); background:rgba(33,197,19,0.06); }
+.tag.orange { color:var(--orange); border-color:rgba(240,154,24,0.25); background:var(--orange-dim); }
+.tag.blue { color:var(--accent); border-color:rgba(5,122,240,0.25); background:rgba(5,122,240,0.06); }
+.tag.red { color:var(--red); border-color:rgba(240,5,5,0.25); background:rgba(240,5,5,0.06); }
+.tag.gold { color:var(--gold); border-color:rgba(212,160,67,0.25); background:var(--gold-dim); }
+
+/* ── HERO ART ── */
+.hero-art {
+  width:100%;
+  margin-bottom:1.25rem;
+  border-radius:10px;
+  border:1px solid var(--border);
+  overflow:hidden;
+  background:var(--bg-card);
+}
+.hero-svg {
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+/* ── HEADER ROW ── */
+.header-row {
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  margin-bottom:1.25rem;
+}
+.header-portrait {
+  width:80px;
+  height:80px;
+  border-radius:8px;
+  border:2px solid var(--border);
+  object-fit:cover;
+}
+.header-text { flex:1; }
+
+/* ── SECTIONS ── */
+.section { margin-top:3rem; }
+
+.section h2 {
+  font-family:'Oswald', sans-serif;
+  font-size:1.5rem;
+  font-weight:600;
+  color:var(--white);
+  margin-bottom:1rem;
+  padding-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.section h3 {
+  font-family:'Oswald', sans-serif;
+  font-size:1.15rem;
+  font-weight:500;
+  color:var(--text);
+  margin:1.5rem 0 0.6rem;
+}
+
+.section p { margin-bottom:1rem; color:var(--text); }
+
+/* ── CALLOUTS ── */
+.callout {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:6px;
+  padding:1rem 1.25rem;
+  margin:1.25rem 0;
+}
+
+.callout.warn { border-left-color:var(--orange); }
+.callout.tip { border-left-color:var(--green); }
+
+.callout-label {
+  font-family:'Oswald', sans-serif;
+  font-size:0.78rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  margin-bottom:0.25rem;
+}
+
+.callout .callout-label { color:var(--accent); }
+.callout.warn .callout-label { color:var(--orange); }
+.callout.tip .callout-label { color:var(--green); }
+
+.callout p { margin-bottom:0.5rem; font-size:0.95rem; }
+.callout p:last-child { margin-bottom:0; }
+
+/* ── STAT BAR ── */
+.stats { display:flex; gap:0.5rem; flex-wrap:wrap; margin:0.75rem 0; }
+.stat-box {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:0.4rem 0.75rem;
+  text-align:center;
+  min-width:3.5rem;
+}
+.stat-box.primary { border-color:rgba(5,122,240,0.4); }
+.stat-label { font-size:0.65rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); }
+.stat-val { font-family:'Oswald',sans-serif; font-size:1.3rem; font-weight:600; color:var(--white); }
+.stat-box.primary .stat-val { color:var(--accent); }
+
+/* ── LEVEL CARDS ── */
+.level-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  margin-bottom:0.4rem;
+  overflow:hidden;
+  transition:border-color 0.15s;
+}
+
+.level-card:hover { border-color:var(--border-light); }
+.level-card.spike { border-left:3px solid var(--orange); }
+.level-card.here { border-color:var(--accent); box-shadow:0 0 0 1px rgba(5,122,240,0.15); }
+
+.lv-head {
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  padding:0.65rem 1rem;
+  cursor:pointer;
+  user-select:none;
+  transition:background 0.1s;
+}
+.lv-head:hover { background:var(--bg-hover); }
+
+.lv-num {
+  font-family:'Oswald',sans-serif;
+  font-weight:700;
+  font-size:1.3rem;
+  color:var(--white);
+  min-width:1.6rem;
+  text-align:center;
+}
+.level-card.here .lv-num { color:var(--accent); }
+
+.lv-badge {
+  font-size:0.68rem;
+  font-weight:600;
+  padding:0.15rem 0.5rem;
+  border-radius:4px;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.lv-badge.paladin { color:var(--gold); background:var(--gold-dim); border:1px solid rgba(212,160,67,0.2); }
+.lv-badge.sorcerer { color:var(--purple); background:rgba(176,128,208,0.08); border:1px solid rgba(176,128,208,0.2); }
+
+.lv-title {
+  font-weight:600;
+  font-size:0.95rem;
+  color:var(--text);
+  flex:1;
+}
+
+.lv-spike {
+  font-size:0.65rem;
+  font-weight:600;
+  color:var(--orange);
+  background:var(--orange-dim);
+  padding:0.15rem 0.45rem;
+  border-radius:4px;
+  border:1px solid rgba(240,154,24,0.2);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+
+.lv-here {
+  font-size:0.65rem;
+  font-weight:600;
+  color:var(--accent);
+  background:rgba(5,122,240,0.1);
+  padding:0.15rem 0.45rem;
+  border-radius:4px;
+  border:1px solid rgba(5,122,240,0.25);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+
+.lv-arrow {
+  color:var(--text-muted);
+  font-size:0.75rem;
+  transition:transform 0.2s;
+}
+.level-card.open .lv-arrow { transform:rotate(90deg); }
+
+.lv-body { max-height:0; overflow:hidden; transition:max-height 0.3s ease; }
+.level-card.open .lv-body { max-height:900px; }
+.lv-inner { padding:0 1rem 1rem; border-top:1px solid var(--border); }
+
+/* Quick picks */
+.qp-row { display:flex; flex-wrap:wrap; gap:0.3rem; margin:0.75rem 0 0.5rem; }
+.qp {
+  font-size:0.78rem;
+  font-weight:500;
+  padding:0.2rem 0.6rem;
+  border-radius:4px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+}
+.qp.feature { color:var(--green); border-color:rgba(33,197,19,0.2); }
+.qp.spell { color:var(--accent); border-color:rgba(5,122,240,0.2); }
+.qp.feat { color:var(--orange); border-color:rgba(240,154,24,0.2); }
+.qp.meta { color:var(--purple); border-color:rgba(176,128,208,0.2); }
+.qp.smite { color:var(--gold); border-color:rgba(212,160,67,0.2); }
+
+/* Pick list */
+.picks { list-style:none; margin:0.5rem 0; }
+.picks li {
+  padding:0.3rem 0 0.3rem 0;
+  font-size:0.95rem;
+  display:flex;
+  gap:0.4rem;
+  align-items:baseline;
+}
+.picks .label {
+  font-size:0.72rem;
+  font-weight:600;
+  color:var(--orange);
+  text-transform:uppercase;
+  letter-spacing:0.03em;
+  flex-shrink:0;
+  min-width:4rem;
+}
+.picks .name { font-weight:600; color:var(--white); }
+.picks .note { color:var(--text-dim); font-size:0.88rem; }
+
+/* Prep box */
+.prep {
+  background:rgba(33,197,19,0.04);
+  border:1px solid rgba(33,197,19,0.15);
+  border-radius:6px;
+  padding:0.75rem 1rem;
+  margin-top:0.75rem;
+}
+.prep-title {
+  font-family:'Oswald',sans-serif;
+  font-size:0.8rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--green);
+  margin-bottom:0.4rem;
+}
+.prep-list { list-style:none; display:flex; flex-wrap:wrap; gap:0.25rem 0.6rem; }
+.prep-list li { font-size:0.9rem; font-weight:500; color:var(--text); }
+.prep-list li::before { content:'&#8226; '; color:var(--green-dim); }
+.prep-list li.new { color:var(--orange); }
+.prep-list li.new::before { content:'&#9733; '; color:var(--orange); }
+.prep-note { font-size:0.78rem; color:var(--text-muted); margin-top:0.3rem; }
+
+/* ── SPELL GRID ── */
+.spell-section { margin-bottom:1.5rem; }
+.spell-level {
+  font-family:'Oswald',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  color:var(--white);
+  padding-bottom:0.35rem;
+  margin-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+.spell-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:start;
+  padding:0.5rem 0.75rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:0.35rem;
+  gap:0.75rem;
+}
+.spell-info { flex:1; }
+.spell-name { font-weight:600; color:var(--white); font-size:0.95rem; }
+.spell-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.1rem; }
+.spell-badge {
+  font-size:0.68rem;
+  font-weight:600;
+  padding:0.15rem 0.5rem;
+  border-radius:4px;
+  text-transform:uppercase;
+  letter-spacing:0.03em;
+  white-space:nowrap;
+  flex-shrink:0;
+  align-self:center;
+}
+.spell-badge.must { color:var(--green); background:rgba(33,197,19,0.08); border:1px solid rgba(33,197,19,0.2); }
+.spell-badge.good { color:var(--accent); background:rgba(5,122,240,0.06); border:1px solid rgba(5,122,240,0.15); }
+.spell-badge.conc { color:var(--purple); background:rgba(176,128,208,0.06); border:1px solid rgba(176,128,208,0.15); }
+.spell-badge.free { color:var(--gold); background:var(--gold-dim); border:1px solid rgba(212,160,67,0.2); }
+
+/* ── ITEMS ── */
+.item-group { margin-bottom:1.5rem; }
+.item-group-title {
+  font-family:'Oswald',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  color:var(--gold);
+  padding-bottom:0.35rem;
+  margin-bottom:0.5rem;
+  border-bottom:1px solid rgba(212,160,67,0.15);
+}
+.item-row {
+  padding:0.6rem 0.75rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:0.35rem;
+}
+.item-name { font-weight:600; color:var(--gold); font-size:0.95rem; }
+.item-slot { font-size:0.7rem; color:var(--text-muted); margin-left:0.35rem; text-transform:uppercase; letter-spacing:0.03em; }
+.item-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.15rem; }
+.item-loc { font-size:0.8rem; color:var(--green-dim); margin-top:0.2rem; }
+
+/* ── ROTATION / STEP LIST ── */
+.step-list { list-style:none; counter-reset:step; }
+.step-list li {
+  position:relative;
+  padding:0.75rem 0 0.75rem 3rem;
+  border-left:2px solid var(--border);
+  margin-left:0.75rem;
+  counter-increment:step;
+}
+.step-list li::before {
+  content:counter(step);
+  position:absolute;
+  left:-0.75rem;
+  top:0.6rem;
+  width:1.4rem;
+  height:1.4rem;
+  background:var(--bg-body);
+  border:2px solid var(--accent);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Oswald',sans-serif;
+  font-weight:600;
+  font-size:0.75rem;
+  color:var(--accent);
+}
+.step-list li:last-child { border-left-color:transparent; }
+.step-action { font-weight:600; color:var(--white); }
+.step-timing {
+  font-size:0.7rem;
+  font-weight:600;
+  padding:0.1rem 0.4rem;
+  border-radius:3px;
+  margin-left:0.4rem;
+  vertical-align:middle;
+  text-transform:uppercase;
+}
+.step-timing.pre { color:var(--text-muted); background:rgba(255,255,255,0.04); }
+.step-timing.turn { color:var(--accent); background:rgba(5,122,240,0.08); }
+.step-timing.every { color:var(--green); background:rgba(33,197,19,0.08); }
+.step-timing.bonus { color:var(--orange); background:var(--orange-dim); }
+.step-detail { color:var(--text-dim); font-size:0.9rem; margin-top:0.2rem; }
+
+/* ── PARTY ── */
+.party-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
+@media(max-width:600px) { .party-grid { grid-template-columns:1fr; } }
+.party-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1rem;
+}
+.party-name { font-family:'Oswald',sans-serif; font-weight:600; font-size:1.05rem; color:var(--white); }
+.party-role { font-size:0.72rem; font-weight:600; color:var(--accent); text-transform:uppercase; letter-spacing:0.04em; margin-top:0.1rem; }
+.party-desc { color:var(--text-dim); font-size:0.88rem; margin-top:0.35rem; }
+
+/* ── FOOTER ── */
+.guide-footer {
+  margin-top:3rem;
+  padding-top:1rem;
+  border-top:1px solid var(--border);
+  font-size:0.82rem;
+  color:var(--text-muted);
+  text-align:center;
+}
+.guide-footer a { color:var(--accent); }
+
+/* Mobile nav */
+.mobile-nav{display:none;position:sticky;top:0;z-index:100;background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:56px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;color:var(--accent);letter-spacing:.06em}
+.nav-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s}
+.nav-links{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.nav-links.open{display:flex}
+.nav-links a{display:flex;align-items:center;gap:.5rem;height:44px;font-size:.9rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){.mobile-nav{display:flex}}
+
+/* ── METAMAGIC TABLE ── */
+.meta-table { width:100%; border-collapse:collapse; margin:1rem 0; }
+.meta-table th {
+  font-family:'Oswald',sans-serif;
+  font-size:0.78rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--text-muted);
+  text-align:left;
+  padding:0.6rem 0.75rem;
+  border-bottom:2px solid var(--border);
+}
+.meta-table td {
+  padding:0.6rem 0.75rem;
+  border-bottom:1px solid var(--border);
+  font-size:0.92rem;
+}
+.meta-table tr:hover { background:var(--bg-card); }
+.meta-name { font-weight:600; color:var(--white); }
+.meta-cost { font-size:0.8rem; color:var(--purple); font-weight:600; }
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity:0; transform:translateY(18px); transition:opacity 0.5s ease, transform 0.5s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+<div class="mobile-nav">
+  <span class="mobile-nav-title">Sorcadin — Divine Tempest</span>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="#overview"><span class="nav-icon">&#9672;</span> Overview</a>
+    <a href="#race"><span class="nav-icon">&#9775;</span> Race & Background</a>
+    <a href="#abilities"><span class="nav-icon">&#9670;</span> Ability Scores</a>
+    <a href="#levels"><span class="nav-icon">&#8593;</span> Progression</a>
+    <a href="#subclass"><span class="nav-icon">&#9733;</span> Subclass</a>
+    <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+    <a href="#metamagic"><span class="nav-icon">&#9830;</span> Metamagic</a>
+    <a href="#items"><span class="nav-icon">&#9670;</span> Gear</a>
+    <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+    <a href="#companions"><span class="nav-icon">&#9673;</span> Companions</a>
+    <a href="#honour"><span class="nav-icon">&#9760;</span> Honour Mode</a>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div style="text-align:center; padding:0 1.25rem 1rem;">
+    <svg viewBox="0 0 48 48" width="48" height="48" style="border-radius:8px; border:1px solid var(--border);">
+      <rect width="48" height="48" fill="#1a1520"/>
+      <path d="M24 8 L30 20 L24 16 L18 20 Z" fill="#d4a043" opacity="0.9"/>
+      <path d="M24 20 L30 36 L24 44 L18 36 Z" fill="#d4a043" opacity="0.6"/>
+      <circle cx="24" cy="20" r="6" fill="none" stroke="#b080d0" stroke-width="1.5" opacity="0.7"/>
+      <circle cx="24" cy="20" r="3" fill="#b080d0" opacity="0.4"/>
+    </svg>
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">&#9672;</span> Overview</a>
+  <a href="#race"><span class="nav-icon">&#9775;</span> Race & Background</a>
+  <a href="#abilities"><span class="nav-icon">&#9670;</span> Ability Scores</a>
+  <a href="#levels"><span class="nav-icon">&#8593;</span> Progression</a>
+  <a href="#subclass"><span class="nav-icon">&#9733;</span> Subclass</a>
+  <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+  <a href="#metamagic"><span class="nav-icon">&#9830;</span> Metamagic</a>
+  <a href="#items"><span class="nav-icon">&#9670;</span> Gear</a>
+  <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+  <a href="#companions"><span class="nav-icon">&#9673;</span> Companions</a>
+  <a href="#honour"><span class="nav-icon">&#9760;</span> Honour Mode</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 800 260" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="smiteGlow" cx="42%" cy="45%" r="55%">
+            <stop offset="0%" stop-color="#d4a020" stop-opacity="0.5"/>
+            <stop offset="35%" stop-color="#8a6010" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="sorcGlow" cx="55%" cy="50%" r="40%">
+            <stop offset="0%" stop-color="#6030a0" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="impactGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffe080" stop-opacity="0.7"/>
+            <stop offset="40%" stop-color="#d4a020" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="bladeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#e0e0e0"/>
+            <stop offset="50%" stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#c0c0c0"/>
+          </linearGradient>
+          <linearGradient id="smiteEnergy" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ffe880" stop-opacity="0.9"/>
+            <stop offset="50%" stop-color="#d4a020" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#ffe880" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="smiteBloom">
+            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- Background -->
+        <rect width="800" height="260" fill="url(#smiteGlow)"/>
+        <rect width="800" height="260" fill="url(#sorcGlow)" opacity="0.6"/>
+
+        <!-- Lightning bolts in sky -->
+        <g opacity="0.35" stroke="#d4c0ff" stroke-width="1.5" fill="none">
+          <path d="M120,10 L135,40 L125,42 L140,75 L128,77 L145,110"/>
+          <path d="M680,5 L665,35 L675,38 L658,70"/>
+          <path d="M350,0 L355,25 L348,28 L360,55" opacity="0.2"/>
+        </g>
+
+        <!-- Sorcery point particles — swirling around paladin -->
+        <g filter="url(#glow)" opacity="0.7">
+          <circle cx="320" cy="60" r="3" fill="#b080d0"><animate attributeName="cy" values="60;50;60" dur="3s" repeatCount="indefinite"/></circle>
+          <circle cx="290" cy="90" r="2.5" fill="#d0a0f0"><animate attributeName="cx" values="290;280;290" dur="2.5s" repeatCount="indefinite"/></circle>
+          <circle cx="350" cy="80" r="2" fill="#e0c0ff"><animate attributeName="cy" values="80;70;80" dur="2s" repeatCount="indefinite"/></circle>
+          <circle cx="270" cy="120" r="3.5" fill="#9060c0"><animate attributeName="cx" values="270;260;270" dur="3.5s" repeatCount="indefinite"/></circle>
+          <circle cx="380" cy="110" r="2" fill="#c090e0"><animate attributeName="cy" values="110;100;110" dur="2.8s" repeatCount="indefinite"/></circle>
+          <circle cx="310" cy="140" r="2.8" fill="#b080d0"><animate attributeName="cx" values="310;320;310" dur="3.2s" repeatCount="indefinite"/></circle>
+          <circle cx="255" cy="70" r="1.8" fill="#e0c0ff"><animate attributeName="cy" values="70;62;70" dur="2.2s" repeatCount="indefinite"/></circle>
+          <circle cx="365" cy="55" r="1.5" fill="#d0a0f0"><animate attributeName="cx" values="365;372;365" dur="2.7s" repeatCount="indefinite"/></circle>
+        </g>
+
+        <!-- THE PALADIN — armored warrior mid-overhead smite swing -->
+        <g transform="translate(320,135)" opacity="0.95">
+          <!-- Cape billowing behind -->
+          <path d="M10,-20 Q30,-25 55,0 Q75,30 85,80 Q88,100 70,105 Q55,95 52,70 Q48,40 35,10 Q25,-8 10,-15 Z" fill="#1a1535" opacity="0.6"/>
+          <path d="M10,-20 Q28,-22 48,-5 Q60,18 65,50 Q68,72 55,78 Q48,65 50,45 Q52,22 40,5 Q30,-10 10,-17 Z" fill="#252040" opacity="0.4"/>
+
+          <!-- Plate armor legs -->
+          <path d="M-15,50 L-20,95 L-10,98 L-5,55" fill="#505560"/>
+          <path d="M10,50 L15,95 L25,92 L18,48" fill="#505560"/>
+          <!-- Knee guards -->
+          <ellipse cx="-14" cy="72" rx="8" ry="5" fill="#606570"/>
+          <ellipse cx="16" cy="70" rx="8" ry="5" fill="#606570"/>
+          <!-- Sabatons -->
+          <path d="M-24,93 L-8,96 L-5,100 L-28,98 Z" fill="#505560"/>
+          <path d="M12,91 L28,90 L32,95 L10,97 Z" fill="#505560"/>
+
+          <!-- Plate armor torso — gleaming -->
+          <path d="M-28,-15 Q-32,10 -28,45 Q-25,55 0,58 Q25,55 28,45 Q32,10 28,-15 Q15,-28 0,-30 Q-15,-28 -28,-15 Z" fill="#606570"/>
+          <!-- Chest plate highlights -->
+          <path d="M-18,-10 Q-5,-15 12,-10 Q15,5 10,20 Q0,25 -10,20 Q-15,5 -18,-10 Z" fill="#707580" opacity="0.6"/>
+          <path d="M-8,-12 Q0,-15 8,-12 Q10,0 5,10 Q0,12 -5,10 Q-10,0 -8,-12 Z" fill="#808590" opacity="0.4"/>
+          <!-- Gorget -->
+          <path d="M-18,-22 Q0,-28 18,-22 Q15,-18 0,-20 Q-15,-18 -18,-22 Z" fill="#707580"/>
+
+          <!-- Pauldrons -->
+          <ellipse cx="-30" cy="-18" rx="14" ry="10" fill="#606570"/>
+          <ellipse cx="-30" cy="-18" rx="10" ry="7" fill="#707580" opacity="0.5"/>
+          <ellipse cx="30" cy="-18" rx="14" ry="10" fill="#606570"/>
+          <ellipse cx="30" cy="-18" rx="10" ry="7" fill="#707580" opacity="0.5"/>
+
+          <!-- Holy symbol on breastplate -->
+          <line x1="0" y1="-2" x2="0" y2="18" stroke="#d4a043" stroke-width="1.5" opacity="0.6"/>
+          <line x1="-8" y1="6" x2="8" y2="6" stroke="#d4a043" stroke-width="1.5" opacity="0.6"/>
+          <circle cx="0" cy="6" r="5" fill="none" stroke="#d4a043" stroke-width="0.8" opacity="0.4"/>
+
+          <!-- Head — helm with visor -->
+          <ellipse cx="0" cy="-40" rx="14" ry="16" fill="#505560"/>
+          <!-- Helm crest -->
+          <path d="M0,-58 Q2,-55 0,-50 Q-2,-55 0,-58 Z" fill="#d4a043" opacity="0.7"/>
+          <path d="M-3,-56 Q0,-62 3,-56" fill="#d4a043" opacity="0.5"/>
+          <!-- Visor slit -->
+          <path d="M-8,-42 L8,-42" stroke="#1a1a1a" stroke-width="2"/>
+          <!-- Visor glow — divine eyes -->
+          <ellipse cx="-4" cy="-42" rx="2" ry="1" fill="#ffe880" opacity="0.6"/>
+          <ellipse cx="4" cy="-42" rx="2" ry="1" fill="#ffe880" opacity="0.6"/>
+
+          <!-- Arms — right arm raised for overhead greatsword strike -->
+          <!-- Left arm bracing -->
+          <path d="M-30,-12 Q-45,-5 -48,10 Q-50,18 -44,22 L-38,15 Q-40,5 -30,0" fill="#505560"/>
+          <ellipse cx="-45" cy="18" rx="6" ry="5" fill="#606570"/>
+
+          <!-- Right arm raised overhead -->
+          <path d="M28,-15 Q40,-30 38,-55 Q37,-62 32,-60 L30,-48 Q32,-35 25,-20" fill="#505560"/>
+          <ellipse cx="36" cy="-58" rx="6" ry="5" fill="#606570"/>
+
+          <!-- GREATSWORD — raised overhead, about to strike down -->
+          <g transform="translate(36,-58) rotate(-25)">
+            <!-- Blade -->
+            <rect x="-3" y="-85" width="6" height="70" fill="url(#bladeGrad)" rx="1"/>
+            <line x1="0" y1="-85" x2="0" y2="-15" stroke="#ffffff" stroke-width="0.5" opacity="0.4"/>
+            <!-- Blade tip -->
+            <path d="M-3,-85 L0,-95 L3,-85 Z" fill="#e0e0e0"/>
+            <!-- Crossguard -->
+            <rect x="-12" y="-14" width="24" height="4" fill="#d4a043" rx="1"/>
+            <circle cx="-10" cy="-12" r="2" fill="#ffe880" opacity="0.5"/>
+            <circle cx="10" cy="-12" r="2" fill="#ffe880" opacity="0.5"/>
+            <!-- Grip -->
+            <rect x="-2.5" y="-10" width="5" height="16" fill="#3a2a18" rx="1"/>
+            <!-- Pommel -->
+            <circle cx="0" cy="8" r="4" fill="#d4a043"/>
+            <circle cx="0" cy="8" r="2" fill="#ffe880" opacity="0.4"/>
+          </g>
+
+          <!-- DIVINE SMITE ENERGY — erupting from sword -->
+          <g filter="url(#smiteBloom)">
+            <!-- Main smite beam going down to impact point -->
+            <path d="M30,-100 Q80,-60 150,60" stroke="#ffe880" stroke-width="4" fill="none" opacity="0.6"/>
+            <path d="M28,-95 Q75,-55 145,55" stroke="#d4a043" stroke-width="2" fill="none" opacity="0.4"/>
+            <path d="M32,-98 Q85,-58 155,58" stroke="#fff8d0" stroke-width="1.5" fill="none" opacity="0.3"/>
+            <!-- Radiant sparks along blade -->
+            <circle cx="36" cy="-110" r="4" fill="#ffe880" opacity="0.7"><animate attributeName="r" values="4;6;4" dur="0.8s" repeatCount="indefinite"/></circle>
+            <circle cx="40" cy="-120" r="3" fill="#fff8d0" opacity="0.5"><animate attributeName="opacity" values="0.5;0.8;0.5" dur="0.6s" repeatCount="indefinite"/></circle>
+            <circle cx="32" cy="-130" r="2.5" fill="#ffe880" opacity="0.6"/>
+            <circle cx="50" cy="-80" r="3" fill="#d4a043" opacity="0.4"/>
+            <circle cx="65" cy="-55" r="2" fill="#ffe880" opacity="0.5"/>
+            <circle cx="90" cy="-20" r="2.5" fill="#fff8d0" opacity="0.4"/>
+            <circle cx="110" cy="10" r="2" fill="#ffe880" opacity="0.35"/>
+          </g>
+        </g>
+
+        <!-- IMPACT ZONE — enemy being obliterated -->
+        <g transform="translate(530,180)">
+          <!-- Impact radiance burst -->
+          <circle cx="0" cy="0" r="50" fill="url(#impactGlow)" filter="url(#smiteBloom)">
+            <animate attributeName="r" values="45;55;45" dur="1.5s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- Radiant shockwave rings -->
+          <circle cx="0" cy="0" r="35" fill="none" stroke="#ffe880" stroke-width="1" opacity="0.3">
+            <animate attributeName="r" values="35;55;35" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.3;0;0.3" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="0" cy="0" r="25" fill="none" stroke="#d4a043" stroke-width="0.8" opacity="0.2">
+            <animate attributeName="r" values="25;45;25" dur="2s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- Enemy silhouette being destroyed — knocked back, fragmenting -->
+          <g opacity="0.6">
+            <!-- Torso blown back -->
+            <ellipse cx="15" cy="-10" rx="12" ry="18" fill="#2a1a1a" transform="rotate(30 15 -10)"/>
+            <!-- Head snapping back -->
+            <circle cx="25" cy="-28" r="8" fill="#2a1a1a"/>
+            <!-- Arms flung -->
+            <path d="M8,-5 Q-8,-25 -15,-35" stroke="#2a1a1a" stroke-width="4" stroke-linecap="round"/>
+            <path d="M22,0 Q38,-15 48,-22" stroke="#2a1a1a" stroke-width="4" stroke-linecap="round"/>
+            <!-- Legs buckling -->
+            <path d="M10,8 Q5,28 -5,40" stroke="#2a1a1a" stroke-width="4" stroke-linecap="round"/>
+            <path d="M18,8 Q25,25 30,38" stroke="#2a1a1a" stroke-width="4" stroke-linecap="round"/>
+            <!-- Armor fragments flying off -->
+            <rect x="35" y="-35" width="5" height="3" fill="#404040" transform="rotate(45)" opacity="0.5"/>
+            <rect x="-20" y="-40" width="4" height="3" fill="#404040" transform="rotate(-30)" opacity="0.4"/>
+            <rect x="40" y="-5" width="3" height="4" fill="#404040" transform="rotate(60)" opacity="0.45"/>
+          </g>
+
+          <!-- Divine smite radiance bolts outward -->
+          <g stroke="#ffe880" stroke-width="1.5" opacity="0.5" fill="none">
+            <line x1="0" y1="0" x2="-30" y2="-25"/>
+            <line x1="0" y1="0" x2="35" y2="-20"/>
+            <line x1="0" y1="0" x2="-25" y2="20"/>
+            <line x1="0" y1="0" x2="30" y2="25"/>
+            <line x1="0" y1="0" x2="0" y2="-35"/>
+            <line x1="0" y1="0" x2="-35" y2="5"/>
+            <line x1="0" y1="0" x2="40" y2="5"/>
+          </g>
+        </g>
+
+        <!-- Ground debris / rubble -->
+        <g opacity="0.35">
+          <ellipse cx="480" cy="235" rx="3" ry="2" fill="#505050"/>
+          <ellipse cx="560" cy="240" rx="4" ry="2" fill="#404040"/>
+          <ellipse cx="600" cy="238" rx="2" ry="1.5" fill="#505050"/>
+          <ellipse cx="440" cy="242" rx="3" ry="1.5" fill="#404040"/>
+        </g>
+
+        <!-- Ground line -->
+        <line x1="100" y1="245" x2="720" y2="245" stroke="#404040" stroke-width="0.6" opacity="0.4"/>
+
+        <!-- Small holy symbol in sky -->
+        <g transform="translate(320,25)" opacity="0.2">
+          <circle cx="0" cy="0" r="12" fill="none" stroke="#d4a043" stroke-width="0.8"/>
+          <line x1="0" y1="-8" x2="0" y2="8" stroke="#d4a043" stroke-width="0.8"/>
+          <line x1="-8" y1="0" x2="8" y2="0" stroke="#d4a043" stroke-width="0.8"/>
+        </g>
+      </svg>
+    </div>
+    <div class="header-row">
+      <svg viewBox="0 0 80 80" width="80" height="80" class="header-portrait" style="border-radius:8px; border:2px solid var(--border); background:#151515;">
+        <rect width="80" height="80" fill="#1a1520"/>
+        <path d="M40 12 L50 28 L40 22 L30 28 Z" fill="#d4a043" opacity="0.9"/>
+        <path d="M40 28 L52 56 L40 68 L28 56 Z" fill="#d4a043" opacity="0.5"/>
+        <circle cx="40" cy="32" r="10" fill="none" stroke="#b080d0" stroke-width="2" opacity="0.6"/>
+        <circle cx="40" cy="32" r="5" fill="#b080d0" opacity="0.3"/>
+        <path d="M40 12 L40 6 M34 14 L30 10 M46 14 L50 10" stroke="#ffe880" stroke-width="1" opacity="0.4"/>
+      </svg>
+      <div class="header-text">
+        <div class="breadcrumb">Baldur's Gate 3 &#8250; Builds &#8250; Sorcadin</div>
+        <h1>Sorcadin &mdash; Divine Tempest</h1>
+        <div class="subtitle">Half-Orc &middot; Paladin 6 / Sorcerer 6 &middot; #1 Ranked Build</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag red">#1 Build</span>
+      <span class="tag gold">Nova Damage</span>
+      <span class="tag green">Frontline</span>
+      <span class="tag blue">Half-Caster</span>
+      <span class="tag orange">Patch 8</span>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="section reveal" id="overview">
+    <h2>Overview</h2>
+
+    <p>The Sorcadin is the undisputed #1 build in Baldur's Gate 3. By combining Paladin 6 with Sorcerer 6, you get the deadliest single-target burst in the game: Extra Attack with Divine Smite on every hit, powered by an expanded spell slot pool from Sorcerer, and Quickened Spell Metamagic to cast a full spell (like Hold Person) as a bonus action before swinging your greatsword. Nothing else in BG3 comes close to this level of burst damage.</p>
+
+    <div class="callout">
+      <div class="callout-label">Why It's #1</div>
+      <p><strong>Divine Smite</strong> adds 2d8&ndash;5d8 radiant damage per hit (extra d8 vs undead/fiends). <strong>Extra Attack</strong> means you smite twice per turn. <strong>Sorcery Points</strong> give you more spell slots to fuel smites. <strong>Quickened Spell</strong> lets you Hold Person (bonus action) &rarr; Attack (action) for guaranteed critical hits, which DOUBLE all smite dice. A single Quickened Hold Person + two crit smites can deal 100+ damage in one turn.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">The Math</div>
+      <p>A crit Divine Smite with a 3rd-level slot deals 8d8 radiant (doubled from 4d8) + weapon damage. Two of those in one turn = 80+ radiant damage before weapon dice. Add Great Weapon Master and you're deleting bosses in a single round. No other build in BG3 achieves this burst window.</p>
+    </div>
+
+    <h3>Core Synergies</h3>
+    <ul class="picks">
+      <li><span class="label">Smite</span> <span class="name">Divine Smite</span> &mdash; <span class="note">2d8&ndash;5d8 radiant per hit, uses spell slots. Sorcerer adds more slots to burn.</span></li>
+      <li><span class="label">Meta</span> <span class="name">Quickened Spell</span> &mdash; <span class="note">Cast Hold Person/Haste as a bonus action, then full Attack action with smites.</span></li>
+      <li><span class="label">Crit</span> <span class="name">Hold Person + Smite</span> &mdash; <span class="note">Paralyzed = auto-crit within 3m. All smite dice doubled. Devastating.</span></li>
+      <li><span class="label">Aura</span> <span class="name">Aura of Protection</span> &mdash; <span class="note">+CHA mod to ALL saving throws for you and nearby allies. Insanely good.</span></li>
+    </ul>
+  </section>
+
+  <!-- RACE & BACKGROUND -->
+  <section class="section reveal" id="race">
+    <h2>Race &amp; Background</h2>
+
+    <h3>Best Race: Half-Orc</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Savage Attacks</span> &mdash; <span class="note">On a crit, roll one extra weapon damage die. Since this build crits constantly (Hold Person), this triggers every nova round.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Relentless Endurance</span> &mdash; <span class="note">Drop to 1 HP instead of 0 once per long rest. Frontline insurance.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Darkvision</span> &mdash; <span class="note">12m range. Useful in Act 2's perpetual darkness.</span></li>
+    </ul>
+
+    <h3>Alternative: Zariel Tiefling</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Searing Smite (free)</span> &mdash; <span class="note">Free smite spell at level 3. Extra fire damage stacks with Divine Smite.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Branding Smite (free)</span> &mdash; <span class="note">Free at level 5. More smite fuel without spending slots.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Fire Resistance</span> &mdash; <span class="note">Halves fire damage. Relevant against many BG3 enemies.</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Other Viable Races</div>
+      <p><strong>Shield Dwarf</strong> &mdash; +2 CON, medium armor proficiency (redundant but Dwarven Toughness is nice). <strong>Human</strong> &mdash; carrying capacity, Civil Militia for shield proficiency (already have it). <strong>Githyanki</strong> &mdash; free Misty Step and medium armor, but you already have both from Paladin.</p>
+    </div>
+
+    <h3>Background</h3>
+    <p>Pick <strong>Soldier</strong> for Athletics and Intimidation proficiency, or <strong>Noble</strong> for History and Persuasion. As the party face (high CHA), you want social skill proficiencies. Soldier is the strongest pick for a frontliner who also leads in dialogue.</p>
+  </section>
+
+  <!-- ABILITY SCORES -->
+  <section class="section reveal" id="abilities">
+    <h2>Ability Scores</h2>
+
+    <div class="stats">
+      <div class="stat-box primary"><div class="stat-label">STR</div><div class="stat-val">16</div></div>
+      <div class="stat-box"><div class="stat-label">DEX</div><div class="stat-val">10</div></div>
+      <div class="stat-box"><div class="stat-label">CON</div><div class="stat-val">14</div></div>
+      <div class="stat-box"><div class="stat-label">INT</div><div class="stat-val">8</div></div>
+      <div class="stat-box primary"><div class="stat-label">WIS</div><div class="stat-val">10</div></div>
+      <div class="stat-box primary"><div class="stat-label">CHA</div><div class="stat-val">16</div></div>
+    </div>
+    <p style="font-size:0.88rem; color:var(--text-dim);">Point buy with Half-Orc racial bonuses (+2 STR, +1 CON already included in BG3's flexible allocation). STR for melee attacks, CHA fuels both Paladin spells and Sorcerer spells. CON 14 for concentration saves and HP.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Why CHA is Everything</div>
+      <p>Charisma is your spellcasting modifier for BOTH Paladin and Sorcerer. It powers your spell save DC (Hold Person, Command), your Aura of Protection bonus (+CHA mod to all saves for the party), and your attack rolls if you take Pact of the Blade... wait, wrong build. The point is: CHA 16 &rarr; 20 by level 8 is non-negotiable. Every point of CHA improves your spell DC, your aura, and your social skills.</p>
+    </div>
+
+    <h3>Feat Priority for Ability Scores</h3>
+    <ul class="picks">
+      <li><span class="label">Level 4</span> <span class="name">+2 CHA &rarr; 18</span> &mdash; <span class="note">Paladin 4 feat. Better aura, better spell DC.</span></li>
+      <li><span class="label">Level 8</span> <span class="name">+2 CHA &rarr; 20</span> &mdash; <span class="note">Sorcerer 2 (character level 8). Cap CHA for maximum Aura of Protection.</span></li>
+      <li><span class="label">Alt L4</span> <span class="name">Great Weapon Master</span> &mdash; <span class="note">If you want raw damage over CHA. +10 damage per hit, -5 attack (offset by Vow of Enmity advantage). Take CHA +2 at Sorc level instead.</span></li>
+    </ul>
+  </section>
+
+  <!-- LEVEL PROGRESSION -->
+  <section class="section reveal" id="levels">
+    <h2>Level-by-Level Progression</h2>
+    <p style="color:var(--text-dim); margin-bottom:1rem;">Click any level to expand. Start Paladin, take 6 levels, then switch to Sorcerer for the rest.</p>
+
+    <!-- Level 1 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">1</span>
+        <span class="lv-badge paladin">Paladin 1</span>
+        <span class="lv-title">Divine Sense &amp; Lay on Hands</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Lay on Hands</span>
+          <span class="qp feature">Divine Sense</span>
+          <span class="qp feature">Heavy Armor</span>
+          <span class="qp feature">All Weapons</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Lay on Hands</span> &mdash; <span class="note">Heal 5 HP per charge, cure diseases/poisons. Your emergency heal.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Divine Sense</span> &mdash; <span class="note">Reveals nearby celestials, fiends, undead. Situational but free.</span></li>
+          <li><span class="label">Profic.</span> <span class="name">Heavy Armor + All Weapons + Shields</span> &mdash; <span class="note">Full martial proficiencies from level 1.</span></li>
+          <li><span class="label">Weapon</span> <span class="name">Greatsword</span> &mdash; <span class="note">2d6 damage. Best two-handed weapon for smite crits.</span></li>
+        </ul>
+        <p style="font-size:0.88rem; color:var(--text-dim); margin-top:0.5rem;">Starting as Paladin gives you heavy armor, all martial weapons, and CON save proficiency (critical for concentration spells later). This is why you MUST start Paladin, not Sorcerer.</p>
+      </div></div>
+    </div>
+
+    <!-- Level 2 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">2</span>
+        <span class="lv-badge paladin">Paladin 2</span>
+        <span class="lv-title">Divine Smite &amp; Fighting Style</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp smite">Divine Smite</span>
+          <span class="qp feature">Great Weapon Fighting</span>
+          <span class="qp spell">Thunderous Smite</span>
+          <span class="qp spell">Wrathful Smite</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Divine Smite</span> &mdash; <span class="note">THE core feature. Expend a spell slot on hit to deal 2d8 radiant (+1d8 per slot level above 1st, +1d8 vs undead/fiends). No action cost &mdash; triggers on hit.</span></li>
+          <li><span class="label">Style</span> <span class="name">Great Weapon Fighting</span> &mdash; <span class="note">Reroll 1s and 2s on two-handed weapon damage dice. Mathematically the best style for greatsword.</span></li>
+          <li><span class="label">Spells</span> <span class="name">Thunderous Smite</span> &mdash; <span class="note">2d6 thunder + knock prone. Great opener.</span></li>
+          <li><span class="label">Spells</span> <span class="name">Wrathful Smite</span> &mdash; <span class="note">Frightened condition. Excellent crowd control.</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These Spells</div>
+          <ul class="prep-list">
+            <li class="new">Thunderous Smite</li>
+            <li class="new">Wrathful Smite</li>
+            <li>Command</li>
+            <li>Cure Wounds</li>
+          </ul>
+          <div class="prep-note">2 spell slots (1st level) &middot; Smite spells stack with Divine Smite for double-dipping damage</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Level 3 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">3</span>
+        <span class="lv-badge paladin">Paladin 3</span>
+        <span class="lv-title">Oath Subclass</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Oath of Vengeance</span>
+          <span class="qp feature">Vow of Enmity</span>
+          <span class="qp spell">Hunter's Mark (free)</span>
+          <span class="qp spell">Misty Step (free)</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">Oath of Vengeance</span> &mdash; <span class="note">Best Sorcadin oath. Vow of Enmity gives advantage on ALL attacks vs one target. Guarantees you hit for smites.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Vow of Enmity</span> &mdash; <span class="note">Bonus action: advantage on attacks against one creature for 1 minute. This is what makes Vengeance the #1 oath for Sorcadin.</span></li>
+          <li><span class="label">Channel</span> <span class="name">Inquisitor's Might</span> &mdash; <span class="note">+2 radiant damage on weapon attacks for 3 turns. Nice early-game buff.</span></li>
+          <li><span class="label">Free</span> <span class="name">Hunter's Mark + Misty Step</span> &mdash; <span class="note">Always prepared, don't count against prep limit. Hunter's Mark adds 1d6 per hit.</span></li>
+        </ul>
+        <div class="callout warn" style="margin-top:0.5rem;">
+          <div class="callout-label">Don't Break Your Oath</div>
+          <p>Vengeance Paladin oath requires you to pursue the guilty. Avoid unnecessary cruelty to innocents. If you break it, you become an Oathbreaker &mdash; which is actually also strong (Spiteful Suffering aura) but locks you out of Vow of Enmity. Decide early.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Level 4 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">4</span>
+        <span class="lv-badge paladin">Paladin 4</span>
+        <span class="lv-title">First Feat</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">+2 CHA &rarr; 18</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">+2 CHA &rarr; 18</span> &mdash; <span class="note">+4 modifier. Better spell DC for Command/smite spells, +4 Aura of Protection (coming at level 6).</span></li>
+          <li><span class="label">Alt</span> <span class="name">Great Weapon Master</span> &mdash; <span class="note">If you're confident in your attack rolls. +10 damage per hit is enormous but -5 to hit hurts without Vow of Enmity active. Best taken here only if you plan +2 CHA from Sorcerer feat.</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These Spells</div>
+          <ul class="prep-list">
+            <li>Thunderous Smite</li>
+            <li>Wrathful Smite</li>
+            <li>Command</li>
+            <li>Cure Wounds</li>
+            <li class="new">Shield of Faith</li>
+          </ul>
+          <div class="prep-note">3 spell slots (2x 1st, 1x 2nd) &middot; Shield of Faith (+2 AC concentration) for tough fights</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Level 5 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">5</span>
+        <span class="lv-badge paladin">Paladin 5</span>
+        <span class="lv-title">Extra Attack</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Extra Attack</span>
+          <span class="qp spell">2nd-Level Slots</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Extra Attack</span> &mdash; <span class="note">Attack TWICE per Attack action. This doubles your smite output. You now deal 2x(2d6 + STR + 2d8 smite) per round = massive damage.</span></li>
+          <li><span class="label">Slots</span> <span class="name">2nd-Level Spells</span> &mdash; <span class="note">Access to 2nd-level slots. Smite with these for 3d8 radiant per hit.</span></li>
+          <li><span class="label">Spells</span> <span class="name">Branding Smite</span> &mdash; <span class="note">2d6 radiant + prevents invisibility. Good vs phase spider matriarch and other invisible enemies.</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These Spells</div>
+          <ul class="prep-list">
+            <li>Thunderous Smite</li>
+            <li>Command</li>
+            <li class="new">Branding Smite</li>
+            <li class="new">Aid</li>
+            <li>Cure Wounds</li>
+          </ul>
+          <div class="prep-note">4x 1st, 2x 2nd level slots &middot; Extra Attack is the biggest single power spike in the game</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Level 6 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">6</span>
+        <span class="lv-badge paladin">Paladin 6</span>
+        <span class="lv-title">Aura of Protection</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Aura of Protection</span>
+          <span class="qp feature">+CHA to Saves</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Aura of Protection</span> &mdash; <span class="note">You and all allies within 3m add your CHA modifier (+4 or +5) to ALL saving throws. This is widely considered the single best class feature in BG3. It makes your entire party dramatically more resilient.</span></li>
+          <li><span class="label">Note</span> <span class="name">Last Paladin Level</span> &mdash; <span class="note">This is where you stop taking Paladin. You have everything you need: Smite, Extra Attack, Aura, Oath features. Now switch to Sorcerer.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.5rem;">
+          <div class="callout-label">Why Stop at Paladin 6?</div>
+          <p>Paladin 7+ gives marginal gains (Relentless Avenger is movement only). Sorcerer gives you Metamagic, more spell slots for smites, and actual spellcasting. The opportunity cost of staying Paladin past 6 is enormous.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Level 7 — Sorcerer 1 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">7</span>
+        <span class="lv-badge sorcerer">Sorcerer 1</span>
+        <span class="lv-title">Sorcerous Origin &amp; Cantrips</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Draconic Bloodline</span>
+          <span class="qp spell">Shield</span>
+          <span class="qp spell">Fire Bolt</span>
+          <span class="qp spell">Minor Illusion</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">Draconic Bloodline (Red/Gold)</span> &mdash; <span class="note">+1 HP per level, AC 13 + DEX when unarmored (irrelevant in plate but the HP is nice). Fire ancestry for later Elemental Affinity synergy.</span></li>
+          <li><span class="label">Cantrips</span> <span class="name">Fire Bolt</span>, <span class="name">Minor Illusion</span>, <span class="name">Ray of Frost</span>, <span class="name">Blade Ward</span></li>
+          <li><span class="label">Spells</span> <span class="name">Shield</span> &mdash; <span class="note">+5 AC reaction. THE best defensive spell in BG3. You've been waiting 6 levels for this.</span></li>
+          <li><span class="label">Spells</span> <span class="name">Magic Missile</span> &mdash; <span class="note">Auto-hit ranged damage for when you can't close distance.</span></li>
+        </ul>
+        <div class="callout" style="margin-top:0.5rem;">
+          <div class="callout-label">Multiclass Spell Slots</div>
+          <p>In BG3, multiclass spell slots are pooled. Paladin 6 / Sorcerer 1 gives you the slot table of a 4th-level caster: 4x 1st, 3x 2nd. ALL of these fuel Divine Smite. As you gain Sorcerer levels, your smite fuel increases dramatically.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Level 8 — Sorcerer 2 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">8</span>
+        <span class="lv-badge sorcerer">Sorcerer 2</span>
+        <span class="lv-title">Sorcery Points &amp; Font of Magic</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp meta">Sorcery Points</span>
+          <span class="qp meta">Font of Magic</span>
+          <span class="qp spell">Misty Step</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Sorcery Points (2)</span> &mdash; <span class="note">2 sorcery points. Use them for Metamagic (coming next level) or convert to spell slots for more smites.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Font of Magic</span> &mdash; <span class="note">Convert spell slots &harr; sorcery points. Convert surplus low-level slots into sorcery points, then create higher-level slots for bigger smites. The engine of the build.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Misty Step</span> &mdash; <span class="note">Teleport 18m as a bonus action. Close distance instantly, then attack. You already have it from Vengeance but now it uses Sorcerer slots.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 9 — Sorcerer 3 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">9</span>
+        <span class="lv-badge sorcerer">Sorcerer 3</span>
+        <span class="lv-title">Metamagic &mdash; Quickened &amp; Twinned</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp meta">Quickened Spell</span>
+          <span class="qp meta">Twinned Spell</span>
+          <span class="qp spell">Hold Person</span>
+          <span class="qp spell">Haste</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Meta</span> <span class="name">Quickened Spell</span> &mdash; <span class="note">Cast a spell as a BONUS ACTION instead of an action. This is the build-defining Metamagic. Hold Person (bonus) &rarr; Attack + Smite (action). Or Haste yourself (bonus) &rarr; Attack (action) + Attack (Haste action).</span></li>
+          <li><span class="label">Meta</span> <span class="name">Twinned Spell</span> &mdash; <span class="note">Target TWO creatures with a single-target spell. Twinned Haste on yourself + ally. Twinned Hold Person on two enemies. Incredible value.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Hold Person</span> &mdash; <span class="note">THE smite enabler. Paralyzed creatures auto-fail melee saves and ALL hits within 3m are critical hits. Twin it to paralyze two targets, then smite both for doubled damage.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Haste</span> &mdash; <span class="note">+2 AC, double movement, extra action (one attack). Quickened Haste on yourself = cast + immediately attack 3 times this turn.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.5rem;">
+          <div class="callout-label">The Build Comes Online</div>
+          <p>Level 9 is when the Sorcadin becomes the best build in the game. Quickened Hold Person + two auto-crit Divine Smites is the single deadliest combo in BG3. You'll be one-rounding most bosses from here on.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Level 10 — Sorcerer 4 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">10</span>
+        <span class="lv-badge sorcerer">Sorcerer 4</span>
+        <span class="lv-title">Second Feat</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">+2 CHA &rarr; 20</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">+2 CHA &rarr; 20</span> &mdash; <span class="note">+5 modifier. Aura of Protection now gives +5 to ALL saves for the party. Spell DC 15. Maximum CHA reached.</span></li>
+          <li><span class="label">Alt</span> <span class="name">Alert</span> &mdash; <span class="note">+5 initiative, can't be surprised. Going first means landing Hold Person before enemies act. Very strong if CHA is already 20 from GWM route.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 11 — Sorcerer 5 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">11</span>
+        <span class="lv-badge sorcerer">Sorcerer 5</span>
+        <span class="lv-title">3rd-Level Spell Slots</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Fireball</span>
+          <span class="qp spell">Counterspell</span>
+          <span class="qp spell">3rd-Level Slots</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Slots</span> <span class="name">3rd-Level Spell Slots</span> &mdash; <span class="note">Smiting with 3rd-level slots = 4d8 radiant (5d8 vs undead). On a crit, that's 8d8 (10d8 vs undead). Devastating.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Fireball</span> &mdash; <span class="note">8d6 fire in a 6m radius. Your best AoE option. Quickened Fireball (bonus) + Attack (action) in the same turn.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Counterspell</span> &mdash; <span class="note">Reaction to negate an enemy spell. Shuts down enemy casters completely. Essential for Honour Mode.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 12 — Sorcerer 6 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">12</span>
+        <span class="lv-badge sorcerer">Sorcerer 6</span>
+        <span class="lv-title">Elemental Affinity</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Elemental Affinity</span>
+          <span class="qp meta">6 Sorcery Points</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Elemental Affinity (Fire)</span> &mdash; <span class="note">Add CHA modifier (+5) to fire damage spells. Fireball now does 8d6+5. Fire Bolt does 2d10+5. Significant damage boost for your ranged options.</span></li>
+          <li><span class="label">Points</span> <span class="name">6 Sorcery Points</span> &mdash; <span class="note">6 sorcery points total. That's 3 Quickened Spells per long rest, or convert them into two extra 2nd-level slots for smites. Maximum fuel.</span></li>
+          <li><span class="label">Slots</span> <span class="name">Full Slot Table</span> &mdash; <span class="note">4x 1st, 3x 2nd, 3x 3rd level slots. Plus Paladin's own 2 slots. You have an enormous pool of smite fuel.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.5rem;">
+          <div class="callout-label">Final Form</div>
+          <p>At level 12, your Sorcadin has: Extra Attack + Divine Smite on every hit, Aura of Protection +5 for the party, Quickened Hold Person for auto-crit setups, Shield for +5 AC reactions, Counterspell for anti-magic, Fireball for AoE, Haste for triple attacks, and 12+ spell slots to fuel it all. You are the most versatile and deadly character in BG3.</p>
+        </div>
+      </div></div>
+    </div>
+
+  </section>
+
+  <!-- SUBCLASS -->
+  <section class="section reveal" id="subclass">
+    <h2>Subclass Choices</h2>
+
+    <h3>Paladin Oath: Vengeance (Recommended)</h3>
+    <ul class="picks">
+      <li><span class="label">L3</span> <span class="name">Vow of Enmity</span> &mdash; <span class="note">Bonus action: advantage on all attacks against one creature for 1 minute. Your #1 tool for guaranteeing smite hits. Use on bosses.</span></li>
+      <li><span class="label">L3</span> <span class="name">Inquisitor's Might</span> &mdash; <span class="note">+2 radiant damage on weapon attacks. Small but consistent early damage bump.</span></li>
+      <li><span class="label">Free</span> <span class="name">Hunter's Mark + Misty Step</span> &mdash; <span class="note">Always prepared. Hunter's Mark adds 1d6 per hit (stacks with smite). Misty Step for mobility.</span></li>
+    </ul>
+
+    <h3>Alternative: Oath of the Ancients</h3>
+    <ul class="picks">
+      <li><span class="label">L3</span> <span class="name">Healing Radiance</span> &mdash; <span class="note">AoE heal centered on you. Decent but wastes your bonus action (Quickened Spell wants it).</span></li>
+      <li><span class="label">L7</span> <span class="name">Aura of Warding</span> &mdash; <span class="note">Resistance to spell damage for you and allies. Extremely strong defensively, but you stop at Paladin 6, so you never get this. Not recommended for Sorcadin.</span></li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="callout-label">Oath of the Ancients Trap</div>
+      <p>Ancients is amazing for pure Paladins because Aura of Warding (level 7) is one of the best defensive features in the game. But since Sorcadin stops at Paladin 6, you NEVER get it. Vengeance's Vow of Enmity is available at level 3 and carries the whole build.</p>
+    </div>
+
+    <h3>Alternative: Oathbreaker</h3>
+    <ul class="picks">
+      <li><span class="label">L3</span> <span class="name">Spiteful Suffering</span> &mdash; <span class="note">Curse a target: 1d4+CHA necrotic damage to them at start of each of YOUR turns. Decent DoT.</span></li>
+      <li><span class="label">L3</span> <span class="name">Control Undead</span> &mdash; <span class="note">Dominate an undead creature. Situational but powerful in Act 2.</span></li>
+      <li><span class="label">Aura</span> <span class="name">Aura of Hate</span> &mdash; <span class="note">+CHA to melee damage for you, allies, AND nearby undead/fiends. If you run summons or have undead allies, this is very strong. Also buffs enemy undead though.</span></li>
+    </ul>
+
+    <h3>Sorcerous Origin: Draconic Bloodline (Recommended)</h3>
+    <ul class="picks">
+      <li><span class="label">L1</span> <span class="name">Draconic Resilience</span> &mdash; <span class="note">+1 HP per Sorcerer level. Extra durability on a frontliner. Base AC 13 (irrelevant in plate but the HP matters).</span></li>
+      <li><span class="label">L6</span> <span class="name">Elemental Affinity</span> &mdash; <span class="note">+CHA mod to fire damage spells. Makes Fireball and Fire Bolt hit significantly harder.</span></li>
+      <li><span class="label">Pick</span> <span class="name">Red or Gold Dragon</span> &mdash; <span class="note">Fire is the most versatile element. Most enemies are NOT fire resistant (and you can use Smite for those who are).</span></li>
+    </ul>
+
+    <h3>Alternative Origin: Storm Sorcery</h3>
+    <ul class="picks">
+      <li><span class="label">L1</span> <span class="name">Tempestuous Magic</span> &mdash; <span class="note">After casting a leveled spell, fly 3m as a bonus action without provoking opportunity attacks. Nice mobility but less impactful than Draconic HP.</span></li>
+      <li><span class="label">L6</span> <span class="name">Heart of the Storm</span> &mdash; <span class="note">Resistance to lightning/thunder, deal bonus lightning damage when casting lightning/thunder spells. Less useful since your best spells aren't lightning-typed.</span></li>
+    </ul>
+  </section>
+
+  <!-- SPELLS -->
+  <section class="section reveal" id="spells">
+    <h2>Spells &amp; Cantrips</h2>
+    <p style="color:var(--text-dim); margin-bottom:1rem;">Paladin spells are prepared (swap on long rest). Sorcerer spells are known (permanent picks). Choose Sorcerer spells carefully.</p>
+
+    <div class="spell-section">
+      <div class="spell-level">Cantrips (Sorcerer)</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Fire Bolt</div><div class="spell-desc">Ranged fire attack, 2d10 at level 5+. Your go-to when you can't reach melee. +CHA damage at Sorc 6.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Minor Illusion</div><div class="spell-desc">Lure enemies into position for ambushes. Free and endlessly useful.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Blade Ward</div><div class="spell-desc">Resistance to bludgeoning/piercing/slashing for 2 turns. Situational but strong defensively.</div></div><span class="spell-badge good">Good</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Ray of Frost</div><div class="spell-desc">Ranged cold attack + slows movement. Useful for kiting.</div></div><span class="spell-badge good">Good</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">1st Level</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Shield</div><div class="spell-desc">Reaction: +5 AC until next turn. Blocks attacks that would otherwise hit. Best defensive spell in the game.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Thunderous Smite</div><div class="spell-desc">2d6 thunder + prone on hit. Stack with Divine Smite for double-dip damage. Paladin spell.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Command</div><div class="spell-desc">Force enemy to grovel/flee/drop weapon. No concentration. Amazing control. Paladin spell.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Wrathful Smite</div><div class="spell-desc">Frightened on hit. Target can't move closer and has disadvantage on attacks. Paladin spell.</div></div><span class="spell-badge good">Good</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Magic Missile</div><div class="spell-desc">Auto-hit 3d4+3 force damage. Never misses. Sorcerer spell for guaranteed chip damage.</div></div><span class="spell-badge good">Good</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">2nd Level</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Hold Person</div><div class="spell-desc">Paralyze a humanoid. ALL melee hits are auto-crits. THE Sorcadin enabler. Quicken or Twin this.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Misty Step</div><div class="spell-desc">Bonus action teleport 18m. Close distance instantly, then Attack. Free from Vengeance, but worth knowing on Sorc too.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Mirror Image</div><div class="spell-desc">3 illusory duplicates absorb attacks. No concentration. Excellent defense stacked with Shield.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Aid</div><div class="spell-desc">+5 max HP for 3 allies. Cast at higher level for more HP. No concentration. Paladin spell.</div></div><span class="spell-badge good">Good</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">3rd Level</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Haste</div><div class="spell-desc">+2 AC, double movement, extra action (one attack). Quickened Haste on self = cast + 3 attacks turn 1. Twin on self + ally for disgusting value.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Fireball</div><div class="spell-desc">8d6 fire in 6m radius (+5 from Elemental Affinity at Sorc 6). Best AoE in your kit. Quicken it for AoE + melee same turn.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Counterspell</div><div class="spell-desc">Reaction: negate a spell being cast. Shuts down enemy casters. Essential for Honour Mode bosses.</div></div><span class="spell-badge must">Must Pick</span></div>
+    </div>
+  </section>
+
+  <!-- METAMAGIC -->
+  <section class="section reveal" id="metamagic">
+    <h2>Metamagic</h2>
+    <p>You choose 2 Metamagic options at Sorcerer 3. These define how the Sorcadin operates in combat. You can pick a 3rd at Sorcerer 10, but you stop at 6.</p>
+
+    <table class="meta-table">
+      <thead><tr><th>Metamagic</th><th>Cost</th><th>Effect</th><th>Why It's Core</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="meta-name">Quickened Spell</span></td>
+          <td><span class="meta-cost">3 SP</span></td>
+          <td>Cast a spell as a bonus action instead of an action</td>
+          <td>THE Sorcadin Metamagic. Bonus action Hold Person &rarr; action Attack with auto-crit smites. Or Quickened Fireball + Attack same turn. Lets you cast AND attack every round.</td>
+        </tr>
+        <tr>
+          <td><span class="meta-name">Twinned Spell</span></td>
+          <td><span class="meta-cost">Spell Level SP</span></td>
+          <td>Target two creatures with a single-target spell</td>
+          <td>Twinned Hold Person paralyzes 2 enemies (2 SP). Twinned Haste buffs you + an ally (3 SP). Doubles the value of your best spells.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Sorcery Point Economy</h3>
+    <ul class="picks">
+      <li><span class="label">Pool</span> <span class="name">6 SP at Sorcerer 6</span> &mdash; <span class="note">That's 2 Quickened Spells per long rest, or 1 Quickened + 1 Twinned Hold Person, with points leftover.</span></li>
+      <li><span class="label">Convert</span> <span class="name">Slots &rarr; SP</span> &mdash; <span class="note">Burn a 1st-level slot for 1 SP, 2nd-level for 2 SP, etc. In fights where you need more Quickened casts, sacrifice low slots.</span></li>
+      <li><span class="label">Convert</span> <span class="name">SP &rarr; Slots</span> &mdash; <span class="note">2 SP = 1st-level slot, 3 SP = 2nd-level slot, 5 SP = 3rd-level slot. Convert SP into smite fuel between fights.</span></li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">Pre-Combat Setup</div>
+      <p>Before a big fight, convert any surplus 1st-level slots into sorcery points. You'll want maximum SP for Quickened Hold Person openers. After the fight, convert leftover SP back into spell slots for smite fuel. This cycling is the engine that makes Sorcadin so resource-efficient.</p>
+    </div>
+  </section>
+
+  <!-- GEAR -->
+  <section class="section reveal" id="items">
+    <h2>Gear &mdash; Act by Act</h2>
+
+    <div class="callout">
+      <div class="callout-label">Gear Philosophy</div>
+      <p>Prioritize STR-based melee weapons (greatswords), heavy armor for max AC, and items that boost CHA, spell save DC, or smite damage. Unlike pure casters, you benefit from BOTH martial and magical gear.</p>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Act 1 &mdash; Essential Pickups</div>
+      <div class="item-row">
+        <div><span class="item-name">Sword of Justice</span> <span class="item-slot">Greatsword</span></div>
+        <div class="item-desc">+1 greatsword, casts Shield of Faith (free concentration +2 AC). Best early-game two-hander. Carry this until Act 2.</div>
+        <div class="item-loc">Defeat Anders and the Paladins of Tyr at the Risen Road toll house</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Adamantine Splint Armour</span> <span class="item-slot">Heavy Armor</span></div>
+        <div class="item-desc">AC 18, attackers can't crit you, -1 to all incoming damage. THE Act 1 armor. Forge it in Grymforge.</div>
+        <div class="item-loc">Craft at the Adamantine Forge (Grymforge) &mdash; need Splint Mould + Mithral Ore</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Disintegrating Night Walkers</span> <span class="item-slot">Boots</span></div>
+        <div class="item-desc">Can't be Enwebbed, Entangled, or Ensnared. Free Misty Step once per short rest. Immunity to difficult terrain slippage.</div>
+        <div class="item-loc">True Soul Nere in Grymforge (reward or loot)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Crusher's Ring</span> <span class="item-slot">Ring</span></div>
+        <div class="item-desc">+3m movement speed. More distance = more reliable gap closing for melee. Trivial to get.</div>
+        <div class="item-loc">Loot from Crusher in the Goblin Camp (defeat or pickpocket)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Amulet of Misty Step</span> <span class="item-slot">Amulet</span></div>
+        <div class="item-desc">Free Misty Step once per short rest. Double your teleport uses with the Vengeance freebie.</div>
+        <div class="item-loc">Shattered Sanctum &mdash; locked chest near Priestess Gut's chambers</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Act 2 &mdash; Key Upgrades</div>
+      <div class="item-row">
+        <div><span class="item-name">Phalar Aluve</span> <span class="item-slot">Longsword</span></div>
+        <div class="item-desc">Sing ability: nearby enemies get -1d4 to attack rolls and saves. Pairs with Hold Person for save debuffing. Use until you get a better greatsword.</div>
+        <div class="item-loc">Underdark &mdash; embedded in a rock near the Selunite Outpost</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Sword of Clutching Umbra</span> <span class="item-slot">Greatsword</span></div>
+        <div class="item-desc">+1 greatsword, 1d4 necrotic damage, can cast Darkness on self (advantage in darkness if you have Devil's Sight).</div>
+        <div class="item-loc">Loot from the Sharran Sanctum beneath the Thorm Mausoleum</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Shield of Devotion</span> <span class="item-slot">Shield</span></div>
+        <div class="item-desc">+2 AC, free Aid cast once per long rest. If you go sword-and-board instead of greatsword, this is BiS Act 2.</div>
+        <div class="item-loc">Sold by Quartermaster Talli at Last Light Inn</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Gauntlets of Hill Giant Strength</span> <span class="item-slot">Gloves</span></div>
+        <div class="item-desc">Sets STR to 23 (+6 mod). Allows you to dump STR during character creation and go full CHA. Completely changes your stat priorities if found.</div>
+        <div class="item-loc">House of Hope (Act 3, technically) &mdash; but if you're planning ahead, rebuild at Withers after getting these</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Cloak of Protection</span> <span class="item-slot">Cloak</span></div>
+        <div class="item-desc">+1 AC, +1 saving throws. Simple and universally good.</div>
+        <div class="item-loc">Sold by Quartermaster Talli at Last Light Inn</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Act 3 &mdash; Best in Slot (Endgame)</div>
+      <div class="item-row">
+        <div><span class="item-name">Balduran's Giantslayer</span> <span class="item-slot">Greatsword</span></div>
+        <div class="item-desc">+3 greatsword, doubles STR modifier damage, advantage on attacks vs Large+ creatures, Giant Form action (+27 HP, extra reach). THE endgame weapon for Sorcadin.</div>
+        <div class="item-loc">Wyrmway &mdash; defeat Ansur the dragon beneath Wyrm's Rock Fortress</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Helldusk Armour</span> <span class="item-slot">Heavy Armor</span></div>
+        <div class="item-desc">AC 21, fire resistance, Fly spell, -3 to incoming damage, can't be burned. Best armor in the game. Proficiency not required.</div>
+        <div class="item-loc">House of Hope &mdash; loot from Raphael after defeating him</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Helm of Balduran</span> <span class="item-slot">Helmet</span></div>
+        <div class="item-desc">+1 AC, +1 saves, HP regen start of turn, can't be crit, can't be stunned. Best defensive helm.</div>
+        <div class="item-loc">Wyrmway &mdash; same area as Balduran's Giantslayer</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Gauntlets of Hill Giant Strength</span> <span class="item-slot">Gloves</span></div>
+        <div class="item-desc">STR set to 23. With this equipped, respec at Withers: dump STR to 8, put all points into CHA/CON. You now have STR 23, CHA 20, CON 16.</div>
+        <div class="item-loc">House of Hope &mdash; in the Archive, locked display case</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Killer's Sweetheart</span> <span class="item-slot">Ring</span></div>
+        <div class="item-desc">When you kill a creature, your next attack is a guaranteed crit. Triggers once per long rest. With smite = devastating free crit.</div>
+        <div class="item-loc">Self-Same Trial in the Gauntlet of Shar (Act 2)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Ring of Protection</span> <span class="item-slot">Ring</span></div>
+        <div class="item-desc">+1 AC, +1 saving throws. Stacks with Aura of Protection. Always wear.</div>
+        <div class="item-loc">Last Light Inn &mdash; Mol's reward, or steal from Brem at the Zhentarim Hideout</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Amulet of Greater Health</span> <span class="item-slot">Amulet</span></div>
+        <div class="item-desc">Sets CON to 23 (+6 mod). Massive HP boost and concentration save bonus. Respec-friendly like the gauntlets.</div>
+        <div class="item-loc">House of Hope &mdash; locked vault in the Archive</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">The Withers Respec Trick</div>
+      <p>Once you have Gauntlets of Hill Giant Strength (STR 23) and Amulet of Greater Health (CON 23), respec at Withers. Dump both STR and CON to 8. Pump CHA to 17 (+2 feat = 20, or start 16 if Half-Orc), and spread remaining points into WIS/DEX for saves. Your items override STR and CON anyway. This min-maxes your Sorcadin to the absolute ceiling.</p>
+    </div>
+  </section>
+
+  <!-- COMBAT -->
+  <section class="section reveal" id="combat">
+    <h2>Combat Guide</h2>
+
+    <h3>The Nova Round &mdash; Maximum Burst</h3>
+    <p>This is the sequence that makes Sorcadin the #1 build. Execute this on the first round of any boss fight.</p>
+
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Quickened Hold Person</span> <span class="step-timing bonus">Bonus Action</span>
+        <div class="step-detail">Spend 3 sorcery points. Cast Hold Person as a bonus action on the boss (or Twinned Hold Person on two targets for 5 SP total). Target must fail a WIS save or be Paralyzed. Paralyzed = auto-crit on melee hits within 3m.</div>
+      </li>
+      <li>
+        <span class="step-action">First Attack + Divine Smite</span> <span class="step-timing turn">Action</span>
+        <div class="step-detail">Move within 3m. Attack with greatsword. Auto-crit against paralyzed target. Trigger Divine Smite with a 3rd-level slot: 4d8 radiant &rarr; DOUBLED to 8d8 on crit. Total: 4d6 weapon (crit) + 8d8 radiant + STR mod = ~55 damage.</div>
+      </li>
+      <li>
+        <span class="step-action">Extra Attack + Divine Smite</span> <span class="step-timing turn">Action (Extra)</span>
+        <div class="step-detail">Second attack from Extra Attack. Same auto-crit, same smite. Another ~55 damage. Running total: ~110 damage in one turn.</div>
+      </li>
+      <li>
+        <span class="step-action">Haste Attack (if active)</span> <span class="step-timing turn">Haste Action</span>
+        <div class="step-detail">If Haste is active (cast last turn or by an ally), you get a third attack. Smite again. Running total: ~165 damage. Most bosses are dead.</div>
+      </li>
+    </ol>
+
+    <div class="callout warn">
+      <div class="callout-label">Hold Person is Humanoid Only</div>
+      <p>Hold Person only works on humanoids. For non-humanoid bosses, use <strong>Vow of Enmity</strong> (advantage on all attacks) instead, or have a party member cast Hold Monster (4th level, Wizard/Bard). Without the auto-crit, your damage is still excellent &mdash; just not one-round-kill territory.</p>
+    </div>
+
+    <h3>Standard Combat Flow</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Pre-combat: Haste (Twinned on self + ally)</span> <span class="step-timing pre">Pre-Fight</span>
+        <div class="step-detail">If you see the fight coming, Twinned Haste yourself and a martial ally before combat starts. Costs 3 SP but is worth it for multi-round fights.</div>
+      </li>
+      <li>
+        <span class="step-action">Turn 1: Quickened Hold Person &rarr; Attack &times; 2 with Smite</span> <span class="step-timing turn">Turn 1</span>
+        <div class="step-detail">The nova round described above. Target the biggest threat and delete them.</div>
+      </li>
+      <li>
+        <span class="step-action">Subsequent turns: Attack &times; 2 with Smite, Shield as needed</span> <span class="step-timing every">Every Turn</span>
+        <div class="step-detail">Without Hold Person, you still deal great damage. Smite on every hit if resources allow. Use Shield (reaction) when attacked. Fall back on Fire Bolt if enemies are out of reach.</div>
+      </li>
+      <li>
+        <span class="step-action">Cleanup: Quickened Fireball + Attack</span> <span class="step-timing turn">As Needed</span>
+        <div class="step-detail">When multiple weaker enemies remain, Quickened Fireball (bonus action) to AoE, then charge in and clean up with melee attacks (action). Versatile.</div>
+      </li>
+    </ol>
+
+    <h3>Defensive Options</h3>
+    <ul class="picks">
+      <li><span class="label">React</span> <span class="name">Shield (+5 AC)</span> &mdash; <span class="note">Reaction. Use when an attack would hit. With plate + Shield spell, your AC can reach 26+. Nearly unhittable.</span></li>
+      <li><span class="label">Free</span> <span class="name">Mirror Image</span> &mdash; <span class="note">No concentration. Cast before combat for 3 free "misses" on incoming attacks. Stacks with everything.</span></li>
+      <li><span class="label">Aura</span> <span class="name">Aura of Protection</span> &mdash; <span class="note">Passive +5 to all saves. Your party rarely fails saves with this active. Stay near allies.</span></li>
+      <li><span class="label">Escape</span> <span class="name">Misty Step</span> &mdash; <span class="note">Bonus action teleport out of danger. You have multiple sources of this.</span></li>
+    </ul>
+  </section>
+
+  <!-- COMPANIONS -->
+  <section class="section reveal" id="companions">
+    <h2>Companion Sorcadin</h2>
+
+    <p>If you want to play a different main character but still have a Sorcadin in your party, you can build any companion this way using Withers' respec. The best candidates:</p>
+
+    <div class="party-grid">
+      <div class="party-card">
+        <div class="party-name">Minthara</div>
+        <div class="party-role">Best Companion Sorcadin</div>
+        <div class="party-desc">Already a Paladin (Oathbreaker). Respec to Paladin 6 / Sorcerer 6 at Withers. High CHA, fits the role perfectly. Requires evil/dark urge path to recruit in Act 1, or can recruit in Act 2 without killing the grove if you knock her out.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Shadowheart</div>
+        <div class="party-role">Respec Option</div>
+        <div class="party-desc">Starts as Cleric but can be fully respecced. Loses her story-relevant Cleric flavor but gains the strongest build in the game. Consider keeping her as Cleric for healing though.</div>
+      </div>
+    </div>
+
+    <h3>Ideal Party Composition (with Sorcadin MC)</h3>
+    <div class="party-grid">
+      <div class="party-card">
+        <div class="party-name">You (Sorcadin)</div>
+        <div class="party-role">Frontline Nova DPS + Party Face</div>
+        <div class="party-desc">Melee burst, tanking with high AC and Shield, Aura of Protection buffs the whole party, social skills from high CHA.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Shadowheart</div>
+        <div class="party-role">Cleric &middot; Healer + Support</div>
+        <div class="party-desc">Spirit Guardians for sustained AoE, heals, Bless to boost your attack rolls further. Your Aura + her Bless makes the party near-invincible.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Gale</div>
+        <div class="party-role">Wizard &middot; AoE + Control</div>
+        <div class="party-desc">Haste on you (frees your Quickened for Hold Person), Fireball/Ice Storm for AoE, Web/Grease for control. The perfect complement.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Astarion</div>
+        <div class="party-role">Rogue &middot; Burst DPS + Utility</div>
+        <div class="party-desc">Your Hold Person gives him guaranteed crits too. Sneak Attack crits are devastating. Handles traps, locks, and scouting.</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">The Dream Team</div>
+      <p>With Gale casting Haste on you and your own Quickened Hold Person, you attack 3 times per turn with auto-crits. Meanwhile Astarion sneak attacks the paralyzed target and Shadowheart heals/buffs. This party can clear Honour Mode with no deaths.</p>
+    </div>
+  </section>
+
+  <!-- HONOUR MODE -->
+  <section class="section reveal" id="honour">
+    <h2>Honour Mode Tips</h2>
+
+    <p>Honour Mode is BG3's hardest difficulty: one save file, permadeath, bosses have Legendary Actions, and enemies are smarter with better stats. The Sorcadin is arguably the best Honour Mode build because it combines overwhelming burst damage with the best defensive aura in the game.</p>
+
+    <h3>Key Honour Mode Changes</h3>
+    <ul class="picks">
+      <li><span class="label">Bosses</span> <span class="name">Legendary Actions</span> &mdash; <span class="note">Major bosses get extra actions between turns. They can break your Hold Person with a legendary save. You MUST burst them down before they use it.</span></li>
+      <li><span class="label">Saves</span> <span class="name">Single Save File</span> &mdash; <span class="note">TPK = game over. Aura of Protection (+5 to all saves) is your insurance policy. Shield (+5 AC reaction) prevents the hits that kill.</span></li>
+      <li><span class="label">AI</span> <span class="name">Smarter Enemies</span> &mdash; <span class="note">Enemies target your squishiest party members, focus fire, and use abilities intelligently. Position your Sorcadin to protect the backline with Aura range.</span></li>
+      <li><span class="label">Stats</span> <span class="name">Buffed Enemies</span> &mdash; <span class="note">Higher HP, better saves, more damage. This makes one-round kills harder but also makes your burst MORE valuable (kill them before they kill you).</span></li>
+    </ul>
+
+    <h3>Honour Mode Boss Strategy</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Identify if boss is humanoid</span> <span class="step-timing pre">Before Fight</span>
+        <div class="step-detail">Hold Person only works on humanoids. Ketheric, Orin, Gortash = humanoid (Hold Person works). Ansur, Myrkul, Netherbrain = not humanoid (use Vow of Enmity instead).</div>
+      </li>
+      <li>
+        <span class="step-action">Pre-buff before initiating</span> <span class="step-timing pre">Before Fight</span>
+        <div class="step-detail">Mirror Image (no concentration), Aid for extra HP, Longstrider for movement. If possible, have Gale cast Haste on you out of combat.</div>
+      </li>
+      <li>
+        <span class="step-action">Nova round 1 &mdash; all-in burst</span> <span class="step-timing turn">Turn 1</span>
+        <div class="step-detail">Quickened Hold Person + double smite crit. Spend your highest slots. In Honour Mode, bosses have legendary actions &mdash; they might break free of Hold Person on their next turn. You need maximum damage NOW.</div>
+      </li>
+      <li>
+        <span class="step-action">Counterspell enemy spells</span> <span class="step-timing every">Reaction</span>
+        <div class="step-detail">Many Honour Mode bosses have devastating spells (Ketheric's Finger of Death, etc). Counterspell is your safety net. Hold your reaction for it when facing casters.</div>
+      </li>
+      <li>
+        <span class="step-action">Fall back on Aura + Shield for survival</span> <span class="step-timing every">Every Turn</span>
+        <div class="step-detail">If the fight goes long, your passive Aura of Protection and Shield reaction keep the party alive. You don't need to win in one round &mdash; you just need to survive long enough for a second nova window.</div>
+      </li>
+    </ol>
+
+    <h3>Hardest Honour Mode Fights &mdash; Sorcadin Approach</h3>
+    <ul class="picks">
+      <li><span class="label">Act 1</span> <span class="name">Grym (Adamantine Forge)</span> &mdash; <span class="note">Immune to most damage except forge hammer. Don't waste smite slots. Lure onto platform, pull lever. Save your nova for meaningful fights.</span></li>
+      <li><span class="label">Act 2</span> <span class="name">Ketheric Thorm</span> &mdash; <span class="note">Humanoid form 1 = Hold Person + smite. Second phase as Apostle of Myrkul = not humanoid. Use Vow of Enmity + radiant smites (extra d8 vs undead).</span></li>
+      <li><span class="label">Act 3</span> <span class="name">Raphael (House of Hope)</span> &mdash; <span class="note">Fiend, not humanoid. Legendary Actions. Extremely dangerous. Vow of Enmity for advantage, smite hard (extra d8 vs fiends). Counterspell his spells. Bring Scroll of Globe of Invulnerability.</span></li>
+      <li><span class="label">Act 3</span> <span class="name">Orin the Red</span> &mdash; <span class="note">Humanoid. Hold Person works. She's squishy but has Unstoppable legendary action. Double smite crit should kill her before she uses it.</span></li>
+      <li><span class="label">Final</span> <span class="name">The Netherbrain</span> &mdash; <span class="note">Not humanoid. Massive HP. Use Haste + Vow of Enmity + smite every attack. Radiant damage is effective here. Fireball for adds. This is a war of attrition &mdash; Aura of Protection keeps the party up.</span></li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="callout-label">Honour Mode Golden Rule</div>
+      <p>Never fight fair. Pre-buff. Ambush. Use environmental advantages. The Sorcadin's burst means most fights end in round 1&ndash;2 before enemies get their Legendary Actions. That's the point: kill them before they kill you.</p>
+    </div>
+  </section>
+
+  <div class="guide-footer">
+    BG3 Sorcadin &mdash; Divine Tempest Build Guide &middot; Paladin 6 / Sorcerer 6 &middot; Patch 8
+    <br>
+    <a href="guides.html">All Build Guides</a> &middot; <a href="index.html">Home</a>
+  </div>
+
+</main>
+</div>
+
+<script>
+// Highlight active sidebar link on scroll
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector('.sidebar a[href="#' + entry.target.id + '"]');
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+
+// Mobile hamburger menu
+const toggle = document.querySelector('.nav-toggle');
+const links = document.querySelector('.nav-links');
+toggle.addEventListener('click', () => links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+// Scroll reveal
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>

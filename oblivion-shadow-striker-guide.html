@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shadow Striker — Oblivion Remastered Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0c0a08;--bg-card:#161310;--bg-el:#1e1a16;--bg-hover:#252018;
+  --border:#302a22;--border-light:#403828;
+  --text:#e0d8c8;--text-dim:#a89878;--text-muted:#6a5a48;--white:#f0e8d8;
+  --accent:#c8a050;--accent-hover:#e0b860;--accent-dim:rgba(200,160,80,0.12);
+  --fire:#d05030;--fire-dim:rgba(208,80,48,0.12);
+  --frost:#4080c0;--frost-dim:rgba(64,128,192,0.12);
+  --shock:#8060c0;--shock-dim:rgba(128,96,192,0.12);
+  --green:#5a9040;--green-dim:rgba(90,144,64,0.1);
+  --blue:#4080b0;--blue-dim:rgba(64,128,176,0.1);
+  --red:#b03030;
+  --poison:#40a060;--poison-dim:rgba(64,160,96,0.1);
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:19px;line-height:1.75;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);text-decoration:underline}
+
+.page{display:flex;max-width:1100px;margin:0 auto}
+.sidebar{width:220px;flex-shrink:0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;border-right:1px solid var(--border);background:var(--bg-card);padding:1.5rem 0;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.sidebar-badge{text-align:center;padding:0 1.25rem 1rem}
+.sidebar-badge img{width:48px;height:48px;border-radius:8px;border:1px solid var(--border)}
+.sidebar-title{font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);padding:0 1.25rem;margin-bottom:.75rem}
+.sidebar a{display:flex;align-items:center;gap:.5rem;padding:.45rem 1.25rem;font-size:.88rem;font-weight:500;color:var(--text-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s}
+.sidebar a:hover{color:var(--white);background:rgba(200,160,80,0.04);text-decoration:none}
+.sidebar a.active{color:var(--white);border-left-color:var(--accent);background:rgba(200,160,80,0.06)}
+.nav-icon{font-size:1rem;width:1.2rem;text-align:center}
+.content{flex:1;min-width:0;padding:2.5rem 2.5rem 4rem}
+@media(max-width:800px){.sidebar{display:none}.content{padding:1.5rem}}
+
+/* Hero */
+.hero-art{width:100%;margin-bottom:1.25rem;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:var(--bg-card)}
+.hero-svg{width:100%;height:auto;display:block}
+.guide-header{margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.header-row{display:flex;align-items:center;gap:1rem;margin-bottom:.5rem}
+.header-portrait{width:72px;height:72px;border-radius:8px;border:2px solid var(--border);object-fit:cover;background:var(--bg-el)}
+.header-text{flex:1}
+.breadcrumb{font-size:.78rem;color:var(--text-muted);margin-bottom:.3rem}
+.guide-header h1{font-family:'Cinzel',serif;font-size:2.2rem;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:.3rem}
+.subtitle{font-size:1rem;color:var(--text-dim)}
+.tag-row{display:flex;gap:.4rem;margin-top:.6rem;flex-wrap:wrap}
+.tag{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim);text-transform:uppercase;letter-spacing:.04em}
+.tag.fire{color:var(--fire);border-color:rgba(208,80,48,0.3);background:var(--fire-dim)}
+.tag.gold{color:var(--accent);border-color:rgba(200,160,80,0.3);background:var(--accent-dim)}
+.tag.green{color:var(--green);border-color:rgba(90,144,64,0.3);background:var(--green-dim)}
+.tag.blue{color:var(--blue);border-color:rgba(64,128,176,0.3);background:var(--blue-dim)}
+.tag.poison{color:var(--poison);border-color:rgba(64,160,96,0.3);background:var(--poison-dim)}
+
+/* Sections */
+.section{margin-top:3rem}
+.section h2{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.section h3{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:600;color:var(--text);margin:1.5rem 0 .6rem}
+.section p{margin-bottom:1rem}
+
+/* Callouts */
+.callout{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0}
+.callout.warn{border-left-color:var(--fire)}
+.callout.tip{border-left-color:var(--green)}
+.callout-label{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem;color:var(--accent)}
+.callout.warn .callout-label{color:var(--fire)}
+.callout.tip .callout-label{color:var(--green)}
+.callout p{margin-bottom:.5rem;font-size:.95rem}.callout p:last-child{margin-bottom:0}
+
+/* Stats */
+.stats{display:flex;gap:.5rem;flex-wrap:wrap;margin:.75rem 0}
+.stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:.4rem .75rem;text-align:center;min-width:3.5rem}
+.stat-box.primary{border-color:rgba(200,160,80,0.4)}
+.stat-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
+.stat-val{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--white)}
+.stat-box.primary .stat-val{color:var(--accent)}
+
+/* Picks */
+.picks{list-style:none;margin:.5rem 0}
+.picks li{padding:.3rem 0;font-size:.95rem;display:flex;gap:.4rem;align-items:baseline}
+.picks .label{font-size:.72rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.03em;flex-shrink:0;min-width:5rem}
+.picks .name{font-weight:600;color:var(--white)}
+.picks .note{color:var(--text-dim);font-size:.88rem}
+
+/* Level cards */
+.lv-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.4rem;overflow:hidden;transition:border-color .15s}
+.lv-card:hover{border-color:var(--border-light)}
+.lv-card.spike{border-left:3px solid var(--accent)}
+.lv-head{display:flex;align-items:center;gap:.6rem;padding:.65rem 1rem;cursor:pointer;user-select:none;transition:background .1s;flex-wrap:wrap}
+.lv-head:hover{background:var(--bg-hover)}
+.lv-num{font-family:'Cinzel',serif;font-weight:900;font-size:1.3rem;color:var(--white);min-width:1.6rem;text-align:center}
+.lv-range{font-size:.72rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(200,160,80,0.2);text-transform:uppercase;letter-spacing:.04em}
+.lv-title{font-weight:600;font-size:.95rem;color:var(--text);flex:1}
+.lv-spike{font-size:.65rem;font-weight:600;color:var(--accent);background:var(--accent-dim);padding:.15rem .45rem;border-radius:4px;border:1px solid rgba(200,160,80,0.2);text-transform:uppercase}
+.lv-arrow{color:var(--text-muted);font-size:.75rem;transition:transform .2s}
+.lv-card.open .lv-arrow{transform:rotate(90deg)}
+.lv-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.lv-card.open .lv-body{max-height:1200px}
+.lv-inner{padding:0 1rem 1rem;border-top:1px solid var(--border)}
+
+/* Quick picks */
+.qp-row{display:flex;flex-wrap:wrap;gap:.3rem;margin:.75rem 0 .5rem}
+.qp{font-size:.78rem;font-weight:500;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim)}
+.qp.skill{color:var(--green);border-color:rgba(90,144,64,0.2)}
+.qp.spell{color:var(--frost);border-color:rgba(64,128,192,0.2)}
+.qp.gear{color:var(--accent);border-color:rgba(200,160,80,0.2)}
+.qp.attr{color:var(--fire);border-color:rgba(208,80,48,0.2)}
+.qp.poison{color:var(--poison);border-color:rgba(64,160,96,0.2)}
+
+/* Gear cards */
+.gear-group{margin-bottom:1.5rem}
+.gear-group-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--accent);padding-bottom:.35rem;margin-bottom:.5rem;border-bottom:1px solid rgba(200,160,80,0.15)}
+.gear-row{display:flex;gap:.75rem;padding:.6rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:.35rem;align-items:center}
+.gear-img{width:48px;height:48px;border-radius:4px;border:1px solid var(--border);object-fit:cover;flex-shrink:0;background:var(--bg-el);display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+.gear-info{flex:1}
+.gear-name{font-weight:600;color:var(--accent);font-size:.95rem}
+.gear-slot{font-size:.7rem;color:var(--text-muted);margin-left:.35rem;text-transform:uppercase}
+.gear-desc{color:var(--text-dim);font-size:.85rem;margin-top:.1rem}
+.gear-loc{font-size:.8rem;color:var(--green);margin-top:.15rem}
+
+/* Spell grid */
+.spell-section{margin-bottom:1.5rem}
+.spell-level{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--white);padding-bottom:.35rem;margin-bottom:.5rem;border-bottom:1px solid var(--border)}
+.spell-row{display:flex;justify-content:space-between;align-items:start;padding:.5rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:.35rem;gap:.75rem}
+.spell-info{flex:1}.spell-name{font-weight:600;color:var(--white);font-size:.95rem}
+.spell-desc{color:var(--text-dim);font-size:.85rem;margin-top:.1rem}
+.spell-badge{font-size:.68rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;flex-shrink:0;align-self:center}
+.spell-badge.must{color:var(--green);background:var(--green-dim);border:1px solid rgba(90,144,64,0.2)}
+.spell-badge.good{color:var(--accent);background:var(--accent-dim);border:1px solid rgba(200,160,80,0.15)}
+.spell-badge.fire{color:var(--fire);background:var(--fire-dim);border:1px solid rgba(208,80,48,0.2)}
+.spell-badge.frost{color:var(--frost);background:var(--frost-dim);border:1px solid rgba(64,128,192,0.2)}
+.spell-badge.shock{color:var(--shock);background:var(--shock-dim);border:1px solid rgba(128,96,192,0.2)}
+.spell-badge.custom{color:#c0a060;background:rgba(192,160,96,0.08);border:1px solid rgba(192,160,96,0.15)}
+.spell-badge.poison{color:var(--poison);background:var(--poison-dim);border:1px solid rgba(64,160,96,0.2)}
+
+/* Birthsign cards */
+.bs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin:1rem 0}
+@media(max-width:700px){.bs-grid{grid-template-columns:1fr}}
+.bs-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center}
+.bs-card.recommended{border-color:var(--accent);box-shadow:0 0 0 1px rgba(200,160,80,0.1)}
+.bs-card img{width:64px;height:64px;border-radius:50%;border:2px solid var(--border);margin-bottom:.5rem;background:var(--bg-el)}
+.bs-card.recommended img{border-color:var(--accent)}
+.bs-name{font-family:'Cinzel',serif;font-weight:700;font-size:1rem;color:var(--white)}
+.bs-bonus{font-size:.85rem;color:var(--green);margin-top:.2rem}
+.bs-penalty{font-size:.85rem;color:var(--fire);margin-top:.1rem}
+.bs-note{font-size:.82rem;color:var(--text-dim);margin-top:.3rem}
+
+/* Rotation */
+.step-list{list-style:none;counter-reset:step}
+.step-list li{position:relative;padding:.75rem 0 .75rem 3rem;border-left:2px solid var(--border);margin-left:.75rem;counter-increment:step}
+.step-list li::before{content:counter(step);position:absolute;left:-.75rem;top:.6rem;width:1.4rem;height:1.4rem;background:var(--bg);border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:700;font-size:.75rem;color:var(--accent)}
+.step-list li:last-child{border-left-color:transparent}
+.step-action{font-weight:600;color:var(--white)}
+.step-detail{color:var(--text-dim);font-size:.9rem;margin-top:.2rem}
+
+/* Virtues table */
+.virtue-table{width:100%;border-collapse:collapse;margin:1rem 0}
+.virtue-table th{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--border)}
+.virtue-table td{padding:.5rem .6rem;border-bottom:1px solid var(--border);font-size:.9rem}
+.virtue-table tr:hover{background:var(--bg-card)}
+.virtue-table .attr-name{font-weight:600;color:var(--white)}
+.virtue-table .priority{font-size:.7rem;font-weight:600;padding:.1rem .4rem;border-radius:3px}
+.priority.t1{color:var(--accent);background:var(--accent-dim)}
+.priority.t2{color:var(--green);background:var(--green-dim)}
+.priority.t3{color:var(--text-muted);background:rgba(200,200,200,0.04)}
+
+/* Section images */
+.section-img{width:100%;max-height:200px;object-fit:cover;object-position:center;border-radius:8px;border:1px solid var(--border);margin:1rem 0;filter:brightness(0.85)}
+.inline-icon{width:28px;height:28px;vertical-align:middle;margin-right:.3rem;border-radius:4px}
+
+/* Ingredient row */
+.ingredient-row{display:flex;gap:.75rem;padding:.5rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:.35rem;align-items:center}
+.ingredient-info{flex:1}
+.ingredient-name{font-weight:600;color:var(--poison);font-size:.95rem}
+.ingredient-effects{color:var(--text-dim);font-size:.85rem;margin-top:.1rem}
+.ingredient-loc{font-size:.8rem;color:var(--green);margin-top:.15rem}
+
+.guide-footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.75rem;color:var(--text-muted);text-align:center}
+.guide-footer a{color:var(--accent)}
+
+/* Mobile nav */
+.mobile-nav{display:none;position:sticky;top:60px;z-index:100;background:rgba(12,10,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:56px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Cinzel',serif;font-size:.85rem;font-weight:700;color:var(--accent);letter-spacing:.06em}
+.nav-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s}
+.nav-links{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:rgba(12,10,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.nav-links.open{display:flex}
+.nav-links a{display:flex;align-items:center;gap:.5rem;height:44px;font-size:.9rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){.mobile-nav{display:flex}}
+
+/* ── Universal Nav ── */
+.unav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.unav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.unav-brand{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;color:var(--text);text-decoration:none;transition:color 0.3s}
+.unav-brand:hover{color:var(--accent,#c9a84c)}
+.unav-links{display:flex;gap:1.5rem;list-style:none;align-items:center}
+.unav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.3s;position:relative}
+.unav-links a:hover,.unav-links a.active{color:var(--accent,#c9a84c)}
+.unav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--accent,#c9a84c);transform:scaleX(0);transition:transform 0.3s;transform-origin:right}
+.unav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.unav-dropdown{position:relative}
+.unav-dropdown>a::after{display:none}
+.unav-dropdown>a{display:flex;align-items:center;gap:0.3rem}
+.unav-dropdown>a .dd-arrow{font-size:0.5rem;transition:transform 0.2s;margin-top:1px}
+.unav-dropdown:hover>a .dd-arrow{transform:rotate(180deg)}
+.unav-dd{
+  position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);
+  background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border);border-radius:10px;
+  min-width:200px;padding:0.5rem 0;
+  opacity:0;visibility:hidden;transform:translateX(-50%) translateY(-5px);
+  transition:opacity 0.2s,visibility 0.2s,transform 0.2s;
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+}
+.unav-dropdown:hover .unav-dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.unav-dd a{display:block;padding:0.6rem 1.2rem;font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.15s,background 0.15s;white-space:nowrap}
+.unav-dd a:hover{color:var(--accent,#c9a84c);background:rgba(201,168,76,0.06)}
+.unav-dd a::after{display:none}
+.unav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:0.5rem;z-index:1001}
+.unav-hamburger span{display:block;width:22px;height:2px;background:var(--text-dim,#aaa);margin:5px 0;transition:all 0.3s ease;border-radius:1px}
+.unav-hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.unav-hamburger.open span:nth-child(2){opacity:0}
+.unav-hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+@media(max-width:700px){
+  .unav-hamburger{display:block}
+  .unav-links{
+    display:flex;flex-direction:column;gap:0;
+    position:absolute;top:60px;left:0;right:0;
+    background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;
+    padding:0 0;
+  }
+  .unav-links.open{max-height:600px;padding:0.5rem 0}
+  .unav-links>li{list-style:none}
+  .unav-links>li>a{display:block;padding:0.8rem 2rem;font-size:0.85rem;border-bottom:1px solid var(--border)}
+  .unav-links>li:last-child>a{border-bottom:none}
+  .unav-links a::after{display:none}
+  .unav-dd{position:static;opacity:1;visibility:visible;transform:none;border:none;border-radius:0;min-width:auto;padding:0;background:none;backdrop-filter:none;box-shadow:none}
+  .unav-dd a{padding:0.7rem 2rem 0.7rem 3rem;font-size:0.8rem;border-bottom:1px solid var(--border)}
+  .unav-dropdown>a{display:none}
+  .unav-dropdown{border-bottom:none}
+}
+
+</style>
+</head>
+<body>
+<nav class="unav">
+  <div class="unav-inner">
+    <a href="index.html" class="unav-brand">Z3nGineer</a>
+    <button class="unav-hamburger" id="unav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="unav-links" id="unav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="unav-dropdown">
+        <a href="#">Projects <span class="dd-arrow">&#x25BC;</span></a>
+        <div class="unav-dd">
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+          <a href="https://crockednloaded.com">CrockedNLoaded</a>
+          <a href="guides.html">Game Guides</a>
+          <a href="CHIM.html">CHIM Modpack</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="mobile-nav" style="margin-top:60px;">
+  <span class="mobile-nav-title">Shadow Striker</span>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="#overview"><span class="nav-icon">◈</span> Overview</a>
+    <a href="#firststeps"><span class="nav-icon">►</span> First Steps</a>
+    <a href="#birthsign"><span class="nav-icon">★</span> Birthsign</a>
+    <a href="#virtues"><span class="nav-icon">↑</span> Leveling</a>
+    <a href="#progression"><span class="nav-icon">⚔</span> Progression</a>
+    <a href="#spells"><span class="nav-icon">✦</span> Spells</a>
+    <a href="#gear"><span class="nav-icon">◆</span> Gear</a>
+    <a href="#alchemy"><span class="nav-icon">⚗</span> Alchemy</a>
+    <a href="#combat"><span class="nav-icon">⚡</span> Combat</a>
+    <a href="#tips"><span class="nav-icon">💡</span> Tips</a>
+  </div>
+</div>
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-badge">
+    <img src="https://images.uesp.net/thumb/c/c1/OBR-icon-race-WoodElf.png/200px-OBR-icon-race-WoodElf.png" alt="Wood Elf">
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">◈</span> Overview</a>
+  <a href="#firststeps"><span class="nav-icon">►</span> First Steps</a>
+  <a href="#birthsign"><span class="nav-icon">★</span> Birthsign</a>
+  <a href="#virtues"><span class="nav-icon">↑</span> Leveling</a>
+  <a href="#progression"><span class="nav-icon">⚔</span> Progression</a>
+  <a href="#spells"><span class="nav-icon">✦</span> Spells</a>
+  <a href="#gear"><span class="nav-icon">◆</span> Gear</a>
+  <a href="#alchemy"><span class="nav-icon">⚗</span> Alchemy</a>
+  <a href="#combat"><span class="nav-icon">⚡</span> Combat</a>
+  <a href="#tips"><span class="nav-icon">💡</span> Tips</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="shadowGlow" cx="35%" cy="50%" r="65%">
+            <stop offset="0%" stop-color="#1a2a18" stop-opacity="0.6"/>
+            <stop offset="40%" stop-color="#101810" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#0c0a08" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="poisonGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#40c060" stop-opacity="0.6"/>
+            <stop offset="60%" stop-color="#30a050" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#209040" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#d0d8e0" stop-opacity="0.15"/>
+            <stop offset="100%" stop-color="#a0a8b0" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="arrowShaft" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#8a7050" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#6a5040" stop-opacity="0.6"/>
+          </linearGradient>
+          <linearGradient id="bowLimb" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#5a4030"/>
+            <stop offset="50%" stop-color="#7a5a40"/>
+            <stop offset="100%" stop-color="#5a4030"/>
+          </linearGradient>
+          <filter id="shadowBlur">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
+          </filter>
+          <filter id="softGlow">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+          </filter>
+        </defs>
+        <rect width="900" height="260" fill="#080a06"/>
+        <rect width="900" height="260" fill="url(#shadowGlow)"/>
+
+        <!-- Moon in background — pale crescent -->
+        <g transform="translate(780,55)" opacity="0.3">
+          <circle cx="0" cy="0" r="30" fill="#c0c8d0" opacity="0.12"/>
+          <circle cx="0" cy="0" r="28" fill="url(#moonGlow)"/>
+          <circle cx="8" cy="-4" r="26" fill="#080a06" opacity="0.85"/>
+          <!-- Moonlight rays -->
+          <line x1="-15" y1="30" x2="-40" y2="120" stroke="#c0c8d0" stroke-width="0.3" opacity="0.08"/>
+          <line x1="0" y1="30" x2="-20" y2="130" stroke="#c0c8d0" stroke-width="0.3" opacity="0.06"/>
+          <line x1="-10" y1="30" x2="-50" y2="150" stroke="#c0c8d0" stroke-width="0.2" opacity="0.05"/>
+        </g>
+
+        <!-- Dark forest background — tall trees silhouetted -->
+        <g opacity="0.35">
+          <!-- Tree 1 — far left -->
+          <rect x="60" y="40" width="8" height="200" fill="#1a1a12"/>
+          <path d="M64,40 L40,80 L50,75 L30,110 L45,105 L25,140 L88,140 L68,105 L83,110 L63,75 L73,80 Z" fill="#1a2018"/>
+          <!-- Tree 2 -->
+          <rect x="140" y="60" width="7" height="180" fill="#181812"/>
+          <path d="M143,60 L122,95 L132,90 L115,125 L130,120 L112,150 L175,150 L157,120 L172,125 L155,90 L165,95 Z" fill="#182018"/>
+          <!-- Tree 3 — behind archer -->
+          <rect x="310" y="30" width="10" height="210" fill="#151510"/>
+          <path d="M315,30 L288,75 L300,70 L280,110 L295,105 L275,145 L355,145 L335,105 L350,110 L330,70 L342,75 Z" fill="#152015"/>
+          <!-- Tree 4 -->
+          <rect x="520" y="50" width="8" height="190" fill="#181812"/>
+          <path d="M524,50 L502,88 L512,83 L495,118 L510,113 L492,148 L556,148 L538,113 L553,118 L536,83 L546,88 Z" fill="#182018"/>
+          <!-- Tree 5 — far right -->
+          <rect x="700" y="55" width="7" height="185" fill="#161612"/>
+          <path d="M703,55 L685,88 L694,84 L678,115 L690,111 L675,142 L732,142 L717,111 L729,115 L713,84 L722,88 Z" fill="#162016"/>
+          <!-- Tree 6 — between trees -->
+          <rect x="420" y="70" width="6" height="170" fill="#141410"/>
+          <path d="M423,70 L408,100 L415,97 L402,125 L413,122 L400,148 L446,148 L433,122 L444,125 L431,97 L438,100 Z" fill="#142014"/>
+        </g>
+
+        <!-- Ground fog / mist -->
+        <g opacity="0.15">
+          <ellipse cx="200" cy="235" rx="120" ry="15" fill="#405040"/>
+          <ellipse cx="500" cy="238" rx="150" ry="12" fill="#405040"/>
+          <ellipse cx="750" cy="232" rx="100" ry="14" fill="#405040"/>
+          <ellipse cx="350" cy="240" rx="80" ry="10" fill="#506050"/>
+        </g>
+
+        <!-- Dungeon entrance — stone archway far right -->
+        <g transform="translate(640,130)" opacity="0.4">
+          <rect x="-30" y="-60" width="12" height="120" fill="#3a3428" rx="2"/>
+          <rect x="18" y="-60" width="12" height="120" fill="#3a3428" rx="2"/>
+          <path d="M-30,-60 Q0,-85 30,-60" fill="#3a3428"/>
+          <rect x="-25" y="-10" width="50" height="70" fill="#0a0a06" rx="3"/>
+          <!-- Faint light from inside -->
+          <ellipse cx="0" cy="25" rx="15" ry="25" fill="#302818" opacity="0.3"/>
+        </g>
+
+        <!-- Fallen enemy — bandit with arrow in back, face-down -->
+        <g transform="translate(580,205)" opacity="0.8">
+          <!-- Body — prone, face-down -->
+          <ellipse cx="0" cy="0" rx="30" ry="10" fill="#4a3828" transform="rotate(-5)"/>
+          <!-- Head -->
+          <circle cx="-28" cy="3" r="8" fill="#5a4838"/>
+          <!-- Arms sprawled -->
+          <line x1="-20" y1="-8" x2="-38" y2="-15" stroke="#4a3828" stroke-width="5" stroke-linecap="round"/>
+          <line x1="15" y1="5" x2="30" y2="12" stroke="#4a3828" stroke-width="5" stroke-linecap="round"/>
+          <!-- Legs -->
+          <line x1="22" y1="-3" x2="38" y2="-10" stroke="#4a3828" stroke-width="5" stroke-linecap="round"/>
+          <line x1="20" y1="6" x2="35" y2="15" stroke="#4a3828" stroke-width="4" stroke-linecap="round"/>
+          <!-- Dropped sword -->
+          <line x1="-42" y1="-18" x2="-58" y2="-25" stroke="#8a8070" stroke-width="2" stroke-linecap="round"/>
+          <line x1="-42" y1="-18" x2="-38" y2="-20" stroke="#6a6050" stroke-width="3" stroke-linecap="round"/>
+          <!-- ARROW sticking out of back — the kill shot -->
+          <line x1="5" y1="-5" x2="5" y2="-32" stroke="#7a6040" stroke-width="2"/>
+          <!-- Arrow fletching -->
+          <path d="M3,-30 L5,-32 L7,-30" stroke="#4a6040" stroke-width="1" fill="none"/>
+          <path d="M3,-28 L5,-30 L7,-28" stroke="#4a6040" stroke-width="1" fill="none"/>
+          <!-- Blood pool -->
+          <ellipse cx="0" cy="8" rx="22" ry="5" fill="#3a0808" opacity="0.5"/>
+          <ellipse cx="-10" cy="5" rx="8" ry="3" fill="#4a0a0a" opacity="0.4"/>
+        </g>
+
+        <!-- Second fallen enemy — further back, slumped against tree -->
+        <g transform="translate(200,195)" opacity="0.55">
+          <ellipse cx="0" cy="10" rx="15" ry="22" fill="#4a3828" transform="rotate(20)"/>
+          <circle cx="-5" cy="-15" r="8" fill="#5a4838"/>
+          <!-- Arrow in chest -->
+          <line x1="8" y1="0" x2="8" y2="-28" stroke="#7a6040" stroke-width="1.8"/>
+          <path d="M6,-26 L8,-28 L10,-26" stroke="#4a6040" stroke-width="1" fill="none"/>
+          <!-- Arms limp -->
+          <line x1="-12" y1="5" x2="-25" y2="18" stroke="#4a3828" stroke-width="4" stroke-linecap="round"/>
+          <line x1="10" y1="8" x2="22" y2="22" stroke="#4a3828" stroke-width="4" stroke-linecap="round"/>
+          <ellipse cx="5" cy="28" rx="12" ry="3" fill="#3a0808" opacity="0.35"/>
+        </g>
+
+        <!-- === THE SHADOW STRIKER — crouched, bow drawn === -->
+        <g transform="translate(400,155)" opacity="0.95">
+          <!-- Shadow pool beneath — the stealth indicator -->
+          <ellipse cx="0" cy="55" rx="35" ry="8" fill="#0a0a06" opacity="0.6" filter="url(#shadowBlur)"/>
+
+          <!-- Cloak / hood — flowing behind, dark fabric -->
+          <path d="M-5,-35 Q-15,-20 -22,0 Q-28,20 -35,45 Q-38,55 -42,60 Q-35,58 -28,50 Q-20,35 -15,15 Q-10,-5 -5,-25 Z" fill="#1a1815" opacity="0.85"/>
+          <path d="M5,-35 Q10,-20 12,0 Q15,20 18,40 Q20,50 22,55 Q18,52 14,45 Q10,30 8,15 Q6,-5 5,-25 Z" fill="#151310" opacity="0.65"/>
+          <!-- Cloak tattered edge -->
+          <path d="M-42,60 Q-38,65 -35,58 Q-30,62 -28,55" stroke="#252218" stroke-width="0.5" opacity="0.4" fill="none"/>
+
+          <!-- Body — crouched low, leaning forward -->
+          <ellipse cx="-2" cy="15" rx="14" ry="22" fill="#2a2520" transform="rotate(-10)"/>
+          <!-- Leather armor details -->
+          <path d="M-12,5 Q-10,15 -8,30" stroke="#3a3025" stroke-width="0.8" opacity="0.5" fill="none"/>
+          <path d="M8,5 Q6,15 4,30" stroke="#3a3025" stroke-width="0.8" opacity="0.5" fill="none"/>
+          <line x1="-10" y1="18" x2="6" y2="16" stroke="#3a3025" stroke-width="0.6" opacity="0.4"/>
+          <!-- Belt with pouches -->
+          <rect x="-11" y="28" width="20" height="3" rx="1" fill="#3a2a18" opacity="0.7"/>
+          <rect x="-8" y="27" width="4" height="5" rx="1" fill="#2a2018" opacity="0.5"/>
+          <rect x="2" y="27" width="4" height="5" rx="1" fill="#2a2018" opacity="0.5"/>
+          <!-- Belt buckle -->
+          <rect x="-2" y="28" width="4" height="3" rx="1" fill="#8a7040" opacity="0.4"/>
+
+          <!-- Head — hooded, pointed ears visible -->
+          <circle cx="0" cy="-18" r="10" fill="#6a8a5a"/>
+          <!-- Hood over head -->
+          <path d="M-12,-25 Q-14,-38 0,-42 Q14,-38 12,-25 Q10,-18 8,-15 L-8,-15 Q-10,-18 -12,-25 Z" fill="#1a1815"/>
+          <!-- Hood shadow over face -->
+          <rect x="-8" y="-22" width="16" height="6" fill="#0a0a06" opacity="0.5" rx="2"/>
+          <!-- Glinting eyes in shadow — narrow, focused -->
+          <ellipse cx="-3" cy="-19" rx="2" ry="1" fill="#a0c060" opacity="0.9"/>
+          <ellipse cx="4" cy="-19" rx="2" ry="1" fill="#a0c060" opacity="0.9"/>
+          <!-- Eye glow -->
+          <ellipse cx="-3" cy="-19" rx="4" ry="2" fill="#a0c060" opacity="0.08" filter="url(#softGlow)"/>
+          <ellipse cx="4" cy="-19" rx="4" ry="2" fill="#a0c060" opacity="0.08" filter="url(#softGlow)"/>
+          <!-- Pointed Bosmer ears — poking from hood -->
+          <path d="M-11,-22 Q-18,-28 -20,-32" stroke="#6a8a5a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M11,-22 Q18,-28 20,-32" stroke="#6a8a5a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+          <!-- Legs — crouched, one knee almost on ground -->
+          <line x1="-5" y1="33" x2="-18" y2="50" stroke="#2a2520" stroke-width="7" stroke-linecap="round"/>
+          <line x1="5" y1="33" x2="15" y2="52" stroke="#2a2520" stroke-width="7" stroke-linecap="round"/>
+          <!-- Back knee touching ground -->
+          <ellipse cx="-20" cy="52" rx="5" ry="4" fill="#2a2018"/>
+          <!-- Front foot planted -->
+          <ellipse cx="16" cy="54" rx="6" ry="3" fill="#2a2018"/>
+
+          <!-- LEFT ARM — holding bow, extended forward -->
+          <line x1="-10" y1="5" x2="-40" y2="-15" stroke="#6a8a5a" stroke-width="5" stroke-linecap="round"/>
+          <!-- Hand grip on bow -->
+          <circle cx="-42" cy="-17" r="3" fill="#6a8a5a"/>
+
+          <!-- THE BOW — large recurve, drawn back -->
+          <path d="M-42,-55 Q-50,-35 -42,-17 Q-50,5 -42,22" stroke="url(#bowLimb)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <!-- Bow grip wrapping -->
+          <rect x="-44" y="-20" width="5" height="8" rx="1" fill="#4a3020" opacity="0.6"/>
+          <!-- Bowstring — pulled back to cheek -->
+          <line x1="-42" y1="-55" x2="8" y2="-18" stroke="#c0b090" stroke-width="0.8" opacity="0.7"/>
+          <line x1="-42" y1="22" x2="8" y2="-18" stroke="#c0b090" stroke-width="0.8" opacity="0.7"/>
+
+          <!-- RIGHT ARM — drawing bowstring back -->
+          <line x1="6" y1="2" x2="10" y2="-15" stroke="#6a8a5a" stroke-width="5" stroke-linecap="round"/>
+          <!-- Hand on string -->
+          <circle cx="10" cy="-17" r="3" fill="#6a8a5a"/>
+          <!-- Fingers on string -->
+          <line x1="8" y1="-18" x2="7" y2="-22" stroke="#6a8a5a" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="10" y1="-18" x2="10" y2="-22" stroke="#6a8a5a" stroke-width="1.5" stroke-linecap="round"/>
+
+          <!-- THE ARROW — nocked, poisoned tip glowing green -->
+          <line x1="8" y1="-18" x2="-55" y2="-18" stroke="url(#arrowShaft)" stroke-width="2"/>
+          <!-- Arrow fletching near hand -->
+          <path d="M6,-16 L10,-18 L6,-20" fill="#4a3020" opacity="0.7"/>
+          <path d="M3,-16 L7,-18 L3,-20" fill="#3a2818" opacity="0.5"/>
+          <!-- Arrowhead — sharp, angular -->
+          <path d="M-55,-18 L-62,-15 L-68,-18 L-62,-21 Z" fill="#8a8070"/>
+          <!-- POISON on arrowhead — glowing green -->
+          <circle cx="-62" cy="-18" r="8" fill="url(#poisonGlow)"/>
+          <circle cx="-62" cy="-18" r="5" fill="#40c060" opacity="0.15"/>
+          <circle cx="-62" cy="-18" r="3" fill="#50d070" opacity="0.3"/>
+          <circle cx="-62" cy="-18" r="1.5" fill="#80f0a0" opacity="0.6"/>
+          <!-- Poison drips -->
+          <path d="M-62,-14 Q-63,-10 -64,-6" stroke="#40c060" stroke-width="1" opacity="0.4" fill="none"/>
+          <circle cx="-64" cy="-4" r="1" fill="#40c060" opacity="0.3"/>
+          <path d="M-60,-14 Q-59,-8 -60,-3" stroke="#40c060" stroke-width="0.8" opacity="0.3" fill="none"/>
+          <circle cx="-60" cy="-1" r="0.8" fill="#40c060" opacity="0.25"/>
+
+          <!-- Quiver on back — visible arrows -->
+          <rect x="-2" y="-8" width="6" height="35" rx="2" fill="#3a2818" transform="rotate(-15)" opacity="0.7"/>
+          <!-- Arrow tips poking out -->
+          <line x1="8" y1="-30" x2="10" y2="-38" stroke="#7a6040" stroke-width="1.2"/>
+          <line x1="10" y1="-29" x2="12" y2="-37" stroke="#7a6040" stroke-width="1.2"/>
+          <line x1="12" y1="-28" x2="14" y2="-36" stroke="#7a6040" stroke-width="1.2"/>
+
+          <!-- Dagger at belt — for close-range kills -->
+          <line x1="10" y1="28" x2="18" y2="22" stroke="#a0a090" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="10" y1="28" x2="8" y2="30" stroke="#5a4030" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+
+        <!-- Poison cloud / particles around arrow trajectory -->
+        <g opacity="0.2">
+          <circle cx="320" cy="138" r="2" fill="#40c060"/>
+          <circle cx="305" cy="140" r="1.5" fill="#50d070"/>
+          <circle cx="290" cy="136" r="1" fill="#40c060"/>
+          <circle cx="275" cy="141" r="1.8" fill="#30a050"/>
+          <circle cx="260" cy="137" r="0.8" fill="#50d070"/>
+        </g>
+
+        <!-- Stealth eye indicator — the Oblivion sneak icon -->
+        <g transform="translate(400,100)" opacity="0.2">
+          <path d="M-18,0 Q0,-12 18,0 Q0,12 -18,0 Z" fill="none" stroke="#c8a050" stroke-width="1"/>
+          <circle cx="0" cy="0" r="4" fill="none" stroke="#c8a050" stroke-width="0.8"/>
+          <circle cx="0" cy="0" r="1.5" fill="#c8a050" opacity="0.5"/>
+          <text x="0" y="18" text-anchor="middle" font-family="Cinzel,serif" font-size="6" fill="#c8a050" opacity="0.4">HIDDEN</text>
+        </g>
+
+        <!-- Potion bottles on ground near archer -->
+        <g transform="translate(440,230)" opacity="0.45">
+          <rect x="-3" y="-10" width="6" height="10" rx="2" fill="#2a4a2a"/>
+          <rect x="-2" y="-12" width="4" height="3" rx="1" fill="#2a4a2a"/>
+          <circle cx="0" cy="-5" r="2.5" fill="#40c060" opacity="0.15"/>
+        </g>
+        <g transform="translate(460,228)" opacity="0.35">
+          <rect x="-2" y="-8" width="5" height="8" rx="2" fill="#2a3a4a"/>
+          <rect x="-1" y="-10" width="3" height="3" rx="1" fill="#2a3a4a"/>
+        </g>
+
+        <!-- Nightshade flowers on the ground -->
+        <g opacity="0.3">
+          <circle cx="130" cy="232" r="2.5" fill="#6040a0"/>
+          <circle cx="132" cy="230" r="2" fill="#7050b0"/>
+          <line x1="131" y1="234" x2="131" y2="240" stroke="#305020" stroke-width="0.8"/>
+          <circle cx="480" cy="235" r="2" fill="#6040a0"/>
+          <circle cx="482" cy="233" r="1.5" fill="#7050b0"/>
+          <line x1="481" y1="237" x2="481" y2="242" stroke="#305020" stroke-width="0.7"/>
+        </g>
+
+        <!-- Ground line -->
+        <line x1="60" y1="242" x2="840" y2="242" stroke="#2a2218" stroke-width="0.5" opacity="0.3"/>
+
+        <!-- Scattered leaves / forest floor debris -->
+        <g opacity="0.2">
+          <ellipse cx="170" cy="238" rx="4" ry="1.5" fill="#4a4020" transform="rotate(15)"/>
+          <ellipse cx="330" cy="240" rx="3" ry="1" fill="#3a3518" transform="rotate(-20)"/>
+          <ellipse cx="500" cy="239" rx="3.5" ry="1.2" fill="#4a4020" transform="rotate(30)"/>
+          <ellipse cx="620" cy="241" rx="3" ry="1" fill="#3a3518" transform="rotate(-10)"/>
+          <ellipse cx="720" cy="238" rx="4" ry="1.5" fill="#4a4020" transform="rotate(25)"/>
+        </g>
+
+        <!-- Fireflies / ambient particles -->
+        <g>
+          <circle cx="150" cy="120" r="1.2" fill="#a0c060" opacity="0.3"/>
+          <circle cx="250" cy="90" r="0.8" fill="#c0e080" opacity="0.25"/>
+          <circle cx="550" cy="100" r="1" fill="#a0c060" opacity="0.2"/>
+          <circle cx="680" cy="80" r="0.7" fill="#c0e080" opacity="0.2"/>
+          <circle cx="350" cy="170" r="0.9" fill="#a0c060" opacity="0.15"/>
+          <circle cx="750" cy="130" r="1.1" fill="#a0c060" opacity="0.2"/>
+        </g>
+      </svg>
+    </div>
+    <div class="header-row">
+      <img class="header-portrait" src="https://images.uesp.net/thumb/c/c1/OBR-icon-race-WoodElf.png/200px-OBR-icon-race-WoodElf.png" alt="Wood Elf">
+      <div class="header-text">
+        <div class="breadcrumb">Oblivion Remastered › Builds › Shadow Striker</div>
+        <h1>Shadow Striker</h1>
+        <div class="subtitle">Wood Elf · The Thief · Marksman + Sneak + Alchemy</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag green">Stealth Archer</span>
+      <span class="tag poison">Poison Crafter</span>
+      <span class="tag gold">Assassin</span>
+      <span class="tag blue">Remastered 2025</span>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="section" id="overview">
+    <h2>Overview</h2>
+    <p>The Shadow Striker is a pure stealth predator. One poisoned arrow from the shadows deals 3x sneak attack damage, and with Alchemy-crafted poisons stacking Weakness to Poison + Damage Health, a single shot can exceed 700 damage by mid-game. Switch to a dagger for 6x melee sneak attacks when enemies close the gap. Illusion magic keeps you invisible and resets combat when things go wrong. Nothing survives what it cannot see.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Remastered Changes That Matter</div>
+      <p><strong>Arrows are always recoverable.</strong> In the remaster, arrows can be picked up after combat — no more running out of ammo. <strong>Agility governs blade damage for daggers</strong>, not Strength, making AGI your primary stat. Fatigue no longer affects damage output, so you can sprint freely without losing DPS. Poison damage is unaffected by difficulty slider.</p>
+    </div>
+
+    <h3>Race — Wood Elf (Bosmer)</h3>
+    <ul class="picks">
+      <li><span class="label">Skill</span> <span class="name">+10 Marksman</span> — <span class="note">start with Apprentice-tier archery immediately</span></li>
+      <li><span class="label">Skill</span> <span class="name">+10 Sneak</span> — <span class="note">harder to detect from the first dungeon</span></li>
+      <li><span class="label">Skill</span> <span class="name">+5 Acrobatics, Alchemy, Alteration, Light Armor</span> — <span class="note">all useful for this build</span></li>
+      <li><span class="label">Daily</span> <span class="name">Beast Tongue</span> — <span class="note">Command Creature for 60 seconds. Turns bears, wolves, trolls into allies. Situational but strong in wilderness.</span></li>
+      <li><span class="label">Passive</span> <span class="name">Resist Disease 75%</span> — <span class="note">nearly immune to diseases from traps and undead</span></li>
+    </ul>
+
+    <h3>Class — Custom: Shadow Striker</h3>
+    <ul class="picks">
+      <li><span class="label">Spec</span> <span class="name">Stealth</span></li>
+      <li><span class="label">Favored</span> <span class="name">Agility, Endurance</span></li>
+      <li><span class="label">Major</span> <span class="name">Marksman, Sneak, Alchemy, Blade, Light Armor, Illusion, Acrobatics</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Why Custom Over Pre-Made?</div>
+      <p>The pre-made "Assassin" class takes Security and Speechcraft instead of Alchemy and Acrobatics. Security is irrelevant with Open Lock spells, and Speechcraft is niche. Alchemy is the core of this build — your poison damage is your real weapon. Acrobatics lets you reach vantage points and escape melee.</p>
+    </div>
+
+    <h3>Starting Attributes</h3>
+    <div class="stats">
+      <div class="stat-box"><div class="stat-label">STR</div><div class="stat-val">30</div></div>
+      <div class="stat-box"><div class="stat-label">INT</div><div class="stat-val">40</div></div>
+      <div class="stat-box"><div class="stat-label">WIL</div><div class="stat-val">30</div></div>
+      <div class="stat-box primary"><div class="stat-label">AGI</div><div class="stat-val">60</div></div>
+      <div class="stat-box primary"><div class="stat-label">SPD</div><div class="stat-val">60</div></div>
+      <div class="stat-box"><div class="stat-label">END</div><div class="stat-val">45</div></div>
+      <div class="stat-box"><div class="stat-label">PER</div><div class="stat-val">30</div></div>
+      <div class="stat-box"><div class="stat-label">LCK</div><div class="stat-val">60</div></div>
+    </div>
+    <p style="font-size:.88rem;color:var(--text-dim);">Wood Elf with The Thief birthsign and Stealth specialization. High AGI/SPD/LCK from the start. Endurance needs early investment — your HP pool is your main weakness.</p>
+  </section>
+
+  <!-- FIRST STEPS -->
+  <section class="section" id="firststeps">
+    <h2>First Steps After the Tutorial</h2>
+    <p>Once you leave the sewers, stealth builds need specific things immediately. Here's the optimal opening route:</p>
+
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Collect every ingredient you see — immediately</span>
+        <div class="step-detail">Before going anywhere, start picking up <strong>every ingredient</strong> on the ground: Flax Seeds, Cairn Bolete, Motherwort, Steel Blue Entoloma. You need Alchemy leveled as fast as possible. Buy a <strong>Mortar and Pestle</strong> from the first alchemist you find (The Main Ingredient in Imperial City Market District). You can start crafting poisons at Alchemy 15.</div>
+      </li>
+      <li>
+        <span class="step-action">Buy a bow and Illusion spells in Imperial City</span>
+        <div class="step-detail">Visit <strong>A Fighting Chance</strong> for a decent bow (Iron or Steel — upgrade when you find better). Then go to <strong>Edgar's Discount Spells</strong> and buy <strong>Starlight</strong> (Night-Eye) and any Novice Illusion spells available. Visit <strong>Mystic Emporium</strong> for an Open Lock spell. Buy arrows in bulk — they're cheap.</div>
+      </li>
+      <li>
+        <span class="step-action">Trigger the Dark Brotherhood</span>
+        <div class="step-detail">You need to <strong>murder an innocent NPC</strong> — any non-hostile, non-essential character. Go to a remote house at night, save first, and kill someone while undetected. Sleep in any bed afterward. Lucien Lachance visits you with the Dark Brotherhood invitation. This questline gives you the <strong>Blade of Woe</strong> and <strong>Shrouded Armor</strong> — critical gear for this build.</div>
+      </li>
+      <li>
+        <span class="step-action">Join the Thieves Guild</span>
+        <div class="step-detail">Go to the <strong>Imperial City Waterfront</strong> at midnight and find the beggars. Talk to <strong>Armand Christophe</strong> who appears at the garden of Dareloth at midnight. Read one of the wanted posters around the Waterfront to start the quest. The Thieves Guild gives fences to sell stolen goods and eventually the <strong>Gray Cowl of Nocturnal</strong>.</div>
+      </li>
+      <li>
+        <span class="step-action">Find your first real bow — Ruins of Vilverin</span>
+        <div class="step-detail">The ruins right outside the sewer exit. Clear it at level 1 for practice and loot. You'll find a decent bow, arrows, and alchemical ingredients inside. Sneak through the entire dungeon — the XP from undetected kills is massive.</div>
+      </li>
+    </ol>
+
+    <div class="callout tip">
+      <div class="callout-label">Level Sneak While Walking</div>
+      <p>Toggle sneak <strong>on</strong> whenever you're near NPCs or enemies. You gain Sneak XP just by moving undetected near living things. Walking through cities in sneak mode at night levels Sneak passively. Cast any Illusion spell you can afford to level that school simultaneously.</p>
+    </div>
+  </section>
+
+  <!-- BIRTHSIGN -->
+  <section class="section" id="birthsign">
+    <h2>Birthsign</h2>
+    <div class="bs-grid">
+      <div class="bs-card recommended">
+        <img src="https://images.uesp.net/thumb/4/44/OBbsign_Thief.jpg/200px-OBbsign_Thief.jpg" alt="The Thief">
+        <div class="bs-name">The Thief</div>
+        <div class="bs-bonus">+10 Agility, +10 Speed, +10 Luck</div>
+        <div class="bs-note">Three stats in one. Agility governs bow and dagger damage, Speed is movement, Luck affects everything. Perfect synergy with Bosmer racials.</div>
+        <div style="margin-top:.5rem"><span class="tag gold">Recommended</span></div>
+      </div>
+      <div class="bs-card">
+        <img src="https://images.uesp.net/thumb/6/6e/OBbsign_Shadow.jpg/200px-OBbsign_Shadow.jpg" alt="The Shadow">
+        <div class="bs-name">The Shadow</div>
+        <div class="bs-bonus">Invisibility (60 sec, once per day)</div>
+        <div class="bs-note">Free Invisibility before you can cast it. Use to escape or set up one guaranteed sneak attack per day. Strong early game, redundant once Illusion hits 50.</div>
+      </div>
+      <div class="bs-card">
+        <img src="https://images.uesp.net/thumb/8/8f/OBbsign_Lover.jpg/200px-OBbsign_Lover.jpg" alt="The Lover">
+        <div class="bs-name">The Lover</div>
+        <div class="bs-bonus">Lover's Kiss: Paralyze 10 sec (once/day)</div>
+        <div class="bs-penalty">200 Fatigue cost on use</div>
+        <div class="bs-note">Emergency paralysis for melee threats. The Fatigue cost is harsh but manageable. Worse than The Thief's passive bonuses long-term.</div>
+      </div>
+    </div>
+    <div class="callout warn">
+      <div class="callout-label">Avoid — The Warrior / The Mage</div>
+      <p>Combat and Magic birthsigns do nothing for a stealth build. The Warrior's +10 STR/END is wasted when Agility is your damage stat. The Mage's +50 Magicka is overkill — you only need enough for Invisibility and Chameleon, and Illusion spells are cheap.</p>
+    </div>
+  </section>
+
+  <!-- VIRTUES / LEVELING -->
+  <section class="section" id="virtues">
+    <h2>Leveling — Virtue System</h2>
+    <p>At each level-up you get <strong>12 Virtues</strong> to distribute freely. Max 5 per attribute, max 3 attributes per level. Luck costs 4 per point. As a stealth build, your priority is unique — Agility is your damage stat for both bows and daggers.</p>
+
+    <table class="virtue-table">
+      <thead><tr><th>Attribute</th><th>Priority</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">Agility</td><td><span class="priority t1">MAX FIRST</span></td><td>Governs Marksman AND Blade (dagger) damage in Remastered. Also determines Fatigue pool. Your #1 stat.</td></tr>
+        <tr><td class="attr-name">Endurance</td><td><span class="priority t1">MAX FIRST</span></td><td>Health + HP regen. At 45, you're squishy. HP is retroactive in the remaster — still push this hard early.</td></tr>
+        <tr><td class="attr-name">Speed</td><td><span class="priority t2">SECOND</span></td><td>Faster movement = better repositioning between shots. Already at 60, strong. Push to 80 mid-game.</td></tr>
+        <tr><td class="attr-name">Intelligence</td><td><span class="priority t2">SECOND</span></td><td>Alchemy potency scales with Intelligence. Higher INT = stronger poisons. Critical for your damage ceiling.</td></tr>
+        <tr><td class="attr-name">Willpower</td><td><span class="priority t3">LATER</span></td><td>Magicka regen for Illusion spells. Invest once you're casting Invisibility regularly (Illusion 50+).</td></tr>
+        <tr><td class="attr-name">Strength</td><td><span class="priority t3">LATER</span></td><td>Only for carry weight. Your damage comes from AGI, not STR. Low priority.</td></tr>
+        <tr><td class="attr-name">Luck</td><td><span class="priority t3">SKIP</span></td><td>Costs 4 Virtues per point. Already at 60 from birthsign. Affects everything slightly but not worth the cost.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-label">Suggested Distribution</div>
+      <p><strong>Levels 2–8:</strong> Agility 5, Endurance 5, Speed 2</p>
+      <p><strong>Levels 9–15:</strong> Intelligence 5, Agility 5 (to 100), Speed 2</p>
+      <p><strong>Levels 16+:</strong> Endurance to 100, then Willpower, then fill remaining.</p>
+    </div>
+  </section>
+
+  <!-- PROGRESSION -->
+  <section class="section" id="progression">
+    <h2>Level Progression</h2>
+    <p style="color:var(--text-dim);margin-bottom:1rem;">Click to expand. Each phase has specific milestones that transform the build.</p>
+
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 1–5</span>
+        <span class="lv-title">Foundation — Sneak + Marksman + First Poisons</span>
+        <span class="lv-spike">Dark Brotherhood</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Sneak to 25</span>
+          <span class="qp skill">Marksman to 25</span>
+          <span class="qp skill">Alchemy to 25</span>
+          <span class="qp gear">Blade of Woe</span>
+          <span class="qp poison">Basic Poisons</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Priority</span> <span class="name">Sneak + Marksman to 25</span> — <span class="note">Apprentice perks: Sneak 25 = moving while sneaking is quieter; Marksman 25 = zoom while aiming</span></li>
+          <li><span class="label">Alchemy</span> <span class="name">Start crafting Damage Health poisons</span> — <span class="note">combine Nightshade + Imp Gall for basic Damage Health poison. Even weak poisons add meaningful damage to arrows.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Dark Brotherhood — "A Knife in the Dark"</span> — <span class="note">first quest gives you the Blade of Woe (sneak attack dagger) and Shrouded Armor (Sneak/Illusion/Marksman bonuses)</span></li>
+          <li><span class="label">Quest</span> <span class="name">Thieves Guild — first two jobs</span> — <span class="note">access to a fence (Ongar in Bruma) for selling stolen goods</span></li>
+          <li><span class="label">Goal</span> <span class="name">Kill everything from stealth</span> — <span class="note">every combat encounter should start with a sneak attack. If detected, retreat and re-enter stealth.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:.5rem;">
+          <div class="callout-label">Blade of Woe — Get This Immediately</div>
+          <p>The Blade of Woe is a leveled dagger rewarded after your first Dark Brotherhood contract. At low levels it's modest, but its sneak attack multiplier with your Sneak skill is devastating. This is your melee panic button for the entire game.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 6–10</span>
+        <span class="lv-title">Poison Craft — Weakness Stacking Comes Online</span>
+        <span class="lv-spike">Power Spike</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Alchemy to 50</span>
+          <span class="qp skill">Sneak to 50</span>
+          <span class="qp skill">Illusion to 25</span>
+          <span class="qp poison">Weakness + Damage stack</span>
+          <span class="qp gear">Glass Bow</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Alchemy 50</span> <span class="name">Journeyman</span> — <span class="note">four-ingredient recipes unlock. You can now see all 4 effects on ingredients. Poisons become dramatically stronger.</span></li>
+          <li><span class="label">Sneak 50</span> <span class="name">Journeyman</span> — <span class="note">you can now perform sneak attacks with bows without breaking stealth as easily. Huge combat upgrade.</span></li>
+          <li><span class="label">Poison</span> <span class="name">Weakness to Poison + Damage Health stack</span> — <span class="note">this is where the build breaks the game. Apply Weakness to Poison first, then Damage Health. The weakness amplifies the damage. See the Alchemy section for full details.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Dark Brotherhood — continue contracts</span> — <span class="note">work toward Shadowhunt bow and advancement rewards</span></li>
+          <li><span class="label">Spell</span> <span class="name">Buy Chameleon spell</span> — <span class="note">partial invisibility while you can still act. Buy from Ita Rienus in Bravil Mages Guild.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 11–15</span>
+        <span class="lv-title">Invisible Predator — Illusion + Expert Poisons</span>
+        <span class="lv-spike">Invisibility</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Illusion to 50</span>
+          <span class="qp skill">Marksman to 50</span>
+          <span class="qp spell">Invisibility</span>
+          <span class="qp poison">300+ dmg poisons</span>
+          <span class="qp gear">Ring of Khajiiti</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Illusion 50</span> <span class="name">Journeyman</span> — <span class="note">access to Invisibility spell. This changes everything — you can now re-stealth mid-combat by casting Invisibility.</span></li>
+          <li><span class="label">Marksman 50</span> <span class="name">Journeyman</span> — <span class="note">significant accuracy and damage increase. Arrows hit harder at range.</span></li>
+          <li><span class="label">Combo</span> <span class="name">Shoot → Invisibility → Reposition → Shoot</span> — <span class="note">this is the core loop. Every arrow is a sneak attack because you go invisible between shots.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Meridia's Shrine (level 10+)</span> — <span class="note">complete the Daedric quest for Ring of Khajiiti: Chameleon 35% + Fortify Sneak. Best stealth accessory in the game.</span></li>
+          <li><span class="label">Poison</span> <span class="name">Refined stacking poisons</span> — <span class="note">at Alchemy 50 with decent INT, your poisons should deal 300+ damage with proper Weakness stacking</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 16–20</span>
+        <span class="lv-title">Master Assassin — Poisons Hit 500+ Damage</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Alchemy to 75</span>
+          <span class="qp skill">Sneak to 75</span>
+          <span class="qp poison">500+ dmg poisons</span>
+          <span class="qp gear">Daedric Bow</span>
+          <span class="qp gear">Glass Armor set</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Alchemy 75</span> <span class="name">Expert</span> — <span class="note">poison potency is now massive. Weakness to Poison 100% + Damage Health 30pts = effective 500+ damage with sneak multiplier.</span></li>
+          <li><span class="label">Sneak 75</span> <span class="name">Expert</span> — <span class="note">much harder to detect even when close. Sneak attacks rarely fail.</span></li>
+          <li><span class="label">Gear</span> <span class="name">Daedric Bow</span> — <span class="note">starts appearing in loot at level 18+. Highest base damage for bows. Enchant with Soul Trap or Weakness to Magic.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Dark Brotherhood endgame</span> — <span class="note">completing the questline opens access to Shadowmere (the best horse) and powerful enchanted gear</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 21–25</span>
+        <span class="lv-title">Ghost Killer — 700+ Damage, Permanent Chameleon</span>
+        <span class="lv-spike">Peak</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Alchemy to 100</span>
+          <span class="qp skill">Sneak to 100</span>
+          <span class="qp poison">700+ dmg poisons</span>
+          <span class="qp gear">100% Chameleon set</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Alchemy 100</span> <span class="name">Master</span> — <span class="note">poisons are now absurdly powerful. Weakness to Poison + Damage Health combo routinely exceeds 700 damage per application.</span></li>
+          <li><span class="label">Sneak 100</span> <span class="name">Master</span> — <span class="note">Master perk: your sneak attacks ignore armor resistance. Combined with poison, nothing survives.</span></li>
+          <li><span class="label">Enchant</span> <span class="name">100% Chameleon gear</span> — <span class="note">stack Chameleon enchantments across 5 equipment slots (helm, cuirass, gauntlets, greaves, shield/ring) to reach 100%. You become permanently invisible and can act freely. Game-breaking.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Shivering Isles</span> — <span class="note">Bow of Infernal Frost from DLC vendor. Strong enchanted bow alternative.</span></li>
+        </ul>
+        <div class="callout warn" style="margin-top:.5rem;">
+          <div class="callout-label">100% Chameleon Trivializes the Game</div>
+          <p>With 100% Chameleon, enemies never detect you. Every attack is a sneak attack. Every fight is a guaranteed win. It's fun for a while, but it removes all challenge. Consider stopping at 80% Chameleon for a balance between power and engagement.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="lv-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 25+</span>
+        <span class="lv-title">Endgame — Perfect Gear + Infinite Power</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">All combat skills 100</span>
+          <span class="qp gear">Enchanted Daedric Bow</span>
+          <span class="qp gear">Gray Cowl of Nocturnal</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Marksman</span> <span class="name">100 Master</span> — <span class="note">arrows knock enemies down on hit. Combined with poison, one shot one kill on almost everything.</span></li>
+          <li><span class="label">Quest</span> <span class="name">Thieves Guild — Gray Cowl of Nocturnal</span> — <span class="note">Detect Life 200ft, Feather 200pts. Lets you see every enemy through walls. Complete stealth information advantage.</span></li>
+          <li><span class="label">Focus</span> <span class="name">Tackle remaining content</span> — <span class="note">Oblivion Gates, Arena, Main Quest, Knights of the Nine, Shivering Isles — everything falls to the Shadow Striker at this point.</span></li>
+        </ul>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- SPELLS -->
+  <section class="section" id="spells">
+    <h2>Spells &amp; Magic</h2>
+    <p>You're not a mage — you use magic as a tool. Illusion is your stealth reset button, and a handful of utility spells round out the build. Keep your Magicka investment minimal.</p>
+
+    <div class="spell-section">
+      <div class="spell-level">Illusion — Your Stealth Engine</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Starlight (Night-Eye)</div><div class="spell-desc">See in the dark. Essential for dungeons and nighttime operations. You live in the shadows — you need to see in them.</div><div class="gear-loc">📍 Edgar Vautrine — Imperial City, Edgar's Discount Spells</div></div><span class="spell-badge must">Must · Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Calm (various)</div><div class="spell-desc">Forces enemies to stop fighting for the duration. Cast on a detected enemy, then crouch — they lose track of you, and your next attack is a sneak attack again. This is your panic button.</div><div class="gear-loc">📍 Delphine Jend — Bravil Mages Guild · Ita Rienus — Bravil Mages Guild</div></div><span class="spell-badge must">Must · Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Chameleon</div><div class="spell-desc">Partial invisibility — you can still act, shoot, and move. Stacks with Chameleon enchantments on gear. At 100% total Chameleon, you're permanently invisible.</div><div class="gear-loc">📍 Ita Rienus — Bravil Mages Guild</div></div><span class="spell-badge must">Must · Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Shadow Shape (Invisibility)</div><div class="spell-desc">Full invisibility — breaks when you act. Cast it, reposition, then break it with a sneak attack for guaranteed 3x/6x damage. The core of your mid-game combat loop.</div><div class="gear-loc">📍 Ita Rienus — Bravil Mages Guild (requires Illusion 50)</div></div><span class="spell-badge must">Must · Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Command Humanoid</div><div class="spell-desc">Turn an enemy into a temporary ally. Use on a tanky enemy to make them fight their allies while you pick everyone off from cover.</div><div class="gear-loc">📍 Borissean — Imperial City, Arcane University Lobby</div></div><span class="spell-badge good">Good · Expert</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Utility Spells</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Heal Minor / Major Wounds</div><div class="spell-desc">You'll take hits when stealth fails. Keep a heal ready. Doesn't need to be strong — you shouldn't be in prolonged combat.</div><div class="gear-loc">📍 Starting spell + any Chapel Healer or Mages Guild vendor</div></div><span class="spell-badge must">Must · Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Open Lock (Easy/Average/Hard)</div><div class="spell-desc">Skip lockpicking entirely. Upgrade the tier as your Alteration skill grows. Saves you from investing in Security.</div><div class="gear-loc">📍 Calindil — Imperial City, Mystic Emporium · Trayvond — Cheydinhal MG</div></div><span class="spell-badge good">Good · Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Detect Life</div><div class="spell-desc">See enemies through walls. Plan your route through a dungeon before entering each room. Invaluable for stealth.</div><div class="gear-loc">📍 Ita Rienus — Bravil Mages Guild · Alberic Litte — Chorrol MG</div></div><span class="spell-badge good">Good · Appr</span></div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Illusion Spell Shopping Route</div>
+      <p><strong>Bravil Mages Guild</strong> is your one-stop shop. Ita Rienus sells Calm, Chameleon, Invisibility, and Detect Life. Delphine Jend has Charm spells. Visit Bravil early and buy everything you can afford — even spells above your current skill level, since you'll grow into them.</p>
+    </div>
+  </section>
+
+  <!-- GEAR -->
+  <section class="section" id="gear">
+    <h2>Gear by Level</h2>
+
+    <div class="callout">
+      <div class="callout-label">Light Armor — No Spell Penalty</div>
+      <p>Unlike Heavy Armor, Light Armor has <strong>no spell effectiveness penalty</strong> in the remaster. You can cast Illusion spells at full power from level 1. This is a massive advantage for stealth-magic hybrids.</p>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Early Game — Levels 1–10</div>
+      <div class="gear-row">
+        <div class="gear-img">🗡</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Blade of Woe</span> <span class="gear-slot">Dagger</span></div>
+          <div class="gear-desc">Leveled dagger with Demoralize enchantment. Your sneak attack dagger for the entire game. Enemies flee after the first hit — chase and finish.</div>
+          <div class="gear-loc">📍 Dark Brotherhood — reward for completing "A Knife in the Dark" (first contract from Lucien Lachance)</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img">🏹</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Bow of Blizzards / Fine Iron Bow</span> <span class="gear-slot">Bow</span></div>
+          <div class="gear-desc">Best early bows. Enchanted bows appear in random loot. Any bow with elemental damage is a keeper until you find Glass or Elven.</div>
+          <div class="gear-loc">📍 Random dungeon loot, or buy from A Fighting Chance (Imperial City) / The Archer's Paradox (Bravil)</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img">🧥</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Shrouded Armor</span> <span class="gear-slot">Light Armor Set</span></div>
+          <div class="gear-desc">Full set: Fortify Sneak, Fortify Illusion, Fortify Marksman, Fortify Blade. Purpose-built for this build. Wear it for 15+ levels.</div>
+          <div class="gear-loc">📍 Dark Brotherhood — given after joining. Full set: Hood, Cuirass, Gauntlets, Greaves, Boots.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img">🥾</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Boots of Springheel Jak</span> <span class="gear-slot">Light Boots</span></div>
+          <div class="gear-desc">Fortify Acrobatics 50pts. Jump to impossible vantage points for archery. Fall from any height safely. Game-changing mobility.</div>
+          <div class="gear-loc">📍 Thieves Guild quest "Boots of Springheel Jak" — available mid-questline</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Mid Game — Levels 10–20</div>
+      <div class="gear-row">
+        <div class="gear-img">🏹</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Shadowhunt</span> <span class="gear-slot">Bow</span></div>
+          <div class="gear-desc">Damage Health + Damage Magicka enchantment. A solid unique bow that drains enemies as it hits. Available relatively early.</div>
+          <div class="gear-loc">📍 Ruins of Fieldhouse Cave — enter from the Topal Bay coast, south of Leyawiin. In a chest at the end of the dungeon.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img">💍</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Ring of Khajiiti</span> <span class="gear-slot">Ring</span></div>
+          <div class="gear-desc">Chameleon 35% + Fortify Sneak 10pts. The single best stealth accessory. Permanently worn from the moment you get it.</div>
+          <div class="gear-loc">📍 Meridia's Shrine (west of Skingrad, near the Gold Road). Daedric quest requires level 10+. You must purge undead from a nearby dungeon.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img">🧥</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Glass Armor</span> <span class="gear-slot">Light Armor Set</span></div>
+          <div class="gear-desc">Best non-unique light armor. AR 45. Upgrade from Shrouded Armor when you find full pieces. Enchant the pieces with Chameleon.</div>
+          <div class="gear-loc">📍 Random loot at level 15+. "The Best Defense" (Imperial City) and "Northern Goods and Trade" (Chorrol) stock it.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img">🏹</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Bow of Infernal Frost</span> <span class="gear-slot">Bow</span></div>
+          <div class="gear-desc">Fire Damage + Frost Damage. Dual-element damage stacks with your poison for triple-threat arrows.</div>
+          <div class="gear-loc">📍 Random enchanted loot at mid levels, or found in Oblivion Gate reward chests. Can also appear at Daedric shrine dungeon rewards.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Late Game — Levels 20+</div>
+      <div class="gear-row">
+        <div class="gear-img">🏹</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Daedric Bow</span> <span class="gear-slot">Bow</span></div>
+          <div class="gear-desc">Highest base damage bow (18). Enchant with Weakness to Poison for even more poison synergy, or Soul Trap for filling gems.</div>
+          <div class="gear-loc">📍 Random loot at level 18+. Enchant at Arcane University or Frostcrag Spire.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img">🧥</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Dark Brotherhood Armor (Enchanted)</span> <span class="gear-slot">Light Armor Set</span></div>
+          <div class="gear-desc">Take your Glass Armor set and enchant each piece with 20% Chameleon using Grand Soul Gems. 5 pieces = 100% Chameleon = permanent invisibility.</div>
+          <div class="gear-loc">📍 Enchant at Arcane University. Requires knowing the Chameleon spell + Grand Soul Gems (Grand Souls).</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img">👑</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Gray Cowl of Nocturnal</span> <span class="gear-slot">Helmet</span></div>
+          <div class="gear-desc">Detect Life 200ft + Feather 200pts. See every living thing through walls. You always know where enemies are. Permanent infamy while worn (crimes attributed to the "Gray Fox").</div>
+          <div class="gear-loc">📍 Thieves Guild — final quest reward. Requires completing the entire Thieves Guild questline.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Key Accessories (Any Level)</div>
+      <div class="gear-row">
+        <div class="gear-img">💍</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Ring of Khajiiti</span></div>
+          <div class="gear-desc">Chameleon 35% + Fortify Sneak. Mandatory. Never unequip this.</div>
+          <div class="gear-loc">📍 Meridia's Shrine quest (level 10+)</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img">📿</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Amulet of Axes / Ring of Skimming</span></div>
+          <div class="gear-desc">Fortify Marksman / Fortify Speed enchantments. Stack with Shrouded Armor bonuses for maximum bow damage.</div>
+          <div class="gear-loc">📍 Random loot, or enchant your own at Arcane University.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALCHEMY / POISON CRAFTING -->
+  <section class="section" id="alchemy">
+    <h2>Alchemy &amp; Poison Crafting</h2>
+    <p>This is the heart of the Shadow Striker. Your bow damage is decent. Your poison damage is <strong>obscene</strong>. Understanding how poison stacking works is the difference between a good build and a broken one.</p>
+
+    <h3>The Weakness to Poison + Damage Health Stack</h3>
+    <div class="callout">
+      <div class="callout-label">How It Works — The Core Mechanic</div>
+      <p>Oblivion processes poison effects in the <strong>order they're listed</strong>. If a poison contains both "Weakness to Poison 100%" and "Damage Health 5pts for 10 seconds," the game applies the Weakness first, then the Damage Health is amplified by that weakness. A 100% Weakness doubles the Damage Health. Stack multiple hits and the numbers get absurd.</p>
+    </div>
+
+    <h3>The Two-Poison Method (Advanced)</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Apply Poison #1 — Weakness to Poison</span>
+        <div class="step-detail">Craft a poison that contains <strong>Weakness to Poison 100%</strong> for 10+ seconds. Apply it to your arrow. Hit the enemy. Now they take double damage from the next poison.</div>
+      </li>
+      <li>
+        <span class="step-action">Apply Poison #2 — Damage Health</span>
+        <div class="step-detail">Immediately switch arrows and apply your strongest <strong>Damage Health</strong> poison. This second poison now deals <strong>double damage</strong> because of the active Weakness. A base 30 Damage Health becomes 60. With sneak attack 3x multiplier, that's 180 per tick.</div>
+      </li>
+      <li>
+        <span class="step-action">Stack more Weakness for exponential scaling</span>
+        <div class="step-detail">Apply Weakness to Poison again before the first wears off. Now the enemy has <strong>200% Weakness</strong> (or more). The next Damage Health poison does <strong>triple</strong> damage. This is how you hit 700+ damage per poisoned arrow at high Alchemy skill.</div>
+      </li>
+    </ol>
+
+    <h3>Best Poison Ingredients</h3>
+    <div class="spell-section">
+      <div class="spell-level">Damage Health — Kill Poisons</div>
+      <div class="ingredient-row">
+        <div class="ingredient-info">
+          <div class="ingredient-name">Nightshade</div>
+          <div class="ingredient-effects">Damage Health + Burden + Damage Luck + Fortify Destruction</div>
+          <div class="ingredient-loc">📍 Grows throughout Cyrodiil — West Weald and near Skingrad. Also sold by alchemists.</div>
+        </div>
+      </div>
+      <div class="ingredient-row">
+        <div class="ingredient-info">
+          <div class="ingredient-name">Imp Gall</div>
+          <div class="ingredient-effects">Damage Health + Cure Paralysis + Fortify Personality + Damage Magicka</div>
+          <div class="ingredient-loc">📍 Dropped by Imps (common dungeon enemy). Stockpile these from every dungeon run.</div>
+        </div>
+      </div>
+      <div class="ingredient-row">
+        <div class="ingredient-info">
+          <div class="ingredient-name">Harrada Root</div>
+          <div class="ingredient-effects">Damage Health + Damage Magicka + Silence + Damage Speed</div>
+          <div class="ingredient-loc">📍 Found inside Oblivion Gates. Harvest everything when you enter a Gate — these are premium ingredients.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Weakness to Poison — Amplifier Poisons</div>
+      <div class="ingredient-row">
+        <div class="ingredient-info">
+          <div class="ingredient-name">Flax Seeds</div>
+          <div class="ingredient-effects">Weakness to Poison + Restore Magicka + Fortify Magicka + Damage Health</div>
+          <div class="ingredient-loc">📍 Extremely common — grows in fields, roadsides, farms across all of Cyrodiil. Pick every one you see.</div>
+        </div>
+      </div>
+      <div class="ingredient-row">
+        <div class="ingredient-info">
+          <div class="ingredient-name">Cairn Bolete Cap</div>
+          <div class="ingredient-effects">Weakness to Poison + Restore Health + Damage Intelligence + Fortify Agility</div>
+          <div class="ingredient-loc">📍 Grows in caves and mines near cave entrances. Common in Ayleid ruins.</div>
+        </div>
+      </div>
+      <div class="ingredient-row">
+        <div class="ingredient-info">
+          <div class="ingredient-name">Stinkhorn Cap</div>
+          <div class="ingredient-effects">Weakness to Poison + Damage Health + Restore Magicka + Fortify Magicka</div>
+          <div class="ingredient-loc">📍 Found in forests, especially near Chorrol and the Great Forest. Doubles as a Damage Health ingredient.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Optimal Farming Route</div>
+      <p><strong>1. West Weald (Skingrad area)</strong> — Nightshade grows heavily here. Walk between Skingrad and Kvatch picking everything.</p>
+      <p><strong>2. Farmlands around Chorrol/Cheydinhal</strong> — Flax Seeds everywhere along farm roads and open fields.</p>
+      <p><strong>3. Any cave dungeon</strong> — Cairn Bolete at entrances, Imp Gall from Imp enemies inside.</p>
+      <p><strong>4. Inside Oblivion Gates</strong> — Harrada Root is exclusive to Oblivion. Enter every gate you find.</p>
+    </div>
+
+    <h3>Poison Damage by Alchemy Skill</h3>
+    <table class="virtue-table">
+      <thead><tr><th>Alchemy Skill</th><th>Poison Damage</th><th>With Sneak (3x)</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">25 (Apprentice)</td><td>~30 Damage Health</td><td>~90 effective</td></tr>
+        <tr><td class="attr-name">50 (Journeyman)</td><td>~80 with Weakness stack</td><td>~240 effective</td></tr>
+        <tr><td class="attr-name">75 (Expert)</td><td>~180 with double stack</td><td>~540 effective</td></tr>
+        <tr><td class="attr-name">100 (Master)</td><td>~300+ with triple stack</td><td>~900+ effective</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <div class="callout-label">Poison Damage is NOT Affected by Difficulty</div>
+      <p>Oblivion's difficulty slider only affects direct weapon and spell damage. <strong>Poison damage always deals full damage regardless of difficulty setting.</strong> This means on maximum difficulty, where your bow does 1/6th normal damage, your poisons still deal 100%. The Shadow Striker is arguably the strongest build on the hardest difficulty because of this.</p>
+    </div>
+  </section>
+
+  <!-- COMBAT ROTATION -->
+  <section class="section" id="combat">
+    <h2>Combat Rotation</h2>
+
+    <h3>The Shadow Striker Loop</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Approach in stealth — always crouched</span>
+        <div class="step-detail">Toggle sneak before entering any room. Use Detect Life to check for enemies through walls. Position yourself at maximum bow range with a clear line of sight. Elevation advantage (balconies, ledges) is ideal.</div>
+      </li>
+      <li>
+        <span class="step-action">Apply Weakness to Poison, draw, and fire</span>
+        <div class="step-detail">Open your inventory, apply the Weakness to Poison poison to your equipped arrow. Draw the bow fully for maximum damage. Release. The sneak attack multiplier (3x for Marksman) plus the Weakness effect lands simultaneously.</div>
+      </li>
+      <li>
+        <span class="step-action">Cast Invisibility immediately after the shot</span>
+        <div class="step-detail">The moment your arrow flies, cast <strong>Invisibility</strong>. The arrow hit alerts enemies, but you vanish before they can locate you. They enter search mode ("must have been the wind") and eventually return to idle.</div>
+      </li>
+      <li>
+        <span class="step-action">Reposition while invisible</span>
+        <div class="step-detail">Move to a different angle. Enemies search where you <strong>were</strong>, not where you are. Apply your <strong>Damage Health</strong> poison to the next arrow while invisible (opening inventory doesn't break Invisibility).</div>
+      </li>
+      <li>
+        <span class="step-action">Fire the killing shot — Damage Health poison</span>
+        <div class="step-detail">With Weakness to Poison still active on the target, this arrow's poison deals amplified damage. Most enemies die here. If not, repeat the Invisibility cycle.</div>
+      </li>
+      <li>
+        <span class="step-action">Emergency melee — dagger sneak attack (6x)</span>
+        <div class="step-detail">If an enemy closes to melee range, switch to the <strong>Blade of Woe</strong>. If you're still hidden (Chameleon stacking), your dagger sneak attack deals <strong>6x damage</strong>. One dagger hit with poison often one-shots enemies that survived your arrows.</div>
+      </li>
+      <li>
+        <span class="step-action">If detected — Calm spell, then re-stealth</span>
+        <div class="step-detail">Cast <strong>Calm</strong> on the enemy. They stop fighting immediately. Crouch. Within 2-3 seconds you re-enter stealth (Calm resets their AI). Your next attack is another sneak attack. This loop has no counter.</div>
+      </li>
+    </ol>
+
+    <div class="callout tip" style="margin-top:1.25rem;">
+      <div class="callout-label">Boss Fight Strategy</div>
+      <p>Against tough enemies (Daedra, liches, boss NPCs): open with <strong>3 rapid Weakness to Poison arrows</strong> to stack the debuff, then switch to your strongest Damage Health poison. The stacked weakness means even boss-tier HP pools melt. On Xivilai and Spider Daedra, this kills them in 2-3 hits total.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Why Sneak Archery is A-Tier in Remastered</div>
+      <p>In the original Oblivion, arrows could miss and were consumed. In the remaster, <strong>arrows always land if aimed correctly and can be recovered from bodies/walls</strong>. Combined with the Invisibility reset loop, you get infinite sneak attacks with zero resource loss. The only cost is Magicka for Invisibility, and at 60+ Willpower that regenerates in seconds.</p>
+    </div>
+  </section>
+
+  <!-- TIPS -->
+  <section class="section" id="tips">
+    <h2>Tips &amp; Remastered Changes</h2>
+
+    <div class="callout tip">
+      <div class="callout-label">Arrows Are Infinite Now</div>
+      <p>In Oblivion Remastered, arrows can always be recovered from bodies and surfaces. You never need to buy arrows in bulk. Pick up every arrow after combat and you'll always have enough. This single change makes stealth archery dramatically more viable than in the original game.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Agility Governs Dagger Damage</div>
+      <p>In the remaster, <strong>Agility</strong> is the governing attribute for both Marksman (bows) and Blade (daggers). This means your primary stat powers both your ranged and melee weapons simultaneously. Strength is only needed for carry weight. Pump Agility to 100 as fast as possible.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Fatigue Doesn't Affect Damage</div>
+      <p>Unlike the original game where low Fatigue reduced damage, the remaster <strong>decoupled Fatigue from damage output</strong>. You can sprint, jump, and power attack without worrying about your Fatigue bar affecting bow or poison damage. Sprint freely to reposition.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Sneak Has a Sound Radius</div>
+      <p>Moving while sneaking makes noise based on your <strong>armor weight</strong> and <strong>speed</strong>. Light Armor is quieter than Heavy Armor. Walking is quieter than running. If enemies keep detecting you, slow down and check your armor. The Shrouded Armor has built-in Fortify Sneak for this reason.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Poison Damage Ignores Difficulty Slider</div>
+      <p>The difficulty slider scales <strong>direct weapon and spell damage only</strong>. Poison damage, which is classified as a magical effect from Alchemy, always deals full damage. On max difficulty where your bow does 1/6th damage, your poisons are unaffected. This makes the Shadow Striker the strongest build on the hardest difficulty setting.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Dark Brotherhood = Best Questline for This Build</div>
+      <p>Every Dark Brotherhood contract is an assassination mission — literally designed for stealth builds. The quests reward you with <strong>Blade of Woe, Shrouded Armor, Shadowmere (horse), bonuses to Sneak/Blade</strong>, and Gold. Do the entire questline. The "Whodunit?" quest (a murder mystery party where you kill all the guests) is one of the best quests in any Elder Scrolls game.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Enchant Your Bow with Weakness to Poison</div>
+      <p>At the Arcane University or Frostcrag Spire, enchant your endgame bow with <strong>Weakness to Poison on Strike</strong>. This means every arrow you fire automatically applies Weakness — no need to manually apply the first poison. Follow up with a Damage Health poison for instant devastating damage.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Steal Everything — Fences Buy It All</div>
+      <p>The Thieves Guild gives you access to <strong>fences</strong> who buy stolen goods. Stealth naturally leads to a lot of theft. Every dungeon clear is a payday. Higher-rank fences (Luciana Galena in Bravil, Fathis Ules in IC Elven Gardens) buy items worth up to 1500+ gold. You'll never be poor.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Save Before Every Major Contract</div>
+      <p>Dark Brotherhood and Thieves Guild quests often have bonus objectives (kill only the target, don't get detected, etc.) that reward extra gold or gear. Save before each quest and reload if you get spotted. Perfectionism is rewarded.</p>
+    </div>
+  </section>
+
+  <div class="guide-footer">
+    Oblivion Remastered · Shadow Striker Build Guide · 2025<br>
+    <a href="guides.html">All Guides</a> · <a href="index.html">Home</a>
+  </div>
+
+</main>
+</div>
+
+<script>
+const sections=document.querySelectorAll('.section');const navLinks=document.querySelectorAll('.sidebar a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const a=document.querySelector('.sidebar a[href="#'+entry.target.id+'"]');if(a)a.classList.add('active')}})},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>observer.observe(s));
+
+// Mobile hamburger menu
+const toggle=document.querySelector('.nav-toggle');
+const links=document.querySelector('.nav-links');
+toggle.addEventListener('click',()=>links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+/* ── Universal Nav Toggle ── */
+(function(){
+  const btn=document.getElementById('unav-hamburger'),nav=document.getElementById('unav-links');
+  if(!btn||!nav)return;
+  btn.addEventListener('click',()=>{btn.classList.toggle('open');nav.classList.toggle('open')});
+  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+    btn.classList.remove('open');nav.classList.remove('open');
+  }));
+})();
+
+</script>
+</body>
+</html>

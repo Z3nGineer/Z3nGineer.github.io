@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lightning Sorceress — D2R Season 13 Build Guide | Z3nGineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0808;--bg-card:#141010;--bg-el:#1c1616;--bg-hover:#241c1c;
+  --border:#2a1e1e;--border-light:#3a2828;
+  --text:#e8e0d8;--text-dim:#a09088;--text-muted:#685850;--white:#f5efe8;
+  --accent:#c44030;--accent-bright:#e04838;--accent-dim:rgba(196,64,48,0.12);
+  --gold:#c8a050;--gold-dim:rgba(200,160,80,0.12);
+  --lightning:#e8d040;--lightning-bright:#f0e060;--lightning-dim:rgba(232,208,64,0.12);
+  --green:#58a048;--green-dim:rgba(88,160,72,0.10);
+  --blue:#5090d0;--blue-dim:rgba(80,144,208,0.12);
+  --ice:#60b8e8;--ice-dim:rgba(96,184,232,0.10);
+  --red:#d05030;
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border-light) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:19px;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--lightning);color:#0a0808}
+a{color:var(--lightning);text-decoration:none}a:hover{color:var(--lightning-bright);text-decoration:underline}
+
+/* ═══════════════════ UNIVERSAL TOP NAV ═══════════════════ */
+.unav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,8,8,0.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:60px}
+.unav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.unav-brand{font-family:'Cinzel',serif;font-size:.88rem;font-weight:900;letter-spacing:.14em;color:var(--white);text-decoration:none;transition:color .3s}
+.unav-brand:hover{color:var(--accent-bright);text-decoration:none}
+.unav-links{display:flex;gap:0;list-style:none;align-items:center;height:60px}
+.unav-links>li{position:relative;height:60px;display:flex;align-items:center}
+.unav-links>li>a{font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);padding:0 1rem;height:60px;display:flex;align-items:center;position:relative;transition:color .2s;text-decoration:none}
+.unav-links>li>a:hover{color:var(--text);text-decoration:none}
+.unav-links>li>a.active{color:var(--accent-bright)}
+.unav-links>li>a::after{content:'';position:absolute;bottom:0;left:1rem;right:1rem;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .2s}
+.unav-links>li>a:hover::after,.unav-links>li>a.active::after{transform:scaleX(1)}
+
+/* Dropdown */
+.dropdown-trigger{cursor:pointer}
+.dropdown-trigger .dd-arrow{font-size:.55rem;margin-left:.3rem;transition:transform .2s;display:inline-block}
+.dropdown{display:none;position:absolute;top:60px;right:0;min-width:200px;background:rgba(14,10,10,0.97);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:0 0 8px 8px;box-shadow:0 12px 40px rgba(0,0,0,0.5);padding:.4rem 0;z-index:1001}
+.dropdown a{display:block;padding:.5rem 1.25rem;font-size:.82rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:all .15s}
+.dropdown a:hover{color:var(--white);background:rgba(232,208,64,0.06);text-decoration:none}
+.dropdown .dd-label{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);padding:.6rem 1.25rem .3rem;pointer-events:none}
+.dropdown-open .dropdown{display:block}
+.dropdown-open .dd-arrow{transform:rotate(180deg)}
+
+.unav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.5rem}
+.unav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all .3s;border-radius:1px}
+
+@media(max-width:768px){
+  .unav-toggle{display:flex}
+  .unav-links{display:none;position:absolute;top:60px;left:0;right:0;flex-direction:column;background:rgba(10,8,8,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:.5rem 0;height:auto}
+  .unav-links.open{display:flex}
+  .unav-links>li{height:auto}
+  .unav-links>li>a{height:44px;padding:0 2rem}
+  .dropdown{position:static;border:none;border-radius:0;box-shadow:none;background:rgba(20,16,16,0.5);padding:.2rem 0 .2rem 1rem}
+  .dropdown-open .dropdown{display:block}
+}
+
+/* ═══════════════════ PAGE SUB-NAV ═══════════════════ */
+.subnav{position:sticky;top:60px;z-index:900;background:rgba(10,8,8,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.subnav::-webkit-scrollbar{display:none}
+.subnav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;padding:0 1.5rem;height:44px;gap:0}
+.subnav a{font-size:.74rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);padding:0 .85rem;height:44px;display:flex;align-items:center;white-space:nowrap;position:relative;transition:color .2s;text-decoration:none;flex-shrink:0}
+.subnav a:hover{color:var(--text);text-decoration:none}
+.subnav a.active{color:var(--lightning)}
+.subnav a::after{content:'';position:absolute;bottom:0;left:.85rem;right:.85rem;height:2px;background:var(--lightning);transform:scaleX(0);transition:transform .2s}
+.subnav a:hover::after,.subnav a.active::after{transform:scaleX(1)}
+
+/* ═══════════════════ LAYOUT ═══════════════════ */
+.page-wrap{max-width:960px;margin:0 auto;padding:0 2rem;margin-top:calc(60px + 44px)}
+
+/* Hero */
+.hero{padding:3rem 0 2rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(232,208,64,0.06) 0%,rgba(232,208,64,0.02) 35%,transparent 65%);pointer-events:none}
+.hero-art{width:100%;margin-bottom:1.5rem;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:var(--bg-card)}
+.hero-svg{width:100%;height:auto;display:block}
+.breadcrumb{font-size:.78rem;color:var(--text-muted);margin-bottom:.5rem}
+.breadcrumb a{color:var(--text-muted);text-decoration:none}
+.breadcrumb a:hover{color:var(--lightning);text-decoration:underline}
+.hero h1{font-family:'Cinzel',serif;font-size:clamp(1.8rem,5vw,2.6rem);font-weight:900;color:var(--white);line-height:1.15;margin-bottom:.5rem;letter-spacing:.03em}
+.hero-sub{font-size:1rem;color:var(--text-dim);max-width:600px}
+.tag-row{display:flex;gap:.4rem;margin-top:.8rem;flex-wrap:wrap}
+.tag{font-size:.7rem;font-weight:600;padding:.22rem .65rem;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim)}
+.tag.lightning{color:var(--lightning);border-color:rgba(232,208,64,0.3);background:var(--lightning-dim)}
+.tag.crimson{color:var(--accent-bright);border-color:rgba(196,57,45,0.3);background:var(--accent-dim)}
+.tag.gold{color:var(--gold);border-color:rgba(200,160,80,0.3);background:var(--gold-dim)}
+.tag.green{color:var(--green);border-color:rgba(88,160,72,0.3);background:var(--green-dim)}
+.tag.blue{color:var(--blue);border-color:rgba(80,144,208,0.3);background:var(--blue-dim)}
+
+/* Sections */
+.section{margin-top:3.5rem;opacity:0;transform:translateY(25px);transition:opacity .6s ease,transform .6s ease}
+.section.visible{opacity:1;transform:translateY(0)}
+.section h2{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.5rem}
+.section h2 .h2-icon{color:var(--lightning);font-size:1.1rem}
+.section h3{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:600;color:var(--text);margin:1.5rem 0 .6rem}
+.section p{margin-bottom:1rem}
+
+/* Callouts */
+.callout{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--lightning);border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0}
+.callout.warn{border-left-color:var(--red)}
+.callout.tip{border-left-color:var(--green)}
+.callout.crimson{border-left-color:var(--accent)}
+.callout-label{font-family:'Cinzel',serif;font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem;color:var(--lightning)}
+.callout.warn .callout-label{color:var(--red)}
+.callout.tip .callout-label{color:var(--green)}
+.callout.crimson .callout-label{color:var(--accent-bright)}
+.callout p{margin-bottom:.5rem;font-size:.95rem}
+.callout p:last-child{margin-bottom:0}
+
+/* Skill table */
+.skill-table{width:100%;border-collapse:collapse;margin:.75rem 0}
+.skill-table th{font-family:'Cinzel',serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--border)}
+.skill-table td{padding:.5rem .6rem;border-bottom:1px solid var(--border);font-size:.9rem}
+.skill-table tr:hover{background:var(--bg-card)}
+.sk-name{font-weight:600;color:var(--white)}
+.sk-badge{font-size:.65rem;font-weight:600;padding:.12rem .4rem;border-radius:3px;text-transform:uppercase;display:inline-block}
+.sk-badge.max{color:var(--lightning);background:var(--lightning-dim);border:1px solid rgba(232,208,64,0.25)}
+.sk-badge.one{color:var(--text-dim);background:var(--bg-el);border:1px solid var(--border)}
+.sk-badge.synergy{color:var(--gold);background:var(--gold-dim);border:1px solid rgba(200,160,80,0.2)}
+
+/* Stats */
+.stats{display:flex;gap:.5rem;flex-wrap:wrap;margin:.75rem 0}
+.stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:.5rem .75rem;text-align:center;min-width:4rem;flex:1}
+.stat-box.primary{border-color:rgba(232,208,64,0.4)}
+.stat-label{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
+.stat-val{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:700;color:var(--white)}
+.stat-box.primary .stat-val{color:var(--lightning)}
+
+/* Level cards */
+.lv-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.5rem;overflow:hidden;transition:border-color .15s}
+.lv-card:hover{border-color:var(--border-light)}
+.lv-card.spike{border-left:3px solid var(--lightning)}
+.lv-head{display:flex;align-items:center;gap:.6rem;padding:.65rem 1rem;cursor:pointer;user-select:none;transition:background .1s;flex-wrap:wrap}
+.lv-head:hover{background:var(--bg-hover)}
+.lv-range{font-size:.72rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;color:var(--lightning);background:var(--lightning-dim);border:1px solid rgba(232,208,64,0.2);text-transform:uppercase;letter-spacing:.04em}
+.lv-title{font-weight:600;font-size:.95rem;color:var(--text);flex:1}
+.lv-arrow{color:var(--text-muted);font-size:.75rem;transition:transform .2s}
+.lv-card.open .lv-arrow{transform:rotate(90deg)}
+.lv-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.lv-card.open .lv-body{max-height:1500px}
+.lv-inner{padding:0 1rem 1rem;border-top:1px solid var(--border)}
+
+/* Quick picks */
+.qp-row{display:flex;flex-wrap:wrap;gap:.3rem;margin:.75rem 0 .5rem}
+.qp{font-size:.78rem;font-weight:500;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim)}
+.qp.skill{color:var(--lightning);border-color:rgba(232,208,64,0.2)}
+.qp.gear{color:var(--gold);border-color:rgba(200,160,80,0.2)}
+.qp.important{color:var(--accent-bright);border-color:rgba(196,57,45,0.2)}
+
+/* Picks */
+.picks{list-style:none;margin:.5rem 0}
+.picks li{padding:.3rem 0;font-size:.95rem;display:flex;gap:.4rem;align-items:baseline}
+.picks .label{font-size:.72rem;font-weight:600;color:var(--lightning);text-transform:uppercase;letter-spacing:.03em;flex-shrink:0;min-width:5rem}
+.picks .name{font-weight:600;color:var(--white)}
+.picks .note{color:var(--text-dim);font-size:.88rem}
+
+/* Gear grid */
+.gear-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.75rem 0}
+@media(max-width:600px){.gear-grid{grid-template-columns:1fr}}
+.gear-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.9rem 1rem;transition:border-color .15s}
+.gear-card:hover{border-color:var(--border-light)}
+.gear-slot{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:.2rem}
+.gear-item{font-weight:700;font-size:.95rem}
+.gear-item.unique{color:var(--gold)}
+.gear-item.runeword{color:var(--accent-bright)}
+.gear-item.set{color:var(--green)}
+.gear-item.rare{color:var(--lightning)}
+.gear-item.magic{color:var(--blue)}
+.gear-notes{color:var(--text-dim);font-size:.82rem;margin-top:.15rem}
+.gear-alt{font-size:.78rem;color:var(--text-muted);margin-top:.3rem;font-style:italic}
+
+/* Gear group */
+.gear-group{margin-bottom:1.75rem}
+.gear-group-title{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:700;color:var(--lightning);padding-bottom:.4rem;margin-bottom:.6rem;border-bottom:1px solid rgba(232,208,64,0.15)}
+
+/* Mercenary card */
+.merc-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin:.75rem 0}
+.merc-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--gold);margin-bottom:.5rem}
+.merc-detail{font-size:.9rem;color:var(--text-dim);margin-bottom:.3rem}
+.merc-detail strong{color:var(--white);font-weight:600}
+
+/* FCR table */
+.fcr-table{width:100%;border-collapse:collapse;margin:.75rem 0}
+.fcr-table th{font-family:'Cinzel',serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--border)}
+.fcr-table td{padding:.5rem .6rem;border-bottom:1px solid var(--border);font-size:.9rem}
+.fcr-table tr:hover{background:var(--bg-card)}
+.fcr-table .bp-target{font-weight:700;color:var(--lightning);background:var(--lightning-dim);border-radius:3px;padding:.1rem .4rem}
+.fcr-table .bp-num{font-family:'Cinzel',serif;font-weight:700;color:var(--white)}
+
+/* Step list */
+.step-list{list-style:none;counter-reset:step}
+.step-list li{position:relative;padding:.65rem 0 .65rem 3rem;border-left:2px solid var(--border);margin-left:.75rem;counter-increment:step;font-size:.95rem}
+.step-list li::before{content:counter(step);position:absolute;left:-.75rem;top:.55rem;width:1.4rem;height:1.4rem;background:var(--bg);border:2px solid var(--lightning);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:700;font-size:.72rem;color:var(--lightning)}
+.step-list li:last-child{border-left-color:transparent}
+.step-action{font-weight:600;color:var(--white)}
+.step-detail{color:var(--text-dim);font-size:.9rem;margin-top:.2rem}
+
+/* Farming grid */
+.farm-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.75rem 0}
+@media(max-width:600px){.farm-grid{grid-template-columns:1fr}}
+.farm-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.9rem 1rem;transition:border-color .15s}
+.farm-card:hover{border-color:var(--border-light)}
+.farm-name{font-weight:700;color:var(--lightning);font-size:.95rem;margin-bottom:.15rem}
+.farm-desc{color:var(--text-dim);font-size:.82rem}
+.farm-rating{font-size:.65rem;font-weight:700;padding:.12rem .4rem;border-radius:3px;text-transform:uppercase;display:inline-block;margin-top:.3rem}
+.farm-rating.s{color:var(--lightning);background:var(--lightning-dim);border:1px solid rgba(232,208,64,0.25)}
+.farm-rating.a{color:var(--gold);background:var(--gold-dim);border:1px solid rgba(200,160,80,0.2)}
+.farm-rating.b{color:var(--green);background:var(--green-dim);border:1px solid rgba(88,160,72,0.2)}
+
+/* Infinity dedicated section */
+.infinity-box{background:linear-gradient(135deg,rgba(196,64,48,0.06),rgba(232,208,64,0.04));border:1px solid rgba(232,208,64,0.2);border-radius:10px;padding:1.5rem 1.75rem;margin:1.25rem 0;position:relative;overflow:hidden}
+.infinity-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--lightning),var(--accent))}
+.infinity-box h3{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;color:var(--lightning);margin-bottom:.6rem}
+.infinity-box p{margin-bottom:.5rem;font-size:.95rem}
+.infinity-box .rune-cost{display:flex;gap:.4rem;flex-wrap:wrap;margin:.6rem 0}
+.rune{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;padding:.25rem .7rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--gold)}
+.rune.ber{color:var(--lightning);border-color:rgba(232,208,64,0.3);background:var(--lightning-dim)}
+
+/* Footer */
+.guide-footer{margin-top:3.5rem;padding:1.5rem 0;border-top:1px solid var(--border);text-align:center}
+.guide-footer span{font-size:.75rem;color:var(--text-muted)}
+.guide-footer a{color:var(--text-muted);font-size:.75rem;text-decoration:none;transition:color .2s}
+.guide-footer a:hover{color:var(--lightning);text-decoration:underline}
+
+/* Responsive */
+@media(max-width:600px){
+  .page-wrap{padding:0 1rem}
+  .hero h1{font-size:1.6rem}
+  .section h2{font-size:1.25rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ UNIVERSAL TOP NAV ═══════════════════ -->
+<nav class="unav">
+  <div class="unav-inner">
+    <a href="index.html" class="unav-brand">Z3NGINEER</a>
+    <button class="unav-toggle" id="unavToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="unav-links" id="unavLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li class="dropdown-trigger" id="pagesDropdown">
+        <a href="#">Pages <span class="dd-arrow">&#9662;</span></a>
+        <div class="dropdown">
+          <div class="dd-label">Game Guides</div>
+          <a href="guides.html">All Guides</a>
+          <a href="d2r-builds.html">D2R — Top 5 Builds</a>
+          <a href="bg3-builds.html">BG3 — Build Guides</a>
+          <a href="oblivion-builds.html">Oblivion — Build Guides</a>
+          <div class="dd-label">Other</div>
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════════════════ PAGE SUB-NAV ═══════════════════ -->
+<nav class="subnav">
+  <div class="subnav-inner">
+    <a href="#overview">Overview</a>
+    <a href="#skills">Skills</a>
+    <a href="#stats">Stats</a>
+    <a href="#progression">Progression</a>
+    <a href="#fcr">FCR</a>
+    <a href="#gear-budget">Budget Gear</a>
+    <a href="#gear-bis">BiS Gear</a>
+    <a href="#infinity">Infinity</a>
+    <a href="#mercenary">Mercenary</a>
+    <a href="#playstyle">Playstyle</a>
+    <a href="#farming">Farming</a>
+    <a href="#tips">Tips</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero">
+  <div class="hero-art">
+    <svg viewBox="0 0 960 300" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+      <defs>
+        <radialGradient id="stormCenter" cx="48%" cy="45%" r="55%">
+          <stop offset="0%" stop-color="#2a2818" stop-opacity="0.9"/>
+          <stop offset="40%" stop-color="#141008" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#0a0808" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="lightGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#e8d040" stop-opacity="0.5"/>
+          <stop offset="50%" stop-color="#e8d040" stop-opacity="0.1"/>
+          <stop offset="100%" stop-color="#e8d040" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="boltGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#f0e870" stop-opacity="0.7"/>
+          <stop offset="100%" stop-color="#e8d040" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="boltGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f8f0a0"/>
+          <stop offset="50%" stop-color="#e8d040"/>
+          <stop offset="100%" stop-color="#c0a020"/>
+        </linearGradient>
+        <filter id="elecGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="6" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Background storm -->
+      <rect width="960" height="300" fill="#0a0808"/>
+      <rect width="960" height="300" fill="url(#stormCenter)"/>
+
+      <!-- Storm clouds -->
+      <g opacity="0.3">
+        <ellipse cx="150" cy="25" rx="180" ry="35" fill="#1a1510"/>
+        <ellipse cx="480" cy="15" rx="220" ry="40" fill="#1c1812"/>
+        <ellipse cx="780" cy="30" rx="160" ry="30" fill="#181510"/>
+        <ellipse cx="320" cy="10" rx="140" ry="28" fill="#1a1510"/>
+        <ellipse cx="650" cy="20" rx="170" ry="32" fill="#1c1812"/>
+      </g>
+
+      <!-- Distant lightning flashes in clouds -->
+      <g opacity="0.15">
+        <circle cx="180" cy="30" r="60" fill="#e8d040"/>
+        <circle cx="720" cy="25" r="50" fill="#e8d040"/>
+        <circle cx="400" cy="15" r="40" fill="#f0e060"/>
+      </g>
+
+      <!-- Ground / floor -->
+      <line x1="60" y1="268" x2="900" y2="268" stroke="#2a1e1e" stroke-width=".5" opacity=".4"/>
+      <ellipse cx="480" cy="270" rx="350" ry="8" fill="#141010" opacity=".5"/>
+
+      <!-- ═══ ENEMY 1 — left, being chain-lightninged ═══ -->
+      <g transform="translate(180,185)" opacity="0.85">
+        <!-- Demon body -->
+        <ellipse cx="0" cy="15" rx="18" ry="28" fill="#4a2828"/>
+        <circle cx="0" cy="-14" r="12" fill="#4a2828"/>
+        <!-- Horns -->
+        <path d="M-8,-24 Q-14,-38 -16,-42" stroke="#5a3830" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M8,-24 Q14,-38 16,-42" stroke="#5a3830" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Eyes — shocked -->
+        <ellipse cx="-4" cy="-16" rx="2.5" ry="2" fill="#e8d040" opacity="0.8"/>
+        <ellipse cx="5" cy="-16" rx="2.5" ry="2" fill="#e8d040" opacity="0.8"/>
+        <!-- Mouth agape -->
+        <ellipse cx="0" cy="-6" rx="5" ry="4" fill="#2a1010"/>
+        <!-- Arms flailing -->
+        <line x1="-14" y1="2" x2="-32" y2="-12" stroke="#4a2828" stroke-width="5" stroke-linecap="round"/>
+        <line x1="14" y1="0" x2="30" y2="-15" stroke="#4a2828" stroke-width="5" stroke-linecap="round"/>
+        <!-- Legs -->
+        <line x1="-6" y1="38" x2="-14" y2="60" stroke="#4a2828" stroke-width="6" stroke-linecap="round"/>
+        <line x1="6" y1="38" x2="16" y2="58" stroke="#4a2828" stroke-width="6" stroke-linecap="round"/>
+        <!-- Electrocution effect around body -->
+        <g filter="url(#elecGlow)" opacity="0.7">
+          <path d="M-20,0 L-12,5 L-22,15 L-10,12" stroke="#e8d040" stroke-width="1.5" fill="none"/>
+          <path d="M18,-5 L12,8 L22,12 L14,20" stroke="#e8d040" stroke-width="1.5" fill="none"/>
+          <path d="M-8,-25 L0,-20 L-5,-10" stroke="#f0e870" stroke-width="1" fill="none"/>
+        </g>
+        <!-- Electric sparks -->
+        <circle cx="-15" cy="10" r="1.5" fill="#f0e870" opacity=".6"/>
+        <circle cx="18" cy="-3" r="1" fill="#e8d040" opacity=".5"/>
+        <circle cx="-8" cy="25" r="1.2" fill="#f8f0a0" opacity=".5"/>
+      </g>
+
+      <!-- ═══ ENEMY 2 — right, being chain-lightninged ═══ -->
+      <g transform="translate(760,190)" opacity="0.8">
+        <!-- Skeleton warrior -->
+        <ellipse cx="0" cy="12" rx="14" ry="24" fill="#4a4438"/>
+        <circle cx="0" cy="-12" r="10" fill="#5a5248"/>
+        <!-- Eye sockets glowing -->
+        <ellipse cx="-3" cy="-14" rx="2" ry="2.5" fill="#e8d040" opacity="0.6"/>
+        <ellipse cx="4" cy="-14" rx="2" ry="2.5" fill="#e8d040" opacity="0.6"/>
+        <!-- Jaw -->
+        <path d="M-5,-6 L0,-3 L5,-6" stroke="#4a4438" stroke-width="1.5" fill="none"/>
+        <!-- Shield arm -->
+        <line x1="-12" y1="0" x2="-28" y2="-8" stroke="#4a4438" stroke-width="4" stroke-linecap="round"/>
+        <ellipse cx="-30" cy="-8" rx="8" ry="10" fill="#3a3028" stroke="#5a5040" stroke-width="1"/>
+        <!-- Sword arm -->
+        <line x1="12" y1="-2" x2="28" y2="-18" stroke="#4a4438" stroke-width="4" stroke-linecap="round"/>
+        <line x1="28" y1="-18" x2="38" y2="-35" stroke="#8a8070" stroke-width="2" stroke-linecap="round"/>
+        <!-- Legs buckling -->
+        <line x1="-5" y1="32" x2="-12" y2="55" stroke="#4a4438" stroke-width="5" stroke-linecap="round"/>
+        <line x1="5" y1="32" x2="14" y2="53" stroke="#4a4438" stroke-width="5" stroke-linecap="round"/>
+        <!-- Electrocution -->
+        <g filter="url(#elecGlow)" opacity="0.65">
+          <path d="M-15,5 L-8,10 L-18,20" stroke="#e8d040" stroke-width="1.2" fill="none"/>
+          <path d="M12,0 L8,12 L15,18" stroke="#e8d040" stroke-width="1.2" fill="none"/>
+        </g>
+        <circle cx="10" cy="5" r="1.2" fill="#f0e870" opacity=".5"/>
+        <circle cx="-12" cy="18" r="1" fill="#e8d040" opacity=".4"/>
+      </g>
+
+      <!-- ═══ ENEMY 3 — behind-left, stumbling ═══ -->
+      <g transform="translate(310,205)" opacity="0.65">
+        <ellipse cx="0" cy="10" rx="15" ry="22" fill="#4a3020"/>
+        <circle cx="0" cy="-10" r="9" fill="#4a3020"/>
+        <line x1="-10" y1="0" x2="-22" y2="-10" stroke="#4a3020" stroke-width="4" stroke-linecap="round"/>
+        <line x1="10" y1="2" x2="22" y2="-6" stroke="#4a3020" stroke-width="4" stroke-linecap="round"/>
+        <line x1="-4" y1="28" x2="-10" y2="45" stroke="#4a3020" stroke-width="5" stroke-linecap="round"/>
+        <line x1="4" y1="28" x2="12" y2="44" stroke="#4a3020" stroke-width="5" stroke-linecap="round"/>
+        <g filter="url(#elecGlow)" opacity="0.5">
+          <path d="M-12,-5 L-5,5 L-15,12" stroke="#e8d040" stroke-width="1" fill="none"/>
+          <path d="M10,-2 L6,8" stroke="#e8d040" stroke-width="1" fill="none"/>
+        </g>
+      </g>
+
+      <!-- ═══ ENEMY 4 — behind-right ═══ -->
+      <g transform="translate(640,200)" opacity="0.6">
+        <ellipse cx="0" cy="10" rx="14" ry="20" fill="#3a2a20"/>
+        <circle cx="0" cy="-8" r="8" fill="#3a2a20"/>
+        <line x1="-8" y1="0" x2="-20" y2="-8" stroke="#3a2a20" stroke-width="4" stroke-linecap="round"/>
+        <line x1="8" y1="2" x2="18" y2="-5" stroke="#3a2a20" stroke-width="4" stroke-linecap="round"/>
+        <line x1="-4" y1="26" x2="-8" y2="42" stroke="#3a2a20" stroke-width="4" stroke-linecap="round"/>
+        <line x1="4" y1="26" x2="10" y2="41" stroke="#3a2a20" stroke-width="4" stroke-linecap="round"/>
+        <g filter="url(#elecGlow)" opacity="0.45">
+          <path d="M-10,0 L-4,8 L-12,14" stroke="#e8d040" stroke-width="1" fill="none"/>
+        </g>
+      </g>
+
+      <!-- ═══ THE SORCERESS — center, channeling lightning ═══ -->
+      <g transform="translate(480,140)" opacity="0.95">
+        <!-- Energy aura -->
+        <circle cx="0" cy="0" r="70" fill="url(#lightGlow)" opacity="0.4"/>
+        <circle cx="0" cy="0" r="45" fill="url(#lightGlow)" opacity="0.25"/>
+
+        <!-- Robes — flowing -->
+        <path d="M-18,30 Q-22,55 -28,80 Q-30,90 -25,95 L25,95 Q30,90 28,80 Q22,55 18,30 Z" fill="#2a2040"/>
+        <path d="M-15,30 Q-18,55 -22,80 Q-24,88 -20,92" stroke="#3a3060" stroke-width=".5" fill="none" opacity=".5"/>
+        <path d="M15,30 Q18,55 22,80 Q24,88 20,92" stroke="#3a3060" stroke-width=".5" fill="none" opacity=".5"/>
+        <!-- Robe sash -->
+        <path d="M-12,30 L12,30" stroke="#c8a050" stroke-width="1.5" opacity=".5"/>
+
+        <!-- Torso -->
+        <ellipse cx="0" cy="15" rx="16" ry="22" fill="#3a3060"/>
+
+        <!-- Head -->
+        <circle cx="0" cy="-14" r="10" fill="#8a7060"/>
+
+        <!-- ═══ GRIFFON'S EYE HELM — glowing ═══ -->
+        <path d="M-12,-18 Q-14,-28 -8,-34 Q0,-38 8,-34 Q14,-28 12,-18 Z" fill="#4a4038"/>
+        <!-- Helm crest -->
+        <path d="M0,-34 Q2,-42 0,-48 Q-2,-42 0,-34" fill="#5a5048" stroke="#6a6058" stroke-width=".5"/>
+        <!-- Griffon's Eye gem — glowing yellow -->
+        <circle cx="0" cy="-26" r="4" fill="#e8d040" opacity="0.9"/>
+        <circle cx="0" cy="-26" r="6" fill="#e8d040" opacity="0.2"/>
+        <circle cx="0" cy="-26" r="10" fill="#e8d040" opacity="0.08"/>
+        <!-- Helm wing details -->
+        <path d="M-10,-24 Q-16,-30 -18,-28" stroke="#5a5048" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <path d="M10,-24 Q16,-30 18,-28" stroke="#5a5048" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <!-- Eyes glowing with lightning -->
+        <ellipse cx="-3" cy="-16" rx="2" ry="1.5" fill="#e8d040" opacity="0.9"/>
+        <ellipse cx="4" cy="-16" rx="2" ry="1.5" fill="#e8d040" opacity="0.9"/>
+        <!-- Eye glow -->
+        <circle cx="-3" cy="-16" r="4" fill="#e8d040" opacity="0.12"/>
+        <circle cx="4" cy="-16" r="4" fill="#e8d040" opacity="0.12"/>
+
+        <!-- LEFT ARM — raised, channeling upward -->
+        <line x1="-12" y1="5" x2="-32" y2="-28" stroke="#3a3060" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="-34" cy="-30" r="3.5" fill="#8a7060"/>
+        <!-- Fingers spread -->
+        <line x1="-34" y1="-30" x2="-38" y2="-36" stroke="#8a7060" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="-34" y1="-30" x2="-36" y2="-38" stroke="#8a7060" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="-34" y1="-30" x2="-32" y2="-38" stroke="#8a7060" stroke-width="1.5" stroke-linecap="round"/>
+
+        <!-- RIGHT ARM — extended forward, casting -->
+        <line x1="12" y1="5" x2="38" y2="-15" stroke="#3a3060" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="40" cy="-17" r="3.5" fill="#8a7060"/>
+        <!-- Fingers forward -->
+        <line x1="40" y1="-17" x2="46" y2="-20" stroke="#8a7060" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="40" y1="-17" x2="46" y2="-18" stroke="#8a7060" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="40" y1="-17" x2="45" y2="-15" stroke="#8a7060" stroke-width="1.5" stroke-linecap="round"/>
+
+        <!-- Lightning orb in right hand -->
+        <circle cx="48" cy="-18" r="18" fill="url(#boltGlow)" opacity=".6"/>
+        <circle cx="48" cy="-18" r="10" fill="#e8d040" opacity=".2"/>
+        <circle cx="48" cy="-18" r="5" fill="#f0e870" opacity=".5"/>
+        <circle cx="48" cy="-18" r="2.5" fill="#f8f0a0" opacity=".9"/>
+
+        <!-- Legs / boots -->
+        <line x1="-6" y1="50" x2="-12" y2="85" stroke="#2a2040" stroke-width="7" stroke-linecap="round"/>
+        <line x1="6" y1="50" x2="14" y2="83" stroke="#2a2040" stroke-width="7" stroke-linecap="round"/>
+        <ellipse cx="-13" cy="87" rx="5" ry="3.5" fill="#3a2a20"/>
+        <ellipse cx="15" cy="85" rx="5" ry="3.5" fill="#3a2a20"/>
+
+        <!-- Crackling energy around body -->
+        <g filter="url(#elecGlow)" opacity="0.6">
+          <path d="M-20,-10 L-15,0 L-22,8 L-14,6" stroke="#e8d040" stroke-width="1" fill="none"/>
+          <path d="M18,-8 L14,2 L20,10 L12,8" stroke="#e8d040" stroke-width="1" fill="none"/>
+          <path d="M-8,35 L-2,40 L-8,48" stroke="#f0e870" stroke-width=".8" fill="none"/>
+          <path d="M10,32 L4,38 L10,45" stroke="#f0e870" stroke-width=".8" fill="none"/>
+        </g>
+      </g>
+
+      <!-- ═══ MAIN LIGHTNING BOLT — from sky to sorceress hand ═══ -->
+      <g filter="url(#softGlow)">
+        <!-- Core bolt from sky -->
+        <path d="M446,0 L440,35 L455,50 L438,80 L452,95 L440,110 L448,125" stroke="#f8f0a0" stroke-width="3" fill="none" opacity="0.9"/>
+        <path d="M446,0 L440,35 L455,50 L438,80 L452,95 L440,110 L448,125" stroke="#e8d040" stroke-width="6" fill="none" opacity="0.3"/>
+        <!-- Branch bolts -->
+        <path d="M440,35 L420,50 L425,60" stroke="#f0e870" stroke-width="1.5" fill="none" opacity="0.5"/>
+        <path d="M455,50 L470,58 L465,70" stroke="#f0e870" stroke-width="1.5" fill="none" opacity="0.5"/>
+        <path d="M438,80 L420,88 L425,95" stroke="#e8d040" stroke-width="1" fill="none" opacity="0.4"/>
+      </g>
+
+      <!-- ═══ CHAIN LIGHTNING — from right hand to enemy 1 (left) ═══ -->
+      <g filter="url(#elecGlow)">
+        <!-- Main chain to left enemy -->
+        <path d="M528,122 L510,130 L490,125 L460,135 L430,130 L400,140 L370,135 L340,145 L310,140 L280,148 L250,142 L220,150 L195,148 L180,155" stroke="#e8d040" stroke-width="2.5" fill="none" opacity="0.85"/>
+        <path d="M528,122 L510,130 L490,125 L460,135 L430,130 L400,140 L370,135 L340,145 L310,140 L280,148 L250,142 L220,150 L195,148 L180,155" stroke="#f8f0a0" stroke-width="1" fill="none" opacity="0.95"/>
+        <!-- Chain branches off main -->
+        <path d="M400,140 L395,155 L405,165" stroke="#e8d040" stroke-width="1" fill="none" opacity="0.4"/>
+        <path d="M310,140 L315,155" stroke="#e8d040" stroke-width="1" fill="none" opacity="0.35"/>
+      </g>
+
+      <!-- ═══ CHAIN LIGHTNING — from enemy 1 arcing to enemy 3 ═══ -->
+      <g filter="url(#elecGlow)">
+        <path d="M180,185 L200,190 L220,185 L250,192 L275,188 L300,195 L310,200" stroke="#e8d040" stroke-width="2" fill="none" opacity="0.65"/>
+        <path d="M180,185 L200,190 L220,185 L250,192 L275,188 L300,195 L310,200" stroke="#f0e870" stroke-width=".8" fill="none" opacity="0.8"/>
+      </g>
+
+      <!-- ═══ CHAIN LIGHTNING — from right hand to enemy 2 (right) ═══ -->
+      <g filter="url(#elecGlow)">
+        <path d="M528,122 L560,130 L590,125 L620,133 L650,128 L680,136 L710,132 L740,140 L760,150" stroke="#e8d040" stroke-width="2.5" fill="none" opacity="0.8"/>
+        <path d="M528,122 L560,130 L590,125 L620,133 L650,128 L680,136 L710,132 L740,140 L760,150" stroke="#f8f0a0" stroke-width="1" fill="none" opacity="0.9"/>
+      </g>
+
+      <!-- ═══ CHAIN LIGHTNING — from enemy 2 arcing to enemy 4 ═══ -->
+      <g filter="url(#elecGlow)">
+        <path d="M760,190 L740,195 L720,190 L700,197 L680,193 L660,200 L640,198" stroke="#e8d040" stroke-width="1.8" fill="none" opacity="0.55"/>
+        <path d="M760,190 L740,195 L720,190 L700,197 L680,193 L660,200 L640,198" stroke="#f0e870" stroke-width=".7" fill="none" opacity="0.7"/>
+      </g>
+
+      <!-- ═══ CHARGED BOLT shotgun — from feet area ═══ -->
+      <g filter="url(#elecGlow)" opacity="0.6">
+        <!-- Multiple small bolts radiating forward from ground -->
+        <circle cx="440" cy="235" r="4" fill="#e8d040" opacity=".3"/>
+        <path d="M440,235 L410,245 L395,250" stroke="#e8d040" stroke-width="1.5" fill="none"/>
+        <circle cx="395" cy="250" r="3" fill="#f0e870" opacity=".5"/>
+        <path d="M445,238 L460,248 L475,252" stroke="#e8d040" stroke-width="1.5" fill="none"/>
+        <circle cx="475" cy="252" r="3" fill="#f0e870" opacity=".5"/>
+        <path d="M442,236 L430,250 L420,258" stroke="#e8d040" stroke-width="1.2" fill="none"/>
+        <circle cx="420" cy="258" r="2.5" fill="#f0e870" opacity=".4"/>
+        <path d="M448,237 L465,250 L480,260" stroke="#e8d040" stroke-width="1.2" fill="none"/>
+        <circle cx="480" cy="260" r="2.5" fill="#f0e870" opacity=".4"/>
+        <path d="M443,238 L440,252 L438,262" stroke="#e8d040" stroke-width="1" fill="none"/>
+        <circle cx="438" cy="262" r="2" fill="#f0e870" opacity=".35"/>
+        <path d="M447,237 L450,252 L455,260" stroke="#e8d040" stroke-width="1" fill="none"/>
+        <circle cx="455" cy="260" r="2" fill="#f0e870" opacity=".35"/>
+      </g>
+
+      <!-- Floating electric sparks everywhere -->
+      <g opacity="0.5">
+        <circle cx="350" cy="100" r="1.2" fill="#f0e870"/>
+        <circle cx="580" cy="90" r="1" fill="#e8d040"/>
+        <circle cx="250" cy="130" r="0.8" fill="#f8f0a0"/>
+        <circle cx="700" cy="110" r="1.1" fill="#f0e870"/>
+        <circle cx="420" cy="70" r="0.9" fill="#e8d040"/>
+        <circle cx="520" cy="55" r="0.7" fill="#f8f0a0"/>
+        <circle cx="150" cy="95" r="1" fill="#e8d040"/>
+        <circle cx="800" cy="85" r="0.8" fill="#f0e870"/>
+        <circle cx="480" cy="45" r="1.3" fill="#e8d040"/>
+        <circle cx="300" cy="75" r="0.6" fill="#f8f0a0"/>
+        <circle cx="650" cy="65" r="0.9" fill="#e8d040"/>
+      </g>
+
+      <!-- Ground electrification -->
+      <g opacity="0.2">
+        <path d="M200,268 L220,265 L240,268 L260,264 L280,268" stroke="#e8d040" stroke-width=".8" fill="none"/>
+        <path d="M400,268 L420,264 L440,268 L460,264 L480,268 L500,264 L520,268 L540,264 L560,268" stroke="#e8d040" stroke-width=".8" fill="none"/>
+        <path d="M680,268 L700,265 L720,268 L740,264" stroke="#e8d040" stroke-width=".8" fill="none"/>
+      </g>
+
+      <!-- Light flash center -->
+      <circle cx="480" cy="140" r="120" fill="#e8d040" opacity="0.02"/>
+      <circle cx="528" cy="122" r="30" fill="#f8f0a0" opacity="0.06"/>
+    </svg>
+  </div>
+
+  <div class="breadcrumb">
+    <a href="guides.html">Diablo 2 Resurrected</a> &rsaquo; <a href="d2r-builds.html">Season 13</a> &rsaquo; Lightning Sorceress
+  </div>
+  <h1>Lightning Sorceress</h1>
+  <div class="hero-sub">#4 Ranked &mdash; Highest damage ceiling of any Sorceress. Requires Infinity. The end-of-ladder flex build you graduate to after Blizzard Sorc farms the wealth.</div>
+  <div class="tag-row">
+    <span class="tag lightning">Lightning</span>
+    <span class="tag crimson">Highest Ceiling</span>
+    <span class="tag gold">Requires Infinity</span>
+    <span class="tag green">Season 13</span>
+  </div>
+</section>
+
+<!-- ═══════════════════ OVERVIEW ═══════════════════ -->
+<section class="section" id="overview">
+  <h2><span class="h2-icon">&#9889;</span> Overview</h2>
+  <p>The Lightning Sorceress has the <strong>highest raw damage ceiling</strong> of any Sorceress build in Diablo 2 Resurrected. A single Lightning cast can deal upwards of <strong>1 to 50,000+ damage</strong> at endgame. The catch? That damage range starts at 1. Every cast is a dice roll &mdash; sometimes you tickle, sometimes you obliterate. When the big numbers hit, nothing else in the game comes close.</p>
+
+  <p>This build is <strong>not a starter</strong>. It requires an <strong>Infinity runeword on your mercenary</strong> (Ber + Mal + Ber + Ist) to break Lightning Immunities via the Conviction aura. Without Infinity, half the monsters in Hell are literally unkillable. The standard path: farm as Blizzard Sorceress first, accumulate wealth, then respec to Lightning once you can afford Infinity.</p>
+
+  <div class="callout">
+    <div class="callout-label">Why Lightning Over Blizzard?</div>
+    <p><strong>Blizzard is safer and cheaper.</strong> Lightning has a higher ceiling. With Infinity + Griffon's Eye + Lightning facets, your Chain Lightning shreds entire screens instantly. Blizzard can never do that. This is the build for players who already have the gear and want to push speed.</p>
+  </div>
+
+  <div class="callout warn">
+    <div class="callout-label">1-to-Max Damage</div>
+    <p>Lightning skills have a damage range of <strong>1 to [your max]</strong>. This means some casts do almost nothing while others instantly delete packs. Unlike Blizzard (which always deals consistent damage), Lightning is inherently spiky. Over time, the average is staggering &mdash; but individual casts can feel random. This is normal. Embrace the variance.</p>
+  </div>
+
+  <h3>Strengths</h3>
+  <ul class="picks">
+    <li><span class="label">Ceiling</span> <span class="name">Highest damage of any Sorc build</span> &mdash; <span class="note">nothing else touches 50k+ per cast</span></li>
+    <li><span class="label">AoE</span> <span class="name">Chain Lightning clears screens</span> &mdash; <span class="note">hits every enemy in range, chains between packs</span></li>
+    <li><span class="label">Speed</span> <span class="name">Fastest clear speed at endgame</span> &mdash; <span class="note">Teleport into pack, one-shot, next pack</span></li>
+    <li><span class="label">Bosses</span> <span class="name">Static Field + Lightning melts bosses</span> &mdash; <span class="note">Static to 50%, then nuke</span></li>
+  </ul>
+
+  <h3>Weaknesses</h3>
+  <ul class="picks">
+    <li><span class="label">Cost</span> <span class="name">Requires Infinity (2x Ber runes)</span> &mdash; <span class="note">one of the most expensive items in the game</span></li>
+    <li><span class="label">Variance</span> <span class="name">1-to-max damage is inconsistent</span> &mdash; <span class="note">some casts do 1 damage, literally</span></li>
+    <li><span class="label">Immunes</span> <span class="name">Lightning immunes are common</span> &mdash; <span class="note">even with Infinity, some remain immune</span></li>
+    <li><span class="label">Squishy</span> <span class="name">Glass cannon</span> &mdash; <span class="note">you kill everything first, or you die. No middle ground.</span></li>
+  </ul>
+</section>
+
+<!-- ═══════════════════ SKILLS ═══════════════════ -->
+<section class="section" id="skills">
+  <h2><span class="h2-icon">&#9889;</span> Skill Allocation</h2>
+  <p>The skill tree is straightforward: max all four Lightning synergies, put 1 point in essential utility skills. Every remaining point goes to Lightning Mastery.</p>
+
+  <table class="skill-table">
+    <thead><tr><th>Skill</th><th>Points</th><th>Tree</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td class="sk-name">Lightning</td><td><span class="sk-badge max">20 (MAX)</span></td><td>Lightning</td><td>Primary single-target nuke. 1-to-max damage. Your boss killer.</td></tr>
+      <tr><td class="sk-name">Chain Lightning</td><td><span class="sk-badge max">20 (MAX)</span></td><td>Lightning</td><td>Primary AoE. Chains between enemies. Your pack clearer.</td></tr>
+      <tr><td class="sk-name">Charged Bolt</td><td><span class="sk-badge max">20 (MAX)</span></td><td>Lightning</td><td>Synergy to Lightning + Chain Lightning. Also a devastating shotgun skill against large hitboxes.</td></tr>
+      <tr><td class="sk-name">Lightning Mastery</td><td><span class="sk-badge max">20 (MAX)</span></td><td>Lightning</td><td>Massive % damage increase to all Lightning skills. Non-negotiable.</td></tr>
+      <tr><td class="sk-name">Static Field</td><td><span class="sk-badge one">1</span></td><td>Lightning</td><td>Drops any enemy to 50% HP in Hell. Cast on bosses before Lightning.</td></tr>
+      <tr><td class="sk-name">Telekinesis</td><td><span class="sk-badge one">1</span></td><td>Lightning</td><td>Prerequisite for Teleport. Can also stun-lock in emergencies.</td></tr>
+      <tr><td class="sk-name">Teleport</td><td><span class="sk-badge one">1</span></td><td>Lightning</td><td>Your mobility. Reposition instantly. The reason Sorc is S-tier.</td></tr>
+      <tr><td class="sk-name">Warmth</td><td><span class="sk-badge one">1</span></td><td>Fire</td><td>Passive mana regeneration. Even 1 point helps significantly.</td></tr>
+      <tr><td class="sk-name">Frozen Armor</td><td><span class="sk-badge one">1</span></td><td>Cold</td><td>Defense buff + freezes attackers. Keep this up at all times.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <div class="callout-label">Charged Bolt Shotgun</div>
+    <p>Charged Bolt fires multiple bolts in a spread pattern. Against enemies with <strong>large hitboxes</strong> (Baal, Diablo, Cows), multiple bolts hit the same target simultaneously. This "shotgun" effect can deal <strong>more single-target damage than Lightning</strong> at point-blank range. Position yourself close to bosses and spam Charged Bolt for insane DPS.</p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Remaining Skill Points</div>
+    <p>After maxing the core 4 skills (80 points) and putting 1 in each utility skill (~5 points), you'll have a handful of leftover points around level 90+. Some players put extra points into <strong>Nova</strong> (another Lightning synergy for Charged Bolt) or <strong>Energy Shield</strong> (1 point for emergency absorb). Personal preference.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ STATS ═══════════════════ -->
+<section class="section" id="stats">
+  <h2><span class="h2-icon">&#9889;</span> Stat Allocation</h2>
+  <p>Sorceress stat allocation is simple. You need enough Strength for your gear, and everything else goes into Vitality. Never put points into Energy.</p>
+
+  <div class="stats">
+    <div class="stat-box"><div class="stat-label">Strength</div><div class="stat-val">156</div></div>
+    <div class="stat-box"><div class="stat-label">Dexterity</div><div class="stat-val">Base</div></div>
+    <div class="stat-box primary"><div class="stat-label">Vitality</div><div class="stat-val">All</div></div>
+    <div class="stat-box"><div class="stat-label">Energy</div><div class="stat-val">Base</div></div>
+  </div>
+
+  <table class="skill-table">
+    <thead><tr><th>Stat</th><th>Target</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td class="sk-name">Strength</td><td>156</td><td>Enough to equip <strong>Monarch</strong> shield (Spirit). If using gear with +STR (Torch, Anni), factor that in and invest fewer base points.</td></tr>
+      <tr><td class="sk-name">Dexterity</td><td>Base (25)</td><td>Don't touch this. Max block builds are an option but sacrifice too much life for Lightning Sorc.</td></tr>
+      <tr><td class="sk-name">Vitality</td><td>Everything else</td><td>Every single remaining point goes here. More HP = more survivability. You are a glass cannon &mdash; you need all the life you can get.</td></tr>
+      <tr><td class="sk-name">Energy</td><td>Base (35)</td><td>Never invest here. Mana comes from gear (Spirit, Insight on merc, SoJs). Energy is a trap.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <div class="callout-label">Monarch Requirement</div>
+    <p>The <strong>Monarch</strong> (4-socket elite shield) requires 156 STR and is the only Sorceress-equippable shield with 4 sockets for Spirit. If your gear provides +STR (Annihilus, Torch, Spirit itself gives +STR from Vitality), calculate your final STR with gear on and only invest enough base points to hit 156 total.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ PROGRESSION ═══════════════════ -->
+<section class="section" id="progression">
+  <h2><span class="h2-icon">&#9889;</span> Progression</h2>
+  <p style="color:var(--text-dim);margin-bottom:1rem;">Click each phase to expand. The Lightning Sorc is not a fresh-start build &mdash; it's a respec destination.</p>
+
+  <div class="lv-card spike">
+    <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+      <span class="lv-range">Phase 1</span>
+      <span class="lv-title">Start as Blizzard Sorceress &mdash; Farm Wealth</span>
+      <span class="lv-arrow">&#9658;</span>
+    </div>
+    <div class="lv-body"><div class="lv-inner">
+      <div class="qp-row">
+        <span class="qp skill">Blizzard (max)</span>
+        <span class="qp skill">Cold Mastery</span>
+        <span class="qp gear">Spirit Sword + Spirit Monarch</span>
+        <span class="qp gear">Insight Merc</span>
+      </div>
+      <ul class="picks">
+        <li><span class="label">Goal</span> <span class="name">Farm Ber runes and trade for Infinity materials</span></li>
+        <li><span class="label">Why</span> <span class="name">Blizzard works with zero investment</span> &mdash; <span class="note">no Infinity needed, Cold Mastery handles cold immunes partially</span></li>
+        <li><span class="label">Farm</span> <span class="name">Ancient Tunnels, Mephisto, Andariel</span> &mdash; <span class="note">no cold immunes in these zones</span></li>
+        <li><span class="label">Respec</span> <span class="name">Save your Akara respec for the switch</span> &mdash; <span class="note">or use a Token of Absolution</span></li>
+      </ul>
+      <div class="callout" style="margin-top:.5rem">
+        <div class="callout-label">How Long?</div>
+        <p>Farming Infinity materials typically takes <strong>weeks to months</strong> of dedicated play. Two Ber runes is an enormous investment. Trade aggressively, run Terror Zones, and target high-rune drop areas. This is the hardest part of building a Lightning Sorc.</p>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="lv-card spike">
+    <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+      <span class="lv-range">Phase 2</span>
+      <span class="lv-title">Respec to Lightning &mdash; Budget Gear</span>
+      <span class="lv-arrow">&#9658;</span>
+    </div>
+    <div class="lv-body"><div class="lv-inner">
+      <div class="qp-row">
+        <span class="qp skill">Lightning (max)</span>
+        <span class="qp skill">Chain Lightning (max)</span>
+        <span class="qp gear">Crescent Moon</span>
+        <span class="qp gear">Spirit Monarch</span>
+        <span class="qp important">Infinity on Merc</span>
+      </div>
+      <ul class="picks">
+        <li><span class="label">Respec</span> <span class="name">Use Akara respec or Token of Absolution</span></li>
+        <li><span class="label">Weapon</span> <span class="name">Crescent Moon</span> &mdash; <span class="note">-35% enemy lightning resistance is massive and dirt cheap</span></li>
+        <li><span class="label">Merc</span> <span class="name">Infinity is NOW equipped</span> &mdash; <span class="note">Conviction aura breaks immunities</span></li>
+        <li><span class="label">Farm</span> <span class="name">Cow Level, Chaos Sanctuary</span> &mdash; <span class="note">everything melts with Conviction + Lightning</span></li>
+      </ul>
+    </div></div>
+  </div>
+
+  <div class="lv-card spike">
+    <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+      <span class="lv-range">Phase 3</span>
+      <span class="lv-title">Best-in-Slot &mdash; Full Endgame</span>
+      <span class="lv-arrow">&#9658;</span>
+    </div>
+    <div class="lv-body"><div class="lv-inner">
+      <div class="qp-row">
+        <span class="qp gear">Griffon's Eye</span>
+        <span class="qp gear">Eschuta's Temper</span>
+        <span class="qp gear">Lightning Facets</span>
+        <span class="qp skill">117% FCR</span>
+      </div>
+      <ul class="picks">
+        <li><span class="label">Helm</span> <span class="name">Griffon's Eye + Lightning Facet</span> &mdash; <span class="note">stacks -% enemy light res and +% light damage</span></li>
+        <li><span class="label">Weapon</span> <span class="name">Eschuta's Temper or HOTO</span> &mdash; <span class="note">Eschuta's for pure damage, HOTO for FCR + resistances</span></li>
+        <li><span class="label">FCR</span> <span class="name">Hit 117% FCR breakpoint</span> &mdash; <span class="note">fastest Teleport and cast speed</span></li>
+        <li><span class="label">Result</span> <span class="name">Everything dies instantly</span> &mdash; <span class="note">Cows in 1 Chain Lightning, bosses in seconds</span></li>
+      </ul>
+    </div></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FCR BREAKPOINTS ═══════════════════ -->
+<section class="section" id="fcr">
+  <h2><span class="h2-icon">&#9889;</span> FCR Breakpoints</h2>
+  <p>Faster Cast Rate (FCR) determines how quickly you cast spells and Teleport. The Sorceress has unique breakpoints. The <strong>117% FCR</strong> breakpoint is the gold standard for Lightning Sorc &mdash; it's harder to reach than the Blizzard Sorc's 105% but the difference in Teleport speed and casting cadence is enormous.</p>
+
+  <table class="fcr-table">
+    <thead><tr><th>FCR %</th><th>Frames</th><th>Casts/sec</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="bp-num">0%</td><td>13</td><td>1.92</td><td>Base speed. Unplayable.</td></tr>
+      <tr><td class="bp-num">9%</td><td>12</td><td>2.08</td><td>Minimal improvement.</td></tr>
+      <tr><td class="bp-num">20%</td><td>11</td><td>2.27</td><td>Early game target.</td></tr>
+      <tr><td class="bp-num">37%</td><td>10</td><td>2.50</td><td>Decent for budget setups.</td></tr>
+      <tr><td class="bp-num">63%</td><td>9</td><td>2.78</td><td>Mid-game comfortable.</td></tr>
+      <tr><td class="bp-num">105%</td><td>8</td><td>3.12</td><td>Standard endgame target. Most Blizzard Sorcs stop here.</td></tr>
+      <tr><td><span class="bp-target">117%</span></td><td>7</td><td>3.57</td><td><strong>Lightning Sorc goal.</strong> Fastest practical breakpoint. Huge Teleport speed boost.</td></tr>
+      <tr><td class="bp-num">200%</td><td>7</td><td>3.57</td><td>Same as 117%. No benefit beyond 117% for Lightning.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <div class="callout-label">Reaching 117% FCR</div>
+    <p><strong>Spirit Sword (35%) + Spirit Monarch (35%) + Arachnid Mesh (20%) + Magefist (20%) + ring (10%)</strong> = 120% FCR. This is the most common budget path. If using Eschuta's Temper (40% FCR) instead of Spirit Sword, you have more flexibility in other slots.</p>
+    <p><strong>Alternative:</strong> HOTO (40%) + Spirit (35%) + Arachnid (20%) + Magefist (20%) + ring (10%) = 125% FCR.</p>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-label">Why 117% Matters</div>
+    <p>The jump from 105% (8 frames) to 117% (7 frames) is a <strong>12.5% speed increase</strong> on every Teleport and every Lightning cast. Over hundreds of runs, this compounds into significantly faster farming. It also makes you harder to kill &mdash; faster Teleport means less time exposed to danger.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ GEAR — BUDGET ═══════════════════ -->
+<section class="section" id="gear-budget">
+  <h2><span class="h2-icon">&#9889;</span> Gear &mdash; Budget</h2>
+  <p>This is your starting gear when you first respec to Lightning. Assumes you have Infinity on your merc but nothing else expensive.</p>
+
+  <div class="gear-grid">
+    <div class="gear-card">
+      <div class="gear-slot">Weapon</div>
+      <div class="gear-item runeword">Crescent Moon</div>
+      <div class="gear-notes"><strong>-35% Enemy Lightning Resistance.</strong> Shael + Um + Tir in a sword/axe/polearm. This single modifier is why it's BiS budget &mdash; stacks with Infinity's Conviction for massive resistance shred.</div>
+      <div class="gear-alt">Alt: Spirit Crystal Sword (35% FCR, +2 skills)</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Shield</div>
+      <div class="gear-item runeword">Spirit Monarch</div>
+      <div class="gear-notes">+2 All Skills, 35% FCR, +55% FHR, mana, vitality. The best Sorc shield at any budget. Tal + Thul + Ort + Amn.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Helm</div>
+      <div class="gear-item unique">Harlequin Crest (Shako)</div>
+      <div class="gear-notes">+2 All Skills, +1.5 life/mana per level, 10% DR, +2 attributes. The all-around best helm until Griffon's.</div>
+      <div class="gear-alt">Alt: Lore runeword (Ort + Sol) if Shako is out of budget</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Armor</div>
+      <div class="gear-item unique">Skin of the Vipermagi</div>
+      <div class="gear-notes">+1 All Skills, 30% FCR, +20-35 All Res. Perfect FCR filler and resists in one slot.</div>
+      <div class="gear-alt">Alt: Stealth (Tal + Eth) for early 25% FCR</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Belt</div>
+      <div class="gear-item unique">Arachnid Mesh</div>
+      <div class="gear-notes">+1 All Skills, 20% FCR, 5% slow. Critical FCR piece for hitting 117%. Not truly "budget" but essential.</div>
+      <div class="gear-alt">Alt: Tal Rasha's belt (rare +MF) or Goldwrap</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Gloves</div>
+      <div class="gear-item unique">Magefist</div>
+      <div class="gear-notes">20% FCR, +1 Fire Skills, mana regen. The 20% FCR is what matters. Cheap and effective.</div>
+      <div class="gear-alt">Alt: Trang-Oul's Claws (20% FCR, cold resist)</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Boots</div>
+      <div class="gear-item rare">War Traveler</div>
+      <div class="gear-notes">30-50% MF, +15-25 damage, +10 STR/VIT. Best MF boots in the game.</div>
+      <div class="gear-alt">Alt: Aldur's Advance (40 FR/W, +50 life) or rare tri-res boots</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Rings</div>
+      <div class="gear-item unique">2x Stone of Jordan / FCR Rings</div>
+      <div class="gear-notes">SoJ: +1 All Skills, +mana. If missing 117% FCR, use a 10% FCR ring in one slot.</div>
+      <div class="gear-alt">Alt: Rare FCR rings with life/mana/resist</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Amulet</div>
+      <div class="gear-item rare">+2 Sorc Skills / Mara's Kaleidoscope</div>
+      <div class="gear-notes">Mara's: +2 All Skills, +20-30 All Res. Or craft/find a +2 Sorc / +FCR amulet.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Charms</div>
+      <div class="gear-item magic">Lightning Skillers + Anni + Torch</div>
+      <div class="gear-notes">Grand charms with +1 Lightning Skills. Annihilus (+1 skills, stats, res). Sorc Torch (+3 skills, stats, res).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ GEAR — BIS ═══════════════════ -->
+<section class="section" id="gear-bis">
+  <h2><span class="h2-icon">&#9889;</span> Gear &mdash; Best in Slot</h2>
+  <p>The dream setup. Maximum lightning damage, full FCR breakpoint, and enough survivability to farm at speed.</p>
+
+  <div class="gear-grid">
+    <div class="gear-card">
+      <div class="gear-slot">Helm</div>
+      <div class="gear-item unique">Griffon's Eye</div>
+      <div class="gear-notes"><strong>+15-20% Lightning Damage, -15-20% Enemy Lightning Res.</strong> Socket with a <strong>5/5 Lightning Facet</strong> for even more. The single most impactful item for Lightning Sorc damage.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Weapon</div>
+      <div class="gear-item unique">Eschuta's Temper</div>
+      <div class="gear-notes">+1-3 Sorc Skills, +10-20% Lightning Damage, 40% FCR. Socket with Lightning Facet. Pure damage weapon.</div>
+      <div class="gear-alt">Alt: HOTO (40 FCR, +3 skills, +40 res) for safety</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Shield</div>
+      <div class="gear-item runeword">Spirit Monarch</div>
+      <div class="gear-notes">Still BiS even at endgame. +2 skills and 35% FCR is unbeatable. Look for a 35% FCR roll.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Armor</div>
+      <div class="gear-item runeword">Chains of Honor</div>
+      <div class="gear-notes">+2 All Skills, +65 All Res, 8% DR, +20 STR. Best defensive armor that also boosts damage.</div>
+      <div class="gear-alt">Alt: Enigma (if you want +MF), or Ormus' Robes (15% lightning damage)</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Belt</div>
+      <div class="gear-item unique">Arachnid Mesh</div>
+      <div class="gear-notes">+1 All Skills, 20% FCR. Non-negotiable for 117% FCR breakpoint.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Gloves</div>
+      <div class="gear-item unique">Magefist</div>
+      <div class="gear-notes">20% FCR. Still BiS at endgame for the FCR alone.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Boots</div>
+      <div class="gear-item rare">War Traveler / Sandstorm Trek</div>
+      <div class="gear-notes">War Trav for MF runs, Sandstorm Trek (+20 STR/VIT, FHR, poison res) for survivability.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Rings</div>
+      <div class="gear-item unique">2x Stone of Jordan</div>
+      <div class="gear-notes">+1 All Skills each, huge mana. BiS for pure damage. If FCR-starved, one SoJ + one 10% FCR ring.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Amulet</div>
+      <div class="gear-item unique">Mara's Kaleidoscope / Crafted +2/20 FCR</div>
+      <div class="gear-notes">Mara's for balanced stats. A rare/crafted +2 Sorc / 20% FCR amulet is technically superior if you find one.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Charms</div>
+      <div class="gear-item magic">9x Lightning Skillers + Anni + Torch</div>
+      <div class="gear-notes">Fill inventory with +1 Lightning Skills grand charms (with +life second mod ideally). Annihilus and Sorc Torch are mandatory.</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Lightning Facets Stack</div>
+    <p><strong>Rainbow Facet (Lightning)</strong> can be socketed into helm, weapon, and armor. Each adds +3-5% Lightning Damage and -3-5% Enemy Lightning Resistance. With Griffon's + facets + Infinity Conviction, you can shred <strong>-150% or more</strong> enemy lightning resistance. Against non-immune monsters, this means they effectively take 2.5x lightning damage.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ INFINITY ═══════════════════ -->
+<section class="section" id="infinity">
+  <h2><span class="h2-icon">&#9889;</span> Infinity &mdash; The Mandatory Runeword</h2>
+
+  <div class="infinity-box">
+    <h3>Why Infinity is Non-Negotiable</h3>
+    <p>In Hell difficulty, <strong>roughly 40-50% of monster types are Lightning Immune</strong>. Lightning Immunity means they take 0% lightning damage. You literally cannot kill them. Unlike Cold Mastery (which reduces cold resistance below immunity threshold), Lightning Mastery only increases your damage &mdash; it does not reduce enemy resistance.</p>
+    <p><strong>Infinity provides the Conviction aura</strong>, which reduces enemy Defense, Fire Resistance, and <strong>Lightning Resistance by -85%</strong>. This is strong enough to break most Lightning Immunities (immunity is resistance &ge;100%, and Conviction reduces it below that threshold for most monsters).</p>
+    <p>Without Infinity, you are playing half a build. Entire areas become no-go zones. Bosses with lightning immunity (like certain Terror Zone elites) become literally impossible.</p>
+
+    <h3 style="margin-top:1rem">Runeword: Infinity</h3>
+    <p style="font-size:.9rem;color:var(--text-dim);">4-socket Polearm (Ethereal preferred &mdash; merc weapons don't lose durability)</p>
+    <div class="rune-cost">
+      <span class="rune ber">Ber</span>
+      <span class="rune">Mal</span>
+      <span class="rune ber">Ber</span>
+      <span class="rune">Ist</span>
+    </div>
+    <ul class="picks" style="margin-top:.5rem">
+      <li><span class="label">Aura</span> <span class="name">Level 12 Conviction</span> &mdash; <span class="note">-85% enemy Defense, Fire Res, and Lightning Res</span></li>
+      <li><span class="label">Stats</span> <span class="name">+35% FCR, 40-50% Chance of Crushing Blow</span></li>
+      <li><span class="label">Damage</span> <span class="name">+255-325% Enhanced Damage</span> &mdash; <span class="note">merc also deals great physical damage</span></li>
+      <li><span class="label">Vitality</span> <span class="name">+21-30 to all attributes</span></li>
+    </ul>
+  </div>
+
+  <div class="callout warn">
+    <div class="callout-label">Some Monsters Stay Immune</div>
+    <p>Conviction can only reduce immunities by 1/5 of its value against immune monsters (due to the immunity penalty). This means some monsters with very high lightning resistance (e.g., Gloams at 180% LR) will remain immune even with Infinity. Plan your farming routes to avoid these zones, or have your merc physical-damage them down.</p>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-label">Best Base for Infinity</div>
+    <p>Use an <strong>Ethereal Thresher</strong> or <strong>Ethereal Giant Thresher</strong> for the fastest attack speed on your merc. Faster attacks = more life leech = merc stays alive. An Eth Colossus Voulge works but attacks slower. Speed matters more than raw damage for merc survival.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ MERCENARY ═══════════════════ -->
+<section class="section" id="mercenary">
+  <h2><span class="h2-icon">&#9889;</span> Mercenary</h2>
+  <p>Your Act 2 mercenary is not optional &mdash; he carries Infinity. Keeping him alive is a core part of your build. If he dies, you lose Conviction and half your damage disappears.</p>
+
+  <div class="merc-card">
+    <div class="merc-title">Act 2 Nightmare &mdash; Holy Freeze (Defensive)</div>
+    <div class="merc-detail"><strong>Aura:</strong> Holy Freeze &mdash; slows nearby enemies, giving you and the merc more breathing room. Conviction comes from Infinity, not his native aura.</div>
+    <div class="merc-detail"><strong>Alternative:</strong> Might (Offensive) for more physical damage from the merc. Less defensive but faster kills on physically-immune monsters.</div>
+  </div>
+
+  <h3>Mercenary Gear</h3>
+  <div class="gear-grid">
+    <div class="gear-card">
+      <div class="gear-slot">Weapon</div>
+      <div class="gear-item runeword">Infinity</div>
+      <div class="gear-notes"><strong>REQUIRED.</strong> The entire build depends on this item. Conviction aura breaks Lightning Immunities. Use an Ethereal Thresher/Giant Thresher base.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Armor</div>
+      <div class="gear-item runeword">Fortitude</div>
+      <div class="gear-notes">+300% Enhanced Damage, +25-30 All Res, +1.5 life per level, 20% Chance of Chilling Armor. Keeps the merc alive and adds damage.</div>
+      <div class="gear-alt">Alt: Treachery (Shael + Thul + Lem) &mdash; cheap, 45% IAS, Fade proc for resists</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Helm</div>
+      <div class="gear-item unique">Andariel's Visage (Ral'd)</div>
+      <div class="gear-notes">+2 Skills, 20% IAS, 8-10% Life Leech, +25-30 STR. Socket with <strong>Ral rune</strong> to offset the -30% fire resistance penalty. Best merc helm.</div>
+      <div class="gear-alt">Alt: Vampire Gaze (DR + life leech) or Guillaume's Face (Crushing Blow)</div>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <div class="callout-label">Keep Your Merc Alive</div>
+    <p>If your merc dies, you lose Conviction. Suddenly Lightning Immunes are immune again and your damage against everything else drops dramatically. Carry <strong>Full Rejuvenation Potions</strong> and feed them to your merc (hold Shift + click potion, or assign to belt slot 1-4 and Shift+1-4). Teleporting on top of your merc resets his position and can save him from being surrounded.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ PLAYSTYLE ═══════════════════ -->
+<section class="section" id="playstyle">
+  <h2><span class="h2-icon">&#9889;</span> Playstyle</h2>
+  <p>Lightning Sorc gameplay is fast, aggressive, and positioning-dependent. Your merc needs to be near enemies for Conviction to apply. You need to be close enough for Chain Lightning to hit everything, but not so close that you die.</p>
+
+  <ol class="step-list">
+    <li>
+      <span class="step-action">Teleport into the pack</span>
+      <div class="step-detail">Use Teleport to move directly into or near a monster pack. This also repositions your merc on top of you, putting his Conviction aura in range of the enemies.</div>
+    </li>
+    <li>
+      <span class="step-action">Position merc &mdash; let Conviction apply</span>
+      <div class="step-detail">Conviction needs ~1 second to strip resistances. Your merc must be close enough to the enemies. Teleporting directly onto the pack ensures this. Watch for the Conviction visual effect on monsters.</div>
+    </li>
+    <li>
+      <span class="step-action">Chain Lightning for packs</span>
+      <div class="step-detail">Against groups of enemies, <strong>Chain Lightning</strong> is your primary skill. It hits the target and chains to nearby enemies. One or two casts usually clears a pack. The chains can hit the same enemy multiple times in dense groups.</div>
+    </li>
+    <li>
+      <span class="step-action">Lightning for single targets / bosses</span>
+      <div class="step-detail">Against bosses and isolated targets, <strong>Lightning</strong> deals more single-target damage. It fires a continuous bolt &mdash; hold the cast and let it rip. The 1-to-max damage means some casts will feel weak; just keep casting.</div>
+    </li>
+    <li>
+      <span class="step-action">Charged Bolt shotgun on large hitboxes</span>
+      <div class="step-detail">Against large monsters (Baal, Diablo, Cow King, Act bosses), <strong>Charged Bolt</strong> at point-blank range deals insane damage. Multiple bolts hit the same target simultaneously. This can out-DPS Lightning against big hitbox targets.</div>
+    </li>
+    <li>
+      <span class="step-action">Static Field bosses to 50%</span>
+      <div class="step-detail"><strong>Static Field</strong> instantly removes 25% of an enemy's current HP (in Hell, capped at reducing them to 50% HP). Cast it 2-3 times on a boss to cut their health in half, then finish with Lightning/Charged Bolt. This is especially powerful against high-HP targets like Baal and Diablo.</div>
+    </li>
+    <li>
+      <span class="step-action">Teleport out if in danger</span>
+      <div class="step-detail">You are a glass cannon. If you're taking damage, Teleport away immediately. Reposition, heal, re-engage. Never stand still in the middle of a pack. Cast and move, cast and move.</div>
+    </li>
+  </ol>
+
+  <div class="callout tip">
+    <div class="callout-label">The Teleport-Nuke Rhythm</div>
+    <p>Elite Lightning Sorc play looks like this: <strong>Teleport &rarr; Chain Lightning &rarr; Teleport &rarr; Chain Lightning &rarr; next pack.</strong> At 117% FCR, each Teleport and each cast takes 7 frames (0.28 seconds). You can clear an entire screen of Cows in under 2 seconds. This is why Lightning Sorc is the fastest farming build at full gear.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ FARMING ═══════════════════ -->
+<section class="section" id="farming">
+  <h2><span class="h2-icon">&#9889;</span> Farming Zones</h2>
+  <p>With Infinity, the Lightning Sorc can farm almost anywhere. These are the best zones ranked by efficiency.</p>
+
+  <div class="farm-grid">
+    <div class="farm-card">
+      <div class="farm-name">Cow Level</div>
+      <div class="farm-desc">Dense packs, huge hitboxes, zero lightning immunes. Chain Lightning clears entire herds in one cast. The single best farming zone for Lightning Sorc. Drops runes, bases, and charms.</div>
+      <div class="farm-rating s">S-Tier</div>
+    </div>
+    <div class="farm-card">
+      <div class="farm-name">Chaos Sanctuary</div>
+      <div class="farm-desc">Dense monsters, high rune drops, Diablo at the end. Some Lightning immunes (De Seis pack) but Infinity breaks most of them. Excellent experience and loot.</div>
+      <div class="farm-rating s">S-Tier</div>
+    </div>
+    <div class="farm-card">
+      <div class="farm-name">Baal Runs</div>
+      <div class="farm-desc">Wave-based boss farming. Static Field + Lightning melts waves. Baal himself has high HP but Charged Bolt shotgun and Static make quick work. Best experience in the game.</div>
+      <div class="farm-rating a">A-Tier</div>
+    </div>
+    <div class="farm-card">
+      <div class="farm-name">Terror Zones</div>
+      <div class="farm-desc">Rotating zone with bonus experience and drops. When TZs land in favorable areas (no persistent lightning immunes), Lightning Sorc is the fastest clearer. Check the zone before committing.</div>
+      <div class="farm-rating a">A-Tier</div>
+    </div>
+    <div class="farm-card">
+      <div class="farm-name">Arcane Sanctuary</div>
+      <div class="farm-desc">Summoner kill + chests. Ghosts drop only runes, jewels, charms. Fast clear with Chain Lightning. Good supplement to main farming.</div>
+      <div class="farm-rating b">B-Tier</div>
+    </div>
+    <div class="farm-card">
+      <div class="farm-name">Worldstone Keep / Throne</div>
+      <div class="farm-desc">Dense, high-level monsters. Some persistent lightning immunes in WSK2/3. Good for experience but slower than Cows or Chaos. Usually combined with Baal runs.</div>
+      <div class="farm-rating b">B-Tier</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Avoid These Zones</div>
+    <p><strong>Maggot Lair</strong> &mdash; narrow corridors make Chain Lightning useless and Teleport dangerous. <strong>Stony Tomb</strong> &mdash; too many persistent lightning immunes. <strong>Any zone with Gloams/Souls</strong> &mdash; they deal lightning damage to YOU and have extremely high lightning resistance.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ TIPS ═══════════════════ -->
+<section class="section" id="tips">
+  <h2><span class="h2-icon">&#9889;</span> Tips</h2>
+
+  <div class="callout">
+    <div class="callout-label">Embrace the Variance</div>
+    <p>Lightning damage rolls 1-to-max on <strong>every single cast</strong>. You will sometimes cast Lightning and see a pathetic 47 damage number. The next cast might hit for 38,000. Over time, the average DPS is staggering and far exceeds Blizzard. But individual casts feel random. Don't panic when you see low numbers &mdash; just keep casting. The math works out.</p>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-label">Static Field is Your Best Friend</div>
+    <p>Static Field removes 25% of a monster's <strong>current</strong> HP per cast (in Hell, capped at reducing to 50%). This means three casts take any enemy from 100% to ~42% HP regardless of their total health pool. Against bosses with millions of HP, this saves enormous time. Always Static first, then nuke.</p>
+  </div>
+
+  <div class="callout crimson">
+    <div class="callout-label">This is the End-of-Ladder Build</div>
+    <p>Lightning Sorceress is not your first character. It's not your second. It's the build you respec into after your Blizzard Sorc has farmed for weeks and accumulated enough wealth for Infinity + supporting gear. Think of it as the final evolution &mdash; the flex build that says "I made it." Every Lightning Sorc you see in-game represents hundreds of hours of farming on a different character first.</p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Merc Management is Everything</div>
+    <p>Your merc carrying Infinity is quite literally half your build. If he dies, you lose Conviction, and suddenly monsters that were taking 40,000 damage are taking 4,000 (or immune). Feed him Full Rejuvs aggressively. Teleport on top of him to reposition. Some players carry 4 columns of Full Rejuvs just for the merc. His survival is your DPS.</p>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-label">Charged Bolt for Uber Bosses</div>
+    <p>In organized Uber runs, Charged Bolt at point-blank range against large-hitbox Uber bosses can deal absurd damage. Each bolt that connects is a separate damage instance. Against Uber Mephisto or Uber Baal's large hitbox, 5-8 bolts can connect per cast, each rolling 1-to-max independently. The aggregate damage is astronomical.</p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Frozen Armor &mdash; Always On</div>
+    <p>Keep <strong>Frozen Armor</strong> active at all times. Even with 1 point, it provides a defense bonus and freezes melee attackers for 1+ seconds. This is your only physical defense as a Sorceress. Rebuff after every death or town portal.</p>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-label">Escape Key: Teleport</div>
+    <p>If you are surrounded, <strong>Teleport to safety first, then assess</strong>. At 117% FCR, Teleport takes 0.28 seconds. Nothing in the game can kill you in 0.28 seconds if you have reasonable HP. The most common cause of Lightning Sorc deaths is standing still too long &mdash; usually because you're greedy for one more cast. Just Teleport. The pack will still be there.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<div class="guide-footer">
+  <span>Diablo 2 Resurrected &middot; Season 13 &middot; Lightning Sorceress Build Guide &middot; 2025</span><br>
+  <a href="d2r-builds.html">&larr; All D2R Builds</a> &nbsp;&middot;&nbsp; <a href="guides.html">Game Guides</a> &nbsp;&middot;&nbsp; <a href="index.html">Home</a>
+</div>
+
+</div><!-- end page-wrap -->
+
+<script>
+// ═══ Scroll-reveal ═══
+const sections = document.querySelectorAll('.section');
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+}, { rootMargin: '-10% 0px -5% 0px' });
+sections.forEach(s => revealObs.observe(s));
+
+// ═══ Subnav active tracking ═══
+const subnavLinks = document.querySelectorAll('.subnav a');
+const sectionObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      subnavLinks.forEach(l => l.classList.remove('active'));
+      const a = document.querySelector('.subnav a[href="#' + entry.target.id + '"]');
+      if (a) a.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => sectionObserver.observe(s));
+
+// ═══ Universal nav hamburger ═══
+const unavToggle = document.getElementById('unavToggle');
+const unavLinks = document.getElementById('unavLinks');
+unavToggle.addEventListener('click', () => unavLinks.classList.toggle('open'));
+
+// ═══ Pages dropdown ═══
+const pagesDropdown = document.getElementById('pagesDropdown');
+pagesDropdown.addEventListener('click', (e) => {
+  e.stopPropagation();
+  pagesDropdown.classList.toggle('dropdown-open');
+});
+document.addEventListener('click', () => pagesDropdown.classList.remove('dropdown-open'));
+
+// ═══ Smooth scroll for subnav ═══
+subnavLinks.forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) {
+      const offset = 60 + 44 + 16; // unav + subnav + padding
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+
+// ═══ Level card collapse ═══
+document.querySelectorAll('.lv-head').forEach(head => {
+  head.addEventListener('click', () => head.parentElement.classList.toggle('open'));
+});
+</script>
+</body>
+</html>

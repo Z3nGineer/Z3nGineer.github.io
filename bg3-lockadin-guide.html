@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lockadin — Infernal Crusader · BG3 Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg-body: #0a0a0a;
+  --bg-card: #151515;
+  --bg-elevated: #1c1c1c;
+  --bg-hover: #222222;
+  --border: #2b2c2c;
+  --border-light: #3a3a3a;
+  --text: #e8e8e8;
+  --text-dim: #a0a0a0;
+  --text-muted: #707070;
+  --white: #ffffff;
+  --accent: #057af0;
+  --accent-hover: #3592ff;
+  --green: #21c513;
+  --green-dim: #199f2f;
+  --orange: #f09a18;
+  --orange-dim: rgba(240,154,24,0.15);
+  --red: #f00505;
+  --gold: #d4a043;
+  --gold-dim: rgba(212,160,67,0.12);
+  --purple: #b080d0;
+  --infernal: #e04020;
+  --infernal-dim: rgba(224,64,32,0.12);
+  --warlock: #9060c0;
+  --warlock-dim: rgba(144,96,192,0.10);
+  --paladin: #f0c840;
+  --paladin-dim: rgba(240,200,64,0.10);
+}
+
+html { scroll-behavior:smooth; scrollbar-width:thin; scrollbar-color:#2b2c2c #0a0a0a; }
+
+body {
+  background: var(--bg-body);
+  color: var(--text);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 19px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration:none; }
+a:hover { color: var(--accent-hover); text-decoration:underline; }
+
+/* ── UNIVERSAL TOP NAV ── */
+.top-nav {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  background:rgba(8,8,8,0.85); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.top-nav-inner {
+  max-width:1100px; margin:0 auto; display:flex; align-items:center;
+  justify-content:space-between; padding:0 2rem; height:60px;
+}
+.top-nav-brand {
+  font-family:'Cinzel',serif; font-size:0.9rem; font-weight:700;
+  letter-spacing:0.15em; color:var(--text); text-decoration:none; transition:color 0.3s;
+}
+.top-nav-brand:hover { color:var(--accent); text-decoration:none; }
+.top-nav-links { display:flex; gap:1.5rem; list-style:none; align-items:center; }
+.top-nav-links a {
+  font-size:0.8rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--text-muted); text-decoration:none; transition:color 0.3s; position:relative;
+}
+.top-nav-links a:hover, .top-nav-links a.active { color:var(--accent); text-decoration:none; }
+.top-nav-links a::after {
+  content:''; position:absolute; bottom:-4px; left:0; right:0; height:1px;
+  background:var(--accent); transform:scaleX(0); transition:transform 0.3s; transform-origin:right;
+}
+.top-nav-links a:hover::after { transform:scaleX(1); transform-origin:left; }
+.tn-dropdown { position:relative; }
+.tn-dropdown > a::after { display:none; }
+.tn-dropdown > a { display:flex; align-items:center; gap:0.3rem; }
+.tn-dropdown > a .dd-arrow { font-size:0.5rem; transition:transform 0.2s; margin-top:1px; }
+.tn-dropdown:hover > a .dd-arrow { transform:rotate(180deg); }
+.tn-dd-menu {
+  position:absolute; top:calc(100% + 12px); left:50%; transform:translateX(-50%);
+  background:rgba(8,8,8,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border); border-radius:10px;
+  min-width:200px; padding:0.5rem 0;
+  opacity:0; visibility:hidden; transform:translateX(-50%) translateY(-5px);
+  transition:opacity 0.2s, visibility 0.2s, transform 0.2s;
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+}
+.tn-dropdown:hover .tn-dd-menu { opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+.tn-dd-menu a {
+  display:block; padding:0.6rem 1.2rem; font-size:0.75rem; font-weight:500;
+  letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted);
+  text-decoration:none; transition:color 0.15s, background 0.15s; white-space:nowrap;
+}
+.tn-dd-menu a:hover { color:var(--accent); background:rgba(5,122,240,0.06); }
+.tn-dd-menu a::after { display:none; }
+
+.top-hamburger { display:none; background:none; border:none; cursor:pointer; padding:0.5rem; z-index:1001; }
+.top-hamburger span { display:block; width:22px; height:2px; background:var(--text-dim); margin:5px 0; transition:all 0.3s; border-radius:1px; }
+.top-hamburger.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+.top-hamburger.open span:nth-child(2) { opacity:0; }
+.top-hamburger.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+
+@media(max-width:800px) {
+  .top-nav-links {
+    display:none; position:absolute; top:60px; left:0; right:0; flex-direction:column;
+    background:rgba(8,8,8,0.95); backdrop-filter:blur(20px); border-bottom:1px solid var(--border);
+    padding:1rem 2rem; gap:0;
+  }
+  .top-nav-links.open { display:flex; }
+  .top-nav-links li { width:100%; }
+  .top-nav-links a { display:block; padding:0.7rem 0; font-size:0.85rem; border-bottom:1px solid var(--border); }
+  .top-nav-links a::after { display:none; }
+  .tn-dd-menu { position:static; opacity:1; visibility:visible; transform:none; border:none; border-radius:0; min-width:auto; padding:0; background:none; backdrop-filter:none; box-shadow:none; }
+  .tn-dd-menu a { padding:0.7rem 2rem 0.7rem 1.5rem; font-size:0.8rem; border-bottom:1px solid var(--border); }
+  .tn-dropdown > a { display:none; }
+  .top-hamburger { display:block; }
+}
+
+/* ── SUB NAV (page-specific) ── */
+.sub-nav {
+  position:sticky; top:60px; z-index:999;
+  background:rgba(15,15,15,0.92); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border); overflow-x:auto;
+  scrollbar-width:none;
+}
+.sub-nav::-webkit-scrollbar { display:none; }
+.sub-nav-inner {
+  max-width:1100px; margin:0 auto; display:flex; align-items:center;
+  padding:0 2rem; height:44px; gap:0.25rem;
+}
+.sub-nav a {
+  font-size:0.75rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;
+  color:var(--text-muted); text-decoration:none; padding:0.35rem 0.75rem; border-radius:4px;
+  transition:color 0.15s, background 0.15s; white-space:nowrap;
+}
+.sub-nav a:hover { color:var(--accent); background:rgba(5,122,240,0.06); text-decoration:none; }
+.sub-nav a.active { color:var(--accent); background:rgba(5,122,240,0.10); }
+
+@media(max-width:800px) {
+  .sub-nav-inner { padding:0 1rem; }
+}
+
+/* ── LAYOUT ── */
+.page { display:flex; max-width:1100px; margin:0 auto; gap:0; padding-top:104px; }
+
+.sidebar {
+  width:220px; flex-shrink:0; position:sticky; top:104px; height:calc(100vh - 104px);
+  overflow-y:auto; border-right:1px solid var(--border); background: var(--bg-card);
+  padding:1.5rem 0; scrollbar-width:thin; scrollbar-color: var(--border) transparent;
+}
+
+.sidebar-title {
+  font-family:'Oswald', sans-serif; font-size:0.75rem; font-weight:600;
+  letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted);
+  padding:0 1.25rem; margin-bottom:0.75rem;
+}
+
+.sidebar a {
+  display:flex; align-items:center; gap:0.5rem; padding:0.45rem 1.25rem;
+  font-size:0.88rem; font-weight:500; color:var(--text-dim); text-decoration:none;
+  border-left:3px solid transparent; transition:all 0.15s;
+}
+.sidebar a:hover { color:var(--white); background:rgba(255,255,255,0.03); text-decoration:none; }
+.sidebar a.active { color:var(--white); border-left-color:var(--accent); background:rgba(5,122,240,0.06); }
+.sidebar .nav-icon { font-size:1rem; width:1.2rem; text-align:center; }
+
+.content { flex:1; min-width:0; padding:2.5rem 2.5rem 4rem; }
+
+@media(max-width:800px) {
+  .sidebar { display:none; }
+  .content { padding:1.5rem; }
+}
+
+/* ── HEADER ── */
+.guide-header { margin-bottom:2.5rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border); }
+.guide-header .breadcrumb { font-size:0.78rem; color:var(--text-muted); margin-bottom:0.5rem; letter-spacing:0.02em; }
+.guide-header h1 { font-family:'Oswald', sans-serif; font-size:2.2rem; font-weight:700; color:var(--white); line-height:1.2; margin-bottom:0.4rem; }
+.guide-header .subtitle { font-size:1rem; color:var(--text-dim); font-weight:400; }
+.tag-row { display:flex; gap:0.4rem; margin-top:0.75rem; flex-wrap:wrap; }
+.tag { font-size:0.72rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:4px; background:var(--bg-elevated); border:1px solid var(--border); color:var(--text-dim); text-transform:uppercase; letter-spacing:0.04em; }
+.tag.green { color:var(--green); border-color:rgba(33,197,19,0.25); background:rgba(33,197,19,0.06); }
+.tag.orange { color:var(--orange); border-color:rgba(240,154,24,0.25); background:var(--orange-dim); }
+.tag.blue { color:var(--accent); border-color:rgba(5,122,240,0.25); background:rgba(5,122,240,0.06); }
+.tag.red { color:var(--infernal); border-color:rgba(224,64,32,0.25); background:var(--infernal-dim); }
+.tag.purple { color:var(--warlock); border-color:rgba(144,96,192,0.25); background:var(--warlock-dim); }
+
+/* ── HERO ART ── */
+.hero-art { width:100%; margin-bottom:1.25rem; border-radius:10px; border:1px solid var(--border); overflow:hidden; background:var(--bg-card); }
+.hero-svg { width:100%; height:auto; display:block; }
+
+.header-row { display:flex; align-items:center; gap:1rem; margin-bottom:1.25rem; }
+.header-text { flex:1; }
+
+/* ── SECTIONS ── */
+.section { margin-top:3rem; }
+.section h2 { font-family:'Oswald', sans-serif; font-size:1.5rem; font-weight:600; color:var(--white); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border); }
+.section h3 { font-family:'Oswald', sans-serif; font-size:1.15rem; font-weight:500; color:var(--text); margin:1.5rem 0 0.6rem; }
+.section p { margin-bottom:1rem; color:var(--text); }
+
+/* ── CALLOUTS ── */
+.callout { background:var(--bg-card); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:6px; padding:1rem 1.25rem; margin:1.25rem 0; }
+.callout.warn { border-left-color:var(--orange); }
+.callout.tip { border-left-color:var(--green); }
+.callout.infernal { border-left-color:var(--infernal); }
+.callout-label { font-family:'Oswald', sans-serif; font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.25rem; }
+.callout .callout-label { color:var(--accent); }
+.callout.warn .callout-label { color:var(--orange); }
+.callout.tip .callout-label { color:var(--green); }
+.callout.infernal .callout-label { color:var(--infernal); }
+.callout p { margin-bottom:0.5rem; font-size:0.95rem; }
+.callout p:last-child { margin-bottom:0; }
+
+/* ── STAT BAR ── */
+.stats { display:flex; gap:0.5rem; flex-wrap:wrap; margin:0.75rem 0; }
+.stat-box { background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:0.4rem 0.75rem; text-align:center; min-width:3.5rem; }
+.stat-box.primary { border-color:rgba(5,122,240,0.4); }
+.stat-label { font-size:0.65rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); }
+.stat-val { font-family:'Oswald',sans-serif; font-size:1.3rem; font-weight:600; color:var(--white); }
+.stat-box.primary .stat-val { color:var(--accent); }
+
+/* ── LEVEL CARDS ── */
+.level-card { background:var(--bg-card); border:1px solid var(--border); border-radius:8px; margin-bottom:0.4rem; overflow:hidden; transition:border-color 0.15s; }
+.level-card:hover { border-color:var(--border-light); }
+.level-card.spike { border-left:3px solid var(--orange); }
+.level-card.here { border-color:var(--accent); box-shadow:0 0 0 1px rgba(5,122,240,0.15); }
+
+.lv-head { display:flex; align-items:center; gap:0.6rem; padding:0.65rem 1rem; cursor:pointer; user-select:none; transition:background 0.1s; flex-wrap:wrap; }
+.lv-head:hover { background:var(--bg-hover); }
+.lv-num { font-family:'Oswald',sans-serif; font-weight:700; font-size:1.3rem; color:var(--white); min-width:1.6rem; text-align:center; }
+.level-card.here .lv-num { color:var(--accent); }
+
+.lv-badge { font-size:0.68rem; font-weight:600; padding:0.15rem 0.5rem; border-radius:4px; text-transform:uppercase; letter-spacing:0.04em; }
+.lv-badge.paladin { color:var(--paladin); background:var(--paladin-dim); border:1px solid rgba(240,200,64,0.2); }
+.lv-badge.warlock { color:var(--warlock); background:var(--warlock-dim); border:1px solid rgba(144,96,192,0.2); }
+
+.lv-title { font-weight:600; font-size:0.95rem; color:var(--text); flex:1; }
+
+.lv-spike { font-size:0.65rem; font-weight:600; color:var(--orange); background:var(--orange-dim); padding:0.15rem 0.45rem; border-radius:4px; border:1px solid rgba(240,154,24,0.2); letter-spacing:0.04em; text-transform:uppercase; }
+.lv-arrow { color:var(--text-muted); font-size:0.75rem; transition:transform 0.2s; }
+.level-card.open .lv-arrow { transform:rotate(90deg); }
+.lv-body { max-height:0; overflow:hidden; transition:max-height 0.3s ease; }
+.level-card.open .lv-body { max-height:900px; }
+.lv-inner { padding:0 1rem 1rem; border-top:1px solid var(--border); }
+
+/* Quick picks */
+.qp-row { display:flex; flex-wrap:wrap; gap:0.3rem; margin:0.75rem 0 0.5rem; }
+.qp { font-size:0.78rem; font-weight:500; padding:0.2rem 0.6rem; border-radius:4px; background:var(--bg-elevated); border:1px solid var(--border); color:var(--text-dim); }
+.qp.feature { color:var(--green); border-color:rgba(33,197,19,0.2); }
+.qp.spell { color:var(--accent); border-color:rgba(5,122,240,0.2); }
+.qp.feat { color:var(--orange); border-color:rgba(240,154,24,0.2); }
+.qp.warlock { color:var(--warlock); border-color:rgba(144,96,192,0.2); }
+.qp.paladin { color:var(--paladin); border-color:rgba(240,200,64,0.2); }
+.qp.invocation { color:var(--infernal); border-color:rgba(224,64,32,0.2); }
+
+/* Pick list */
+.picks { list-style:none; margin:0.5rem 0; }
+.picks li { padding:0.3rem 0; font-size:0.95rem; display:flex; gap:0.4rem; align-items:baseline; }
+.picks .label { font-size:0.72rem; font-weight:600; color:var(--orange); text-transform:uppercase; letter-spacing:0.03em; flex-shrink:0; min-width:4rem; }
+.picks .name { font-weight:600; color:var(--white); }
+.picks .note { color:var(--text-dim); font-size:0.88rem; }
+
+/* ── SPELL GRID ── */
+.spell-section { margin-bottom:1.5rem; }
+.spell-level { font-family:'Oswald',sans-serif; font-size:1rem; font-weight:500; color:var(--white); padding-bottom:0.35rem; margin-bottom:0.5rem; border-bottom:1px solid var(--border); }
+.spell-row { display:flex; justify-content:space-between; align-items:start; padding:0.5rem 0.75rem; background:var(--bg-card); border:1px solid var(--border); border-radius:6px; margin-bottom:0.35rem; gap:0.75rem; }
+.spell-info { flex:1; }
+.spell-name { font-weight:600; color:var(--white); font-size:0.95rem; }
+.spell-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.1rem; }
+.spell-badge { font-size:0.68rem; font-weight:600; padding:0.15rem 0.5rem; border-radius:4px; text-transform:uppercase; letter-spacing:0.03em; white-space:nowrap; flex-shrink:0; align-self:center; }
+.spell-badge.must { color:var(--green); background:rgba(33,197,19,0.08); border:1px solid rgba(33,197,19,0.2); }
+.spell-badge.good { color:var(--accent); background:rgba(5,122,240,0.06); border:1px solid rgba(5,122,240,0.15); }
+.spell-badge.conc { color:var(--purple); background:rgba(176,128,208,0.06); border:1px solid rgba(176,128,208,0.15); }
+.spell-badge.free { color:var(--gold); background:var(--gold-dim); border:1px solid rgba(212,160,67,0.2); }
+.spell-badge.warlock { color:var(--warlock); background:var(--warlock-dim); border:1px solid rgba(144,96,192,0.2); }
+
+/* ── INVOCATIONS TABLE ── */
+.invoc-table { width:100%; border-collapse:collapse; margin:1rem 0; }
+.invoc-table th { font-family:'Oswald',sans-serif; font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); text-align:left; padding:0.6rem 0.75rem; border-bottom:2px solid var(--border); }
+.invoc-table td { padding:0.6rem 0.75rem; border-bottom:1px solid var(--border); font-size:0.92rem; }
+.invoc-table tr:hover { background:var(--bg-card); }
+.invoc-name { font-weight:600; color:var(--white); }
+.invoc-tier { font-size:0.7rem; font-weight:600; color:var(--infernal); margin-left:0.4rem; padding:0.1rem 0.35rem; background:var(--infernal-dim); border-radius:3px; }
+
+/* ── ITEMS ── */
+.item-group { margin-bottom:1.5rem; }
+.item-group-title { font-family:'Oswald',sans-serif; font-size:1rem; font-weight:500; color:var(--gold); padding-bottom:0.35rem; margin-bottom:0.5rem; border-bottom:1px solid rgba(212,160,67,0.15); }
+.item-row { padding:0.6rem 0.75rem; background:var(--bg-card); border:1px solid var(--border); border-radius:6px; margin-bottom:0.35rem; }
+.item-name { font-weight:600; color:var(--gold); font-size:0.95rem; }
+.item-slot { font-size:0.7rem; color:var(--text-muted); margin-left:0.35rem; text-transform:uppercase; letter-spacing:0.03em; }
+.item-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.15rem; }
+.item-loc { font-size:0.8rem; color:var(--green-dim); margin-top:0.2rem; }
+
+/* ── ROTATION ── */
+.step-list { list-style:none; counter-reset:step; }
+.step-list li { position:relative; padding:0.75rem 0 0.75rem 3rem; border-left:2px solid var(--border); margin-left:0.75rem; counter-increment:step; }
+.step-list li::before { content:counter(step); position:absolute; left:-0.75rem; top:0.6rem; width:1.4rem; height:1.4rem; background:var(--bg-body); border:2px solid var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Oswald',sans-serif; font-weight:600; font-size:0.75rem; color:var(--accent); }
+.step-list li:last-child { border-left-color:transparent; }
+.step-action { font-weight:600; color:var(--white); }
+.step-timing { font-size:0.7rem; font-weight:600; padding:0.1rem 0.4rem; border-radius:3px; margin-left:0.4rem; vertical-align:middle; text-transform:uppercase; }
+.step-timing.pre { color:var(--text-muted); background:rgba(255,255,255,0.04); }
+.step-timing.turn { color:var(--accent); background:rgba(5,122,240,0.08); }
+.step-timing.every { color:var(--green); background:rgba(33,197,19,0.08); }
+.step-timing.bonus { color:var(--warlock); background:var(--warlock-dim); }
+.step-detail { color:var(--text-dim); font-size:0.9rem; margin-top:0.2rem; }
+
+/* ── PARTY ── */
+.party-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
+@media(max-width:600px) { .party-grid { grid-template-columns:1fr; } }
+.party-card { background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:1rem; }
+.party-name { font-family:'Oswald',sans-serif; font-weight:600; font-size:1.05rem; color:var(--white); }
+.party-role { font-size:0.72rem; font-weight:600; color:var(--accent); text-transform:uppercase; letter-spacing:0.04em; margin-top:0.1rem; }
+.party-desc { color:var(--text-dim); font-size:0.88rem; margin-top:0.35rem; }
+
+/* ── FOOTER ── */
+.guide-footer {
+  margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border);
+  font-size:0.8rem; color:var(--text-muted); text-align:center;
+}
+.guide-footer a { color:var(--text-dim); }
+.guide-footer a:hover { color:var(--accent); }
+.footer-links { display:flex; gap:1.5rem; justify-content:center; margin-bottom:0.5rem; }
+
+/* Mobile nav */
+.mobile-nav { display:none; position:sticky; top:104px; z-index:98; background:rgba(10,10,10,0.95); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); padding:0 1.25rem; height:56px; align-items:center; justify-content:space-between; }
+.mobile-nav-title { font-family:'Oswald',sans-serif; font-size:0.85rem; font-weight:600; color:var(--accent); letter-spacing:0.06em; }
+.nav-toggle { display:flex; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:0.5rem; }
+.nav-toggle span { display:block; width:22px; height:2px; background:var(--text); transition:all 0.3s; }
+.mob-nav-links { display:none; position:absolute; top:56px; left:0; right:0; flex-direction:column; background:rgba(10,10,10,0.95); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); padding:1rem 2rem; gap:0; }
+.mob-nav-links.open { display:flex; }
+.mob-nav-links a { display:flex; align-items:center; gap:0.5rem; height:44px; font-size:0.9rem; font-weight:500; color:var(--text-dim); text-decoration:none; transition:color 0.15s; }
+.mob-nav-links a:hover { color:var(--white); text-decoration:none; }
+@media(max-width:800px) { .mobile-nav { display:flex; } }
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity:0; transform:translateY(24px); transition:opacity 0.5s ease, transform 0.5s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ── MECHANIC BOX ── */
+.mechanic-box { background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:1.25rem; margin:1.25rem 0; }
+.mechanic-title { font-family:'Oswald',sans-serif; font-size:1rem; font-weight:600; color:var(--infernal); margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.04em; }
+.mechanic-box p { font-size:0.92rem; margin-bottom:0.5rem; }
+.mechanic-box p:last-child { margin-bottom:0; }
+.vs-row { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin:0.75rem 0; }
+@media(max-width:600px) { .vs-row { grid-template-columns:1fr; } }
+.vs-card { background:var(--bg-elevated); border:1px solid var(--border); border-radius:6px; padding:0.75rem 1rem; }
+.vs-card-title { font-family:'Oswald',sans-serif; font-size:0.85rem; font-weight:600; color:var(--white); margin-bottom:0.25rem; }
+.vs-card p { font-size:0.85rem; color:var(--text-dim); margin-bottom:0; }
+</style>
+</head>
+<body>
+
+<!-- UNIVERSAL TOP NAV -->
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="top-nav-brand">Z3nGineer</a>
+    <button class="top-hamburger" id="top-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="top-nav-links" id="top-nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li class="tn-dropdown">
+        <a href="#">Pages <span class="dd-arrow">&#x25BC;</span></a>
+        <div class="tn-dd-menu">
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+          <a href="https://crockednloaded.com">CrockedNLoaded</a>
+          <a href="guides.html">Game Guides</a>
+          <a href="CHIM.html">CHIM Modpack</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE SUB NAV -->
+<nav class="sub-nav">
+  <div class="sub-nav-inner">
+    <a href="#overview">Overview</a>
+    <a href="#race">Race</a>
+    <a href="#levels">Levels</a>
+    <a href="#subclasses">Subclasses</a>
+    <a href="#mechanics">Mechanics</a>
+    <a href="#spells">Spells</a>
+    <a href="#invocations">Invocations</a>
+    <a href="#items">Gear</a>
+    <a href="#combat">Combat</a>
+    <a href="#party">Party</a>
+    <a href="#honour">Honour</a>
+  </div>
+</nav>
+
+<div class="mobile-nav">
+  <span class="mobile-nav-title">Lockadin</span>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="mob-nav-links">
+    <a href="#overview"><span class="nav-icon">&#9670;</span> Overview</a>
+    <a href="#race"><span class="nav-icon">&#9671;</span> Race</a>
+    <a href="#levels"><span class="nav-icon">&uarr;</span> Levels</a>
+    <a href="#subclasses"><span class="nav-icon">&#9674;</span> Subclasses</a>
+    <a href="#mechanics"><span class="nav-icon">&#9881;</span> Mechanics</a>
+    <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+    <a href="#invocations"><span class="nav-icon">&#9733;</span> Invocations</a>
+    <a href="#items"><span class="nav-icon">&#9670;</span> Gear</a>
+    <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+    <a href="#party"><span class="nav-icon">&#9678;</span> Party</a>
+    <a href="#honour"><span class="nav-icon">&#9760;</span> Honour</a>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div style="text-align:center; padding:0 1.25rem 1rem;">
+    <svg viewBox="0 0 48 48" width="48" height="48" style="border-radius:8px; border:1px solid var(--border);">
+      <rect width="48" height="48" fill="#151515"/>
+      <path d="M24,8 L14,18 L14,36 L24,42 L34,36 L34,18 Z" fill="none" stroke="#e04020" stroke-width="1.5" opacity="0.8"/>
+      <path d="M24,14 L18,20 L18,34 L24,38 L30,34 L30,20 Z" fill="#e04020" opacity="0.15"/>
+      <path d="M24,20 L24,32" stroke="#f0c840" stroke-width="1.5" opacity="0.7"/>
+      <path d="M20,24 L28,24" stroke="#f0c840" stroke-width="1.5" opacity="0.7"/>
+      <circle cx="24" cy="26" r="3" fill="none" stroke="#9060c0" stroke-width="1" opacity="0.6"/>
+    </svg>
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">&#9670;</span> Overview</a>
+  <a href="#race"><span class="nav-icon">&#9671;</span> Race &amp; Stats</a>
+  <a href="#levels"><span class="nav-icon">&uarr;</span> Progression</a>
+  <a href="#subclasses"><span class="nav-icon">&#9674;</span> Subclasses</a>
+  <a href="#mechanics"><span class="nav-icon">&#9881;</span> Warlock Mechanics</a>
+  <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+  <a href="#invocations"><span class="nav-icon">&#9733;</span> Invocations</a>
+  <a href="#items"><span class="nav-icon">&#9670;</span> Gear</a>
+  <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+  <a href="#party"><span class="nav-icon">&#9678;</span> Party</a>
+  <a href="#honour"><span class="nav-icon">&#9760;</span> Honour Mode</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header reveal">
+    <div class="hero-art">
+      <svg viewBox="0 0 800 260" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="infernalGlow" cx="50%" cy="40%" r="55%">
+            <stop offset="0%" stop-color="#3a1008" stop-opacity="0.8"/>
+            <stop offset="40%" stop-color="#1a0a04" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="smiteGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#f0c840" stop-opacity="0.5"/>
+            <stop offset="60%" stop-color="#e08020" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="eldritchGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#9060c0" stop-opacity="0.5"/>
+            <stop offset="60%" stop-color="#6040a0" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="bladeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#e0d0c0" stop-opacity="0.9"/>
+            <stop offset="50%" stop-color="#a08060" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#604020" stop-opacity="0.5"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Background -->
+        <rect width="800" height="260" fill="url(#infernalGlow)"/>
+
+        <!-- Embers floating -->
+        <g opacity="0.5">
+          <circle cx="120" cy="50" r="1.2" fill="#e04020" opacity="0.6"/>
+          <circle cx="680" cy="35" r="1" fill="#e04020" opacity="0.5"/>
+          <circle cx="200" cy="80" r="0.8" fill="#f08030" opacity="0.4"/>
+          <circle cx="600" cy="60" r="1.1" fill="#e04020" opacity="0.45"/>
+          <circle cx="350" cy="30" r="0.7" fill="#f0a040" opacity="0.35"/>
+          <circle cx="500" cy="45" r="0.9" fill="#e04020" opacity="0.4"/>
+          <circle cx="150" cy="110" r="0.6" fill="#f08030" opacity="0.3"/>
+          <circle cx="650" cy="90" r="0.8" fill="#e04020" opacity="0.35"/>
+          <circle cx="300" cy="55" r="1" fill="#f0a040" opacity="0.3"/>
+          <circle cx="720" cy="70" r="0.7" fill="#e04020" opacity="0.4"/>
+        </g>
+
+        <!-- Infernal chains - left side -->
+        <g opacity="0.3" stroke="#604030" stroke-width="1.5" fill="none">
+          <path d="M80,240 Q100,200 120,180 Q140,160 130,130 Q120,100 140,80"/>
+          <ellipse cx="100" cy="210" rx="5" ry="8" stroke-width="1"/>
+          <ellipse cx="120" cy="175" rx="5" ry="8" stroke-width="1"/>
+          <ellipse cx="132" cy="140" rx="5" ry="8" stroke-width="1"/>
+        </g>
+        <!-- Infernal chains - right side -->
+        <g opacity="0.25" stroke="#604030" stroke-width="1.5" fill="none">
+          <path d="M720,240 Q700,200 680,175 Q660,150 670,120 Q680,90 660,70"/>
+          <ellipse cx="700" cy="208" rx="5" ry="8" stroke-width="1"/>
+          <ellipse cx="678" cy="170" rx="5" ry="8" stroke-width="1"/>
+          <ellipse cx="668" cy="130" rx="5" ry="8" stroke-width="1"/>
+        </g>
+
+        <!-- Infernal sigil on ground -->
+        <g transform="translate(400,230)" opacity="0.2">
+          <circle cx="0" cy="0" r="60" fill="none" stroke="#e04020" stroke-width="0.8"/>
+          <circle cx="0" cy="0" r="50" fill="none" stroke="#e04020" stroke-width="0.5"/>
+          <path d="M0,-50 L29,40 L-47,-15 L47,-15 L-29,40 Z" fill="none" stroke="#e04020" stroke-width="0.6"/>
+          <circle cx="0" cy="0" r="15" fill="#e04020" opacity="0.08"/>
+        </g>
+
+        <!-- THE PALADIN/WARLOCK FIGURE -->
+        <g transform="translate(400,130)" opacity="0.95">
+          <!-- Cape flowing behind -->
+          <path d="M-15,-55 Q-40,-30 -55,10 Q-65,50 -50,90 Q-40,100 -30,95 Q-35,60 -30,20 Q-22,-10 -10,-45 Z" fill="#1a0a08" opacity="0.7"/>
+          <path d="M15,-55 Q40,-30 55,10 Q65,50 50,90 Q40,100 30,95 Q35,60 30,20 Q22,-10 10,-45 Z" fill="#1a0a08" opacity="0.65"/>
+          <!-- Cape inner lining - infernal red -->
+          <path d="M-14,-50 Q-35,-25 -48,10 Q-55,40 -42,75 Q-38,60 -35,30 Q-28,-5 -12,-42 Z" fill="#2a0808" opacity="0.5"/>
+          <path d="M14,-50 Q35,-25 48,10 Q55,40 42,75 Q38,60 35,30 Q28,-5 12,-42 Z" fill="#2a0808" opacity="0.45"/>
+
+          <!-- Body/Torso — heavy dark plate armor -->
+          <path d="M-22,-50 L-28,-10 L-26,30 Q-20,45 0,48 Q20,45 26,30 L28,-10 L22,-50 Z" fill="#1a1a1a"/>
+          <!-- Armor plate highlights -->
+          <path d="M-18,-45 L-24,-8 L-22,25 Q-16,38 0,40" fill="#222" opacity="0.6"/>
+          <path d="M18,-45 L24,-8 L22,25 Q16,38 0,40" fill="#222" opacity="0.5"/>
+          <!-- Center armor line -->
+          <line x1="0" y1="-48" x2="0" y2="40" stroke="#2a2a2a" stroke-width="1.5"/>
+          <!-- Armor rivet dots -->
+          <circle cx="-8" cy="-30" r="1" fill="#404040" opacity="0.6"/>
+          <circle cx="8" cy="-30" r="1" fill="#404040" opacity="0.6"/>
+          <circle cx="-8" cy="-10" r="1" fill="#404040" opacity="0.6"/>
+          <circle cx="8" cy="-10" r="1" fill="#404040" opacity="0.6"/>
+          <circle cx="-8" cy="10" r="1" fill="#404040" opacity="0.6"/>
+          <circle cx="8" cy="10" r="1" fill="#404040" opacity="0.6"/>
+
+          <!-- Infernal pact symbol on chest -->
+          <circle cx="0" cy="-15" r="8" fill="none" stroke="#e04020" stroke-width="0.8" opacity="0.5"/>
+          <path d="M0,-22 L0,-8" stroke="#e04020" stroke-width="0.6" opacity="0.4"/>
+          <path d="M-6,-15 L6,-15" stroke="#e04020" stroke-width="0.6" opacity="0.4"/>
+          <circle cx="0" cy="-15" r="3" fill="#e04020" opacity="0.12"/>
+
+          <!-- Shoulders — pauldrons -->
+          <ellipse cx="-28" cy="-45" rx="12" ry="8" fill="#1a1a1a"/>
+          <ellipse cx="28" cy="-45" rx="12" ry="8" fill="#1a1a1a"/>
+          <ellipse cx="-28" cy="-45" rx="10" ry="6" fill="#222" opacity="0.5"/>
+          <ellipse cx="28" cy="-45" rx="10" ry="6" fill="#222" opacity="0.5"/>
+          <!-- Shoulder spikes -->
+          <path d="M-35,-50 L-38,-62 L-32,-50" fill="#2a2a2a"/>
+          <path d="M35,-50 L38,-62 L32,-50" fill="#2a2a2a"/>
+
+          <!-- Helmet — full plate with visor -->
+          <path d="M-14,-55 Q-16,-72 -12,-82 Q-6,-90 0,-92 Q6,-90 12,-82 Q16,-72 14,-55 Z" fill="#1a1a1a"/>
+          <!-- Visor slit -->
+          <path d="M-8,-70 L8,-70" stroke="#e04020" stroke-width="1.5" opacity="0.6"/>
+          <!-- Helmet crest -->
+          <path d="M0,-92 Q-2,-100 0,-105 Q2,-100 0,-92" fill="#e04020" opacity="0.4"/>
+          <!-- Helmet horns -->
+          <path d="M-12,-80 Q-20,-90 -24,-100" stroke="#2a2a2a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M12,-80 Q20,-90 24,-100" stroke="#2a2a2a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+          <!-- LEFT ARM — Eldritch Blast hand -->
+          <path d="M-28,-40 Q-45,-30 -60,-15 Q-68,-8 -65,0" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="6" stroke-linecap="round"/>
+          <!-- Gauntlet -->
+          <ellipse cx="-65" cy="2" rx="7" ry="5" fill="#1a1a1a"/>
+          <!-- Fingers spread -->
+          <line x1="-68" y1="-2" x2="-78" y2="-10" stroke="#222" stroke-width="2" stroke-linecap="round"/>
+          <line x1="-66" y1="-3" x2="-74" y2="-14" stroke="#222" stroke-width="2" stroke-linecap="round"/>
+          <line x1="-63" y1="-2" x2="-68" y2="-14" stroke="#222" stroke-width="2" stroke-linecap="round"/>
+          <line x1="-61" y1="0" x2="-64" y2="-10" stroke="#222" stroke-width="1.8" stroke-linecap="round"/>
+
+          <!-- Eldritch Blast energy -->
+          <g filter="url(#glow)">
+            <circle cx="-72" cy="-12" r="14" fill="url(#eldritchGlow)"/>
+            <circle cx="-72" cy="-12" r="8" fill="#9060c0" opacity="0.15"/>
+            <circle cx="-72" cy="-12" r="4" fill="#b080e0" opacity="0.3"/>
+            <circle cx="-72" cy="-12" r="2" fill="#d0a0f0" opacity="0.6"/>
+            <!-- Energy tendrils -->
+            <path d="M-72,-12 Q-90,-20 -105,-15" stroke="#9060c0" stroke-width="1.5" opacity="0.5" fill="none"/>
+            <path d="M-72,-12 Q-85,-30 -100,-28" stroke="#b080e0" stroke-width="1" opacity="0.4" fill="none"/>
+            <path d="M-72,-12 Q-88,-5 -102,-10" stroke="#9060c0" stroke-width="1" opacity="0.35" fill="none"/>
+            <!-- Crackling sparks -->
+            <circle cx="-85" cy="-18" r="1.2" fill="#b080e0" opacity="0.5"/>
+            <circle cx="-92" cy="-14" r="0.8" fill="#d0a0f0" opacity="0.4"/>
+            <circle cx="-88" cy="-26" r="0.7" fill="#9060c0" opacity="0.35"/>
+            <circle cx="-96" cy="-22" r="0.6" fill="#b080e0" opacity="0.3"/>
+          </g>
+
+          <!-- RIGHT ARM — Pact Blade + Divine Smite -->
+          <path d="M28,-40 Q48,-20 58,5 Q60,12 56,18" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="6" stroke-linecap="round"/>
+          <!-- Gauntlet gripping blade -->
+          <ellipse cx="56" cy="15" rx="6" ry="5" fill="#1a1a1a"/>
+
+          <!-- Pact Blade — longsword -->
+          <g transform="translate(56,15) rotate(-35)">
+            <!-- Blade -->
+            <rect x="-2" y="-65" width="4" height="55" fill="url(#bladeGrad)" rx="1"/>
+            <line x1="0" y1="-65" x2="0" y2="-10" stroke="#e0d0c0" stroke-width="0.5" opacity="0.4"/>
+            <!-- Blade tip -->
+            <path d="M-2,-65 L0,-72 L2,-65" fill="#e0d0c0" opacity="0.8"/>
+            <!-- Crossguard -->
+            <rect x="-8" y="-10" width="16" height="3" fill="#404040" rx="1"/>
+            <!-- Grip -->
+            <rect x="-1.5" y="-7" width="3" height="14" fill="#2a1a0a" rx="1"/>
+            <!-- Pommel -->
+            <circle cx="0" cy="9" r="2.5" fill="#404040"/>
+            <circle cx="0" cy="9" r="1.2" fill="#e04020" opacity="0.5"/>
+            <!-- Infernal runes on blade -->
+            <circle cx="0" cy="-45" r="1.5" fill="#e04020" opacity="0.3"/>
+            <circle cx="0" cy="-35" r="1.5" fill="#e04020" opacity="0.25"/>
+            <circle cx="0" cy="-25" r="1.5" fill="#e04020" opacity="0.2"/>
+          </g>
+
+          <!-- Divine Smite energy on blade -->
+          <g filter="url(#glow)" transform="translate(56,15) rotate(-35)">
+            <ellipse cx="0" cy="-50" rx="10" ry="25" fill="url(#smiteGlow)" opacity="0.5"/>
+            <path d="M-4,-60 Q0,-70 4,-60" stroke="#f0c840" stroke-width="1" opacity="0.6" fill="none"/>
+            <path d="M-6,-55 Q0,-68 6,-55" stroke="#e0a020" stroke-width="0.8" opacity="0.4" fill="none"/>
+            <circle cx="-3" cy="-55" r="1" fill="#f0c840" opacity="0.5"/>
+            <circle cx="3" cy="-48" r="0.8" fill="#f0e080" opacity="0.4"/>
+            <circle cx="-1" cy="-62" r="0.6" fill="#f0c840" opacity="0.35"/>
+          </g>
+
+          <!-- Legs — armored greaves -->
+          <path d="M-12,40 L-14,80 Q-15,90 -10,95" fill="#1a1a1a" stroke="#222" stroke-width="0.5"/>
+          <path d="M12,40 L14,80 Q15,90 10,95" fill="#1a1a1a" stroke="#222" stroke-width="0.5"/>
+          <!-- Knee plates -->
+          <ellipse cx="-13" cy="60" rx="5" ry="4" fill="#222" opacity="0.6"/>
+          <ellipse cx="13" cy="60" rx="5" ry="4" fill="#222" opacity="0.6"/>
+          <!-- Boot tips -->
+          <ellipse cx="-10" cy="96" rx="6" ry="3" fill="#1a1a1a"/>
+          <ellipse cx="10" cy="96" rx="6" ry="3" fill="#1a1a1a"/>
+
+          <!-- Belt buckle -->
+          <rect x="-5" y="30" width="10" height="5" fill="#404040" rx="1"/>
+          <rect x="-3" y="31" width="6" height="3" fill="#e04020" opacity="0.3" rx="0.5"/>
+        </g>
+
+        <!-- Hellfire beneath feet -->
+        <g opacity="0.4">
+          <ellipse cx="400" cy="240" rx="80" ry="12" fill="#e04020" opacity="0.08"/>
+          <ellipse cx="400" cy="240" rx="50" ry="8" fill="#e04020" opacity="0.12"/>
+          <path d="M360,240 Q365,225 370,240" fill="#e04020" opacity="0.2"/>
+          <path d="M380,240 Q385,220 390,240" fill="#f08030" opacity="0.15"/>
+          <path d="M410,240 Q415,222 420,240" fill="#e04020" opacity="0.18"/>
+          <path d="M430,240 Q433,228 436,240" fill="#f08030" opacity="0.12"/>
+        </g>
+
+        <!-- Ground line -->
+        <line x1="150" y1="245" x2="650" y2="245" stroke="#3a2018" stroke-width="0.6" opacity="0.3"/>
+      </svg>
+    </div>
+
+    <div class="header-row">
+      <div class="header-text">
+        <div class="breadcrumb">Baldur's Gate 3 &rsaquo; Builds &rsaquo; Lockadin</div>
+        <h1>Lockadin &mdash; Infernal Crusader</h1>
+        <div class="subtitle">Half-Elf &middot; Paladin 7 / Warlock 5 &middot; #3 Ranked Build (Patch 8)</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag red">Melee Nova</span>
+      <span class="tag purple">Multiclass</span>
+      <span class="tag green">Short Rest Smites</span>
+      <span class="tag blue">Patch 8</span>
+      <span class="tag orange">Honour Viable</span>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="section reveal" id="overview">
+    <h2>Overview</h2>
+
+    <p>The Lockadin is the most devastating single-target damage dealer in Baldur's Gate 3. By combining Paladin's Divine Smite with Warlock's short-rest-recharging spell slots, you get a character that can smite on virtually every attack, every fight, without ever running dry. Add Eldritch Blast for ranged firepower, Hexblade's Curse-style crit fishing, and Aura of Protection for party-wide saving throw boosts, and you have a build that excels at everything.</p>
+
+    <div class="callout infernal">
+      <div class="callout-label">The Core Mechanic &mdash; Infinite Smites</div>
+      <p>Warlock spell slots recharge on a <strong>Short Rest</strong>. Divine Smite lets you burn <em>any</em> spell slot to add radiant damage to melee hits. Since BG3 gives you 2 short rests per long rest, you effectively triple your smite fuel. A normal Paladin burns through slots by Act 2. A Lockadin never stops.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Why #3?</div>
+      <p>This build is ranked #3 because it combines top-tier burst damage, excellent sustained damage via short rest slots, strong party utility from Paladin Auras, and a viable ranged option with Eldritch Blast. Only the Swords Bard (#1) and Sorlock (#2) compete, and neither matches the Lockadin's mix of defense, aura support, and melee devastation.</p>
+    </div>
+  </section>
+
+  <!-- RACE & STATS -->
+  <section class="section reveal" id="race">
+    <h2>Race &amp; Background</h2>
+
+    <h3>Race &mdash; Half-Elf (High or Wood)</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Darkvision</span> &mdash; <span class="note">12m range. See in the dark without torches.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Fey Ancestry</span> &mdash; <span class="note">Advantage on saves vs charm. Can't be put to sleep.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Civil Militia</span> &mdash; <span class="note">Shield + weapon proficiencies (redundant but free).</span></li>
+      <li><span class="label">High</span> <span class="name">Free Cantrip</span> &mdash; <span class="note">Take Fire Bolt or Minor Illusion from the Wizard list.</span></li>
+      <li><span class="label">Wood</span> <span class="name">Fleet of Foot</span> &mdash; <span class="note">+1.5m movement. Better for melee uptime.</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Alternative Races</div>
+      <p><strong>Zariel Tiefling</strong> &mdash; Thematic and strong. Free Searing Smite (level 3) and Branding Smite (level 5) once per long rest. Fire resistance.</p>
+      <p><strong>Human</strong> &mdash; Civil Militia + extra carrying capacity. Solid but boring.</p>
+      <p><strong>Githyanki</strong> &mdash; Free Misty Step at level 5. Medium armor + sword proficiency. Good if you want mobility.</p>
+    </div>
+
+    <h3>Background</h3>
+    <p>Pick <strong>Soldier</strong> (Athletics + Intimidation) for the most thematic and mechanically useful option. Athletics fuels Shove attempts and Intimidation synergizes with your high Charisma. Noble works too for Persuasion if you want to be the party face.</p>
+
+    <h3>Ability Scores (Point Buy)</h3>
+    <div class="stats">
+      <div class="stat-box"><div class="stat-label">STR</div><div class="stat-val">16</div></div>
+      <div class="stat-box"><div class="stat-label">DEX</div><div class="stat-val">10</div></div>
+      <div class="stat-box"><div class="stat-label">CON</div><div class="stat-val">14</div></div>
+      <div class="stat-box"><div class="stat-label">INT</div><div class="stat-val">8</div></div>
+      <div class="stat-box"><div class="stat-label">WIS</div><div class="stat-val">10</div></div>
+      <div class="stat-box primary"><div class="stat-label">CHA</div><div class="stat-val">16</div></div>
+    </div>
+    <p style="font-size:0.88rem; color:var(--text-dim);">Half-Elf bonuses: +2 CHA (included above), +1 STR, +1 CON. STR for melee attacks early game. CHA is your spellcasting stat for <em>both</em> classes and powers Aura of Protection. You'll cap CHA at 20 by level 8.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">STR vs CHA for Attacks</div>
+      <p>You start with STR-based attacks (levels 1-4). Once you get Pact of the Blade at Warlock 3, your pact weapon uses CHA for attack and damage rolls. After that, STR only matters for Athletics checks and carrying capacity. CHA does <em>everything</em>: attack rolls, damage, spell DC, spell attack, and Aura of Protection.</p>
+    </div>
+  </section>
+
+  <!-- LEVELS -->
+  <section class="section reveal" id="levels">
+    <h2>Level-by-Level Progression</h2>
+    <p style="color:var(--text-dim); margin-bottom:1rem;">Click any level to expand. This build goes Paladin 1-6, then Warlock 1-5, then finishes Paladin 7. Gold = Paladin levels. Purple = Warlock levels.</p>
+
+    <!-- 1 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">1</span>
+        <span class="lv-badge paladin">Paladin 1</span>
+        <span class="lv-title">Divine Sense + Lay on Hands</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Lay on Hands</span>
+          <span class="qp feature">Divine Sense</span>
+          <span class="qp paladin">Heavy Armor</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Lay on Hands</span> &mdash; <span class="note">Free healing pool, no spell slots needed. Scales with Paladin level.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Divine Sense</span> &mdash; <span class="note">Detect celestials, fiends, undead. Situational.</span></li>
+          <li><span class="label">Armor</span> <span class="name">Heavy Armor + Shields</span> &mdash; <span class="note">You start with all armor and weapon proficiencies. Use chain mail + shield = AC 18.</span></li>
+          <li><span class="label">Note</span> <span class="note">No spell slots yet. Hit things with a longsword and shield.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 2 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">2</span>
+        <span class="lv-badge paladin">Paladin 2</span>
+        <span class="lv-title">Divine Smite + Fighting Style</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Divine Smite</span>
+          <span class="qp feature">Great Weapon Fighting</span>
+          <span class="qp spell">Thunderous Smite</span>
+          <span class="qp spell">Shield of Faith</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Divine Smite</span> &mdash; <span class="note">2d8 radiant on hit, 3d8 vs undead/fiends. THIS is the build.</span></li>
+          <li><span class="label">Style</span> <span class="name">Defence</span> &mdash; <span class="note">+1 AC while wearing armor. Best survivability option.</span></li>
+          <li><span class="label">Alt</span> <span class="name">Great Weapon Fighting</span> &mdash; <span class="note">Reroll 1s and 2s on damage dice if using two-handers. Higher damage ceiling.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Thunderous Smite</span> &mdash; <span class="note">Bonus action, 2d6 thunder + knockback. Strong opener.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Shield of Faith</span> &mdash; <span class="note">+2 AC (concentration). Huge for early survivability.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 3 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">3</span>
+        <span class="lv-badge paladin">Paladin 3</span>
+        <span class="lv-title">Sacred Oath</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp paladin">Oath Choice</span>
+          <span class="qp spell">Oath Spells</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">See Subclasses section</span> &mdash; <span class="note">Vengeance (best damage) or Oathbreaker (best dark theme). Details below.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Command</span> &mdash; <span class="note">Force enemy to flee, drop weapon, or fall prone. Excellent.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Bless</span> &mdash; <span class="note">+1d4 to attacks and saves for 3 allies. Best level 1 concentration spell.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 4 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">4</span>
+        <span class="lv-badge paladin">Paladin 4</span>
+        <span class="lv-title">First Feat</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">+2 CHA &rarr; 18</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">+2 CHA &rarr; 18</span> &mdash; <span class="note">+4 mod. Better Aura, better spell DC, higher save bonus for the whole party.</span></li>
+          <li><span class="label">Alt</span> <span class="name">Great Weapon Master</span> &mdash; <span class="note">If going two-handed. Bonus action attack on crit/kill. Incredible with smites.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 5 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">5</span>
+        <span class="lv-badge paladin">Paladin 5</span>
+        <span class="lv-title">Extra Attack + Lvl 2 Spells</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Extra Attack</span>
+          <span class="qp spell">Branding Smite</span>
+          <span class="qp spell">Magic Weapon</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Extra Attack</span> &mdash; <span class="note">Two attacks per action. Two chances to smite. This doubles your damage.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Branding Smite</span> &mdash; <span class="note">2d6 radiant, prevents invisibility. Bonus action.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Magic Weapon</span> &mdash; <span class="note">+1 weapon for 10 turns (concentration). Good before you get magic weapons.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.75rem;">
+          <div class="callout-label">Critical Milestone</div>
+          <p>Extra Attack is the most important martial feature in the game. You now get 2 attacks per turn, each of which can trigger Divine Smite. Never skip Paladin 5.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 6 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">6</span>
+        <span class="lv-badge paladin">Paladin 6</span>
+        <span class="lv-title">Aura of Protection</span>
+        <span class="lv-spike">&#9733;&#9733; Build Defining</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Aura of Protection</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Aura of Protection</span> &mdash; <span class="note">You and allies within 3m add your CHA modifier (+4, eventually +5) to ALL saving throws. Best party buff in BG3.</span></li>
+        </ul>
+        <div class="callout infernal" style="margin-top:0.75rem;">
+          <div class="callout-label">Why Paladin 6 Before Warlock</div>
+          <p>Aura of Protection is the single strongest party support ability in BG3. At CHA 18 that's +4 to every save for everyone near you. You want this before branching into Warlock. This is non-negotiable.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 7 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">7</span>
+        <span class="lv-badge warlock">Warlock 1</span>
+        <span class="lv-title">The Pact Begins</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp warlock">Patron Choice</span>
+          <span class="qp spell">Eldritch Blast</span>
+          <span class="qp spell">Hex</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">Patron Choice</span> &mdash; <span class="note">The Fiend or The Great Old One. See Subclasses section.</span></li>
+          <li><span class="label">Cantrip</span> <span class="name">Eldritch Blast</span> &mdash; <span class="note">Best cantrip in the game. 1d10 force, scales with level. Your ranged option.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Hex</span> &mdash; <span class="note">+1d6 necrotic per hit. Lasts until long rest. Bonus action. Stacks with smites.</span></li>
+          <li><span class="label">Slots</span> <span class="name">1 slot, level 1</span> &mdash; <span class="note">Recharges on short rest. Your first taste of infinite fuel.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 8 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">8</span>
+        <span class="lv-badge warlock">Warlock 2</span>
+        <span class="lv-title">Eldritch Invocations</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp invocation">Agonizing Blast</span>
+          <span class="qp invocation">Devil's Sight</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Invoc</span> <span class="name">Agonizing Blast</span> &mdash; <span class="note">Add CHA modifier to Eldritch Blast damage. Now it hits for 1d10+4 (later +5). Turns EB into a real weapon.</span></li>
+          <li><span class="label">Invoc</span> <span class="name">Devil's Sight</span> &mdash; <span class="note">See in magical darkness. Pair with Darkness spell for permanent advantage on attacks + enemies have disadvantage on you.</span></li>
+          <li><span class="label">Alt</span> <span class="name">Repelling Blast</span> &mdash; <span class="note">Push enemies 4.5m on EB hit. Incredible for environmental kills. Take this if you skip Devil's Sight.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 9 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">9</span>
+        <span class="lv-badge warlock">Warlock 3</span>
+        <span class="lv-title">Pact of the Blade</span>
+        <span class="lv-spike">&#9733;&#9733; Build Defining</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp warlock">Pact of the Blade</span>
+          <span class="qp spell">Darkness</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Pact</span> <span class="name">Pact of the Blade</span> &mdash; <span class="note">Summon a pact weapon or bind to an existing one. Pact weapons use CHA for attacks and damage. You can now dump STR entirely. Respec at Withers and move STR points into CON.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Darkness</span> &mdash; <span class="note">Creates magical darkness. You see through it (Devil's Sight), enemies don't. Permanent advantage on attacks. Enemies can't target you with spells.</span></li>
+          <li><span class="label">Slots</span> <span class="name">2 slots, level 2</span> &mdash; <span class="note">Both recharge on short rest. You now have 2 smites per short rest on top of all your Paladin slots.</span></li>
+        </ul>
+        <div class="callout infernal" style="margin-top:0.75rem;">
+          <div class="callout-label">Respec Opportunity</div>
+          <p>With Pact of the Blade making your weapon CHA-based, visit Withers and reallocate: drop STR to 10, push CHA to 18 (if not already), boost CON to 16. Your attacks now scale off your best stat.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 10 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">10</span>
+        <span class="lv-badge warlock">Warlock 4</span>
+        <span class="lv-title">Cap CHA</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">+2 CHA &rarr; 20 (max!)</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">+2 CHA &rarr; 20</span> &mdash; <span class="note">+5 mod. Max CHA. Aura of Protection now gives +5 saves. Attacks, spell DC, Eldritch Blast all at maximum.</span></li>
+          <li><span class="label">Alt</span> <span class="name">Polearm Master</span> &mdash; <span class="note">If CHA is already 20 from respec. Bonus action attack with pact weapon butt = extra smite opportunity.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 11 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">11</span>
+        <span class="lv-badge warlock">Warlock 5</span>
+        <span class="lv-title">Lvl 3 Warlock Slots + Deepened Pact</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp warlock">Deepened Pact</span>
+          <span class="qp invocation">New Invocation</span>
+          <span class="qp spell">Counterspell / Fireball</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Deepened Pact (Blade)</span> &mdash; <span class="note">Extra Attack with pact weapon. Doesn't stack with Paladin Extra Attack but adds a third attack via bonus action in some cases.</span></li>
+          <li><span class="label">Slots</span> <span class="name">2 slots, level 3</span> &mdash; <span class="note">Level 3 slots = 3d8 smite damage per hit (4d8 vs undead). Recharges on short rest. This is the payoff.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Counterspell</span> &mdash; <span class="note">Reaction: negate an enemy spell. Incredible in Honour Mode.</span></li>
+          <li><span class="label">Invoc</span> <span class="name">One with Shadows</span> &mdash; <span class="note">Free invisibility in darkness. Godlike with Devil's Sight. Or swap to Repelling Blast.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.75rem;">
+          <div class="callout-label">Smite Math</div>
+          <p>With 2 short rests per long rest, you have: 4 Paladin slots + (2 Warlock slots &times; 3 rests) = <strong>10 smites per long rest</strong>. Each level 3 Warlock smite: 3d8 radiant (13.5 avg). That's 135 bonus radiant damage per day, just from smites.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 12 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">12</span>
+        <span class="lv-badge paladin">Paladin 7</span>
+        <span class="lv-title">Oath Aura + Build Complete</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp paladin">Oath Aura</span>
+          <span class="qp spell">Lvl 2 Paladin Spells</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Subclass Aura</span> &mdash; <span class="note">Vengeance: Relentless Avenger (move after opportunity attack). Oathbreaker: Aura of Hate (+CHA to melee damage for you AND undead allies).</span></li>
+          <li><span class="label">Note</span> <span class="note">Build is now complete. You have Extra Attack, Aura of Protection, 20 CHA, Pact of the Blade, Agonizing Blast, and short-rest smite fuel.</span></li>
+        </ul>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- SUBCLASSES -->
+  <section class="section reveal" id="subclasses">
+    <h2>Subclass Choices</h2>
+
+    <h3>Paladin Oath</h3>
+    <div class="vs-row">
+      <div class="vs-card" style="border-left:3px solid var(--paladin);">
+        <div class="vs-card-title">Oath of Vengeance (Recommended)</div>
+        <p><strong>Vow of Enmity</strong> &mdash; Advantage on all attacks against one target for 10 turns. No concentration. Turns every attack into a near-guaranteed hit, and doubles your crit chance (crit = bonus smite damage).</p>
+        <p><strong>Oath Spells:</strong> Hunter's Mark (free), Hold Person, Misty Step, Haste (level 9).</p>
+        <p><strong>Relentless Avenger (Lvl 7):</strong> Free movement after opportunity attacks.</p>
+      </div>
+      <div class="vs-card" style="border-left:3px solid var(--infernal);">
+        <div class="vs-card-title">Oathbreaker (Highest Damage)</div>
+        <p><strong>Spiteful Suffering</strong> &mdash; 1d4+CHA necrotic per turn to a target. No save, no concentration. Free damage.</p>
+        <p><strong>Aura of Hate (Lvl 7):</strong> Add CHA modifier to melee damage for you AND any undead/fiend allies. +5 damage per hit at CHA 20. Stacks with everything.</p>
+        <p><strong>How to break:</strong> Kill the tieflings in the Druid Grove, or betray certain NPCs. Easy to trigger in Act 1.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Verdict</div>
+      <p><strong>Vengeance</strong> is safer and more consistent &mdash; Vow of Enmity is always good. <strong>Oathbreaker</strong> has a higher damage ceiling with Aura of Hate stacking on every melee hit and boosting undead summons, but requires an evil playthrough or deliberate oath-breaking. Both are excellent.</p>
+    </div>
+
+    <h3>Warlock Patron</h3>
+    <div class="vs-row">
+      <div class="vs-card" style="border-left:3px solid var(--infernal);">
+        <div class="vs-card-title">The Fiend (Recommended)</div>
+        <p><strong>Dark One's Blessing:</strong> Gain temp HP equal to CHA + Warlock level every time you kill something. With your burst damage, you kill a LOT. This keeps you topped off in every fight.</p>
+        <p><strong>Spells:</strong> Burning Hands, Command, Scorching Ray, Fireball.</p>
+      </div>
+      <div class="vs-card" style="border-left:3px solid var(--purple);">
+        <div class="vs-card-title">The Great Old One (Utility)</div>
+        <p><strong>Mortal Reminder:</strong> When you crit, nearby enemies are Frightened for 2 turns. With Vow of Enmity doubling crit chance, this triggers often.</p>
+        <p><strong>Spells:</strong> Tasha's Hideous Laughter, Dissonant Whispers, Phantasmal Force.</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Best Combo</div>
+      <p><strong>Vengeance + Fiend</strong> is the most popular and consistent. Vow of Enmity gives you advantage (more crits, more smites land), and Dark One's Blessing keeps you alive. <strong>Oathbreaker + Fiend</strong> is highest raw damage if you want to go full dark knight.</p>
+    </div>
+  </section>
+
+  <!-- WARLOCK MECHANICS -->
+  <section class="section reveal" id="mechanics">
+    <h2>Warlock Mechanics Explained</h2>
+
+    <div class="mechanic-box">
+      <div class="mechanic-title">Short Rest Slot Recovery</div>
+      <p>Paladin spell slots recharge on <strong>long rest only</strong>. Warlock spell slots recharge on <strong>short rest</strong>. BG3 gives you 2 short rests per long rest (3 total rest cycles).</p>
+      <p>At Warlock 5 you have 2 Warlock slots. That means: 2 slots &times; 3 rest cycles = <strong>6 Warlock-powered smites per long rest</strong>, on top of your 4 Paladin slots. Total: <strong>10 smites per adventuring day</strong>.</p>
+      <p>A pure Paladin 12 has 9 slots total. You have 10 smites AND Eldritch Blast AND Invocations AND Pact of the Blade. The math doesn't even close.</p>
+    </div>
+
+    <div class="mechanic-box">
+      <div class="mechanic-title">Pact of the Blade</div>
+      <p>Your pact weapon uses <strong>CHA for attack and damage rolls</strong>. This means CHA is your ONLY important stat &mdash; it powers your melee, your spells, your Aura of Protection, and your Eldritch Blast. True single-attribute dependency (SAD build).</p>
+      <p>You can bind ANY weapon as your pact weapon. Found an amazing greatsword? Bind it. Want a glaive for Polearm Master? Bind it. The weapon doesn't need to be summoned &mdash; binding an existing weapon works.</p>
+    </div>
+
+    <div class="mechanic-box">
+      <div class="mechanic-title">Eldritch Blast Scaling</div>
+      <p>Eldritch Blast scales with <strong>character level</strong>, not class level. At character level 5 it fires 2 beams. At level 11, 3 beams (though you cap at 12 in BG3). Each beam can trigger Hex (+1d6) and Agonizing Blast (+CHA mod).</p>
+      <p>At level 11 with Agonizing Blast + Hex: 2 beams &times; (1d10 + 5 + 1d6) = <strong>2d10 + 2d6 + 10</strong> per turn at range, no slot cost. This is better than most martial characters' ranged damage.</p>
+    </div>
+
+    <div class="mechanic-box">
+      <div class="mechanic-title">Divine Smite + Warlock Slots</div>
+      <p>BG3 lets you smite with <em>any</em> spell slot, regardless of source. Warlock level 3 slots deal <strong>3d8 radiant</strong> (4d8 vs undead/fiends) per smite. On a crit, all smite dice are doubled: <strong>6d8 radiant</strong> (8d8 vs undead). Average crit smite: 27-36 bonus radiant damage. PER HIT.</p>
+    </div>
+  </section>
+
+  <!-- SPELLS -->
+  <section class="section reveal" id="spells">
+    <h2>Spell Recommendations</h2>
+
+    <div class="callout">
+      <div class="callout-label">Spell Slot Management</div>
+      <p>Use Paladin slots for concentration spells (Bless, Shield of Faith) and emergency heals. Use Warlock slots for smites &mdash; they recharge on short rest anyway. Always smite with Warlock slots first, save Paladin slots for utility.</p>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Cantrips</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Eldritch Blast</div><div class="spell-desc">1d10 force per beam. Scales with level. With Agonizing Blast: 1d10+CHA. Best cantrip in the game.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Minor Illusion</div><div class="spell-desc">Distract enemies, lure them into position. Useful for initiating fights.</div></div><span class="spell-badge good">Good</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Paladin Spells</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Bless</div><div class="spell-desc">+1d4 to attacks and saves for 3 allies. Best level 1 concentration spell.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Command</div><div class="spell-desc">Force enemy: Halt, Flee, Drop Weapon, Grovel. Excellent crowd control.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Shield of Faith</div><div class="spell-desc">+2 AC (concentration). Great for tough fights early game.</div></div><span class="spell-badge conc">Conc &middot; Good</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Thunderous Smite</div><div class="spell-desc">2d6 thunder + prone on hit. Great opener, then drop concentration.</div></div><span class="spell-badge good">Good</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Branding Smite</div><div class="spell-desc">2d6 radiant, prevents invisibility. Bonus action setup.</div></div><span class="spell-badge good">Good</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Misty Step</div><div class="spell-desc">Bonus action teleport 18m (Vengeance oath spell). Gap closer.</div></div><span class="spell-badge free">Oath Spell</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Warlock Spells</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Hex</div><div class="spell-desc">+1d6 necrotic per hit, lasts until long rest. Applies to every attack and every EB beam.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Darkness</div><div class="spell-desc">Magical darkness bubble. You see through it (Devil's Sight), enemies don't. Permanent advantage.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Counterspell</div><div class="spell-desc">Reaction: negate enemy spells. Incredible in Honour Mode boss fights.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Fireball</div><div class="spell-desc">8d6 fire AoE. If you need to clear trash mobs, this does it. Fiend patron only.</div></div><span class="spell-badge warlock">Fiend Only</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Hellish Rebuke</div><div class="spell-desc">Reaction: 2d10 fire when hit. Free damage when enemies attack you.</div></div><span class="spell-badge good">Good</span></div>
+    </div>
+  </section>
+
+  <!-- INVOCATIONS -->
+  <section class="section reveal" id="invocations">
+    <h2>Eldritch Invocations</h2>
+
+    <p>You get 2 invocations at Warlock 2, and a 3rd at Warlock 5. Choose wisely &mdash; these are permanent passive upgrades.</p>
+
+    <table class="invoc-table">
+      <thead><tr><th>Invocation</th><th>Effect</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td><span class="invoc-name">Agonizing Blast</span> <span class="invoc-tier">CORE</span></td><td>Add CHA modifier to Eldritch Blast damage. Turns EB into 1d10+5 per beam.</td><td>Always take</td></tr>
+        <tr><td><span class="invoc-name">Devil's Sight</span></td><td>See normally in magical darkness. Combo with Darkness spell for permanent advantage + enemy disadvantage.</td><td>Take if using Darkness</td></tr>
+        <tr><td><span class="invoc-name">Repelling Blast</span></td><td>EB pushes enemies 4.5m. Environmental kills (cliffs, lava, chasms). Incredible in BG3.</td><td>Take if skipping Devil's Sight</td></tr>
+        <tr><td><span class="invoc-name">One with Shadows</span></td><td>Free invisibility when standing in darkness. Scouting, positioning, ambushes.</td><td>Best 3rd pick</td></tr>
+        <tr><td><span class="invoc-name">Fiendish Vigour</span></td><td>Cast False Life at will (5 temp HP). Decent early, falls off later.</td><td>Early game only</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-label">Recommended Setup</div>
+      <p><strong>Warlock 2:</strong> Agonizing Blast + Devil's Sight (or Repelling Blast for more fun).</p>
+      <p><strong>Warlock 5:</strong> Add One with Shadows or whichever you didn't pick above.</p>
+    </div>
+  </section>
+
+  <!-- GEAR -->
+  <section class="section reveal" id="items">
+    <h2>Key Gear (Act by Act)</h2>
+
+    <div class="callout warn">
+      <div class="callout-label">Weapon Priority</div>
+      <p>You want a weapon with bonus effects that trigger on hit &mdash; since you attack twice and smite often, "on hit" effects are doubled in value. Two-handers deal more damage per smite (bigger dice = bigger crits), but sword-and-board gives +2 AC from shield.</p>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Act 1 &mdash; Essential Pickups</div>
+      <div class="item-row">
+        <div><span class="item-name">Sword of Justice</span> <span class="item-slot">Greatsword</span></div>
+        <div class="item-desc">+1 weapon. Grants Shield of Faith (free, no slot cost). Best Act 1 weapon.</div>
+        <div class="item-loc">Hunt the devil &mdash; Anders and the paladins at the Risen Road tollhouse.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Everburn Blade</span> <span class="item-slot">Greatsword</span></div>
+        <div class="item-desc">2d6+1d4 fire. Free from the tutorial boss Commander Zhalk if you loot it before the ship crashes.</div>
+        <div class="item-loc">Nautiloid &mdash; loot from Commander Zhalk during the tutorial.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Haste Helm</span> <span class="item-slot">Helmet</span></div>
+        <div class="item-desc">3 turns of Momentum at combat start. Extra movement to close gaps and get into smite range.</div>
+        <div class="item-loc">Blighted Village &mdash; cellar chest.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Amulet of Misty Step</span> <span class="item-slot">Amulet</span></div>
+        <div class="item-desc">Free Misty Step per short rest. Teleport into melee, smite, done.</div>
+        <div class="item-loc">Shattered Sanctum &mdash; chest near Priestess Gut.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Ring of Protection</span> <span class="item-slot">Ring</span></div>
+        <div class="item-desc">+1 AC, +1 saving throws. Always equipped.</div>
+        <div class="item-loc">Tiefling hideout (Mol's stash) or Last Light Inn.</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Act 2 &mdash; Power Upgrades</div>
+      <div class="item-row">
+        <div><span class="item-name">Phalar Aluve</span> <span class="item-slot">Longsword</span></div>
+        <div class="item-desc">AoE party buff (Shriek: 1d4 thunder to enemies) or Sing (+1d4 to ally attacks). Pull from the stone in the Underdark.</div>
+        <div class="item-loc">Underdark &mdash; stuck in stone near the Selunite outpost.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Cloak of Protection</span> <span class="item-slot">Cloak</span></div>
+        <div class="item-desc">+1 AC, +1 saving throws. Stacks with Ring of Protection.</div>
+        <div class="item-loc">Quartermaster Talli, Last Light Inn.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Gauntlets of Hill Giant Strength</span> <span class="item-slot">Gloves</span></div>
+        <div class="item-desc">STR set to 23. Only useful before Pact of the Blade makes you CHA-based. Sell or give to a companion after.</div>
+        <div class="item-loc">Creche Y'llek &mdash; Githyanki Creche chest.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Shield of Devotion</span> <span class="item-slot">Shield</span></div>
+        <div class="item-desc">+1 shield (+3 AC total). Grants free Aid spell once per long rest.</div>
+        <div class="item-loc">Quartermaster Talli, Last Light Inn.</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Act 3 &mdash; Best in Slot</div>
+      <div class="item-row">
+        <div><span class="item-name">Nyrulna</span> <span class="item-slot">Trident (Versatile)</span></div>
+        <div class="item-desc">+3 weapon, +1d6 thunder on hit, returns when thrown, creates AoE on throw. One of the best weapons in the game. Bind as pact weapon.</div>
+        <div class="item-loc">Akabi the djinni &mdash; spin the wheel at the circus (Rivington). Cheat by stealing the ring first.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Bloodthirst</span> <span class="item-slot">Dagger</span></div>
+        <div class="item-desc">Guaranteed crit on attacks against creatures that can't react. True Strike cantrip. Insane with smites.</div>
+        <div class="item-loc">Orin's reward &mdash; defeat Orin in the Temple of Bhaal.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Helm of Balduran</span> <span class="item-slot">Helmet</span></div>
+        <div class="item-desc">+1 AC, +1 saves, HP regen, can't be stunned or critted. Best helm in the game. Period.</div>
+        <div class="item-loc">Wyrmway &mdash; defeat Ansur the dragon.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Armour of Persistence</span> <span class="item-slot">Heavy Armor</span></div>
+        <div class="item-desc">AC 20. Resistance to slashing/piercing/bludgeoning. Blade Ward on self when hit (reaction). Best heavy armor.</div>
+        <div class="item-loc">Dammon &mdash; available at his Act 3 shop in Baldur's Gate.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Killer's Sweetheart</span> <span class="item-slot">Ring</span></div>
+        <div class="item-desc">Guaranteed crit on next attack after killing an enemy. Kill &rarr; crit smite &rarr; kill again. Snowball ring.</div>
+        <div class="item-loc">Self-Same Trial &mdash; Gauntlet of Shar (Act 2, but usable in Act 3).</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Gontr Mael</span> <span class="item-slot">Longbow</span></div>
+        <div class="item-desc">+3 bow, Celestial Haste on crit, Guiding Bolt on hit. Best ranged option for when EB isn't enough.</div>
+        <div class="item-loc">Steel Watch Foundry &mdash; Act 3.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMBAT -->
+  <section class="section reveal" id="combat">
+    <h2>Combat Guide</h2>
+
+    <h3>Standard Rotation</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Pre-buff</span> <span class="step-timing pre">Before Combat</span>
+        <div class="step-detail">Cast Hex (bonus action, lasts until long rest). Activate Bless on yourself and 2 allies if expecting a tough fight. Vow of Enmity on the priority target (Vengeance).</div>
+      </li>
+      <li>
+        <span class="step-action">Engage &mdash; Darkness (optional)</span> <span class="step-timing turn">Turn 1</span>
+        <div class="step-detail">If you have Devil's Sight, drop Darkness on yourself. You now have advantage on all attacks and enemies have disadvantage on you. Skip this vs scattered enemies.</div>
+      </li>
+      <li>
+        <span class="step-action">Attack + Smite</span> <span class="step-timing every">Every Turn</span>
+        <div class="step-detail">Attack twice (Extra Attack). Smite on both hits using Warlock slots first. With Hex, each hit deals: weapon damage + CHA + 1d6 (Hex) + 2-3d8 (Smite). On a crit, double all dice.</div>
+      </li>
+      <li>
+        <span class="step-action">Ranged Fallback</span> <span class="step-timing bonus">When Needed</span>
+        <div class="step-detail">If you can't reach melee, Eldritch Blast: 2 beams at 1d10+5+1d6 each. Better than most martials' ranged options. Push enemies off cliffs with Repelling Blast.</div>
+      </li>
+      <li>
+        <span class="step-action">Short Rest</span> <span class="step-timing pre">Between Fights</span>
+        <div class="step-detail">After every 2-3 fights, short rest. Warlock slots refill. You're back to full smite capacity while the rest of the party is running low. This is the build's core advantage.</div>
+      </li>
+    </ol>
+
+    <h3>Burst Rotation (Boss Kills)</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Vow of Enmity</span> <span class="step-timing turn">Turn 0</span>
+        <div class="step-detail">Advantage on all attacks vs target for 10 turns. Doubles your crit chance. No concentration.</div>
+      </li>
+      <li>
+        <span class="step-action">Hex + Bonus Action Smite Spell</span> <span class="step-timing bonus">Bonus Action</span>
+        <div class="step-detail">Cast Hex if not already active. Or use Thunderous Smite for knockback + extra damage.</div>
+      </li>
+      <li>
+        <span class="step-action">Attack 1 + Divine Smite (Level 3 slot)</span> <span class="step-timing turn">Action</span>
+        <div class="step-detail">First attack. If it hits, smite with a level 3 Warlock slot: weapon + CHA + 3d8 radiant + 1d6 necrotic. On a crit: weapon + CHA + 6d8 + 2d6.</div>
+      </li>
+      <li>
+        <span class="step-action">Attack 2 + Divine Smite (Level 3 slot)</span> <span class="step-timing turn">Action</span>
+        <div class="step-detail">Second attack. Smite again. Both Warlock slots are now spent, but the target is probably dead or close to it.</div>
+      </li>
+    </ol>
+
+    <div class="callout infernal" style="margin-top:1.25rem;">
+      <div class="callout-label">Damage Example (Single Turn, Level 11)</div>
+      <p>Greatsword (2d6+5) + Smite (3d8) + Hex (1d6) = ~28 damage per hit. Two attacks = ~56 damage. On a crit (doubled dice): ~80+ damage in a single turn. With Oathbreaker's Aura of Hate (+5 per hit): ~66 normal, ~90+ crit. No other build in BG3 matches this single-target burst.</p>
+    </div>
+  </section>
+
+  <!-- PARTY -->
+  <section class="section reveal" id="party">
+    <h2>Recommended Party</h2>
+    <p>You're the frontline burst damage dealer and save-booster. Build around control, healing, and action economy.</p>
+
+    <div class="party-grid" style="margin-top:1rem;">
+      <div class="party-card">
+        <div class="party-name">Shadowheart</div>
+        <div class="party-role">Cleric &middot; Primary Healer</div>
+        <div class="party-desc">Spirit Guardians + your frontline aura is oppressive. She heals, you kill. Her saves are boosted by your Aura of Protection.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Gale</div>
+        <div class="party-role">Wizard &middot; AoE + Control</div>
+        <div class="party-desc">You handle single targets. He handles groups with Fireball, Web, and Haste (on you). Haste + Extra Attack = 3 smite-eligible attacks per turn.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Astarion</div>
+        <div class="party-role">Rogue &middot; Burst + Utility</div>
+        <div class="party-desc">Your Darkness bubble doesn't affect him if he's outside it. He handles traps, locks, and sneak attacks on enemies you're pressuring.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Alt: Karlach</div>
+        <div class="party-role">Barbarian &middot; Second Frontliner</div>
+        <div class="party-desc">Two melee threats force enemies to split attention. She rages and tanks while your Aura boosts her saves. Great Weapon Master on her for cleave damage.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HONOUR MODE -->
+  <section class="section reveal" id="honour">
+    <h2>Honour Mode Tips</h2>
+
+    <div class="callout warn">
+      <div class="callout-label">Honour Mode Changes</div>
+      <p>Honour Mode gives bosses Legendary Actions (extra turns/reactions), higher HP, and sometimes new mechanics. Your burst damage and Counterspell are critical here.</p>
+    </div>
+
+    <h3>General Strategy</h3>
+    <ul class="picks">
+      <li><span class="label">Priority</span> <span class="name">Always keep Counterspell ready</span> &mdash; <span class="note">Honour bosses love to cast Hold Person, Banishment, and Power Word Kill. One Counterspell can save a run.</span></li>
+      <li><span class="label">Priority</span> <span class="name">Short rest religiously</span> &mdash; <span class="note">In Honour Mode, attrition kills you. Short rest after every 2 fights to refill Warlock slots.</span></li>
+      <li><span class="label">Priority</span> <span class="name">Aura positioning</span> &mdash; <span class="note">Your +5 save bonus is 3m radius. Keep allies clustered. This is the difference between surviving boss AoEs and wiping.</span></li>
+      <li><span class="label">Tip</span> <span class="name">Save smites for crits</span> &mdash; <span class="note">In Honour Mode, resources matter more. Don't auto-smite every hit. Wait for crits (especially with Vow of Enmity active) to maximize value.</span></li>
+      <li><span class="label">Tip</span> <span class="name">Darkness is your panic button</span> &mdash; <span class="note">Drop Darkness when things go wrong. Enemies can't target you, can't cast spells on you, and have disadvantage on melee. You can heal/reposition safely inside.</span></li>
+    </ul>
+
+    <h3>Key Honour Mode Boss Tips</h3>
+    <ul class="picks">
+      <li><span class="label">Act 1</span> <span class="name">Grym (Adamantine Forge)</span> &mdash; <span class="note">Immune to most damage. Lure onto the forge plate, superheat with lava, then smash with the hammer. Save your smites for when he's vulnerable.</span></li>
+      <li><span class="label">Act 2</span> <span class="name">Ketheric Thorm</span> &mdash; <span class="note">Phase 2 has massive HP. Vow of Enmity + double smite + Hex burns him down. Save Counterspell for his self-heals.</span></li>
+      <li><span class="label">Act 3</span> <span class="name">Raphael</span> &mdash; <span class="note">One of the hardest fights. His Legendary Actions are brutal. Darkness + Devil's Sight to avoid his targeting. Counterspell his Power Word Kill. Smite the pillars first to remove his immortality.</span></li>
+      <li><span class="label">Act 3</span> <span class="name">Final Boss</span> &mdash; <span class="note">Multiple phases. Conserve Warlock slots for the final phase. Aura of Protection keeps the party alive through AoE. This build is one of the safest for the final fight.</span></li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">Honour Mode Insurance</div>
+      <p>The Lockadin is one of the <strong>safest Honour Mode builds</strong> because it combines high burst (end fights fast), Aura of Protection (survive save-or-die effects), Counterspell (negate threats), Lay on Hands (free emergency healing), and heavy armor + shield (high AC). You have answers to everything.</p>
+    </div>
+  </section>
+
+  <footer class="guide-footer">
+    <div class="footer-links">
+      <a href="guides.html">All Game Guides</a>
+      <a href="index.html">Home</a>
+      <a href="index.html#projects">Projects</a>
+    </div>
+    BG3 Lockadin &mdash; Infernal Crusader Build Guide &middot; Paladin 7 / Warlock 5 &middot; Patch 8
+  </footer>
+
+</main>
+</div>
+
+<script>
+// Highlight active sub-nav link on scroll
+const sections = document.querySelectorAll('.section');
+const subLinks = document.querySelectorAll('.sub-nav a');
+const sideLinks = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      subLinks.forEach(l => l.classList.remove('active'));
+      sideLinks.forEach(l => l.classList.remove('active'));
+      const activeSub = document.querySelector('.sub-nav a[href="#' + id + '"]');
+      const activeSide = document.querySelector('.sidebar a[href="#' + id + '"]');
+      if (activeSub) activeSub.classList.add('active');
+      if (activeSide) activeSide.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+
+// Top nav hamburger
+const topHamburger = document.getElementById('top-hamburger');
+const topNavLinks = document.getElementById('top-nav-links');
+if (topHamburger) {
+  topHamburger.addEventListener('click', () => {
+    topHamburger.classList.toggle('open');
+    topNavLinks.classList.toggle('open');
+  });
+}
+
+// Mobile page nav hamburger
+const toggle = document.querySelector('.nav-toggle');
+const mobLinks = document.querySelector('.mob-nav-links');
+if (toggle) {
+  toggle.addEventListener('click', () => mobLinks.classList.toggle('open'));
+  mobLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobLinks.classList.remove('open')));
+}
+
+// Scroll reveal
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Echoing Strike Warlock — D2R Season 13 Build Guide | Z3nGineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0808;--bg-card:#141010;--bg-el:#1c1616;--bg-hover:#241c1c;
+  --border:#2a1e1e;--border-light:#3a2828;
+  --text:#e8e0d8;--text-dim:#a09088;--text-muted:#685850;--white:#f5efe8;
+  --accent:#c44030;--accent-hover:#e04838;--accent-dim:rgba(196,64,48,0.12);
+  --gold:#c8a050;--gold-dim:rgba(200,160,80,0.12);
+  --ice:#60b8e8;--ice-dim:rgba(96,184,232,0.10);
+  --lightning:#e8d040;--lightning-dim:rgba(232,208,64,0.10);
+  --poison:#58a048;--poison-dim:rgba(88,160,72,0.10);
+  --purple:#9068c0;--purple-dim:rgba(144,104,192,0.12);
+  --magic:#b080e0;--magic-dim:rgba(176,128,224,0.12);
+  --fire:#d05030;--fire-dim:rgba(208,80,48,0.12);
+  --blue:#5090d0;--blue-dim:rgba(80,144,208,0.12);
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border-light) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:19px;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--accent);color:#fff}
+a{color:var(--accent-hover);text-decoration:none}a:hover{color:#ff6050;text-decoration:underline}
+
+/* ===== UNIVERSAL TOP NAV ===== */
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,8,8,0.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:60px}
+.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.top-nav-brand{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;letter-spacing:0.14em;color:var(--text);text-decoration:none;transition:color 0.3s;text-transform:uppercase}
+.top-nav-brand:hover{color:var(--accent-hover);text-decoration:none}
+.top-nav-links{display:flex;gap:0;list-style:none;align-items:center;height:60px}
+.top-nav-links>li{position:relative;height:60px;display:flex;align-items:center}
+.top-nav-links>li>a{
+  font-size:0.76rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--text-muted);padding:0 0.9rem;height:60px;
+  display:flex;align-items:center;position:relative;
+  transition:color 0.2s,background 0.2s;text-decoration:none;
+}
+.top-nav-links>li>a:hover{color:var(--text);background:rgba(255,255,255,0.03);text-decoration:none}
+.top-nav-links>li>a::after{
+  content:'';position:absolute;bottom:0;left:0.9rem;right:0.9rem;height:2px;
+  background:var(--accent);transform:scaleX(0);transition:transform 0.2s;
+}
+.top-nav-links>li>a:hover::after{transform:scaleX(1)}
+/* Dropdown */
+.dropdown-trigger{cursor:pointer}
+.dropdown-trigger::after{content:' \25BE';font-size:0.6rem}
+.dropdown-menu{display:none;position:absolute;top:60px;left:0;min-width:200px;background:rgba(14,10,10,0.97);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:0 0 8px 8px;padding:0.4rem 0;z-index:1001;box-shadow:0 8px 32px rgba(0,0,0,0.5)}
+.top-nav-links>li:hover .dropdown-menu{display:block}
+.dropdown-menu a{display:block;padding:0.5rem 1.25rem;font-size:0.8rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:all 0.15s}
+.dropdown-menu a:hover{color:var(--white);background:rgba(196,64,48,0.08);text-decoration:none}
+/* Top nav hamburger */
+.top-nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.top-nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s;border-radius:1px}
+@media(max-width:800px){
+  .top-nav-toggle{display:flex}
+  .top-nav-links{display:none;position:absolute;top:60px;left:0;right:0;flex-direction:column;background:rgba(10,8,8,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0.5rem 0;height:auto}
+  .top-nav-links.open{display:flex}
+  .top-nav-links>li{height:auto}
+  .top-nav-links>li>a{height:44px;padding:0 2rem}
+  .dropdown-menu{position:static;display:block;border:none;box-shadow:none;padding-left:1rem;background:transparent}
+}
+
+/* ===== PAGE SUB-NAV ===== */
+.sub-nav{position:sticky;top:60px;z-index:900;background:rgba(10,8,8,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.sub-nav::-webkit-scrollbar{display:none}
+.sub-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;padding:0 2rem;height:44px;gap:0}
+.sub-nav a{
+  font-size:0.72rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;
+  color:var(--text-muted);padding:0 0.75rem;height:44px;white-space:nowrap;
+  display:flex;align-items:center;position:relative;
+  transition:color 0.2s;text-decoration:none;flex-shrink:0;
+}
+.sub-nav a:hover{color:var(--text);text-decoration:none}
+.sub-nav a.active{color:var(--accent-hover)}
+.sub-nav a::after{
+  content:'';position:absolute;bottom:0;left:0.5rem;right:0.5rem;height:2px;
+  background:var(--accent);transform:scaleX(0);transition:transform 0.2s;
+}
+.sub-nav a.active::after,.sub-nav a:hover::after{transform:scaleX(1)}
+
+/* ===== LAYOUT ===== */
+.page{display:flex;max-width:1100px;margin:0 auto;padding-top:104px}
+.sidebar{width:220px;flex-shrink:0;position:sticky;top:104px;height:calc(100vh - 104px);overflow-y:auto;border-right:1px solid var(--border);background:var(--bg-card);padding:1.5rem 0;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.sidebar-title{font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);padding:0 1.25rem;margin-bottom:.75rem}
+.sidebar a{display:flex;align-items:center;gap:.5rem;padding:.45rem 1.25rem;font-size:.86rem;font-weight:500;color:var(--text-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s}
+.sidebar a:hover{color:var(--white);background:rgba(196,64,48,0.04);text-decoration:none}
+.sidebar a.active{color:var(--white);border-left-color:var(--accent);background:rgba(196,64,48,0.06)}
+.nav-icon{font-size:1rem;width:1.2rem;text-align:center}
+.content{flex:1;min-width:0;padding:2.5rem 2.5rem 4rem}
+@media(max-width:800px){.sidebar{display:none}.content{padding:1.5rem}}
+
+/* Hero */
+.hero-art{width:100%;margin-bottom:1.25rem;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:var(--bg-card)}
+.hero-svg{width:100%;height:auto;display:block}
+.guide-header{margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.header-text{flex:1}
+.breadcrumb{font-size:.78rem;color:var(--text-muted);margin-bottom:.3rem}
+.breadcrumb a{color:var(--text-muted)}
+.breadcrumb a:hover{color:var(--accent-hover)}
+.guide-header h1{font-family:'Cinzel',serif;font-size:2.2rem;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:.3rem}
+.subtitle{font-size:1rem;color:var(--text-dim)}
+.tag-row{display:flex;gap:.4rem;margin-top:.6rem;flex-wrap:wrap}
+.tag{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim);text-transform:uppercase;letter-spacing:.04em}
+.tag.crimson{color:var(--accent-hover);border-color:rgba(196,64,48,0.3);background:var(--accent-dim)}
+.tag.gold{color:var(--gold);border-color:rgba(200,160,80,0.3);background:var(--gold-dim)}
+.tag.purple{color:var(--purple);border-color:rgba(144,104,192,0.3);background:var(--purple-dim)}
+.tag.magic{color:var(--magic);border-color:rgba(176,128,224,0.3);background:var(--magic-dim)}
+.tag.poison{color:var(--poison);border-color:rgba(88,160,72,0.3);background:var(--poison-dim)}
+.tag.stier{color:var(--gold);border-color:rgba(200,160,80,0.3);background:var(--gold-dim)}
+
+/* Sections */
+.section{margin-top:3rem;opacity:0;transform:translateY(25px);transition:opacity 0.6s ease,transform 0.6s ease}
+.section.visible{opacity:1;transform:translateY(0)}
+.section h2{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:2px solid var(--border)}
+.section h3{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:600;color:var(--text);margin:1.5rem 0 .6rem}
+.section p{margin-bottom:1rem}
+
+/* Callouts */
+.callout{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0}
+.callout.warn{border-left-color:var(--fire)}
+.callout.tip{border-left-color:var(--poison)}
+.callout.magic{border-left-color:var(--magic)}
+.callout-label{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem;color:var(--accent)}
+.callout.warn .callout-label{color:var(--fire)}
+.callout.tip .callout-label{color:var(--poison)}
+.callout.magic .callout-label{color:var(--magic)}
+.callout p{margin-bottom:.5rem;font-size:.95rem}.callout p:last-child{margin-bottom:0}
+
+/* Stats */
+.stats{display:flex;gap:.5rem;flex-wrap:wrap;margin:.75rem 0}
+.stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:.4rem .75rem;text-align:center;min-width:4rem;flex:1}
+.stat-box.primary{border-color:rgba(196,64,48,0.4)}
+.stat-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
+.stat-val{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--white)}
+.stat-box.primary .stat-val{color:var(--accent-hover)}
+
+/* Picks */
+.picks{list-style:none;margin:.5rem 0}
+.picks li{padding:.3rem 0;font-size:.95rem;display:flex;gap:.4rem;align-items:baseline}
+.picks .label{font-size:.72rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.03em;flex-shrink:0;min-width:5rem}
+.picks .name{font-weight:600;color:var(--white)}
+.picks .note{color:var(--text-dim);font-size:.88rem}
+
+/* Skill table */
+.skill-table{width:100%;border-collapse:collapse;margin:.75rem 0}
+.skill-table th{font-family:'Cinzel',serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--border)}
+.skill-table td{padding:.5rem .6rem;border-bottom:1px solid var(--border);font-size:.9rem}
+.skill-table tr:hover{background:var(--bg-card)}
+.skill-name{font-weight:600;color:var(--white)}
+.skill-badge{font-size:.65rem;font-weight:600;padding:.12rem .4rem;border-radius:3px;text-transform:uppercase}
+.skill-badge.max{color:var(--accent-hover);background:var(--accent-dim);border:1px solid rgba(196,64,48,0.2)}
+.skill-badge.high{color:var(--gold);background:var(--gold-dim);border:1px solid rgba(200,160,80,0.15)}
+.skill-badge.pts{color:var(--text-dim);background:var(--bg-el);border:1px solid var(--border)}
+.skill-badge.prereq{color:var(--text-muted);background:rgba(200,200,200,0.04);border:1px solid var(--border)}
+
+/* Level cards */
+.lv-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.4rem;overflow:hidden;transition:border-color .15s}
+.lv-card:hover{border-color:var(--border-light)}
+.lv-card.spike{border-left:3px solid var(--accent)}
+.lv-head{display:flex;align-items:center;gap:.6rem;padding:.65rem 1rem;cursor:pointer;user-select:none;transition:background .1s;flex-wrap:wrap}
+.lv-head:hover{background:var(--bg-hover)}
+.lv-range{font-size:.72rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;color:var(--accent-hover);background:var(--accent-dim);border:1px solid rgba(196,64,48,0.2);text-transform:uppercase;letter-spacing:.04em}
+.lv-title{font-weight:600;font-size:.95rem;color:var(--text);flex:1}
+.lv-spike{font-size:.65rem;font-weight:600;color:var(--gold);background:var(--gold-dim);padding:.15rem .45rem;border-radius:4px;border:1px solid rgba(200,160,80,0.2);text-transform:uppercase}
+.lv-arrow{color:var(--text-muted);font-size:.75rem;transition:transform .2s}
+.lv-card.open .lv-arrow{transform:rotate(90deg)}
+.lv-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.lv-card.open .lv-body{max-height:1600px}
+.lv-inner{padding:0 1rem 1rem;border-top:1px solid var(--border)}
+
+/* Quick picks */
+.qp-row{display:flex;flex-wrap:wrap;gap:.3rem;margin:.75rem 0 .5rem}
+.qp{font-size:.78rem;font-weight:500;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim)}
+.qp.skill{color:var(--accent-hover);border-color:rgba(196,64,48,0.2)}
+.qp.spell{color:var(--magic);border-color:rgba(176,128,224,0.2)}
+.qp.gear{color:var(--gold);border-color:rgba(200,160,80,0.2)}
+.qp.curse{color:var(--purple);border-color:rgba(144,104,192,0.2)}
+
+/* Gear grid */
+.gear-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.75rem 0}
+@media(max-width:600px){.gear-grid{grid-template-columns:1fr}}
+.gear-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.9rem 1rem;transition:border-color .15s}
+.gear-card:hover{border-color:var(--border-light)}
+.gear-slot{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:.2rem}
+.gear-item{font-weight:700;font-size:.95rem}
+.gear-item.unique{color:var(--gold)}
+.gear-item.runeword{color:var(--accent-hover)}
+.gear-item.set{color:var(--poison)}
+.gear-item.rare{color:var(--lightning)}
+.gear-item.magic-item{color:var(--magic)}
+.gear-notes{color:var(--text-dim);font-size:.82rem;margin-top:.15rem}
+.gear-alt{font-size:.78rem;color:var(--text-muted);margin-top:.3rem;font-style:italic}
+
+/* Runeword table */
+.rw-table{width:100%;border-collapse:collapse;margin:1rem 0}
+.rw-table th{font-family:'Cinzel',serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);text-align:left;padding:.6rem .75rem;border-bottom:2px solid var(--border)}
+.rw-table td{padding:.65rem .75rem;border-bottom:1px solid var(--border);font-size:.9rem;vertical-align:top}
+.rw-table tr:hover{background:var(--bg-card)}
+.rw-name{font-weight:700;color:var(--gold);white-space:nowrap}
+.rw-new{font-size:.6rem;font-weight:700;color:var(--accent-hover);background:var(--accent-dim);padding:.1rem .35rem;border-radius:3px;margin-left:.4rem;vertical-align:middle;text-transform:uppercase}
+.rw-runes{color:var(--text-dim);font-size:.85rem}
+.rw-stats{color:var(--text-dim);font-size:.85rem;line-height:1.5}
+
+/* FCR breakpoint table */
+.bp-table{width:100%;border-collapse:collapse;margin:1rem 0}
+.bp-table th{font-family:'Cinzel',serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--border)}
+.bp-table td{padding:.5rem .6rem;border-bottom:1px solid var(--border);font-size:.9rem}
+.bp-table tr:hover{background:var(--bg-card)}
+.bp-table .bp-val{font-family:'Cinzel',serif;font-weight:700;color:var(--white)}
+.bp-table .bp-frames{color:var(--text-dim)}
+.bp-table .bp-target{color:var(--accent-hover);font-weight:700}
+.bp-table .bp-row-active{background:rgba(196,64,48,0.06)}
+.bp-table .bp-row-active .bp-val{color:var(--accent-hover)}
+
+/* Merc card */
+.merc-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin:.75rem 0}
+.merc-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--gold);margin-bottom:.5rem}
+.merc-detail{font-size:.9rem;color:var(--text-dim);margin-bottom:.3rem}
+.merc-detail strong{color:var(--white);font-weight:600}
+
+/* Step list */
+.step-list{list-style:none;counter-reset:step}
+.step-list li{position:relative;padding:.75rem 0 .75rem 3rem;border-left:2px solid var(--border);margin-left:.75rem;counter-increment:step}
+.step-list li::before{content:counter(step);position:absolute;left:-.75rem;top:.6rem;width:1.4rem;height:1.4rem;background:var(--bg);border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:700;font-size:.75rem;color:var(--accent)}
+.step-list li:last-child{border-left-color:transparent}
+.step-action{font-weight:600;color:var(--white)}
+.step-detail{color:var(--text-dim);font-size:.9rem;margin-top:.2rem}
+
+/* Farming grid */
+.farm-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.75rem 0}
+@media(max-width:600px){.farm-grid{grid-template-columns:1fr}}
+.farm-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.9rem 1rem;transition:border-color .15s}
+.farm-card:hover{border-color:var(--border-light)}
+.farm-area{font-family:'Cinzel',serif;font-weight:700;color:var(--white);font-size:.95rem;margin-bottom:.2rem}
+.farm-act{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:.15rem}
+.farm-notes{color:var(--text-dim);font-size:.82rem}
+.farm-tier{font-size:.6rem;font-weight:700;padding:.12rem .4rem;border-radius:3px;text-transform:uppercase;margin-left:.4rem}
+.farm-tier.s{color:var(--accent-hover);background:var(--accent-dim)}
+.farm-tier.a{color:var(--gold);background:var(--gold-dim)}
+
+/* Footer */
+.guide-footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);text-align:center}
+.guide-footer p{font-size:.75rem;color:var(--text-muted);margin-bottom:.3rem}
+.guide-footer a{color:var(--text-muted);transition:color .2s}
+.guide-footer a:hover{color:var(--accent-hover)}
+
+/* Mobile nav */
+.mobile-nav{display:none;position:sticky;top:60px;z-index:100;background:rgba(10,8,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:50px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Cinzel',serif;font-size:.85rem;font-weight:700;color:var(--accent);letter-spacing:.06em}
+.mob-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.mob-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s}
+.mob-links{display:none;position:absolute;top:50px;left:0;right:0;flex-direction:column;background:rgba(10,8,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.mob-links.open{display:flex}
+.mob-links a{display:flex;align-items:center;gap:.5rem;height:40px;font-size:.88rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.mob-links a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){.mobile-nav{display:flex}.sub-nav{display:none}}
+
+/* Scroll reveal */
+@keyframes fadeUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+
+/* Responsive */
+@media(max-width:768px){
+  .page{padding-top:60px}
+  .guide-header h1{font-size:1.6rem}
+  .gear-grid{grid-template-columns:1fr}
+  .farm-grid{grid-template-columns:1fr}
+  .rw-table{font-size:.82rem}
+  .rw-table th,.rw-table td{padding:.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== UNIVERSAL TOP NAV ===== -->
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="top-nav-brand">Z3ngineer</a>
+    <button class="top-nav-toggle" id="topNavToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="top-nav-links" id="topNavLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li>
+        <a href="#" class="dropdown-trigger">Pages</a>
+        <div class="dropdown-menu">
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+          <a href="https://crockednloaded.com">CrockedNLoaded</a>
+          <a href="guides.html">Game Guides</a>
+          <a href="CHIM.html">CHIM Modpack</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===== PAGE SUB-NAV ===== -->
+<nav class="sub-nav">
+  <div class="sub-nav-inner">
+    <a href="#overview">Overview</a>
+    <a href="#skills">Skills</a>
+    <a href="#stats">Stats</a>
+    <a href="#progression">Progression</a>
+    <a href="#gear-budget">Budget Gear</a>
+    <a href="#gear-bis">Best in Slot</a>
+    <a href="#runewords">Runewords</a>
+    <a href="#fcr">FCR</a>
+    <a href="#mercenary">Mercenary</a>
+    <a href="#playstyle">Playstyle</a>
+    <a href="#farming">Farming</a>
+    <a href="#tips">Tips</a>
+  </div>
+</nav>
+
+<!-- ===== MOBILE PAGE NAV ===== -->
+<div class="mobile-nav">
+  <span class="mobile-nav-title">Echoing Strike Warlock</span>
+  <button class="mob-toggle" aria-label="Sections">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="mob-links">
+    <a href="#overview"><span class="nav-icon">&#9670;</span> Overview</a>
+    <a href="#skills"><span class="nav-icon">&#9733;</span> Skills</a>
+    <a href="#stats"><span class="nav-icon">&#8593;</span> Stats</a>
+    <a href="#progression"><span class="nav-icon">&#9876;</span> Progression</a>
+    <a href="#gear-budget"><span class="nav-icon">&#9671;</span> Budget Gear</a>
+    <a href="#gear-bis"><span class="nav-icon">&#9670;</span> Best in Slot</a>
+    <a href="#runewords"><span class="nav-icon">&#10023;</span> Runewords</a>
+    <a href="#fcr"><span class="nav-icon">&#9889;</span> FCR</a>
+    <a href="#mercenary"><span class="nav-icon">&#9876;</span> Mercenary</a>
+    <a href="#playstyle"><span class="nav-icon">&#9654;</span> Playstyle</a>
+    <a href="#farming"><span class="nav-icon">&#9733;</span> Farming</a>
+    <a href="#tips"><span class="nav-icon">&#128161;</span> Tips</a>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">&#9670;</span> Overview</a>
+  <a href="#skills"><span class="nav-icon">&#9733;</span> Skills</a>
+  <a href="#stats"><span class="nav-icon">&#8593;</span> Stats</a>
+  <a href="#progression"><span class="nav-icon">&#9876;</span> Progression</a>
+  <a href="#gear-budget"><span class="nav-icon">&#9671;</span> Budget Gear</a>
+  <a href="#gear-bis"><span class="nav-icon">&#9670;</span> Best in Slot</a>
+  <a href="#runewords"><span class="nav-icon">&#10023;</span> Runewords</a>
+  <a href="#fcr"><span class="nav-icon">&#9889;</span> FCR Breaks</a>
+  <a href="#mercenary"><span class="nav-icon">&#9876;</span> Mercenary</a>
+  <a href="#playstyle"><span class="nav-icon">&#9654;</span> Playstyle</a>
+  <a href="#farming"><span class="nav-icon">&#9733;</span> Farming</a>
+  <a href="#tips"><span class="nav-icon">&#128161;</span> Tips</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER + HERO SVG -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="hellGlow" cx="50%" cy="45%" r="55%">
+            <stop offset="0%" stop-color="#4a1515" stop-opacity="0.9"/>
+            <stop offset="40%" stop-color="#2a0808" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#0a0808" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="echoGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#9068c0" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#9068c0" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="magicCore" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#b080e0" stop-opacity="0.6"/>
+            <stop offset="50%" stop-color="#7050a0" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#5030a0" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="echoTrail" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#b080e0" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#b080e0" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="weaponBlade" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#e0d8e8" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#9068c0" stop-opacity="0.4"/>
+          </linearGradient>
+          <filter id="glow-filter">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Background -->
+        <rect width="900" height="300" fill="url(#hellGlow)"/>
+
+        <!-- Subtle pentagram in background -->
+        <g transform="translate(450,150)" opacity="0.06" stroke="#c44030" stroke-width="1" fill="none">
+          <circle cx="0" cy="0" r="120"/>
+          <polygon points="0,-120 -114.1,-37.1 -70.5,97.1 70.5,97.1 114.1,-37.1"/>
+          <polygon points="0,120 114.1,37.1 70.5,-97.1 -70.5,-97.1 -114.1,37.1"/>
+          <!-- Inner circle -->
+          <circle cx="0" cy="0" r="70"/>
+        </g>
+
+        <!-- Arcane symbols floating -->
+        <g opacity="0.1" fill="none" stroke="#b080e0" stroke-width="0.8">
+          <circle cx="180" cy="60" r="12"/><path d="M180,48 L180,72 M168,60 L192,60"/>
+          <circle cx="720" cy="70" r="10"/><path d="M714,64 L726,76 M726,64 L714,76"/>
+          <circle cx="150" cy="200" r="8"/><path d="M150,192 L150,208"/>
+          <circle cx="750" cy="190" r="9"/><path d="M741,190 L759,190 M750,181 L750,199"/>
+          <circle cx="300" cy="40" r="7"/><path d="M293,33 L307,47 M307,33 L293,47"/>
+          <circle cx="600" cy="35" r="8"/><path d="M600,27 L600,43"/>
+        </g>
+
+        <!-- Hellish fire/lava ground -->
+        <g opacity="0.15">
+          <ellipse cx="200" cy="270" rx="60" ry="6" fill="#c44030"/>
+          <ellipse cx="650" cy="275" rx="45" ry="5" fill="#c44030"/>
+          <ellipse cx="400" cy="278" rx="30" ry="4" fill="#a03020"/>
+        </g>
+
+        <!-- Faint columns / ruins in background -->
+        <g opacity="0.12">
+          <rect x="100" y="60" width="16" height="200" rx="3" fill="#3a2020"/>
+          <rect x="780" y="80" width="14" height="180" rx="3" fill="#3a2020"/>
+          <rect x="830" y="100" width="12" height="160" rx="3" fill="#2a1818" opacity="0.7"/>
+          <rect x="60" y="90" width="10" height="170" rx="3" fill="#2a1818" opacity="0.6"/>
+        </g>
+
+        <!-- Ground line -->
+        <line x1="50" y1="272" x2="850" y2="272" stroke="#3a1818" stroke-width="0.5" opacity="0.4"/>
+
+        <!-- Fallen demons on ground -->
+        <g transform="translate(200,255)" opacity="0.5">
+          <ellipse cx="0" cy="0" rx="22" ry="9" fill="#4a2020"/>
+          <circle cx="-18" cy="2" r="6" fill="#4a2020"/>
+          <line x1="15" y1="-3" x2="28" y2="-8" stroke="#4a2020" stroke-width="4" stroke-linecap="round"/>
+          <ellipse cx="3" cy="6" rx="14" ry="3" fill="#2a0808" opacity="0.4"/>
+        </g>
+        <g transform="translate(700,258)" opacity="0.45">
+          <ellipse cx="0" cy="0" rx="20" ry="8" fill="#4a2020" transform="rotate(-12)"/>
+          <circle cx="16" cy="-2" r="5.5" fill="#4a2020"/>
+          <line x1="-14" y1="4" x2="-25" y2="10" stroke="#4a2020" stroke-width="4" stroke-linecap="round"/>
+          <ellipse cx="4" cy="5" rx="12" ry="3" fill="#2a0808" opacity="0.35"/>
+        </g>
+
+        <!-- ===== THE WARLOCK — center, casting Echoing Strike ===== -->
+        <g transform="translate(440,145)" opacity="0.95">
+
+          <!-- Robes / Cloak — flowing, dark -->
+          <path d="M-12,-5 Q-18,20 -28,50 Q-35,75 -42,95 Q-48,105 -55,108 Q-50,100 -40,80 Q-30,55 -22,30 Q-16,10 -12,-5 Z" fill="#2a1535" opacity="0.85"/>
+          <path d="M12,-5 Q18,20 28,50 Q35,75 42,95 Q48,105 55,108 Q50,100 40,80 Q30,55 22,30 Q16,10 12,-5 Z" fill="#201030" opacity="0.7"/>
+          <!-- Robe inner folds -->
+          <path d="M-5,30 Q-12,55 -20,80" stroke="#3a2045" stroke-width="0.6" opacity="0.4" fill="none"/>
+          <path d="M5,30 Q12,55 20,80" stroke="#3a2045" stroke-width="0.6" opacity="0.4" fill="none"/>
+
+          <!-- Body — robed torso -->
+          <ellipse cx="0" cy="20" rx="20" ry="30" fill="#2a1838"/>
+          <!-- Robe details -->
+          <line x1="0" y1="-5" x2="0" y2="45" stroke="#3a2048" stroke-width="0.8" opacity="0.5"/>
+          <!-- Belt / sash -->
+          <rect x="-16" y="32" width="32" height="4" rx="2" fill="#5a3060" opacity="0.7"/>
+          <rect x="-3" y="32" width="6" height="4" rx="1" fill="#b080e0" opacity="0.3"/>
+
+          <!-- Hood / Head -->
+          <path d="M-14,-18 Q-16,-32 -10,-40 Q-4,-46 0,-48 Q4,-46 10,-40 Q16,-32 14,-18 Z" fill="#1a1028"/>
+          <!-- Deep hood shadow -->
+          <ellipse cx="0" cy="-22" rx="10" ry="8" fill="#0a0510"/>
+          <!-- Glowing eyes within hood -->
+          <ellipse cx="-4" cy="-24" rx="2.5" ry="1.5" fill="#b080e0" opacity="0.9"/>
+          <ellipse cx="4" cy="-24" rx="2.5" ry="1.5" fill="#b080e0" opacity="0.9"/>
+          <!-- Eye glow -->
+          <circle cx="-4" cy="-24" r="5" fill="#b080e0" opacity="0.15"/>
+          <circle cx="4" cy="-24" r="5" fill="#b080e0" opacity="0.15"/>
+          <!-- Hood ornament -->
+          <circle cx="0" cy="-40" r="3" fill="#9068c0" opacity="0.35"/>
+          <circle cx="0" cy="-40" r="1.5" fill="#b080e0" opacity="0.5"/>
+
+          <!-- Legs — robed, stance -->
+          <line x1="-6" y1="48" x2="-14" y2="82" stroke="#2a1838" stroke-width="9" stroke-linecap="round"/>
+          <line x1="6" y1="48" x2="18" y2="80" stroke="#2a1838" stroke-width="9" stroke-linecap="round"/>
+          <!-- Boots -->
+          <ellipse cx="-15" cy="84" rx="7" ry="4" fill="#1a1020"/>
+          <ellipse cx="19" cy="82" rx="7" ry="4" fill="#1a1020"/>
+
+          <!-- LEFT ARM — raised, channeling -->
+          <line x1="-14" y1="5" x2="-42" y2="-25" stroke="#2a1838" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="-44" cy="-27" r="4" fill="#2a1838"/>
+          <!-- Open hand fingers -->
+          <line x1="-46" y1="-29" x2="-50" y2="-34" stroke="#3a2040" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="-44" y1="-31" x2="-46" y2="-37" stroke="#3a2040" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="-42" y1="-31" x2="-42" y2="-37" stroke="#3a2040" stroke-width="1.5" stroke-linecap="round"/>
+
+          <!-- RIGHT ARM — swinging weapon forward -->
+          <line x1="14" y1="5" x2="40" y2="-20" stroke="#2a1838" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="42" cy="-22" r="4" fill="#2a1838"/>
+
+          <!-- WEAPON — arcane mace/scepter -->
+          <line x1="44" y1="-24" x2="78" y2="-55" stroke="url(#weaponBlade)" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- Weapon head -->
+          <circle cx="80" cy="-57" r="6" fill="#5a3880" opacity="0.7"/>
+          <circle cx="80" cy="-57" r="3.5" fill="#b080e0" opacity="0.5"/>
+          <circle cx="80" cy="-57" r="1.5" fill="#e0c8f8" opacity="0.8"/>
+
+          <!-- ===== ECHOING STRIKE EFFECTS ===== -->
+
+          <!-- Echo 1 — ghostly weapon projection going right -->
+          <g opacity="0.55" filter="url(#glow-filter)">
+            <line x1="90" y1="-55" x2="135" y2="-40" stroke="#b080e0" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="138" cy="-38" r="5" fill="#9068c0" opacity="0.4"/>
+            <circle cx="138" cy="-38" r="2.5" fill="#b080e0" opacity="0.6"/>
+          </g>
+          <!-- Echo trail 1 -->
+          <path d="M85,-55 Q110,-50 135,-40" stroke="#b080e0" stroke-width="1.5" opacity="0.3" fill="none"/>
+          <path d="M88,-58 Q115,-54 140,-43" stroke="#9068c0" stroke-width="0.8" opacity="0.2" fill="none"/>
+
+          <!-- Echo 2 — further out, more faded -->
+          <g opacity="0.35" filter="url(#glow-filter)">
+            <line x1="150" y1="-35" x2="195" y2="-18" stroke="#b080e0" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="198" cy="-16" r="4" fill="#9068c0" opacity="0.35"/>
+            <circle cx="198" cy="-16" r="2" fill="#b080e0" opacity="0.5"/>
+          </g>
+          <path d="M148,-33 Q172,-26 195,-18" stroke="#9068c0" stroke-width="1" opacity="0.2" fill="none"/>
+
+          <!-- Echo 3 — farthest, very ghostly -->
+          <g opacity="0.2" filter="url(#glow-filter)">
+            <line x1="210" y1="-12" x2="250" y2="5" stroke="#b080e0" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="253" cy="7" r="3" fill="#9068c0" opacity="0.25"/>
+          </g>
+
+          <!-- Echo going LEFT (boomerang return) -->
+          <g opacity="0.4" filter="url(#glow-filter)">
+            <line x1="-55" y1="-30" x2="-100" y2="-20" stroke="#9068c0" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="-103" cy="-18" r="4" fill="#7050a0" opacity="0.35"/>
+          </g>
+          <g opacity="0.22">
+            <line x1="-115" y1="-15" x2="-155" y2="-5" stroke="#9068c0" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="-158" cy="-3" r="3" fill="#7050a0" opacity="0.25"/>
+          </g>
+
+          <!-- Magic aura around warlock -->
+          <circle cx="0" cy="5" r="50" fill="url(#magicCore)"/>
+          <!-- Arcane particles -->
+          <circle cx="-25" cy="-40" r="1.5" fill="#b080e0" opacity="0.5"/>
+          <circle cx="30" cy="-38" r="1.2" fill="#9068c0" opacity="0.4"/>
+          <circle cx="-35" cy="10" r="1" fill="#b080e0" opacity="0.35"/>
+          <circle cx="35" cy="15" r="0.8" fill="#9068c0" opacity="0.3"/>
+          <circle cx="10" cy="-50" r="1.3" fill="#e0c8f8" opacity="0.3"/>
+          <circle cx="-18" cy="-55" r="0.9" fill="#b080e0" opacity="0.25"/>
+          <circle cx="22" cy="30" r="1.1" fill="#9068c0" opacity="0.3"/>
+          <circle cx="-30" cy="25" r="0.7" fill="#b080e0" opacity="0.25"/>
+        </g>
+
+        <!-- Monster being struck — right side, recoiling from echo -->
+        <g transform="translate(620,165)" opacity="0.85">
+          <ellipse cx="0" cy="10" rx="18" ry="28" fill="#5a2828" transform="rotate(12)"/>
+          <circle cx="6" cy="-18" r="11" fill="#5a2828"/>
+          <!-- Horns -->
+          <path d="M0,-28 Q-6,-40 -10,-44" stroke="#6a3828" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M13,-25 Q20,-36 24,-40" stroke="#6a3828" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Eyes — pained -->
+          <ellipse cx="2" cy="-20" rx="2" ry="1.5" fill="#c44030" opacity="0.6"/>
+          <ellipse cx="11" cy="-18" rx="2" ry="1.5" fill="#c44030" opacity="0.6"/>
+          <!-- Mouth -->
+          <ellipse cx="6" cy="-12" rx="4" ry="3.5" fill="#1a0808"/>
+          <!-- Arms flailing -->
+          <line x1="-12" y1="0" x2="-28" y2="-12" stroke="#5a2828" stroke-width="5" stroke-linecap="round"/>
+          <line x1="14" y1="-3" x2="28" y2="-16" stroke="#5a2828" stroke-width="5" stroke-linecap="round"/>
+          <!-- Legs buckling -->
+          <line x1="-6" y1="32" x2="-14" y2="52" stroke="#5a2828" stroke-width="6" stroke-linecap="round"/>
+          <line x1="8" y1="30" x2="14" y2="50" stroke="#5a2828" stroke-width="6" stroke-linecap="round"/>
+          <!-- Echo impact slash across body -->
+          <line x1="-14" y1="-5" x2="16" y2="18" stroke="#b080e0" stroke-width="2" opacity="0.6"/>
+          <line x1="-14" y1="-5" x2="16" y2="18" stroke="#e0c8f8" stroke-width="1" opacity="0.3"/>
+          <!-- Magic damage burst -->
+          <circle cx="2" cy="8" r="12" fill="#9068c0" opacity="0.1"/>
+          <circle cx="2" cy="8" r="6" fill="#b080e0" opacity="0.15"/>
+        </g>
+
+        <!-- Second monster — left side, already dying -->
+        <g transform="translate(260,175)" opacity="0.7">
+          <ellipse cx="0" cy="5" rx="16" ry="24" fill="#4a2222" transform="rotate(-15)"/>
+          <circle cx="-5" cy="-15" r="9" fill="#4a2222"/>
+          <!-- Horns -->
+          <path d="M-10,-22 Q-14,-32 -16,-36" stroke="#5a3020" stroke-width="2" stroke-linecap="round"/>
+          <path d="M2,-22 Q6,-30 10,-34" stroke="#5a3020" stroke-width="2" stroke-linecap="round"/>
+          <!-- Limbs going limp -->
+          <line x1="-12" y1="2" x2="-25" y2="15" stroke="#4a2222" stroke-width="4" stroke-linecap="round"/>
+          <line x1="10" y1="-2" x2="22" y2="8" stroke="#4a2222" stroke-width="4" stroke-linecap="round"/>
+          <line x1="-5" y1="26" x2="-12" y2="42" stroke="#4a2222" stroke-width="5" stroke-linecap="round"/>
+          <line x1="5" y1="24" x2="10" y2="40" stroke="#4a2222" stroke-width="5" stroke-linecap="round"/>
+          <!-- Echo slash wound -->
+          <line x1="-10" y1="-8" x2="10" y2="12" stroke="#9068c0" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="0" cy="2" r="8" fill="#9068c0" opacity="0.08"/>
+        </g>
+
+        <!-- Floating echo particles across the scene -->
+        <g opacity="0.4" fill="#b080e0">
+          <circle cx="350" cy="90" r="1.3"/>
+          <circle cx="520" cy="75" r="1"/>
+          <circle cx="380" cy="120" r="0.8"/>
+          <circle cx="560" cy="100" r="1.1"/>
+          <circle cx="310" cy="140" r="0.7"/>
+          <circle cx="580" cy="130" r="0.9"/>
+        </g>
+        <g opacity="0.25" fill="#9068c0">
+          <circle cx="200" cy="80" r="1.5"/>
+          <circle cx="680" cy="85" r="1.2"/>
+          <circle cx="240" cy="130" r="0.9"/>
+          <circle cx="650" cy="120" r="1"/>
+        </g>
+
+        <!-- Hellfire embers -->
+        <g opacity="0.3" fill="#c44030">
+          <circle cx="150" cy="50" r="0.8"/>
+          <circle cx="750" cy="55" r="0.6"/>
+          <circle cx="350" cy="30" r="0.7"/>
+          <circle cx="550" cy="25" r="0.5"/>
+          <circle cx="450" cy="45" r="0.6"/>
+        </g>
+
+        <!-- Ground blood/debris pools -->
+        <ellipse cx="250" cy="268" rx="20" ry="3" fill="#2a0808" opacity="0.25"/>
+        <ellipse cx="620" cy="266" rx="18" ry="3" fill="#2a0808" opacity="0.2"/>
+        <ellipse cx="440" cy="270" rx="25" ry="3" fill="#1a0510" opacity="0.2"/>
+      </svg>
+    </div>
+
+    <div class="header-text">
+      <div class="breadcrumb"><a href="guides.html">Diablo 2 Resurrected</a> &rsaquo; <a href="d2r-builds.html">Season 13</a> &rsaquo; Echoing Strike Warlock</div>
+      <h1>Echoing Strike Warlock</h1>
+      <div class="subtitle">Warlock &middot; Season 13: Reign of the Warlock &middot; #1 Ranked Build &middot; Magic Damage</div>
+    </div>
+    <div class="tag-row">
+      <span class="tag crimson">#1 Build</span>
+      <span class="tag stier">S-Tier</span>
+      <span class="tag purple">New Class</span>
+      <span class="tag magic">Magic Damage</span>
+      <span class="tag gold">FCR Scaling</span>
+    </div>
+  </div>
+
+  <!-- ==================== OVERVIEW ==================== -->
+  <section class="section" id="overview">
+    <h2>Overview</h2>
+    <p>The <strong>Warlock</strong> is the first new class added to Diablo 2: Resurrected, arriving in Season 13 &mdash; <em>Reign of the Warlock</em>. An arcane-melee hybrid that conjures astral weapon projections and curses, the Warlock completely reshapes the D2R meta. Its signature skill, <strong>Echoing Strike</strong>, creates ghostly copies of your weapon swing that boomerang outward through enemies and return for a second hit, dealing <strong>pure magic damage</strong>.</p>
+
+    <p>This build sits at #1 for one massive reason: <strong>almost nothing in the game is immune to magic damage.</strong> While Hammerdins deal magic damage too, the Warlock does it with better clear speed, built-in mobility via Blade Warp, and a curse that strips the few remaining resistances. You never need Infinity. You never need to skip packs. You just kill everything.</p>
+
+    <div class="callout magic">
+      <div class="callout-label">Why Magic Damage is King</div>
+      <p>In Hell difficulty, most monsters have immunity to at least one element &mdash; Fire, Cold, Lightning, or Poison. But <strong>magic damage immunity is extremely rare</strong>. Only a tiny handful of monsters in the entire game resist magic, and the Warlock's <strong>Hex: Purge</strong> curse can break even those. This means zero skipping, zero immunity headaches, and full clear potential in every area of the game.</p>
+    </div>
+
+    <h3>Warlock Class Identity</h3>
+    <ul class="picks">
+      <li><span class="label">Archetype</span> <span class="name">Arcane-Melee Hybrid</span> &mdash; <span class="note">scales with FCR, not IAS. Plays like a caster in melee range.</span></li>
+      <li><span class="label">Primary</span> <span class="name">Echoing Strike</span> &mdash; <span class="note">astral projections boomerang through packs, piercing and returning</span></li>
+      <li><span class="label">Mobility</span> <span class="name">Blade Warp</span> &mdash; <span class="note">pseudo-teleport: warp to target location, damaging enemies in the path</span></li>
+      <li><span class="label">Curse</span> <span class="name">Hex: Purge</span> &mdash; <span class="note">strips enemy resistances, breaks the rare magic immunes</span></li>
+      <li><span class="label">Buff</span> <span class="name">Mirrored Blades</span> &mdash; <span class="note">multiplies projections, massive damage scaling synergy</span></li>
+      <li><span class="label">Damage</span> <span class="name">Magic</span> &mdash; <span class="note">almost zero immunes in the entire game. Superior to elemental builds.</span></li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">Ladder Starter Friendly</div>
+      <p>Unlike Lightning Sorc (needs Infinity) or Hammerdin (needs Enigma for true endgame), the Echoing Strike Warlock functions on <strong>budget gear</strong> from day one. The new <strong>Authority</strong> runeword (leveling weapon) and <strong>Spirit</strong> shield carry you through Hell. This is the best ladder starter in Season 13.</p>
+    </div>
+  </section>
+
+  <!-- ==================== SKILLS ==================== -->
+  <section class="section" id="skills">
+    <h2>Skill Allocation</h2>
+    <p>The Warlock has three skill trees: <strong>Astral Blades</strong> (weapon projections), <strong>Hexes</strong> (curses and debuffs), and <strong>Dark Rites</strong> (buffs and utility). Echoing Strike lives in Astral Blades and benefits from heavy investment in synergies.</p>
+
+    <h3>Core Skills (80 Points)</h3>
+    <table class="skill-table">
+      <thead><tr><th>Skill</th><th>Points</th><th>Tree</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="skill-name">Echoing Strike</td><td><span class="skill-badge max">20</span></td><td>Astral Blades</td><td>Primary damage. Each point adds +18% magic damage and +1 echo range.</td></tr>
+        <tr><td class="skill-name">Mirrored Blades</td><td><span class="skill-badge max">20</span></td><td>Astral Blades</td><td>+14% Echoing Strike damage per point. At 20, adds 2 additional projections per cast.</td></tr>
+        <tr><td class="skill-name">Blade Warp</td><td><span class="skill-badge max">20</span></td><td>Astral Blades</td><td>Mobility + synergy. +12% Echoing Strike damage per point. Teleport-like repositioning.</td></tr>
+        <tr><td class="skill-name">Hex: Purge</td><td><span class="skill-badge max">20</span></td><td>Hexes</td><td>-100% enemy magic resistance at level 20. Breaks magic immunes. Critical for bosses.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Utility Skills (20+ Points)</h3>
+    <table class="skill-table">
+      <thead><tr><th>Skill</th><th>Points</th><th>Tree</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="skill-name">Spectral Shield</td><td><span class="skill-badge high">10-15</span></td><td>Dark Rites</td><td>Magic damage absorb. 15% at level 10. Your survivability layer.</td></tr>
+        <tr><td class="skill-name">Dark Pact</td><td><span class="skill-badge pts">1</span></td><td>Dark Rites</td><td>Prerequisite. Life-for-mana trade. Emergency sustain in long fights.</td></tr>
+        <tr><td class="skill-name">Astral Blade Mastery</td><td><span class="skill-badge pts">1</span></td><td>Astral Blades</td><td>Prerequisite. Each point adds +8% attack rating for projections.</td></tr>
+        <tr><td class="skill-name">Hex: Wither</td><td><span class="skill-badge pts">1</span></td><td>Hexes</td><td>Slows enemies 30%. Quality of life for kiting dangerous packs.</td></tr>
+        <tr><td class="skill-name">Soul Harvest</td><td><span class="skill-badge pts">1</span></td><td>Dark Rites</td><td>Mana on kill. 1 point returns enough mana to sustain without potions in dense areas.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-label">Remaining Points</div>
+      <p>After core skills and utility, dump remaining points into <strong>Spectral Shield</strong> for survivability or <strong>Astral Blade Mastery</strong> for attack rating if you're missing in Hell. Most builds finish with 5-8 flex points around level 85.</p>
+    </div>
+  </section>
+
+  <!-- ==================== STATS ==================== -->
+  <section class="section" id="stats">
+    <h2>Stat Allocation</h2>
+    <p>The Warlock follows the classic D2 stat distribution with one twist: because Echoing Strike scales with FCR (not IAS), you don't need Dexterity for attack speed. Put just enough for gear, then dump everything into Vitality.</p>
+
+    <div class="stats">
+      <div class="stat-box"><div class="stat-label">Strength</div><div class="stat-val">156</div></div>
+      <div class="stat-box primary"><div class="stat-label">Dexterity</div><div class="stat-val">Base</div></div>
+      <div class="stat-box primary"><div class="stat-label">Vitality</div><div class="stat-val">All</div></div>
+      <div class="stat-box"><div class="stat-label">Energy</div><div class="stat-val">Base</div></div>
+    </div>
+
+    <table class="skill-table">
+      <thead><tr><th>Attribute</th><th>Target</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="skill-name">Strength</td><td><span class="skill-badge high">156</span></td><td>Enough for Monarch shield (Spirit) and endgame armor. Use gear bonuses to reduce this &mdash; every point saved goes to Vitality.</td></tr>
+        <tr><td class="skill-name">Dexterity</td><td><span class="skill-badge pts">Base</span></td><td>No block build. Echoing Strike doesn't use attack rating in the traditional sense &mdash; projections auto-hit. Keep at base unless going max block variant (75% block with Stormshield = ~130 Dex).</td></tr>
+        <tr><td class="skill-name">Vitality</td><td><span class="skill-badge max">Everything</span></td><td>Every remaining point goes here. The Warlock has a solid life-per-vitality ratio (3 HP per point). Target 2500+ life with gear and charms.</td></tr>
+        <tr><td class="skill-name">Energy</td><td><span class="skill-badge prereq">Base</span></td><td>Never put points here. Soul Harvest + mana potions + Insight on merc handle sustain. Endgame gear provides plenty of mana.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <div class="callout-label">Max Block Variant</div>
+      <p>Some players opt for max block (75%) using <strong>Stormshield</strong> or the new <strong>Void</strong> runeword. This requires ~130 Dexterity depending on level, which costs ~100 Vitality points. The tradeoff is debatable &mdash; you gain physical damage reduction but lose ~300 HP. For hardcore, max block is standard. For softcore, the Vitality dump is generally better.</p>
+    </div>
+  </section>
+
+  <!-- ==================== PROGRESSION ==================== -->
+  <section class="section" id="progression">
+    <h2>Progression</h2>
+    <p style="color:var(--text-dim);margin-bottom:1rem;">Click to expand each phase. The Warlock has a smooth leveling curve thanks to Echoing Strike being available from level 1.</p>
+
+    <!-- Normal -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 1&ndash;30</span>
+        <span class="lv-title">Normal &mdash; Foundation</span>
+        <span class="lv-spike">Power Spike: Echoing Strike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Echoing Strike to 20</span>
+          <span class="qp curse">Hex: Purge 1pt</span>
+          <span class="qp spell">Blade Warp 1pt</span>
+          <span class="qp gear">Authority Runeword</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Lvl 1-6</span> <span class="name">Echoing Strike + basic swing</span> &mdash; <span class="note">put every point into Echoing Strike. One-point Astral Blade Mastery as prereq at level 1.</span></li>
+          <li><span class="label">Lvl 6</span> <span class="name">Blade Warp (1 point)</span> &mdash; <span class="note">mobility unlocked. Use this to reposition and skip dangerous packs if needed.</span></li>
+          <li><span class="label">Lvl 12</span> <span class="name">Hex: Purge (1 point)</span> &mdash; <span class="note">curse for bosses. Cast before engaging Andariel, Duriel, etc.</span></li>
+          <li><span class="label">Lvl 18</span> <span class="name">Mirrored Blades (1 point)</span> &mdash; <span class="note">extra projection. Noticeable clear speed increase.</span></li>
+          <li><span class="label">Weapon</span> <span class="name">Authority runeword</span> &mdash; <span class="note">Ral + Ort + Tal in a scepter/mace. +2 Warlock skills, 20% FCR. Available from Normal Act 1.</span></li>
+          <li><span class="label">Shield</span> <span class="name">Ancients' Pledge</span> &mdash; <span class="note">Ral + Ort + Tal in a 3os shield. Free from Act 5 quest. Solid resists.</span></li>
+          <li><span class="label">Armor</span> <span class="name">Stealth</span> &mdash; <span class="note">Tal + Eth in a 2os armor. 25% FCR. Essential leveling runeword.</span></li>
+          <li><span class="label">Goal</span> <span class="name">Rush through Normal</span> &mdash; <span class="note">Echoing Strike melts Normal. Don't overlevel &mdash; push to Nightmare by level 30.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:.5rem;">
+          <div class="callout-label">The Warlock's Smooth Start</div>
+          <p>Unlike most D2 builds that struggle in Normal (looking at you, Hammerdin), the Warlock's Echoing Strike is effective from level 1. The projections pierce, so even without synergies, you clear packs efficiently. Enjoy the smoothest Normal playthrough in D2R.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Nightmare -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 31&ndash;60</span>
+        <span class="lv-title">Nightmare &mdash; Synergy Stacking</span>
+        <span class="lv-spike">Power Spike: Mirrored Blades Maxed</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Mirrored Blades to 20</span>
+          <span class="qp skill">Start Blade Warp</span>
+          <span class="qp gear">Spirit Sword</span>
+          <span class="qp gear">Spirit Shield (Monarch)</span>
+          <span class="qp gear">Lore Helm</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Lvl 30-45</span> <span class="name">Max Mirrored Blades</span> &mdash; <span class="note">every point here adds +14% to Echoing Strike AND at level 20 you gain 2 extra projections. Huge damage jump.</span></li>
+          <li><span class="label">Lvl 45-55</span> <span class="name">Begin Blade Warp</span> &mdash; <span class="note">start dumping into Blade Warp for the +12% Echoing Strike synergy.</span></li>
+          <li><span class="label">Weapon</span> <span class="name">Spirit Crystal Sword</span> &mdash; <span class="note">Tal + Thul + Ort + Amn. +2 all skills, 35% FCR, mana, vitality. THE budget weapon.</span></li>
+          <li><span class="label">Shield</span> <span class="name">Spirit Monarch</span> &mdash; <span class="note">same runes. +2 skills, 35% FCR. Need 156 Str for Monarch. Hits the 70% FCR breakpoint with Spirit/Spirit + Stealth.</span></li>
+          <li><span class="label">Helm</span> <span class="name">Lore</span> &mdash; <span class="note">Ort + Sol. +1 all skills, lightning resist. Cheap and effective.</span></li>
+          <li><span class="label">Boots</span> <span class="name">Rare/Craft with FRW + Resists</span> &mdash; <span class="note">look for 30% FRW, resists, and life. Upgrade when you find Sandstorm Treks.</span></li>
+          <li><span class="label">Goal</span> <span class="name">Farm NM Baal to 60</span> &mdash; <span class="note">Nightmare Baal runs are efficient from 55-60. Stack resists for Hell.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Hell -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 61&ndash;85+</span>
+        <span class="lv-title">Hell &mdash; Endgame Domination</span>
+        <span class="lv-spike">Power Spike: Void Shield</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp skill">Max Blade Warp</span>
+          <span class="qp skill">Max Hex: Purge</span>
+          <span class="qp skill">Spectral Shield 10+</span>
+          <span class="qp gear">Void Shield</span>
+          <span class="qp gear">Harlequin Crest</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Lvl 60-70</span> <span class="name">Max Blade Warp</span> &mdash; <span class="note">complete the synergy trifecta. Your Echoing Strike now has +520% synergy damage.</span></li>
+          <li><span class="label">Lvl 70-85</span> <span class="name">Max Hex: Purge + fill Spectral Shield</span> &mdash; <span class="note">Purge at 20 strips -100% magic resist, breaking any magic immune. Spectral Shield for defense.</span></li>
+          <li><span class="label">Shield</span> <span class="name">Void runeword (Season 13)</span> &mdash; <span class="note">THE endgame shield. 40% FCR, +2 skills, 15% magic skill damage. Replaces Spirit Monarch.</span></li>
+          <li><span class="label">Weapon</span> <span class="name">Heart of the Oak (Hoto)</span> &mdash; <span class="note">+3 all skills, 40% FCR, resists. Best-in-slot weapon for pure caster scaling.</span></li>
+          <li><span class="label">Armor</span> <span class="name">Enigma</span> &mdash; <span class="note">+2 skills, teleport, MF, strength. Even with Blade Warp, Enigma's utility is unmatched.</span></li>
+          <li><span class="label">Goal</span> <span class="name">Farm everything</span> &mdash; <span class="note">with no immunities to worry about, the entire game is your playground. Run Chaos Sanctuary, Baal, Cows, Pits &mdash; whatever drops what you need.</span></li>
+        </ul>
+        <div class="callout" style="margin-top:.5rem;">
+          <div class="callout-label">The Immunity Advantage</div>
+          <p>While Blizzard Sorcs skip Cold Immunes and Hammerdins struggle with tight corridors, the Echoing Strike Warlock clears <strong>every single area</strong> in Hell at full speed. This makes it the most versatile MF build and the most efficient ladder farmer in Season 13.</p>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ==================== GEAR BUDGET ==================== -->
+  <section class="section" id="gear-budget">
+    <h2>Gear &mdash; Budget / Ladder Start</h2>
+    <p>This is what you aim for at the start of a ladder season. All of these items are self-found or cheap to trade for in the first few days.</p>
+
+    <div class="gear-grid">
+      <div class="gear-card">
+        <div class="gear-slot">Weapon</div>
+        <div class="gear-item runeword">Authority</div>
+        <div class="gear-notes">Ral + Ort + Tal in Scepter/Mace. +2 Warlock, 20% FCR, +15 all resist. The Warlock's Leaf equivalent.</div>
+        <div class="gear-alt">Upgrade to: Spirit Crystal Sword (35% FCR)</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Shield</div>
+        <div class="gear-item runeword">Spirit Monarch</div>
+        <div class="gear-notes">Tal + Thul + Ort + Amn. +2 skills, 35% FCR, 55% FHR, mana, vitality. THE shield until Void.</div>
+        <div class="gear-alt">Early: Ancients' Pledge (resists)</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Helm</div>
+        <div class="gear-item runeword">Lore</div>
+        <div class="gear-notes">Ort + Sol in 2os helm. +1 all skills, 30% lightning resist, +10 energy.</div>
+        <div class="gear-alt">Upgrade to: Peasant Crown (+1 skills, FRW, Vit)</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Armor</div>
+        <div class="gear-item runeword">Stealth</div>
+        <div class="gear-notes">Tal + Eth in 2os armor. 25% FCR, 25% FRW, FHR, mana regen. Best leveling armor in D2.</div>
+        <div class="gear-alt">Upgrade to: Vipermagi (30% FCR, +1 skills, resists)</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Gloves</div>
+        <div class="gear-item rare">Rare FCR Gloves</div>
+        <div class="gear-notes">Look for 20% FCR + resists + life. Craft Blood gloves for life leech if desperate.</div>
+        <div class="gear-alt">Upgrade to: Magefist (20% FCR, +1 Fire, mana regen)</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Boots</div>
+        <div class="gear-item rare">Rare Resist Boots</div>
+        <div class="gear-notes">30% FRW + fire/lightning resist. Replace ASAP with uniques.</div>
+        <div class="gear-alt">Upgrade to: Sandstorm Trek (FHR, Str, Vit, poison resist)</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Belt</div>
+        <div class="gear-item unique">Goldwrap</div>
+        <div class="gear-notes">30% MF, 10% IAS (irrelevant but the MF is nice early). Easy to find.</div>
+        <div class="gear-alt">Upgrade to: Arachnid Mesh (20% FCR, +1 skills)</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Amulet</div>
+        <div class="gear-item magic-item">+2 Warlock Skills Ammy</div>
+        <div class="gear-notes">Any +2 Warlock skills amulet. Add FCR or resists if possible. Craft caster amulets when you can.</div>
+        <div class="gear-alt">Upgrade to: Mara's Kaleidoscope (+2, 20-30 all res)</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Ring 1</div>
+        <div class="gear-item rare">Rare FCR Ring</div>
+        <div class="gear-notes">10% FCR + life + resist. Essential for hitting FCR breakpoints early.</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Ring 2</div>
+        <div class="gear-item rare">Rare FCR Ring</div>
+        <div class="gear-notes">Another 10% FCR ring. Stack life and resists.</div>
+        <div class="gear-alt">Upgrade to: SoJ (+1 skills, +20 mana) or BK Ring</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Budget FCR Breakpoint</div>
+      <p>With Spirit Sword (35) + Spirit Shield (35) + Stealth (25) you already hit <strong>95% FCR</strong>, which is likely above the Warlock's key breakpoint. If using Authority (20 FCR), pair with Spirit Shield + Stealth + an FCR ring to reach 90+. Exact breakpoints in the FCR section below.</p>
+    </div>
+  </section>
+
+  <!-- ==================== GEAR BIS ==================== -->
+  <section class="section" id="gear-bis">
+    <h2>Gear &mdash; Best in Slot</h2>
+    <p>Endgame gear for the fully optimized Echoing Strike Warlock. This is your target after the first week of ladder.</p>
+
+    <div class="gear-grid">
+      <div class="gear-card">
+        <div class="gear-slot">Weapon</div>
+        <div class="gear-item runeword">Heart of the Oak (Hoto)</div>
+        <div class="gear-notes">Ko + Vex + Pul + Thul in Flail. +3 all skills, 40% FCR, 30-40 all resist, +10 Dex. Best caster weapon in the game.</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Shield</div>
+        <div class="gear-item runeword">Void</div>
+        <div class="gear-notes">Season 13 runeword. 40% FCR, +2 all skills, 15% magic skill damage, 10% damage reduction. THE Warlock shield. Replaces Spirit.</div>
+        <div class="gear-alt">Alternative: Spirit Monarch (budget) or Stormshield (max block)</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Helm</div>
+        <div class="gear-item unique">Harlequin Crest (Shako)</div>
+        <div class="gear-notes">+2 skills, +1.5 life/mana per level, 10% DR, 50% MF. Socket with Um (resist) or Ist (MF) or 5/5 magic facet.</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Armor</div>
+        <div class="gear-item runeword">Enigma</div>
+        <div class="gear-notes">Jah + Ith + Ber. +2 skills, Teleport, +0.75 Str/level, MF, damage reduction. Even with Blade Warp, Enigma is superior for map traversal and has +Str that lets you dump more into Vit.</div>
+        <div class="gear-alt">Alternative: Chains of Honor (+2 skills, 65 all resist, 8% DR)</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Gloves</div>
+        <div class="gear-item unique">Magefist</div>
+        <div class="gear-notes">20% FCR, +1 Fire skills (irrelevant), 25% mana regen. The FCR is what matters.</div>
+        <div class="gear-alt">Alternative: Trang-Oul's Claws (25% FCR, +25% Poison &mdash; FCR only)</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Boots</div>
+        <div class="gear-item unique">Sandstorm Trek</div>
+        <div class="gear-notes">20% FHR, +10-15 Str, +10-15 Vit, 40-70% poison resist. Best all-around caster boots.</div>
+        <div class="gear-alt">Alternative: War Traveler (MF variant, 30-50% MF)</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Belt</div>
+        <div class="gear-item unique">Arachnid Mesh</div>
+        <div class="gear-notes">+1 all skills, 20% FCR, 5% max mana, slows target 10%. Best caster belt. Non-negotiable endgame.</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Amulet</div>
+        <div class="gear-item unique">Mara's Kaleidoscope</div>
+        <div class="gear-notes">+2 all skills, 20-30 all resist, +5 all attributes. Perfect balance of offense and defense.</div>
+        <div class="gear-alt">Alternative: +2 Warlock / 20% FCR / resist crafted amulet</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Ring 1</div>
+        <div class="gear-item unique">Stone of Jordan</div>
+        <div class="gear-notes">+1 all skills, +20 mana, +25% max mana. Massive skill boost and mana pool.</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Ring 2</div>
+        <div class="gear-item unique">Bul-Kathos' Wedding Band</div>
+        <div class="gear-notes">+1 all skills, 3-5% life leech, +50 life. Life leech doesn't apply to echoes, but the +skill and life are excellent.</div>
+        <div class="gear-alt">Alternative: 10 FCR / life / resist rare ring (if needing breakpoint)</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Charm Inventory</div>
+      <p><strong>Annihilus</strong> (small charm) + <strong>Hellfire Torch</strong> (large charm, Warlock class) are mandatory. Fill remaining inventory with <strong>Warlock skill GCs</strong> (Grand Charms with +1 Astral Blades) and <strong>20 life / 5 resist small charms</strong>. A single CTA on weapon swap for Battle Orders rounds out the build.</p>
+    </div>
+  </section>
+
+  <!-- ==================== NEW RUNEWORDS ==================== -->
+  <section class="section" id="runewords">
+    <h2>Season 13 Runewords</h2>
+    <p>Four new runewords were introduced in Reign of the Warlock. Here's how each one impacts this build.</p>
+
+    <table class="rw-table">
+      <thead><tr><th>Runeword</th><th>Runes / Base</th><th>Key Stats</th><th>Build Impact</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="rw-name">Void</span><span class="rw-new">New S13</span></td>
+          <td class="rw-runes">Vex + Ohm + Ist + Eld<br>4os Shield</td>
+          <td class="rw-stats">+2 All Skills<br>40% FCR<br>15% Magic Skill Damage<br>10% Damage Reduction<br>+30 All Resist<br>+100 Mana</td>
+          <td class="rw-stats"><strong style="color:var(--accent-hover)">BEST IN SLOT SHIELD.</strong> 15% magic skill damage is a unique multiplier &mdash; it applies AFTER all other bonuses. The 40% FCR matches Spirit while adding massive offensive and defensive stats. This is the item that pushes Warlock to #1.</td>
+        </tr>
+        <tr>
+          <td><span class="rw-name">Authority</span><span class="rw-new">New S13</span></td>
+          <td class="rw-runes">Ral + Ort + Tal<br>3os Scepter/Mace</td>
+          <td class="rw-stats">+2 Warlock Skills<br>20% FCR<br>+15 All Resist<br>+40 Mana<br>+20 Life</td>
+          <td class="rw-stats"><strong style="color:var(--gold)">Best leveling weapon.</strong> Uses the same runes as Ancients' Pledge. Available from Normal Act 1. Carries the Warlock through Normal and into Nightmare until Spirit becomes available.</td>
+        </tr>
+        <tr>
+          <td><span class="rw-name">Ritual</span><span class="rw-new">New S13</span></td>
+          <td class="rw-runes">Mal + Ist + Gul + Vex<br>4os Body Armor</td>
+          <td class="rw-stats">+3 Warlock Skills<br>20% FCR<br>+10% Magic Skill Damage<br>+20 All Resist<br>10% MF</td>
+          <td class="rw-stats"><strong style="color:var(--gold)">Warlock-specific armor.</strong> +3 Warlock skills and 10% magic skill damage make this competitive with Enigma for pure damage. No teleport, though. Use if you don't have Enigma or prefer raw damage over mobility.</td>
+        </tr>
+        <tr>
+          <td><span class="rw-name">Coven</span><span class="rw-new">New S13</span></td>
+          <td class="rw-runes">Um + Mal + Ist<br>3os Helm</td>
+          <td class="rw-stats">+2 Warlock Skills<br>20% FCR<br>+10% Magic Skill Damage<br>+30 All Resist<br>+15 Energy</td>
+          <td class="rw-stats"><strong style="color:var(--gold)">Alternative to Shako.</strong> Trades Shako's DR and MF for 10% magic skill damage and FCR. Use when you need FCR from the helm slot to hit a breakpoint, or when farming content where DR doesn't matter.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout magic">
+      <div class="callout-label">Magic Skill Damage is Multiplicative</div>
+      <p>The "% Magic Skill Damage" modifier on Void, Ritual, and Coven is a <strong>separate multiplier</strong> that applies after +skills, synergies, and other bonuses. With Void (15%) + Ritual (10%) + Coven (10%), you get a total 1.35x damage multiplier on top of everything else. This is why the Warlock's ceiling is so much higher than Hammerdin despite dealing the same damage type.</p>
+    </div>
+  </section>
+
+  <!-- ==================== FCR BREAKPOINTS ==================== -->
+  <section class="section" id="fcr">
+    <h2>FCR Breakpoints</h2>
+    <p>Echoing Strike scales with Faster Cast Rate, not Increased Attack Speed. The Warlock has unique breakpoints similar to the Sorceress. Hitting the right breakpoint is critical for clear speed.</p>
+
+    <table class="bp-table">
+      <thead><tr><th>FCR %</th><th>Frames</th><th>Casts/Sec</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="bp-val">0%</td><td class="bp-frames">15</td><td>1.66</td><td>Base cast speed. Painfully slow.</td></tr>
+        <tr><td class="bp-val">9%</td><td class="bp-frames">14</td><td>1.78</td><td>Minimal improvement.</td></tr>
+        <tr><td class="bp-val">20%</td><td class="bp-frames">13</td><td>1.92</td><td>Authority alone hits this.</td></tr>
+        <tr><td class="bp-val">37%</td><td class="bp-frames">12</td><td>2.08</td><td>Spirit weapon or shield alone.</td></tr>
+        <tr><td class="bp-val">52%</td><td class="bp-frames">11</td><td>2.27</td><td>Comfortable early Hell.</td></tr>
+        <tr class="bp-row-active"><td class="bp-val bp-target">78%</td><td class="bp-frames">10</td><td>2.50</td><td><strong>Primary target.</strong> Hoto (40) + Void (40) = 80%. Easy to hit.</td></tr>
+        <tr class="bp-row-active"><td class="bp-val bp-target">105%</td><td class="bp-frames">9</td><td>2.77</td><td><strong>Optimal target.</strong> Hoto + Void + Arachnid + Magefist = 120%. Smooth.</td></tr>
+        <tr><td class="bp-val">152%</td><td class="bp-frames">8</td><td>3.12</td><td>Maximum. Not practical to reach without sacrificing too many other stats.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-label">Target: 105% FCR</div>
+      <p>The <strong>105% breakpoint (9 frames)</strong> is the sweet spot for endgame. With Hoto (40) + Void (40) + Arachnid (20) + Magefist (20) = <strong>120% FCR</strong>, you comfortably exceed 105% with room to swap gear. This gives you 2.77 casts per second, which translates to 2.77 Echoing Strikes launching projections into packs every second. The difference between 10 and 9 frames is enormous for clear speed.</p>
+    </div>
+  </section>
+
+  <!-- ==================== MERCENARY ==================== -->
+  <section class="section" id="mercenary">
+    <h2>Mercenary</h2>
+    <p>Act 2 Nightmare mercenary remains the best choice for the Warlock. The aura provides a defensive or offensive buff that the Warlock's own skill trees lack.</p>
+
+    <div class="merc-card">
+      <div class="merc-title">Act 2 Nightmare &mdash; Holy Freeze (Defensive)</div>
+      <div class="merc-detail"><strong>Aura:</strong> Holy Freeze &mdash; slows all enemies in range. Provides crowd control that stacks with Hex: Wither for near-frozen packs. The Warlock doesn't need Conviction (no elemental damage) or Might (projections don't scale with physical). Holy Freeze is pure quality of life.</div>
+    </div>
+
+    <h3>Mercenary Gear</h3>
+    <div class="gear-grid">
+      <div class="gear-card">
+        <div class="gear-slot">Weapon</div>
+        <div class="gear-item runeword">Insight</div>
+        <div class="gear-notes">Ral + Tir + Tal + Sol in Polearm. Meditation aura gives massive mana regen. Solves all mana problems permanently.</div>
+        <div class="gear-alt">Endgame: Infinity (if running with elemental party members)</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Armor</div>
+        <div class="gear-item runeword">Treachery</div>
+        <div class="gear-notes">Shael + Thul + Lem. 45% IAS, Fade proc (60 all resist, 15% DR). Keeps your merc alive through Hell. Budget and effective.</div>
+        <div class="gear-alt">Endgame: Fortitude (300% ED, resists, life)</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-slot">Helm</div>
+        <div class="gear-item unique">Tal Rasha's Horadric Crest</div>
+        <div class="gear-notes">10% life leech, 10% mana leech, 45 all resist, 30 life. Cheap, keeps merc alive. Available early.</div>
+        <div class="gear-alt">Endgame: Andariel's Visage (20% IAS, 10% LL, +2 skills, socketed with Ral for fire resist)</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Insight over Infinity</div>
+      <p>Most caster builds eventually upgrade their merc weapon to Infinity for the Conviction aura. <strong>The Warlock does not need Infinity.</strong> Magic damage doesn't benefit from -enemy resistance from Conviction (it only reduces Fire/Cold/Lightning resist). Keep Insight for the mana sustain &mdash; it's better for this build specifically.</p>
+    </div>
+  </section>
+
+  <!-- ==================== PLAYSTYLE ==================== -->
+  <section class="section" id="playstyle">
+    <h2>Playstyle &mdash; Combat Rotation</h2>
+    <p>The Echoing Strike Warlock plays like a mid-range caster with teleport-like mobility. Here's the optimal combat flow.</p>
+
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Blade Warp into pack density</span>
+        <div class="step-detail">Use Blade Warp to teleport into the center of a pack. The warp itself deals damage along the path. Position yourself so Echoing Strike projections will travel through the maximum number of enemies.</div>
+      </li>
+      <li>
+        <span class="step-action">Cast Hex: Purge on dangerous targets</span>
+        <div class="step-detail">Pre-curse bosses, champions, and unique monsters. The -100% magic resistance at max level makes even resistant targets melt. For normal packs, skip this step &mdash; they die too fast to bother cursing.</div>
+      </li>
+      <li>
+        <span class="step-action">Spam Echoing Strike</span>
+        <div class="step-detail">Hold down Echoing Strike and aim through pack centers. Each cast sends astral projections outward that pierce through enemies, then boomerang back through them for a second hit. With Mirrored Blades maxed, you launch 4+ projections per cast. At the 105% FCR breakpoint, you're launching ~11 projections per second.</div>
+      </li>
+      <li>
+        <span class="step-action">Reposition with Blade Warp</span>
+        <div class="step-detail">If enemies close in or you need to dodge a dangerous attack, Blade Warp out. With Enigma, you can also use Teleport for faster repositioning in open areas. Blade Warp is better in tight corridors because it damages along the path.</div>
+      </li>
+      <li>
+        <span class="step-action">Use Hex: Wither for crowd control</span>
+        <div class="step-detail">Against extra-fast or extra-strong packs, cast Hex: Wither to slow them. Combined with your merc's Holy Freeze, enemies become nearly stationary. This is your "oh no" button for dangerous packs in hardcore.</div>
+      </li>
+      <li>
+        <span class="step-action">Dark Pact for emergency mana</span>
+        <div class="step-detail">If you run dry on mana (rare with Insight merc), Dark Pact converts life to mana. Use sparingly &mdash; it's a panic button, not a sustain tool. Pop a rejuv immediately after if low on life.</div>
+      </li>
+    </ol>
+
+    <div class="callout">
+      <div class="callout-label">Clear Speed Context</div>
+      <p>An optimally geared Echoing Strike Warlock clears Chaos Sanctuary in under 2 minutes solo, comparable to a fully geared Hammerdin. The key difference is that the Warlock never has to path around magic-immune monsters (there are essentially none), making runs more consistent. Cow Level runs are even faster due to the open layout and dense packs.</p>
+    </div>
+  </section>
+
+  <!-- ==================== FARMING ==================== -->
+  <section class="section" id="farming">
+    <h2>Farming Spots</h2>
+    <p>The Warlock's magic damage means <strong>every area in Hell is farmable</strong>. Here are the most efficient spots, ranked.</p>
+
+    <div class="farm-grid">
+      <div class="farm-card">
+        <div class="farm-act">Act 4 &mdash; Hell</div>
+        <div class="farm-area">Chaos Sanctuary <span class="farm-tier s">S-Tier</span></div>
+        <div class="farm-notes">Best overall farming spot. Dense packs, three seal bosses, Diablo kill. Drops every item in the game. No immunes to worry about. ~2 min runs.</div>
+      </div>
+      <div class="farm-card">
+        <div class="farm-act">Act 1 &mdash; Hell</div>
+        <div class="farm-area">Cow Level <span class="farm-tier s">S-Tier</span></div>
+        <div class="farm-notes">Incredible density for Echoing Strike. Projections pierce through entire cow herds. Best area for rune farming. ~1.5 min clears.</div>
+      </div>
+      <div class="farm-card">
+        <div class="farm-act">Act 5 &mdash; Hell</div>
+        <div class="farm-area">Baal Runs <span class="farm-tier s">S-Tier</span></div>
+        <div class="farm-notes">Best XP in the game. The five waves are trivial with Echoing Strike. Baal himself melts under Hex: Purge. ~3 min runs including Throne.</div>
+      </div>
+      <div class="farm-card">
+        <div class="farm-act">Act 1 &mdash; Hell</div>
+        <div class="farm-area">The Pit (Tamoe Highland) <span class="farm-tier a">A-Tier</span></div>
+        <div class="farm-notes">Level 85 area. Easy monsters, compact layout. Good for MF runs. Drops all items. ~1 min clears.</div>
+      </div>
+      <div class="farm-card">
+        <div class="farm-act">Act 3 &mdash; Hell</div>
+        <div class="farm-area">Travincal <span class="farm-tier a">A-Tier</span></div>
+        <div class="farm-notes">Council members drop high runes at elevated rates. Quick runs &mdash; Blade Warp in, Echoing Strike, collect loot. ~30 sec per run.</div>
+      </div>
+      <div class="farm-card">
+        <div class="farm-act">Act 5 &mdash; Hell</div>
+        <div class="farm-area">Worldstone Keep <span class="farm-tier a">A-Tier</span></div>
+        <div class="farm-notes">Level 85 area. Dense packs through three floors. Run this on the way to Baal for extra drops and XP.</div>
+      </div>
+      <div class="farm-card">
+        <div class="farm-act">Act 2 &mdash; Hell</div>
+        <div class="farm-area">Ancient Tunnels <span class="farm-tier a">A-Tier</span></div>
+        <div class="farm-notes">Level 85 area. Traditionally the Cold Sorc spot (no cold immunes), but the Warlock clears it just as fast with zero restrictions.</div>
+      </div>
+      <div class="farm-card">
+        <div class="farm-act">Act 1 &mdash; Hell</div>
+        <div class="farm-area">Countess Runs <span class="farm-tier a">A-Tier</span></div>
+        <div class="farm-notes">Rune farming. The Warlock doesn't care about the tower's fire/cold immunes. Run Countess for early-season rune accumulation.</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Farm Rotation Suggestion</div>
+      <p><strong>High efficiency loop:</strong> Countess &rarr; Pit &rarr; Travincal &rarr; Chaos Sanctuary &rarr; Baal &rarr; Cows. This loop hits every major drop table in the game, covers all rune tiers, and takes roughly 12-15 minutes per cycle with endgame gear. No other build can run this full rotation without skipping areas.</p>
+    </div>
+  </section>
+
+  <!-- ==================== TIPS ==================== -->
+  <section class="section" id="tips">
+    <h2>Season 13 Tips</h2>
+
+    <div class="callout magic">
+      <div class="callout-label">The Warlock is NOT a Melee Class</div>
+      <p>Despite swinging a weapon, the Warlock functions as a <strong>caster</strong>. Echoing Strike's damage comes from the astral projections, not the physical hit. The projections scale with <strong>+skills, FCR, and synergies</strong> &mdash; not weapon damage, IAS, or physical stats. Stack caster gear, not melee gear. Spirit/Hoto outperforms any physical weapon by miles.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Hex: Purge vs. Lower Resist</div>
+      <p>Hex: Purge reduces <strong>magic resistance</strong> specifically, which is different from the Necromancer's Lower Resist curse. They can stack in party play. If you're in a group with a Necromancer, coordinate curses for maximum resistance reduction on bosses. Your Purge handles magic immunes; their Lower Resist handles elemental immunes for the party's other damage dealers.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Blade Warp Has No Cooldown</div>
+      <p>Unlike Teleport (which has a natural delay between casts for non-Sorceress classes), Blade Warp is <strong>instant cast with no cooldown</strong>. You can spam it for repositioning just like a Sorceress with Teleport. However, it has a shorter range (~2/3 of Teleport distance). For long-distance travel across open maps, Enigma's Teleport is superior. Use Blade Warp for combat repositioning and Teleport for map traversal.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Warlock Cannot Use All Weapon Types</div>
+      <p>The Warlock class can only equip <strong>Scepters, Maces, Swords, and Daggers</strong>. Axes, Polearms, Spears, Bows, and Claws are NOT equippable. This doesn't matter much since Hoto (Flail = Mace) and Spirit (Crystal Sword) are both usable, but be aware when shopping for weapons. Don't accidentally make a runeword in a weapon type the Warlock can't use.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Spectral Shield Stacks with Other DR</div>
+      <p>The Warlock's <strong>Spectral Shield</strong> provides magic damage absorb that stacks with physical damage reduction from gear (Shako's 10% DR, Void's 10% DR, etc.). At level 10, Spectral Shield absorbs ~15% of incoming magic damage. Combined with Shako + Void, you have 35% DR against physical and 15% against magic. This makes the Warlock surprisingly tanky for a "caster" build.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Charm Priority</div>
+      <p>Warlock-specific Hellfire Torches exist in Season 13. A Warlock Torch with +3 skills / +20 resist / +20 attributes is extremely valuable early in the season. <strong>Anni + Torch first, then Astral Blades skillers with +life.</strong> Small charms should be 20 life / 5 resist or 20 life / 5% FHR if you need the FHR breakpoint.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Hardcore Considerations</div>
+      <p>For hardcore, swap to the <strong>max block variant</strong> with Stormshield (or Void if you can hit 75% block with Dex investment). Add a Call to Arms on weapon switch for Battle Orders (+life). Consider Holy Freeze merc (standard) and keep Hex: Wither on your right-click for emergency crowd control. The Warlock is one of the safest HC classes thanks to Blade Warp's instant repositioning and Spectral Shield's damage absorb.</p>
+    </div>
+
+    <div class="callout magic">
+      <div class="callout-label">Party Play Value</div>
+      <p>The Warlock is a top-tier party member. <strong>Hex: Purge</strong> benefits the entire party by stripping magic resistance from enemies. In a Baal run group, the Warlock's curse makes the Hammerdin's Blessed Hammer deal significantly more damage to high-resist targets. You're not just a DPS &mdash; you're a force multiplier for the party's other magic damage dealers.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="guide-footer">
+    <p>Diablo II: Resurrected &middot; Season 13: Reign of the Warlock &middot; Echoing Strike Warlock Build Guide</p>
+    <p><a href="d2r-builds.html">All D2R Builds</a> &middot; <a href="guides.html">All Game Guides</a> &middot; <a href="index.html">Home</a></p>
+  </div>
+
+</main>
+</div>
+
+<script>
+// Scroll reveal
+const sections=document.querySelectorAll('.section');
+const revealObserver=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');revealObserver.unobserve(entry.target)}});
+},{threshold:0.08});
+sections.forEach(s=>revealObserver.observe(s));
+
+// Sidebar active state
+const navLinks=document.querySelectorAll('.sidebar a');
+const subNavLinks=document.querySelectorAll('.sub-nav a');
+const activeObserver=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const id=entry.target.id;
+      navLinks.forEach(l=>{l.classList.remove('active');if(l.getAttribute('href')==='#'+id)l.classList.add('active')});
+      subNavLinks.forEach(l=>{l.classList.remove('active');if(l.getAttribute('href')==='#'+id)l.classList.add('active')});
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>activeObserver.observe(s));
+
+// Top nav hamburger
+const topToggle=document.getElementById('topNavToggle');
+const topLinks=document.getElementById('topNavLinks');
+topToggle.addEventListener('click',()=>topLinks.classList.toggle('open'));
+
+// Mobile page nav hamburger
+const mobToggle=document.querySelector('.mob-toggle');
+const mobLinks=document.querySelector('.mob-links');
+if(mobToggle&&mobLinks){
+  mobToggle.addEventListener('click',()=>mobLinks.classList.toggle('open'));
+  mobLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mobLinks.classList.remove('open')));
+}
+</script>
+</body>
+</html>

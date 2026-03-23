@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shadow Magic Sorcerer — Umbral Executioner · BG3 Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg-body: #0a0a0a;
+  --bg-card: #151515;
+  --bg-elevated: #1c1c1c;
+  --bg-hover: #222222;
+  --border: #2b2c2c;
+  --border-light: #3a3a3a;
+  --text: #e8e8e8;
+  --text-dim: #a0a0a0;
+  --text-muted: #707070;
+  --white: #ffffff;
+  --accent: #057af0;
+  --accent-hover: #3592ff;
+  --green: #21c513;
+  --green-dim: #199f2f;
+  --orange: #f09a18;
+  --orange-dim: rgba(240,154,24,0.15);
+  --red: #f00505;
+  --gold: #d4a043;
+  --gold-dim: rgba(212,160,67,0.12);
+  --purple: #b080d0;
+  --shadow: #6a3fa0;
+  --shadow-dim: rgba(106,63,160,0.12);
+  --shadow-bright: #9b6fd0;
+  --void: #2d1650;
+}
+
+html { scroll-behavior:smooth; scrollbar-width:thin; scrollbar-color:#2b2c2c #0a0a0a; }
+
+body {
+  background: var(--bg-body);
+  color: var(--text);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 19px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration:none; }
+a:hover { color: var(--accent-hover); text-decoration:underline; }
+
+/* ── UNIVERSAL TOP NAV ── */
+.universal-nav {
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:1000;
+  height:60px;
+  background:rgba(10,10,10,0.95);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 2rem;
+}
+.unav-brand {
+  font-family:'Cinzel', serif;
+  font-size:1rem;
+  font-weight:700;
+  letter-spacing:0.12em;
+  color:var(--text);
+  text-decoration:none;
+  transition:color 0.2s;
+}
+.unav-brand:hover { color:var(--accent); text-decoration:none; }
+.unav-links {
+  display:flex;
+  gap:1.5rem;
+  align-items:center;
+}
+.unav-links > a {
+  font-size:0.88rem;
+  font-weight:500;
+  color:var(--text-dim);
+  text-decoration:none;
+  transition:color 0.15s;
+  white-space:nowrap;
+}
+.unav-links > a:hover { color:var(--white); text-decoration:none; }
+.unav-dropdown {
+  position:relative;
+}
+.unav-dropdown > a {
+  font-size:0.88rem;
+  font-weight:500;
+  color:var(--text-dim);
+  text-decoration:none;
+  transition:color 0.15s;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.unav-dropdown > a:hover { color:var(--white); text-decoration:none; }
+.unav-dropdown .dd-arrow { font-size:0.6rem; margin-left:0.2rem; }
+.unav-dd-menu {
+  display:none;
+  position:absolute;
+  top:100%;
+  right:0;
+  background:rgba(21,21,21,0.98);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:0.5rem 0;
+  min-width:180px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.5);
+  z-index:1001;
+}
+.unav-dropdown:hover .unav-dd-menu { display:block; }
+.unav-dd-menu a {
+  display:block;
+  padding:0.5rem 1.25rem;
+  font-size:0.85rem;
+  font-weight:500;
+  color:var(--text-dim);
+  text-decoration:none;
+  transition:all 0.1s;
+}
+.unav-dd-menu a:hover {
+  color:var(--white);
+  background:rgba(255,255,255,0.04);
+  text-decoration:none;
+}
+@media(max-width:800px) {
+  .unav-links { display:none; }
+}
+
+/* ── LAYOUT ── */
+.page { display:flex; max-width:1100px; margin:0 auto; gap:0; padding-top:60px; }
+
+.sidebar {
+  width:220px;
+  flex-shrink:0;
+  position:sticky;
+  top:60px;
+  height:calc(100vh - 60px);
+  overflow-y:auto;
+  border-right:1px solid var(--border);
+  background: var(--bg-card);
+  padding:1.5rem 0;
+  scrollbar-width:thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.sidebar-title {
+  font-family:'Oswald', sans-serif;
+  font-size:0.75rem;
+  font-weight:600;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  padding:0 1.25rem;
+  margin-bottom:0.75rem;
+}
+
+.sidebar a {
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  padding:0.45rem 1.25rem;
+  font-size:0.88rem;
+  font-weight:500;
+  color:var(--text-dim);
+  text-decoration:none;
+  border-left:3px solid transparent;
+  transition:all 0.15s;
+}
+
+.sidebar a:hover {
+  color:var(--white);
+  background:rgba(255,255,255,0.03);
+  text-decoration:none;
+}
+
+.sidebar a.active {
+  color:var(--white);
+  border-left-color:var(--accent);
+  background:rgba(5,122,240,0.06);
+}
+
+.sidebar .nav-icon { font-size:1rem; width:1.2rem; text-align:center; }
+
+.content {
+  flex:1;
+  min-width:0;
+  padding:2.5rem 2.5rem 4rem;
+}
+
+@media(max-width:800px) {
+  .sidebar { display:none; }
+  .content { padding:1.5rem; }
+}
+
+/* ── HEADER ── */
+.guide-header {
+  margin-bottom:2.5rem;
+  padding-bottom:1.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.guide-header .breadcrumb {
+  font-size:0.78rem;
+  color:var(--text-muted);
+  margin-bottom:0.5rem;
+  letter-spacing:0.02em;
+}
+
+.guide-header h1 {
+  font-family:'Oswald', sans-serif;
+  font-size:2.2rem;
+  font-weight:700;
+  color:var(--white);
+  line-height:1.2;
+  margin-bottom:0.4rem;
+}
+
+.guide-header .subtitle {
+  font-size:1rem;
+  color:var(--text-dim);
+  font-weight:400;
+}
+
+.tag-row { display:flex; gap:0.4rem; margin-top:0.75rem; flex-wrap:wrap; }
+.tag {
+  font-size:0.72rem;
+  font-weight:600;
+  padding:0.2rem 0.6rem;
+  border-radius:4px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.tag.green { color:var(--green); border-color:rgba(33,197,19,0.25); background:rgba(33,197,19,0.06); }
+.tag.orange { color:var(--orange); border-color:rgba(240,154,24,0.25); background:var(--orange-dim); }
+.tag.blue { color:var(--accent); border-color:rgba(5,122,240,0.25); background:rgba(5,122,240,0.06); }
+.tag.red { color:var(--red); border-color:rgba(240,5,5,0.25); background:rgba(240,5,5,0.06); }
+.tag.gold { color:var(--gold); border-color:rgba(212,160,67,0.25); background:var(--gold-dim); }
+.tag.purple { color:var(--shadow); border-color:rgba(106,63,160,0.3); background:var(--shadow-dim); }
+
+/* ── HERO ART ── */
+.hero-art {
+  width:100%;
+  margin-bottom:1.25rem;
+  border-radius:10px;
+  border:1px solid var(--border);
+  overflow:hidden;
+  background:var(--bg-card);
+}
+.hero-svg {
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+/* ── HEADER ROW ── */
+.header-row {
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  margin-bottom:1.25rem;
+}
+.header-portrait {
+  width:80px;
+  height:80px;
+  border-radius:8px;
+  border:2px solid var(--border);
+  object-fit:cover;
+}
+.header-text { flex:1; }
+
+/* ── SECTIONS ── */
+.section { margin-top:3rem; }
+
+.section h2 {
+  font-family:'Oswald', sans-serif;
+  font-size:1.5rem;
+  font-weight:600;
+  color:var(--white);
+  margin-bottom:1rem;
+  padding-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.section h3 {
+  font-family:'Oswald', sans-serif;
+  font-size:1.15rem;
+  font-weight:500;
+  color:var(--text);
+  margin:1.5rem 0 0.6rem;
+}
+
+.section p { margin-bottom:1rem; color:var(--text); }
+
+/* ── CALLOUTS ── */
+.callout {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:6px;
+  padding:1rem 1.25rem;
+  margin:1.25rem 0;
+}
+
+.callout.warn { border-left-color:var(--orange); }
+.callout.tip { border-left-color:var(--green); }
+.callout.shadow { border-left-color:var(--shadow); }
+
+.callout-label {
+  font-family:'Oswald', sans-serif;
+  font-size:0.78rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  margin-bottom:0.25rem;
+}
+
+.callout .callout-label { color:var(--accent); }
+.callout.warn .callout-label { color:var(--orange); }
+.callout.tip .callout-label { color:var(--green); }
+.callout.shadow .callout-label { color:var(--shadow); }
+
+.callout p { margin-bottom:0.5rem; font-size:0.95rem; }
+.callout p:last-child { margin-bottom:0; }
+
+/* ── STAT BAR ── */
+.stats { display:flex; gap:0.5rem; flex-wrap:wrap; margin:0.75rem 0; }
+.stat-box {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:0.4rem 0.75rem;
+  text-align:center;
+  min-width:3.5rem;
+}
+.stat-box.primary { border-color:rgba(5,122,240,0.4); }
+.stat-label { font-size:0.65rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); }
+.stat-val { font-family:'Oswald',sans-serif; font-size:1.3rem; font-weight:600; color:var(--white); }
+.stat-box.primary .stat-val { color:var(--accent); }
+
+/* ── LEVEL CARDS ── */
+.level-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  margin-bottom:0.4rem;
+  overflow:hidden;
+  transition:border-color 0.15s;
+}
+
+.level-card:hover { border-color:var(--border-light); }
+.level-card.spike { border-left:3px solid var(--orange); }
+.level-card.here { border-color:var(--shadow); box-shadow:0 0 0 1px rgba(106,63,160,0.15); }
+
+.lv-head {
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  padding:0.65rem 1rem;
+  cursor:pointer;
+  user-select:none;
+  transition:background 0.1s;
+}
+.lv-head:hover { background:var(--bg-hover); }
+
+.lv-num {
+  font-family:'Oswald',sans-serif;
+  font-weight:700;
+  font-size:1.3rem;
+  color:var(--white);
+  min-width:1.6rem;
+  text-align:center;
+}
+.level-card.here .lv-num { color:var(--shadow); }
+
+.lv-badge {
+  font-size:0.68rem;
+  font-weight:600;
+  padding:0.15rem 0.5rem;
+  border-radius:4px;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.lv-badge.sorcerer { color:var(--shadow); background:var(--shadow-dim); border:1px solid rgba(106,63,160,0.2); }
+
+.lv-title {
+  font-weight:600;
+  font-size:0.95rem;
+  color:var(--text);
+  flex:1;
+}
+
+.lv-spike {
+  font-size:0.65rem;
+  font-weight:600;
+  color:var(--orange);
+  background:var(--orange-dim);
+  padding:0.15rem 0.45rem;
+  border-radius:4px;
+  border:1px solid rgba(240,154,24,0.2);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+
+.lv-here {
+  font-size:0.65rem;
+  font-weight:600;
+  color:var(--shadow);
+  background:var(--shadow-dim);
+  padding:0.15rem 0.45rem;
+  border-radius:4px;
+  border:1px solid rgba(106,63,160,0.25);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+
+.lv-arrow {
+  color:var(--text-muted);
+  font-size:0.75rem;
+  transition:transform 0.2s;
+}
+.level-card.open .lv-arrow { transform:rotate(90deg); }
+
+.lv-body { max-height:0; overflow:hidden; transition:max-height 0.3s ease; }
+.level-card.open .lv-body { max-height:900px; }
+.lv-inner { padding:0 1rem 1rem; border-top:1px solid var(--border); }
+
+/* Quick picks */
+.qp-row { display:flex; flex-wrap:wrap; gap:0.3rem; margin:0.75rem 0 0.5rem; }
+.qp {
+  font-size:0.78rem;
+  font-weight:500;
+  padding:0.2rem 0.6rem;
+  border-radius:4px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+}
+.qp.feature { color:var(--green); border-color:rgba(33,197,19,0.2); }
+.qp.spell { color:var(--accent); border-color:rgba(5,122,240,0.2); }
+.qp.feat { color:var(--orange); border-color:rgba(240,154,24,0.2); }
+.qp.meta { color:var(--purple); border-color:rgba(176,128,208,0.2); }
+.qp.shadow { color:var(--shadow); border-color:rgba(106,63,160,0.2); }
+
+/* Pick list */
+.picks { list-style:none; margin:0.5rem 0; }
+.picks li {
+  padding:0.3rem 0 0.3rem 0;
+  font-size:0.95rem;
+  display:flex;
+  gap:0.4rem;
+  align-items:baseline;
+}
+.picks .label {
+  font-size:0.72rem;
+  font-weight:600;
+  color:var(--orange);
+  text-transform:uppercase;
+  letter-spacing:0.03em;
+  flex-shrink:0;
+  min-width:4rem;
+}
+.picks .name { font-weight:600; color:var(--white); }
+.picks .note { color:var(--text-dim); font-size:0.88rem; }
+
+/* Prep box */
+.prep {
+  background:rgba(33,197,19,0.04);
+  border:1px solid rgba(33,197,19,0.15);
+  border-radius:6px;
+  padding:0.75rem 1rem;
+  margin-top:0.75rem;
+}
+.prep-title {
+  font-family:'Oswald',sans-serif;
+  font-size:0.8rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--green);
+  margin-bottom:0.4rem;
+}
+.prep-list { list-style:none; display:flex; flex-wrap:wrap; gap:0.25rem 0.6rem; }
+.prep-list li { font-size:0.9rem; font-weight:500; color:var(--text); }
+.prep-list li::before { content:'&#8226; '; color:var(--green-dim); }
+.prep-list li.new { color:var(--orange); }
+.prep-list li.new::before { content:'&#9733; '; color:var(--orange); }
+.prep-note { font-size:0.78rem; color:var(--text-muted); margin-top:0.3rem; }
+
+/* ── SPELL GRID ── */
+.spell-section { margin-bottom:1.5rem; }
+.spell-level {
+  font-family:'Oswald',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  color:var(--white);
+  padding-bottom:0.35rem;
+  margin-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+.spell-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:start;
+  padding:0.5rem 0.75rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:0.35rem;
+  gap:0.75rem;
+}
+.spell-info { flex:1; }
+.spell-name { font-weight:600; color:var(--white); font-size:0.95rem; }
+.spell-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.1rem; }
+.spell-badge {
+  font-size:0.68rem;
+  font-weight:600;
+  padding:0.15rem 0.5rem;
+  border-radius:4px;
+  text-transform:uppercase;
+  letter-spacing:0.03em;
+  white-space:nowrap;
+  flex-shrink:0;
+  align-self:center;
+}
+.spell-badge.must { color:var(--green); background:rgba(33,197,19,0.08); border:1px solid rgba(33,197,19,0.2); }
+.spell-badge.good { color:var(--accent); background:rgba(5,122,240,0.06); border:1px solid rgba(5,122,240,0.15); }
+.spell-badge.conc { color:var(--purple); background:rgba(176,128,208,0.06); border:1px solid rgba(176,128,208,0.15); }
+.spell-badge.free { color:var(--gold); background:var(--gold-dim); border:1px solid rgba(212,160,67,0.2); }
+.spell-badge.core { color:var(--shadow); background:var(--shadow-dim); border:1px solid rgba(106,63,160,0.2); }
+
+/* ── ITEMS ── */
+.item-group { margin-bottom:1.5rem; }
+.item-group-title {
+  font-family:'Oswald',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  color:var(--gold);
+  padding-bottom:0.35rem;
+  margin-bottom:0.5rem;
+  border-bottom:1px solid rgba(212,160,67,0.15);
+}
+.item-row {
+  padding:0.6rem 0.75rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:0.35rem;
+}
+.item-name { font-weight:600; color:var(--gold); font-size:0.95rem; }
+.item-slot { font-size:0.7rem; color:var(--text-muted); margin-left:0.35rem; text-transform:uppercase; letter-spacing:0.03em; }
+.item-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.15rem; }
+.item-loc { font-size:0.8rem; color:var(--green-dim); margin-top:0.2rem; }
+
+/* ── ROTATION / STEP LIST ── */
+.step-list { list-style:none; counter-reset:step; }
+.step-list li {
+  position:relative;
+  padding:0.75rem 0 0.75rem 3rem;
+  border-left:2px solid var(--border);
+  margin-left:0.75rem;
+  counter-increment:step;
+}
+.step-list li::before {
+  content:counter(step);
+  position:absolute;
+  left:-0.75rem;
+  top:0.6rem;
+  width:1.4rem;
+  height:1.4rem;
+  background:var(--bg-body);
+  border:2px solid var(--shadow);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Oswald',sans-serif;
+  font-weight:600;
+  font-size:0.75rem;
+  color:var(--shadow);
+}
+.step-list li:last-child { border-left-color:transparent; }
+.step-action { font-weight:600; color:var(--white); }
+.step-timing {
+  font-size:0.7rem;
+  font-weight:600;
+  padding:0.1rem 0.4rem;
+  border-radius:3px;
+  margin-left:0.4rem;
+  vertical-align:middle;
+  text-transform:uppercase;
+}
+.step-timing.pre { color:var(--text-muted); background:rgba(255,255,255,0.04); }
+.step-timing.turn { color:var(--accent); background:rgba(5,122,240,0.08); }
+.step-timing.every { color:var(--green); background:rgba(33,197,19,0.08); }
+.step-timing.bonus { color:var(--orange); background:var(--orange-dim); }
+
+/* ── PARTY ── */
+.party-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
+@media(max-width:600px) { .party-grid { grid-template-columns:1fr; } }
+.party-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1rem;
+}
+.party-name { font-family:'Oswald',sans-serif; font-weight:600; font-size:1.05rem; color:var(--white); }
+.party-role { font-size:0.72rem; font-weight:600; color:var(--accent); text-transform:uppercase; letter-spacing:0.04em; margin-top:0.1rem; }
+.party-desc { color:var(--text-dim); font-size:0.88rem; margin-top:0.35rem; }
+
+/* ── METAMAGIC TABLE ── */
+.meta-table { width:100%; border-collapse:collapse; margin:1rem 0; }
+.meta-table th {
+  font-family:'Oswald',sans-serif;
+  font-size:0.78rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--text-muted);
+  text-align:left;
+  padding:0.6rem 0.75rem;
+  border-bottom:2px solid var(--border);
+}
+.meta-table td {
+  padding:0.6rem 0.75rem;
+  border-bottom:1px solid var(--border);
+  font-size:0.92rem;
+}
+.meta-table tr:hover { background:var(--bg-card); }
+.meta-name { font-weight:600; color:var(--white); }
+.meta-cost { font-size:0.8rem; color:var(--purple); font-weight:600; }
+
+/* ── FOOTER ── */
+.guide-footer {
+  margin-top:3rem;
+  padding-top:1rem;
+  border-top:1px solid var(--border);
+  font-size:0.82rem;
+  color:var(--text-muted);
+  text-align:center;
+}
+.guide-footer a { color:var(--accent); }
+
+/* Mobile nav */
+.mobile-nav{display:none;position:sticky;top:60px;z-index:100;background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:56px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;color:var(--shadow);letter-spacing:.06em}
+.nav-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s}
+.nav-links{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.nav-links.open{display:flex}
+.nav-links a{display:flex;align-items:center;gap:.5rem;height:44px;font-size:.9rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){.mobile-nav{display:flex}}
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity:0; transform:translateY(18px); transition:opacity 0.5s ease, transform 0.5s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- UNIVERSAL TOP NAV -->
+<nav class="universal-nav">
+  <a href="index.html" class="unav-brand">Z3NGINEER</a>
+  <div class="unav-links">
+    <a href="index.html">Home</a>
+    <div class="unav-dropdown">
+      <a href="#">Projects <span class="dd-arrow">&#x25BC;</span></a>
+      <div class="unav-dd-menu">
+        <a href="omnisuite.html">OmniSuite</a>
+        <a href="heatsync.html">HeatSync</a>
+        <a href="https://crockednloaded.com">CrockedNLoaded</a>
+        <a href="guides.html">Game Guides</a>
+        <a href="CHIM.html">CHIM Modpack</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE SUB-NAV -->
+<div class="mobile-nav">
+  <span class="mobile-nav-title">Shadow Sorcerer</span>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="#overview"><span class="nav-icon">&#9672;</span> Overview</a>
+    <a href="#race"><span class="nav-icon">&#9775;</span> Race &amp; Background</a>
+    <a href="#abilities"><span class="nav-icon">&#9670;</span> Ability Scores</a>
+    <a href="#levels"><span class="nav-icon">&#8593;</span> Progression</a>
+    <a href="#subclass"><span class="nav-icon">&#9733;</span> Shadow Features</a>
+    <a href="#metamagic"><span class="nav-icon">&#9830;</span> Metamagic</a>
+    <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+    <a href="#items"><span class="nav-icon">&#9670;</span> Gear</a>
+    <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+    <a href="#companions"><span class="nav-icon">&#9673;</span> Party</a>
+    <a href="#honour"><span class="nav-icon">&#9760;</span> Honour Mode</a>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div style="text-align:center; padding:0 1.25rem 1rem;">
+    <svg viewBox="0 0 48 48" width="48" height="48" style="border-radius:8px; border:1px solid var(--border);">
+      <rect width="48" height="48" fill="#0d0818"/>
+      <circle cx="24" cy="24" r="16" fill="none" stroke="#6a3fa0" stroke-width="1" opacity="0.4"/>
+      <path d="M24 10 Q30 18 28 26 Q26 34 24 38 Q22 34 20 26 Q18 18 24 10 Z" fill="#6a3fa0" opacity="0.5"/>
+      <circle cx="24" cy="20" r="3" fill="#9b6fd0" opacity="0.7"/>
+      <circle cx="22" cy="19" r="1" fill="#e0d0ff" opacity="0.9"/>
+      <circle cx="26" cy="19" r="1" fill="#e0d0ff" opacity="0.9"/>
+    </svg>
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">&#9672;</span> Overview</a>
+  <a href="#race"><span class="nav-icon">&#9775;</span> Race &amp; Background</a>
+  <a href="#abilities"><span class="nav-icon">&#9670;</span> Ability Scores</a>
+  <a href="#levels"><span class="nav-icon">&#8593;</span> Progression</a>
+  <a href="#subclass"><span class="nav-icon">&#9733;</span> Shadow Features</a>
+  <a href="#metamagic"><span class="nav-icon">&#9830;</span> Metamagic</a>
+  <a href="#spells"><span class="nav-icon">&#10022;</span> Spells</a>
+  <a href="#items"><span class="nav-icon">&#9670;</span> Gear</a>
+  <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+  <a href="#companions"><span class="nav-icon">&#9673;</span> Party</a>
+  <a href="#honour"><span class="nav-icon">&#9760;</span> Honour Mode</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <!-- Background gradients -->
+          <radialGradient id="voidGlow" cx="40%" cy="45%" r="55%">
+            <stop offset="0%" stop-color="#2d1650" stop-opacity="0.6"/>
+            <stop offset="40%" stop-color="#150a28" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="darknessField" cx="55%" cy="55%" r="35%">
+            <stop offset="0%" stop-color="#000000" stop-opacity="0.85"/>
+            <stop offset="50%" stop-color="#0d0020" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="eyeGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#e0d0ff" stop-opacity="0.95"/>
+            <stop offset="40%" stop-color="#9b6fd0" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#6a3fa0" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="shadowBladeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#1a0a30"/>
+            <stop offset="30%" stop-color="#2d1650"/>
+            <stop offset="60%" stop-color="#1a0a30"/>
+            <stop offset="100%" stop-color="#0d0018"/>
+          </linearGradient>
+          <linearGradient id="shadowBladeEdge" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#6a3fa0" stop-opacity="0.8"/>
+            <stop offset="50%" stop-color="#9b6fd0" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#6a3fa0" stop-opacity="0.8"/>
+          </linearGradient>
+          <linearGradient id="tendrilGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#6a3fa0" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="shadowBloom">
+            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="darkBlur">
+            <feGaussianBlur stdDeviation="12"/>
+          </filter>
+        </defs>
+
+        <!-- Background -->
+        <rect width="800" height="300" fill="#050510"/>
+        <rect width="800" height="300" fill="url(#voidGlow)"/>
+
+        <!-- Darkness spell zone — engulfing right side with enemies -->
+        <ellipse cx="580" cy="160" rx="180" ry="130" fill="#000000" opacity="0.7" filter="url(#darkBlur)"/>
+        <ellipse cx="580" cy="160" rx="140" ry="100" fill="#050008" opacity="0.8"/>
+        <!-- Darkness tendrils at the edge -->
+        <path d="M440,100 Q420,80 400,95 Q380,110 410,120 Q430,115 440,100Z" fill="#0a0015" opacity="0.6"/>
+        <path d="M430,180 Q400,200 410,220 Q430,210 445,195 Q440,185 430,180Z" fill="#0a0015" opacity="0.5"/>
+        <path d="M700,80 Q730,60 740,85 Q730,100 710,95 Q700,90 700,80Z" fill="#0a0015" opacity="0.4"/>
+
+        <!-- Enemy silhouettes INSIDE darkness — blinded, stumbling -->
+        <g opacity="0.35">
+          <!-- Enemy 1 — staggering -->
+          <ellipse cx="540" cy="135" rx="10" ry="15" fill="#1a1a1a" transform="rotate(-10 540 135)"/>
+          <circle cx="542" cy="115" r="7" fill="#1a1a1a"/>
+          <path d="M530,125 Q520,110 510,105" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          <path d="M550,128 Q560,115 570,118" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          <path d="M535,150 Q530,175 525,190" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          <path d="M548,150 Q555,172 560,188" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+
+          <!-- Enemy 2 — arms out, blind -->
+          <ellipse cx="620" cy="170" rx="10" ry="16" fill="#1a1a1a" transform="rotate(5 620 170)"/>
+          <circle cx="618" cy="148" r="7" fill="#1a1a1a"/>
+          <path d="M608,162 Q590,155 575,160" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          <path d="M632,165 Q650,158 660,165" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          <path d="M615,186 Q610,210 608,225" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          <path d="M628,186 Q635,208 638,222" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+
+          <!-- Enemy 3 — falling -->
+          <ellipse cx="680" cy="195" rx="12" ry="10" fill="#1a1a1a" transform="rotate(40 680 195)"/>
+          <circle cx="695" cy="185" r="6" fill="#1a1a1a"/>
+          <path d="M670,200 Q660,215 655,225" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round" fill="none"/>
+        </g>
+
+        <!-- Shadow tendrils radiating from the sorcerer -->
+        <g opacity="0.5">
+          <path d="M280,160 Q350,130 440,110 Q500,95 530,100" stroke="#2d1650" stroke-width="3" fill="none" opacity="0.6">
+            <animate attributeName="d" values="M280,160 Q350,130 440,110 Q500,95 530,100;M280,160 Q345,125 435,105 Q505,90 535,95;M280,160 Q350,130 440,110 Q500,95 530,100" dur="4s" repeatCount="indefinite"/>
+          </path>
+          <path d="M280,170 Q370,180 460,190 Q530,195 580,185" stroke="#1a0a30" stroke-width="4" fill="none" opacity="0.5">
+            <animate attributeName="d" values="M280,170 Q370,180 460,190 Q530,195 580,185;M280,170 Q375,185 465,195 Q535,200 585,190;M280,170 Q370,180 460,190 Q530,195 580,185" dur="5s" repeatCount="indefinite"/>
+          </path>
+          <path d="M270,180 Q340,210 430,230 Q500,240 560,225" stroke="#2d1650" stroke-width="2.5" fill="none" opacity="0.4">
+            <animate attributeName="d" values="M270,180 Q340,210 430,230 Q500,240 560,225;M270,180 Q335,215 425,235 Q495,245 555,230;M270,180 Q340,210 430,230 Q500,240 560,225" dur="3.5s" repeatCount="indefinite"/>
+          </path>
+          <path d="M260,150 Q310,100 380,80 Q430,68 480,75" stroke="#1a0a30" stroke-width="2" fill="none" opacity="0.35"/>
+          <path d="M265,195 Q300,240 380,260 Q440,268 500,255" stroke="#150a28" stroke-width="2" fill="none" opacity="0.3"/>
+        </g>
+
+        <!-- Floating shadow particles -->
+        <g filter="url(#glow)" opacity="0.6">
+          <circle cx="350" cy="100" r="2.5" fill="#6a3fa0"><animate attributeName="cy" values="100;90;100" dur="3s" repeatCount="indefinite"/></circle>
+          <circle cx="310" cy="130" r="2" fill="#9b6fd0"><animate attributeName="cx" values="310;300;310" dur="2.5s" repeatCount="indefinite"/></circle>
+          <circle cx="380" cy="120" r="1.8" fill="#e0d0ff"><animate attributeName="cy" values="120;110;120" dur="2s" repeatCount="indefinite"/></circle>
+          <circle cx="250" cy="170" r="3" fill="#4a2580"><animate attributeName="cx" values="250;240;250" dur="3.5s" repeatCount="indefinite"/></circle>
+          <circle cx="400" cy="160" r="2" fill="#9b6fd0"><animate attributeName="cy" values="160;148;160" dur="2.8s" repeatCount="indefinite"/></circle>
+          <circle cx="330" cy="200" r="2.5" fill="#6a3fa0"><animate attributeName="cx" values="330;340;330" dur="3.2s" repeatCount="indefinite"/></circle>
+          <circle cx="220" cy="120" r="1.5" fill="#e0d0ff"><animate attributeName="cy" values="120;112;120" dur="2.2s" repeatCount="indefinite"/></circle>
+          <circle cx="420" cy="90" r="1.8" fill="#9b6fd0"><animate attributeName="cx" values="420;428;420" dur="2.7s" repeatCount="indefinite"/></circle>
+          <circle cx="190" cy="200" r="2" fill="#4a2580"><animate attributeName="cy" values="200;192;200" dur="3s" repeatCount="indefinite"/></circle>
+        </g>
+
+        <!-- THE SHADOW SORCERER — dark robes, wreathed in living shadows -->
+        <g transform="translate(280,155)" opacity="0.95">
+          <!-- Shadow aura around the sorcerer -->
+          <ellipse cx="0" cy="0" rx="55" ry="65" fill="#0d0020" opacity="0.3" filter="url(#darkBlur)">
+            <animate attributeName="rx" values="55;60;55" dur="3s" repeatCount="indefinite"/>
+          </ellipse>
+
+          <!-- Flowing dark robes -->
+          <path d="M-25,-10 Q-35,20 -40,60 Q-42,80 -35,95 Q-20,105 0,108 Q20,105 35,95 Q42,80 40,60 Q35,20 25,-10 Q15,-20 0,-22 Q-15,-20 -25,-10 Z" fill="#0d0818"/>
+          <!-- Robe folds and detail -->
+          <path d="M-20,-5 Q-28,15 -32,50 Q-34,70 -28,85" stroke="#1a0a30" stroke-width="1" fill="none" opacity="0.6"/>
+          <path d="M20,-5 Q28,15 32,50 Q34,70 28,85" stroke="#1a0a30" stroke-width="1" fill="none" opacity="0.6"/>
+          <path d="M0,-18 Q-5,10 -3,50 Q0,80 0,105" stroke="#150a28" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <!-- Robe hem wisps -->
+          <path d="M-35,92 Q-45,100 -48,110 Q-42,115 -35,108" fill="#0d0818" opacity="0.7"/>
+          <path d="M35,92 Q45,100 48,110 Q42,115 35,108" fill="#0d0818" opacity="0.7"/>
+
+          <!-- Shadow energy wreathing the body -->
+          <path d="M-30,-15 Q-50,-5 -45,15 Q-38,25 -30,10 Z" fill="#1a0a30" opacity="0.5">
+            <animate attributeName="d" values="M-30,-15 Q-50,-5 -45,15 Q-38,25 -30,10 Z;M-30,-15 Q-52,-8 -48,12 Q-40,22 -30,10 Z;M-30,-15 Q-50,-5 -45,15 Q-38,25 -30,10 Z" dur="2.5s" repeatCount="indefinite"/>
+          </path>
+          <path d="M30,-15 Q50,-5 45,15 Q38,25 30,10 Z" fill="#1a0a30" opacity="0.5">
+            <animate attributeName="d" values="M30,-15 Q50,-5 45,15 Q38,25 30,10 Z;M30,-15 Q52,-8 48,12 Q40,22 30,10 Z;M30,-15 Q50,-5 45,15 Q38,25 30,10 Z" dur="2.8s" repeatCount="indefinite"/>
+          </path>
+
+          <!-- Hood / Head -->
+          <path d="M-16,-30 Q-20,-48 -12,-55 Q0,-60 12,-55 Q20,-48 16,-30 Q10,-25 0,-24 Q-10,-25 -16,-30 Z" fill="#0d0818"/>
+          <!-- Hood shadow inside -->
+          <path d="M-12,-32 Q-15,-45 -8,-50 Q0,-53 8,-50 Q15,-45 12,-32 Q6,-28 0,-27 Q-6,-28 -12,-32 Z" fill="#050010"/>
+
+          <!-- Glowing eyes — can see through Darkness -->
+          <g filter="url(#shadowBloom)">
+            <ellipse cx="-5" cy="-40" rx="2.5" ry="1.5" fill="#e0d0ff" opacity="0.95">
+              <animate attributeName="opacity" values="0.95;0.7;0.95" dur="2s" repeatCount="indefinite"/>
+            </ellipse>
+            <ellipse cx="5" cy="-40" rx="2.5" ry="1.5" fill="#e0d0ff" opacity="0.95">
+              <animate attributeName="opacity" values="0.95;0.7;0.95" dur="2s" repeatCount="indefinite"/>
+            </ellipse>
+            <!-- Eye glow halos -->
+            <ellipse cx="-5" cy="-40" rx="5" ry="3" fill="#9b6fd0" opacity="0.3"/>
+            <ellipse cx="5" cy="-40" rx="5" ry="3" fill="#9b6fd0" opacity="0.3"/>
+            <!-- Light beams from eyes piercing darkness -->
+            <line x1="8" y1="-39" x2="45" y2="-35" stroke="#9b6fd0" stroke-width="1" opacity="0.2"/>
+            <line x1="-8" y1="-39" x2="-30" y2="-42" stroke="#9b6fd0" stroke-width="0.8" opacity="0.15"/>
+          </g>
+
+          <!-- Left arm — extended, casting Darkness -->
+          <path d="M-25,-12 Q-40,-18 -55,-10 Q-62,-5 -58,2 L-50,-2 Q-52,-8 -38,-12" fill="#0d0818"/>
+          <!-- Left hand — fingers splayed, shadow energy pouring out -->
+          <g transform="translate(-58,0)">
+            <path d="M0,0 L-5,-8 M0,0 L-8,-4 M0,0 L-8,2 M0,0 L-5,7 M0,0 L0,8" stroke="#1a0a30" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="-3" cy="0" r="5" fill="#2d1650" opacity="0.4" filter="url(#glow)"/>
+          </g>
+
+          <!-- Right arm — holding Shadow Blade -->
+          <path d="M25,-12 Q38,-22 42,-35 Q44,-42 40,-44 L36,-36 Q38,-28 30,-18" fill="#0d0818"/>
+
+          <!-- SHADOW BLADE — pure darkness given form -->
+          <g transform="translate(40,-44) rotate(-35)">
+            <!-- Blade body — shifting dark matter -->
+            <rect x="-3.5" y="-75" width="7" height="62" fill="url(#shadowBladeGrad)" rx="1"/>
+            <!-- Blade edge glow -->
+            <line x1="-3.5" y1="-75" x2="-3.5" y2="-13" stroke="url(#shadowBladeEdge)" stroke-width="1.2" opacity="0.7"/>
+            <line x1="3.5" y1="-75" x2="3.5" y2="-13" stroke="url(#shadowBladeEdge)" stroke-width="1.2" opacity="0.7"/>
+            <!-- Blade center void line -->
+            <line x1="0" y1="-72" x2="0" y2="-16" stroke="#0d0018" stroke-width="1.5" opacity="0.6"/>
+            <!-- Blade tip -->
+            <path d="M-3.5,-75 L0,-85 L3.5,-75 Z" fill="#2d1650"/>
+            <path d="M-1,-75 L0,-82 L1,-75 Z" fill="#9b6fd0" opacity="0.4"/>
+            <!-- Crossguard — shadow tendrils -->
+            <path d="M-14,-12 Q-10,-15 0,-14 Q10,-15 14,-12 Q10,-9 0,-10 Q-10,-9 -14,-12 Z" fill="#1a0a30"/>
+            <circle cx="-12" cy="-12" r="2" fill="#6a3fa0" opacity="0.5"/>
+            <circle cx="12" cy="-12" r="2" fill="#6a3fa0" opacity="0.5"/>
+            <!-- Grip -->
+            <rect x="-2.5" y="-10" width="5" height="14" fill="#0d0818" rx="1"/>
+            <!-- Pommel — void orb -->
+            <circle cx="0" cy="6" r="4" fill="#1a0a30"/>
+            <circle cx="0" cy="6" r="2" fill="#6a3fa0" opacity="0.5">
+              <animate attributeName="opacity" values="0.5;0.8;0.5" dur="1.5s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Shadow Blade energy wisps -->
+            <g filter="url(#glow)" opacity="0.6">
+              <path d="M-5,-60 Q-12,-55 -8,-48" stroke="#6a3fa0" stroke-width="1" fill="none">
+                <animate attributeName="d" values="M-5,-60 Q-12,-55 -8,-48;M-5,-60 Q-14,-53 -10,-46;M-5,-60 Q-12,-55 -8,-48" dur="2s" repeatCount="indefinite"/>
+              </path>
+              <path d="M5,-50 Q12,-45 8,-38" stroke="#9b6fd0" stroke-width="0.8" fill="none">
+                <animate attributeName="d" values="M5,-50 Q12,-45 8,-38;M5,-50 Q14,-43 10,-36;M5,-50 Q12,-45 8,-38" dur="2.3s" repeatCount="indefinite"/>
+              </path>
+              <circle cx="-2" cy="-65" r="2" fill="#9b6fd0" opacity="0.5"><animate attributeName="r" values="2;3;2" dur="1.8s" repeatCount="indefinite"/></circle>
+              <circle cx="3" cy="-40" r="1.5" fill="#e0d0ff" opacity="0.4"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- HOUND OF ILL OMEN — shadow wolf stalking -->
+        <g transform="translate(160,210)" opacity="0.7">
+          <!-- Wolf body — made of shadow -->
+          <ellipse cx="0" cy="0" rx="28" ry="14" fill="#1a0a30" transform="rotate(-5)"/>
+          <!-- Head -->
+          <path d="M-25,-8 Q-38,-15 -42,-10 Q-40,-5 -32,-4 Q-28,-2 -25,-5 Z" fill="#1a0a30"/>
+          <!-- Ears -->
+          <path d="M-38,-15 L-42,-25 L-35,-16 Z" fill="#150a28"/>
+          <path d="M-34,-14 L-36,-23 L-30,-15 Z" fill="#150a28"/>
+          <!-- Eye — glowing -->
+          <circle cx="-35" cy="-10" r="1.5" fill="#9b6fd0" filter="url(#glow)">
+            <animate attributeName="opacity" values="0.9;0.5;0.9" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Legs -->
+          <path d="M-15,10 L-18,28 L-14,28" stroke="#1a0a30" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <path d="M-5,12 L-8,26 L-4,26" stroke="#1a0a30" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <path d="M10,12 L8,27 L12,27" stroke="#1a0a30" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <path d="M20,10 L22,26 L26,26" stroke="#1a0a30" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <!-- Tail — wispy shadow -->
+          <path d="M28,-2 Q38,-8 45,-15 Q48,-18 50,-12" stroke="#1a0a30" stroke-width="3" fill="none" opacity="0.7">
+            <animate attributeName="d" values="M28,-2 Q38,-8 45,-15 Q48,-18 50,-12;M28,-2 Q38,-10 45,-18 Q48,-22 52,-15;M28,-2 Q38,-8 45,-15 Q48,-18 50,-12" dur="2s" repeatCount="indefinite"/>
+          </path>
+          <!-- Shadow wisps from wolf body -->
+          <path d="M-10,-12 Q-8,-20 -15,-25" stroke="#2d1650" stroke-width="1" fill="none" opacity="0.4"/>
+          <path d="M5,-12 Q10,-22 8,-28" stroke="#2d1650" stroke-width="1" fill="none" opacity="0.3"/>
+          <!-- Shadow pool beneath -->
+          <ellipse cx="0" cy="28" rx="25" ry="5" fill="#0d0018" opacity="0.4"/>
+        </g>
+
+        <!-- Purple arcane sigils floating -->
+        <g opacity="0.2">
+          <circle cx="200" cy="60" r="15" fill="none" stroke="#6a3fa0" stroke-width="0.6"/>
+          <path d="M200,48 L200,72 M188,60 L212,60 M191,49 L209,71 M209,49 L191,71" stroke="#6a3fa0" stroke-width="0.4"/>
+        </g>
+        <g opacity="0.15" transform="translate(400,40)">
+          <circle cx="0" cy="0" r="10" fill="none" stroke="#9b6fd0" stroke-width="0.5"/>
+          <path d="M0,-7 L6,5 L-6,5 Z" fill="none" stroke="#9b6fd0" stroke-width="0.4"/>
+          <path d="M0,7 L6,-5 L-6,-5 Z" fill="none" stroke="#9b6fd0" stroke-width="0.4"/>
+        </g>
+
+        <!-- Ground line and shadow pools -->
+        <line x1="60" y1="268" x2="740" y2="268" stroke="#1a0a30" stroke-width="0.8" opacity="0.3"/>
+        <ellipse cx="280" cy="268" rx="40" ry="4" fill="#0d0018" opacity="0.4"/>
+        <ellipse cx="160" cy="268" rx="30" ry="3" fill="#0d0018" opacity="0.3"/>
+        <ellipse cx="580" cy="268" rx="60" ry="5" fill="#000000" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="header-row">
+      <svg viewBox="0 0 80 80" width="80" height="80" class="header-portrait" style="border-radius:8px; border:2px solid var(--border); background:#0d0818;">
+        <rect width="80" height="80" fill="#0d0818"/>
+        <!-- Shadow figure silhouette -->
+        <path d="M40 15 Q48 25 46 35 Q44 45 40 52 Q36 45 34 35 Q32 25 40 15 Z" fill="#1a0a30" opacity="0.8"/>
+        <!-- Hood shape -->
+        <path d="M30 28 Q28 18 35 14 Q40 12 45 14 Q52 18 50 28 Q45 32 40 33 Q35 32 30 28Z" fill="#0d0818"/>
+        <!-- Glowing eyes -->
+        <circle cx="37" cy="24" r="2" fill="#e0d0ff" opacity="0.9"/>
+        <circle cx="43" cy="24" r="2" fill="#e0d0ff" opacity="0.9"/>
+        <circle cx="37" cy="24" r="4" fill="#9b6fd0" opacity="0.2"/>
+        <circle cx="43" cy="24" r="4" fill="#9b6fd0" opacity="0.2"/>
+        <!-- Shadow blade -->
+        <line x1="52" y1="30" x2="62" y2="12" stroke="#6a3fa0" stroke-width="2" opacity="0.7"/>
+        <line x1="52" y1="30" x2="62" y2="12" stroke="#9b6fd0" stroke-width="0.8" opacity="0.5"/>
+        <!-- Darkness wisps -->
+        <circle cx="25" cy="50" r="8" fill="#0d0018" opacity="0.4"/>
+        <circle cx="55" cy="55" r="10" fill="#0d0018" opacity="0.3"/>
+      </svg>
+      <div class="header-text">
+        <div class="breadcrumb">Baldur's Gate 3 &#8250; Builds &#8250; Shadow Magic Sorcerer</div>
+        <h1>Shadow Magic Sorcerer &mdash; Umbral Executioner</h1>
+        <div class="subtitle">Half-Elf / Drow &middot; Sorcerer 12 &middot; #5 Ranked Build</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag purple">#5 Build</span>
+      <span class="tag purple">Shadow Blade</span>
+      <span class="tag green">Darkness Combo</span>
+      <span class="tag blue">Full Caster</span>
+      <span class="tag orange">Patch 8</span>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="section reveal" id="overview">
+    <h2>Overview</h2>
+
+    <p>Patch 8 introduced the Shadow Magic subclass, and it immediately displaced Draconic Bloodline as the premier Sorcerer build in BG3. The core loop is devastating: cast <strong>Darkness</strong> on yourself for free (Eyes of the Dark), then attack with <strong>Shadow Blade</strong> &mdash; a finesse weapon that deals psychic damage and grants <strong>advantage on every attack</strong> in dim light or darkness. You see through your own Darkness; enemies don't. Every single swing has advantage while they swing blind.</p>
+
+    <div class="callout shadow">
+      <div class="callout-label">Why Shadow Magic Replaced Draconic</div>
+      <p>Draconic Bloodline gave +CHA mod to one damage type and permanent Mage Armor (13 + DEX AC). Shadow Magic gives you <strong>permanent advantage on attacks</strong> via Darkness + Shadow Blade, a <strong>free shadow wolf summon</strong> (Hound of Ill Omen) that forces disadvantage on target saves, and <strong>Strength of the Grave</strong> to cheat death. The sustained damage from always-advantage Shadow Blade plus Quickened Spell metamagic creates a higher damage floor AND ceiling than Draconic ever could.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">The Math</div>
+      <p>Shadow Blade at 3rd level deals 3d8 psychic per hit. With advantage on every attack (Darkness combo), your hit rate jumps from ~65% to ~88%. Quickened Shadow Blade lets you attack twice per round: one with your action, one quickened cantrip or another attack via Haste. That's roughly 27 expected psychic damage per round at level 5 &mdash; from a full caster who still has Fireball, Haste, and Counterspell in the tank. Draconic Fire Sorcerer can't compete with this sustained throughput.</p>
+    </div>
+
+    <h3>Core Synergies</h3>
+    <ul class="picks">
+      <li><span class="label">Combo</span> <span class="name">Darkness + Shadow Blade</span> &mdash; <span class="note">Free Darkness (Eyes of the Dark) + Shadow Blade = advantage on all attacks while enemies are blinded. You see through it; they don't.</span></li>
+      <li><span class="label">Meta</span> <span class="name">Quickened Spell</span> &mdash; <span class="note">Quicken a cantrip or spell as bonus action, then attack with Shadow Blade. Or quicken Shadow Blade itself to attack on the same turn you cast Darkness.</span></li>
+      <li><span class="label">Summon</span> <span class="name">Hound of Ill Omen</span> &mdash; <span class="note">Shadow wolf that gives targets disadvantage on saves against YOUR spells. Heightened Spell + Hound = near-guaranteed Hold Person.</span></li>
+      <li><span class="label">Survive</span> <span class="name">Strength of the Grave</span> &mdash; <span class="note">When reduced to 0 HP, CHA save to stay at 1 HP instead. A free Relentless Endurance that recharges on long rest.</span></li>
+    </ul>
+  </section>
+
+  <!-- RACE & BACKGROUND -->
+  <section class="section reveal" id="race">
+    <h2>Race &amp; Background</h2>
+
+    <h3>Best Race: Half-Elf (Drow Ancestry)</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Superior Darkvision (24m)</span> &mdash; <span class="note">Extended darkvision range synergizes perfectly with Darkness + Shadow Blade. You operate at maximum effectiveness in low light environments.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Fey Ancestry</span> &mdash; <span class="note">Advantage on saves against being charmed, immunity to magical sleep. Solid defensive perk.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Two Extra Skill Proficiencies</span> &mdash; <span class="note">CHA-based class with flexible skill picks. Grab Persuasion and Deception for the party face role.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Civil Militia</span> &mdash; <span class="note">Light armor and shield proficiency. Useful early before your AC alternatives come online.</span></li>
+    </ul>
+
+    <h3>Alternative: Drow</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Superior Darkvision (24m)</span> &mdash; <span class="note">Same extended range as Half-Elf Drow ancestry. Critical for the Darkness combo.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Dancing Lights (cantrip)</span> &mdash; <span class="note">Free cantrip for party utility when you're NOT using Darkness.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Faerie Fire (free 1/day)</span> &mdash; <span class="note">Gives advantage to the whole party against a group of enemies. Great when Darkness would hurt your allies.</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Other Viable Races</div>
+      <p><strong>Tiefling (Asmodeus)</strong> &mdash; fire resistance, free Darkness at level 5 (redundant but saves a spell known). <strong>Human</strong> &mdash; carrying capacity + Civil Militia. <strong>Half-Orc</strong> &mdash; Relentless Endurance stacks with Strength of the Grave for double death insurance, but no darkvision bonus.</p>
+    </div>
+
+    <h3>Background</h3>
+    <p>Pick <strong>Charlatan</strong> for Deception and Sleight of Hand (thematic and useful), or <strong>Noble</strong> for History and Persuasion. As a high-CHA character, you're the natural party face. Charlatan fits the shadowy manipulator fantasy.</p>
+  </section>
+
+  <!-- ABILITY SCORES -->
+  <section class="section reveal" id="abilities">
+    <h2>Ability Scores</h2>
+
+    <div class="stats">
+      <div class="stat-box"><div class="stat-label">STR</div><div class="stat-val">8</div></div>
+      <div class="stat-box primary"><div class="stat-label">DEX</div><div class="stat-val">14</div></div>
+      <div class="stat-box primary"><div class="stat-label">CON</div><div class="stat-val">14</div></div>
+      <div class="stat-box"><div class="stat-label">INT</div><div class="stat-val">10</div></div>
+      <div class="stat-box"><div class="stat-label">WIS</div><div class="stat-val">10</div></div>
+      <div class="stat-box primary"><div class="stat-label">CHA</div><div class="stat-val">17</div></div>
+    </div>
+    <p style="font-size:0.88rem; color:var(--text-dim);">Point buy. CHA 17 (odd for +1 feat later). DEX 14 is mandatory &mdash; Shadow Blade is finesse, so you attack with DEX, and it boosts AC with light/medium armor. CON 14 for concentration saves (Haste, Shadow Blade are both concentration).</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Why DEX 14 Matters</div>
+      <p>Shadow Blade is a finesse weapon, meaning you use DEX for attack and damage rolls. Unlike Draconic Sorcerer who could dump DEX entirely, Shadow Magic needs 14 DEX for both the Shadow Blade attack bonus and medium armor AC. CHA is still your spellcasting stat for everything else &mdash; spell save DC, spell attack rolls for cantrips, and Strength of the Grave saves. The 17 CHA is intentional: take Resilient (CON) at level 4 for +1 CON (to 15) and concentration save proficiency, then +2 CHA at level 8 to reach 19, and use Hag's Hair for the 20 cap.</p>
+    </div>
+
+    <h3>Feat Priority</h3>
+    <ul class="picks">
+      <li><span class="label">Level 4</span> <span class="name">+2 CHA &rarr; 19</span> &mdash; <span class="note">Or take Resilient (CON) if you want concentration save proficiency early. Both are strong.</span></li>
+      <li><span class="label">Level 8</span> <span class="name">+2 CHA &rarr; 20 (with Hag Hair)</span> &mdash; <span class="note">Visit Auntie Ethel in Act 1 for +1 CHA (Hag's Hair). This lets you reach 20 CHA with just one ASI.</span></li>
+      <li><span class="label">Level 12</span> <span class="name">Alert</span> &mdash; <span class="note">+5 Initiative, can't be surprised. Going first means Darkness + Shadow Blade before enemies act. Devastating opener.</span></li>
+      <li><span class="label">Alt L4</span> <span class="name">War Caster</span> &mdash; <span class="note">Advantage on concentration saves. If you didn't take Resilient (CON), this is your concentration insurance.</span></li>
+    </ul>
+  </section>
+
+  <!-- LEVEL PROGRESSION -->
+  <section class="section reveal" id="levels">
+    <h2>Level-by-Level Progression</h2>
+    <p style="color:var(--text-dim); margin-bottom:1rem;">Click any level to expand. Pure Sorcerer 12 &mdash; no multiclass needed. Shadow Magic features provide everything.</p>
+
+    <!-- Level 1 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">1</span>
+        <span class="lv-badge sorcerer">Sorcerer 1</span>
+        <span class="lv-title">Shadow Magic Origin &amp; Cantrips</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp shadow">Eyes of the Dark</span>
+          <span class="qp shadow">Strength of the Grave</span>
+          <span class="qp spell">Shield</span>
+          <span class="qp spell">Mage Armor</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">Eyes of the Dark</span> &mdash; <span class="note">You gain Superior Darkvision (24m). At Sorcerer 3, this expands to let you see through your own Darkness spell.</span></li>
+          <li><span class="label">Subclass</span> <span class="name">Strength of the Grave</span> &mdash; <span class="note">When damage reduces you to 0 HP, make a CHA save (DC = damage taken). On success, drop to 1 HP. Once per long rest. Incredible safety net.</span></li>
+          <li><span class="label">Cantrips</span> <span class="name">Fire Bolt, Minor Illusion, Chill Touch, Mage Hand</span> &mdash; <span class="note">Fire Bolt for ranged damage, Minor Illusion for utility, Chill Touch to prevent healing, Mage Hand for environmental puzzles.</span></li>
+          <li><span class="label">Spells</span> <span class="name">Shield + Mage Armor</span> &mdash; <span class="note">Shield for emergency AC, Mage Armor for 13+DEX base AC. You need both for survivability until gear comes online.</span></li>
+        </ul>
+        <p style="font-size:0.88rem; color:var(--text-dim); margin-top:0.5rem;">Starting Sorcerer gives you CON save proficiency, which is critical for maintaining concentration on Shadow Blade and Haste later. Never start anything else.</p>
+      </div></div>
+    </div>
+
+    <!-- Level 2 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">2</span>
+        <span class="lv-badge sorcerer">Sorcerer 2</span>
+        <span class="lv-title">Sorcery Points &amp; Metamagic</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp meta">Sorcery Points (2)</span>
+          <span class="qp meta">Quickened Spell</span>
+          <span class="qp meta">Twinned Spell</span>
+          <span class="qp spell">Misty Step</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Sorcery Points (2)</span> &mdash; <span class="note">Fuel for Metamagic. Convert spell slots to points or points to slots. You get more points per level.</span></li>
+          <li><span class="label">Meta</span> <span class="name">Quickened Spell (3 SP)</span> &mdash; <span class="note">THE metamagic. Cast a spell as a bonus action. Later: Quicken a cantrip &rarr; Attack with Shadow Blade. Or Quicken Darkness &rarr; Shadow Blade attack same turn.</span></li>
+          <li><span class="label">Meta</span> <span class="name">Twinned Spell (SP = spell level)</span> &mdash; <span class="note">Twin Haste on yourself and an ally. Twin Hold Person on two enemies. Insane action economy.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Misty Step</span> &mdash; <span class="note">Bonus action teleport. Repositioning within your Darkness field or escaping danger.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 3 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">3</span>
+        <span class="lv-badge sorcerer">Sorcerer 3</span>
+        <span class="lv-title">Shadow Blade &amp; Darkness Online</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp shadow">Shadow Blade</span>
+          <span class="qp shadow">Darkness (Free)</span>
+          <span class="qp feature">Eyes of the Dark (Full)</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Spell</span> <span class="name">Shadow Blade (2nd level)</span> &mdash; <span class="note">Concentration. Creates a finesse melee weapon: 2d8 psychic damage, advantage on attacks in dim light or darkness. THE reason this build exists. Light, finesse, thrown (20/60).</span></li>
+          <li><span class="label">Feature</span> <span class="name">Eyes of the Dark (Full)</span> &mdash; <span class="note">You can now cast Darkness using Sorcery Points (2 SP) instead of a spell slot. AND you can see through your own Darkness. This is the combo enabler.</span></li>
+          <li><span class="label">Combo</span> <span class="name">The Loop</span> &mdash; <span class="note">Cast Darkness (free via SP or slot) &rarr; cast Shadow Blade &rarr; attack with advantage every turn. Enemies in the Darkness are blinded (disadvantage on attacks, can't target spells). You see perfectly.</span></li>
+        </ul>
+        <p style="font-size:0.88rem; color:var(--text-dim); margin-top:0.5rem;">This is the biggest power spike of the build. At level 3, you go from a regular Sorcerer to an unstoppable shadow warrior with permanent advantage on attacks and enemies attacking blind.</p>
+      </div></div>
+    </div>
+
+    <!-- Level 4 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">4</span>
+        <span class="lv-badge sorcerer">Sorcerer 4</span>
+        <span class="lv-title">ASI &mdash; Charisma or Resilient</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">Feat / ASI</span>
+          <span class="qp spell">Cantrip</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">+2 CHA &rarr; 19</span> &mdash; <span class="note">Raise spell DC and CHA save for Strength of the Grave. If you got Hag Hair (+1 CHA), you hit 20 here.</span></li>
+          <li><span class="label">Alt</span> <span class="name">War Caster</span> &mdash; <span class="note">Advantage on concentration saves. If you find yourself dropping Shadow Blade or Haste frequently, this is the pick.</span></li>
+          <li><span class="label">Cantrip</span> <span class="name">Bone Chill</span> &mdash; <span class="note">Prevents healing on hit. Shadow-themed and useful against regenerating enemies.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 5 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">5</span>
+        <span class="lv-badge sorcerer">Sorcerer 5</span>
+        <span class="lv-title">3rd-Level Spells &mdash; Haste &amp; Fireball</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Haste</span>
+          <span class="qp spell">Fireball</span>
+          <span class="qp spell">Counterspell</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Spell</span> <span class="name">Haste</span> &mdash; <span class="note">+2 AC, double movement, extra action per turn. Twin it on yourself + a martial ally for devastating turns. Note: conflicts with Shadow Blade concentration &mdash; use one or the other, or Twin Haste on allies.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Fireball</span> &mdash; <span class="note">8d6 fire AoE. Your answer when Shadow Blade isn't optimal (large groups, flying enemies). Cast from outside your Darkness.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Counterspell</span> &mdash; <span class="note">Shut down enemy casters. Reaction spell, no concentration. Essential in every Sorcerer build.</span></li>
+          <li><span class="label">Upcast</span> <span class="name">Shadow Blade at 3rd level</span> &mdash; <span class="note">3d8 psychic per hit (up from 2d8). Use your 3rd-level slots on Shadow Blade when going into a boss fight.</span></li>
+        </ul>
+        <div class="callout warn">
+          <div class="callout-label">Concentration Warning</div>
+          <p>Shadow Blade and Haste are both concentration. You can't run both on yourself. The play: Twin Haste on two allies, then use Shadow Blade + Darkness on yourself. Or: Shadow Blade on yourself, skip Haste entirely. Both work &mdash; Shadow Blade + Darkness alone is strong enough.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Level 6 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">6</span>
+        <span class="lv-badge sorcerer">Sorcerer 6</span>
+        <span class="lv-title">Hound of Ill Omen</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp shadow">Hound of Ill Omen</span>
+          <span class="qp meta">Heightened Spell</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">Hound of Ill Omen (3 SP)</span> &mdash; <span class="note">Spend 3 Sorcery Points to summon a shadow dire wolf next to an enemy. The target has <strong>disadvantage on all saving throws against your spells</strong> while the Hound is within 5m. The Hound moves toward the target automatically.</span></li>
+          <li><span class="label">Meta</span> <span class="name">Heightened Spell (3 SP)</span> &mdash; <span class="note">Target has disadvantage on their first save against the spell. Stack this with Hound of Ill Omen: target has disadvantage from BOTH sources on saves against your Hold Person / Banishment / etc.</span></li>
+          <li><span class="label">Combo</span> <span class="name">Hound + Heightened Hold Person</span> &mdash; <span class="note">Summon Hound (3 SP) &rarr; Heightened Hold Person (3 SP + spell slot). Target saves at massive disadvantage. On failure, they're paralyzed and all attacks within 3m are critical hits. Pair with Shadow Blade for psychic crits.</span></li>
+        </ul>
+        <p style="font-size:0.88rem; color:var(--text-dim); margin-top:0.5rem;">Level 6 is a massive spike. The Hound turns your save-or-suck spells from "maybe they fail" to "they almost certainly fail." Plus the wolf itself deals decent damage and has HP to soak hits.</p>
+      </div></div>
+    </div>
+
+    <!-- Level 7 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">7</span>
+        <span class="lv-badge sorcerer">Sorcerer 7</span>
+        <span class="lv-title">4th-Level Spells &mdash; Banishment, Greater Invisibility</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Banishment</span>
+          <span class="qp spell">Greater Invisibility</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Spell</span> <span class="name">Banishment</span> &mdash; <span class="note">Remove a target from combat entirely (CHA save). With Hound + Heightened, they're almost guaranteed to fail. Concentration, so swap out Shadow Blade for this against bosses.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Greater Invisibility</span> &mdash; <span class="note">Alternative to Darkness for advantage. Can attack and cast while invisible. Useful when Darkness would blind your allies. Concentration &mdash; replaces Shadow Blade.</span></li>
+          <li><span class="label">Upcast</span> <span class="name">Shadow Blade at 4th level</span> &mdash; <span class="note">4d8 psychic per hit. The damage scaling is excellent.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 8 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">8</span>
+        <span class="lv-badge sorcerer">Sorcerer 8</span>
+        <span class="lv-title">ASI &mdash; CHA 20 or Alert</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">Feat / ASI</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">+2 CHA &rarr; 20 (if no Hag Hair)</span> &mdash; <span class="note">Cap CHA for maximum spell DC, attack bonus on cantrips, and Strength of the Grave reliability.</span></li>
+          <li><span class="label">Alt</span> <span class="name">Alert</span> &mdash; <span class="note">+5 Initiative, can't be surprised. If CHA is already 20 via Hag Hair + level 4 ASI, take this. Going first with Darkness + Shadow Blade is fight-ending.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 9 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">9</span>
+        <span class="lv-badge sorcerer">Sorcerer 9</span>
+        <span class="lv-title">5th-Level Spells &mdash; Hold Monster</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Hold Monster</span>
+          <span class="qp spell">Cloudkill</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Spell</span> <span class="name">Hold Monster</span> &mdash; <span class="note">Hold Person for ALL creature types, not just humanoids. With Hound + Heightened, even dragons and demons fail the save. Paralyzed = auto-crit Shadow Blade.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Cloudkill</span> &mdash; <span class="note">Persistent AoE damage. Good for area denial. Stacks with Darkness for a zone of death.</span></li>
+          <li><span class="label">Upcast</span> <span class="name">Shadow Blade at 5th level</span> &mdash; <span class="note">5d8 psychic per hit. At this point Shadow Blade outdamages most martial weapons.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 10 -->
+    <div class="level-card here">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">10</span>
+        <span class="lv-badge sorcerer">Sorcerer 10</span>
+        <span class="lv-title">Shadow Walk &amp; 4th Metamagic</span>
+        <span class="lv-here">&#9670; Subclass Feature</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp shadow">Shadow Walk</span>
+          <span class="qp meta">Subtle Spell</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">Shadow Walk</span> &mdash; <span class="note">When you're in dim light or darkness, you can teleport up to 36m to another spot in dim light or darkness as a bonus action. No spell slot, no Sorcery Points. Free infinite-range Misty Step in shadows. Insane mobility.</span></li>
+          <li><span class="label">Meta</span> <span class="name">Subtle Spell (1 SP)</span> &mdash; <span class="note">Cast without verbal/somatic components. Can't be Counterspelled. Use on Counterspell to guarantee it lands, or on Hold Monster against caster bosses.</span></li>
+          <li><span class="label">Combo</span> <span class="name">Shadow Walk + Shadow Blade</span> &mdash; <span class="note">Teleport to an enemy in your Darkness field (bonus action) &rarr; attack with Shadow Blade (action). Free repositioning every turn.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 11 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">11</span>
+        <span class="lv-badge sorcerer">Sorcerer 11</span>
+        <span class="lv-title">6th-Level Spells &mdash; Disintegrate, Chain Lightning</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Disintegrate</span>
+          <span class="qp spell">Chain Lightning</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Spell</span> <span class="name">Disintegrate</span> &mdash; <span class="note">10d6+40 force damage. On kill, target is completely destroyed (no reviving, no death saves). Your "delete this enemy" button. Hound + Heightened makes the DEX save almost impossible.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Chain Lightning</span> &mdash; <span class="note">10d8 lightning to primary target, 5d8 to up to 3 additional targets. Your AoE nuke for when Shadow Blade melee isn't practical.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Level 12 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">12</span>
+        <span class="lv-badge sorcerer">Sorcerer 12</span>
+        <span class="lv-title">Final ASI &amp; Build Complete</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">Feat / ASI</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">Alert</span> &mdash; <span class="note">If not taken at 8. Going first is paramount for setting up Darkness before enemies act.</span></li>
+          <li><span class="label">Alt</span> <span class="name">Lucky</span> &mdash; <span class="note">3 luck points per long rest. Reroll attacks, saves, or force enemy rerolls. Universally powerful.</span></li>
+          <li><span class="label">Alt</span> <span class="name">Tough</span> &mdash; <span class="note">+2 HP per level (24 HP). You're in melee with Shadow Blade &mdash; extra HP helps. Strength of the Grave + Tough = very hard to kill.</span></li>
+        </ul>
+        <p style="font-size:0.88rem; color:var(--text-dim); margin-top:0.5rem;">At level 12, you have 12 Sorcery Points, 6th-level spells, Shadow Walk for free teleportation, the Hound of Ill Omen, and Shadow Blade dealing 5d8+ psychic with advantage on every swing. The build is complete.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- SHADOW MAGIC FEATURES -->
+  <section class="section reveal" id="subclass">
+    <h2>Shadow Magic Features</h2>
+    <p>Shadow Magic Sorcerer gains four subclass features across 12 levels. Each one is build-defining.</p>
+
+    <h3>Eyes of the Dark (Level 1 / 3)</h3>
+    <div class="callout shadow">
+      <div class="callout-label">Eyes of the Dark</div>
+      <p><strong>Level 1:</strong> You gain Superior Darkvision (24m range). You can see in complete darkness as if it were dim light.<br>
+      <strong>Level 3:</strong> You can cast Darkness using 2 Sorcery Points instead of a spell slot. When you do, <strong>you can see through the Darkness</strong>. This doesn't apply when casting with a spell slot &mdash; only with Sorcery Points. This is the single most important feature of the build.</p>
+    </div>
+
+    <h3>Strength of the Grave (Level 1)</h3>
+    <ul class="picks">
+      <li><span class="label">Trigger</span> <span class="name">Reduced to 0 HP</span> &mdash; <span class="note">Make a CHA saving throw. DC = the damage that reduced you. On success, you drop to 1 HP instead of falling unconscious.</span></li>
+      <li><span class="label">Limit</span> <span class="name">Once per long rest</span> &mdash; <span class="note">Doesn't work against radiant damage or critical hits. Recharges on long rest. Stacks with Half-Orc Relentless Endurance if you chose that race.</span></li>
+      <li><span class="label">Scaling</span> <span class="name">CHA-dependent</span> &mdash; <span class="note">Higher CHA = higher save bonus = more likely to succeed. Another reason to cap CHA at 20.</span></li>
+    </ul>
+
+    <h3>Hound of Ill Omen (Level 6)</h3>
+    <ul class="picks">
+      <li><span class="label">Cost</span> <span class="name">3 Sorcery Points</span> &mdash; <span class="note">Bonus action to summon. The hound appears within 9m of a target you can see.</span></li>
+      <li><span class="label">Effect</span> <span class="name">Disadvantage on saves</span> &mdash; <span class="note">While the hound is within 5m of the target, the target has disadvantage on saving throws against YOUR spells only.</span></li>
+      <li><span class="label">Stats</span> <span class="name">Dire Wolf statblock</span> &mdash; <span class="note">Uses dire wolf stats but is a monstrosity, not a beast. It has temporary HP equal to half your Sorcerer level. Moves toward target each turn automatically.</span></li>
+      <li><span class="label">Combo</span> <span class="name">Hound + Any save spell</span> &mdash; <span class="note">The Hound makes Hold Person, Hold Monster, Banishment, and Disintegrate far more reliable. A Sorcerer-exclusive advantage that no other subclass gets.</span></li>
+    </ul>
+
+    <h3>Shadow Walk (Level 10)</h3>
+    <ul class="picks">
+      <li><span class="label">Cost</span> <span class="name">Free (Bonus Action)</span> &mdash; <span class="note">No spell slot, no Sorcery Points. Requires you to be in dim light or darkness.</span></li>
+      <li><span class="label">Range</span> <span class="name">Up to 36m</span> &mdash; <span class="note">Teleport to an unoccupied space you can see that is also in dim light or darkness. Double the range of Misty Step.</span></li>
+      <li><span class="label">Combo</span> <span class="name">Inside your Darkness</span> &mdash; <span class="note">Since you're always in your own Darkness (and can see through it), Shadow Walk is always available. Free 36m teleport every turn as a bonus action.</span></li>
+    </ul>
+  </section>
+
+  <!-- METAMAGIC -->
+  <section class="section reveal" id="metamagic">
+    <h2>Metamagic</h2>
+    <p>You pick 2 Metamagic options at level 2 and a 3rd at level 3 (totaling 3 by level 3), then a 4th at level 10. Here's the priority order.</p>
+
+    <table class="meta-table">
+      <thead>
+        <tr><th>Metamagic</th><th>Cost</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="meta-name">Quickened Spell</span></td>
+          <td><span class="meta-cost">3 SP</span></td>
+          <td>Cast a spell as a bonus action. Quicken a cantrip &rarr; attack with Shadow Blade. Or Quicken Darkness &rarr; Shadow Blade on turn 1. The single most important Metamagic.</td>
+        </tr>
+        <tr>
+          <td><span class="meta-name">Twinned Spell</span></td>
+          <td><span class="meta-cost">SP = Level</span></td>
+          <td>Twin Haste on two allies (6 SP). Twin Hold Person on two enemies (2 SP). Incredible value for single-target concentration spells.</td>
+        </tr>
+        <tr>
+          <td><span class="meta-name">Heightened Spell</span></td>
+          <td><span class="meta-cost">3 SP</span></td>
+          <td>Target has disadvantage on their first save against your spell. Stack with Hound of Ill Omen for near-guaranteed fails on Hold Monster, Banishment, Disintegrate.</td>
+        </tr>
+        <tr>
+          <td><span class="meta-name">Subtle Spell</span></td>
+          <td><span class="meta-cost">1 SP</span></td>
+          <td>Can't be Counterspelled. Use on your own Counterspell to guarantee it works. Also useful in dialogue (cast Charm Person without anyone noticing).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-label">Sorcery Point Economy</div>
+      <p>At level 12, you have 12 SP plus whatever you convert from spell slots. A typical combat: Darkness (2 SP) + Hound (3 SP) + Heightened Hold Monster (3 SP) = 8 SP in one round. That's expensive but fight-ending. For trash fights, just use Darkness (2 SP) + Shadow Blade (spell slot) and swing with advantage all day. Save the SP combos for bosses.</p>
+    </div>
+  </section>
+
+  <!-- SPELLS -->
+  <section class="section reveal" id="spells">
+    <h2>Spell Selection</h2>
+    <p>Sorcerers know very few spells (15 at level 12), so every pick counts. Prioritize Shadow Blade synergies, save-or-suck spells for the Hound combo, and defensive reactions.</p>
+
+    <div class="spell-section">
+      <div class="spell-level">Cantrips</div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Fire Bolt</div><div class="spell-desc">Ranged damage cantrip (1d10, scaling). Use when you can't reach melee or Shadow Blade isn't active.</div></div>
+        <span class="spell-badge good">Core</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Minor Illusion</div><div class="spell-desc">Lure enemies into your Darkness field. Create distractions. Incredible utility cantrip.</div></div>
+        <span class="spell-badge good">Utility</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Chill Touch</div><div class="spell-desc">Prevents healing for one turn. Good against trolls and undead with regeneration.</div></div>
+        <span class="spell-badge good">Situational</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Mage Hand</div><div class="spell-desc">Environmental interaction, shoving, disarming traps from safety.</div></div>
+        <span class="spell-badge good">Utility</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Bone Chill</div><div class="spell-desc">Prevents healing + undead have disadvantage on attacks. Thematic and useful.</div></div>
+        <span class="spell-badge good">Flex</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">1st Level</div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Shield</div><div class="spell-desc">+5 AC as a reaction until your next turn. Non-negotiable defensive spell for a melee sorcerer.</div></div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Mage Armor</div><div class="spell-desc">13 + DEX mod AC. With DEX 14, that's AC 15 baseline. Cast before combat, lasts all day.</div></div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Magic Missile</div><div class="spell-desc">Auto-hit damage. Guaranteed to finish off low-HP targets or break concentration. Never misses.</div></div>
+        <span class="spell-badge good">Reliable</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">2nd Level</div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Shadow Blade</div><div class="spell-desc">THE build-defining spell. Finesse melee weapon, 2d8 psychic, advantage in dim light/darkness. Scales with upcasting. Concentration.</div></div>
+        <span class="spell-badge core">Core</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Misty Step</div><div class="spell-desc">Bonus action teleport 18m. Use before Shadow Walk comes online at level 10.</div></div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Hold Person</div><div class="spell-desc">Paralyze a humanoid. Attacks within 3m are automatic crits. With Hound: devastating.</div></div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">3rd Level</div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Fireball</div><div class="spell-desc">8d6 fire AoE. Your mass damage option for groups that Shadow Blade can't reach.</div></div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Counterspell</div><div class="spell-desc">Negate an enemy spell as a reaction. Essential in every encounter with casters. Use Subtle Spell to prevent counter-Counterspell.</div></div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Haste</div><div class="spell-desc">Twin on two martial allies for incredible action economy. Don't self-cast (conflicts with Shadow Blade concentration).</div></div>
+        <span class="spell-badge conc">Concentration</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">4th Level</div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Banishment</div><div class="spell-desc">Remove a creature from combat (CHA save). Hound + Heightened = almost guaranteed. Concentration.</div></div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Greater Invisibility</div><div class="spell-desc">Invisibility that doesn't break on attacking. Alternative to Darkness when allies need to see. Concentration.</div></div>
+        <span class="spell-badge good">Flex</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">5th Level</div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Hold Monster</div><div class="spell-desc">Hold Person but works on ANY creature type. The endgame save-or-suck. Hound + Heightened = near-guaranteed paralysis.</div></div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">6th Level</div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Disintegrate</div><div class="spell-desc">10d6+40 force damage. Target reduced to 0 HP is completely destroyed. No save on hit &mdash; just a DEX save to halve. With Hound: devastating.</div></div>
+        <span class="spell-badge must">Must Have</span>
+      </div>
+      <div class="spell-row">
+        <div class="spell-info"><div class="spell-name">Chain Lightning</div><div class="spell-desc">10d8 primary + 5d8 to 3 others. Your AoE nuke for when Fireball isn't enough.</div></div>
+        <span class="spell-badge good">Strong</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- GEAR -->
+  <section class="section reveal" id="items">
+    <h2>Gear</h2>
+
+    <div class="item-group">
+      <div class="item-group-title">Weapons</div>
+      <div class="item-row">
+        <div class="item-name">Markoheshkir <span class="item-slot">Quarterstaff</span></div>
+        <div class="item-desc">+1 spell save DC, +1 spell attack rolls. Kereska's Favour grants access to one elemental damage boost per long rest. The best caster weapon in the game. Equip this when not using Shadow Blade.</div>
+        <div class="item-loc">Act 3 &mdash; Ramazith's Tower (Sorcerous Sundries), behind the Karsus vault puzzle</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Staff of Spell Power <span class="item-slot">Quarterstaff</span></div>
+        <div class="item-desc">+1 spell save DC, +1 spell attack rolls. Essentially the same bonuses as Markoheshkir without the Kereska's Favour toggle. Strong Act 2 alternative.</div>
+        <div class="item-loc">Act 2 &mdash; Sold by Quartermaster Talli at Last Light Inn</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Armor &amp; Clothing</div>
+      <div class="item-row">
+        <div class="item-name">Potent Robe <span class="item-slot">Clothing</span></div>
+        <div class="item-desc">Cantrips deal additional damage equal to your CHA modifier. AC = 10 + DEX + CHA. With 20 CHA and 14 DEX, that's AC 17 without armor. Best-in-slot for casters.</div>
+        <div class="item-loc">Act 2 &mdash; Reward from Alfira at Last Light Inn (save the tieflings in Act 1)</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Robe of the Weave <span class="item-slot">Clothing</span></div>
+        <div class="item-desc">+1 spell save DC, +1 AC. Strong alternative if you didn't get Potent Robe.</div>
+        <div class="item-loc">Act 3 &mdash; Ramazith's Tower lower levels</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Yuan-Ti Scale Mail <span class="item-slot">Medium Armor</span></div>
+        <div class="item-desc">AC 15 + DEX mod (max 2). Initiative +1. No Stealth disadvantage. Solid mid-game option before Potent Robe.</div>
+        <div class="item-loc">Act 2 &mdash; Found in the Shadow-Cursed Lands, Drider cave</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Headwear</div>
+      <div class="item-row">
+        <div class="item-name">Birthright <span class="item-slot">Hat</span></div>
+        <div class="item-desc">+2 CHA while worn. If CHA is 18, this brings it to 20 without an ASI. Frees up a feat slot for Alert or Lucky.</div>
+        <div class="item-loc">Act 3 &mdash; Sold by Helsik in Devil's Fee (Baldur's Gate)</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Hood of the Weave <span class="item-slot">Helmet</span></div>
+        <div class="item-desc">+2 spell save DC bonus. Stacks with Markoheshkir for massive DC. Critical for making save-or-suck spells reliable.</div>
+        <div class="item-loc">Act 3 &mdash; Mystic Carrion's lair in Baldur's Gate (Philgrave's Mansion)</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Covert Cowl <span class="item-slot">Helmet</span></div>
+        <div class="item-desc">Critical hit threshold reduced by 1 (crit on 19-20). While obscured (you're in Darkness), gain advantage on Stealth checks. Shadow-themed and mechanically excellent.</div>
+        <div class="item-loc">Act 2 &mdash; Sold by Roah Moonglow in Moonrise Towers</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Accessories</div>
+      <div class="item-row">
+        <div class="item-name">Cloak of the Weave <span class="item-slot">Cloak</span></div>
+        <div class="item-desc">+1 spell save DC, +1 spell attack rolls. Stacks with everything. More DC = more reliable Hold Monster.</div>
+        <div class="item-loc">Act 3 &mdash; Ramazith's Tower (Sorcerous Sundries)</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Amulet of Greater Health <span class="item-slot">Amulet</span></div>
+        <div class="item-desc">Sets CON to 23. Massive HP boost and concentration save bonus (+6). Best-in-slot for any concentration caster.</div>
+        <div class="item-loc">Act 3 &mdash; House of Hope, in Raphael's vault</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Killer's Sweetheart <span class="item-slot">Ring</span></div>
+        <div class="item-desc">When you kill a creature, your next attack is a guaranteed critical hit. Shadow Blade crit = double all psychic dice. One kill starts a chain.</div>
+        <div class="item-loc">Act 2 &mdash; Self-Same Trial in the Gauntlet of Shar</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Ring of Free Action <span class="item-slot">Ring</span></div>
+        <div class="item-desc">Can't be paralyzed, restrained, or slowed. Movement can't be reduced. Melee sorcerers need mobility insurance.</div>
+        <div class="item-loc">Act 2 &mdash; Oubliette beneath Moonrise Towers</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Gloves of Dexterity <span class="item-slot">Gloves</span></div>
+        <div class="item-desc">Sets DEX to 18. If you started with DEX 14, this gives +2 to hit with Shadow Blade, +2 AC, and +2 initiative. Huge upgrade.</div>
+        <div class="item-loc">Act 1 &mdash; Sold by A'jak'nir Jeera in Cr&egrave;che Y'llek</div>
+      </div>
+      <div class="item-row">
+        <div class="item-name">Boots of Speed <span class="item-slot">Boots</span></div>
+        <div class="item-desc">Click Heels to double movement speed for 3 turns. Useful for reaching enemies in your Darkness field or escaping.</div>
+        <div class="item-loc">Act 1 &mdash; Sold by Thulla in the Myconid Colony (Underdark)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMBAT ROTATION -->
+  <section class="section reveal" id="combat">
+    <h2>Combat Rotation</h2>
+
+    <h3>Standard Opener (Darkness + Shadow Blade)</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Cast Darkness (2 SP via Eyes of the Dark)</span> <span class="step-timing turn">Turn 1</span>
+        <div class="step-detail">Center it on yourself or slightly ahead. You can see through it; enemies can't. All enemies inside are Blinded (disadvantage on attacks, can't target spells). All enemies outside can't see into it. Cost: 2 Sorcery Points (not a spell slot).</div>
+      </li>
+      <li>
+        <span class="step-action">Cast Shadow Blade (2nd+ level slot)</span> <span class="step-timing bonus">Quickened</span>
+        <div class="step-detail">Quicken Shadow Blade (3 SP) to cast it as a bonus action, then attack with it as your action on the same turn. Or cast it normally this turn and start attacking next turn. Upcast to 3rd/4th/5th level for 3d8/4d8/5d8 psychic.</div>
+      </li>
+      <li>
+        <span class="step-action">Attack with Shadow Blade (with advantage)</span> <span class="step-timing every">Every Turn</span>
+        <div class="step-detail">You're in Darkness. Shadow Blade grants advantage on attacks in dim light or darkness. Swing every turn with advantage. Enemies attack you with disadvantage (they're blinded). This is your sustained damage loop.</div>
+      </li>
+      <li>
+        <span class="step-action">Shadow Walk to reposition</span> <span class="step-timing bonus">Bonus (Lv10+)</span>
+        <div class="step-detail">At level 10, use Shadow Walk (free bonus action teleport up to 36m) to move to the next target without provoking opportunity attacks. You're always in darkness, so it's always available.</div>
+      </li>
+    </ol>
+
+    <h3>Boss Killer Combo (Hound + Hold)</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Summon Hound of Ill Omen (3 SP, bonus action)</span> <span class="step-timing pre">Pre-Cast</span>
+        <div class="step-detail">Summon the shadow wolf next to the boss. It automatically moves toward the target and gives disadvantage on saves against your spells while within 5m.</div>
+      </li>
+      <li>
+        <span class="step-action">Heightened Hold Monster (3 SP + 5th level slot)</span> <span class="step-timing turn">Turn 1</span>
+        <div class="step-detail">The target has disadvantage from both Hound and Heightened Spell. Even creatures with +8 WIS saves will fail most of the time. On failure: paralyzed, incapacitated, auto-fail STR/DEX saves, attacks within 3m auto-crit.</div>
+      </li>
+      <li>
+        <span class="step-action">Quickened Shadow Blade + attack (auto-crit)</span> <span class="step-timing bonus">Same Turn</span>
+        <div class="step-detail">Quicken Shadow Blade, then attack the paralyzed target. Automatic critical hit. 5d8 psychic doubled to 10d8 = average 45 psychic damage in a single hit. Have martial allies pile on for more crits.</div>
+      </li>
+      <li>
+        <span class="step-action">Disintegrate if still standing</span> <span class="step-timing turn">Turn 2</span>
+        <div class="step-detail">If the boss survived the crit round, Disintegrate (10d6+40 force, DEX save with disadvantage from Hound) finishes them. If it kills them, they're completely destroyed &mdash; no revival, no death saves.</div>
+      </li>
+    </ol>
+
+    <h3>AoE / Ranged Fallback</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Fireball or Chain Lightning for groups</span> <span class="step-timing turn">Turn 1</span>
+        <div class="step-detail">When enemies are spread out or flying, Shadow Blade isn't optimal. Drop a Fireball (8d6 fire) or Chain Lightning (10d8 + chain). Cast from outside your Darkness or drop concentration first.</div>
+      </li>
+      <li>
+        <span class="step-action">Quickened cantrip for extra damage</span> <span class="step-timing bonus">Bonus</span>
+        <div class="step-detail">After casting a leveled spell, Quicken Fire Bolt for bonus action damage. With Potent Robe, cantrips deal an extra +5 (CHA mod) damage.</div>
+      </li>
+    </ol>
+
+    <div class="callout warn">
+      <div class="callout-label">Friendly Fire Warning</div>
+      <p>Your Darkness field blinds EVERYONE except you. Don't center it on your party. Position it so enemies are inside but allies are outside, or communicate with your team to stay clear. Alternatively, use Greater Invisibility instead of Darkness when your allies need line of sight.</p>
+    </div>
+  </section>
+
+  <!-- PARTY -->
+  <section class="section reveal" id="companions">
+    <h2>Party Recommendations</h2>
+    <p>Your Darkness field complicates party dynamics since allies can't see through it either. Build your party around ranged allies who stay outside the field, or martial allies who can fight without sight.</p>
+
+    <div class="party-grid">
+      <div class="party-card">
+        <div class="party-name">Karlach (Berserker)</div>
+        <div class="party-role">Melee Damage</div>
+        <div class="party-desc">Reckless Attack already gives advantage (negating Darkness disadvantage). She can fight inside your Darkness field without penalty. Frenzy for extra attacks. Perfect melee partner.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Shadowheart (Life/Trickery Cleric)</div>
+        <div class="party-role">Healer / Support</div>
+        <div class="party-desc">Heals and buffs from outside your Darkness. Spirit Guardians has its own damage aura. Trickery Cleric can cast their own Darkness, fitting the shadow theme. Warding Bond for concentration insurance.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Astarion (Gloom Stalker / Assassin)</div>
+        <div class="party-role">Ranged / Burst</div>
+        <div class="party-desc">Build him as an archer who stays outside the Darkness. Gloom Stalker's Dread Ambusher for round 1 burst. Assassin's auto-crit on surprised enemies pairs with your initiative advantage from Alert.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Gale (Evocation Wizard)</div>
+        <div class="party-role">AoE / Control</div>
+        <div class="party-desc">Sculpt Spells lets him Fireball into your Darkness without hitting you. Web, Slow, and Wall of Fire for zone control outside your bubble. Covers your AoE weakness.</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">The Darkness Positioning Rule</div>
+      <p>Place Darkness so YOU are inside it and enemies are inside it, but your ranged allies are OUTSIDE looking in. They can't target specific enemies inside (Blinded), but they can use AoE spells on the area. Martial allies with Blindsight or Reckless Attack can fight inside the field. This is the key to making the party work.</p>
+    </div>
+  </section>
+
+  <!-- HONOUR MODE -->
+  <section class="section reveal" id="honour">
+    <h2>Honour Mode Tips</h2>
+    <p>Shadow Magic Sorcerer is one of the safest Honour Mode builds thanks to permanent defensive advantages (enemies attack at disadvantage in Darkness) and Strength of the Grave as death insurance.</p>
+
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Darkness + Shadow Blade on turn 1, always</span> <span class="step-timing turn">Opener</span>
+        <div class="step-detail">In Honour Mode, enemies hit harder and have more HP. Forcing disadvantage on all enemy attacks (via Darkness) is the single best defensive tool. Never skip the setup turn.</div>
+      </li>
+      <li>
+        <span class="step-action">Save Hound + Heightened for Legendary enemies</span> <span class="step-timing pre">Resource</span>
+        <div class="step-detail">Honour Mode bosses have Legendary Actions and Legendary Resistance. Don't waste your Hound + Heightened combo on trash. Save the 6+ SP investment for boss encounters where a failed save means death.</div>
+      </li>
+      <li>
+        <span class="step-action">Subtle Counterspell is mandatory</span> <span class="step-timing every">Every Caster Fight</span>
+        <div class="step-detail">Honour Mode casters WILL Counterspell your key spells. Subtle Counterspell (1 SP) can't be countered. Always hold your reaction for caster fights.</div>
+      </li>
+      <li>
+        <span class="step-action">Strength of the Grave + backup plan</span> <span class="step-timing every">Safety Net</span>
+        <div class="step-detail">In Honour Mode, if you die it's over. Strength of the Grave gives you one free save from death. Stack it with Amulet of Greater Health (CON 23 = massive HP pool) and Shield reactions. You should almost never go down.</div>
+      </li>
+      <li>
+        <span class="step-action">Use Greater Invisibility against immune enemies</span> <span class="step-timing every">Adaptation</span>
+        <div class="step-detail">Some Honour Mode enemies have Devil's Sight or Blindsight, negating your Darkness. Switch to Greater Invisibility for advantage on attacks without relying on darkness. Always have a plan B.</div>
+      </li>
+    </ol>
+
+    <h3>Hardest Honour Mode Fights &mdash; Shadow Sorcerer Approach</h3>
+    <ul class="picks">
+      <li><span class="label">Act 1</span> <span class="name">Grym (Adamantine Forge)</span> &mdash; <span class="note">Immune to most damage. Don't waste spells &mdash; use the forge hammer mechanic. Save resources for real fights.</span></li>
+      <li><span class="label">Act 2</span> <span class="name">Ketheric Thorm</span> &mdash; <span class="note">Phase 1 is humanoid: Hold Person + Shadow Blade crits. Phase 2 (Apostle of Myrkul): use Hold Monster + Hound. The Darkness field protects against his AoE darkness &mdash; ironic, since you see through it.</span></li>
+      <li><span class="label">Act 3</span> <span class="name">Raphael (House of Hope)</span> &mdash; <span class="note">Fiend with Legendary Resistance. Burn through his resistances with cheap save spells first, then Hound + Heightened Hold Monster. He has fire immunity, so use Shadow Blade (psychic) and Disintegrate (force). Your Darkness protects against his Hellfire orbs.</span></li>
+      <li><span class="label">Act 3</span> <span class="name">Orin the Red</span> &mdash; <span class="note">Humanoid. Hold Person with Hound + Heightened. She has Unstoppable (Legendary Action) but only one charge. Force a save, she burns Unstoppable, then Hold Person again. Shadow Blade crits finish her.</span></li>
+      <li><span class="label">Final</span> <span class="name">The Netherbrain</span> &mdash; <span class="note">Not humanoid, massive HP. Use Hold Monster with Hound. Darkness field protects your party from adds. Chain Lightning for tentacle adds. This is a war of attrition &mdash; your defensive Darkness advantage keeps you alive long enough to win.</span></li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="callout-label">Honour Mode Golden Rule</div>
+      <p>Pre-buff before every fight. Mage Armor should already be active. Position Darkness before combat starts (via stealth). Shadow Blade can be pre-cast if you anticipate combat. The Shadow Sorcerer's advantage is that the setup only costs 2 SP (Darkness) + one spell slot (Shadow Blade) &mdash; sustainable across multiple fights without long resting.</p>
+    </div>
+  </section>
+
+  <div class="guide-footer">
+    BG3 Shadow Magic Sorcerer &mdash; Umbral Executioner Build Guide &middot; Sorcerer 12 &middot; Patch 8
+    <br>
+    <a href="guides.html">All Build Guides</a> &middot; <a href="index.html">Home</a>
+  </div>
+
+</main>
+</div>
+
+<script>
+// Highlight active sidebar link on scroll
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector('.sidebar a[href="#' + entry.target.id + '"]');
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+
+// Mobile hamburger menu
+const toggle = document.querySelector('.nav-toggle');
+const links = document.querySelector('.nav-links');
+toggle.addEventListener('click', () => links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+// Scroll reveal
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>

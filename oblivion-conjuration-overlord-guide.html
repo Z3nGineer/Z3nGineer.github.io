@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conjuration Overlord — Oblivion Remastered Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0c0a08;--bg-card:#161310;--bg-el:#1e1a16;--bg-hover:#252018;
+  --border:#302a22;--border-light:#403828;
+  --text:#e0d8c8;--text-dim:#a89878;--text-muted:#6a5a48;--white:#f0e8d8;
+  --accent:#c8a050;--accent-hover:#e0b860;--accent-dim:rgba(200,160,80,0.12);
+  --fire:#d05030;--fire-dim:rgba(208,80,48,0.12);
+  --frost:#4080c0;--frost-dim:rgba(64,128,192,0.12);
+  --shock:#8060c0;--shock-dim:rgba(128,96,192,0.12);
+  --green:#5a9040;--green-dim:rgba(90,144,64,0.1);
+  --blue:#4080b0;--blue-dim:rgba(64,128,176,0.1);
+  --red:#b03030;
+  --conjure:#9060b0;--conjure-dim:rgba(144,96,176,0.12);
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:19px;line-height:1.75;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);text-decoration:underline}
+
+.page{display:flex;max-width:1100px;margin:0 auto}
+.sidebar{width:220px;flex-shrink:0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;border-right:1px solid var(--border);background:var(--bg-card);padding:1.5rem 0;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.sidebar-badge{text-align:center;padding:0 1.25rem 1rem}
+.sidebar-badge img{width:48px;height:48px;border-radius:8px;border:1px solid var(--border)}
+.sidebar-title{font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);padding:0 1.25rem;margin-bottom:.75rem}
+.sidebar a{display:flex;align-items:center;gap:.5rem;padding:.45rem 1.25rem;font-size:.88rem;font-weight:500;color:var(--text-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s}
+.sidebar a:hover{color:var(--white);background:rgba(200,160,80,0.04);text-decoration:none}
+.sidebar a.active{color:var(--white);border-left-color:var(--accent);background:rgba(200,160,80,0.06)}
+.nav-icon{font-size:1rem;width:1.2rem;text-align:center}
+.content{flex:1;min-width:0;padding:2.5rem 2.5rem 4rem}
+@media(max-width:800px){.sidebar{display:none}.content{padding:1.5rem}}
+
+/* Hero */
+.hero-art{width:100%;margin-bottom:1.25rem;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:var(--bg-card)}
+.hero-svg{width:100%;height:auto;display:block}
+.guide-header{margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.header-row{display:flex;align-items:center;gap:1rem;margin-bottom:.5rem}
+.header-portrait{width:72px;height:72px;border-radius:8px;border:2px solid var(--border);object-fit:cover;background:var(--bg-el)}
+.header-text{flex:1}
+.breadcrumb{font-size:.78rem;color:var(--text-muted);margin-bottom:.3rem}
+.guide-header h1{font-family:'Cinzel',serif;font-size:2.2rem;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:.3rem}
+.subtitle{font-size:1rem;color:var(--text-dim)}
+.tag-row{display:flex;gap:.4rem;margin-top:.6rem;flex-wrap:wrap}
+.tag{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim);text-transform:uppercase;letter-spacing:.04em}
+.tag.fire{color:var(--fire);border-color:rgba(208,80,48,0.3);background:var(--fire-dim)}
+.tag.gold{color:var(--accent);border-color:rgba(200,160,80,0.3);background:var(--accent-dim)}
+.tag.green{color:var(--green);border-color:rgba(90,144,64,0.3);background:var(--green-dim)}
+.tag.blue{color:var(--blue);border-color:rgba(64,128,176,0.3);background:var(--blue-dim)}
+.tag.conjure{color:var(--conjure);border-color:rgba(144,96,176,0.3);background:var(--conjure-dim)}
+
+/* Sections */
+.section{margin-top:3rem}
+.section h2{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.section h3{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:600;color:var(--text);margin:1.5rem 0 .6rem}
+.section p{margin-bottom:1rem}
+
+/* Callouts */
+.callout{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0}
+.callout.warn{border-left-color:var(--fire)}
+.callout.tip{border-left-color:var(--green)}
+.callout-label{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem;color:var(--accent)}
+.callout.warn .callout-label{color:var(--fire)}
+.callout.tip .callout-label{color:var(--green)}
+.callout p{margin-bottom:.5rem;font-size:.95rem}.callout p:last-child{margin-bottom:0}
+
+/* Stats */
+.stats{display:flex;gap:.5rem;flex-wrap:wrap;margin:.75rem 0}
+.stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:.4rem .75rem;text-align:center;min-width:3.5rem}
+.stat-box.primary{border-color:rgba(200,160,80,0.4)}
+.stat-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
+.stat-val{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--white)}
+.stat-box.primary .stat-val{color:var(--accent)}
+
+/* Picks */
+.picks{list-style:none;margin:.5rem 0}
+.picks li{padding:.3rem 0;font-size:.95rem;display:flex;gap:.4rem;align-items:baseline}
+.picks .label{font-size:.72rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.03em;flex-shrink:0;min-width:5rem}
+.picks .name{font-weight:600;color:var(--white)}
+.picks .note{color:var(--text-dim);font-size:.88rem}
+
+/* Level cards */
+.lv-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.4rem;overflow:hidden;transition:border-color .15s}
+.lv-card:hover{border-color:var(--border-light)}
+.lv-card.spike{border-left:3px solid var(--accent)}
+.lv-head{display:flex;align-items:center;gap:.6rem;padding:.65rem 1rem;cursor:pointer;user-select:none;transition:background .1s;flex-wrap:wrap}
+.lv-head:hover{background:var(--bg-hover)}
+.lv-num{font-family:'Cinzel',serif;font-weight:900;font-size:1.3rem;color:var(--white);min-width:1.6rem;text-align:center}
+.lv-range{font-size:.72rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(200,160,80,0.2);text-transform:uppercase;letter-spacing:.04em}
+.lv-title{font-weight:600;font-size:.95rem;color:var(--text);flex:1}
+.lv-spike{font-size:.65rem;font-weight:600;color:var(--accent);background:var(--accent-dim);padding:.15rem .45rem;border-radius:4px;border:1px solid rgba(200,160,80,0.2);text-transform:uppercase}
+.lv-arrow{color:var(--text-muted);font-size:.75rem;transition:transform .2s}
+.lv-card.open .lv-arrow{transform:rotate(90deg)}
+.lv-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.lv-card.open .lv-body{max-height:1200px}
+.lv-inner{padding:0 1rem 1rem;border-top:1px solid var(--border)}
+
+/* Quick picks */
+.qp-row{display:flex;flex-wrap:wrap;gap:.3rem;margin:.75rem 0 .5rem}
+.qp{font-size:.78rem;font-weight:500;padding:.2rem .6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim)}
+.qp.skill{color:var(--green);border-color:rgba(90,144,64,0.2)}
+.qp.spell{color:var(--frost);border-color:rgba(64,128,192,0.2)}
+.qp.gear{color:var(--accent);border-color:rgba(200,160,80,0.2)}
+.qp.attr{color:var(--fire);border-color:rgba(208,80,48,0.2)}
+.qp.conjure{color:var(--conjure);border-color:rgba(144,96,176,0.2)}
+
+/* Gear cards */
+.gear-group{margin-bottom:1.5rem}
+.gear-group-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--accent);padding-bottom:.35rem;margin-bottom:.5rem;border-bottom:1px solid rgba(200,160,80,0.15)}
+.gear-row{display:flex;gap:.75rem;padding:.6rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:.35rem;align-items:center}
+.gear-img{width:48px;height:48px;border-radius:4px;border:1px solid var(--border);object-fit:cover;flex-shrink:0;background:var(--bg-el)}
+.gear-info{flex:1}
+.gear-name{font-weight:600;color:var(--accent);font-size:.95rem}
+.gear-slot{font-size:.7rem;color:var(--text-muted);margin-left:.35rem;text-transform:uppercase}
+.gear-desc{color:var(--text-dim);font-size:.85rem;margin-top:.1rem}
+.gear-loc{font-size:.8rem;color:var(--green);margin-top:.15rem}
+
+/* Spell grid */
+.spell-section{margin-bottom:1.5rem}
+.spell-level{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--white);padding-bottom:.35rem;margin-bottom:.5rem;border-bottom:1px solid var(--border)}
+.spell-row{display:flex;justify-content:space-between;align-items:start;padding:.5rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:.35rem;gap:.75rem}
+.spell-info{flex:1}.spell-name{font-weight:600;color:var(--white);font-size:.95rem}
+.spell-desc{color:var(--text-dim);font-size:.85rem;margin-top:.1rem}
+.spell-badge{font-size:.68rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;flex-shrink:0;align-self:center}
+.spell-badge.must{color:var(--green);background:var(--green-dim);border:1px solid rgba(90,144,64,0.2)}
+.spell-badge.good{color:var(--accent);background:var(--accent-dim);border:1px solid rgba(200,160,80,0.15)}
+.spell-badge.fire{color:var(--fire);background:var(--fire-dim);border:1px solid rgba(208,80,48,0.2)}
+.spell-badge.frost{color:var(--frost);background:var(--frost-dim);border:1px solid rgba(64,128,192,0.2)}
+.spell-badge.shock{color:var(--shock);background:var(--shock-dim);border:1px solid rgba(128,96,192,0.2)}
+.spell-badge.custom{color:#c0a060;background:rgba(192,160,96,0.08);border:1px solid rgba(192,160,96,0.15)}
+.spell-badge.conjure{color:var(--conjure);background:var(--conjure-dim);border:1px solid rgba(144,96,176,0.2)}
+
+/* Birthsign cards */
+.bs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin:1rem 0}
+@media(max-width:700px){.bs-grid{grid-template-columns:1fr}}
+.bs-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center}
+.bs-card.recommended{border-color:var(--accent);box-shadow:0 0 0 1px rgba(200,160,80,0.1)}
+.bs-card img{width:64px;height:64px;border-radius:50%;border:2px solid var(--border);margin-bottom:.5rem;background:var(--bg-el)}
+.bs-card.recommended img{border-color:var(--accent)}
+.bs-name{font-family:'Cinzel',serif;font-weight:700;font-size:1rem;color:var(--white)}
+.bs-bonus{font-size:.85rem;color:var(--green);margin-top:.2rem}
+.bs-penalty{font-size:.85rem;color:var(--fire);margin-top:.1rem}
+.bs-note{font-size:.82rem;color:var(--text-dim);margin-top:.3rem}
+
+/* Rotation */
+.step-list{list-style:none;counter-reset:step}
+.step-list li{position:relative;padding:.75rem 0 .75rem 3rem;border-left:2px solid var(--border);margin-left:.75rem;counter-increment:step}
+.step-list li::before{content:counter(step);position:absolute;left:-.75rem;top:.6rem;width:1.4rem;height:1.4rem;background:var(--bg);border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:700;font-size:.75rem;color:var(--accent)}
+.step-list li:last-child{border-left-color:transparent}
+.step-action{font-weight:600;color:var(--white)}
+.step-detail{color:var(--text-dim);font-size:.9rem;margin-top:.2rem}
+
+/* Virtues table */
+.virtue-table{width:100%;border-collapse:collapse;margin:1rem 0}
+.virtue-table th{font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--border)}
+.virtue-table td{padding:.5rem .6rem;border-bottom:1px solid var(--border);font-size:.9rem}
+.virtue-table tr:hover{background:var(--bg-card)}
+.virtue-table .attr-name{font-weight:600;color:var(--white)}
+.virtue-table .priority{font-size:.7rem;font-weight:600;padding:.1rem .4rem;border-radius:3px}
+.priority.t1{color:var(--accent);background:var(--accent-dim)}
+.priority.t2{color:var(--green);background:var(--green-dim)}
+.priority.t3{color:var(--text-muted);background:rgba(200,200,200,0.04)}
+
+/* Section images */
+.section-img{width:100%;max-height:200px;object-fit:cover;object-position:center;border-radius:8px;border:1px solid var(--border);margin:1rem 0;filter:brightness(0.85)}
+.inline-icon{width:28px;height:28px;vertical-align:middle;margin-right:.3rem;border-radius:4px}
+
+.guide-footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.75rem;color:var(--text-muted);text-align:center}
+.guide-footer a{color:var(--text-dim);margin:0 .5rem}
+.guide-footer a:hover{color:var(--accent)}
+
+/* Mobile nav */
+.mobile-nav{display:none;position:sticky;top:60px;z-index:100;background:rgba(12,10,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:56px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Cinzel',serif;font-size:.85rem;font-weight:700;color:var(--accent);letter-spacing:.06em}
+.nav-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s}
+.nav-links{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:rgba(12,10,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.nav-links.open{display:flex}
+.nav-links a{display:flex;align-items:center;gap:.5rem;height:44px;font-size:.9rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){.mobile-nav{display:flex}}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── Universal Nav ── */
+.unav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.unav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.unav-brand{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;color:var(--text);text-decoration:none;transition:color 0.3s}
+.unav-brand:hover{color:var(--accent,#c9a84c)}
+.unav-links{display:flex;gap:1.5rem;list-style:none;align-items:center}
+.unav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.3s;position:relative}
+.unav-links a:hover,.unav-links a.active{color:var(--accent,#c9a84c)}
+.unav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--accent,#c9a84c);transform:scaleX(0);transition:transform 0.3s;transform-origin:right}
+.unav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.unav-dropdown{position:relative}
+.unav-dropdown>a::after{display:none}
+.unav-dropdown>a{display:flex;align-items:center;gap:0.3rem}
+.unav-dropdown>a .dd-arrow{font-size:0.5rem;transition:transform 0.2s;margin-top:1px}
+.unav-dropdown:hover>a .dd-arrow{transform:rotate(180deg)}
+.unav-dd{
+  position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);
+  background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border);border-radius:10px;
+  min-width:200px;padding:0.5rem 0;
+  opacity:0;visibility:hidden;transform:translateX(-50%) translateY(-5px);
+  transition:opacity 0.2s,visibility 0.2s,transform 0.2s;
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+}
+.unav-dropdown:hover .unav-dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.unav-dd a{display:block;padding:0.6rem 1.2rem;font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.15s,background 0.15s;white-space:nowrap}
+.unav-dd a:hover{color:var(--accent,#c9a84c);background:rgba(201,168,76,0.06)}
+.unav-dd a::after{display:none}
+.unav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:0.5rem;z-index:1001}
+.unav-hamburger span{display:block;width:22px;height:2px;background:var(--text-dim,#aaa);margin:5px 0;transition:all 0.3s ease;border-radius:1px}
+.unav-hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.unav-hamburger.open span:nth-child(2){opacity:0}
+.unav-hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+@media(max-width:700px){
+  .unav-hamburger{display:block}
+  .unav-links{
+    display:flex;flex-direction:column;gap:0;
+    position:absolute;top:60px;left:0;right:0;
+    background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;
+    padding:0 0;
+  }
+  .unav-links.open{max-height:600px;padding:0.5rem 0}
+  .unav-links>li{list-style:none}
+  .unav-links>li>a{display:block;padding:0.8rem 2rem;font-size:0.85rem;border-bottom:1px solid var(--border)}
+  .unav-links>li:last-child>a{border-bottom:none}
+  .unav-links a::after{display:none}
+  .unav-dd{position:static;opacity:1;visibility:visible;transform:none;border:none;border-radius:0;min-width:auto;padding:0;background:none;backdrop-filter:none;box-shadow:none}
+  .unav-dd a{padding:0.7rem 2rem 0.7rem 3rem;font-size:0.8rem;border-bottom:1px solid var(--border)}
+  .unav-dropdown>a{display:none}
+  .unav-dropdown{border-bottom:none}
+}
+
+</style>
+</head>
+<body>
+<nav class="unav">
+  <div class="unav-inner">
+    <a href="index.html" class="unav-brand">Z3nGineer</a>
+    <button class="unav-hamburger" id="unav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="unav-links" id="unav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="unav-dropdown">
+        <a href="#">Projects <span class="dd-arrow">&#x25BC;</span></a>
+        <div class="unav-dd">
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+          <a href="https://crockednloaded.com">CrockedNLoaded</a>
+          <a href="guides.html">Game Guides</a>
+          <a href="CHIM.html">CHIM Modpack</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="mobile-nav" style="margin-top:60px;">
+  <span class="mobile-nav-title">Conjuration Overlord</span>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="#overview"><span class="nav-icon">◈</span> Overview</a>
+    <a href="#firststeps"><span class="nav-icon">►</span> First Steps</a>
+    <a href="#birthsign"><span class="nav-icon">★</span> Birthsign</a>
+    <a href="#virtues"><span class="nav-icon">↑</span> Leveling</a>
+    <a href="#progression"><span class="nav-icon">⚔</span> Progression</a>
+    <a href="#spells"><span class="nav-icon">✦</span> Spells</a>
+    <a href="#gear"><span class="nav-icon">◆</span> Gear</a>
+    <a href="#enchanting"><span class="nav-icon">✧</span> Enchanting</a>
+    <a href="#combat"><span class="nav-icon">⚡</span> Combat</a>
+    <a href="#tips"><span class="nav-icon">💡</span> Tips</a>
+  </div>
+</div>
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-badge">
+    <img src="https://images.uesp.net/thumb/2/2d/OBR-class-Sorcerer.png/200px-OBR-class-Sorcerer.png" alt="Sorcerer">
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">◈</span> Overview</a>
+  <a href="#firststeps"><span class="nav-icon">►</span> First Steps</a>
+  <a href="#birthsign"><span class="nav-icon">★</span> Birthsign</a>
+  <a href="#virtues"><span class="nav-icon">↑</span> Leveling</a>
+  <a href="#progression"><span class="nav-icon">⚔</span> Progression</a>
+  <a href="#spells"><span class="nav-icon">✦</span> Spells</a>
+  <a href="#gear"><span class="nav-icon">◆</span> Gear</a>
+  <a href="#enchanting"><span class="nav-icon">✧</span> Enchanting</a>
+  <a href="#combat"><span class="nav-icon">⚡</span> Combat</a>
+  <a href="#tips"><span class="nav-icon">💡</span> Tips</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="glow" cx="50%" cy="45%" r="60%">
+            <stop offset="0%" stop-color="#2a1040" stop-opacity="0.9"/>
+            <stop offset="50%" stop-color="#1a0828" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#0c0a08" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="portalGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#9060b0" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#9060b0" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="fireGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#d05030" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#d05030" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="frostGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#4080c0" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#4080c0" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="shockGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#c0a020" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#c0a020" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="900" height="300" fill="url(#glow)"/>
+
+        <!-- Magical circle on ground — large, under everything -->
+        <g transform="translate(450,260)" opacity="0.3">
+          <ellipse cx="0" cy="0" rx="200" ry="30" fill="none" stroke="#9060b0" stroke-width="1.5"/>
+          <ellipse cx="0" cy="0" rx="160" ry="24" fill="none" stroke="#9060b0" stroke-width="1"/>
+          <ellipse cx="0" cy="0" rx="120" ry="18" fill="none" stroke="#c8a050" stroke-width="0.8"/>
+          <!-- Rune marks on circle -->
+          <line x1="-160" y1="0" x2="160" y2="0" stroke="#9060b0" stroke-width="0.5"/>
+          <line x1="0" y1="-24" x2="0" y2="24" stroke="#9060b0" stroke-width="0.5"/>
+          <line x1="-113" y1="-17" x2="113" y2="17" stroke="#9060b0" stroke-width="0.4"/>
+          <line x1="-113" y1="17" x2="113" y2="-17" stroke="#9060b0" stroke-width="0.4"/>
+          <!-- Pentagram points -->
+          <circle cx="-140" cy="0" r="4" fill="#9060b0" opacity="0.4"/>
+          <circle cx="140" cy="0" r="4" fill="#9060b0" opacity="0.4"/>
+          <circle cx="0" cy="-22" r="4" fill="#9060b0" opacity="0.4"/>
+          <circle cx="-80" cy="15" r="3" fill="#c8a050" opacity="0.3"/>
+          <circle cx="80" cy="15" r="3" fill="#c8a050" opacity="0.3"/>
+        </g>
+
+        <!-- Secondary magic circle — smaller, left -->
+        <g transform="translate(180,255)" opacity="0.2">
+          <ellipse cx="0" cy="0" rx="60" ry="10" fill="none" stroke="#d05030" stroke-width="1"/>
+          <ellipse cx="0" cy="0" rx="45" ry="7" fill="none" stroke="#d05030" stroke-width="0.7"/>
+          <circle cx="-40" cy="0" r="3" fill="#d05030" opacity="0.3"/>
+          <circle cx="40" cy="0" r="3" fill="#d05030" opacity="0.3"/>
+        </g>
+
+        <!-- Secondary magic circle — right -->
+        <g transform="translate(720,255)" opacity="0.2">
+          <ellipse cx="0" cy="0" rx="60" ry="10" fill="none" stroke="#4080c0" stroke-width="1"/>
+          <ellipse cx="0" cy="0" rx="45" ry="7" fill="none" stroke="#4080c0" stroke-width="0.7"/>
+          <circle cx="-40" cy="0" r="3" fill="#4080c0" opacity="0.3"/>
+          <circle cx="40" cy="0" r="3" fill="#4080c0" opacity="0.3"/>
+        </g>
+
+        <!-- === FLAME ATRONACH — left === -->
+        <g transform="translate(180,170)" opacity="0.9">
+          <!-- Fire body glow -->
+          <circle cx="0" cy="0" r="35" fill="url(#fireGlow)"/>
+          <!-- Body — feminine fiery form -->
+          <ellipse cx="0" cy="10" rx="12" ry="22" fill="#d05030" opacity="0.7"/>
+          <ellipse cx="0" cy="10" rx="9" ry="18" fill="#e08040" opacity="0.5"/>
+          <!-- Head -->
+          <circle cx="0" cy="-14" r="9" fill="#d05030" opacity="0.8"/>
+          <circle cx="0" cy="-14" r="6" fill="#e08040" opacity="0.5"/>
+          <!-- Eyes -->
+          <ellipse cx="-3" cy="-15" rx="1.5" ry="1" fill="#f0c060" opacity="0.9"/>
+          <ellipse cx="3" cy="-15" rx="1.5" ry="1" fill="#f0c060" opacity="0.9"/>
+          <!-- Fire horns -->
+          <path d="M-6,-20 Q-10,-35 -5,-40" stroke="#e08040" stroke-width="2" fill="none" opacity="0.7"/>
+          <path d="M6,-20 Q10,-35 5,-40" stroke="#e08040" stroke-width="2" fill="none" opacity="0.7"/>
+          <!-- Arms — casting fire -->
+          <line x1="-10" y1="2" x2="-28" y2="-10" stroke="#d05030" stroke-width="4" stroke-linecap="round"/>
+          <line x1="10" y1="2" x2="28" y2="-10" stroke="#d05030" stroke-width="4" stroke-linecap="round"/>
+          <!-- Floating fire below (no legs) -->
+          <path d="M-8,30 Q-4,40 0,45 Q4,40 8,30" fill="#e08040" opacity="0.5"/>
+          <path d="M-5,33 Q0,50 5,33" fill="#f0a040" opacity="0.3"/>
+          <!-- Fire wisps -->
+          <circle cx="-15" cy="-30" r="2" fill="#f0c060" opacity="0.5"/>
+          <circle cx="12" cy="-35" r="1.5" fill="#f0a040" opacity="0.4"/>
+          <circle cx="-20" cy="5" r="1.5" fill="#e08040" opacity="0.35"/>
+          <circle cx="22" cy="-5" r="1" fill="#f0c060" opacity="0.3"/>
+          <!-- Fireball in hand -->
+          <circle cx="-30" cy="-12" r="8" fill="#d05030" opacity="0.3"/>
+          <circle cx="-30" cy="-12" r="5" fill="#e08040" opacity="0.5"/>
+          <circle cx="-30" cy="-12" r="3" fill="#f0c060" opacity="0.7"/>
+        </g>
+
+        <!-- === FROST ATRONACH — right === -->
+        <g transform="translate(720,155)" opacity="0.85">
+          <!-- Frost glow -->
+          <circle cx="0" cy="0" r="40" fill="url(#frostGlow)"/>
+          <!-- Body — large icy golem -->
+          <ellipse cx="0" cy="15" rx="22" ry="32" fill="#2a5070" opacity="0.8"/>
+          <ellipse cx="0" cy="10" rx="18" ry="26" fill="#3a6888" opacity="0.5"/>
+          <!-- Ice crystal surface -->
+          <path d="M-12,-5 L-8,15 L-15,25" stroke="#80b8d8" stroke-width="1" opacity="0.4" fill="none"/>
+          <path d="M8,-8 L12,10 L6,22" stroke="#80b8d8" stroke-width="1" opacity="0.4" fill="none"/>
+          <!-- Head — angular, crystalline -->
+          <polygon points="0,-28 -12,-12 12,-12" fill="#2a5070" opacity="0.9"/>
+          <polygon points="0,-25 -9,-14 9,-14" fill="#3a6888" opacity="0.6"/>
+          <!-- Eyes — blue glow -->
+          <ellipse cx="-4" cy="-18" rx="2" ry="1.5" fill="#80c0e0" opacity="0.9"/>
+          <ellipse cx="4" cy="-18" rx="2" ry="1.5" fill="#80c0e0" opacity="0.9"/>
+          <!-- Ice spikes on shoulders -->
+          <path d="M-18,0 L-28,-15 L-20,-5" fill="#4a88a8" opacity="0.6"/>
+          <path d="M18,0 L28,-15 L20,-5" fill="#4a88a8" opacity="0.6"/>
+          <path d="M0,-28 L-5,-42 L5,-38" fill="#4a88a8" opacity="0.5"/>
+          <!-- Arms — thick icy -->
+          <line x1="-18" y1="5" x2="-35" y2="20" stroke="#2a5070" stroke-width="8" stroke-linecap="round"/>
+          <line x1="18" y1="5" x2="35" y2="20" stroke="#2a5070" stroke-width="8" stroke-linecap="round"/>
+          <!-- Fists -->
+          <circle cx="-37" cy="22" r="6" fill="#2a5070"/>
+          <circle cx="37" cy="22" r="6" fill="#2a5070"/>
+          <!-- Legs — thick columns -->
+          <line x1="-8" y1="40" x2="-12" y2="65" stroke="#2a5070" stroke-width="10" stroke-linecap="round"/>
+          <line x1="8" y1="40" x2="12" y2="65" stroke="#2a5070" stroke-width="10" stroke-linecap="round"/>
+          <!-- Frost particles -->
+          <circle cx="-25" cy="-20" r="1.5" fill="#80c0e0" opacity="0.4"/>
+          <circle cx="20" cy="-25" r="1" fill="#a0d0e8" opacity="0.35"/>
+          <circle cx="-30" cy="10" r="1" fill="#80c0e0" opacity="0.3"/>
+          <circle cx="30" cy="-5" r="1.2" fill="#a0d0e8" opacity="0.3"/>
+        </g>
+
+        <!-- === XIVILAI (Daedric warrior) — far left === -->
+        <g transform="translate(100,175)" opacity="0.7">
+          <!-- Tall, dark daedric body -->
+          <ellipse cx="0" cy="10" rx="14" ry="25" fill="#4a2838"/>
+          <!-- Head with horns -->
+          <circle cx="0" cy="-18" r="10" fill="#4a2838"/>
+          <path d="M-7,-26 Q-12,-42 -6,-48" stroke="#6a3848" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M7,-26 Q12,-42 6,-48" stroke="#6a3848" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Eyes — burning -->
+          <ellipse cx="-3" cy="-20" rx="2" ry="1.2" fill="#d05030" opacity="0.8"/>
+          <ellipse cx="3" cy="-20" rx="2" ry="1.2" fill="#d05030" opacity="0.8"/>
+          <!-- Arms — clawed -->
+          <line x1="-12" y1="0" x2="-28" y2="-8" stroke="#4a2838" stroke-width="5" stroke-linecap="round"/>
+          <line x1="12" y1="0" x2="28" y2="10" stroke="#4a2838" stroke-width="5" stroke-linecap="round"/>
+          <!-- Claws -->
+          <line x1="-28" y1="-8" x2="-33" y2="-14" stroke="#6a3848" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="-28" y1="-8" x2="-31" y2="-16" stroke="#6a3848" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Legs -->
+          <line x1="-6" y1="30" x2="-10" y2="55" stroke="#4a2838" stroke-width="6" stroke-linecap="round"/>
+          <line x1="6" y1="30" x2="10" y2="55" stroke="#4a2838" stroke-width="6" stroke-linecap="round"/>
+          <!-- Dark aura -->
+          <circle cx="0" cy="0" r="30" fill="#4a2838" opacity="0.08"/>
+        </g>
+
+        <!-- === STORM ATRONACH — far right === -->
+        <g transform="translate(810,160)" opacity="0.7">
+          <!-- Electric glow -->
+          <circle cx="0" cy="0" r="35" fill="url(#shockGlow)"/>
+          <!-- Rocky floating body segments -->
+          <ellipse cx="0" cy="0" rx="14" ry="10" fill="#5a5040" opacity="0.8"/>
+          <ellipse cx="0" cy="-18" rx="10" ry="8" fill="#5a5040" opacity="0.8"/>
+          <ellipse cx="0" cy="20" rx="12" ry="8" fill="#5a5040" opacity="0.7"/>
+          <!-- Head rock -->
+          <circle cx="0" cy="-30" r="8" fill="#5a5040" opacity="0.8"/>
+          <!-- Eyes — lightning -->
+          <ellipse cx="-3" cy="-31" rx="1.5" ry="1" fill="#e0c040" opacity="0.9"/>
+          <ellipse cx="3" cy="-31" rx="1.5" ry="1" fill="#e0c040" opacity="0.9"/>
+          <!-- Lightning arcs between segments -->
+          <path d="M0,-22 Q-8,-15 0,-10" stroke="#c0a020" stroke-width="1.5" opacity="0.6" fill="none"/>
+          <path d="M0,10 Q8,14 0,18" stroke="#c0a020" stroke-width="1.5" opacity="0.6" fill="none"/>
+          <path d="M-3,-26 Q-12,-22 -5,-18" stroke="#e0c040" stroke-width="1" opacity="0.4" fill="none"/>
+          <!-- Floating arm rocks -->
+          <ellipse cx="-22" cy="-5" rx="6" ry="5" fill="#5a5040" opacity="0.7"/>
+          <ellipse cx="22" cy="-5" rx="6" ry="5" fill="#5a5040" opacity="0.7"/>
+          <!-- Lightning to arms -->
+          <path d="M-14,0 Q-18,-3 -20,-5" stroke="#c0a020" stroke-width="1" opacity="0.5" fill="none"/>
+          <path d="M14,0 Q18,-3 20,-5" stroke="#c0a020" stroke-width="1" opacity="0.5" fill="none"/>
+          <!-- Sparks -->
+          <circle cx="-10" cy="-35" r="1.2" fill="#e0c040" opacity="0.5"/>
+          <circle cx="15" cy="-20" r="1" fill="#c0a020" opacity="0.4"/>
+          <circle cx="-18" cy="10" r="0.8" fill="#e0c040" opacity="0.35"/>
+        </g>
+
+        <!-- === THE SUMMONER — center === -->
+        <g transform="translate(450,145)" opacity="0.95">
+          <!-- Robes — long, flowing -->
+          <path d="M-18,20 Q-22,50 -28,80 Q-30,90 -35,95 L35,95 Q30,90 28,80 Q22,50 18,20 Z" fill="#2a1840" opacity="0.9"/>
+          <!-- Robe inner fold -->
+          <path d="M-5,25 Q-3,55 -8,85" stroke="#3a2850" stroke-width="0.8" opacity="0.5" fill="none"/>
+          <path d="M5,25 Q3,55 8,85" stroke="#3a2850" stroke-width="0.8" opacity="0.5" fill="none"/>
+          <!-- Robe hem glow -->
+          <path d="M-35,95 Q-20,98 0,96 Q20,98 35,95" stroke="#9060b0" stroke-width="0.8" opacity="0.3" fill="none"/>
+
+          <!-- Body under robes -->
+          <ellipse cx="0" cy="15" rx="16" ry="24" fill="#2a1840"/>
+
+          <!-- Hood -->
+          <path d="M-14,-8 Q-18,-25 -8,-38 Q0,-42 8,-38 Q18,-25 14,-8 Z" fill="#2a1840"/>
+          <!-- Hood shadow -->
+          <ellipse cx="0" cy="-15" rx="10" ry="8" fill="#1a0c28" opacity="0.7"/>
+          <!-- Glowing eyes inside hood -->
+          <ellipse cx="-4" cy="-18" rx="2.5" ry="1.5" fill="#9060b0" opacity="0.9"/>
+          <ellipse cx="4" cy="-18" rx="2.5" ry="1.5" fill="#9060b0" opacity="0.9"/>
+          <!-- Eye glow -->
+          <circle cx="-4" cy="-18" r="5" fill="#9060b0" opacity="0.1"/>
+          <circle cx="4" cy="-18" r="5" fill="#9060b0" opacity="0.1"/>
+
+          <!-- Robe sash/belt -->
+          <rect x="-12" y="28" width="24" height="3" rx="1" fill="#c8a050" opacity="0.5"/>
+          <rect x="-3" y="28" width="6" height="3" rx="1" fill="#c8a050" opacity="0.7"/>
+
+          <!-- LEFT ARM — raised, casting summoning magic -->
+          <line x1="-14" y1="8" x2="-38" y2="-20" stroke="#2a1840" stroke-width="5" stroke-linecap="round"/>
+          <!-- Sleeve drape -->
+          <path d="M-30,-12 Q-35,-8 -38,-2 Q-40,2 -36,0" fill="#2a1840" opacity="0.7"/>
+          <!-- Hand -->
+          <circle cx="-40" cy="-22" r="3.5" fill="#6a5860"/>
+          <!-- Fingers spread -->
+          <line x1="-42" y1="-24" x2="-46" y2="-28" stroke="#6a5860" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="-40" y1="-25" x2="-43" y2="-30" stroke="#6a5860" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="-38" y1="-25" x2="-39" y2="-30" stroke="#6a5860" stroke-width="1.2" stroke-linecap="round"/>
+          <!-- Summoning energy from left hand -->
+          <circle cx="-42" cy="-30" r="18" fill="url(#portalGlow)"/>
+          <circle cx="-42" cy="-30" r="12" fill="#9060b0" opacity="0.1"/>
+          <circle cx="-42" cy="-30" r="7" fill="#9060b0" opacity="0.2"/>
+          <circle cx="-42" cy="-30" r="4" fill="#b080d0" opacity="0.4"/>
+          <circle cx="-42" cy="-30" r="2" fill="#d0a0f0" opacity="0.7"/>
+          <!-- Summoning tendrils to creatures -->
+          <path d="M-42,-30 Q-80,-40 -120,-20" stroke="#9060b0" stroke-width="1" opacity="0.25" fill="none"/>
+          <path d="M-42,-30 Q-60,-60 -80,-50" stroke="#b080d0" stroke-width="0.8" opacity="0.2" fill="none"/>
+
+          <!-- RIGHT ARM — raised, casting summoning magic -->
+          <line x1="14" y1="8" x2="38" y2="-20" stroke="#2a1840" stroke-width="5" stroke-linecap="round"/>
+          <!-- Sleeve drape -->
+          <path d="M30,-12 Q35,-8 38,-2 Q40,2 36,0" fill="#2a1840" opacity="0.7"/>
+          <!-- Hand -->
+          <circle cx="40" cy="-22" r="3.5" fill="#6a5860"/>
+          <!-- Fingers spread -->
+          <line x1="42" y1="-24" x2="46" y2="-28" stroke="#6a5860" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="40" y1="-25" x2="43" y2="-30" stroke="#6a5860" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="38" y1="-25" x2="39" y2="-30" stroke="#6a5860" stroke-width="1.2" stroke-linecap="round"/>
+          <!-- Summoning energy from right hand -->
+          <circle cx="42" cy="-30" r="18" fill="url(#portalGlow)"/>
+          <circle cx="42" cy="-30" r="12" fill="#9060b0" opacity="0.1"/>
+          <circle cx="42" cy="-30" r="7" fill="#9060b0" opacity="0.2"/>
+          <circle cx="42" cy="-30" r="4" fill="#b080d0" opacity="0.4"/>
+          <circle cx="42" cy="-30" r="2" fill="#d0a0f0" opacity="0.7"/>
+          <!-- Summoning tendrils to creatures -->
+          <path d="M42,-30 Q80,-40 120,-20" stroke="#9060b0" stroke-width="1" opacity="0.25" fill="none"/>
+          <path d="M42,-30 Q60,-60 80,-50" stroke="#b080d0" stroke-width="0.8" opacity="0.2" fill="none"/>
+        </g>
+
+        <!-- Floating runes around summoner -->
+        <g opacity="0.2" fill="none" stroke="#9060b0" stroke-width="0.8">
+          <circle cx="400" cy="100" r="8"/><path d="M400,92 L400,108 M392,100 L408,100"/>
+          <circle cx="510" cy="90" r="7"/><path d="M505,84 L515,96 M515,84 L505,96"/>
+          <circle cx="380" cy="140" r="6"/><path d="M380,134 L380,146"/>
+          <circle cx="530" cy="130" r="5"/><path d="M526,124 L534,136 M534,124 L526,136"/>
+        </g>
+
+        <!-- Floating magic particles everywhere -->
+        <circle cx="250" cy="100" r="1.5" fill="#9060b0" opacity="0.4"/>
+        <circle cx="650" cy="80" r="1.2" fill="#9060b0" opacity="0.35"/>
+        <circle cx="350" cy="60" r="1" fill="#b080d0" opacity="0.3"/>
+        <circle cx="550" cy="70" r="0.8" fill="#9060b0" opacity="0.3"/>
+        <circle cx="300" cy="130" r="1.2" fill="#d0a0f0" opacity="0.25"/>
+        <circle cx="600" cy="120" r="1" fill="#b080d0" opacity="0.25"/>
+        <circle cx="420" cy="50" r="0.7" fill="#d0a0f0" opacity="0.3"/>
+        <circle cx="480" cy="40" r="0.9" fill="#9060b0" opacity="0.25"/>
+
+        <!-- Ground line -->
+        <line x1="50" y1="270" x2="850" y2="270" stroke="#3a2a18" stroke-width="0.5" opacity="0.3"/>
+        <!-- Summoning circle glow on ground -->
+        <ellipse cx="450" cy="265" rx="100" ry="8" fill="#9060b0" opacity="0.06"/>
+      </svg>
+    </div>
+    <div class="header-row">
+      <img class="header-portrait" src="https://images.uesp.net/thumb/1/15/OBR-icon-race-Breton.png/200px-OBR-icon-race-Breton.png" alt="Breton">
+      <div class="header-text">
+        <div class="breadcrumb">Oblivion Remastered › Builds › Conjuration Overlord</div>
+        <h1>Conjuration Overlord</h1>
+        <div class="subtitle">Breton · The Atronach · Summons + Debuffs + Ranged Support</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag conjure">Summoner</span>
+      <span class="tag gold">Overlord</span>
+      <span class="tag green">Max Difficulty</span>
+      <span class="tag blue">Remastered 2025</span>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="section reveal" id="overview">
+    <h2>Overview</h2>
+    <p>The Conjuration Overlord is the strongest build for high-difficulty play in Oblivion Remastered. On maximum difficulty, the player deals 1/6 normal damage with weapons and spells, while receiving 6x damage. Summoned creatures bypass this entirely — they deal <strong>full, unscaled damage</strong> regardless of difficulty slider. Your army fights at 100% effectiveness while every other build in the game is crippled. You are not the weapon. You are the general.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Why Summons Break Difficulty Scaling</div>
+      <p>Oblivion's difficulty slider only modifies damage dealt <strong>by the player</strong> and damage received <strong>by the player</strong>. Conjured creatures are classified as NPCs — their attacks and defenses are completely unaffected. A summoned Xivilai hits just as hard on max difficulty as on minimum. This makes Conjuration the only school that scales linearly with difficulty: the harder you set it, the more valuable your summons become relative to everything else.</p>
+    </div>
+
+    <h3>Race — Breton</h3>
+    <ul class="picks">
+      <li><span class="label">Passive</span> <span class="name">50% Magic Resistance</span> — <span class="note">best defensive racial in the game, permanent</span></li>
+      <li><span class="label">Passive</span> <span class="name">+50 Magicka</span> — <span class="note">permanent bonus to your mana pool</span></li>
+      <li><span class="label">Daily</span> <span class="name">Dragon Skin</span> — <span class="note">50% physical damage shield for 60 seconds. Emergency button.</span></li>
+      <li><span class="label">Racials</span> <span class="name">+10 Conjuration, Mysticism, Restoration</span> · <span class="name">+5 Alchemy, Alteration, Illusion</span></li>
+    </ul>
+    <p>Breton is non-negotiable. The +10 Conjuration head start means you begin with Apprentice-tier summons available immediately. The 50% Magic Resistance covers your biggest weakness — enemy mages — and Dragon Skin gives you an emergency panic button for the rare moment when your summons fall and you're face-to-face with something nasty.</p>
+
+    <h3>Class — Custom: Conjuration Overlord</h3>
+    <ul class="picks">
+      <li><span class="label">Spec</span> <span class="name">Magic</span></li>
+      <li><span class="label">Favored</span> <span class="name">Intelligence, Endurance</span></li>
+      <li><span class="label">Major</span> <span class="name">Alchemy, Conjuration, Destruction, Illusion, Marksman, Restoration, Security</span></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Why These Majors?</div>
+      <p><strong>Conjuration</strong> is your entire identity — summon progressively stronger creatures. <strong>Illusion</strong> for Courage/Rally to buff your summons and Command Humanoid for crowd control. <strong>Destruction</strong> for Weakness to Magic/Fire/Frost/Shock debuffs that make your summons hit even harder. <strong>Restoration</strong> for healing yourself and sustain. <strong>Marksman</strong> for ranged damage while your army tanks — bows bypass the Conjuration duration penalty from Heavy Armor. <strong>Alchemy</strong> for magicka potions (critical with The Atronach). <strong>Security</strong> because you have no room for Alteration, and lockpicking is essential.</p>
+    </div>
+
+    <h3>Starting Attributes</h3>
+    <div class="stats">
+      <div class="stat-box"><div class="stat-label">STR</div><div class="stat-val">30</div></div>
+      <div class="stat-box primary"><div class="stat-label">INT</div><div class="stat-val">55</div></div>
+      <div class="stat-box"><div class="stat-label">WIL</div><div class="stat-val">50</div></div>
+      <div class="stat-box"><div class="stat-label">AGI</div><div class="stat-val">40</div></div>
+      <div class="stat-box"><div class="stat-label">SPD</div><div class="stat-val">40</div></div>
+      <div class="stat-box primary"><div class="stat-label">END</div><div class="stat-val">40</div></div>
+      <div class="stat-box"><div class="stat-label">PER</div><div class="stat-val">40</div></div>
+      <div class="stat-box"><div class="stat-label">LCK</div><div class="stat-val">50</div></div>
+    </div>
+    <p style="font-size:.88rem;color:var(--text-dim);">Breton with The Atronach birthsign and Magic specialization. +200 total bonus Magicka (+50 racial, +150 Atronach). INT and END are your favored attributes for a strong magicka pool and survivable HP base.</p>
+  </section>
+
+  <!-- FIRST STEPS -->
+  <section class="section reveal" id="firststeps">
+    <h2>First Steps After the Tutorial</h2>
+    <p>The Conjuration Overlord has a very specific shopping list. Your first hour sets the tone for the entire playthrough.</p>
+
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Buy Summon Skeleton at Edgar's Discount Spells</span>
+        <div class="step-detail">Imperial City Market District. <strong>Summon Skeleton</strong> is your first soldier. It fights, it tanks, it dies so you don't. Also buy <strong>Flare</strong> (Destruction) and <strong>Heal Minor Wounds</strong> (Restoration) if you don't have them. Grab <strong>Courage</strong> (Illusion) from <strong>Calindil at Mystic Emporium</strong> to buff your skeleton's damage.</div>
+      </li>
+      <li>
+        <span class="step-action">Join the Mages Guild — all 7 cities</span>
+        <div class="step-detail">Start the recommendation quest chain immediately. You need Arcane University access for the Spellmaking Altar, where you'll craft buffed-duration summons and custom debuff combos. Talk to any Mages Guild hall to begin. Do one recommendation per city as you travel.</div>
+      </li>
+      <li>
+        <span class="step-action">Buy Summon Zombie + early spells in Skingrad</span>
+        <div class="step-detail">Visit <strong>Sulinus Vassinus</strong> at the Skingrad Mages Guild. Buy <strong>Summon Zombie</strong> (stronger than Skeleton) and any Destruction spells available. Do the Skingrad Mages Guild recommendation quest while you're here.</div>
+      </li>
+      <li>
+        <span class="step-action">Set up the Telekinesis absorption loop</span>
+        <div class="step-detail">Buy <strong>Telekinesis</strong> from any Mysticism vendor (Ita Rienus in Bravil, or Calindil in Imperial City). With The Atronach birthsign, casting Telekinesis on yourself and having it absorbed restores magicka. This is your primary sustain mechanic — see the Birthsign section for the full loop.</div>
+      </li>
+      <li>
+        <span class="step-action">Get a bow — any bow</span>
+        <div class="step-detail">Buy from <strong>"A Fighting Chance"</strong> in the Imperial City Market District. Your bow is your personal DPS tool while summons tank. Marksman levels quickly and doesn't depend on magicka. Even a cheap iron bow works — you just need to start leveling the skill.</div>
+      </li>
+      <li>
+        <span class="step-action">Collect every ingredient you see</span>
+        <div class="step-detail">With The Atronach birthsign, you have zero natural magicka regen. Alchemy potions are your lifeline. Pick up <strong>everything</strong> — food, flowers, mushrooms. Buy a <strong>Mortar and Pestle</strong> and start brewing Restore Magicka potions immediately. Ingredients with Restore Magicka: Milk Thistle Seeds, Mandrake Root, Bonemeal, Frost Salts.</div>
+      </li>
+    </ol>
+
+    <div class="callout tip">
+      <div class="callout-label">Skill XP While Traveling</div>
+      <p>While walking between cities, <strong>keep a summon active at all times</strong>. Every time you re-cast a summon spell, you gain Conjuration XP. Spam Summon Skeleton as it expires to grind the skill. Also cast <strong>Flare at nothing</strong> for Destruction XP and <strong>Heal Minor Wounds</strong> for Restoration XP. In the remaster, higher-cost spells give more XP, so always use your most expensive summon.</p>
+    </div>
+  </section>
+
+  <!-- BIRTHSIGN -->
+  <section class="section reveal" id="birthsign">
+    <h2>Birthsign — The Atronach</h2>
+    <p>The Atronach is the most powerful and most punishing birthsign in Oblivion. It gives you the largest magicka pool possible and a 50% chance to absorb incoming spells — but you will never regenerate magicka naturally. Not ever. This is a trade-off that defines your entire playstyle.</p>
+
+    <div class="bs-grid">
+      <div class="bs-card recommended">
+        <img src="https://images.uesp.net/thumb/1/1f/OBbsign_Atronach.jpg/200px-OBbsign_Atronach.jpg" alt="The Atronach">
+        <div class="bs-name">The Atronach</div>
+        <div class="bs-bonus">+150 Magicka, 50% Spell Absorption</div>
+        <div class="bs-penalty">ZERO magicka regen — ever</div>
+        <div class="bs-note">Enormous magicka pool + absorb enemy spells to refuel. Requires Alchemy for sustain. THE summoner birthsign.</div>
+        <div style="margin-top:.5rem"><span class="tag gold">Required</span></div>
+      </div>
+      <div class="bs-card">
+        <img src="https://images.uesp.net/thumb/c/c7/OBbsign_Mage.jpg/200px-OBbsign_Mage.jpg" alt="The Mage">
+        <div class="bs-name">The Mage</div>
+        <div class="bs-bonus">+50 Magicka</div>
+        <div class="bs-note">Safe, no drawbacks. Less magicka, but you get natural regen. Beginner-friendly fallback if Atronach is too punishing.</div>
+      </div>
+      <div class="bs-card">
+        <img src="https://images.uesp.net/thumb/a/a8/OBbsign_Lady.jpg/200px-OBbsign_Lady.jpg" alt="The Lady">
+        <div class="bs-name">The Lady</div>
+        <div class="bs-bonus">+10 Willpower, +10 Endurance</div>
+        <div class="bs-note">Patches Breton's -10 END. Good for durability, but you sacrifice 150 magicka and spell absorption.</div>
+      </div>
+    </div>
+
+    <h3>The Absorption Loop — Your Sustain Engine</h3>
+    <p>With The Atronach, you never regenerate magicka naturally. Instead, you gain magicka by <strong>absorbing spells</strong>. Every spell that hits you has a 50% chance to be absorbed, restoring its magicka cost to your pool. This means enemy mages are not a threat — they're fuel.</p>
+
+    <div class="callout">
+      <div class="callout-label">How to Refuel Magicka</div>
+      <p><strong>Method 1 — Let enemies cast at you.</strong> Stand in front of enemy mages and let them blast you. 50% of their spells restore your magicka instead of hurting you, and your 50% Magic Resistance handles the other 50%. Against pure mages, you're practically immortal AND they're filling your tank.</p>
+      <p><strong>Method 2 — Alchemy potions.</strong> Brew Restore Magicka potions constantly. This is your out-of-combat sustain. Key ingredients: Bonemeal + Frost Salts, Milk Thistle Seeds + Mandrake Root, any "Restore Magicka" combo.</p>
+      <p><strong>Method 3 — Welkynd Stones.</strong> Found in Ayleid ruins. Each stone fully restores your magicka. Hoard them for boss fights. They're single-use but respawn after the cell resets (3 in-game days).</p>
+      <p><strong>Method 4 — Chapel Altars.</strong> Praying at any chapel altar fully restores Health, Magicka, and Fatigue. Free, unlimited, always available in cities.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Avoid — The Apprentice</div>
+      <p>+100 Magicka but 100% Weakness to Magic. Your 50% Breton resistance gets negated AND you take extra damage. On max difficulty with 6x incoming damage, this is suicidal.</p>
+    </div>
+  </section>
+
+  <!-- VIRTUES / LEVELING -->
+  <section class="section reveal" id="virtues">
+    <h2>Leveling — Virtue System</h2>
+    <p>The remaster replaced the old attribute multiplier system. At each level-up you get <strong>12 Virtues</strong> to distribute freely. Max 5 per attribute, max 3 attributes per level. Luck costs 4 per point.</p>
+
+    <table class="virtue-table">
+      <thead><tr><th>Attribute</th><th>Priority</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">Intelligence</td><td><span class="priority t1">MAX FIRST</span></td><td>Max Magicka pool. Every summon costs magicka. More INT = more summons per fight. With The Atronach you have no regen, so a massive pool is critical.</td></tr>
+        <tr><td class="attr-name">Endurance</td><td><span class="priority t1">MAX FIRST</span></td><td>Health + HP regen. On max difficulty you take 6x damage. You WILL get hit when summons die. HP is retroactive in the remaster — push this early.</td></tr>
+        <tr><td class="attr-name">Willpower</td><td><span class="priority t2">SECOND</span></td><td>Normally governs magicka regen — but you have NO regen with The Atronach. Still useful for Fatigue pool and spell resistance. Lower priority than usual.</td></tr>
+        <tr><td class="attr-name">Agility</td><td><span class="priority t2">SECOND</span></td><td>Bow damage bonus + Fatigue pool. You're using Marksman as your personal DPS — Agility matters. Also governs dodge/stagger resistance.</td></tr>
+        <tr><td class="attr-name">Speed</td><td><span class="priority t3">LATER</span></td><td>Movement speed. You need to kite when summons fall. At 40 you're okay, bump to 60+ eventually.</td></tr>
+        <tr><td class="attr-name">Strength</td><td><span class="priority t3">LATER</span></td><td>Carry weight only. You're not meleeing. Bump if encumbrance becomes a problem.</td></tr>
+        <tr><td class="attr-name">Luck</td><td><span class="priority t3">SKIP</span></td><td>Costs 4 Virtues per point. Not worth the investment when INT and END need capping.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-label">Suggested Distribution</div>
+      <p><strong>Levels 2-8:</strong> Intelligence 5, Endurance 5, Agility 2</p>
+      <p><strong>Levels 9-15:</strong> Intelligence 5, Endurance 5, Willpower 2 (or Agility if bow-focused)</p>
+      <p><strong>Levels 16+:</strong> Fill Agility to 70+, then Speed. Top off remaining attributes.</p>
+    </div>
+  </section>
+
+  <!-- PROGRESSION -->
+  <section class="section reveal" id="progression">
+    <h2>Level Progression</h2>
+    <p style="color:var(--text-dim);margin-bottom:1rem;">Click to expand. Each phase introduces stronger summons that keep pace with enemy scaling.</p>
+
+    <!-- Early -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 1-5</span>
+        <span class="lv-title">Apprentice Summoner — Skeletons and Zombies</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp conjure">Summon Skeleton</span>
+          <span class="qp conjure">Summon Zombie</span>
+          <span class="qp skill">Conjuration to 25</span>
+          <span class="qp skill">Alchemy to 25</span>
+          <span class="qp spell">Courage</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Summon</span> <span class="name">Summon Skeleton</span> — <span class="note">your first soldier. Fights in melee, tanks hits, draws aggro away from you</span></li>
+          <li><span class="label">Summon</span> <span class="name">Summon Zombie</span> — <span class="note">tougher than skeleton, more HP, better damage. Upgrade ASAP.</span></li>
+          <li><span class="label">Buff</span> <span class="name">Courage (Illusion)</span> — <span class="note">cast on your summon to boost its damage and morale. Makes summons fight harder.</span></li>
+          <li><span class="label">Debuff</span> <span class="name">Weakness to Magic (Destruction)</span> — <span class="note">cast on enemies to make your summons' magic-based attacks hit harder</span></li>
+          <li><span class="label">Sustain</span> <span class="name">Alchemy — Restore Magicka potions</span> — <span class="note">Bonemeal + Frost Salts is your go-to early combo</span></li>
+          <li><span class="label">Quest</span> <span class="name">Mages Guild recommendations</span> — <span class="note">start all 7 cities. Unlocks Arcane University + Spellmaking altar.</span></li>
+          <li><span class="label">Ranged</span> <span class="name">Buy any bow + arrows</span> — <span class="note">shoot enemies while your skeleton tanks. Level Marksman passively.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:.5rem;">
+          <div class="callout-label">Spam Summons While Walking</div>
+          <p>Re-cast Summon Skeleton every time it expires (even outside combat) to grind Conjuration XP. You want to hit skill 25 fast for the Apprentice perk, which unlocks Scamp and Ghost summons.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Early-Mid -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 6-10</span>
+        <span class="lv-title">Journeyman Summoner — Scamps and Atronachs</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp conjure">Summon Scamp</span>
+          <span class="qp conjure">Summon Flame Atronach</span>
+          <span class="qp skill">Conjuration to 50</span>
+          <span class="qp spell">Rally</span>
+          <span class="qp gear">Spelldrinker Amulet</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Summon</span> <span class="name">Summon Scamp</span> — <span class="note">ranged fire attacker. Shoots fireballs while you shoot arrows. Combined DPS is excellent.</span></li>
+          <li><span class="label">Summon</span> <span class="name">Summon Flame Atronach</span> — <span class="note">major upgrade. Ranged fire attacks, decent HP, floats away from melee. Your workhorse for levels 6-15.</span></li>
+          <li><span class="label">Conj 50</span> <span class="name">Journeyman perk</span> — <span class="note">unlocks Frost Atronach and Headless Zombie. Frost Atronach is a massive tank.</span></li>
+          <li><span class="label">Buff</span> <span class="name">Rally (Illusion)</span> — <span class="note">stronger version of Courage. Significantly boosts summon attack power.</span></li>
+          <li><span class="label">Goal</span> <span class="name">Complete Mages Guild recommendations</span> — <span class="note">Arcane University access + Spellmaking altar. Craft extended-duration summons.</span></li>
+          <li><span class="label">Alchemy</span> <span class="name">Stockpile Restore Magicka potions</span> — <span class="note">you should have 20+ potions on hand at all times</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- Mid -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 11-17</span>
+        <span class="lv-title">Expert Summoner — Frost Atronach + Dremora</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp conjure">Summon Frost Atronach</span>
+          <span class="qp conjure">Summon Dremora</span>
+          <span class="qp skill">Conjuration to 75</span>
+          <span class="qp skill">Illusion to 50</span>
+          <span class="qp gear">Mundane Ring</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Summon</span> <span class="name">Summon Frost Atronach</span> — <span class="note">your mid-game anchor. Massive HP pool, strong melee, frost damage aura. True tank.</span></li>
+          <li><span class="label">Summon</span> <span class="name">Summon Dremora</span> — <span class="note">Daedric warrior with a sword. High melee damage, aggressive AI. Your first real "soldier".</span></li>
+          <li><span class="label">Conj 75</span> <span class="name">Expert perk</span> — <span class="note">unlocks Storm Atronach and Dremora Lord. Game-changing summons.</span></li>
+          <li><span class="label">Debuff</span> <span class="name">Weakness to Fire/Frost/Shock</span> — <span class="note">match the weakness spell to your summon's element. Frost Atronach + Weakness to Frost = devastating.</span></li>
+          <li><span class="label">Custom</span> <span class="name">Extended Summon spells</span> — <span class="note">at the Spellmaking altar, craft summons with 120-second duration instead of the default 40-60s</span></li>
+          <li><span class="label">Quest</span> <span class="name">Daedric shrines for gear</span> — <span class="note">Azura's Star (reusable Grand Soul Gem), Peryite's Spellbreaker, etc.</span></li>
+        </ul>
+        <div class="callout" style="margin-top:.5rem;">
+          <div class="callout-label">The Debuff Combo</div>
+          <p>Cast <strong>Weakness to Fire 100%</strong> on an enemy, then let your Flame Atronach hit them. The atronach's fire attacks now do double damage. This combo works for all elements — match the weakness to your summon's type.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Late -->
+    <div class="lv-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-range">Lvl 18-25+</span>
+        <span class="lv-title">Overlord — Xivilai + Storm Atronach + Dremora Lord</span>
+        <span class="lv-spike">Peak Build</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp conjure">Summon Storm Atronach</span>
+          <span class="qp conjure">Summon Xivilai</span>
+          <span class="qp conjure">Summon Dremora Lord</span>
+          <span class="qp skill">Conjuration 100</span>
+          <span class="qp gear">Hatreds Soul Bow</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Summon</span> <span class="name">Summon Storm Atronach</span> — <span class="note">the strongest damage-dealing summon. Massive shock damage, area attacks, floats and is hard to hit.</span></li>
+          <li><span class="label">Summon</span> <span class="name">Summon Xivilai</span> — <span class="note">elite Daedric warrior. Casts spells AND fights in melee. Can summon its own Clannfear. An army within an army.</span></li>
+          <li><span class="label">Summon</span> <span class="name">Summon Dremora Lord</span> — <span class="note">the apex melee summon. Wields a Daedric weapon, heavy armor stats, extremely aggressive.</span></li>
+          <li><span class="label">Conj 100</span> <span class="name">Master perk</span> — <span class="note">summons last 50% longer. Your Storm Atronach stays in the fight for the entire dungeon.</span></li>
+          <li><span class="label">Custom</span> <span class="name">Master-duration summons (180s+)</span> — <span class="note">craft at Spellmaking altar. With Master perk bonus, you rarely need to re-summon.</span></li>
+          <li><span class="label">Combo</span> <span class="name">Xivilai + Rally + Weakness to Magic</span> — <span class="note">the Xivilai casts its own spells. Rally boosts its damage. Weakness to Magic amplifies ALL of its attacks.</span></li>
+          <li><span class="label">DLC</span> <span class="name">Shivering Isles — Summon Flesh Atronach</span> — <span class="note">highest-HP summon in the game. Unkillable tank. Get this.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:.5rem;">
+          <div class="callout-label">The Xivilai's Secret</div>
+          <p>The Xivilai is unique among summons — it can <strong>summon its own Clannfear</strong> to fight alongside it. This means casting Summon Xivilai can give you TWO creatures. Rally the Xivilai and its Clannfear tanks while the Xivilai casts. You now have a three-entity army from a single spell.</p>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- SPELLS -->
+  <section class="section reveal" id="spells">
+    <h2>Spells — Full Arsenal</h2>
+
+    <div class="spell-section">
+      <div class="spell-level">Conjuration — Your Core Identity</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Skeleton</div><div class="spell-desc">Your starter. Melee fighter, low HP, but it draws aggro and costs almost nothing. Spam it to level Conjuration fast.</div><div class="gear-loc">Edgar's Discount Spells — Imperial City Market District</div></div><span class="spell-badge conjure">Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Zombie</div><div class="spell-desc">Tougher than skeleton, more damage, more HP. Your main summon for levels 1-5. Still cheap to cast.</div><div class="gear-loc">Sulinus Vassinus — Skingrad Mages Guild</div></div><span class="spell-badge conjure">Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Scamp</div><div class="spell-desc">First ranged summon. Shoots fireballs at enemies. Excellent when paired with your bow — double ranged DPS.</div><div class="gear-loc">Alberic Litte — Chorrol Mages Guild</div></div><span class="spell-badge conjure">Apprentice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Ghost</div><div class="spell-desc">Attacks drain enemy Magicka. Niche use against enemy mages — drains their ability to cast.</div><div class="gear-loc">Edgar's Discount Spells — Imperial City Market District</div></div><span class="spell-badge conjure">Apprentice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Flame Atronach</div><div class="spell-desc">Ranged fire attacker, decent HP, floats away from melee threats. Your workhorse for levels 6-15. Pair with Weakness to Fire for devastating damage.</div><div class="gear-loc">Volanaro — Bruma Mages Guild</div></div><span class="spell-badge must">Must · Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Frost Atronach</div><div class="spell-desc">Massive HP pool, strong melee damage, frost aura slows nearby enemies. THE mid-game tank. Almost impossible to kill.</div><div class="gear-loc">Vigge the Cautious — Skingrad Mages Guild</div></div><span class="spell-badge must">Must · Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Dremora</div><div class="spell-desc">Daedric warrior with a sword. High melee DPS, aggressive AI. First true "soldier" — attacks proactively.</div><div class="gear-loc">Alberic Litte — Chorrol Mages Guild</div></div><span class="spell-badge conjure">Expert</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Storm Atronach</div><div class="spell-desc">Best damage-dealing summon. Massive shock damage, area-of-effect attacks, floats above melee range. Absolutely devastating DPS.</div><div class="gear-loc">Gaspar Stegine — Arcane University</div></div><span class="spell-badge must">Must · Expert</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Xivilai</div><div class="spell-desc">Elite Daedra. Casts spells AND melees. Can summon its own Clannfear. Gives you a 2-creature army from one spell. The ultimate summon.</div><div class="gear-loc">Gaspar Stegine — Arcane University</div></div><span class="spell-badge must">Must · Master</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Summon Dremora Lord</div><div class="spell-desc">Apex melee combatant. Daedric weapon, extreme aggression. Kill-on-sight AI. Your executioner.</div><div class="gear-loc">Gaspar Stegine — Arcane University</div></div><span class="spell-badge must">Must · Master</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Illusion — Buff Your Army</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Courage</div><div class="spell-desc">Boost summon's Willpower and Strength by a flat amount. Makes your summon hit harder and resist stagger. Cast on summon immediately after summoning.</div><div class="gear-loc">Calindil — Mystic Emporium, Imperial City Market District</div></div><span class="spell-badge must">Must · Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Rally</div><div class="spell-desc">Stronger version of Courage. Significant attack power boost for your summon. Required from mid-game onward.</div><div class="gear-loc">Ita Rienus — Bravil Mages Guild</div></div><span class="spell-badge must">Must · Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Command Humanoid</div><div class="spell-desc">Turn an enemy human into a temporary ally. Works on bandits, marauders, and necromancers. Gives you a second "summon" at no Conjuration cost.</div><div class="gear-loc">Delphine Jend — Bravil Mages Guild</div></div><span class="spell-badge good">Good · Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Command Creature</div><div class="spell-desc">Turn an enemy creature into a temporary ally. Works on animals, trolls, ogres, minotaurs. Free tank.</div><div class="gear-loc">Delphine Jend — Bravil Mages Guild</div></div><span class="spell-badge good">Good · Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Chameleon</div><div class="spell-desc">Partial invisibility. You can cast while partially invisible. Lets you summon and buff without enemies targeting you first.</div><div class="gear-loc">Ita Rienus — Bravil Mages Guild</div></div><span class="spell-badge good">Good · Journ</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Destruction — Debuff Enemies for Your Army</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Weakness to Fire</div><div class="spell-desc">Cast on enemy before your Flame Atronach attacks. Doubles fire damage received. Massive DPS multiplier.</div><div class="gear-loc">Druja — Skingrad Mages Guild</div></div><span class="spell-badge fire">Fire · Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Weakness to Frost</div><div class="spell-desc">Same concept, frost version. Pair with Frost Atronach for amplified frost damage.</div><div class="gear-loc">Druja — Skingrad Mages Guild</div></div><span class="spell-badge frost">Frost · Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Weakness to Shock</div><div class="spell-desc">For Storm Atronach. Shock is already the best element (drains Magicka too). With this debuff, it's overwhelming.</div><div class="gear-loc">Vigge the Cautious — Skingrad Mages Guild</div></div><span class="spell-badge shock">Shock · Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Weakness to Magic</div><div class="spell-desc">Amplifies ALL magic damage — works with any summon type. The universal debuff. Stack with elemental weakness for insane results.</div><div class="gear-loc">Vigge the Cautious — Skingrad Mages Guild</div></div><span class="spell-badge must">Must · Journ</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Drain Health (Touch)</div><div class="spell-desc">Direct damage that bypasses difficulty scaling when cast as a touch spell. Also good as a finisher if your summon leaves an enemy at low HP.</div><div class="gear-loc">Various Destruction vendors</div></div><span class="spell-badge good">Good · Appr</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Restoration — Stay Alive</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Heal Minor Wounds</div><div class="spell-desc">Starting spell. Cast between fights to top off. Also levels Restoration for free.</div><div class="gear-loc">Starting spell — you already have it</div></div><span class="spell-badge must">Free · Novice</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Heal Major Wounds</div><div class="spell-desc">Stronger heal. Your mid-combat emergency button. Critical when your summon falls and you take hits.</div><div class="gear-loc">Any Chapel Healer or Mages Guild Restoration vendor</div></div><span class="spell-badge must">Must · Appr</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Absorb Health (Touch)</div><div class="spell-desc">Steals HP from an enemy. Does NOT count as player damage for difficulty scaling purposes — always drains the full amount. Excellent sustain.</div><div class="gear-loc">Various Restoration vendors</div></div><span class="spell-badge good">Good · Journ</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Marksman — Your Personal DPS</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Bow + Arrows (any type)</div><div class="spell-desc">Your primary personal weapon. While your summon tanks, you shoot from behind it. Levels Marksman passively. Doesn't cost magicka. Scaled by difficulty, but still your best personal DPS option since you stay at range.</div><div class="gear-loc">Any weapons shop — "A Fighting Chance" in Imperial City</div></div><span class="spell-badge must">Must · Always</span></div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Spell Shopping Route</div>
+      <p><strong>1. Imperial City Market District</strong> — Summon Skeleton, Summon Ghost, Courage (Calindil at Mystic Emporium + Edgar's Discount Spells)</p>
+      <p><strong>2. Skingrad Mages Guild</strong> — Summon Zombie, Frost Atronach, Weakness spells (Sulinus + Vigge + Druja)</p>
+      <p><strong>3. Chorrol Mages Guild</strong> — Summon Scamp, Summon Dremora (Alberic Litte)</p>
+      <p><strong>4. Bruma Mages Guild</strong> — Summon Flame Atronach (Volanaro)</p>
+      <p><strong>5. Bravil Mages Guild</strong> — Rally, Command spells, Chameleon (Ita Rienus + Delphine Jend)</p>
+      <p><strong>6. Arcane University</strong> — Storm Atronach, Xivilai, Dremora Lord (Gaspar Stegine — requires full Mages Guild access)</p>
+    </div>
+  </section>
+
+  <!-- GEAR -->
+  <section class="section reveal" id="gear">
+    <h2>Gear — Light Armor and Robes</h2>
+
+    <div class="callout warn">
+      <div class="callout-label">CRITICAL — Heavy Armor Kills Conjuration Duration</div>
+      <p>In Oblivion Remastered (2025), wearing <strong>Heavy Armor reduces the duration of Conjuration spells</strong>. A Storm Atronach that should last 60 seconds might only last 30-35 seconds in full heavy plate. This is a Remastered-specific change that did not exist in the original game. <strong>Wear Light Armor or Robes.</strong> If you insist on Heavy Armor, you MUST enchant every piece with Fortify Conjuration to compensate — see the Enchanting section.</p>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Armor Philosophy</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">👘</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Robes (Recommended for Pure Summoner)</span> <span class="gear-slot">Body</span></div>
+          <div class="gear-desc">Zero armor penalty. Full summon duration. Enchant with Fortify Conjuration, Fortify Intelligence, or Resist Magic. You shouldn't be getting hit — your summons tank for you.</div>
+          <div class="gear-loc">Buy Mage's Robes from any Mages Guild. Enchant at Arcane University.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🛡</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Light Armor (Recommended for Hybrid)</span> <span class="gear-slot">Body</span></div>
+          <div class="gear-desc">Minimal summon duration penalty. Provides actual defense for when your summon falls. Glass or Elven armor is ideal. Good middle ground between protection and spell effectiveness.</div>
+          <div class="gear-loc">Craft or find Glass Armor (level 18+). Buy Elven from shops (level 12+).</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Key Equipment</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">📿</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Spelldrinker Amulet</span> <span class="gear-slot">Amulet</span></div>
+          <div class="gear-desc">Absorb Spell effect. Stacks with your Atronach birthsign's 50% Spell Absorption. More absorbed spells = more magicka returned to your pool. Essential for sustain.</div>
+          <div class="gear-loc">Random enchanted loot or enchant your own at Arcane University. Look for any Absorb/Reflect Spell amulet.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">💍</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Mundane Ring</span> <span class="gear-slot">Ring</span></div>
+          <div class="gear-desc">Resist Magic or Spell Absorption. Further stacks your already formidable magic defense. With Breton racial (50%) + Atronach (50% absorb) + this ring, enemy mages literally heal you.</div>
+          <div class="gear-loc">Random enchanted loot. Enchant your own for best values.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🏹</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Hatreds Soul Bow</span> <span class="gear-slot">Marksman</span></div>
+          <div class="gear-desc">Powerful unique bow with Soul Trap enchantment. Fills soul gems while you DPS from behind your summons. Soul gems fuel your enchanting pipeline. Best-in-slot ranged weapon for this build.</div>
+          <div class="gear-loc">Reward from the Daedric quest at Malacath's Shrine (level 10+). Located far west of the Imperial City, near the border of Hammerfell.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">⚔</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Staff of Worms</span> <span class="gear-slot">Staff</span></div>
+          <div class="gear-desc">Reanimate dead enemies to fight for you for 30 seconds. Effectively gives you a SECOND summon. Does not conflict with your Conjuration summon limit. Endgame prize.</div>
+          <div class="gear-loc">Reward for completing the entire Mages Guild questline (defeating Mannimarco).</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">⭐</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Azura's Star</span> <span class="gear-slot">Reusable Soul Gem</span></div>
+          <div class="gear-desc">A Grand Soul Gem that never gets consumed. Fill it, enchant with it, fill it again. Infinite enchanting fuel. Absolutely essential for any magic build.</div>
+          <div class="gear-loc">Azura's Shrine (east of Cheydinhal, north of the Blue Road). Complete the Daedric quest. Requires level 2+.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-group">
+      <div class="gear-group-title">Bow Progression</div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🏹</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Iron/Steel Bow</span> <span class="gear-slot">Lvl 1-8</span></div>
+          <div class="gear-desc">Starter bow. Cheap, does the job. Your damage comes from summons anyway — the bow is supplemental.</div>
+          <div class="gear-loc">Any weapons shop.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🏹</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Elven/Dwarven Bow</span> <span class="gear-slot">Lvl 8-15</span></div>
+          <div class="gear-desc">Mid-tier upgrade. Look for enchanted versions with elemental damage.</div>
+          <div class="gear-loc">Random loot at level 8+. Buy from "A Fighting Chance" in Imperial City.</div>
+        </div>
+      </div>
+      <div class="gear-row">
+        <div class="gear-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🏹</div>
+        <div class="gear-info">
+          <div><span class="gear-name">Hatreds Soul / Glass Bow</span> <span class="gear-slot">Lvl 15+</span></div>
+          <div class="gear-desc">Endgame bow. Hatreds Soul with Soul Trap is best-in-slot. Glass Bow is a strong alternative if you don't have Hatreds Soul yet.</div>
+          <div class="gear-loc">Hatreds Soul: Malacath Shrine quest. Glass Bow: random loot at level 18+.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENCHANTING -->
+  <section class="section reveal" id="enchanting">
+    <h2>Enchanting Your Gear</h2>
+    <p>As a Conjuration Overlord, your enchanting priorities are different from any other build. You're not stacking damage — your summons handle that. You're stacking <strong>summon duration, magicka pool, and survivability</strong>.</p>
+
+    <h3>Priority Enchantments</h3>
+    <table class="virtue-table">
+      <thead><tr><th>Enchantment</th><th>Priority</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">Fortify Conjuration</td><td><span class="priority t1">TOP</span></td><td>Increases summon duration. MANDATORY if wearing Heavy Armor (to offset the duration penalty). Useful on robes too — longer summons = fewer recasts = less magicka spent.</td></tr>
+        <tr><td class="attr-name">Fortify Intelligence</td><td><span class="priority t1">TOP</span></td><td>More max magicka. With no regen from The Atronach, a bigger pool is everything. Each INT point = 2 magicka.</td></tr>
+        <tr><td class="attr-name">Resist Magic</td><td><span class="priority t2">GOOD</span></td><td>Stacks with Breton 50% racial. At 80-85% total resist, almost nothing magical can threaten you. Push as close to cap as possible.</td></tr>
+        <tr><td class="attr-name">Spell Absorption</td><td><span class="priority t2">GOOD</span></td><td>Stacks with Atronach's 50%. More absorption = more magicka returned from enemy spells. You want to approach 100% where enemy mages literally refuel you.</td></tr>
+        <tr><td class="attr-name">Fortify Health</td><td><span class="priority t2">GOOD</span></td><td>Emergency HP buffer for when summons fall. On max difficulty with 6x damage, even a few hits can kill you.</td></tr>
+        <tr><td class="attr-name">Fortify Marksman</td><td><span class="priority t3">NICE</span></td><td>Boosts your personal bow damage. Less critical than summon-focused enchantments but good for a bow-heavy playstyle.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>If Using Heavy Armor</h3>
+    <div class="callout warn">
+      <div class="callout-label">Heavy Armor Enchanting Tax</div>
+      <p>If you insist on wearing Heavy Armor despite the Conjuration duration penalty, you must enchant <strong>every piece</strong> with Fortify Conjuration to claw back the lost duration. This consumes all your enchanting slots just to get back to baseline. You lose the ability to stack Fortify Intelligence, Resist Magic, or Spell Absorption. This is why Light Armor or Robes are strictly superior for this build — you get the enchantment slots for offensive/defensive stacking instead of wasting them on damage control.</p>
+    </div>
+
+    <h3>Best Enchanting Targets</h3>
+    <table class="virtue-table">
+      <thead><tr><th>Slot</th><th>Enchantment</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="attr-name">Chest (Robes)</td><td>Fortify Conjuration</td><td>Largest enchantment magnitude. Your most impactful slot.</td></tr>
+        <tr><td class="attr-name">Ring 1</td><td>Fortify Intelligence</td><td>Bigger magicka pool from a ring slot — great value.</td></tr>
+        <tr><td class="attr-name">Ring 2</td><td>Spell Absorption</td><td>Push total absorption closer to 80-100%. Enemy mages become batteries.</td></tr>
+        <tr><td class="attr-name">Amulet</td><td>Resist Magic</td><td>Stack with Breton racial for near-immunity to magic damage.</td></tr>
+        <tr><td class="attr-name">Hood/Helmet</td><td>Fortify Intelligence</td><td>More magicka. Can also use Fortify Conjuration here if you want maximum duration.</td></tr>
+        <tr><td class="attr-name">Gloves</td><td>Fortify Marksman</td><td>Boost your personal bow damage. Low-priority but nice quality-of-life.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-label">Azura's Star Makes Enchanting Free</div>
+      <p>Get <strong>Azura's Star</strong> from Azura's Shrine as early as possible (requires level 2). It's a Grand Soul Gem that never gets consumed. Fill it with Hatreds Soul bow (Soul Trap on kill), enchant your gear, fill it again. Infinite enchanting with zero resource cost.</p>
+    </div>
+  </section>
+
+  <!-- COMBAT -->
+  <section class="section reveal" id="combat">
+    <h2>Combat — The Overlord Rotation</h2>
+    <p>Your combat loop is fundamentally different from every other build in Oblivion. You never engage enemies directly. You summon, buff, debuff, and shoot from behind your army. Think of it as an RTS played in first person.</p>
+
+    <h3>The Full Combat Rotation</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Summon your creature before entering combat</span>
+        <div class="step-detail">Always have a summon active. Pre-cast before opening doors, entering new areas, or approaching enemy camps. Storm Atronach for damage, Frost Atronach for tanking, Xivilai for versatility. Never walk into a fight alone.</div>
+      </li>
+      <li>
+        <span class="step-action">Cast Rally on your summon</span>
+        <div class="step-detail">Immediately after summoning, cast <strong>Rally</strong> (or Courage if you're still low-level) directly on your creature. This significantly boosts its attack damage. The difference between a buffed and unbuffed summon is enormous — always buff.</div>
+      </li>
+      <li>
+        <span class="step-action">Cast Weakness to [Element] on the enemy</span>
+        <div class="step-detail">Match the weakness to your summon. Flame Atronach → Weakness to Fire. Storm Atronach → Weakness to Shock. Frost Atronach → Weakness to Frost. Xivilai → Weakness to Magic (covers all its attacks). This doubles or triples your summon's effective damage.</div>
+      </li>
+      <li>
+        <span class="step-action">Shoot with your bow from behind your summon</span>
+        <div class="step-detail">Position yourself behind your summon and shoot arrows at the same target. Your summon draws aggro while you deal supplemental ranged damage. On max difficulty your bow damage is reduced, but it still contributes — and Marksman XP is free.</div>
+      </li>
+      <li>
+        <span class="step-action">Heal yourself if your summon falls</span>
+        <div class="step-detail">If your summon dies, immediately re-summon. If you can't (out of magicka), cast Heal Major Wounds, drink a Restore Magicka potion, and re-summon. Dragon Skin (daily) gives you 60 seconds of breathing room in emergencies.</div>
+      </li>
+      <li>
+        <span class="step-action">Against multiple enemies: prioritize debuffs</span>
+        <div class="step-detail">Cast Weakness to Magic on the toughest enemy first. Your summon will target whoever is closest — use the debuff to ensure the hardest target goes down fast. Against groups, the Frost Atronach's area frost damage is invaluable.</div>
+      </li>
+    </ol>
+
+    <div class="callout">
+      <div class="callout-label">Advanced: The Double Army Trick</div>
+      <p>With the <strong>Staff of Worms</strong> (Mages Guild questline reward), you can reanimate a dead enemy to fight alongside your summoned creature. This gives you TWO combatants — one from Conjuration, one from the staff. If you summoned a Xivilai (which summons its own Clannfear), you now have <strong>three entities</strong> fighting for you plus a reanimated corpse. Four-versus-one in your favor, every fight.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Enemy Mages Are Your Best Friends</div>
+      <p>With 50% Magic Resistance (Breton) + 50% Spell Absorption (Atronach) + additional absorption from gear, enemy mages literally refuel your magicka pool when they cast at you. Let them. Stand in the open and absorb their spells. Every absorbed spell restores its full magicka cost to your pool. Against a room of mages, you become <strong>more powerful</strong> the longer the fight lasts.</p>
+    </div>
+  </section>
+
+  <!-- TIPS -->
+  <section class="section reveal" id="tips">
+    <h2>Tips and Critical Warnings</h2>
+
+    <div class="callout warn">
+      <div class="callout-label">CRITICAL — Heavy Armor + Conjuration Duration Penalty</div>
+      <p>This is the single most important piece of information for this build in Oblivion Remastered. Wearing <strong>Heavy Armor significantly reduces the duration of Conjuration spells</strong>. This is a new Remastered mechanic that did not exist in the original 2006 game. If you wear full Heavy Armor without compensating with Fortify Conjuration enchantments, your Storm Atronach might despawn mid-fight. Wear <strong>Robes or Light Armor</strong> unless you have enough Fortify Conjuration enchantments to counteract the penalty.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Summons Don't Scale With Difficulty</div>
+      <p>This is why the build works. Oblivion's difficulty slider modifies <strong>player damage dealt</strong> (reduced on higher difficulty) and <strong>player damage taken</strong> (increased on higher difficulty). Summoned creatures are classified as NPCs — they are completely unaffected by either modifier. A Storm Atronach on maximum difficulty deals the same damage as one on minimum difficulty. On max difficulty, where your sword deals 1/6 damage, your summon still deals 6/6. This is not an exploit — it's how the game engine works.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Welkynd Stones Are Your Best Resource</div>
+      <p>Found in every Ayleid ruin, Welkynd Stones <strong>fully restore your magicka</strong> when activated. With The Atronach's zero regen, these are invaluable. Clear Ayleid ruins early and often. Stones respawn after the dungeon cell resets (3 in-game days). Keep 5-10 Welkynd Stones in your inventory at all times for emergency magicka refills during tough fights.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Alchemy Is Non-Negotiable</div>
+      <p>With The Atronach birthsign, <strong>Alchemy is not optional — it is survival</strong>. You need a constant supply of Restore Magicka potions. Key combos: <strong>Bonemeal + Frost Salts</strong> (common from undead), <strong>Milk Thistle Seeds + Mandrake Root</strong> (found in the wild), <strong>Flax Seeds + Lady's Mantle Leaves</strong>. Buy a Mortar and Pestle from any alchemist. Carry it always. Brew potions after every dungeon. Your Alchemy skill will level fast because you're using it constantly.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Level Conjuration Fast — The Re-Summon Trick</div>
+      <p>Conjuration XP is granted every time you <strong>cast a summon spell</strong>, not when the summon fights. You can gain XP by spamming Summon Skeleton while walking between locations. Cast, wait for it to appear, cast again (replacing the old one). Higher-cost summons give more XP in the remaster. Once you can afford it, spam Summon Flame Atronach for faster leveling than Summon Skeleton.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">The Summon Limit</div>
+      <p>You can only have <strong>one summoned creature active at a time</strong> (from Conjuration spells). Casting a new summon despawns the old one. This is why the Xivilai is so strong — it summons its own Clannfear, effectively giving you two creatures. The Staff of Worms reanimation does NOT count toward this limit, so you can have a summon + a reanimated corpse simultaneously.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Custom Spells at the Spellmaking Altar</div>
+      <p>Once you have Arcane University access, create custom summon spells with extended durations. A custom Summon Storm Atronach lasting 120 seconds costs more magicka but means fewer recasts — critical when you have no natural regen. Also craft combo debuff spells: <strong>Weakness to Magic 100% + Weakness to Shock 100%</strong> in a single cast for maximum efficiency.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Don't Melee — Ever</div>
+      <p>On maximum difficulty, you deal 1/6 melee damage and take 6x damage. Swinging a sword is actively suicidal. Your bow damage is also reduced, but at least you're at range and behind a summon. Never close to melee range. If an enemy reaches you, re-summon between you and them, then back away. You are the general, not the soldier.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Sleep to Level Up</div>
+      <p>You don't level up automatically in Oblivion. When the game says "you should rest and meditate," find any bed (inns, your house, bedrolls in dungeons) and sleep to trigger the level-up screen. Each level gives you 12 Virtues to distribute — push INT and END first.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Best Daedric Quests for This Build</div>
+      <p><strong>1. Azura's Shrine</strong> (level 2+) — Azura's Star, reusable Grand Soul Gem. Get this first.</p>
+      <p><strong>2. Malacath's Shrine</strong> (level 10+) — Hatreds Soul bow with Soul Trap. Your endgame weapon.</p>
+      <p><strong>3. Peryite's Shrine</strong> (level 10+) — Spellbreaker shield, 30% Reflect Spell. Backup defense.</p>
+      <p><strong>4. Clavicus Vile's Shrine</strong> (level 20+) — Umbra sword for backup Soul Trap weapon if needed.</p>
+    </div>
+  </section>
+
+  <div class="guide-footer">
+    Oblivion Remastered · Conjuration Overlord Build Guide · 2025
+    <br>
+    <a href="guides.html">All Build Guides</a> · <a href="index.html">Home</a>
+  </div>
+
+</main>
+</div>
+
+<script>
+// Active nav highlighting
+const sections=document.querySelectorAll('.section');const navLinks=document.querySelectorAll('.sidebar a');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const a=document.querySelector('.sidebar a[href="#'+entry.target.id+'"]');if(a)a.classList.add('active')}})},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>observer.observe(s));
+
+// Mobile hamburger menu
+const toggle=document.querySelector('.nav-toggle');
+const links=document.querySelector('.nav-links');
+toggle.addEventListener('click',()=>links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+// Scroll reveal
+const reveals=document.querySelectorAll('.reveal');
+const revealObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');revealObserver.unobserve(entry.target)}})},{rootMargin:'0px 0px -60px 0px',threshold:0.1});
+reveals.forEach(el=>revealObserver.observe(el));
+
+/* ── Universal Nav Toggle ── */
+(function(){
+  const btn=document.getElementById('unav-hamburger'),nav=document.getElementById('unav-links');
+  if(!btn||!nav)return;
+  btn.addEventListener('click',()=>{btn.classList.toggle('open');nav.classList.toggle('open')});
+  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+    btn.classList.remove('open');nav.classList.remove('open');
+  }));
+})();
+
+</script>
+</body>
+</html>

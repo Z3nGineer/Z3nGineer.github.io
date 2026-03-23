@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Throwzerker — Avernus Catapult · BG3 Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg-body: #0a0a0a;
+  --bg-card: #151515;
+  --bg-elevated: #1c1c1c;
+  --bg-hover: #222222;
+  --border: #2b2c2c;
+  --border-light: #3a3a3a;
+  --text: #e8e8e8;
+  --text-dim: #a0a0a0;
+  --text-muted: #707070;
+  --white: #ffffff;
+  --accent: #057af0;
+  --accent-hover: #3592ff;
+  --green: #21c513;
+  --green-dim: #199f2f;
+  --orange: #f09a18;
+  --orange-dim: rgba(240,154,24,0.15);
+  --red: #f00505;
+  --gold: #d4a043;
+  --gold-dim: rgba(212,160,67,0.12);
+  --purple: #b080d0;
+}
+
+html { scroll-behavior:smooth; scrollbar-width:thin; scrollbar-color:#2b2c2c #0a0a0a; }
+
+body {
+  background: var(--bg-body);
+  color: var(--text);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 19px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration:none; }
+a:hover { color: var(--accent-hover); text-decoration:underline; }
+
+/* ── UNIVERSAL TOP NAV ── */
+.top-nav {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  background:rgba(10,10,10,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); height:60px;
+}
+.top-nav-inner {
+  max-width:1200px; margin:0 auto; display:flex; align-items:center;
+  justify-content:space-between; padding:0 2rem; height:60px;
+}
+.top-nav-brand {
+  font-family:'Cinzel',serif; font-size:0.9rem; font-weight:700;
+  letter-spacing:0.15em; color:var(--text); text-decoration:none; transition:color 0.3s;
+}
+.top-nav-brand:hover { color:var(--accent); text-decoration:none; }
+.top-nav-links { display:flex; gap:0; list-style:none; align-items:center; }
+.top-nav-links > li > a {
+  font-size:0.78rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;
+  color:var(--text-muted); padding:0 1rem; height:60px;
+  display:flex; align-items:center; position:relative;
+  transition:color 0.2s; text-decoration:none;
+}
+.top-nav-links > li > a:hover { color:var(--white); text-decoration:none; }
+.top-nav-links > li > a::after {
+  content:''; position:absolute; bottom:0; left:1rem; right:1rem; height:2px;
+  background:var(--accent); transform:scaleX(0); transition:transform 0.2s;
+}
+.top-nav-links > li > a:hover::after { transform:scaleX(1); }
+
+/* Dropdown */
+.nav-dropdown { position:relative; }
+.nav-dropdown > a::after { display:none !important; }
+.nav-dropdown > a { display:flex; align-items:center; gap:0.3rem; }
+.nav-dropdown > a .dd-arrow { font-size:0.5rem; transition:transform 0.2s; margin-top:1px; }
+.nav-dropdown:hover > a .dd-arrow { transform:rotate(180deg); }
+.dd-menu {
+  position:absolute; top:calc(100% + 0px); left:50%; transform:translateX(-50%) translateY(-5px);
+  background:rgba(10,10,10,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border); border-radius:10px;
+  min-width:200px; padding:0.5rem 0;
+  opacity:0; visibility:hidden;
+  transition:opacity 0.2s, visibility 0.2s, transform 0.2s;
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+}
+.nav-dropdown:hover .dd-menu { opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+.dd-menu a {
+  display:block; padding:0.6rem 1.2rem; font-size:0.75rem; font-weight:500;
+  letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted);
+  text-decoration:none; transition:color 0.15s, background 0.15s; white-space:nowrap;
+}
+.dd-menu a:hover { color:var(--accent); background:rgba(5,122,240,0.06); text-decoration:none; }
+.dd-menu a::after { display:none; }
+
+/* Hamburger (top nav mobile) */
+.top-hamburger {
+  display:none; background:none; border:none; cursor:pointer; padding:0.5rem; z-index:1001;
+}
+.top-hamburger span {
+  display:block; width:22px; height:2px; background:var(--text-dim); margin:5px 0;
+  transition:all 0.3s; border-radius:1px;
+}
+.top-hamburger.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+.top-hamburger.open span:nth-child(2) { opacity:0; }
+.top-hamburger.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+
+@media(max-width:800px) {
+  .top-hamburger { display:block; }
+  .top-nav-links {
+    position:fixed; top:60px; left:0; right:0; bottom:0;
+    background:rgba(10,10,10,0.98); flex-direction:column;
+    align-items:center; justify-content:flex-start; padding-top:2rem; gap:0;
+    transform:translateY(-110%); transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+  .top-nav-links.open { transform:translateY(0); }
+  .top-nav-links > li > a { height:48px; font-size:0.9rem; }
+  .nav-dropdown > a { display:none; }
+  .dd-menu {
+    position:static; opacity:1; visibility:visible;
+    transform:none; background:transparent; border:none;
+    box-shadow:none; padding:0; min-width:0;
+  }
+  .dd-menu a { text-align:center; padding:0.5rem 1rem; }
+}
+
+/* ── LAYOUT ── */
+.page { display:flex; max-width:1100px; margin:0 auto; gap:0; padding-top:60px; }
+
+.sidebar {
+  width:220px; flex-shrink:0; position:sticky; top:60px; height:calc(100vh - 60px);
+  overflow-y:auto; border-right:1px solid var(--border);
+  background: var(--bg-card); padding:1.5rem 0;
+  scrollbar-width:thin; scrollbar-color: var(--border) transparent;
+}
+
+.sidebar-title {
+  font-family:'Oswald', sans-serif; font-size:0.75rem; font-weight:600;
+  letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted);
+  padding:0 1.25rem; margin-bottom:0.75rem;
+}
+
+.sidebar a {
+  display:flex; align-items:center; gap:0.5rem;
+  padding:0.45rem 1.25rem; font-size:0.88rem; font-weight:500;
+  color:var(--text-dim); text-decoration:none;
+  border-left:3px solid transparent; transition:all 0.15s;
+}
+.sidebar a:hover { color:var(--white); background:rgba(255,255,255,0.03); text-decoration:none; }
+.sidebar a.active { color:var(--white); border-left-color:var(--accent); background:rgba(5,122,240,0.06); }
+.sidebar .nav-icon { font-size:1rem; width:1.2rem; text-align:center; }
+
+.content { flex:1; min-width:0; padding:2.5rem 2.5rem 4rem; }
+
+@media(max-width:800px) {
+  .sidebar { display:none; }
+  .content { padding:1.5rem; }
+}
+
+/* ── HEADER ── */
+.guide-header { margin-bottom:2.5rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border); }
+.guide-header .breadcrumb { font-size:0.78rem; color:var(--text-muted); margin-bottom:0.5rem; letter-spacing:0.02em; }
+.guide-header h1 { font-family:'Oswald', sans-serif; font-size:2.2rem; font-weight:700; color:var(--white); line-height:1.2; margin-bottom:0.4rem; }
+.guide-header .subtitle { font-size:1rem; color:var(--text-dim); font-weight:400; }
+.tag-row { display:flex; gap:0.4rem; margin-top:0.75rem; flex-wrap:wrap; }
+.tag { font-size:0.72rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:4px; background:var(--bg-elevated); border:1px solid var(--border); color:var(--text-dim); text-transform:uppercase; letter-spacing:0.04em; }
+.tag.green { color:var(--green); border-color:rgba(33,197,19,0.25); background:rgba(33,197,19,0.06); }
+.tag.orange { color:var(--orange); border-color:rgba(240,154,24,0.25); background:var(--orange-dim); }
+.tag.blue { color:var(--accent); border-color:rgba(5,122,240,0.25); background:rgba(5,122,240,0.06); }
+.tag.red { color:var(--red); border-color:rgba(240,5,5,0.25); background:rgba(240,5,5,0.06); }
+
+/* ── HERO ART ── */
+.hero-art { width:100%; margin-bottom:1.25rem; border-radius:10px; border:1px solid var(--border); overflow:hidden; background:var(--bg-card); }
+.hero-svg { width:100%; height:auto; display:block; }
+
+/* ── SECTIONS ── */
+.section { margin-top:3rem; }
+.section h2 { font-family:'Oswald', sans-serif; font-size:1.5rem; font-weight:600; color:var(--white); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border); }
+.section h3 { font-family:'Oswald', sans-serif; font-size:1.15rem; font-weight:500; color:var(--text); margin:1.5rem 0 0.6rem; }
+.section p { margin-bottom:1rem; color:var(--text); }
+
+/* ── CALLOUTS ── */
+.callout { background:var(--bg-card); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:6px; padding:1rem 1.25rem; margin:1.25rem 0; }
+.callout.warn { border-left-color:var(--orange); }
+.callout.tip { border-left-color:var(--green); }
+.callout-label { font-family:'Oswald', sans-serif; font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.25rem; }
+.callout .callout-label { color:var(--accent); }
+.callout.warn .callout-label { color:var(--orange); }
+.callout.tip .callout-label { color:var(--green); }
+.callout p { margin-bottom:0.5rem; font-size:0.95rem; }
+.callout p:last-child { margin-bottom:0; }
+
+/* ── STAT BAR ── */
+.stats { display:flex; gap:0.5rem; flex-wrap:wrap; margin:0.75rem 0; }
+.stat-box { background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:0.4rem 0.75rem; text-align:center; min-width:3.5rem; }
+.stat-box.primary { border-color:rgba(5,122,240,0.4); }
+.stat-label { font-size:0.65rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); }
+.stat-val { font-family:'Oswald',sans-serif; font-size:1.3rem; font-weight:600; color:var(--white); }
+.stat-box.primary .stat-val { color:var(--accent); }
+
+/* ── LEVEL CARDS ── */
+.level-card { background:var(--bg-card); border:1px solid var(--border); border-radius:8px; margin-bottom:0.4rem; overflow:hidden; transition:border-color 0.15s; }
+.level-card:hover { border-color:var(--border-light); }
+.level-card.spike { border-left:3px solid var(--orange); }
+.level-card.here { border-color:var(--accent); box-shadow:0 0 0 1px rgba(5,122,240,0.15); }
+.lv-head { display:flex; align-items:center; gap:0.6rem; padding:0.65rem 1rem; cursor:pointer; user-select:none; transition:background 0.1s; }
+.lv-head:hover { background:var(--bg-hover); }
+.lv-num { font-family:'Oswald',sans-serif; font-weight:700; font-size:1.3rem; color:var(--white); min-width:1.6rem; text-align:center; }
+.level-card.here .lv-num { color:var(--accent); }
+.lv-badge { font-size:0.68rem; font-weight:600; padding:0.15rem 0.5rem; border-radius:4px; text-transform:uppercase; letter-spacing:0.04em; }
+.lv-badge.barb { color:#e84040; background:rgba(232,64,64,0.08); border:1px solid rgba(232,64,64,0.2); }
+.lv-badge.rogue { color:var(--gold); background:var(--gold-dim); border:1px solid rgba(212,160,67,0.2); }
+.lv-badge.fighter { color:var(--accent); background:rgba(5,122,240,0.06); border:1px solid rgba(5,122,240,0.15); }
+.lv-title { font-weight:600; font-size:0.95rem; color:var(--text); flex:1; }
+.lv-spike { font-size:0.65rem; font-weight:600; color:var(--orange); background:var(--orange-dim); padding:0.15rem 0.45rem; border-radius:4px; border:1px solid rgba(240,154,24,0.2); letter-spacing:0.04em; text-transform:uppercase; }
+.lv-arrow { color:var(--text-muted); font-size:0.75rem; transition:transform 0.2s; }
+.level-card.open .lv-arrow { transform:rotate(90deg); }
+.lv-body { max-height:0; overflow:hidden; transition:max-height 0.3s ease; }
+.level-card.open .lv-body { max-height:900px; }
+.lv-inner { padding:0 1rem 1rem; border-top:1px solid var(--border); }
+
+/* Quick picks */
+.qp-row { display:flex; flex-wrap:wrap; gap:0.3rem; margin:0.75rem 0 0.5rem; }
+.qp { font-size:0.78rem; font-weight:500; padding:0.2rem 0.6rem; border-radius:4px; background:var(--bg-elevated); border:1px solid var(--border); color:var(--text-dim); }
+.qp.feature { color:var(--green); border-color:rgba(33,197,19,0.2); }
+.qp.spell { color:var(--accent); border-color:rgba(5,122,240,0.2); }
+.qp.feat { color:var(--orange); border-color:rgba(240,154,24,0.2); }
+.qp.skill { color:var(--gold); border-color:rgba(212,160,67,0.2); }
+
+/* Pick list */
+.picks { list-style:none; margin:0.5rem 0; }
+.picks li { padding:0.3rem 0; font-size:0.95rem; display:flex; gap:0.4rem; align-items:baseline; }
+.picks .label { font-size:0.72rem; font-weight:600; color:var(--orange); text-transform:uppercase; letter-spacing:0.03em; flex-shrink:0; min-width:4rem; }
+.picks .name { font-weight:600; color:var(--white); }
+.picks .note { color:var(--text-dim); font-size:0.88rem; }
+
+/* ── ITEMS ── */
+.item-group { margin-bottom:1.5rem; }
+.item-group-title { font-family:'Oswald',sans-serif; font-size:1rem; font-weight:500; color:var(--gold); padding-bottom:0.35rem; margin-bottom:0.5rem; border-bottom:1px solid rgba(212,160,67,0.15); }
+.item-row { padding:0.6rem 0.75rem; background:var(--bg-card); border:1px solid var(--border); border-radius:6px; margin-bottom:0.35rem; }
+.item-name { font-weight:600; color:var(--gold); font-size:0.95rem; }
+.item-slot { font-size:0.7rem; color:var(--text-muted); margin-left:0.35rem; text-transform:uppercase; letter-spacing:0.03em; }
+.item-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.15rem; }
+.item-loc { font-size:0.8rem; color:var(--green-dim); margin-top:0.2rem; }
+
+/* ── SPELL GRID ── */
+.spell-section { margin-bottom:1.5rem; }
+.spell-level { font-family:'Oswald',sans-serif; font-size:1rem; font-weight:500; color:var(--white); padding-bottom:0.35rem; margin-bottom:0.5rem; border-bottom:1px solid var(--border); }
+.spell-row { display:flex; justify-content:space-between; align-items:start; padding:0.5rem 0.75rem; background:var(--bg-card); border:1px solid var(--border); border-radius:6px; margin-bottom:0.35rem; gap:0.75rem; }
+.spell-info { flex:1; }
+.spell-name { font-weight:600; color:var(--white); font-size:0.95rem; }
+.spell-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.1rem; }
+.spell-badge { font-size:0.68rem; font-weight:600; padding:0.15rem 0.5rem; border-radius:4px; text-transform:uppercase; letter-spacing:0.03em; white-space:nowrap; flex-shrink:0; align-self:center; }
+.spell-badge.must { color:var(--green); background:rgba(33,197,19,0.08); border:1px solid rgba(33,197,19,0.2); }
+.spell-badge.good { color:var(--accent); background:rgba(5,122,240,0.06); border:1px solid rgba(5,122,240,0.15); }
+.spell-badge.core { color:var(--orange); background:var(--orange-dim); border:1px solid rgba(240,154,24,0.2); }
+
+/* ── ROTATION ── */
+.step-list { list-style:none; counter-reset:step; }
+.step-list li { position:relative; padding:0.75rem 0 0.75rem 3rem; border-left:2px solid var(--border); margin-left:0.75rem; counter-increment:step; }
+.step-list li::before { content:counter(step); position:absolute; left:-0.75rem; top:0.6rem; width:1.4rem; height:1.4rem; background:var(--bg-body); border:2px solid var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Oswald',sans-serif; font-weight:600; font-size:0.75rem; color:var(--accent); }
+.step-list li:last-child { border-left-color:transparent; }
+.step-action { font-weight:600; color:var(--white); }
+.step-timing { font-size:0.7rem; font-weight:600; padding:0.1rem 0.4rem; border-radius:3px; margin-left:0.4rem; vertical-align:middle; text-transform:uppercase; }
+.step-timing.pre { color:var(--text-muted); background:rgba(255,255,255,0.04); }
+.step-timing.turn { color:var(--accent); background:rgba(5,122,240,0.08); }
+.step-timing.every { color:var(--green); background:rgba(33,197,19,0.08); }
+.step-detail { color:var(--text-dim); font-size:0.9rem; margin-top:0.2rem; }
+
+/* ── PARTY ── */
+.party-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
+@media(max-width:600px) { .party-grid { grid-template-columns:1fr; } }
+.party-card { background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:1rem; }
+.party-name { font-family:'Oswald',sans-serif; font-weight:600; font-size:1.05rem; color:var(--white); }
+.party-role { font-size:0.72rem; font-weight:600; color:var(--accent); text-transform:uppercase; letter-spacing:0.04em; margin-top:0.1rem; }
+.party-desc { color:var(--text-dim); font-size:0.88rem; margin-top:0.35rem; }
+
+/* ── FOOTER ── */
+.guide-footer { margin-top:3rem; padding-top:1rem; border-top:1px solid var(--border); font-size:0.75rem; color:var(--text-muted); text-align:center; }
+.guide-footer a { color:var(--accent); }
+
+/* Mobile nav */
+.mobile-nav{display:none;position:sticky;top:60px;z-index:100;background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 1.25rem;height:56px;align-items:center;justify-content:space-between}
+.mobile-nav-title{font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;color:var(--accent);letter-spacing:.06em}
+.nav-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s}
+.mob-nav-links{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:0}
+.mob-nav-links.open{display:flex}
+.mob-nav-links a{display:flex;align-items:center;gap:.5rem;height:44px;font-size:.9rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.mob-nav-links a:hover{color:var(--white);text-decoration:none}
+@media(max-width:800px){.mobile-nav{display:flex}}
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity:0; transform:translateY(20px); transition:opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* Damage calc table */
+.dmg-table { width:100%; border-collapse:collapse; margin:1rem 0; }
+.dmg-table th { font-family:'Oswald',sans-serif; font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); text-align:left; padding:0.6rem 0.75rem; border-bottom:2px solid var(--border); }
+.dmg-table td { padding:0.6rem 0.75rem; border-bottom:1px solid var(--border); font-size:0.92rem; }
+.dmg-table tr:hover { background:var(--bg-card); }
+.dmg-table .highlight { color:var(--orange); font-weight:600; }
+</style>
+</head>
+<body>
+
+<!-- ═══════ UNIVERSAL TOP NAV ═══════ -->
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="top-nav-brand">Z3nGineer</a>
+    <button class="top-hamburger" id="top-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="top-nav-links" id="top-nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li class="nav-dropdown">
+        <a href="#">Pages <span class="dd-arrow">&#x25BC;</span></a>
+        <div class="dd-menu">
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+          <a href="https://crockednloaded.com">CrockedNLoaded</a>
+          <a href="guides.html">Game Guides</a>
+          <a href="CHIM.html">CHIM Modpack</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════ MOBILE SUB-NAV ═══════ -->
+<div class="mobile-nav">
+  <span class="mobile-nav-title">Throwzerker</span>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="mob-nav-links">
+    <a href="#overview"><span class="nav-icon">&#9672;</span> Overview</a>
+    <a href="#tavern-brawler"><span class="nav-icon">&#9733;</span> Tavern Brawler</a>
+    <a href="#levels"><span class="nav-icon">&uarr;</span> Progression</a>
+    <a href="#subclasses"><span class="nav-icon">&#9670;</span> Subclasses</a>
+    <a href="#thrown"><span class="nav-icon">&#9884;</span> Thrown Weapons</a>
+    <a href="#items"><span class="nav-icon">&#9670;</span> Gear</a>
+    <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+    <a href="#honour"><span class="nav-icon">&#9760;</span> Honour Mode</a>
+    <a href="#party"><span class="nav-icon">&#9678;</span> Party</a>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ═══════ PAGE SUB-NAV / SIDEBAR ═══════ -->
+<nav class="sidebar">
+  <div style="text-align:center; padding:0.5rem 1.25rem 1rem;">
+    <div style="width:48px; height:48px; border-radius:8px; border:1px solid var(--border); background:var(--bg-elevated); display:inline-flex; align-items:center; justify-content:center; font-size:1.6rem;">&#9876;</div>
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">&#9672;</span> Overview</a>
+  <a href="#tavern-brawler"><span class="nav-icon">&#9733;</span> Tavern Brawler</a>
+  <a href="#levels"><span class="nav-icon">&uarr;</span> Progression</a>
+  <a href="#subclasses"><span class="nav-icon">&#9670;</span> Subclasses</a>
+  <a href="#thrown"><span class="nav-icon">&#9884;</span> Thrown Weapons</a>
+  <a href="#items"><span class="nav-icon">&#9670;</span> Gear</a>
+  <a href="#combat"><span class="nav-icon">&#9889;</span> Combat</a>
+  <a href="#honour"><span class="nav-icon">&#9760;</span> Honour Mode</a>
+  <a href="#party"><span class="nav-icon">&#9678;</span> Party</a>
+</nav>
+
+<!-- ═══════ CONTENT ═══════ -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header reveal">
+    <div class="hero-art">
+      <svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="rageGlow" cx="40%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="#6a1515" stop-opacity="0.6"/>
+            <stop offset="40%" stop-color="#3a0808" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="weaponGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#f09a18" stop-opacity="0.8"/>
+            <stop offset="40%" stop-color="#d48020" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="trailGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#f09a18" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#f09a18" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="trailGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#e84040" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#e84040" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <rect width="800" height="280" fill="url(#rageGlow)"/>
+
+        <!-- Battlefield ground -->
+        <line x1="50" y1="250" x2="750" y2="250" stroke="#3a2520" stroke-width="0.8" opacity="0.5"/>
+        <path d="M100,252 Q200,248 300,252 Q400,256 500,251 Q600,248 700,252" stroke="#2a1a15" stroke-width="0.5" opacity="0.3" fill="none"/>
+
+        <!-- Rage energy waves around berserker -->
+        <ellipse cx="300" cy="160" rx="120" ry="100" fill="none" stroke="#e84040" stroke-width="0.8" opacity="0.12"/>
+        <ellipse cx="300" cy="160" rx="90" ry="75" fill="none" stroke="#e84040" stroke-width="0.6" opacity="0.15"/>
+        <ellipse cx="300" cy="160" rx="60" ry="50" fill="none" stroke="#f09a18" stroke-width="0.5" opacity="0.1"/>
+        <!-- Rage fire particles -->
+        <circle cx="220" cy="100" r="2" fill="#e84040" opacity="0.5"/>
+        <circle cx="250" cy="80" r="1.5" fill="#f09a18" opacity="0.4"/>
+        <circle cx="370" cy="90" r="1.8" fill="#e84040" opacity="0.45"/>
+        <circle cx="340" cy="75" r="1.2" fill="#f09a18" opacity="0.35"/>
+        <circle cx="200" cy="120" r="1" fill="#e84040" opacity="0.3"/>
+        <circle cx="395" cy="110" r="1.5" fill="#f09a18" opacity="0.4"/>
+        <circle cx="280" cy="70" r="2.2" fill="#e84040" opacity="0.35"/>
+        <circle cx="320" cy="65" r="1" fill="#f09a18" opacity="0.25"/>
+
+        <!-- BERSERKER — center left, mid-throw pose -->
+        <g transform="translate(300,155)" opacity="0.95">
+          <!-- Massive muscular torso -->
+          <ellipse cx="0" cy="10" rx="35" ry="45" fill="#5a3a2a"/>
+          <!-- Chest detail -->
+          <path d="M-15,-10 Q0,-20 15,-10" stroke="#4a2a1a" stroke-width="1" fill="none" opacity="0.4"/>
+          <ellipse cx="0" cy="0" rx="28" ry="15" fill="#6a4030" opacity="0.5"/>
+          <!-- Neck -->
+          <ellipse cx="0" cy="-32" rx="14" ry="10" fill="#5a3a2a"/>
+          <!-- Head with horned helm -->
+          <ellipse cx="0" cy="-48" rx="16" ry="18" fill="#5a3a2a"/>
+          <!-- Helm -->
+          <path d="M-18,-55 Q-15,-68 -8,-72 Q0,-75 8,-72 Q15,-68 18,-55" fill="#404040"/>
+          <path d="M-18,-55 L18,-55" stroke="#505050" stroke-width="1.5"/>
+          <!-- Helm horns -->
+          <path d="M-16,-60 Q-28,-78 -22,-90" stroke="#505050" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M16,-60 Q28,-78 22,-90" stroke="#505050" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- Eyes — glowing rage -->
+          <ellipse cx="-6" cy="-48" rx="2.5" ry="1.5" fill="#e84040" opacity="0.9" filter="url(#glow)"/>
+          <ellipse cx="6" cy="-48" rx="2.5" ry="1.5" fill="#e84040" opacity="0.9" filter="url(#glow)"/>
+          <!-- Mouth open — war cry -->
+          <ellipse cx="0" cy="-38" rx="8" ry="5" fill="#0a0a0a"/>
+          <path d="M-5,-41 L-4,-38 L-3,-41" fill="#e0e0d0" opacity="0.6"/>
+          <path d="M3,-41 L4,-38 L5,-41" fill="#e0e0d0" opacity="0.6"/>
+          <!-- War paint -->
+          <line x1="-12" y1="-50" x2="-4" y2="-46" stroke="#e84040" stroke-width="1.5" opacity="0.5"/>
+          <line x1="12" y1="-50" x2="4" y2="-46" stroke="#e84040" stroke-width="1.5" opacity="0.5"/>
+
+          <!-- RIGHT ARM — throwing motion, extended forward -->
+          <path d="M25,-5 Q50,-25 68,-40 Q75,-45 78,-42" fill="#5a3a2a"/>
+          <ellipse cx="78" cy="-42" rx="6" ry="5" fill="#5a3a2a"/>
+          <!-- Fingers releasing weapon -->
+          <line x1="82" y1="-44" x2="88" y2="-48" stroke="#5a3a2a" stroke-width="2" stroke-linecap="round"/>
+          <line x1="84" y1="-42" x2="90" y2="-44" stroke="#5a3a2a" stroke-width="2" stroke-linecap="round"/>
+          <line x1="83" y1="-39" x2="89" y2="-40" stroke="#5a3a2a" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- LEFT ARM — holding second weapon behind -->
+          <path d="M-28,-5 Q-48,5 -55,15 Q-58,20 -56,22" fill="#5a3a2a"/>
+          <ellipse cx="-56" cy="22" rx="5" ry="4.5" fill="#5a3a2a"/>
+          <!-- Held pike in left hand -->
+          <line x1="-56" y1="22" x2="-56" y2="-40" stroke="#6a6a6a" stroke-width="3" stroke-linecap="round"/>
+          <polygon points="-56,-40 -52,-50 -56,-55 -60,-50" fill="#a0a0a0" opacity="0.8"/>
+
+          <!-- Belt with weapon harness -->
+          <rect x="-28" y="40" width="56" height="8" rx="2" fill="#4a3020"/>
+          <circle cx="-15" cy="44" r="3" fill="#6a5030" opacity="0.6"/>
+          <circle cx="0" cy="44" r="3" fill="#6a5030" opacity="0.6"/>
+          <circle cx="15" cy="44" r="3" fill="#6a5030" opacity="0.6"/>
+
+          <!-- Legs in wide throwing stance -->
+          <path d="M-12,50 Q-18,70 -25,85 Q-28,90 -22,92" fill="#3a2a1a"/>
+          <path d="M12,50 Q20,65 30,80 Q35,88 28,92" fill="#3a2a1a"/>
+          <!-- Boots -->
+          <ellipse cx="-22" cy="92" rx="10" ry="5" fill="#2a2020"/>
+          <ellipse cx="28" cy="92" rx="10" ry="5" fill="#2a2020"/>
+
+          <!-- Rage aura close to body -->
+          <ellipse cx="0" cy="0" rx="50" ry="55" fill="none" stroke="#e84040" stroke-width="1" opacity="0.15" stroke-dasharray="4 6"/>
+        </g>
+
+        <!-- ══ WEAPON 1 — Returning Trident, just released, flying right ══ -->
+        <g transform="translate(420, 100) rotate(-15)" filter="url(#glow)">
+          <!-- Glow trail -->
+          <ellipse cx="-20" cy="0" rx="30" ry="8" fill="url(#weaponGlow)" opacity="0.5"/>
+          <!-- Shaft -->
+          <line x1="-35" y1="0" x2="15" y2="0" stroke="#8a8a8a" stroke-width="3" stroke-linecap="round"/>
+          <!-- Triple prongs -->
+          <polygon points="15,0 25,-6 30,0 25,6" fill="#c0c0c0"/>
+          <line x1="22" y1="-3" x2="32" y2="-10" stroke="#c0c0c0" stroke-width="2" stroke-linecap="round"/>
+          <line x1="22" y1="3" x2="32" y2="10" stroke="#c0c0c0" stroke-width="2" stroke-linecap="round"/>
+          <line x1="25" y1="0" x2="35" y2="0" stroke="#c0c0c0" stroke-width="2" stroke-linecap="round"/>
+          <!-- Magic glow on prongs -->
+          <circle cx="32" cy="-10" r="3" fill="#f09a18" opacity="0.6"/>
+          <circle cx="35" cy="0" r="3" fill="#f09a18" opacity="0.6"/>
+          <circle cx="32" cy="10" r="3" fill="#f09a18" opacity="0.6"/>
+        </g>
+        <!-- Motion trail for trident -->
+        <path d="M380,105 Q360,108 330,110 Q290,114 260,115" stroke="url(#trailGrad)" stroke-width="2.5" fill="none" opacity="0.6"/>
+        <path d="M380,100 Q350,102 310,106 Q270,110 240,112" stroke="url(#trailGrad2)" stroke-width="1.5" fill="none" opacity="0.4"/>
+
+        <!-- ══ WEAPON 2 — Returning pike arcing high ══ -->
+        <g transform="translate(550, 60) rotate(-25)">
+          <line x1="-30" y1="0" x2="18" y2="0" stroke="#7a7a7a" stroke-width="2.5" stroke-linecap="round"/>
+          <polygon points="18,0 28,-5 30,0 28,5" fill="#b0b0b0"/>
+          <circle cx="30" cy="0" r="4" fill="#f09a18" opacity="0.5"/>
+          <!-- Trail -->
+          <path d="M-30,0 Q-50,5 -70,12" stroke="url(#trailGrad)" stroke-width="2" fill="none" opacity="0.5"/>
+        </g>
+
+        <!-- ══ WEAPON 3 — Handaxe mid-spin ══ -->
+        <g transform="translate(600, 130) rotate(40)">
+          <!-- Handle -->
+          <line x1="-12" y1="0" x2="8" y2="0" stroke="#6a4a28" stroke-width="3" stroke-linecap="round"/>
+          <!-- Axe head -->
+          <path d="M8,-2 Q14,-8 12,-14 Q8,-12 6,-6 Z" fill="#a0a0a0"/>
+          <path d="M8,2 Q14,8 12,14 Q8,12 6,6 Z" fill="#909090"/>
+          <circle cx="12" cy="0" r="3" fill="#f09a18" opacity="0.4"/>
+          <!-- Spin trail -->
+          <circle cx="0" cy="0" r="16" fill="none" stroke="#f09a18" stroke-width="0.8" opacity="0.25" stroke-dasharray="3 5"/>
+        </g>
+
+        <!-- ══ ENEMY 1 — getting hit by thrown weapon, staggering ══ -->
+        <g transform="translate(580, 190)" opacity="0.7">
+          <!-- Body recoiling -->
+          <ellipse cx="0" cy="-20" rx="15" ry="25" fill="#3a3030" transform="rotate(15)"/>
+          <!-- Head snapping back -->
+          <circle cx="5" cy="-48" r="10" fill="#3a3030"/>
+          <ellipse cx="5" cy="-55" rx="12" ry="4" fill="#404040"/>
+          <!-- Arms flailing -->
+          <path d="M-12,-25 Q-30,-35 -35,-25" stroke="#3a3030" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M12,-15 Q28,-8 32,-18" stroke="#3a3030" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <!-- Legs stumbling -->
+          <path d="M-5,5 Q-10,20 -18,30" stroke="#2a2020" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M5,5 Q12,18 8,30" stroke="#2a2020" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <!-- Impact sparks -->
+          <circle cx="-2" cy="-30" r="2" fill="#f09a18" opacity="0.7"/>
+          <line x1="-2" y1="-30" x2="-8" y2="-38" stroke="#f09a18" stroke-width="1" opacity="0.5"/>
+          <line x1="-2" y1="-30" x2="4" y2="-40" stroke="#f09a18" stroke-width="1" opacity="0.5"/>
+          <line x1="-2" y1="-30" x2="-10" y2="-28" stroke="#f09a18" stroke-width="1" opacity="0.4"/>
+          <!-- Weapon embedded -->
+          <line x1="-8" y1="-32" x2="4" y2="-22" stroke="#8a8a8a" stroke-width="2.5"/>
+          <polygon points="4,-22 8,-18 6,-24" fill="#a0a0a0"/>
+        </g>
+
+        <!-- ══ ENEMY 2 — on the ground, already hit ══ -->
+        <g transform="translate(680, 238)" opacity="0.5">
+          <ellipse cx="0" cy="0" rx="22" ry="7" fill="#2a2018"/>
+          <circle cx="-18" cy="3" r="6" fill="#2a2018"/>
+          <line x1="16" y1="-2" x2="30" y2="-6" stroke="#2a2018" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="12" y1="5" x2="25" y2="8" stroke="#2a2018" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- Weapon sticking out of body -->
+          <line x1="-5" y1="-8" x2="-5" y2="-25" stroke="#7a7a7a" stroke-width="2"/>
+          <polygon points="-5,-25 -2,-30 -5,-32 -8,-30" fill="#a0a0a0" opacity="0.7"/>
+          <!-- Blood pool -->
+          <ellipse cx="0" cy="5" rx="18" ry="4" fill="#4a1010" opacity="0.4"/>
+        </g>
+
+        <!-- ══ ENEMY 3 — far right, shield up, about to get hit ══ -->
+        <g transform="translate(720, 180)" opacity="0.6">
+          <ellipse cx="0" cy="-15" rx="14" ry="22" fill="#3a3535"/>
+          <circle cx="0" cy="-42" r="9" fill="#3a3535"/>
+          <!-- Helm -->
+          <path d="M-10,-46 Q0,-55 10,-46" fill="#505050"/>
+          <!-- Shield raised -->
+          <ellipse cx="-14" cy="-18" rx="10" ry="14" fill="#4a4040" stroke="#606060" stroke-width="1"/>
+          <!-- Sword -->
+          <line x1="12" y1="-20" x2="22" y2="-35" stroke="#808080" stroke-width="2" stroke-linecap="round"/>
+          <!-- Legs -->
+          <path d="M-5,7 Q-8,20 -12,30" stroke="#2a2525" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <path d="M5,7 Q8,18 6,30" stroke="#2a2525" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- Weapon 4 heading toward enemy 3 -->
+        <g transform="translate(670, 155) rotate(-10)">
+          <line x1="-20" y1="0" x2="10" y2="0" stroke="#7a7a7a" stroke-width="2.5" stroke-linecap="round"/>
+          <polygon points="10,0 18,-4 20,0 18,4" fill="#b0b0b0"/>
+          <circle cx="20" cy="0" r="3.5" fill="#f09a18" opacity="0.55"/>
+          <path d="M-20,0 Q-35,3 -50,8" stroke="url(#trailGrad)" stroke-width="1.5" fill="none" opacity="0.45"/>
+        </g>
+
+        <!-- Scattered weapons on ground (thrown earlier) -->
+        <line x1="160" y1="248" x2="175" y2="238" stroke="#6a6a6a" stroke-width="2" opacity="0.3"/>
+        <polygon points="175,238 180,234 177,240" fill="#808080" opacity="0.25"/>
+        <line x1="450" y1="252" x2="440" y2="240" stroke="#6a6a6a" stroke-width="1.8" opacity="0.25"/>
+
+        <!-- Dust/debris from impacts -->
+        <circle cx="590" cy="200" r="15" fill="#3a3030" opacity="0.1"/>
+        <circle cx="680" cy="240" r="12" fill="#3a3030" opacity="0.08"/>
+        <circle cx="420" cy="108" r="6" fill="#f09a18" opacity="0.06"/>
+      </svg>
+    </div>
+    <div class="breadcrumb"><a href="guides.html" style="color:var(--text-muted);">Baldur's Gate 3</a> &rsaquo; <a href="bg3-builds.html" style="color:var(--text-muted);">Builds</a> &rsaquo; Throwzerker</div>
+    <h1>Throwzerker &mdash; Avernus Catapult</h1>
+    <div class="subtitle">Shield Dwarf &middot; Berserker 5 / Thief 4 / Champion 3 &middot; Thrown Weapon Specialist</div>
+    <div class="tag-row">
+      <span class="tag red">Damage</span>
+      <span class="tag orange">Thrown Builds</span>
+      <span class="tag blue">Multiclass</span>
+      <span class="tag green">Patch 8</span>
+    </div>
+  </div>
+
+  <!-- ═══════ OVERVIEW ═══════ -->
+  <section class="section reveal" id="overview">
+    <h2>Overview</h2>
+
+    <p>The Throwzerker is the most explosive damage build in Baldur's Gate 3. You hurl weapons at enemies from range with the force of a freight train, using Tavern Brawler to add double your Strength modifier to every thrown attack. With Berserker Frenzy, Thief's extra bonus action, Extra Attack, and Fighter's Action Surge, you can unleash 5&ndash;6 thrown attacks in a single turn &mdash; each one dealing massive damage with returning weapons that fly right back to your hand.</p>
+
+    <p>This build peaks at level 12 with a terrifying combination: Rage for bonus damage on every throw, Frenzy for a bonus action throw, Thief for a second bonus action throw, Extra Attack for two throws per action, and Action Surge for another full action of throws. That is up to 6 thrown weapon attacks in one turn, each benefiting from Tavern Brawler, Rage damage, and whatever enchantment your weapon carries.</p>
+
+    <div class="callout">
+      <div class="callout-label">Why Thrown Weapons?</div>
+      <p>In BG3, thrown weapons use Strength for attack and damage rolls. Tavern Brawler adds your STR modifier a second time to thrown attacks, effectively doubling your damage bonus. A character with 20 STR adds +10 damage to every thrown attack instead of +5. Multiply that by 5&ndash;6 attacks per turn and you get the highest sustained single-target DPR in the game.</p>
+    </div>
+
+    <h3>Race &mdash; Shield Dwarf (Recommended)</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Dwarven Resilience</span> &mdash; <span class="note">Advantage on poison saves, resistance to poison damage. Very common enemy type.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Darkvision</span> &mdash; <span class="note">12m range. Essential for Underdark and Shadow-cursed lands.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Dwarven Toughness</span> &mdash; <span class="note">+1 HP per level. Adds up to 12 extra HP, compensating for no heavy armor.</span></li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">Alternative: Half-Orc</div>
+      <p><strong>Savage Attacks</strong> adds an extra damage die on crits. With 5&ndash;6 attacks per turn, you crit more often through sheer volume. <strong>Relentless Endurance</strong> saves you from going down once per long rest. Both are excellent for an aggressive build like this.</p>
+    </div>
+
+    <h3>Ability Scores (Point Buy)</h3>
+    <div class="stats">
+      <div class="stat-box primary"><div class="stat-label">STR</div><div class="stat-val">17</div></div>
+      <div class="stat-box"><div class="stat-label">DEX</div><div class="stat-val">14</div></div>
+      <div class="stat-box"><div class="stat-label">CON</div><div class="stat-val">14</div></div>
+      <div class="stat-box"><div class="stat-label">INT</div><div class="stat-val">8</div></div>
+      <div class="stat-box"><div class="stat-label">WIS</div><div class="stat-val">10</div></div>
+      <div class="stat-box"><div class="stat-label">CHA</div><div class="stat-val">10</div></div>
+    </div>
+    <p style="font-size:0.88rem; color:var(--text-dim);">After racial bonuses (Shield Dwarf +2 CON is automatic via background). STR 17 is critical &mdash; Tavern Brawler at level 4 rounds it up to 18 (+1 STR from the feat). At level 8 or 12, take +2 STR to reach 20.</p>
+
+    <div class="callout">
+      <div class="callout-label">Build Summary</div>
+      <p><strong>Berserker Barbarian 5</strong> &mdash; Extra Attack, Rage bonus damage, Frenzy (bonus action attack), Reckless Attack<br>
+      <strong>Thief Rogue 4</strong> &mdash; Second bonus action, Sneak Attack (1d6 bonus once per turn), a feat<br>
+      <strong>Champion Fighter 3</strong> &mdash; Action Surge (double your action once per short rest), Improved Critical (crit on 19&ndash;20), Fighting Style</p>
+    </div>
+  </section>
+
+  <!-- ═══════ TAVERN BRAWLER ═══════ -->
+  <section class="section reveal" id="tavern-brawler">
+    <h2>Tavern Brawler &mdash; The Key Feat</h2>
+
+    <p>Tavern Brawler is the single most important feat in this build. Without it, this is just a regular Barbarian. With it, you become a siege weapon.</p>
+
+    <div class="callout warn">
+      <div class="callout-label">How It Works in BG3</div>
+      <p>BG3's Tavern Brawler is different from tabletop D&D 5e. In BG3, it reads: <em>"When you make an unarmed attack, or attack with an improvised weapon, or throw something, your Strength modifier is added twice to the damage and Attack Rolls."</em></p>
+      <p>This means with 20 STR (+5 modifier), every thrown weapon attack gets +10 to hit and +10 to damage instead of +5/+5. The feat also gives +1 STR, bringing your 17 to 18 at level 4.</p>
+    </div>
+
+    <h3>Damage Math</h3>
+    <table class="dmg-table">
+      <thead><tr><th>Attack</th><th>Without TB</th><th>With TB (20 STR)</th></tr></thead>
+      <tbody>
+        <tr><td>Single throw (1d6+STR)</td><td>1d6+5 = ~8.5</td><td class="highlight">1d6+10 = ~13.5</td></tr>
+        <tr><td>+ Rage damage (+2/+3)</td><td>~10.5</td><td class="highlight">~16.5</td></tr>
+        <tr><td>5 throws in one turn</td><td>~52.5</td><td class="highlight">~82.5</td></tr>
+        <tr><td>6 throws (Action Surge turn)</td><td>~63</td><td class="highlight">~99+</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.85rem; color:var(--text-dim);">Numbers assume 20 STR, Rage +3 damage, and 1d6 base weapon die. With Nyrulna (1d6+3 + 3d6 thunder), Action Surge turns easily exceed 150+ damage.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Tavern Brawler also boosts attack rolls</div>
+      <p>Double STR to hit means you almost never miss. With 20 STR and proficiency, your attack bonus is +15 or higher. You will hit even high-AC enemies on Honour Mode reliably.</p>
+    </div>
+  </section>
+
+  <!-- ═══════ LEVELS ═══════ -->
+  <section class="section reveal" id="levels">
+    <h2>Level-by-Level Progression</h2>
+    <p style="color:var(--text-dim); margin-bottom:1rem;">Click any level to expand. The leveling order is: Barbarian 1&ndash;5, then Rogue 1&ndash;4, then Fighter 1&ndash;3.</p>
+
+    <!-- 1 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">1</span>
+        <span class="lv-badge barb">Barbarian 1</span>
+        <span class="lv-title">Rage + Unarmored Defense</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Rage</span>
+          <span class="qp feature">Unarmored Defense</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Rage</span> &mdash; <span class="note">Bonus melee/thrown damage, resistance to physical damage, advantage on STR checks. 2 rages per long rest.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Unarmored Defense</span> &mdash; <span class="note">AC = 10 + DEX mod + CON mod. With 14 DEX and 14 CON, that's 14 AC. Wear medium armor instead early on.</span></li>
+          <li><span class="label">Note</span> <span class="note">Grab Handaxes and Javelins from vendors. Start throwing immediately. Rage adds damage to throws.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 2 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">2</span>
+        <span class="lv-badge barb">Barbarian 2</span>
+        <span class="lv-title">Reckless Attack + Danger Sense</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Reckless Attack</span>
+          <span class="qp feature">Danger Sense</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Reckless Attack</span> &mdash; <span class="note">Advantage on all melee and thrown attacks for the turn. Enemies get advantage on you too, but you're tanky enough.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Danger Sense</span> &mdash; <span class="note">Advantage on DEX saves against things you can see. Helps survive AoE.</span></li>
+          <li><span class="label">Tip</span> <span class="note">Always use Reckless Attack. Advantage on 5+ attacks per turn is an enormous DPS increase.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 3 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">3</span>
+        <span class="lv-badge barb">Barbarian 3</span>
+        <span class="lv-title">Berserker &mdash; Frenzy</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Frenzy</span>
+          <span class="qp feature">Frenzied Strike</span>
+          <span class="qp feature">Enraged Throw</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">Berserker</span> &mdash; <span class="note">Frenzy turns your Rage into a damage machine</span></li>
+          <li><span class="label">Feature</span> <span class="name">Frenzy</span> &mdash; <span class="note">When raging, your Rage becomes Frenzy. Grants Frenzied Strike and Enraged Throw as bonus actions.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Enraged Throw</span> &mdash; <span class="note">Bonus action to throw a weapon or object. Deals extra damage equal to Rage bonus. This is your bread and butter.</span></li>
+          <li><span class="label">Tip</span> <span class="note">In BG3, Frenzy does NOT cause exhaustion like in tabletop. It is pure upside.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.75rem;">
+          <div class="callout-label">No Exhaustion Penalty</div>
+          <p>In tabletop 5e, Berserker Frenzy gives a level of exhaustion. BG3 completely removed this penalty. Frenzy is free bonus action attacks with zero downside.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 4 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">4</span>
+        <span class="lv-badge barb">Barbarian 4</span>
+        <span class="lv-title">Tavern Brawler (THE Feat)</span>
+        <span class="lv-spike">&#9733;&#9733; Build Defining</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">Tavern Brawler</span>
+          <span class="qp feat">+1 STR &rarr; 18</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">Tavern Brawler</span> &mdash; <span class="note">Double STR mod on thrown attack and damage rolls. Also +1 STR (17&rarr;18). This is the entire build.</span></li>
+          <li><span class="label">STR 18</span> <span class="note">+4 modifier, doubled to +8 on all thrown attacks. Massive jump in both accuracy and damage.</span></li>
+        </ul>
+        <div class="callout warn" style="margin-top:0.75rem;">
+          <div class="callout-label">Do NOT Skip This Feat</div>
+          <p>Tavern Brawler is non-negotiable. Without it, this build does not work. Every other feat choice (GWM, Sentinel, etc.) is strictly worse for a throw build. Take it at Barbarian 4, no exceptions.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 5 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">5</span>
+        <span class="lv-badge barb">Barbarian 5</span>
+        <span class="lv-title">Extra Attack + Fast Movement</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Extra Attack</span>
+          <span class="qp feature">Fast Movement (+3m)</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Extra Attack</span> &mdash; <span class="note">Two attacks per action. Combined with Frenzy, that is 3 throws per turn minimum.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Fast Movement</span> &mdash; <span class="note">+3m speed while not wearing heavy armor. Helps with positioning.</span></li>
+          <li><span class="label">Rage</span> <span class="note">3 rages per long rest now. Also +3 Rage damage bonus (up from +2).</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.75rem;">
+          <div class="callout-label">End of Barbarian Levels</div>
+          <p>Barbarian 5 is your last Barbarian level. You now have everything you need: Extra Attack, Frenzy, Tavern Brawler, Reckless Attack. Time to multiclass into Rogue for even more bonus actions.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 6 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">6</span>
+        <span class="lv-badge rogue">Rogue 1</span>
+        <span class="lv-title">Sneak Attack + Expertise</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Sneak Attack (1d6)</span>
+          <span class="qp skill">Expertise x2</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Sneak Attack (1d6)</span> &mdash; <span class="note">Once per turn extra damage when you have advantage. Reckless Attack gives advantage on all your throws, so this triggers every turn.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Expertise</span> &mdash; <span class="note">Double proficiency on Athletics (grapple/shove) and Stealth. Athletics + STR 20 = ungrappleable.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 7 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">7</span>
+        <span class="lv-badge rogue">Rogue 2</span>
+        <span class="lv-title">Cunning Action</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Cunning Action: Dash</span>
+          <span class="qp feature">Cunning Action: Hide</span>
+          <span class="qp feature">Cunning Action: Disengage</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Cunning Action</span> &mdash; <span class="note">Bonus action Dash, Disengage, or Hide. Dash for repositioning, Hide for advantage on next attack if Reckless is too risky.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 8 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">8</span>
+        <span class="lv-badge rogue">Rogue 3</span>
+        <span class="lv-title">Thief &mdash; Extra Bonus Action</span>
+        <span class="lv-spike">&#9733;&#9733; Build Defining</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Fast Hands (2nd Bonus Action!)</span>
+          <span class="qp feature">Second-Story Work</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">Thief</span> &mdash; <span class="note">The only subclass in the game that gives an extra bonus action</span></li>
+          <li><span class="label">Feature</span> <span class="name">Fast Hands</span> &mdash; <span class="note">You gain an additional bonus action each turn. That means TWO Enraged Throws per turn (Frenzy + Fast Hands). Your throw count per turn goes from 3 to 4.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Second-Story Work</span> &mdash; <span class="note">Resistance to falling damage. Minor but nice for positioning.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.75rem;">
+          <div class="callout-label">The Second Build-Defining Level</div>
+          <p>Fast Hands is the second pillar of this build. Frenzy gives one bonus action throw. Fast Hands gives another. Combined with Extra Attack (2 throws), you now throw 4 weapons per turn without spending any resources beyond Rage.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 9 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">9</span>
+        <span class="lv-badge rogue">Rogue 4</span>
+        <span class="lv-title">Second Feat &mdash; +2 STR</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">+2 STR &rarr; 20 (Max!)</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat</span> <span class="name">+2 STR &rarr; 20</span> &mdash; <span class="note">Caps Strength. +5 modifier, doubled to +10 by Tavern Brawler. Your throws now hit like a ballista.</span></li>
+          <li><span class="label">Alt</span> <span class="name">Alert</span> &mdash; <span class="note">+5 initiative. Going first is huge for a burst damage build. Take this if you already have Elixirs boosting STR to 21+.</span></li>
+        </ul>
+        <div class="callout" style="margin-top:0.75rem;">
+          <div class="callout-label">Elixir Strategy</div>
+          <p>If you use <strong>Elixir of Hill Giant Strength</strong> (STR 21) or <strong>Cloud Giant Strength</strong> (STR 27), your STR score doesn't matter. In that case, take Alert or Savage Attacker instead of +2 STR. Cloud Giant at level 12 means +8 modifier doubled to +16 per throw.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 10 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">10</span>
+        <span class="lv-badge fighter">Fighter 1</span>
+        <span class="lv-title">Fighting Style + Second Wind</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Archery (+2 ranged)</span>
+          <span class="qp feature">Second Wind</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Fighting Style: Archery</span> &mdash; <span class="note">+2 to ranged attack rolls. Thrown weapons ARE ranged attacks, so this stacks with Tavern Brawler. Your to-hit becomes absurd.</span></li>
+          <li><span class="label">Feature</span> <span class="name">Second Wind</span> &mdash; <span class="note">Bonus action heal 1d10+Fighter level. Nice emergency sustain.</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 11 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">11</span>
+        <span class="lv-badge fighter">Fighter 2</span>
+        <span class="lv-title">Action Surge</span>
+        <span class="lv-spike">&#9733; Power Spike</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Action Surge</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Action Surge</span> &mdash; <span class="note">Once per short rest, gain an additional action. That's 2 more throws (Extra Attack applies to the surge action too). Turns your 4-throw turn into a 6-throw nuke turn.</span></li>
+        </ul>
+        <div class="callout warn" style="margin-top:0.75rem;">
+          <div class="callout-label">The Nuke Turn</div>
+          <p><strong>Action (2 throws)</strong> + <strong>Action Surge (2 throws)</strong> + <strong>Frenzy Throw (1)</strong> + <strong>Fast Hands Throw (1)</strong> = 6 thrown weapon attacks in a single turn. With Nyrulna and 20+ STR, this one-shots most bosses.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 12 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">12</span>
+        <span class="lv-badge fighter">Fighter 3</span>
+        <span class="lv-title">Champion &mdash; Improved Critical</span>
+        <span class="lv-arrow">&#9656;</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Improved Critical (19&ndash;20)</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">Champion</span> &mdash; <span class="note">Crit on 19 or 20 instead of just 20</span></li>
+          <li><span class="label">Feature</span> <span class="name">Improved Critical</span> &mdash; <span class="note">Doubles your crit chance. With Reckless Attack (advantage = 2 rolls per attack) and 5&ndash;6 attacks per turn, you crit multiple times per combat.</span></li>
+          <li><span class="label">Alt</span> <span class="name">Battle Master</span> &mdash; <span class="note">Superiority Dice add damage and utility (Trip Attack, Precision Attack). More consistent but lower ceiling than Champion's crit fishing with this many attacks.</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.75rem;">
+          <div class="callout-label">Build Complete</div>
+          <p>At level 12 you have the full kit: Tavern Brawler, Extra Attack, Frenzy, Fast Hands, Action Surge, Improved Critical, Reckless Attack. You are the highest single-target damage dealer in Baldur's Gate 3. Enjoy deleting bosses.</p>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ═══════ SUBCLASSES ═══════ -->
+  <section class="section reveal" id="subclasses">
+    <h2>Subclass Breakdown</h2>
+
+    <h3>Berserker (Barbarian &mdash; Required)</h3>
+    <p>Berserker is the only Barbarian subclass that works for this build. Frenzy gives you a bonus action attack (Enraged Throw) while raging, which is the entire reason you take Barbarian past level 2. Wild Magic is random and unreliable; Wildheart gives resistances but no extra attacks. Berserker is locked in.</p>
+    <ul class="picks">
+      <li><span class="label">Level 3</span> <span class="name">Frenzy</span> &mdash; <span class="note">Bonus action Enraged Throw or Frenzied Strike while raging</span></li>
+      <li><span class="label">Level 3</span> <span class="name">Enraged Throw</span> &mdash; <span class="note">Throw a weapon or heavy object as bonus action. Deals extra Rage damage.</span></li>
+      <li><span class="label">Level 3</span> <span class="name">Frenzied Strike</span> &mdash; <span class="note">Bonus action melee attack. Use when in melee range and out of throwable weapons (rare).</span></li>
+    </ul>
+
+    <h3>Thief (Rogue &mdash; Required)</h3>
+    <p>Thief is the only Rogue subclass that provides a second bonus action. Assassin gives auto-crit on surprised enemies (nice but situational). Arcane Trickster gives minor spells (useless while raging). Thief gives a permanent extra bonus action every single turn. No competition.</p>
+    <ul class="picks">
+      <li><span class="label">Level 3</span> <span class="name">Fast Hands</span> &mdash; <span class="note">Additional bonus action. Throw again, Dash, Disengage, use items &mdash; your choice every turn.</span></li>
+      <li><span class="label">Level 3</span> <span class="name">Second-Story Work</span> &mdash; <span class="note">Falling damage resistance. Lets you jump off high ground without worry.</span></li>
+    </ul>
+
+    <h3>Champion vs Battle Master (Fighter)</h3>
+    <p>Both are strong. Champion is the default recommendation because Improved Critical synergizes with your high attack volume.</p>
+
+    <div class="callout">
+      <div class="callout-label">Champion</div>
+      <p>Crit on 19&ndash;20. With Reckless Attack (advantage) and 5&ndash;6 attacks per turn, you effectively roll 10&ndash;12 d20s. The probability of at least one crit per turn is extremely high. Crits double all damage dice (weapon die + Sneak Attack die + Rage bonus).</p>
+    </div>
+    <div class="callout">
+      <div class="callout-label">Battle Master (Alternative)</div>
+      <p>4 Superiority Dice (d8). <strong>Trip Attack</strong> knocks prone on hit (advantage for party). <strong>Precision Attack</strong> adds d8 to an attack roll (guarantee hits). <strong>Menacing Attack</strong> frightens targets. More tactical, slightly lower peak damage. Pick this for Honour Mode if consistency matters more than burst.</p>
+    </div>
+  </section>
+
+  <!-- ═══════ THROWN WEAPONS ═══════ -->
+  <section class="section reveal" id="thrown">
+    <h2>Thrown Weapon Mechanics in BG3</h2>
+
+    <p>Thrown weapons in BG3 have unique rules that make this build possible. Understanding them is critical.</p>
+
+    <h3>Key Mechanics</h3>
+    <ul class="picks">
+      <li><span class="label">Return</span> <span class="name">Returning weapons come back</span> &mdash; <span class="note">Weapons with the "Returning" property fly back to your hand after being thrown. Without this, you'd need a full inventory of throwable weapons. Nyrulna and the Returning Pike are essential.</span></li>
+      <li><span class="label">STR</span> <span class="name">Thrown = STR-based ranged</span> &mdash; <span class="note">Thrown weapons use your Strength modifier for attack and damage. They count as ranged attacks (so Archery fighting style applies) but use STR, not DEX.</span></li>
+      <li><span class="label">Range</span> <span class="name">18m standard range</span> &mdash; <span class="note">Most thrown weapons have 18m range in BG3. That is well beyond melee and lets you attack from safety.</span></li>
+      <li><span class="label">Tavern</span> <span class="name">Tavern Brawler applies</span> &mdash; <span class="note">TB specifically says "throw something" &mdash; all thrown weapon attacks get doubled STR modifier.</span></li>
+      <li><span class="label">Rage</span> <span class="name">Rage bonus applies</span> &mdash; <span class="note">Rage bonus damage (+2/+3) applies to thrown weapon attacks. Thrown weapons count as "weapon attacks" for Rage purposes.</span></li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="callout-label">Non-Returning Weapons</div>
+      <p>If you throw a weapon that does NOT have the Returning property, it stays where it lands and you must pick it up. Early game (Acts 1&ndash;2), stock up on Handaxes and Javelins from vendors. Late game, Nyrulna solves this permanently.</p>
+    </div>
+
+    <h3>Throw Types</h3>
+    <ul class="picks">
+      <li><span class="label">Action</span> <span class="name">Regular Throw</span> &mdash; <span class="note">Use your action to throw. Extra Attack means 2 throws per action. Your main damage source.</span></li>
+      <li><span class="label">Bonus</span> <span class="name">Enraged Throw</span> &mdash; <span class="note">Berserker Frenzy bonus action. Deals weapon damage + STR mod + Rage bonus. Can also throw heavy objects (environmental kills).</span></li>
+      <li><span class="label">Bonus</span> <span class="name">Fast Hands Throw</span> &mdash; <span class="note">Your second bonus action from Thief. Throw again with the same weapon.</span></li>
+    </ul>
+  </section>
+
+  <!-- ═══════ GEAR ═══════ -->
+  <section class="section reveal" id="items">
+    <h2>Key Gear</h2>
+
+    <div class="callout">
+      <div class="callout-label">Weapon Priority</div>
+      <p>Returning weapons are the single most important gear for this build. Without them, you run out of things to throw. Nyrulna in Act 3 is the build's ultimate weapon &mdash; everything before that is building toward it.</p>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Thrown Weapons &mdash; Act 1</div>
+      <div class="item-row">
+        <div><span class="item-name">Returning Pike</span> <span class="item-slot">Weapon</span></div>
+        <div class="item-desc">1d10 piercing, thrown, returns to hand after throwing. Your best weapon for Acts 1&ndash;2.</div>
+        <div class="item-loc">&#128205; Sold by Dammon at the Emerald Grove (Act 1). Also available at Last Light Inn (Act 2).</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Handaxes</span> <span class="item-slot">Weapon</span></div>
+        <div class="item-desc">1d6 slashing, light, thrown. Stock up &mdash; buy 10+ from any weapon vendor. Dual-wield for backup melee.</div>
+        <div class="item-loc">&#128205; Every weapon vendor in the game sells them. Cheap and plentiful.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Javelins</span> <span class="item-slot">Weapon</span></div>
+        <div class="item-desc">1d6 piercing, thrown. Slightly longer range than handaxes. Good backup throwing option.</div>
+        <div class="item-loc">&#128205; Loot from goblins, buy from vendors. Found everywhere in Act 1.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">The Returning Handaxe</span> <span class="item-slot">Weapon</span></div>
+        <div class="item-desc">1d6+1 slashing, returns to hand. A decent early-game returning weapon if you find it.</div>
+        <div class="item-loc">&#128205; Sold by certain vendors (check Dammon, Derryth in Underdark).</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Thrown Weapons &mdash; Act 2</div>
+      <div class="item-row">
+        <div><span class="item-name">Dwarven Thrower</span> <span class="item-slot">Weapon</span></div>
+        <div class="item-desc">1d8+3 bludgeoning, returns to hand, deals extra 1d8 to Large+ creatures. Dwarves only &mdash; another reason to pick Shield Dwarf.</div>
+        <div class="item-loc">&#128205; Sold by the Quartermaster at Last Light Inn (Act 2). Requires attunement.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Lightning Jabber</span> <span class="item-slot">Weapon</span></div>
+        <div class="item-desc">1d6+1, thrown, deals extra 1d6 lightning damage on hit. Does not return &mdash; use sparingly.</div>
+        <div class="item-loc">&#128205; Found in the Grymforge area (Act 1 Underdark route).</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Thrown Weapons &mdash; Act 3 (Endgame)</div>
+      <div class="item-row">
+        <div><span class="item-name">Nyrulna</span> <span class="item-slot">Weapon (Legendary)</span></div>
+        <div class="item-desc">1d6+3 piercing, returns to hand, +3 thrown attack/damage, deals 3d4 thunder damage on hit, creates a thunderwave explosion on impact. THE endgame weapon. Nothing else comes close.</div>
+        <div class="item-loc">&#128205; Akabi the Djinni's spinning wheel at the Circus of the Last Days (Act 3). Use Detect Thoughts or pick his pocket for the real prize. Win the "bad" result to be teleported to Jungle &mdash; loot the chest.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Dwarven Thrower (if Dwarf)</span> <span class="item-slot">Weapon</span></div>
+        <div class="item-desc">Keep as secondary. Switch to it for Large+ enemies (Dragons, Myrmidons) for the extra 1d8 damage.</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Best Armor &amp; Accessories</div>
+      <div class="item-row">
+        <div><span class="item-name">Bonespike Garb</span> <span class="item-slot">Armor</span></div>
+        <div class="item-desc">Deals 2d4 piercing damage to enemies that hit you while Raging. Free Rage trigger. Light armor so no heavy armor penalty for Fast Movement.</div>
+        <div class="item-loc">&#128205; Sold by Blurg in the Myconid Colony (Underdark, Act 1).</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Enraging Heart Garb</span> <span class="item-slot">Armor</span></div>
+        <div class="item-desc">Gain Wrath for 1 turn when you deal damage while Raging. Wrath = +1 damage per attack. Stacks up.</div>
+        <div class="item-loc">&#128205; Sold by Brem at Zhentarim Hideout (Act 1).</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Haste Helm</span> <span class="item-slot">Helmet</span></div>
+        <div class="item-desc">3 turns of Momentum at combat start (+1.5m movement). Position before throwing. Also works with Dash.</div>
+        <div class="item-loc">&#128205; Blighted Village cellar chest (Act 1).</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Ring of Flinging</span> <span class="item-slot">Ring</span></div>
+        <div class="item-desc">+1d4 damage on thrown weapon attacks. Applies to every single throw. Enormous over a full turn.</div>
+        <div class="item-loc">&#128205; Sold by Araj Oblodra at Moonrise Towers (Act 2).</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Gloves of Uninhibited Kushigo</span> <span class="item-slot">Gloves</span></div>
+        <div class="item-desc">Add WIS modifier to unarmed and thrown damage while not wearing armor. If using Unarmored Defense, this stacks.</div>
+        <div class="item-loc">&#128205; Found in the Monastery (Githyanki Creche, Act 1).</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Elixir of Hill Giant Strength</span> <span class="item-slot">Consumable</span></div>
+        <div class="item-desc">Sets STR to 21. Lasts until long rest. Frees up your feat from +2 STR. Craftable with alchemy.</div>
+        <div class="item-loc">&#128205; Alchemist vendors, loot, or craft with Hill Giant Finger + any sublimate.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Elixir of Cloud Giant Strength</span> <span class="item-slot">Consumable</span></div>
+        <div class="item-desc">Sets STR to 27 (+8 modifier, doubled to +16 with TB). The ultimate damage boost. Save for bosses.</div>
+        <div class="item-loc">&#128205; Very rare. Craft with Cloud Giant Finger + any sublimate. Limited supply.</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Helm of Balduran</span> <span class="item-slot">Helmet</span></div>
+        <div class="item-desc">+1 AC, +1 saves, HP regen, can't be stunned or critically hit. Best defensive helm in Act 3.</div>
+        <div class="item-loc">&#128205; Wyrmway &mdash; defeat Ansur the dragon (Act 3).</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ COMBAT ═══════ -->
+  <section class="section reveal" id="combat">
+    <h2>Combat Guide</h2>
+
+    <h3>Standard Turn (No Resources Spent)</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Rage / Frenzy</span> <span class="step-timing pre">Turn 1 Only</span>
+        <div class="step-detail">Activate Frenzy (replaces Rage) at the start of combat. Costs a bonus action on the first turn only. Lasts 10 turns. You need this active for Enraged Throw.</div>
+      </li>
+      <li>
+        <span class="step-action">Reckless Attack + Throw x2</span> <span class="step-timing every">Every Turn</span>
+        <div class="step-detail">Toggle Reckless Attack on. Use your action to throw your returning weapon twice (Extra Attack). Advantage on both throws from Reckless Attack. Sneak Attack triggers on the first hit.</div>
+      </li>
+      <li>
+        <span class="step-action">Enraged Throw (Frenzy)</span> <span class="step-timing every">Bonus Action 1</span>
+        <div class="step-detail">Use your first bonus action for an Enraged Throw. This is the Berserker's Frenzy ability. Same weapon, same Tavern Brawler bonus.</div>
+      </li>
+      <li>
+        <span class="step-action">Throw Again (Fast Hands)</span> <span class="step-timing every">Bonus Action 2</span>
+        <div class="step-detail">Use your second bonus action (from Thief) to throw again. 4 total throws per turn, every turn, no resources spent.</div>
+      </li>
+    </ol>
+
+    <h3>The Nuke Turn (Action Surge)</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Reckless Attack + Throw x2</span> <span class="step-timing turn">Action</span>
+        <div class="step-detail">Two throws with advantage. Sneak Attack on first hit.</div>
+      </li>
+      <li>
+        <span class="step-action">Action Surge + Throw x2</span> <span class="step-timing turn">Surge</span>
+        <div class="step-detail">Action Surge gives a second action. Two more throws with advantage. 4 throws from actions alone.</div>
+      </li>
+      <li>
+        <span class="step-action">Enraged Throw + Fast Hands Throw</span> <span class="step-timing turn">Both Bonus Actions</span>
+        <div class="step-detail">Two more bonus action throws. Total: 6 thrown weapon attacks in one turn. With Nyrulna, each hit deals 1d6+3+10 (TB)+3 (Rage)+3d4 (thunder) = ~27 average damage. Six hits = ~162 damage.</div>
+      </li>
+    </ol>
+
+    <div class="callout warn">
+      <div class="callout-label">Damage Estimate &mdash; Nuke Turn with Nyrulna + 20 STR</div>
+      <p>6 attacks x (3.5 + 3 + 10 + 3 + 7.5) average = 6 x 27 = <strong>162 base damage</strong>. Add Sneak Attack (3.5), Ring of Flinging (6 x 2.5 = 15), crits, and advantage rerolls. Realistic nuke turn: <strong>180&ndash;220+ damage</strong>. This one-shots the Apostle of Myrkul on Tactician.</p>
+    </div>
+
+    <h3>Positioning Tips</h3>
+    <ul class="picks">
+      <li><span class="label">Range</span> <span class="name">Stay at 12&ndash;18m</span> &mdash; <span class="note">You are a ranged attacker. No need to stand in melee. Throw from behind your tank.</span></li>
+      <li><span class="label">Height</span> <span class="name">Use high ground</span> &mdash; <span class="note">High ground gives +2 to ranged attack rolls. Stack with Reckless + TB for near-guaranteed hits.</span></li>
+      <li><span class="label">Frenzy</span> <span class="name">Keep Rage active</span> &mdash; <span class="note">Rage drops if you end a turn without attacking or taking damage. Always throw at least once per turn.</span></li>
+      <li><span class="label">Objects</span> <span class="name">Throw environment objects</span> &mdash; <span class="note">Enraged Throw can hurl heavy objects (barrels, rocks, enemies). Throw explosive barrels for massive AoE.</span></li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">Throw Enemies at Enemies</div>
+      <p>Enraged Throw can throw creatures. If you succeed on the STR check (easy with 20 STR + Expertise Athletics), you throw one enemy into another, dealing damage to both and knocking both prone. This is hilarious and effective.</p>
+    </div>
+  </section>
+
+  <!-- ═══════ HONOUR MODE ═══════ -->
+  <section class="section reveal" id="honour">
+    <h2>Honour Mode Tips</h2>
+
+    <p>The Throwzerker is one of the safest Honour Mode builds because you deal massive damage from range while Raging for physical resistance. Here are specific tips for the hardest difficulty.</p>
+
+    <div class="callout warn">
+      <div class="callout-label">Honour Mode Changes</div>
+      <p>Bosses have Legendary Actions in Honour Mode. They can interrupt your turn, add extra attacks, and resist conditions. Your best defense is overwhelming offense &mdash; kill them before they use Legendary Actions.</p>
+    </div>
+
+    <h3>Boss Strategy</h3>
+    <ul class="picks">
+      <li><span class="label">Prep</span> <span class="name">Pre-buff before boss rooms</span> &mdash; <span class="note">Drink Elixir of Cloud Giant Strength (STR 27). Pre-position party. Have a Haste caster ready.</span></li>
+      <li><span class="label">Alpha</span> <span class="name">Nuke turn 1</span> &mdash; <span class="note">Open with Action Surge turn. 6 throws at a single target. Many Honour Mode bosses can be killed or nearly killed in one turn.</span></li>
+      <li><span class="label">Sustain</span> <span class="name">4 throws per turn baseline</span> &mdash; <span class="note">Even without Action Surge, 4 throws per turn is enormous sustained damage. Short rest to get Surge back between fights.</span></li>
+      <li><span class="label">Safety</span> <span class="name">Rage gives resistance</span> &mdash; <span class="note">Half damage from physical attacks while raging. Combined with medium armor and decent DEX/CON, you are surprisingly tanky.</span></li>
+    </ul>
+
+    <h3>Dangerous Fights</h3>
+    <ul class="picks">
+      <li><span class="label">Act 1</span> <span class="name">Grym (Adamantine Forge)</span> &mdash; <span class="note">Immune to most damage except when standing on lava. Use the forge hammer mechanic. Your throws won't help here &mdash; this is a puzzle boss.</span></li>
+      <li><span class="label">Act 2</span> <span class="name">Ketheric Thorm</span> &mdash; <span class="note">Two-phase fight. Save Action Surge for phase 2 (Apostle of Myrkul). Nuke the Apostle immediately.</span></li>
+      <li><span class="label">Act 3</span> <span class="name">Raphael</span> &mdash; <span class="note">High AC, Legendary Resistance. Use Reckless Attack + TB for near-guaranteed hits. Focus Raphael, ignore adds. Nuke turn can end him in 1&ndash;2 rounds.</span></li>
+      <li><span class="label">Act 3</span> <span class="name">Orin</span> &mdash; <span class="note">1v1 duel (if chosen). Your throw build works perfectly solo. Rage, Reckless, throw 4 times per turn. She dies fast.</span></li>
+      <li><span class="label">Final</span> <span class="name">Netherbrain</span> &mdash; <span class="note">Multiple phases with adds. Throw at the brain, ignore minions (party handles them). Action Surge on the final phase.</span></li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">Battle Master for Honour Mode?</div>
+      <p>If consistency over burst appeals to you, Battle Master with Precision Attack (add d8 to attack roll) guarantees hits against high-AC Honour Mode bosses. Trip Attack knocks prone, giving advantage to your entire party. It is a valid alternative to Champion in Honour specifically.</p>
+    </div>
+  </section>
+
+  <!-- ═══════ PARTY ═══════ -->
+  <section class="section reveal" id="party">
+    <h2>Recommended Party</h2>
+    <p>You are the primary damage dealer. Build your party around enabling your throws and covering your weaknesses (healing, crowd control, utility).</p>
+
+    <div class="party-grid" style="margin-top:1rem;">
+      <div class="party-card">
+        <div class="party-name">Shadowheart</div>
+        <div class="party-role">Cleric &middot; Healer / Buffer</div>
+        <div class="party-desc">Spirit Guardians + your thrown damage shreds everything. She heals when you take hits through Reckless. Bless adds +1d4 to your already absurd attack rolls.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Gale</div>
+        <div class="party-role">Wizard &middot; CC / Haste</div>
+        <div class="party-desc">Haste on you = 3 throws per action instead of 2. That is 5 throws baseline, 7 with Action Surge. Hold Person/Monster gives auto-crits in melee range (throw from close if needed).</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Lae'zel</div>
+        <div class="party-role">Fighter &middot; Frontline Tank</div>
+        <div class="party-desc">She holds the line while you throw from behind. Battle Master Lae'zel can Trip Attack enemies prone, giving your throws advantage without needing Reckless.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Alt: Karlach</div>
+        <div class="party-role">Barbarian &middot; Second Frontliner</div>
+        <div class="party-desc">Two Barbarians raging = double physical resistance frontline. She goes Wildheart for tankiness while you go Berserker for damage. Pure aggression comp.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="guide-footer">
+    <p>Throwzerker &mdash; Avernus Catapult &middot; BG3 Build Guide &middot; Patch 8</p>
+    <p style="margin-top:0.4rem;"><a href="bg3-builds.html">All BG3 Builds</a> &middot; <a href="guides.html">Game Guides</a> &middot; <a href="index.html">Home</a></p>
+  </div>
+
+</main>
+</div>
+
+<script>
+// Highlight active sidebar link on scroll
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector('.sidebar a[href="#' + entry.target.id + '"]');
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+
+// Mobile sub-nav hamburger
+const toggle = document.querySelector('.nav-toggle');
+const mobLinks = document.querySelector('.mob-nav-links');
+if (toggle && mobLinks) {
+  toggle.addEventListener('click', () => mobLinks.classList.toggle('open'));
+  mobLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobLinks.classList.remove('open')));
+}
+
+// Top nav hamburger
+const topHamburger = document.getElementById('top-hamburger');
+const topNavLinks = document.getElementById('top-nav-links');
+if (topHamburger && topNavLinks) {
+  topHamburger.addEventListener('click', () => {
+    topHamburger.classList.toggle('open');
+    topNavLinks.classList.toggle('open');
+  });
+  topNavLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      topHamburger.classList.remove('open');
+      topNavLinks.classList.remove('open');
+    });
+  });
+}
+
+// Scroll reveal
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>

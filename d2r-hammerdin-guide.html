@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hammerdin Build Guide — Diablo 2 Resurrected Season 13 | Z3nGineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0808;--bg-card:#141010;--bg-el:#1c1616;--bg-hover:#241c1c;
+  --border:#2a1e1e;--border-light:#3a2828;
+  --text:#e8e0d8;--text-dim:#a09088;--text-muted:#685850;--white:#f5efe8;
+  --accent:#c44030;--accent-bright:#e04838;--accent-dim:rgba(196,64,48,0.12);
+  --gold:#c8a050;--gold-bright:#e0b860;--gold-dim:rgba(200,160,80,0.12);
+  --blue:#5090d0;--blue-dim:rgba(80,144,208,0.12);
+  --green:#58a048;--green-dim:rgba(88,160,72,0.10);
+  --purple:#9068c0;--purple-dim:rgba(144,104,192,0.10);
+  --ice:#60b8e8;--ice-dim:rgba(96,184,232,0.10);
+  --magic:#b898e0;--magic-dim:rgba(184,152,224,0.10);
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border-light) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:18px;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--accent);color:#fff}
+a{color:var(--gold);text-decoration:none}a:hover{color:var(--gold-bright);text-decoration:underline}
+
+/* ==================== UNIVERSAL TOP NAV ==================== */
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,8,8,0.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:60px}
+.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.top-nav-brand{font-family:'Cinzel',serif;font-size:0.85rem;font-weight:700;letter-spacing:0.12em;color:var(--white);text-decoration:none;transition:color 0.3s}
+.top-nav-brand:hover{color:var(--accent-bright);text-decoration:none}
+.top-nav-links{display:flex;gap:0;list-style:none;align-items:center;height:60px}
+.top-nav-links>li{position:relative;height:60px;display:flex;align-items:center}
+.top-nav-links>li>a{
+  font-family:'Source Sans 3',sans-serif;font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--text-muted);padding:0 1rem;height:60px;
+  display:flex;align-items:center;position:relative;
+  transition:color 0.2s,background 0.2s;text-decoration:none;
+}
+.top-nav-links>li>a:hover{color:var(--text);background:rgba(255,255,255,0.03);text-decoration:none}
+.top-nav-links>li>a.active{color:var(--accent-bright)}
+.top-nav-links>li>a::after{
+  content:'';position:absolute;bottom:0;left:1rem;right:1rem;height:2px;
+  background:var(--accent);transform:scaleX(0);transition:transform 0.2s;
+}
+.top-nav-links>li>a.active::after,.top-nav-links>li>a:hover::after{transform:scaleX(1)}
+
+/* Dropdown */
+.dropdown-trigger{cursor:pointer}
+.dropdown-trigger .dd-arrow{font-size:0.55rem;margin-left:0.3rem;transition:transform 0.2s}
+.dropdown-menu{
+  display:none;position:absolute;top:60px;right:0;min-width:200px;
+  background:rgba(14,10,10,0.97);backdrop-filter:blur(16px);
+  border:1px solid var(--border);border-radius:0 0 8px 8px;
+  padding:0.4rem 0;box-shadow:0 12px 32px rgba(0,0,0,0.5);z-index:1001;
+}
+.dropdown-menu a{
+  display:block;padding:0.5rem 1.25rem;font-size:0.82rem;font-weight:500;
+  color:var(--text-dim);text-decoration:none;transition:all 0.15s;
+}
+.dropdown-menu a:hover{color:var(--white);background:rgba(196,64,48,0.08);text-decoration:none}
+.top-nav-links>li:hover .dropdown-menu{display:block}
+.top-nav-links>li:hover .dd-arrow{transform:rotate(180deg)}
+
+/* Top nav hamburger */
+.top-nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.top-nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s;border-radius:1px}
+.top-nav-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.top-nav-toggle.open span:nth-child(2){opacity:0}
+.top-nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+@media(max-width:800px){
+  .top-nav-toggle{display:flex}
+  .top-nav-links{display:none;position:absolute;top:60px;left:0;right:0;flex-direction:column;height:auto;background:rgba(10,8,8,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0.5rem 0}
+  .top-nav-links.open{display:flex}
+  .top-nav-links>li{height:auto}
+  .top-nav-links>li>a{height:44px;padding:0 2rem}
+  .dropdown-menu{position:static;box-shadow:none;border:none;border-radius:0;padding-left:1rem;background:transparent}
+  .top-nav-links>li .dropdown-menu{display:none}
+  .top-nav-links>li.dd-open .dropdown-menu{display:block}
+}
+
+/* ==================== PAGE SUB-NAV ==================== */
+.sub-nav{position:sticky;top:60px;z-index:999;background:rgba(10,8,8,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.sub-nav::-webkit-scrollbar{display:none}
+.sub-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;padding:0 2rem;height:44px;gap:0}
+.sub-nav a{
+  font-size:0.72rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;
+  color:var(--text-muted);padding:0 0.85rem;height:44px;white-space:nowrap;
+  display:flex;align-items:center;position:relative;
+  transition:color 0.2s;text-decoration:none;flex-shrink:0;
+}
+.sub-nav a:hover{color:var(--text);text-decoration:none}
+.sub-nav a.active{color:var(--gold)}
+.sub-nav a::after{
+  content:'';position:absolute;bottom:0;left:0.85rem;right:0.85rem;height:2px;
+  background:var(--gold);transform:scaleX(0);transition:transform 0.2s;
+}
+.sub-nav a.active::after,.sub-nav a:hover::after{transform:scaleX(1)}
+
+/* ==================== LAYOUT ==================== */
+.page-wrap{max-width:960px;margin:0 auto;padding:0 2rem;padding-top:calc(60px + 44px)}
+
+/* ==================== HERO ==================== */
+.hero{padding:3rem 0 2rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{
+  content:'';position:absolute;top:-50px;left:50%;transform:translateX(-50%);
+  width:800px;height:800px;
+  background:radial-gradient(circle,rgba(196,64,48,0.08) 0%,rgba(196,64,48,0.02) 40%,transparent 70%);
+  pointer-events:none;
+}
+.hero-art{width:100%;margin-bottom:1.5rem;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:var(--bg-card)}
+.hero-svg{width:100%;height:auto;display:block}
+.breadcrumb{font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem}
+.breadcrumb a{color:var(--text-muted)}
+.breadcrumb a:hover{color:var(--gold)}
+.breadcrumb .sep{margin:0 0.35rem;opacity:0.5}
+.hero h1{font-family:'Cinzel',serif;font-size:clamp(2rem,5vw,2.8rem);font-weight:900;color:var(--white);line-height:1.15;margin-bottom:0.5rem;letter-spacing:0.04em}
+.hero-sub{font-size:1rem;color:var(--text-dim);font-weight:400;max-width:600px;margin:0 auto}
+.hero-tags{display:flex;gap:0.5rem;justify-content:center;margin-top:1.25rem;flex-wrap:wrap}
+.hero-tag{font-size:0.7rem;font-weight:600;padding:0.3rem 0.8rem;border-radius:20px;text-transform:uppercase;letter-spacing:0.06em}
+.hero-tag.crimson{color:var(--accent-bright);background:var(--accent-dim);border:1px solid rgba(196,64,48,0.25)}
+.hero-tag.gold{color:var(--gold);background:var(--gold-dim);border:1px solid rgba(200,160,80,0.25)}
+.hero-tag.magic{color:var(--magic);background:var(--magic-dim);border:1px solid rgba(184,152,224,0.25)}
+.hero-tag.green{color:var(--green);background:var(--green-dim);border:1px solid rgba(88,160,72,0.25)}
+
+/* ==================== SECTIONS ==================== */
+.section{margin-top:3.5rem;opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease}
+.section.visible{opacity:1;transform:translateY(0)}
+.section h2{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:800;color:var(--white);margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:2px solid var(--border)}
+.section h3{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;color:var(--text);margin:1.5rem 0 0.6rem}
+.section p{margin-bottom:1rem}
+
+/* ==================== CALLOUTS ==================== */
+.callout{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0}
+.callout.warn{border-left-color:#d05030}
+.callout.tip{border-left-color:var(--green)}
+.callout.gold{border-left-color:var(--gold)}
+.callout.magic{border-left-color:var(--magic)}
+.callout-label{font-family:'Cinzel',serif;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.25rem;color:var(--accent)}
+.callout.warn .callout-label{color:#d05030}
+.callout.tip .callout-label{color:var(--green)}
+.callout.gold .callout-label{color:var(--gold)}
+.callout.magic .callout-label{color:var(--magic)}
+.callout p{margin-bottom:0.4rem;font-size:0.92rem}.callout p:last-child{margin-bottom:0}
+
+/* ==================== STAT BOXES ==================== */
+.stat-row{display:flex;gap:0.5rem;flex-wrap:wrap;margin:0.75rem 0}
+.stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:0.5rem 0.75rem;text-align:center;min-width:4rem;flex:1}
+.stat-label{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted)}
+.stat-val{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:700;color:var(--white)}
+.stat-box.primary{border-color:rgba(196,64,48,0.4)}
+.stat-box.primary .stat-val{color:var(--accent-bright)}
+.stat-box.gold{border-color:rgba(200,160,80,0.4)}
+.stat-box.gold .stat-val{color:var(--gold)}
+
+/* ==================== SKILL TABLE ==================== */
+.skill-table{width:100%;border-collapse:collapse;margin:0.75rem 0}
+.skill-table th{font-family:'Cinzel',serif;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);text-align:left;padding:0.5rem 0.6rem;border-bottom:2px solid var(--border)}
+.skill-table td{padding:0.5rem 0.6rem;border-bottom:1px solid var(--border);font-size:0.9rem}
+.skill-table tr:hover{background:var(--bg-card)}
+.sk-name{font-weight:600;color:var(--white)}
+.sk-badge{font-size:0.65rem;font-weight:600;padding:0.12rem 0.4rem;border-radius:3px;text-transform:uppercase;display:inline-block}
+.sk-badge.max{color:var(--accent-bright);background:var(--accent-dim);border:1px solid rgba(196,64,48,0.2)}
+.sk-badge.synergy{color:var(--gold);background:var(--gold-dim);border:1px solid rgba(200,160,80,0.15)}
+.sk-badge.util{color:var(--text-dim);background:var(--bg-el);border:1px solid var(--border)}
+.sk-badge.core{color:var(--magic);background:var(--magic-dim);border:1px solid rgba(184,152,224,0.2)}
+
+/* ==================== FCR BREAKPOINT TABLE ==================== */
+.bp-table{width:100%;border-collapse:collapse;margin:0.75rem 0}
+.bp-table th{font-family:'Cinzel',serif;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);text-align:left;padding:0.5rem 0.75rem;border-bottom:2px solid var(--border)}
+.bp-table td{padding:0.5rem 0.75rem;border-bottom:1px solid var(--border);font-size:0.9rem}
+.bp-table tr:hover{background:var(--bg-card)}
+.bp-table .target{color:var(--gold);font-weight:700}
+.bp-table .optimal{background:rgba(200,160,80,0.06)}
+.bp-row-highlight{border-left:3px solid var(--gold)}
+
+/* ==================== GEAR GRID ==================== */
+.gear-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin:0.75rem 0}
+@media(max-width:600px){.gear-grid{grid-template-columns:1fr}}
+.gear-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:0.9rem 1rem;transition:border-color 0.15s}
+.gear-card:hover{border-color:var(--border-light)}
+.gear-slot{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:0.2rem}
+.gear-item{font-weight:700;color:var(--gold);font-size:0.95rem}
+.gear-item.unique{color:var(--gold)}
+.gear-item.runeword{color:var(--accent-bright)}
+.gear-item.set{color:var(--green)}
+.gear-item.rare{color:#e8d040}
+.gear-item.magic-i{color:var(--magic)}
+.gear-notes{color:var(--text-dim);font-size:0.82rem;margin-top:0.15rem}
+.gear-alt{font-size:0.78rem;color:var(--text-muted);margin-top:0.3rem;font-style:italic}
+
+/* ==================== LEVEL CARDS (Progression) ==================== */
+.lv-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:0.4rem;overflow:hidden;transition:border-color 0.15s}
+.lv-card:hover{border-color:var(--border-light)}
+.lv-card.spike{border-left:3px solid var(--gold)}
+.lv-head{display:flex;align-items:center;gap:0.6rem;padding:0.65rem 1rem;cursor:pointer;user-select:none;transition:background 0.1s;flex-wrap:wrap}
+.lv-head:hover{background:var(--bg-hover)}
+.lv-range{font-family:'Cinzel',serif;font-weight:900;font-size:0.72rem;padding:0.15rem 0.5rem;border-radius:4px;color:var(--gold);background:var(--gold-dim);border:1px solid rgba(200,160,80,0.2);text-transform:uppercase;letter-spacing:0.04em}
+.lv-title{font-weight:600;font-size:0.95rem;color:var(--text);flex:1}
+.lv-spike{font-size:0.65rem;font-weight:600;color:var(--accent-bright);background:var(--accent-dim);padding:0.15rem 0.45rem;border-radius:4px;border:1px solid rgba(196,64,48,0.2);text-transform:uppercase}
+.lv-arrow{color:var(--text-muted);font-size:0.75rem;transition:transform 0.2s}
+.lv-card.open .lv-arrow{transform:rotate(90deg)}
+.lv-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
+.lv-card.open .lv-body{max-height:2000px}
+.lv-inner{padding:0 1rem 1rem;border-top:1px solid var(--border)}
+.lv-inner p{margin-top:0.75rem;font-size:0.92rem}
+.lv-inner h4{font-family:'Cinzel',serif;font-size:0.88rem;font-weight:700;color:var(--gold);margin-top:0.75rem}
+
+/* Quick pick pills */
+.qp-row{display:flex;flex-wrap:wrap;gap:0.3rem;margin:0.75rem 0 0.5rem}
+.qp{font-size:0.75rem;font-weight:500;padding:0.2rem 0.6rem;border-radius:4px;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim)}
+.qp.skill{color:var(--accent-bright);border-color:rgba(196,64,48,0.2)}
+.qp.gear{color:var(--gold);border-color:rgba(200,160,80,0.2)}
+.qp.aura{color:var(--magic);border-color:rgba(184,152,224,0.2)}
+
+/* ==================== MERC CARD ==================== */
+.merc-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin:0.75rem 0}
+.merc-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--gold);margin-bottom:0.5rem}
+.merc-detail{font-size:0.9rem;color:var(--text-dim);margin-bottom:0.3rem}
+.merc-detail strong{color:var(--white);font-weight:600}
+
+/* ==================== PLAYSTYLE STEPS ==================== */
+.step-list{list-style:none;counter-reset:step;margin:0.75rem 0}
+.step-list li{position:relative;padding:0.6rem 0 0.6rem 2.5rem;border-left:2px solid var(--border);margin-left:0.75rem;counter-increment:step;font-size:0.95rem}
+.step-list li::before{
+  content:counter(step);position:absolute;left:-0.75rem;top:0.5rem;
+  width:1.3rem;height:1.3rem;background:var(--bg);border:2px solid var(--accent);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel',serif;font-weight:700;font-size:0.7rem;color:var(--accent)
+}
+.step-list li:last-child{border-left-color:transparent}
+.step-action{font-weight:600;color:var(--white)}
+.step-detail{color:var(--text-dim);font-size:0.88rem;margin-top:0.15rem}
+
+/* ==================== FARMING GRID ==================== */
+.farm-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin:0.75rem 0}
+@media(max-width:600px){.farm-grid{grid-template-columns:1fr}}
+.farm-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:0.9rem 1rem}
+.farm-card:hover{border-color:var(--border-light)}
+.farm-name{font-family:'Cinzel',serif;font-weight:700;font-size:0.95rem;color:var(--gold);margin-bottom:0.25rem}
+.farm-desc{font-size:0.85rem;color:var(--text-dim)}
+.farm-tag{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;padding:0.12rem 0.4rem;border-radius:3px;display:inline-block;margin-bottom:0.35rem}
+.farm-tag.best{color:var(--accent-bright);background:var(--accent-dim);border:1px solid rgba(196,64,48,0.2)}
+.farm-tag.great{color:var(--gold);background:var(--gold-dim);border:1px solid rgba(200,160,80,0.15)}
+.farm-tag.good{color:var(--green);background:var(--green-dim);border:1px solid rgba(88,160,72,0.15)}
+
+/* ==================== SEASON CARD ==================== */
+.season-card{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:8px;padding:1.5rem 1.75rem;margin:1.5rem 0}
+.season-card h3{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;color:var(--accent-bright);margin:0 0 0.75rem;padding:0}
+.season-card ul{list-style:none;padding:0}
+.season-card li{padding:0.3rem 0;font-size:0.92rem;color:var(--text-dim);display:flex;align-items:baseline;gap:0.5rem}
+.season-card li::before{content:'\25C6';color:var(--accent);font-size:0.55rem;flex-shrink:0;margin-top:0.15rem}
+
+/* ==================== FOOTER ==================== */
+.guide-footer{margin-top:3rem;padding:1.5rem 0;border-top:1px solid var(--border);text-align:center}
+.guide-footer p{font-size:0.78rem;color:var(--text-muted);margin-bottom:0.3rem}
+.guide-footer a{color:var(--text-muted)}
+.guide-footer a:hover{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<!-- ==================== UNIVERSAL TOP NAV ==================== -->
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="top-nav-brand">Z3nGineer</a>
+    <button class="top-nav-toggle" id="topNavToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="top-nav-links" id="topNavLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li class="dropdown-trigger">
+        <a href="#">Pages <span class="dd-arrow">&#9662;</span></a>
+        <div class="dropdown-menu">
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+          <a href="index.html#projects">CrockedNLoaded</a>
+          <a href="guides.html" class="active">Game Guides</a>
+          <a href="CHIM.html">CHIM Modpack</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ==================== PAGE SUB-NAV ==================== -->
+<nav class="sub-nav">
+  <div class="sub-nav-inner">
+    <a href="#overview">Overview</a>
+    <a href="#skills">Skills</a>
+    <a href="#stats">Stats</a>
+    <a href="#progression">Progression</a>
+    <a href="#fcr">FCR</a>
+    <a href="#gear-budget">Budget Gear</a>
+    <a href="#gear-bis">BiS Gear</a>
+    <a href="#season13">Season 13</a>
+    <a href="#mercenary">Mercenary</a>
+    <a href="#playstyle">Playstyle</a>
+    <a href="#farming">Farming</a>
+    <a href="#tips">Tips</a>
+  </div>
+</nav>
+
+<!-- ==================== CONTENT ==================== -->
+<div class="page-wrap">
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+
+  <div class="hero-art">
+    <svg viewBox="0 0 960 320" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+      <defs>
+        <!-- Background cathedral glow -->
+        <radialGradient id="cathedralGlow" cx="50%" cy="45%" r="65%">
+          <stop offset="0%" stop-color="#3a2010" stop-opacity="0.7"/>
+          <stop offset="40%" stop-color="#1a0c06" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#0a0808" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Concentration aura glow -->
+        <radialGradient id="auraGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#c8a050" stop-opacity="0.35"/>
+          <stop offset="50%" stop-color="#c8a050" stop-opacity="0.1"/>
+          <stop offset="100%" stop-color="#c8a050" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Enigma armor shimmer -->
+        <radialGradient id="enigmaGlow" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#8080e0" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#8080e0" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Hammer gold gradient -->
+        <linearGradient id="hammerGold" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f0d070" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#c8a050" stop-opacity="0.6"/>
+        </linearGradient>
+        <!-- Hammer glow -->
+        <radialGradient id="hammerAura" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#f0d070" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#f0d070" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Fire for cathedral -->
+        <radialGradient id="fireLight" cx="50%" cy="100%" r="50%">
+          <stop offset="0%" stop-color="#d05030" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#d05030" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <!-- Background -->
+      <rect width="960" height="320" fill="var(--bg)"/>
+      <rect width="960" height="320" fill="url(#cathedralGlow)"/>
+
+      <!-- Cathedral backdrop — arched columns -->
+      <g opacity="0.18">
+        <!-- Left pillar -->
+        <rect x="100" y="30" width="18" height="260" fill="#4a3828" rx="3"/>
+        <rect x="103" y="30" width="4" height="260" fill="#5a4838" opacity="0.5"/>
+        <!-- Left arch -->
+        <path d="M100,30 Q160,-20 220,30" stroke="#4a3828" stroke-width="8" fill="none"/>
+        <!-- Center pillar -->
+        <rect x="220" y="30" width="18" height="260" fill="#4a3828" rx="3"/>
+        <!-- Center arch -->
+        <path d="M220,30 Q330,-30 440,30" stroke="#4a3828" stroke-width="8" fill="none"/>
+        <!-- Right-center pillar -->
+        <rect x="440" y="30" width="18" height="260" fill="#4a3828" rx="3"/>
+        <!-- Right arch -->
+        <path d="M440,30 Q550,-30 660,30" stroke="#4a3828" stroke-width="8" fill="none"/>
+        <!-- Right pillar -->
+        <rect x="660" y="30" width="18" height="260" fill="#4a3828" rx="3"/>
+        <!-- Far right arch -->
+        <path d="M660,30 Q720,-20 780,30" stroke="#4a3828" stroke-width="8" fill="none"/>
+        <rect x="780" y="30" width="18" height="260" fill="#4a3828" rx="3"/>
+        <!-- Rose window -->
+        <circle cx="330" cy="15" r="25" fill="none" stroke="#5a3828" stroke-width="2"/>
+        <circle cx="330" cy="15" r="18" fill="none" stroke="#5a3828" stroke-width="1"/>
+        <circle cx="330" cy="15" r="8" fill="#6a3020" opacity="0.3"/>
+        <!-- Cross beams -->
+        <line x1="330" y1="-10" x2="330" y2="40" stroke="#5a3828" stroke-width="1"/>
+        <line x1="305" y1="15" x2="355" y2="15" stroke="#5a3828" stroke-width="1"/>
+      </g>
+
+      <!-- Floor tiles -->
+      <g opacity="0.08">
+        <line x1="0" y1="290" x2="960" y2="290" stroke="#6a5838" stroke-width="1"/>
+        <line x1="200" y1="290" x2="300" y2="320" stroke="#6a5838" stroke-width="0.5"/>
+        <line x1="400" y1="290" x2="450" y2="320" stroke="#6a5838" stroke-width="0.5"/>
+        <line x1="560" y1="290" x2="610" y2="320" stroke="#6a5838" stroke-width="0.5"/>
+        <line x1="720" y1="290" x2="770" y2="320" stroke="#6a5838" stroke-width="0.5"/>
+      </g>
+
+      <!-- Enemy 1 — left, being struck by hammer, recoiling -->
+      <g transform="translate(200,220)" opacity="0.75">
+        <!-- Demon body staggering -->
+        <ellipse cx="0" cy="15" rx="22" ry="30" fill="#4a2020" transform="rotate(-15)"/>
+        <circle cx="-5" cy="-18" r="13" fill="#4a2020"/>
+        <!-- Horns -->
+        <path d="M-12,-28 Q-18,-42 -22,-46" stroke="#5a3028" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M5,-28 Q10,-40 15,-44" stroke="#5a3028" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Eyes pained -->
+        <ellipse cx="-8" cy="-20" rx="2" ry="1.5" fill="#c04030" opacity="0.7"/>
+        <ellipse cx="0" cy="-19" rx="2" ry="1.5" fill="#c04030" opacity="0.7"/>
+        <!-- Arms flailing -->
+        <line x1="-18" y1="0" x2="-38" y2="-12" stroke="#4a2020" stroke-width="5" stroke-linecap="round"/>
+        <line x1="12" y1="5" x2="28" y2="-8" stroke="#4a2020" stroke-width="5" stroke-linecap="round"/>
+        <!-- Legs -->
+        <line x1="-8" y1="38" x2="-18" y2="60" stroke="#4a2020" stroke-width="5" stroke-linecap="round"/>
+        <line x1="5" y1="40" x2="15" y2="62" stroke="#4a2020" stroke-width="5" stroke-linecap="round"/>
+        <!-- Impact flash -->
+        <circle cx="20" cy="-5" r="12" fill="#f0d070" opacity="0.15"/>
+        <circle cx="20" cy="-5" r="6" fill="#f0d070" opacity="0.25"/>
+      </g>
+
+      <!-- Enemy 2 — right, crumpling -->
+      <g transform="translate(730,225)" opacity="0.7">
+        <ellipse cx="0" cy="12" rx="20" ry="28" fill="#3a2828" transform="rotate(10)"/>
+        <circle cx="6" cy="-15" r="12" fill="#3a2828"/>
+        <!-- Horns -->
+        <path d="M0,-25 Q-8,-38 -12,-42" stroke="#4a3020" stroke-width="2" stroke-linecap="round"/>
+        <path d="M14,-24 Q20,-36 24,-40" stroke="#4a3020" stroke-width="2" stroke-linecap="round"/>
+        <!-- Arms drooping -->
+        <line x1="-15" y1="2" x2="-28" y2="18" stroke="#3a2828" stroke-width="5" stroke-linecap="round"/>
+        <line x1="15" y1="5" x2="30" y2="15" stroke="#3a2828" stroke-width="5" stroke-linecap="round"/>
+        <!-- Legs collapsing -->
+        <line x1="-6" y1="35" x2="-12" y2="55" stroke="#3a2828" stroke-width="5" stroke-linecap="round"/>
+        <line x1="6" y1="36" x2="14" y2="58" stroke="#3a2828" stroke-width="5" stroke-linecap="round"/>
+        <!-- Shadow pool -->
+        <ellipse cx="5" cy="60" rx="22" ry="6" fill="#1a0808" opacity="0.4"/>
+      </g>
+
+      <!-- Enemy 3 — far left, fallen -->
+      <g transform="translate(90,265)" opacity="0.5">
+        <ellipse cx="0" cy="0" rx="25" ry="10" fill="#3a2020"/>
+        <circle cx="-20" cy="2" r="8" fill="#3a2020"/>
+        <line x1="18" y1="-4" x2="32" y2="-8" stroke="#3a2020" stroke-width="4" stroke-linecap="round"/>
+        <ellipse cx="2" cy="8" rx="16" ry="4" fill="#1a0808" opacity="0.35"/>
+      </g>
+
+      <!-- ===== CONCENTRATION AURA — large golden circle around paladin ===== -->
+      <circle cx="480" cy="175" r="120" fill="url(#auraGlow)"/>
+      <circle cx="480" cy="175" r="100" stroke="#c8a050" stroke-width="0.8" fill="none" opacity="0.12">
+        <animate attributeName="r" values="95;105;95" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.12;0.06;0.12" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="480" cy="175" r="80" stroke="#c8a050" stroke-width="0.5" fill="none" opacity="0.08">
+        <animate attributeName="r" values="75;85;75" dur="2.5s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- ===== BLESSED HAMMERS — golden spiral pattern ===== -->
+
+      <!-- Hammer 1 — close orbit, 0deg -->
+      <g opacity="0.95">
+        <circle cx="520" cy="130" r="18" fill="url(#hammerAura)"/>
+        <rect x="513" y="125" width="14" height="10" rx="2" fill="url(#hammerGold)" transform="rotate(15,520,130)"/>
+        <line x1="520" y1="130" x2="520" y2="142" stroke="#c8a050" stroke-width="2" stroke-linecap="round" transform="rotate(15,520,130)"/>
+        <animateTransform attributeName="transform" type="rotate" values="0 480 175;360 480 175" dur="2s" repeatCount="indefinite"/>
+      </g>
+
+      <!-- Hammer 2 — mid orbit, 90deg -->
+      <g opacity="0.9">
+        <circle cx="480" cy="115" r="22" fill="url(#hammerAura)"/>
+        <rect x="473" y="110" width="14" height="10" rx="2" fill="url(#hammerGold)" transform="rotate(-30,480,115)"/>
+        <line x1="480" y1="115" x2="480" y2="127" stroke="#c8a050" stroke-width="2" stroke-linecap="round" transform="rotate(-30,480,115)"/>
+        <animateTransform attributeName="transform" type="rotate" values="90 480 175;450 480 175" dur="2.2s" repeatCount="indefinite"/>
+      </g>
+
+      <!-- Hammer 3 — wide orbit, 180deg -->
+      <g opacity="0.85">
+        <circle cx="420" cy="175" r="20" fill="url(#hammerAura)"/>
+        <rect x="413" y="170" width="14" height="10" rx="2" fill="url(#hammerGold)" transform="rotate(45,420,175)"/>
+        <line x1="420" y1="175" x2="420" y2="187" stroke="#c8a050" stroke-width="2" stroke-linecap="round" transform="rotate(45,420,175)"/>
+        <animateTransform attributeName="transform" type="rotate" values="180 480 175;540 480 175" dur="2.5s" repeatCount="indefinite"/>
+      </g>
+
+      <!-- Hammer 4 — outer orbit, 270deg -->
+      <g opacity="0.75">
+        <circle cx="540" cy="210" r="24" fill="url(#hammerAura)"/>
+        <rect x="533" y="205" width="14" height="10" rx="2" fill="url(#hammerGold)" transform="rotate(-60,540,210)"/>
+        <line x1="540" y1="210" x2="540" y2="222" stroke="#c8a050" stroke-width="2" stroke-linecap="round" transform="rotate(-60,540,210)"/>
+        <animateTransform attributeName="transform" type="rotate" values="270 480 175;630 480 175" dur="2.8s" repeatCount="indefinite"/>
+      </g>
+
+      <!-- Hammer 5 — widest orbit, 45deg -->
+      <g opacity="0.6">
+        <circle cx="560" cy="120" r="20" fill="url(#hammerAura)"/>
+        <rect x="553" y="115" width="14" height="10" rx="2" fill="url(#hammerGold)" transform="rotate(20,560,120)"/>
+        <line x1="560" y1="120" x2="560" y2="132" stroke="#c8a050" stroke-width="2" stroke-linecap="round" transform="rotate(20,560,120)"/>
+        <animateTransform attributeName="transform" type="rotate" values="45 480 175;405 480 175" dur="3.2s" repeatCount="indefinite"/>
+      </g>
+
+      <!-- Hammer 6 — outermost orbit reaching enemies -->
+      <g opacity="0.5">
+        <circle cx="380" cy="140" r="18" fill="url(#hammerAura)"/>
+        <rect x="373" y="135" width="14" height="10" rx="2" fill="url(#hammerGold)"/>
+        <line x1="380" y1="140" x2="380" y2="152" stroke="#c8a050" stroke-width="2" stroke-linecap="round"/>
+        <animateTransform attributeName="transform" type="rotate" values="135 480 175;495 480 175" dur="3.5s" repeatCount="indefinite"/>
+      </g>
+
+      <!-- Spiral trail lines (golden) -->
+      <g opacity="0.1">
+        <path d="M480,175 Q500,155 520,130 Q545,100 560,80" stroke="#f0d070" stroke-width="1.5" fill="none"/>
+        <path d="M480,175 Q460,155 430,145 Q400,135 370,130" stroke="#f0d070" stroke-width="1.5" fill="none"/>
+        <path d="M480,175 Q500,195 530,210 Q560,225 590,235" stroke="#f0d070" stroke-width="1.5" fill="none"/>
+        <path d="M480,175 Q460,195 440,215 Q420,235 395,250" stroke="#f0d070" stroke-width="1.5" fill="none"/>
+      </g>
+
+      <!-- ===== THE PALADIN — center, arms raised, casting ===== -->
+      <g transform="translate(480,175)" opacity="0.95">
+        <!-- Enigma armor glow -->
+        <circle cx="0" cy="0" r="50" fill="url(#enigmaGlow)"/>
+
+        <!-- Cape flowing behind -->
+        <path d="M-10,0 Q-15,20 -22,45 Q-28,70 -40,88 Q-45,92 -38,85 Q-25,65 -18,40 Q-12,20 -10,0Z" fill="#3a2848" opacity="0.7"/>
+        <path d="M10,0 Q12,22 8,48 Q4,72 -5,90 Q-10,94 -2,86 Q8,68 12,42 Q14,20 10,0Z" fill="#2a1838" opacity="0.5"/>
+
+        <!-- Body — Enigma runeword plate armor -->
+        <ellipse cx="0" cy="22" rx="20" ry="30" fill="#58506a"/>
+        <!-- Chest plate with runic shimmer -->
+        <ellipse cx="0" cy="16" rx="16" ry="22" fill="#686080" opacity="0.6"/>
+        <!-- Enigma rune markings -->
+        <text x="-6" y="12" font-family="serif" font-size="6" fill="#a090c0" opacity="0.35">Jah</text>
+        <text x="-6" y="22" font-family="serif" font-size="6" fill="#a090c0" opacity="0.3">Ith</text>
+        <text x="-6" y="32" font-family="serif" font-size="6" fill="#a090c0" opacity="0.25">Ber</text>
+        <!-- Armor detail -->
+        <line x1="-10" y1="6" x2="-10" y2="35" stroke="#7a6890" stroke-width="0.7" opacity="0.4"/>
+        <line x1="10" y1="6" x2="10" y2="35" stroke="#7a6890" stroke-width="0.7" opacity="0.4"/>
+        <!-- Belt — Arachnid Mesh -->
+        <rect x="-15" y="36" width="30" height="5" rx="2" fill="#4a6040" opacity="0.8"/>
+        <circle cx="-6" cy="38.5" r="1" fill="#80c060" opacity="0.4"/>
+        <circle cx="0" cy="38.5" r="1.5" fill="#80c060" opacity="0.5"/>
+        <circle cx="6" cy="38.5" r="1" fill="#80c060" opacity="0.4"/>
+
+        <!-- Head — Shako (War Hat) -->
+        <circle cx="0" cy="-12" r="12" fill="#4a6048"/>
+        <!-- Visor/face -->
+        <rect x="-7" y="-15" width="14" height="4" rx="1" fill="#0a0a0a"/>
+        <!-- Glowing eyes -->
+        <ellipse cx="-3" cy="-13.5" rx="2.5" ry="1.3" fill="#c8a050" opacity="0.9"/>
+        <ellipse cx="4" cy="-13.5" rx="2.5" ry="1.3" fill="#c8a050" opacity="0.9"/>
+        <!-- Shako brim -->
+        <ellipse cx="0" cy="-20" rx="15" ry="5" fill="#3a5038"/>
+        <!-- Shako dome -->
+        <path d="M-13,-22 Q-8,-38 0,-42 Q8,-38 13,-22" fill="#3a5038"/>
+        <!-- Green tint detail -->
+        <path d="M-8,-35 Q0,-40 8,-35" stroke="#5a8050" stroke-width="0.8" fill="none" opacity="0.3"/>
+
+        <!-- Legs — standing firm -->
+        <line x1="-7" y1="46" x2="-14" y2="80" stroke="#58506a" stroke-width="8" stroke-linecap="round"/>
+        <line x1="7" y1="46" x2="16" y2="78" stroke="#58506a" stroke-width="8" stroke-linecap="round"/>
+        <!-- Boots — War Traveler -->
+        <ellipse cx="-15" cy="82" rx="7" ry="4" fill="#6a5840"/>
+        <ellipse cx="17" cy="80" rx="7" ry="4" fill="#6a5840"/>
+
+        <!-- LEFT ARM raised — holding HOTO (Heart of the Oak flail) -->
+        <line x1="-14" y1="8" x2="-35" y2="-25" stroke="#58506a" stroke-width="6" stroke-linecap="round"/>
+        <!-- Gauntlet — Magefist -->
+        <circle cx="-37" cy="-27" r="4" fill="#8a4030"/>
+        <circle cx="-37" cy="-27" r="6" fill="#d05030" opacity="0.1"/>
+        <!-- HOTO flail -->
+        <line x1="-37" y1="-30" x2="-37" y2="-55" stroke="#8a7050" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Flail head — oak leaf motif -->
+        <circle cx="-37" cy="-58" r="5" fill="#6a8040" opacity="0.7"/>
+        <circle cx="-37" cy="-58" r="3" fill="#8aa050" opacity="0.5"/>
+        <circle cx="-37" cy="-58" r="8" fill="#c8a050" opacity="0.1"/>
+        <!-- Oak tendrils -->
+        <path d="M-37,-58 Q-44,-62 -42,-68" stroke="#6a8040" stroke-width="1" opacity="0.4" fill="none"/>
+        <path d="M-37,-58 Q-30,-64 -32,-70" stroke="#6a8040" stroke-width="1" opacity="0.4" fill="none"/>
+
+        <!-- RIGHT ARM — holding Spirit shield -->
+        <line x1="14" y1="8" x2="32" y2="-10" stroke="#58506a" stroke-width="6" stroke-linecap="round"/>
+        <!-- Shield — Spirit Monarch -->
+        <rect x="30" y="-28" width="22" height="28" rx="3" fill="#4a5a6a" transform="rotate(10,41,-14)"/>
+        <rect x="33" y="-25" width="16" height="22" rx="2" fill="#5a6a7a" opacity="0.5" transform="rotate(10,41,-14)"/>
+        <!-- Spirit rune glow -->
+        <circle cx="41" cy="-14" r="6" fill="#90a8c8" opacity="0.2"/>
+        <text x="36" y="-12" font-family="serif" font-size="5" fill="#90b0d0" opacity="0.4" transform="rotate(10,41,-14)">Tal</text>
+        <!-- Spirit shimmer -->
+        <circle cx="41" cy="-14" r="10" fill="#6080b0" opacity="0.08">
+          <animate attributeName="opacity" values="0.08;0.15;0.08" dur="2s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Paladin shadow -->
+        <ellipse cx="2" cy="86" rx="28" ry="7" fill="#0a0808" opacity="0.5"/>
+      </g>
+
+      <!-- Floating golden sparkles around the scene -->
+      <g>
+        <circle cx="350" cy="100" r="1.5" fill="#f0d070" opacity="0.4">
+          <animate attributeName="opacity" values="0.4;0.1;0.4" dur="1.5s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="600" cy="90" r="1" fill="#f0d070" opacity="0.3">
+          <animate attributeName="opacity" values="0.3;0.05;0.3" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="420" cy="80" r="1.2" fill="#f0d070" opacity="0.35">
+          <animate attributeName="opacity" values="0.35;0.1;0.35" dur="1.8s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="550" cy="260" r="1" fill="#f0d070" opacity="0.25">
+          <animate attributeName="opacity" values="0.25;0.05;0.25" dur="2.2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="310" cy="200" r="0.8" fill="#f0d070" opacity="0.2">
+          <animate attributeName="opacity" values="0.2;0.05;0.2" dur="1.6s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="650" cy="150" r="1.3" fill="#f0d070" opacity="0.3">
+          <animate attributeName="opacity" values="0.3;0.08;0.3" dur="2.5s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+
+      <!-- Subtle Chaos Sanctuary pentagram in background -->
+      <g transform="translate(820,80)" opacity="0.06">
+        <circle cx="0" cy="0" r="30" fill="none" stroke="#c04030" stroke-width="1"/>
+        <polygon points="0,-30 17.6,24.3 -28.5,-9.3 28.5,-9.3 -17.6,24.3" fill="none" stroke="#c04030" stroke-width="0.8"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="breadcrumb">
+    <a href="guides.html">Diablo 2 Resurrected</a>
+    <span class="sep">&#8250;</span>
+    <a href="d2r-builds.html">Season 13</a>
+    <span class="sep">&#8250;</span>
+    Hammerdin
+  </div>
+  <h1>Blessed Hammer Paladin</h1>
+  <p class="hero-sub">The eternal S-tier build. Magic damage annihilates nearly everything in the game. Concentration aura, Enigma teleport, and spinning golden hammers that never go out of style.</p>
+  <div class="hero-tags">
+    <span class="hero-tag crimson">Season 13</span>
+    <span class="hero-tag gold">S-Tier</span>
+    <span class="hero-tag magic">Magic Damage</span>
+    <span class="hero-tag green">Beginner Friendly</span>
+  </div>
+</section>
+
+<!-- ==================== OVERVIEW ==================== -->
+<section class="section" id="overview">
+  <h2>Overview</h2>
+
+  <p>The Hammerdin is the most iconic Paladin build in Diablo 2 history and has been the dominant PvE build across nearly every patch since 1.10. <strong>Blessed Hammer</strong> deals pure magic damage, which almost nothing in the game is immune to -- only a handful of monsters across all three difficulties (specifically some undead in Act 2 and the Uber bosses). This means the Hammerdin can clear every area in the game without needing a secondary element or an Infinity runeword to break immunities.</p>
+
+  <p>The core engine is simple: <strong>Concentration</strong> aura passively multiplies your Blessed Hammer damage, while <strong>Vigor</strong> and <strong>Blessed Aim</strong> provide massive synergy bonuses. Once you acquire <strong>Enigma</strong> runeword armor, you gain Teleport -- the single most powerful utility skill in the game -- allowing you to reposition instantly into dense packs, drop hammers, and move on. This combination of universal damage, safety through mobility, and absurd clear speed makes the Hammerdin consistently the strongest all-around build in the game.</p>
+
+  <div class="stat-row">
+    <div class="stat-box primary">
+      <div class="stat-label">Tier</div>
+      <div class="stat-val">S</div>
+    </div>
+    <div class="stat-box gold">
+      <div class="stat-label">Damage</div>
+      <div class="stat-val">18-20k</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Clear Speed</div>
+      <div class="stat-val">10/10</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Survivability</div>
+      <div class="stat-val">9/10</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Immunities</div>
+      <div class="stat-val">~0</div>
+    </div>
+  </div>
+
+  <div class="callout gold">
+    <div class="callout-label">Why Hammerdin Is Eternal</div>
+    <p>Magic damage immunity is the rarest immunity type in the game. Lightning Sorceresses need Infinity. Cold Sorceresses skip half of Hell. Hammerdins just kill everything. No other build combines this level of universal damage with max block, high life, Teleport, and 125% FCR casting speed.</p>
+  </div>
+</section>
+
+<!-- ==================== SKILLS ==================== -->
+<section class="section" id="skills">
+  <h2>Skill Allocation</h2>
+
+  <p>The Hammerdin skill tree is clean and efficient. You max four skills (one primary, one aura, two synergies) and spend remaining points on utility. Total skill points at level 90: ~101 (including quest rewards).</p>
+
+  <table class="skill-table">
+    <thead>
+      <tr><th>Skill</th><th>Tree</th><th>Points</th><th>Priority</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="sk-name">Blessed Hammer</span></td>
+        <td>Combat</td>
+        <td>20</td>
+        <td><span class="sk-badge max">Max</span></td>
+        <td>Your entire damage source. Magic damage hammers spiral outward from your character. Max this first.</td>
+      </tr>
+      <tr>
+        <td><span class="sk-name">Concentration</span></td>
+        <td>Offensive Aura</td>
+        <td>20</td>
+        <td><span class="sk-badge max">Max</span></td>
+        <td>Your active aura. Adds massive % enhanced damage to Blessed Hammer. Keep this on at all times.</td>
+      </tr>
+      <tr>
+        <td><span class="sk-name">Vigor</span></td>
+        <td>Defensive Aura</td>
+        <td>20</td>
+        <td><span class="sk-badge synergy">Synergy</span></td>
+        <td>+14% magic damage to Blessed Hammer per hard point. Also increases run/walk speed when active.</td>
+      </tr>
+      <tr>
+        <td><span class="sk-name">Blessed Aim</span></td>
+        <td>Offensive Aura</td>
+        <td>20</td>
+        <td><span class="sk-badge synergy">Synergy</span></td>
+        <td>+14% magic damage to Blessed Hammer per hard point. Pure synergy -- you never activate this aura.</td>
+      </tr>
+      <tr>
+        <td><span class="sk-name">Holy Shield</span></td>
+        <td>Combat</td>
+        <td>1+</td>
+        <td><span class="sk-badge core">Core</span></td>
+        <td>Massive block chance boost + defense. 1 hard point + gear bonuses is usually enough. Dump leftover points here.</td>
+      </tr>
+      <tr>
+        <td><span class="sk-name">Smite</span></td>
+        <td>Combat</td>
+        <td>1</td>
+        <td><span class="sk-badge util">1-Pt</span></td>
+        <td>Prerequisite. Also useful for Uber Tristram (always hits, cannot be blocked).</td>
+      </tr>
+      <tr>
+        <td><span class="sk-name">Charge</span></td>
+        <td>Combat</td>
+        <td>1</td>
+        <td><span class="sk-badge util">1-Pt</span></td>
+        <td>Prerequisite. Gap-closer before you get Enigma. Occasionally useful for Baal wave repositioning.</td>
+      </tr>
+      <tr>
+        <td><span class="sk-name">Holy Bolt</span></td>
+        <td>Combat</td>
+        <td>1</td>
+        <td><span class="sk-badge util">1-Pt</span></td>
+        <td>Prerequisite for Blessed Hammer. Can heal your mercenary in a pinch.</td>
+      </tr>
+      <tr>
+        <td><span class="sk-name">Cleansing</span></td>
+        <td>Defensive Aura</td>
+        <td>1</td>
+        <td><span class="sk-badge util">1-Pt</span></td>
+        <td>Prerequisite for Vigor. Swap to this briefly to remove poison/curses, then switch back to Concentration.</td>
+      </tr>
+      <tr>
+        <td><span class="sk-name">Redemption</span></td>
+        <td>Defensive Aura</td>
+        <td>1</td>
+        <td><span class="sk-badge util">1-Pt</span></td>
+        <td>Toggle briefly after clearing a pack to absorb corpses for life/mana. Prevents monster revival.</td>
+      </tr>
+      <tr>
+        <td><span class="sk-name">Salvation</span></td>
+        <td>Defensive Aura</td>
+        <td>1</td>
+        <td><span class="sk-badge util">1-Pt</span></td>
+        <td>Prerequisite. Useful against Conviction aura enemies (Uber Mephisto).</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <div class="callout-label">Skill Point Priority Order</div>
+    <p><strong>Blessed Hammer 20</strong> (rush this first) &rarr; <strong>Concentration 20</strong> &rarr; <strong>Vigor 20</strong> &rarr; <strong>Blessed Aim 20</strong> &rarr; <strong>Holy Shield</strong> (dump rest). Get all 1-point wonders along the way as you need them for prerequisites.</p>
+  </div>
+</section>
+
+<!-- ==================== STATS ==================== -->
+<section class="section" id="stats">
+  <h2>Stat Allocation</h2>
+
+  <p>The Hammerdin stat spread follows the standard caster template: just enough Strength and Dexterity for gear and max block, then everything else into Vitality. Energy is never touched.</p>
+
+  <div class="stat-row">
+    <div class="stat-box primary">
+      <div class="stat-label">Strength</div>
+      <div class="stat-val">156</div>
+    </div>
+    <div class="stat-box gold">
+      <div class="stat-label">Dexterity</div>
+      <div class="stat-val">Max Block</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Vitality</div>
+      <div class="stat-val">All Rest</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Energy</div>
+      <div class="stat-val">Base</div>
+    </div>
+  </div>
+
+  <table class="skill-table">
+    <thead>
+      <tr><th>Stat</th><th>Target</th><th>Why</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="sk-name">Strength</span></td>
+        <td>~156 (after gear)</td>
+        <td>Required for Monarch shield (Spirit). Factor in +STR from Enigma (+74), Torch, Anni, etc. Base STR needed is often only 75-90.</td>
+      </tr>
+      <tr>
+        <td><span class="sk-name">Dexterity</span></td>
+        <td>75% block</td>
+        <td>With Holy Shield active, you need ~120-136 DEX (depending on level and +skills) to reach 75% max block with a Paladin shield. This is non-negotiable for survivability.</td>
+      </tr>
+      <tr>
+        <td><span class="sk-name">Vitality</span></td>
+        <td>Everything else</td>
+        <td>Every remaining point goes here. With Enigma, Shako, and CTA Battle Orders, you should reach 2500-3500+ life.</td>
+      </tr>
+      <tr>
+        <td><span class="sk-name">Energy</span></td>
+        <td>Base (15)</td>
+        <td>Never put points here. Between Insight on mercenary, Redemption aura, and mana potions, you will never have mana issues.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    <div class="callout-label">Max Block Warning</div>
+    <p>Do NOT skip max block. Many players try to dump all points into Vitality, but 75% block with Holy Shield is what keeps you alive in Chaos Sanctuary and Baal runs. The Dexterity investment is always worth it. Recalculate your DEX every time you gain or lose +skills gear.</p>
+  </div>
+</section>
+
+<!-- ==================== PROGRESSION ==================== -->
+<section class="section" id="progression">
+  <h2>Progression</h2>
+
+  <p>The Hammerdin has one awkward phase: levels 1-17 before you can use Blessed Hammer. After that, it becomes one of the smoothest leveling experiences in the game.</p>
+
+  <!-- Normal -->
+  <div class="lv-card spike" onclick="this.classList.toggle('open')">
+    <div class="lv-head">
+      <span class="lv-range">Lv 1-17</span>
+      <span class="lv-title">Normal &mdash; Holy Fire Leveling</span>
+      <span class="lv-spike">Pre-Hammer</span>
+      <span class="lv-arrow">&#9654;</span>
+    </div>
+    <div class="lv-body"><div class="lv-inner">
+      <div class="qp-row">
+        <span class="qp aura">Holy Fire</span>
+        <span class="qp skill">Zeal</span>
+        <span class="qp gear">Stealth Armor</span>
+      </div>
+      <p>Put points into <strong>Might &rarr; Holy Fire</strong> and use <strong>Zeal</strong> or basic attacks. Holy Fire's pulse damage clears Normal Act 1-2 extremely fast. Use whatever weapon you find -- damage comes from the aura, not your weapon.</p>
+      <h4>Key Milestones</h4>
+      <p>Level 6: Equip Stealth runeword (Tal + Eth in 2-socket armor) for 25% FCR and run/walk speed.</p>
+      <p>Level 12: If you find a Ral rune, keep it for Leaf staff (Fire Sorceress only) or save for later crafting.</p>
+      <p>Level 17: Get to Act 2, hire a Defensive mercenary (Holy Freeze aura). He stays with you for the entire game.</p>
+      <h4>Respec Plan</h4>
+      <p>At level 18, <strong>respec at Akara</strong> (free first respec from Den of Evil quest). Move all points into Blessed Hammer + Concentration. This is the moment the build turns on.</p>
+    </div></div>
+  </div>
+
+  <!-- Hammer Online -->
+  <div class="lv-card spike" onclick="this.classList.toggle('open')">
+    <div class="lv-head">
+      <span class="lv-range">Lv 18-40</span>
+      <span class="lv-title">Normal &mdash; Hammers Come Online</span>
+      <span class="lv-spike">Power Spike</span>
+      <span class="lv-arrow">&#9654;</span>
+    </div>
+    <div class="lv-body"><div class="lv-inner">
+      <div class="qp-row">
+        <span class="qp skill">Blessed Hammer</span>
+        <span class="qp aura">Concentration</span>
+        <span class="qp gear">Spirit Sword</span>
+        <span class="qp gear">Lore Helm</span>
+      </div>
+      <p>After respec, immediately max <strong>Blessed Hammer</strong> while putting 1 point into <strong>Concentration</strong>. The hammers already hit hard enough to one-shot everything in Normal. Rush through Acts 3-5.</p>
+      <h4>Gear Targets</h4>
+      <p><strong>Spirit Sword</strong> (Tal Thul Ort Amn in a 4-socket sword) -- +2 skills, 25-35% FCR, huge mana. Make this in a Crystal Sword from Normal Cows or a Broad Sword.</p>
+      <p><strong>Lore</strong> helm (Ort Sol in 2-socket helm) -- +1 skills, lightning resist. Easy to make.</p>
+      <p><strong>Ancient's Pledge</strong> shield (Ral Ort Tal in 3-socket Paladin shield or any shield) -- huge resists for Normal/Nightmare.</p>
+    </div></div>
+  </div>
+
+  <!-- Nightmare -->
+  <div class="lv-card" onclick="this.classList.toggle('open')">
+    <div class="lv-head">
+      <span class="lv-range">Lv 40-65</span>
+      <span class="lv-title">Nightmare &mdash; Farming and Gearing</span>
+      <span class="lv-arrow">&#9654;</span>
+    </div>
+    <div class="lv-body"><div class="lv-inner">
+      <div class="qp-row">
+        <span class="qp skill">Max Concentration</span>
+        <span class="qp aura">Start Vigor</span>
+        <span class="qp gear">Spirit Monarch</span>
+        <span class="qp gear">Smoke Armor</span>
+      </div>
+      <p>Nightmare is where you solidify your gear. Continue maxing <strong>Concentration</strong>, then start <strong>Vigor</strong> for synergy damage. Everything in Nightmare melts to your hammers.</p>
+      <h4>Priority Upgrades</h4>
+      <p><strong>Spirit Monarch</strong> -- Find a white Monarch shield (Hell difficulty only, or trade for one). 4-socket it with Larzuk quest reward. Spirit in a Monarch gives +2 skills, 25-35% FCR, and huge mana/vitality. This is your endgame shield until you get a Void or perfect Spirit.</p>
+      <p><strong>Smoke</strong> armor (Nef Lum) -- +50 all resist, great placeholder until Enigma.</p>
+      <p>Farm Nightmare Andy/Mephisto for uniques like Magefist, Goldwrap, Chance Guards to build wealth.</p>
+      <h4>Mercenary</h4>
+      <p>Make <strong>Insight</strong> (Ral Tir Tal Sol in a 4-socket polearm) for your mercenary. The Meditation aura gives you infinite mana -- never drink a mana potion again.</p>
+    </div></div>
+  </div>
+
+  <!-- Hell -->
+  <div class="lv-card spike" onclick="this.classList.toggle('open')">
+    <div class="lv-head">
+      <span class="lv-range">Lv 65-90+</span>
+      <span class="lv-title">Hell &mdash; Full Build Online</span>
+      <span class="lv-spike">Endgame</span>
+      <span class="lv-arrow">&#9654;</span>
+    </div>
+    <div class="lv-body"><div class="lv-inner">
+      <div class="qp-row">
+        <span class="qp skill">Max Blessed Aim</span>
+        <span class="qp skill">Holy Shield Dump</span>
+        <span class="qp gear">Enigma</span>
+        <span class="qp gear">HOTO</span>
+      </div>
+      <p>Hell difficulty is where the Hammerdin truly dominates. With all four skills maxed and gear coming together, your hammers deal 15,000-20,000+ damage. Almost nothing resists magic damage.</p>
+      <h4>The Enigma Moment</h4>
+      <p>Acquiring <strong>Enigma</strong> (Jah Ith Ber in 3-socket armor) transforms the build entirely. Teleport lets you skip everything, jump into dense packs, and clear maps in seconds. This is the single biggest power spike in any D2 build. Before Enigma, use Vigor aura to run. After Enigma, you are a god.</p>
+      <h4>Hell Progression</h4>
+      <p>Clear Acts 1-4 with ease. Act 2 has a few magic-immune undead (Greater Mummies in Arcane Sanctuary) -- your mercenary handles them. Act 5 Baal waves are the only real challenge, and even then your damage trivializes them.</p>
+      <p>Start farming <strong>Chaos Sanctuary</strong> and <strong>Baal</strong> runs immediately. These are the two best XP/loot areas in the game, and Hammerdin clears them faster than any other build.</p>
+    </div></div>
+  </div>
+</section>
+
+<!-- ==================== FCR BREAKPOINTS ==================== -->
+<section class="section" id="fcr">
+  <h2>FCR Breakpoints</h2>
+
+  <p>Faster Cast Rate (FCR) determines how quickly you can spam Blessed Hammer. The Paladin has specific frame breakpoints. The two targets that matter are <strong>75% FCR</strong> (comfortable) and <strong>125% FCR</strong> (optimal). Every serious Hammerdin hits 125%.</p>
+
+  <table class="bp-table">
+    <thead>
+      <tr><th>FCR %</th><th>Frames</th><th>Casts/Sec</th><th>Verdict</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>0%</td><td>15</td><td>1.67</td><td>Unplayable</td></tr>
+      <tr><td>9%</td><td>14</td><td>1.79</td><td>Still bad</td></tr>
+      <tr><td>18%</td><td>13</td><td>1.92</td><td>Barely acceptable</td></tr>
+      <tr><td>30%</td><td>12</td><td>2.08</td><td>Workable early game</td></tr>
+      <tr><td>48%</td><td>11</td><td>2.27</td><td>Decent</td></tr>
+      <tr class="optimal"><td class="target"><strong>75%</strong></td><td><strong>10</strong></td><td><strong>2.50</strong></td><td><strong>Minimum target</strong></td></tr>
+      <tr class="optimal" style="border-left:3px solid var(--gold)"><td class="target"><strong>125%</strong></td><td><strong>9</strong></td><td><strong>2.78</strong></td><td><strong>Optimal &mdash; always aim for this</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h3>How to Hit 125% FCR</h3>
+  <div class="callout gold">
+    <div class="callout-label">Standard 125% FCR Setup</div>
+    <p><strong>Heart of the Oak</strong> (40%) + <strong>Spirit Monarch</strong> (35%) + <strong>Arachnid Mesh</strong> (20%) + <strong>Magefist</strong> (20%) + <strong>10% FCR ring</strong> (10%) = <strong>125% FCR</strong></p>
+    <p>Alternative: If using a 35% Spirit, you hit 125% with HOTO 40 + Spirit 35 + Arach 20 + Magefist 20 + any 10 FCR ring. If Spirit rolls low (25-34%), you need two FCR rings or an FCR amulet.</p>
+  </div>
+</section>
+
+<!-- ==================== GEAR — BUDGET ==================== -->
+<section class="section" id="gear-budget">
+  <h2>Gear &mdash; Budget / Ladder Start</h2>
+
+  <p>This setup costs almost nothing and can clear Hell difficulty. The Hammerdin is one of the best ladder-start builds because Spirit sword + Spirit shield are made from common runes.</p>
+
+  <div class="gear-grid">
+    <div class="gear-card">
+      <div class="gear-slot">Weapon</div>
+      <div class="gear-item runeword">Spirit Crystal Sword</div>
+      <div class="gear-notes">Tal Thul Ort Amn. +2 skills, 25-35% FCR, 55% FHR, huge mana. Crystal Sword from Normal Cows gets 4 sockets from Larzuk.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Shield</div>
+      <div class="gear-item runeword">Spirit Monarch</div>
+      <div class="gear-notes">Same runes, 4-socket Monarch. +2 skills, 25-35% FCR. Only Monarch has 4 sockets among non-Paladin shields. 156 STR req.</div>
+      <div class="gear-alt">Pre-Monarch: Ancient's Pledge (Ral Ort Tal) or any resist shield</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Helm</div>
+      <div class="gear-item runeword">Lore</div>
+      <div class="gear-notes">Ort Sol in 2-socket helm. +1 all skills, 30% lightning resist, 2 mana per kill.</div>
+      <div class="gear-alt">Alt: 3-socket helm with perfect topazes for MF</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Armor</div>
+      <div class="gear-item runeword">Stealth / Smoke</div>
+      <div class="gear-notes">Stealth (Tal Eth): 25% FCR + run speed. Smoke (Nef Lum): +50 all resist. Use Stealth for speed, Smoke for resist cap.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Gloves</div>
+      <div class="gear-item unique">Magefist</div>
+      <div class="gear-notes">20% FCR, +1 Fire skills (irrelevant), mana regen. Extremely common drop. Essential for hitting FCR breakpoints.</div>
+      <div class="gear-alt">Alt: Any rare gloves with 20% FCR + resists</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Belt</div>
+      <div class="gear-item unique">Goldwrap / Nightsmoke</div>
+      <div class="gear-notes">Goldwrap for MF. Nightsmoke for mana sustain. Any belt with life and resists works early.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Boots</div>
+      <div class="gear-item rare">Resist Boots</div>
+      <div class="gear-notes">Look for rare boots with 30+ fire/lightning resist, faster run/walk, and life. Aldur's Advance is a common budget option.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Rings / Amulet</div>
+      <div class="gear-item rare">FCR + Resist</div>
+      <div class="gear-notes">10% FCR rings with resists. +1 Paladin skills amulet or any resist amulet. Prioritize hitting 75% FCR at minimum.</div>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-label">Budget Build FCR</div>
+    <p>Spirit Sword (25-35) + Spirit Monarch (25-35) + Stealth (25) + Magefist (20) = <strong>95-115% FCR</strong>. You can hit the 75% breakpoint with just the two Spirits, and approach 125% with Magefist + a single FCR ring. This is why Hammerdin is the best ladder starter.</p>
+  </div>
+</section>
+
+<!-- ==================== GEAR — BIS ==================== -->
+<section class="section" id="gear-bis">
+  <h2>Gear &mdash; Best in Slot</h2>
+
+  <p>The endgame Hammerdin is one of the most expensive builds in the game (Enigma alone costs Jah + Ber), but every piece serves a purpose. This setup hits 125% FCR, max block, capped resists, and 18,000-20,000+ hammer damage.</p>
+
+  <div class="gear-grid">
+    <div class="gear-card">
+      <div class="gear-slot">Weapon</div>
+      <div class="gear-item runeword">Heart of the Oak (HOTO)</div>
+      <div class="gear-notes">Ko Vex Pul Thul in a flail. +3 all skills, 30-40% FCR, 30-40 all resist, +10 Dexterity. The perfect Hammerdin weapon. Always roll in a Flail for lowest requirements.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Shield</div>
+      <div class="gear-item runeword">Spirit Monarch (35% FCR)</div>
+      <div class="gear-notes">35% FCR roll is critical for hitting 125%. Also +2 skills, 55% FHR, 89-112 mana. The perfect-rolled Spirit is worth keeping forever.</div>
+      <div class="gear-alt">BiS swap: Herald of Zakarum (+2 Paladin, +2 Combat, huge resists/block) when FCR isn't needed</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Helm</div>
+      <div class="gear-item unique">Harlequin Crest (Shako)</div>
+      <div class="gear-notes">+2 skills, +life/mana based on level, 10% DR, 50% MF. Socket with Um rune (all resist) or Ist rune (MF) or Ber (8% DR).</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Armor</div>
+      <div class="gear-item runeword">Enigma</div>
+      <div class="gear-notes">Jah Ith Ber in 3-socket armor (Mage Plate preferred for low STR req). Teleport, +2 skills, 45% run speed, +0.75 STR per level, 8% DR. This single item transforms the build from great to unstoppable.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Belt</div>
+      <div class="gear-item unique">Arachnid Mesh</div>
+      <div class="gear-notes">+1 skills, 20% FCR, 5% slow target. The 20% FCR is essential for hitting the 125% breakpoint. No substitute.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Gloves</div>
+      <div class="gear-item unique">Magefist</div>
+      <div class="gear-notes">20% FCR, mana regen. Even in the BiS setup, Magefist stays because 20% FCR is irreplaceable. Upgrade to Exceptional for more defense.</div>
+      <div class="gear-alt">Alt: Trang-Oul's Claws (20% FCR, +cold resist)</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Boots</div>
+      <div class="gear-item unique">War Traveler</div>
+      <div class="gear-notes">30-50% MF, +15-25 damage (irrelevant), +10 STR/VIT. Best MF boots in the game.</div>
+      <div class="gear-alt">Alt: Sandstorm Trek (+STR/VIT, FHR, poison resist)</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Amulet</div>
+      <div class="gear-item unique">Mara's Kaleidoscope</div>
+      <div class="gear-notes">+2 all skills, +20-30 all resist. The best all-around amulet for any caster build.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Ring 1</div>
+      <div class="gear-item unique">Stone of Jordan (SOJ)</div>
+      <div class="gear-notes">+1 skills, +20 mana, +25% max mana. Pure damage boost. Use two if you can afford it.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Ring 2</div>
+      <div class="gear-item unique">SOJ / 10% FCR Ring</div>
+      <div class="gear-notes">Second SOJ for max damage. If your Spirit rolled 25-34% FCR, use a 10% FCR ring here instead to hit 125%.</div>
+      <div class="gear-alt">Alt: Bul-Kathos' Wedding Band (+1 skills, life)</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Switch Weapon</div>
+      <div class="gear-item runeword">Call to Arms (CTA)</div>
+      <div class="gear-notes">Amn Ral Mal Ist Ohm. Battle Command (+1 skills) + Battle Orders (+life/mana). Pre-buff before fights. Massive survivability boost.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Switch Shield</div>
+      <div class="gear-item runeword">Spirit Monarch</div>
+      <div class="gear-notes">Second Spirit for the +2 skills on weapon switch. Makes CTA's Battle Orders even stronger.</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Charm Inventory</div>
+    <p><strong>Annihilus</strong> (+1 skills, +stats, +resist, +XP) &mdash; always.</p>
+    <p><strong>Paladin Hellfire Torch</strong> (+3 Paladin skills, +stats, +resist) &mdash; always.</p>
+    <p><strong>Combat Grand Charms</strong> (+1 Paladin Combat skills) &mdash; fill remaining inventory. These add ~800-1000 damage per charm. With life suffix, they are extremely valuable.</p>
+    <p><strong>Small Charms</strong> &mdash; resist SCs to cap, then 20 life / 5 resist or 7% MF SCs.</p>
+  </div>
+</section>
+
+<!-- ==================== SEASON 13 RUNEWORD ==================== -->
+<section class="section" id="season13">
+  <h2>Season 13 &mdash; New Runeword: Void</h2>
+
+  <div class="season-card">
+    <h3>Void Shield Runeword (Season 13 Exclusive)</h3>
+    <ul>
+      <li><strong>40% Faster Cast Rate</strong> &mdash; matches HOTO for the highest FCR on any single item</li>
+      <li><strong>+2 to All Skills</strong> &mdash; same as Spirit</li>
+      <li><strong>15% Magic Skill Damage</strong> &mdash; a completely new modifier that directly amplifies Blessed Hammer</li>
+      <li><strong>+30 All Resistances</strong> &mdash; comparable to Spirit's variable resist roll</li>
+      <li><strong>10% Damage Reduction</strong> &mdash; significant survivability boost</li>
+      <li>Made in a 4-socket Paladin shield (not Monarch) &mdash; can use a Sacred Targe/Rondache with inherent all-resist</li>
+    </ul>
+  </div>
+
+  <div class="callout magic">
+    <div class="callout-label">Void vs Spirit &mdash; Analysis</div>
+    <p>Void is a potential Spirit replacement. The <strong>15% Magic Skill Damage</strong> modifier is unprecedented -- it is a separate damage multiplier that stacks after synergies. On a fully geared Hammerdin dealing 18,000 damage, Void adds roughly <strong>2,700 extra damage per hammer</strong>.</p>
+    <p>The tradeoff: Spirit gives 25-35% FCR + 55% FHR + big mana, while Void gives 40% FCR + 10% DR + the magic damage multiplier. If you use Void, you can drop Magefist for Trang-Oul's or a crafted glove with more utility, since the FCR surplus lets you rearrange gear.</p>
+    <p><strong>Verdict:</strong> Void is the new BiS shield for Season 13 Hammerdin if you can afford the runes. The 15% magic damage alone is worth the swap. Being able to make it in a Paladin shield base with +45 all resist makes it strictly superior.</p>
+  </div>
+
+  <h3>125% FCR with Void</h3>
+  <div class="callout tip">
+    <div class="callout-label">New 125% FCR Setup</div>
+    <p><strong>HOTO</strong> (40%) + <strong>Void</strong> (40%) + <strong>Arachnid Mesh</strong> (20%) + <strong>any 25% FCR source</strong> (ring/gloves/amulet) = 125%+. This opens the glove slot for crafted Blood Gloves (crushing blow + life) or rare gloves with resists.</p>
+  </div>
+</section>
+
+<!-- ==================== MERCENARY ==================== -->
+<section class="section" id="mercenary">
+  <h2>Mercenary</h2>
+
+  <p>The Act 2 Defensive mercenary (from Nightmare difficulty) provides <strong>Holy Freeze</strong> aura, which slows all enemies around you. This is the universal best mercenary for Hammerdin because the slow effect gives you more time to position hammers and acts as a safety net.</p>
+
+  <div class="merc-card">
+    <div class="merc-title">Act 2 Nightmare Defensive &mdash; Holy Freeze</div>
+    <div class="merc-detail"><strong>Weapon:</strong> Insight (Ral Tir Tal Sol) in an Ethereal Thresher/Giant Thresher &mdash; Meditation aura for infinite mana. Upgraded to Infinity only if you run a secondary element build.</div>
+    <div class="merc-detail"><strong>Armor:</strong> Fortitude (El Sol Dol Lo) &mdash; +300% Enhanced Damage, +life, resists. Keeps your merc alive and killing. Budget: Treachery (Shael Thul Lem) for the Fade proc (60 all resist + 15% DR).</div>
+    <div class="merc-detail"><strong>Helm:</strong> Andariel's Visage &mdash; +2 skills, 20% IAS, 8-10% life leech, +30 STR. Socket with Ral rune to offset the -30% fire resist. Budget: Tal Rasha's helm (10% life leech, resist) or Crown of Thieves.</div>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-label">Ethereal Weapon Note</div>
+    <p>Always make Insight/Infinity in an <strong>ethereal</strong> polearm. Mercenary equipment does not lose durability, so ethereal weapons give +50% enhanced damage for free. Ethereal Thresher is the best base (fastest speed + good damage).</p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Why Not Might Merc?</div>
+    <p>Some players prefer the Act 2 <strong>Offensive</strong> (Might) mercenary for more merc damage. However, the Hammerdin does not benefit from Might aura (it only affects physical damage), so Holy Freeze's crowd control is far more valuable for the Paladin. Your hammers are your damage; the merc's job is to stay alive, provide Meditation aura (Insight), and slow enemies.</p>
+  </div>
+</section>
+
+<!-- ==================== PLAYSTYLE ==================== -->
+<section class="section" id="playstyle">
+  <h2>Playstyle</h2>
+
+  <p>The Hammerdin gameplay loop is deceptively simple, but mastering hammer positioning takes practice. Here is the step-by-step flow for clearing any area.</p>
+
+  <ol class="step-list">
+    <li>
+      <div class="step-action">Pre-buff with CTA</div>
+      <div class="step-detail">Weapon switch to CTA, cast Battle Command (1 minute) then Battle Orders (1 minute). Switch back to main weapon. This adds 40-60% max life and mana.</div>
+    </li>
+    <li>
+      <div class="step-action">Ensure Concentration Aura is Active</div>
+      <div class="step-detail">Concentration must be on at all times while dealing damage. It is the single largest damage multiplier for Blessed Hammer. Bind it to a hotkey you can hit instantly.</div>
+    </li>
+    <li>
+      <div class="step-action">Teleport into Monster Density</div>
+      <div class="step-detail">Use Enigma's Teleport to jump directly into the largest pack of monsters. Teleport places you right on top of them. The denser the pack, the more hammers connect.</div>
+    </li>
+    <li>
+      <div class="step-action">Spam Blessed Hammer</div>
+      <div class="step-detail">Hold down the Blessed Hammer key while left-clicking. Hammers spawn at your position and spiral outward in a clockwise pattern. Each hammer can hit a monster once per revolution.</div>
+    </li>
+    <li>
+      <div class="step-action">Reposition with Short Teleports</div>
+      <div class="step-detail">Teleport 1-2 screens to the next pack. Do NOT walk -- always teleport. Each teleport resets your hammer origin point, creating overlapping hammer fields.</div>
+    </li>
+    <li>
+      <div class="step-action">Toggle Redemption for Recovery</div>
+      <div class="step-detail">After clearing a large pack, briefly switch to Redemption aura to absorb corpses for life and mana. Switch back to Concentration immediately. This also prevents monsters from being revived.</div>
+    </li>
+    <li>
+      <div class="step-action">Repeat Until Map is Clear</div>
+      <div class="step-detail">Teleport &rarr; Hammer &rarr; Reposition &rarr; Hammer &rarr; Redemption &rarr; Teleport. A well-played Hammerdin clears Chaos Sanctuary in 2-3 minutes.</div>
+    </li>
+  </ol>
+
+  <div class="callout warn">
+    <div class="callout-label">Hammer Spiral Direction</div>
+    <p>Blessed Hammers always spiral <strong>clockwise</strong> starting from your left side. This means enemies directly to your <strong>upper-left</strong> are in a blind spot -- hammers take a full revolution to reach them. To hit monsters in that direction, teleport slightly past them so they are to your right when you start casting. This is the #1 positioning trick every Hammerdin must learn.</p>
+  </div>
+</section>
+
+<!-- ==================== FARMING ==================== -->
+<section class="section" id="farming">
+  <h2>Farming Zones</h2>
+
+  <p>The Hammerdin can farm every area in the game, but these are the highest-efficiency targets for XP, runes, and uniques.</p>
+
+  <div class="farm-grid">
+    <div class="farm-card">
+      <span class="farm-tag best">#1 Best</span>
+      <div class="farm-name">Chaos Sanctuary</div>
+      <div class="farm-desc">The gold standard Hammerdin farm. Extremely dense, high monster level (85), drops every item in the game. Three seal bosses give guaranteed unique/champion packs. Clear time: 2-3 minutes. Teleport to each seal, clear, pop seals, kill Diablo.</div>
+    </div>
+    <div class="farm-card">
+      <span class="farm-tag best">#1 Best</span>
+      <div class="farm-name">Baal Runs</div>
+      <div class="farm-desc">Best XP in the game. Teleport to Throne of Destruction, clear the five waves, kill Baal. Waves 2 and 5 drop from treasure class 87 (highest). Each run gives massive experience at any level.</div>
+    </div>
+    <div class="farm-card">
+      <span class="farm-tag great">Excellent</span>
+      <div class="farm-name">Worldstone Keep</div>
+      <div class="farm-desc">Level 85 area with extremely high density. Clear floors 2 and 3 on the way to Baal. Excellent for rune drops (high monster count = more drop chances).</div>
+    </div>
+    <div class="farm-card">
+      <span class="farm-tag great">Excellent</span>
+      <div class="farm-name">Nihlathak (Halls of Vaught)</div>
+      <div class="farm-desc">Level 95 area (super unique). Fast teleport run. Drops Destruction Keys for Uber Tristram. Also drops from TC 87. Watch out for Corpse Explosion.</div>
+    </div>
+    <div class="farm-card">
+      <span class="farm-tag good">Great</span>
+      <div class="farm-name">Arcane Sanctuary (Key of Summoner)</div>
+      <div class="farm-desc">Teleport along the narrow paths. Fast and easy with Hammers. Ghost-type monsters have good rune drop rates. Drops Key of Hate from the Summoner.</div>
+    </div>
+    <div class="farm-card">
+      <span class="farm-tag good">Great</span>
+      <div class="farm-name">Uber Tristram</div>
+      <div class="farm-desc">Hammerdin can complete Ubers with a gear swap: Life Tap wand on switch, Smite for single-target, Guillame's Face, Dracs. Not the fastest Uber killer, but entirely viable.</div>
+    </div>
+    <div class="farm-card">
+      <span class="farm-tag good">Great</span>
+      <div class="farm-name">Countess (Rune Farming)</div>
+      <div class="farm-desc">Teleport through Tower Cellar levels 1-5, kill Countess. Drops runes up to Ist (Hell). Fast 30-second runs. Essential for building runewords early in a season.</div>
+    </div>
+    <div class="farm-card">
+      <span class="farm-tag good">Great</span>
+      <div class="farm-name">Cow Level</div>
+      <div class="farm-desc">Massive density, all in the open. Hammers hit huge numbers of cows simultaneously. Great for rune farming (high kill count) and bases (white items for runewords).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TIPS ==================== -->
+<section class="section" id="tips">
+  <h2>Tips &amp; Tricks</h2>
+
+  <div class="callout gold">
+    <div class="callout-label">Learn the Hammer Spiral</div>
+    <p>Hammers orbit in a fixed clockwise pattern starting from your left. The effective "kill zone" is roughly 1-2 yards from your character in a crescent to the right and below. Practice in Normal Cows until the spiral feels natural. You should be able to instinctively position so that hammers hit monsters on the first revolution.</p>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-label">Namelock Teleport</div>
+    <p>You can namelock (hover over a monster's name) and teleport directly on top of them. This is the fastest way to reach elite packs. Teleport puts your character at the exact position of the target, which means your first hammer cast is already on top of them.</p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Aura Hotkey Management</div>
+    <p>Bind Concentration, Vigor, Redemption, and Cleansing to adjacent hotkeys. You should be switching between them constantly: <strong>Concentration</strong> while fighting, <strong>Redemption</strong> after a pack dies (1-2 seconds), <strong>Vigor</strong> if you need to run (pre-Enigma), and <strong>Cleansing</strong> to remove curses/poison.</p>
+  </div>
+
+  <div class="callout warn">
+    <div class="callout-label">Magic Immunes</div>
+    <p>The very few magic immune monsters in the game: <strong>Ghoul Lords</strong> and <strong>Unravelers</strong> (Greater Mummies in Act 2 tombs). Your mercenary handles them. In Chaos Sanctuary, the Oblivion Knights can be annoying (Iron Maiden curse) but are not immune -- just dangerous. Toggle Redemption to eat corpses so they can't revive.</p>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-label">Stacking MF Efficiently</div>
+    <p>The Hammerdin's damage is so high that you can stack 300-400+ MF without any damage loss. Shako (50), War Traveler (50), Gheeds (40), small charms (7x6 = 42), Ist in Shako (25) = 200+ MF without touching a single damage slot. Add an Ali Baba/Isted weapon on switch for the killing blow on bosses for even more.</p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Season 13 Meta Impact</div>
+    <p>The Warlock (Necromancer) is the new #1 build in Season 13, but the Hammerdin remains the more reliable and consistent choice. The Warlock requires more specific gear and falls off against spread-out enemies. Hammerdin is still king of Chaos Sanctuary, Baal runs, and general farming. If you want a safe, proven ladder-start build that scales infinitely, Hammerdin is the answer.</p>
+  </div>
+
+  <div class="callout gold">
+    <div class="callout-label">Uber Tristram Gear Swap</div>
+    <p>To do Ubers as a Hammerdin, swap these items: <strong>Guillame's Face</strong> (35% Crushing Blow), <strong>Dracul's Grasp</strong> (Life Tap proc), <strong>Gore Rider</strong> (Crushing Blow + Open Wounds), <strong>Grief Phase Blade</strong> if possible. Use <strong>Smite</strong> against Uber bosses (always hits, cannot be blocked). Keep Salvation aura against Uber Mephisto's Conviction. Carry a Life Tap wand on switch for reliability.</p>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="guide-footer">
+  <p><a href="d2r-builds.html">D2R Season 13 Builds</a> &nbsp;&bull;&nbsp; <a href="guides.html">All Game Guides</a> &nbsp;&bull;&nbsp; <a href="index.html">Home</a></p>
+  <p>&copy; 2026 Z3nGineer &mdash; Diablo 2 Resurrected Season 13 Hammerdin Build Guide</p>
+</footer>
+
+</div><!-- /page-wrap -->
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+// Scroll reveal for sections
+const sections = document.querySelectorAll('.section');
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { rootMargin: '-10% 0px -10% 0px', threshold: 0.05 });
+sections.forEach(s => revealObserver.observe(s));
+
+// Sub-nav active state tracking
+const subNavLinks = document.querySelectorAll('.sub-nav a');
+const sectionObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      subNavLinks.forEach(l => l.classList.remove('active'));
+      const matching = document.querySelector('.sub-nav a[href="#' + entry.target.id + '"]');
+      if (matching) matching.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => sectionObserver.observe(s));
+
+// Top nav hamburger
+const topNavToggle = document.getElementById('topNavToggle');
+const topNavLinks = document.getElementById('topNavLinks');
+topNavToggle.addEventListener('click', () => {
+  topNavToggle.classList.toggle('open');
+  topNavLinks.classList.toggle('open');
+});
+
+// Mobile dropdown handling
+document.querySelectorAll('.dropdown-trigger').forEach(trigger => {
+  trigger.addEventListener('click', (e) => {
+    if (window.innerWidth <= 800) {
+      e.preventDefault();
+      trigger.classList.toggle('dd-open');
+    }
+  });
+});
+
+// Close mobile nav on link click
+topNavLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    if (window.innerWidth <= 800 && !a.closest('.dropdown-trigger')) {
+      topNavToggle.classList.remove('open');
+      topNavLinks.classList.remove('open');
+    }
+  });
+});
+
+// Level card expand/collapse (already handled by onclick in HTML, but add keyboard support)
+document.querySelectorAll('.lv-card').forEach(card => {
+  card.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      card.classList.toggle('open');
+    }
+  });
+});
+</script>
+</body>
+</html>

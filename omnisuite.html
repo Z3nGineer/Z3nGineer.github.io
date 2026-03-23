@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OmniSuite — AI-Powered Music Production Platform</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -38,7 +39,7 @@ a{color:var(--purple-bright);text-decoration:none}a:hover{color:var(--purple)}
 
 /* Hero */
 .hero{
-  padding:7rem 2rem 4rem;margin-top:56px;
+  padding:7rem 2rem 4rem;margin-top:100px;
   background:
     radial-gradient(ellipse 60% 50% at 50% 30%,rgba(138,106,181,0.06),transparent),
     linear-gradient(180deg,var(--surface) 0%,var(--bg) 100%);
@@ -179,23 +180,73 @@ footer a{color:var(--purple-bright);text-decoration:none}
   .features{grid-template-columns:1fr}
   section{padding:3rem 1.5rem}
 }
+
+/* Global Nav */
+.global-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06)}
+.global-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.global-nav-brand{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;color:#e0e0e0;text-decoration:none;transition:color 0.3s}
+.global-nav-brand:hover{color:#c8a050}
+.global-nav-links{display:flex;gap:1.5rem;list-style:none;align-items:center}
+.global-nav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#6a6a6a;text-decoration:none;transition:color 0.3s}
+.global-nav-links a:hover{color:#c8a050;text-decoration:none}
+.global-nav-dropdown{position:relative}
+.global-nav-dropdown>a{display:flex;align-items:center;gap:0.3rem}
+.global-dd-arrow{font-size:0.5rem;transition:transform 0.2s;margin-top:1px}
+.global-nav-dropdown:hover .global-dd-arrow{transform:rotate(180deg)}
+.global-dd-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(8px);min-width:180px;background:rgba(15,15,15,0.97);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.5rem 0;opacity:0;visibility:hidden;transition:opacity 0.2s,transform 0.2s,visibility 0.2s}
+.global-nav-dropdown:hover .global-dd-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.global-dd-menu a{display:block;padding:0.55rem 1.25rem;font-size:0.78rem;font-weight:500;letter-spacing:0.06em;color:#999;transition:color 0.15s,background 0.15s}
+.global-dd-menu a:hover{color:#fff;background:rgba(255,255,255,0.04)}
+.global-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.global-hamburger span{display:block;width:22px;height:2px;background:#e0e0e0;transition:all 0.3s}
+@media(max-width:700px){
+  .global-hamburger{display:flex}
+  .global-nav-links{display:flex;flex-direction:column;gap:0;position:absolute;top:60px;left:0;right:0;background:rgba(8,8,8,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;padding:0}
+  .global-nav-links.open{max-height:600px;padding:0.5rem 0}
+  .global-nav-links>li{list-style:none}
+  .global-nav-links>li>a{display:block;padding:0.8rem 2rem;font-size:0.85rem;border-bottom:1px solid rgba(255,255,255,0.04)}
+  .global-dd-menu{position:static;opacity:1;visibility:visible;transform:none;border:none;border-radius:0;min-width:auto;padding:0;background:none;backdrop-filter:none;box-shadow:none}
+  .global-dd-menu a{padding:0.7rem 2rem 0.7rem 3rem;font-size:0.8rem;border-bottom:1px solid rgba(255,255,255,0.04)}
+  .global-nav-dropdown>a{display:none}
+}
+/* Page Sub-Nav */
+.page-subnav{position:sticky;top:60px;z-index:999;background:rgba(12,12,12,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.04);height:40px;display:flex;align-items:center;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.page-subnav::-webkit-scrollbar{display:none}
+.page-subnav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;gap:1.5rem;white-space:nowrap}
+.page-subnav a{font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#5a5a5a;text-decoration:none;transition:color 0.2s}
+.page-subnav a:hover,.page-subnav a.active{color:#ccc}
+
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="#" class="nav-brand"><img src="img/omni-icon.png" alt=""><span>OmniSuite</span></a>
-    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
-    <ul class="nav-links">
+<nav class="global-nav">
+  <div class="global-nav-inner">
+    <a href="index.html" class="global-nav-brand">Z3nGineer</a>
+    <button class="global-hamburger" id="globalHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="global-nav-links" id="globalNavLinks">
       <li><a href="index.html">Home</a></li>
-      <li><a href="#features">Features</a></li>
-      <li><a href="#pipeline">Pipeline</a></li>
-      <li><a href="#architecture">Architecture</a></li>
-      <li><a href="#stack">Stack</a></li>
+      <li class="global-nav-dropdown">
+        <a href="#">Projects <span class="global-dd-arrow">&#x25BC;</span></a>
+        <div class="global-dd-menu">
+          <a href="omnisuite.html">OmniSuite</a>
+          <a href="heatsync.html">HeatSync</a>
+          <a href="https://crockednloaded.com">CrockedNLoaded</a>
+          <a href="guides.html">Game Guides</a>
+          <a href="CHIM.html">CHIM Modpack</a>
+        </div>
+      </li>
     </ul>
   </div>
 </nav>
+<div class="page-subnav">
+  <div class="page-subnav-inner">
+    <a href="#features">Features</a>
+    <a href="#pipeline">Pipeline</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#stack">Stack</a>
+  </div>
+</div>
 
 <header class="hero">
   <img src="img/omni-icon.png" alt="OmniSuite" class="hero-icon">
@@ -461,9 +512,8 @@ footer a{color:var(--purple-bright);text-decoration:none}
 <script>
 const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0.08,rootMargin:'0px 0px -50px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-const toggle=document.querySelector('.nav-toggle');const links=document.querySelector('.nav-links');
-toggle.addEventListener('click',()=>links.classList.toggle('open'));
-links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+const gBtn=document.getElementById('globalHamburger'),gNav=document.getElementById('globalNavLinks');
+if(gBtn&&gNav){gBtn.addEventListener('click',()=>{gBtn.classList.toggle('open');gNav.classList.toggle('open')});gNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{gBtn.classList.remove('open');gNav.classList.remove('open')}))}
 
 /* Lightbox */
 (function(){
