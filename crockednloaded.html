@@ -253,6 +253,13 @@ section{padding:7rem 2rem;position:relative;z-index:2}
   font-family:'Permanent Marker',cursive;font-size:2rem;
   color:var(--text);margin-bottom:0.3rem;
 }
+.crew-photo{
+  width:100%;aspect-ratio:1/1;object-fit:cover;
+  border-radius:12px;margin-bottom:1.5rem;
+  border:2px solid var(--border);
+  transition:border-color 0.3s;
+}
+.crew-card:hover .crew-photo{border-color:rgba(255,87,34,0.4)}
 .crew-role{
   font-size:0.8rem;font-weight:600;letter-spacing:0.15em;
   text-transform:uppercase;color:var(--ember);margin-bottom:1.2rem;
@@ -559,6 +566,7 @@ footer{
         <span class="crew-emoji">&#x1F525;</span>
         <h3 class="crew-name">CrockPotDaddy</h3>
         <p class="crew-role">The Connector</p>
+        <img src="img/eric-macncheese.jpg" alt="CrockPotDaddy with cast iron mac and cheese" class="crew-photo">
         <p class="crew-desc">Sales guy by trade, kitchen experimenter by obsession. Spent years working behind the scenes in the music industry — got to know some artists right before they blew up. That same energy for spotting talent and building connections? He brings it to food. No culinary school, just instinct and a willingness to try anything.</p>
         <div class="crew-facts">
           <div class="crew-fact"><span class="crew-fact-label">Day Job</span> Sales</div>
@@ -569,8 +577,9 @@ footer{
       </div>
       <div class="crew-card reveal reveal-d2">
         <span class="crew-emoji">&#x1F468;&#x200D;&#x1F373;</span>
-        <h3 class="crew-name">MACK3Y</h3>
-        <p class="crew-role">The Pro</p>
+        <h3 class="crew-name" style="font-size:2.8rem">Steve Mackey</h3>
+        <p class="crew-role">MACK3Y &mdash; The Pro</p>
+        <img src="img/steve-junkyard.jpg" alt="Steve Mackey" class="crew-photo">
         <p class="crew-desc">23 years in professional kitchens. Everything from fine dining to food trucks, coast to coast. I've seen every shortcut, every trick, every technique that chefs keep to themselves. My job here is to pull back the curtain and show you what's really going on. I also make music because apparently one creative outlet wasn't enough.</p>
         <div class="crew-facts">
           <div class="crew-fact"><span class="crew-fact-label">Experience</span> 23 years in pro kitchens</div>
