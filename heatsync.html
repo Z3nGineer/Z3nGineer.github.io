@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HeatSync — Real-Time System Monitor</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#080a10;--surface:#0e1218;--surface-2:#141a24;--surface-3:#1a2230;
+  --border:#1e2838;--border-light:#2a3848;
+  --text:#e4eaf4;--text-dim:#8a9ab8;--text-muted:#5a6a84;
+  --cyan:#00d4ff;--cyan-bright:#40e8ff;--cyan-dim:#0088aa;--cyan-glow:rgba(0,212,255,0.08);
+  --orange:#ff8c42;--orange-glow:rgba(255,140,66,0.08);
+  --red:#ff4444;--red-glow:rgba(255,68,68,0.06);
+  --green:#44cc66;
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--cyan-dim) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:17px;line-height:1.7;overflow-x:hidden}
+::selection{background:var(--cyan);color:var(--bg)}
+a{color:var(--cyan);text-decoration:none}a:hover{color:var(--cyan-bright)}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,10,16,0.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:56px}
+.nav-brand{display:flex;align-items:center;gap:0.6rem;transition:opacity 0.3s}
+.nav-brand:hover{opacity:0.8}
+.nav-brand img{width:28px;height:28px;border-radius:6px}
+.nav-brand span{font-size:0.9rem;font-weight:700;letter-spacing:0.08em;color:var(--text)}
+.nav-links{display:flex;gap:0;list-style:none}
+.nav-links a{font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);padding:0 1.2rem;height:56px;display:flex;align-items:center;position:relative;transition:color 0.2s;text-decoration:none}
+.nav-links a:hover{color:var(--text)}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:1.2rem;right:1.2rem;height:2px;background:var(--cyan);transform:scaleX(0);transition:transform 0.2s}
+.nav-links a:hover::after{transform:scaleX(1)}
+
+/* Hero */
+.hero{
+  padding:7rem 2rem 4rem;margin-top:56px;
+  background:linear-gradient(180deg,var(--surface) 0%,var(--bg) 100%);
+  border-bottom:1px solid var(--border);
+  text-align:center;
+}
+.hero-icon{width:80px;height:80px;border-radius:20px;margin:0 auto 2rem;border:1px solid var(--border);display:block}
+.hero h1{font-size:clamp(2.5rem,6vw,4rem);font-weight:800;letter-spacing:0.04em;color:var(--text);margin-bottom:0.5rem}
+.hero h1 span{color:var(--cyan)}
+.hero-sub{font-size:1.15rem;font-weight:300;color:var(--text-dim);max-width:550px;margin:0 auto 2rem}
+.hero-badges{display:flex;justify-content:center;gap:0.6rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.badge{font-family:'JetBrains Mono',monospace;font-size:0.65rem;font-weight:600;padding:0.3rem 0.8rem;border-radius:20px;letter-spacing:0.04em}
+.badge-cyan{background:var(--cyan-glow);color:var(--cyan);border:1px solid rgba(0,212,255,0.2)}
+.badge-green{background:rgba(68,204,102,0.08);color:var(--green);border:1px solid rgba(68,204,102,0.2)}
+
+.hero-cta{display:flex;justify-content:center;gap:1rem;margin-bottom:3rem}
+.btn{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  padding:0.75rem 1.8rem;font-size:0.8rem;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;border-radius:6px;
+  text-decoration:none;transition:all 0.3s;
+}
+.btn-primary{background:var(--cyan);color:var(--bg);box-shadow:0 4px 20px rgba(0,212,255,0.3)}
+.btn-primary:hover{background:var(--cyan-bright);color:var(--bg);transform:translateY(-2px);box-shadow:0 6px 30px rgba(0,212,255,0.4)}
+.btn-secondary{background:var(--surface-2);color:var(--text-dim);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px)}
+
+/* Screenshots */
+.screenshots{max-width:1000px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
+.screenshots img{width:100%;border-radius:8px;border:1px solid var(--border);display:block}
+.screenshot-label{font-size:0.7rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);text-align:center;margin-top:0.3rem}
+
+/* Sections */
+section{padding:5rem 2rem;position:relative}
+.container{max-width:1000px;margin:0 auto}
+.section-label{font-size:0.65rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--cyan);text-align:center;margin-bottom:0.5rem}
+.section-title{font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:800;color:var(--text);text-align:center;letter-spacing:0.03em;margin-bottom:0.6rem}
+.section-desc{text-align:center;color:var(--text-dim);font-size:1rem;font-weight:300;max-width:600px;margin:0 auto 3rem}
+.divider{width:40px;height:2px;margin:0 auto 3rem;background:var(--cyan);border-radius:2px}
+
+/* Feature grid */
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.feat{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:1.8rem;transition:all 0.3s;
+}
+.feat:hover{border-color:rgba(0,212,255,0.2);transform:translateY(-3px)}
+.feat-icon{font-size:1.8rem;margin-bottom:1rem;display:block}
+.feat h3{font-size:0.95rem;font-weight:700;color:var(--text);margin-bottom:0.4rem}
+.feat p{font-size:0.85rem;color:var(--text-dim);font-weight:300;line-height:1.6}
+
+/* Specs table */
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem}
+.spec{
+  display:flex;align-items:center;gap:1rem;
+  padding:1rem 1.2rem;background:var(--surface);
+  border:1px solid var(--border);border-radius:8px;
+  transition:border-color 0.3s;
+}
+.spec:hover{border-color:rgba(0,212,255,0.2)}
+.spec-label{font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--cyan);min-width:80px}
+.spec-value{font-size:0.9rem;color:var(--text-dim);font-weight:400}
+
+/* Themes */
+.themes{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center}
+.theme-tag{
+  font-size:0.75rem;font-weight:600;padding:0.4rem 1rem;
+  border-radius:20px;background:var(--surface);border:1px solid var(--border);
+  color:var(--text-dim);transition:all 0.2s;
+}
+.theme-tag:hover{border-color:var(--cyan);color:var(--cyan)}
+
+/* GPU table */
+.gpu-table{width:100%;border-collapse:collapse;margin-top:1rem}
+.gpu-table th{font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--cyan);text-align:left;padding:0.8rem 1rem;border-bottom:1px solid var(--border)}
+.gpu-table td{font-size:0.85rem;color:var(--text-dim);padding:0.7rem 1rem;border-bottom:1px solid rgba(30,40,56,0.5)}
+.gpu-table tr:hover td{background:var(--surface)}
+
+/* Back link */
+.back{display:flex;align-items:center;gap:0.5rem;margin-bottom:2rem;font-size:0.8rem;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.2s}
+.back:hover{color:var(--cyan)}
+
+footer{border-top:1px solid var(--border);padding:2rem;text-align:center}
+footer span{font-size:0.7rem;color:var(--text-muted);font-weight:300}
+footer a{color:var(--cyan);text-decoration:none}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.r1{transition-delay:0.1s}.r2{transition-delay:0.2s}.r3{transition-delay:0.3s}
+
+@media(max-width:900px){.features{grid-template-columns:1fr 1fr}.specs{grid-template-columns:1fr}}
+@media(max-width:700px){
+  .nav-links{display:none}
+  .features{grid-template-columns:1fr}
+  .hero-cta{flex-direction:column;align-items:center}
+  section{padding:3rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-brand"><img src="img/heatsync-icon.png" alt=""><span>HeatSync</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#screenshots">Screenshots</a></li>
+      <li><a href="#specs">Details</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <img src="img/heatsync-icon.png" alt="HeatSync" class="hero-icon">
+  <h1>Heat<span>Sync</span></h1>
+  <p class="hero-sub">Real-time system monitoring for Linux, Windows, and macOS. Built because I got tired of opening five apps to check if my GPU was throttling.</p>
+  <div class="hero-badges">
+    <span class="badge badge-cyan">v1.0.71</span>
+    <span class="badge badge-cyan">Python 3.10+</span>
+    <span class="badge badge-cyan">Cross-Platform</span>
+    <span class="badge badge-green">MIT License</span>
+  </div>
+  <div class="hero-cta">
+    <a href="https://github.com/VibeSmiths/HeatSync" class="btn btn-primary">View on GitHub &rarr;</a>
+    <a href="https://github.com/VibeSmiths/HeatSync/releases" class="btn btn-secondary">Download</a>
+  </div>
+</header>
+
+<section id="screenshots">
+  <div class="container">
+    <p class="section-label reveal">In Action</p>
+    <h2 class="section-title reveal r1">Screenshots</h2>
+    <div class="divider reveal r2"></div>
+    <div class="screenshots">
+      <div class="reveal">
+        <img src="img/heatsync-screenshot.png" alt="HeatSync Docked Mode">
+        <p class="screenshot-label">Docked Mode — Full-Width System Bar</p>
+      </div>
+      <div class="reveal r1">
+        <img src="img/heatsync-load.png" alt="HeatSync Standard View">
+        <p class="screenshot-label">Standard View — Under Load</p>
+      </div>
+      <div class="reveal r2">
+        <img src="img/heatsync-compact.png" alt="HeatSync Compact Mode">
+        <p class="screenshot-label">Compact Mode — Minimal Footprint</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features" style="background:linear-gradient(180deg,var(--bg),var(--surface),var(--bg))">
+  <div class="container">
+    <p class="section-label reveal">What It Does</p>
+    <h2 class="section-title reveal r1">Features</h2>
+    <p class="section-desc reveal r2">Everything you need to know about your system, nothing you don't.</p>
+
+    <div class="features">
+      <div class="feat reveal">
+        <span class="feat-icon">&#x1F4CA;</span>
+        <h3>Live Gauges</h3>
+        <p>CPU usage, CPU temp, GPU usage, GPU temp — four animated arc gauges with 300-degree sweep. Color shifts from white to orange to red as temps climb.</p>
+      </div>
+      <div class="feat reveal r1">
+        <span class="feat-icon">&#x1F4C8;</span>
+        <h3>Sparkline History</h3>
+        <p>90-point rolling graphs under each gauge. Plus a full 3600-point history window you can export as PNG whenever you need proof your GPU hit 90 degrees.</p>
+      </div>
+      <div class="feat reveal r2">
+        <span class="feat-icon">&#x1F6A8;</span>
+        <h3>Smart Alerts</h3>
+        <p>Per-metric thresholds with tray notifications. 5-minute cooldown so it's not nagging you. Triggers after 10 consecutive readings, not random spikes.</p>
+      </div>
+      <div class="feat reveal">
+        <span class="feat-icon">&#x1F3A8;</span>
+        <h3>10 Themes</h3>
+        <p>Dark, Synthwave, Dracula, Nord, AMOLED, and more. Switch from the settings menu. Because a system monitor should look as good as your desktop.</p>
+      </div>
+      <div class="feat reveal r1">
+        <span class="feat-icon">&#x1F4BE;</span>
+        <h3>Data Export</h3>
+        <p>Optional CSV or NDJSON logging with configurable retention. Auto-flushes every 60 seconds. Great for tracking thermals over time or proving your case for a new cooler.</p>
+      </div>
+      <div class="feat reveal r2">
+        <span class="feat-icon">&#x1F5A5;</span>
+        <h3>Dock & Compact</h3>
+        <p>Double-click to snap to the top edge as a full-width bar. Or switch to compact mode — one slim line with all key stats. Adjustable opacity, always-on-top, position memory.</p>
+      </div>
+      <div class="feat reveal">
+        <span class="feat-icon">&#x1F50C;</span>
+        <h3>Per-Core & Fans</h3>
+        <p>Optional per-core CPU breakdown and fan RPM display. Network upload/download in Mbps. Battery gauge for laptops. NVMe temps in the status bar.</p>
+      </div>
+      <div class="feat reveal r1">
+        <span class="feat-icon">&#x2699;</span>
+        <h3>Profiles</h3>
+        <p>Save and load entire configurations as presets. Theme, gauges, opacity, refresh rate, alerts — everything. Switch between setups instantly.</p>
+      </div>
+      <div class="feat reveal r2">
+        <span class="feat-icon">&#x1F504;</span>
+        <h3>Zero Setup</h3>
+        <p>First launch creates a desktop shortcut and enables autostart. AppImage on Linux, runs from source on Windows/macOS. Detects your GPU automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="specs">
+  <div class="container">
+    <p class="section-label reveal">Under The Hood</p>
+    <h2 class="section-title reveal r1">Technical Details</h2>
+    <div class="divider reveal r2"></div>
+
+    <div class="specs reveal">
+      <div class="spec"><span class="spec-label">Language</span><span class="spec-value">Python 3.10+</span></div>
+      <div class="spec"><span class="spec-label">GUI</span><span class="spec-value">PyQt6</span></div>
+      <div class="spec"><span class="spec-label">Platforms</span><span class="spec-value">Linux, Windows, macOS</span></div>
+      <div class="spec"><span class="spec-label">Linux</span><span class="spec-value">AppImage + AUR package</span></div>
+      <div class="spec"><span class="spec-label">Refresh</span><span class="spec-value">0.5s — 10s configurable</span></div>
+      <div class="spec"><span class="spec-label">History</span><span class="spec-value">3600 data points, PNG export</span></div>
+      <div class="spec"><span class="spec-label">Export</span><span class="spec-value">CSV / NDJSON, 1-24hr retention</span></div>
+      <div class="spec"><span class="spec-label">License</span><span class="spec-value">MIT — open source</span></div>
+    </div>
+
+    <h3 style="font-size:1rem;font-weight:700;color:var(--text);margin:3rem 0 1rem;text-align:center" class="reveal">GPU Support</h3>
+    <table class="gpu-table reveal r1">
+      <thead><tr><th>GPU</th><th>Driver</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>NVIDIA</td><td>pynvml</td><td>Requires nvidia-utils</td></tr>
+        <tr><td>AMD</td><td>amdgpu sysfs</td><td>No extra drivers needed</td></tr>
+        <tr><td>Intel Arc / iGPU</td><td>xe / i915 sysfs</td><td>No extra drivers needed</td></tr>
+        <tr><td>Windows (non-NVIDIA)</td><td>WMI</td><td>Basic stats via Windows Management</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-size:1rem;font-weight:700;color:var(--text);margin:3rem 0 1rem;text-align:center" class="reveal">Themes</h3>
+    <div class="themes reveal r1">
+      <span class="theme-tag">Dark</span><span class="theme-tag">Light</span>
+      <span class="theme-tag">Synthwave</span><span class="theme-tag">Midnight</span>
+      <span class="theme-tag">Dracula</span><span class="theme-tag">Nord</span>
+      <span class="theme-tag">Solarized</span><span class="theme-tag">Forest</span>
+      <span class="theme-tag">Amber</span><span class="theme-tag">AMOLED</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>HeatSync &mdash; built by <a href="index.html">Z3nGineer</a> &mdash; <a href="https://github.com/VibeSmiths/HeatSync">GitHub</a></span>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0.08,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
