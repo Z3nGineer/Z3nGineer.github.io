@@ -40,9 +40,13 @@ a:hover{color:var(--accent-bright)}
 /* Hero */
 .hero{padding:10rem 2rem 5rem;max-width:1100px;margin:0 auto;position:relative;z-index:2}
 .hero-img{width:100%;border-radius:12px;border:1px solid var(--border);margin-bottom:3rem;animation:fadeUp 0.8s ease both}
-.hero-label{font-size:0.7rem;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;animation:fadeUp 0.8s ease 0.15s both}
-.hero h1{font-family:'Cinzel',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:800;color:var(--text);letter-spacing:0.08em;line-height:1.2;margin-bottom:1.5rem;animation:fadeUp 0.8s ease 0.25s both}
-.hero-bio{max-width:750px;color:var(--text-dim);font-size:1.1rem;line-height:1.9;font-weight:300;animation:fadeUp 0.8s ease 0.35s both}
+.hero-label{font-family:'Cinzel',serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);text-align:center;margin-bottom:0.5rem;animation:fadeUp 0.8s ease 0.15s both}
+.hero h1{font-family:'Cinzel',serif;font-size:clamp(1.2rem,2.5vw,1.6rem);font-weight:500;color:var(--text-dim);letter-spacing:0.12em;line-height:1.2;margin-bottom:2.5rem;animation:fadeUp 0.8s ease 0.25s both;text-align:center}
+.hero-intro{display:grid;grid-template-columns:320px 1fr;gap:3rem;align-items:start;animation:fadeUp 0.8s ease 0.3s both}
+.hero-portrait{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center 15%;border-radius:12px;border:2px solid var(--border);transition:border-color 0.3s}
+.hero-portrait:hover{border-color:var(--accent)}
+.hero-bio{color:var(--text-dim);font-size:1.1rem;line-height:1.9;font-weight:300}
+@media(max-width:700px){.hero-intro{grid-template-columns:1fr;gap:2rem}.hero-portrait{max-width:280px;margin:0 auto}}
 .hero-bio p+p{margin-top:1rem}
 .hero-bio strong{color:var(--text);font-weight:600}
 
@@ -138,17 +142,22 @@ footer span{font-size:0.75rem;color:var(--text-muted);font-weight:300}
   <img src="img/studio.jpg" alt="My setup" class="hero-img">
   <p class="hero-label">Steve Mackey</p>
   <h1>Software Engineer, Chef &amp; Musician</h1>
-  <div class="hero-bio">
-    <p>I taught myself to code at 15 building MySpace layouts from scratch — not picking themes, writing the actual HTML and CSS. Twenty years later the tools changed but I didn't. If I can see it, I can build it.</p>
-    <p>I build full-stack apps from the ground up. Backend APIs, desktop frontends, ML pipelines, real-time streaming, audio and video processing. I'm also going deep on AI systems — local LLMs, MCP servers, and using AI as a development force multiplier, not a crutch. Everything on this site was designed, coded, and shipped by me.</p>
-    <p>When I'm not coding I'm in the kitchen or the studio. I'm a professional chef and I make music as <strong>MACK3Y</strong>. I also co-host <strong><a href="crockednloaded.html">CrockedNLoaded</a></strong> — a cooking channel with my boy CrockPotDaddy where we cook whatever sounds fun and see what happens.</p>
-  </div>
-  <div class="tech-bar">
+  <div class="hero-intro">
+    <img src="img/steve-city.jpg" alt="Steve Mackey" class="hero-portrait">
+    <div>
+      <div class="hero-bio">
+        <p>I taught myself to code at 15 building MySpace layouts from scratch — not picking themes, writing the actual HTML and CSS. Twenty years later the tools changed but I didn't. If I can see it, I can build it.</p>
+        <p>I build full-stack apps from the ground up. Backend APIs, desktop frontends, ML pipelines, real-time streaming, audio and video processing. I'm also going deep on AI systems — local LLMs, MCP servers, and using AI as a development force multiplier, not a crutch. Everything on this site was designed, coded, and shipped by me.</p>
+        <p>When I'm not coding I'm in the kitchen or the studio. I'm a professional chef and I make music as <strong>MACK3Y</strong>. I also co-host <strong><a href="crockednloaded.html">CrockedNLoaded</a></strong> — a cooking channel with my boy CrockPotDaddy where we cook whatever sounds fun and see what happens.</p>
+      </div>
+      <div class="tech-bar">
     <span class="tech">Python</span><span class="tech">FastAPI</span><span class="tech">JavaScript</span>
     <span class="tech">HTML/CSS</span><span class="tech">TypeScript</span><span class="tech">PyTorch</span>
     <span class="tech">Docker</span><span class="tech">FFmpeg</span><span class="tech">CUDA</span>
     <span class="tech">Linux</span><span class="tech">Git</span><span class="tech">REST APIs</span>
     <span class="tech">SSE/Streaming</span><span class="tech">ChromaDB</span>
+  </div>
+    </div>
   </div>
 </header>
 
