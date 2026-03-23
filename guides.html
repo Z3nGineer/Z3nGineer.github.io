@@ -13,10 +13,9 @@
   --text:#e8ecf2;--text-dim:#8a9ab0;--text-muted:#5a6a80;
   --gold:#c9a84c;--gold-bright:#e4c565;--gold-dim:#8a7234;
   --blue:#4a9ae8;--blue-bright:#6ab4ff;--blue-dim:#2a6aa0;
-  --accent-line:#2a4a6a;
 }
 html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border-light) var(--bg)}
-body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:17px;line-height:1.7;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:17px;line-height:1.7;overflow-x:hidden;min-height:100vh}
 ::selection{background:var(--blue);color:#fff}
 a{text-decoration:none;color:inherit}
 
@@ -40,107 +39,151 @@ a{text-decoration:none;color:inherit}
 }
 .nav-links a.active::after,.nav-links a:hover::after{transform:scaleX(1)}
 
-/* Hero banner */
-.hero{
-  padding:5rem 0 0;margin-top:56px;
-  background:linear-gradient(180deg,var(--bg-warm) 0%,var(--bg) 100%);
-  border-bottom:1px solid var(--border);
+/* Page container */
+.page{max-width:1200px;margin:0 auto;padding:0 2rem;margin-top:56px}
+
+/* ====== LANDING VIEW ====== */
+#landing{padding:4rem 0 5rem}
+.landing-header{text-align:center;padding:3rem 0}
+.landing-header h1{
+  font-family:'Cinzel',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;
+  color:var(--text);letter-spacing:0.06em;margin-bottom:0.8rem;
 }
-.hero-inner{
-  max-width:1200px;margin:0 auto;padding:3rem 2rem 2.5rem;
-  display:flex;align-items:center;justify-content:space-between;
+.landing-header p{font-size:1.05rem;color:var(--text-dim);font-weight:400;max-width:550px;margin:0 auto}
+
+.game-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
+  gap:1.5rem;margin-top:1rem;
 }
-.hero h1{
-  font-family:'Cinzel',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;
-  color:var(--text);letter-spacing:0.06em;
+.game-card{
+  position:relative;border-radius:16px;overflow:hidden;
+  border:1px solid var(--border);cursor:pointer;
+  transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s;
 }
-.hero p{font-size:1rem;color:var(--text-dim);margin-top:0.5rem;font-weight:400;max-width:500px}
-.hero-stats{display:flex;gap:2.5rem}
-.stat{text-align:center}
-.stat-num{font-family:'Cinzel',serif;font-size:1.8rem;font-weight:700;color:var(--text);display:block}
-.stat-label{font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted)}
-
-/* Content area */
-.content{max-width:1200px;margin:0 auto;padding:0 2rem}
-
-/* Game section */
-.game{padding:2.5rem 0;border-bottom:1px solid var(--border)}
-.game:last-of-type{border-bottom:none}
-
-.game-bar{
-  display:flex;align-items:center;gap:1rem;
-  padding:0.8rem 1.2rem;margin-bottom:1.5rem;
-  background:var(--surface);border:1px solid var(--border);border-radius:6px;
-  border-left:3px solid var(--gold);
+.game-card:hover{
+  transform:translateY(-6px);
+  border-color:var(--border-light);
+  box-shadow:0 20px 60px rgba(0,0,0,0.4);
 }
-.game[data-g="bg3"] .game-bar{border-left-color:var(--blue)}
-
-.game-bar-icon{font-size:1.4rem;flex-shrink:0}
-.game-bar h2{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;color:var(--text);letter-spacing:0.04em}
-.game-bar-sub{font-size:0.8rem;color:var(--text-muted);margin-left:0.8rem}
-.game-bar-count{
-  margin-left:auto;font-size:0.6rem;font-weight:700;letter-spacing:0.12em;
-  text-transform:uppercase;color:var(--text-muted);
-  padding:0.3rem 0.8rem;background:var(--surface-2);border:1px solid var(--border);border-radius:3px;
+.game-card-img{
+  width:100%;aspect-ratio:16/9;object-fit:cover;
+  display:block;filter:brightness(0.6);
+  transition:filter 0.4s,transform 0.4s;
+}
+.game-card:hover .game-card-img{filter:brightness(0.75);transform:scale(1.03)}
+.game-card-overlay{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:2rem;
+  background:linear-gradient(0deg,rgba(12,16,24,0.95) 0%,rgba(12,16,24,0.3) 50%,transparent 100%);
+}
+.game-card-title{
+  font-family:'Cinzel',serif;font-size:1.6rem;font-weight:700;
+  color:var(--text);letter-spacing:0.04em;margin-bottom:0.3rem;
+}
+.game-card-sub{font-size:0.9rem;color:var(--text-dim);font-weight:400;margin-bottom:1rem}
+.game-card-meta{display:flex;align-items:center;gap:1rem}
+.game-card-count{
+  font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  padding:0.35rem 0.9rem;border-radius:20px;
+}
+.game-card[data-g="oblivion"] .game-card-count{color:var(--gold);background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.2)}
+.game-card[data-g="bg3"] .game-card-count{color:var(--blue);background:rgba(74,154,232,0.12);border:1px solid rgba(74,154,232,0.2)}
+.game-card-arrow{
+  margin-left:auto;width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);
+  color:var(--text-muted);transition:all 0.3s;
+}
+.game-card:hover .game-card-arrow{
+  background:rgba(255,255,255,0.1);color:var(--text);transform:translateX(3px);
 }
 
-/* Guide rows */
-.guide-list{display:flex;flex-direction:column;gap:0.6rem}
+/* ====== GUIDES VIEW ====== */
+#guides-view{display:none;padding:3rem 0 5rem}
+.back-btn{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  font-size:0.8rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--text-muted);padding:0.6rem 0;margin-bottom:2rem;
+  cursor:pointer;transition:color 0.2s;border:none;background:none;
+}
+.back-btn:hover{color:var(--text)}
+.back-btn svg{width:16px;height:16px;transition:transform 0.2s}
+.back-btn:hover svg{transform:translateX(-3px)}
 
+.guides-header{
+  display:flex;align-items:center;gap:2rem;
+  padding:2rem;margin-bottom:2rem;
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  position:relative;overflow:hidden;
+}
+.guides-header-img{
+  width:120px;height:80px;object-fit:cover;border-radius:8px;flex-shrink:0;
+}
+.guides-header h2{
+  font-family:'Cinzel',serif;font-size:1.6rem;font-weight:700;
+  color:var(--text);letter-spacing:0.04em;
+}
+.guides-header p{font-size:0.9rem;color:var(--text-dim);font-weight:400;margin-top:0.3rem}
+.guides-header-accent{
+  position:absolute;top:0;left:0;right:0;height:3px;
+}
+.guides-header-accent[data-c="gold"]{background:linear-gradient(90deg,var(--gold),var(--gold-dim),transparent)}
+.guides-header-accent[data-c="blue"]{background:linear-gradient(90deg,var(--blue),var(--blue-dim),transparent)}
+
+/* Guide cards */
+.guide-list{display:flex;flex-direction:column;gap:0.8rem}
 .guide{
   display:flex;align-items:stretch;gap:0;
-  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
   overflow:hidden;transition:all 0.25s ease;
 }
-.guide:hover{border-color:var(--border-light);background:var(--surface-2);transform:translateX(3px)}
-
+.guide:hover{border-color:var(--border-light);background:var(--surface-2);transform:translateX(4px)}
 .guide-accent{width:4px;flex-shrink:0}
-.game[data-g="oblivion"] .guide-accent{background:var(--gold)}
-.game[data-g="bg3"] .guide-accent{background:var(--blue)}
+.guide-accent[data-c="gold"]{background:var(--gold)}
+.guide-accent[data-c="blue"]{background:var(--blue)}
 
 .guide-icon{
   width:80px;display:flex;align-items:center;justify-content:center;
   font-size:2rem;flex-shrink:0;
   background:rgba(255,255,255,0.02);
 }
-
-.guide-body{flex:1;padding:1.2rem 1.5rem;display:flex;flex-direction:column;justify-content:center}
-.guide-type{
-  font-size:0.6rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
-  margin-bottom:0.3rem;
-}
-.game[data-g="oblivion"] .guide-type{color:var(--gold)}
-.game[data-g="bg3"] .guide-type{color:var(--blue)}
+.guide-body{flex:1;padding:1.4rem 1.5rem;display:flex;flex-direction:column;justify-content:center}
+.guide-type{font-size:0.6rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.3rem}
+.guide-type[data-c="gold"]{color:var(--gold)}
+.guide-type[data-c="blue"]{color:var(--blue)}
 .guide-title{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.3rem}
 .guide-desc{font-size:0.88rem;color:var(--text-dim);font-weight:400;line-height:1.5}
-
 .guide-go{
   width:60px;display:flex;align-items:center;justify-content:center;
   font-size:1.2rem;color:var(--text-muted);flex-shrink:0;
   transition:color 0.2s,transform 0.2s;
 }
 .guide:hover .guide-go{transform:translateX(3px)}
-.game[data-g="oblivion"] .guide:hover .guide-go{color:var(--gold)}
-.game[data-g="bg3"] .guide:hover .guide-go{color:var(--blue)}
+.guide[data-c="gold"]:hover .guide-go{color:var(--gold)}
+.guide[data-c="blue"]:hover .guide-go{color:var(--blue)}
 
-/* Coming soon */
-.coming{
-  padding:3rem 0 4rem;text-align:center;
-}
-.coming p{font-size:0.85rem;color:var(--text-muted);font-weight:400}
+.no-guides{text-align:center;padding:3rem;color:var(--text-muted);font-size:0.9rem}
 
 /* Footer */
 footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center}
 footer span{font-size:0.7rem;color:var(--text-muted);font-weight:400}
 
+/* View transitions */
+.fade-in{animation:fadeIn 0.35s ease both}
+.fade-out{animation:fadeOut 0.2s ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-10px)}}
+
 @media(max-width:700px){
   .nav-links{display:none}
-  .hero-inner{flex-direction:column;align-items:flex-start;gap:1.5rem;padding:2rem}
+  .game-grid{grid-template-columns:1fr}
   .guide{flex-direction:column}
   .guide-icon{width:100%;height:60px}
   .guide-accent{width:100%;height:3px}
   .guide-go{width:100%;height:40px}
-  .content{padding:0 1rem}
+  .guides-header{flex-direction:column;text-align:center}
+  .guides-header-img{width:100%;height:120px}
 }
 </style>
 </head>
@@ -151,76 +194,188 @@ footer span{font-size:0.7rem;color:var(--text-muted);font-weight:400}
     <a href="index.html" class="nav-brand">Z3nGineer</a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="#oblivion">Oblivion</a></li>
-      <li><a href="#bg3">Baldur's Gate 3</a></li>
+      <li><a href="guides.html" class="active">Guides</a></li>
     </ul>
   </div>
 </nav>
 
-<header class="hero">
-  <div class="hero-inner">
-    <div>
+<div class="page">
+
+  <!-- ====== GAME SELECTOR LANDING ====== -->
+  <div id="landing">
+    <div class="landing-header">
       <h1>Game Guides</h1>
-      <p>Build guides for the games I'm actually playing. Written for people mid-playthrough, not theory-crafters.</p>
+      <p>Build guides for the games I'm actually playing. Pick a game to see what's available.</p>
     </div>
-    <div class="hero-stats">
-      <div class="stat"><span class="stat-num">2</span><span class="stat-label">Games</span></div>
-      <div class="stat"><span class="stat-num">2</span><span class="stat-label">Guides</span></div>
-    </div>
+    <div class="game-grid" id="game-grid"></div>
   </div>
-</header>
 
-<div class="content">
-
-  <section class="game" data-g="oblivion">
-    <div class="game-bar">
-      <span class="game-bar-icon">&#9876;</span>
-      <h2>Oblivion Remastered</h2>
-      <span class="game-bar-sub">The Elder Scrolls IV</span>
-      <span class="game-bar-count">1 Guide</span>
-    </div>
-    <div class="guide-list">
-      <a href="oblivion-spellsword-guide.html" class="guide">
-        <div class="guide-accent"></div>
-        <div class="guide-icon">&#9876;</div>
-        <div class="guide-body">
-          <span class="guide-type">Build Guide</span>
-          <h3 class="guide-title">Breton Spellsword</h3>
-          <p class="guide-desc">Blade in one hand, spell in the other. Race, birthsign, class setup, leveling path, and endgame enchanting. Built to be strong from level 1.</p>
-        </div>
-        <div class="guide-go">&rarr;</div>
-      </a>
-    </div>
-  </section>
-
-  <section class="game" data-g="bg3">
-    <div class="game-bar">
-      <span class="game-bar-icon">&#9733;</span>
-      <h2>Baldur's Gate 3</h2>
-      <span class="game-bar-sub">Larian Studios</span>
-      <span class="game-bar-count">1 Guide</span>
-    </div>
-    <div class="guide-list">
-      <a href="bg3-moon-druid-guide.html" class="guide">
-        <div class="guide-accent"></div>
-        <div class="guide-icon">&#9733;</div>
-        <div class="guide-body">
-          <span class="guide-type">Build Guide</span>
-          <h3 class="guide-title">Pure Moon Druid</h3>
-          <p class="guide-desc">Full commitment to Wild Shape. Spell picks, gear choices, and the tricks I figured out the hard way. For people who actually want to stay in animal form.</p>
-        </div>
-        <div class="guide-go">&rarr;</div>
-      </a>
-    </div>
-  </section>
-
-  <div class="coming">
-    <p>More guides added as I play more games.</p>
+  <!-- ====== PER-GAME GUIDES VIEW ====== -->
+  <div id="guides-view">
+    <button class="back-btn" onclick="showLanding()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      All Games
+    </button>
+    <div id="guides-header"></div>
+    <div id="guides-list"></div>
   </div>
 
 </div>
 
 <footer><span>&copy; 2026 Z3nGineer</span></footer>
 
+<script>
+// ====== DATA ======
+const games = [
+  {
+    id: 'oblivion',
+    title: 'Oblivion Remastered',
+    sub: 'The Elder Scrolls IV',
+    img: 'img/oblivion-banner.jpg',
+    color: 'gold',
+    icon: '\u2694',
+    guides: [
+      {
+        href: 'oblivion-spellsword-guide.html',
+        type: 'Build Guide',
+        icon: '\u2694',
+        title: 'Breton Spellsword',
+        desc: 'Blade in one hand, spell in the other. Race, birthsign, class setup, leveling path, and endgame enchanting. Built to be strong from level 1.'
+      }
+    ]
+  },
+  {
+    id: 'bg3',
+    title: "Baldur's Gate 3",
+    sub: 'Larian Studios',
+    img: 'img/bg3-banner.jpg',
+    color: 'blue',
+    icon: '\u2733',
+    guides: [
+      {
+        href: 'bg3-moon-druid-guide.html',
+        type: 'Build Guide',
+        icon: '\u2733',
+        title: 'Pure Moon Druid',
+        desc: "Full commitment to Wild Shape. Spell picks, gear choices, and the tricks I figured out the hard way. For people who actually want to stay in animal form."
+      }
+    ]
+  }
+];
+
+// ====== RENDER LANDING ======
+function renderLanding() {
+  const grid = document.getElementById('game-grid');
+  grid.innerHTML = games.map(g => `
+    <div class="game-card" data-g="${g.id}" onclick="showGame('${g.id}')">
+      <img src="${g.img}" alt="${g.title}" class="game-card-img">
+      <div class="game-card-overlay">
+        <h2 class="game-card-title">${g.title}</h2>
+        <p class="game-card-sub">${g.sub}</p>
+        <div class="game-card-meta">
+          <span class="game-card-count">${g.guides.length} Guide${g.guides.length !== 1 ? 's' : ''}</span>
+          <span class="game-card-arrow">&rarr;</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ====== SHOW GAME GUIDES ======
+function showGame(id) {
+  const game = games.find(g => g.id === id);
+  if (!game) return;
+
+  const landing = document.getElementById('landing');
+  const view = document.getElementById('guides-view');
+
+  // Header
+  document.getElementById('guides-header').innerHTML = `
+    <div class="guides-header">
+      <div class="guides-header-accent" data-c="${game.color}"></div>
+      <img src="${game.img}" alt="${game.title}" class="guides-header-img">
+      <div>
+        <h2>${game.title}</h2>
+        <p>${game.sub} &mdash; ${game.guides.length} guide${game.guides.length !== 1 ? 's' : ''} available</p>
+      </div>
+    </div>
+  `;
+
+  // Guides
+  document.getElementById('guides-list').innerHTML = game.guides.length ? `
+    <div class="guide-list">
+      ${game.guides.map(g => `
+        <a href="${g.href}" class="guide" data-c="${game.color}">
+          <div class="guide-accent" data-c="${game.color}"></div>
+          <div class="guide-icon">${g.icon}</div>
+          <div class="guide-body">
+            <span class="guide-type" data-c="${game.color}">${g.type}</span>
+            <h3 class="guide-title">${g.title}</h3>
+            <p class="guide-desc">${g.desc}</p>
+          </div>
+          <div class="guide-go">&rarr;</div>
+        </a>
+      `).join('')}
+    </div>
+  ` : '<div class="no-guides">Guides coming soon.</div>';
+
+  landing.classList.add('fade-out');
+  setTimeout(() => {
+    landing.style.display = 'none';
+    landing.classList.remove('fade-out');
+    view.style.display = 'block';
+    view.classList.add('fade-in');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 200);
+
+  history.pushState({ game: id }, '', `?game=${id}`);
+}
+
+// ====== BACK TO LANDING ======
+function showLanding() {
+  const landing = document.getElementById('landing');
+  const view = document.getElementById('guides-view');
+
+  view.classList.add('fade-out');
+  setTimeout(() => {
+    view.style.display = 'none';
+    view.classList.remove('fade-out', 'fade-in');
+    landing.style.display = 'block';
+    landing.classList.add('fade-in');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 200);
+
+  history.pushState({}, '', 'guides.html');
+}
+
+// ====== HANDLE BACK BUTTON ======
+window.addEventListener('popstate', (e) => {
+  if (e.state && e.state.game) {
+    showGame(e.state.game);
+  } else {
+    const landing = document.getElementById('landing');
+    const view = document.getElementById('guides-view');
+    view.style.display = 'none';
+    view.classList.remove('fade-out', 'fade-in');
+    landing.style.display = 'block';
+  }
+});
+
+// ====== INIT ======
+renderLanding();
+const params = new URLSearchParams(window.location.search);
+if (params.get('game')) {
+  const landing = document.getElementById('landing');
+  landing.style.display = 'none';
+  const view = document.getElementById('guides-view');
+  const game = games.find(g => g.id === params.get('game'));
+  if (game) {
+    showGame(game.id);
+    view.style.display = 'block';
+  } else {
+    landing.style.display = 'block';
+  }
+}
+</script>
 </body>
 </html>
