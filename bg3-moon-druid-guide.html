@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pure Moon Druid — BG3 Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Crimson+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg-body: #0a0a0a;
+  --bg-card: #151515;
+  --bg-elevated: #1c1c1c;
+  --bg-hover: #222222;
+  --border: #2b2c2c;
+  --border-light: #3a3a3a;
+  --text: #e8e8e8;
+  --text-dim: #a0a0a0;
+  --text-muted: #707070;
+  --white: #ffffff;
+  --accent: #057af0;
+  --accent-hover: #3592ff;
+  --green: #21c513;
+  --green-dim: #199f2f;
+  --orange: #f09a18;
+  --orange-dim: rgba(240,154,24,0.15);
+  --red: #f00505;
+  --gold: #d4a043;
+  --gold-dim: rgba(212,160,67,0.12);
+  --purple: #b080d0;
+}
+
+html { scroll-behavior:smooth; scrollbar-width:thin; scrollbar-color:#2b2c2c #0a0a0a; }
+
+body {
+  background: var(--bg-body);
+  color: var(--text);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 19px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration:none; }
+a:hover { color: var(--accent-hover); text-decoration:underline; }
+
+/* ── LAYOUT ── */
+.page { display:flex; max-width:1100px; margin:0 auto; gap:0; }
+
+.sidebar {
+  width:220px;
+  flex-shrink:0;
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow-y:auto;
+  border-right:1px solid var(--border);
+  background: var(--bg-card);
+  padding:1.5rem 0;
+  scrollbar-width:thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.sidebar-title {
+  font-family:'Oswald', sans-serif;
+  font-size:0.75rem;
+  font-weight:600;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  padding:0 1.25rem;
+  margin-bottom:0.75rem;
+}
+
+.sidebar a {
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  padding:0.45rem 1.25rem;
+  font-size:0.88rem;
+  font-weight:500;
+  color:var(--text-dim);
+  text-decoration:none;
+  border-left:3px solid transparent;
+  transition:all 0.15s;
+}
+
+.sidebar a:hover {
+  color:var(--white);
+  background:rgba(255,255,255,0.03);
+  text-decoration:none;
+}
+
+.sidebar a.active {
+  color:var(--white);
+  border-left-color:var(--accent);
+  background:rgba(5,122,240,0.06);
+}
+
+.sidebar .nav-icon { font-size:1rem; width:1.2rem; text-align:center; }
+
+.content {
+  flex:1;
+  min-width:0;
+  padding:2.5rem 2.5rem 4rem;
+}
+
+@media(max-width:800px) {
+  .sidebar { display:none; }
+  .content { padding:1.5rem; }
+}
+
+/* ── HEADER ── */
+.guide-header {
+  margin-bottom:2.5rem;
+  padding-bottom:1.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.guide-header .breadcrumb {
+  font-size:0.78rem;
+  color:var(--text-muted);
+  margin-bottom:0.5rem;
+  letter-spacing:0.02em;
+}
+
+.guide-header h1 {
+  font-family:'Oswald', sans-serif;
+  font-size:2.2rem;
+  font-weight:700;
+  color:var(--white);
+  line-height:1.2;
+  margin-bottom:0.4rem;
+}
+
+.guide-header .subtitle {
+  font-size:1rem;
+  color:var(--text-dim);
+  font-weight:400;
+}
+
+.tag-row { display:flex; gap:0.4rem; margin-top:0.75rem; flex-wrap:wrap; }
+.tag {
+  font-size:0.72rem;
+  font-weight:600;
+  padding:0.2rem 0.6rem;
+  border-radius:4px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.tag.green { color:var(--green); border-color:rgba(33,197,19,0.25); background:rgba(33,197,19,0.06); }
+.tag.orange { color:var(--orange); border-color:rgba(240,154,24,0.25); background:var(--orange-dim); }
+.tag.blue { color:var(--accent); border-color:rgba(5,122,240,0.25); background:rgba(5,122,240,0.06); }
+
+/* ── HERO ART ── */
+.hero-art {
+  width:100%;
+  margin-bottom:1.25rem;
+  border-radius:10px;
+  border:1px solid var(--border);
+  overflow:hidden;
+  background:var(--bg-card);
+}
+.hero-svg {
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+/* ── IMAGES ── */
+.form-img-row {
+  display:flex;
+  gap:0.75rem;
+  margin:1rem 0;
+  flex-wrap:wrap;
+}
+.form-img-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+  text-align:center;
+  flex:1;
+  min-width:140px;
+  max-width:200px;
+}
+.form-img-card img {
+  width:100%;
+  height:140px;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+}
+.form-img-label {
+  font-family:'Oswald',sans-serif;
+  font-size:0.8rem;
+  font-weight:500;
+  color:var(--text-dim);
+  padding:0.4rem;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+
+.section-img {
+  width:100%;
+  max-height:220px;
+  object-fit:cover;
+  object-position:center;
+  border-radius:8px;
+  border:1px solid var(--border);
+  margin:1rem 0;
+  filter:brightness(0.85);
+}
+
+.inline-icon {
+  width:28px;
+  height:28px;
+  vertical-align:middle;
+  margin-right:0.3rem;
+  border-radius:4px;
+}
+
+/* Form table icons */
+.forms-table .form-icon {
+  width:32px;
+  height:32px;
+  vertical-align:middle;
+  margin-right:0.4rem;
+  border-radius:4px;
+  border:1px solid var(--border);
+}
+
+.header-row {
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  margin-bottom:1.25rem;
+}
+.header-portrait {
+  width:80px;
+  height:80px;
+  border-radius:8px;
+  border:2px solid var(--border);
+  object-fit:cover;
+}
+.header-text { flex:1; }
+
+/* ── SECTIONS ── */
+.section { margin-top:3rem; }
+
+.section h2 {
+  font-family:'Oswald', sans-serif;
+  font-size:1.5rem;
+  font-weight:600;
+  color:var(--white);
+  margin-bottom:1rem;
+  padding-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.section h3 {
+  font-family:'Oswald', sans-serif;
+  font-size:1.15rem;
+  font-weight:500;
+  color:var(--text);
+  margin:1.5rem 0 0.6rem;
+}
+
+.section p { margin-bottom:1rem; color:var(--text); }
+
+/* ── CALLOUTS ── */
+.callout {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:6px;
+  padding:1rem 1.25rem;
+  margin:1.25rem 0;
+}
+
+.callout.warn { border-left-color:var(--orange); }
+.callout.tip { border-left-color:var(--green); }
+
+.callout-label {
+  font-family:'Oswald', sans-serif;
+  font-size:0.78rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  margin-bottom:0.25rem;
+}
+
+.callout .callout-label { color:var(--accent); }
+.callout.warn .callout-label { color:var(--orange); }
+.callout.tip .callout-label { color:var(--green); }
+
+.callout p { margin-bottom:0.5rem; font-size:0.95rem; }
+.callout p:last-child { margin-bottom:0; }
+
+/* ── STAT BAR ── */
+.stats { display:flex; gap:0.5rem; flex-wrap:wrap; margin:0.75rem 0; }
+.stat-box {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:0.4rem 0.75rem;
+  text-align:center;
+  min-width:3.5rem;
+}
+.stat-box.primary { border-color:rgba(5,122,240,0.4); }
+.stat-label { font-size:0.65rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); }
+.stat-val { font-family:'Oswald',sans-serif; font-size:1.3rem; font-weight:600; color:var(--white); }
+.stat-box.primary .stat-val { color:var(--accent); }
+
+/* ── LEVEL CARDS ── */
+.level-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  margin-bottom:0.4rem;
+  overflow:hidden;
+  transition:border-color 0.15s;
+}
+
+.level-card:hover { border-color:var(--border-light); }
+.level-card.spike { border-left:3px solid var(--orange); }
+.level-card.here { border-color:var(--accent); box-shadow:0 0 0 1px rgba(5,122,240,0.15); }
+
+.lv-head {
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  padding:0.65rem 1rem;
+  cursor:pointer;
+  user-select:none;
+  transition:background 0.1s;
+}
+.lv-head:hover { background:var(--bg-hover); }
+
+.lv-num {
+  font-family:'Oswald',sans-serif;
+  font-weight:700;
+  font-size:1.3rem;
+  color:var(--white);
+  min-width:1.6rem;
+  text-align:center;
+}
+.level-card.here .lv-num { color:var(--accent); }
+
+.lv-badge {
+  font-size:0.68rem;
+  font-weight:600;
+  padding:0.15rem 0.5rem;
+  border-radius:4px;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.lv-badge.druid { color:var(--green); background:rgba(33,197,19,0.08); border:1px solid rgba(33,197,19,0.2); }
+
+.lv-title {
+  font-weight:600;
+  font-size:0.95rem;
+  color:var(--text);
+  flex:1;
+}
+
+.lv-spike {
+  font-size:0.65rem;
+  font-weight:600;
+  color:var(--orange);
+  background:var(--orange-dim);
+  padding:0.15rem 0.45rem;
+  border-radius:4px;
+  border:1px solid rgba(240,154,24,0.2);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+
+.lv-here {
+  font-size:0.65rem;
+  font-weight:600;
+  color:var(--accent);
+  background:rgba(5,122,240,0.1);
+  padding:0.15rem 0.45rem;
+  border-radius:4px;
+  border:1px solid rgba(5,122,240,0.25);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+
+.lv-arrow {
+  color:var(--text-muted);
+  font-size:0.75rem;
+  transition:transform 0.2s;
+}
+.level-card.open .lv-arrow { transform:rotate(90deg); }
+
+.lv-body { max-height:0; overflow:hidden; transition:max-height 0.3s ease; }
+.level-card.open .lv-body { max-height:900px; }
+.lv-inner { padding:0 1rem 1rem; border-top:1px solid var(--border); }
+
+/* Quick picks */
+.qp-row { display:flex; flex-wrap:wrap; gap:0.3rem; margin:0.75rem 0 0.5rem; }
+.qp {
+  font-size:0.78rem;
+  font-weight:500;
+  padding:0.2rem 0.6rem;
+  border-radius:4px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+}
+.qp.feature { color:var(--green); border-color:rgba(33,197,19,0.2); }
+.qp.spell { color:var(--accent); border-color:rgba(5,122,240,0.2); }
+.qp.feat { color:var(--orange); border-color:rgba(240,154,24,0.2); }
+.qp.form { color:var(--gold); border-color:rgba(212,160,67,0.2); }
+
+/* Pick list */
+.picks { list-style:none; margin:0.5rem 0; }
+.picks li {
+  padding:0.3rem 0 0.3rem 0;
+  font-size:0.95rem;
+  display:flex;
+  gap:0.4rem;
+  align-items:baseline;
+}
+.picks .label {
+  font-size:0.72rem;
+  font-weight:600;
+  color:var(--orange);
+  text-transform:uppercase;
+  letter-spacing:0.03em;
+  flex-shrink:0;
+  min-width:4rem;
+}
+.picks .name { font-weight:600; color:var(--white); }
+.picks .note { color:var(--text-dim); font-size:0.88rem; }
+
+/* Prep box */
+.prep {
+  background:rgba(33,197,19,0.04);
+  border:1px solid rgba(33,197,19,0.15);
+  border-radius:6px;
+  padding:0.75rem 1rem;
+  margin-top:0.75rem;
+}
+.prep-title {
+  font-family:'Oswald',sans-serif;
+  font-size:0.8rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--green);
+  margin-bottom:0.4rem;
+}
+.prep-list { list-style:none; display:flex; flex-wrap:wrap; gap:0.25rem 0.6rem; }
+.prep-list li { font-size:0.9rem; font-weight:500; color:var(--text); }
+.prep-list li::before { content:'• '; color:var(--green-dim); }
+.prep-list li.new { color:var(--orange); }
+.prep-list li.new::before { content:'★ '; color:var(--orange); }
+.prep-note { font-size:0.78rem; color:var(--text-muted); margin-top:0.3rem; }
+
+/* ── FORMS TABLE ── */
+.forms-table { width:100%; border-collapse:collapse; margin:1rem 0; }
+.forms-table th {
+  font-family:'Oswald',sans-serif;
+  font-size:0.78rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--text-muted);
+  text-align:left;
+  padding:0.6rem 0.75rem;
+  border-bottom:2px solid var(--border);
+}
+.forms-table td {
+  padding:0.6rem 0.75rem;
+  border-bottom:1px solid var(--border);
+  font-size:0.92rem;
+}
+.forms-table tr:hover { background:var(--bg-card); }
+.form-name { font-weight:600; color:var(--white); }
+.form-tier { font-size:0.7rem; font-weight:600; color:var(--orange); margin-left:0.4rem; padding:0.1rem 0.35rem; background:var(--orange-dim); border-radius:3px; }
+
+/* ── SPELL GRID ── */
+.spell-section { margin-bottom:1.5rem; }
+.spell-level {
+  font-family:'Oswald',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  color:var(--white);
+  padding-bottom:0.35rem;
+  margin-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+.spell-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:start;
+  padding:0.5rem 0.75rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:0.35rem;
+  gap:0.75rem;
+}
+.spell-info { flex:1; }
+.spell-name { font-weight:600; color:var(--white); font-size:0.95rem; }
+.spell-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.1rem; }
+.spell-badge {
+  font-size:0.68rem;
+  font-weight:600;
+  padding:0.15rem 0.5rem;
+  border-radius:4px;
+  text-transform:uppercase;
+  letter-spacing:0.03em;
+  white-space:nowrap;
+  flex-shrink:0;
+  align-self:center;
+}
+.spell-badge.must { color:var(--green); background:rgba(33,197,19,0.08); border:1px solid rgba(33,197,19,0.2); }
+.spell-badge.good { color:var(--accent); background:rgba(5,122,240,0.06); border:1px solid rgba(5,122,240,0.15); }
+.spell-badge.conc { color:var(--purple); background:rgba(176,128,208,0.06); border:1px solid rgba(176,128,208,0.15); }
+.spell-badge.free { color:var(--gold); background:var(--gold-dim); border:1px solid rgba(212,160,67,0.2); }
+
+/* ── ITEMS ── */
+.item-group { margin-bottom:1.5rem; }
+.item-group-title {
+  font-family:'Oswald',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  color:var(--gold);
+  padding-bottom:0.35rem;
+  margin-bottom:0.5rem;
+  border-bottom:1px solid rgba(212,160,67,0.15);
+}
+.item-row {
+  padding:0.6rem 0.75rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:0.35rem;
+}
+.item-name { font-weight:600; color:var(--gold); font-size:0.95rem; }
+.item-slot { font-size:0.7rem; color:var(--text-muted); margin-left:0.35rem; text-transform:uppercase; letter-spacing:0.03em; }
+.item-desc { color:var(--text-dim); font-size:0.85rem; margin-top:0.15rem; }
+.item-loc { font-size:0.8rem; color:var(--green-dim); margin-top:0.2rem; }
+
+/* ── ROTATION ── */
+.step-list { list-style:none; counter-reset:step; }
+.step-list li {
+  position:relative;
+  padding:0.75rem 0 0.75rem 3rem;
+  border-left:2px solid var(--border);
+  margin-left:0.75rem;
+  counter-increment:step;
+}
+.step-list li::before {
+  content:counter(step);
+  position:absolute;
+  left:-0.75rem;
+  top:0.6rem;
+  width:1.4rem;
+  height:1.4rem;
+  background:var(--bg-body);
+  border:2px solid var(--accent);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Oswald',sans-serif;
+  font-weight:600;
+  font-size:0.75rem;
+  color:var(--accent);
+}
+.step-list li:last-child { border-left-color:transparent; }
+.step-action { font-weight:600; color:var(--white); }
+.step-timing {
+  font-size:0.7rem;
+  font-weight:600;
+  padding:0.1rem 0.4rem;
+  border-radius:3px;
+  margin-left:0.4rem;
+  vertical-align:middle;
+  text-transform:uppercase;
+}
+.step-timing.pre { color:var(--text-muted); background:rgba(255,255,255,0.04); }
+.step-timing.turn { color:var(--accent); background:rgba(5,122,240,0.08); }
+.step-timing.every { color:var(--green); background:rgba(33,197,19,0.08); }
+.step-detail { color:var(--text-dim); font-size:0.9rem; margin-top:0.2rem; }
+
+/* ── PARTY ── */
+.party-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
+@media(max-width:600px) { .party-grid { grid-template-columns:1fr; } }
+.party-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1rem;
+}
+.party-name { font-family:'Oswald',sans-serif; font-weight:600; font-size:1.05rem; color:var(--white); }
+.party-role { font-size:0.72rem; font-weight:600; color:var(--accent); text-transform:uppercase; letter-spacing:0.04em; margin-top:0.1rem; }
+.party-desc { color:var(--text-dim); font-size:0.88rem; margin-top:0.35rem; }
+
+/* ── FOOTER ── */
+.guide-footer {
+  margin-top:3rem;
+  padding-top:1rem;
+  border-top:1px solid var(--border);
+  font-size:0.75rem;
+  color:var(--text-muted);
+  text-align:center;
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div style="text-align:center; padding:0 1.25rem 1rem;">
+    <img src="https://bg3.wiki/w/images/4/45/Class_Druid_Moon_Badge_Icon.png" alt="Moon Druid" style="width:48px; height:48px; border-radius:8px; border:1px solid var(--border);">
+  </div>
+  <div class="sidebar-title">Build Guide</div>
+  <a href="#overview"><span class="nav-icon">◈</span> Overview</a>
+  <a href="#levels"><span class="nav-icon">↑</span> Progression</a>
+  <a href="#forms"><span class="nav-icon">◉</span> Wild Shape Forms</a>
+  <a href="#spells"><span class="nav-icon">✦</span> Spells</a>
+  <a href="#items"><span class="nav-icon">◆</span> Items</a>
+  <a href="#combat"><span class="nav-icon">⚡</span> Combat</a>
+  <a href="#party"><span class="nav-icon">◎</span> Party</a>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="guide-header">
+    <div class="hero-art">
+      <svg viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+        <defs>
+          <radialGradient id="moonGlow" cx="30%" cy="30%" r="55%">
+            <stop offset="0%" stop-color="#2a5a3a" stop-opacity="0.7"/>
+            <stop offset="50%" stop-color="#1a3a2a" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="moonDisc" cx="45%" cy="45%" r="50%">
+            <stop offset="0%" stop-color="#e8f0e0" stop-opacity="0.35"/>
+            <stop offset="50%" stop-color="#c8d8c0" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#708868" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="800" height="220" fill="url(#moonGlow)"/>
+        <!-- Moon — upper left, not behind bear -->
+        <circle cx="220" cy="55" r="42" fill="url(#moonDisc)"/>
+        <circle cx="220" cy="55" r="33" fill="none" stroke="#7cc26a" stroke-width="0.8" opacity="0.4"/>
+        <circle cx="235" cy="47" r="28" fill="#0a0a0a" opacity="0.6"/>
+        <!-- Stars -->
+        <circle cx="100" cy="30" r="1.2" fill="#c8d8c0" opacity="0.7"/><circle cx="150" cy="18" r="1" fill="#c8d8c0" opacity="0.55"/>
+        <circle cx="500" cy="20" r="1.2" fill="#c8d8c0" opacity="0.6"/><circle cx="600" cy="35" r="0.8" fill="#c8d8c0" opacity="0.45"/>
+        <circle cx="350" cy="12" r="0.7" fill="#c8d8c0" opacity="0.4"/><circle cx="700" cy="25" r="0.9" fill="#c8d8c0" opacity="0.5"/>
+        <circle cx="450" cy="40" r="0.6" fill="#c8d8c0" opacity="0.35"/><circle cx="300" cy="30" r="0.8" fill="#c8d8c0" opacity="0.45"/>
+
+        <!-- Grizzly bear - rearing up with staff and cape -->
+        <g transform="translate(420,115)" opacity="0.9">
+          <!-- Cape flowing behind -->
+          <path d="M25,-15 Q42,-20 60,-8 Q80,15 88,50 Q92,70 80,82 Q65,78 62,60 Q58,35 45,12 Q35,-3 25,-12 Z" fill="#1a3528" opacity="0.65"/>
+          <path d="M25,-15 Q38,-18 52,-10 Q65,8 70,35 Q74,55 62,65 Q55,55 58,40 Q60,20 48,5 Q38,-5 25,-10 Z" fill="#1f4030" opacity="0.45"/>
+          <path d="M62,65 Q65,78 80,82 Q92,70 88,50" stroke="#2a5a3a" stroke-width="0.7" opacity="0.4" fill="none"/>
+
+          <!-- Massive torso - rearing upright -->
+          <ellipse cx="0" cy="30" rx="42" ry="55" fill="#304530"/>
+          <!-- Thick neck -->
+          <ellipse cx="0" cy="-20" rx="28" ry="18" fill="#304530"/>
+          <!-- Head - broad, aggressive -->
+          <ellipse cx="0" cy="-42" rx="24" ry="20" fill="#304530"/>
+          <!-- Brow ridge -->
+          <ellipse cx="0" cy="-50" rx="22" ry="6" fill="#384838"/>
+          <!-- Ears -->
+          <circle cx="-18" cy="-58" r="7" fill="#304530"/><circle cx="-18" cy="-58" r="4" fill="#253525"/>
+          <circle cx="18" cy="-58" r="7" fill="#304530"/><circle cx="18" cy="-58" r="4" fill="#253525"/>
+          <!-- Snout snarling -->
+          <ellipse cx="0" cy="-34" rx="14" ry="10" fill="#384838"/>
+          <!-- Open jaw -->
+          <ellipse cx="0" cy="-28" rx="11" ry="7" fill="#0a0a0a"/>
+          <!-- Teeth -->
+          <path d="M-8,-32 L-6,-28 L-4,-32" fill="#e0e0d0" opacity="0.7"/>
+          <path d="M4,-32 L6,-28 L8,-32" fill="#e0e0d0" opacity="0.7"/>
+          <path d="M-10,-31 L-9,-26 L-7,-31" fill="#e0e0d0" opacity="0.8"/>
+          <path d="M7,-31 L9,-26 L10,-31" fill="#e0e0d0" opacity="0.8"/>
+          <path d="M-5,-27 L-4,-30 L-3,-27" fill="#e0e0d0" opacity="0.5"/>
+          <path d="M3,-27 L4,-30 L5,-27" fill="#e0e0d0" opacity="0.5"/>
+          <!-- Nose -->
+          <ellipse cx="0" cy="-37" rx="5" ry="3.5" fill="#253525"/>
+          <!-- Eyes -->
+          <ellipse cx="-10" cy="-46" rx="3.5" ry="2" fill="#5a8a4a" opacity="0.9"/>
+          <ellipse cx="10" cy="-46" rx="3.5" ry="2" fill="#5a8a4a" opacity="0.9"/>
+          <ellipse cx="-10" cy="-46" rx="1.5" ry="1" fill="#7cc26a" opacity="0.6"/>
+          <ellipse cx="10" cy="-46" rx="1.5" ry="1" fill="#7cc26a" opacity="0.6"/>
+          <!-- Left arm — claws out -->
+          <path d="M-30,-5 Q-55,-25 -60,-45 Q-62,-50 -58,-48 L-50,-35 Q-45,-20 -28,0" fill="#304530"/>
+          <line x1="-60" y1="-45" x2="-68" y2="-55" stroke="#e0e0d0" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <line x1="-58" y1="-48" x2="-64" y2="-58" stroke="#e0e0d0" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <line x1="-55" y1="-49" x2="-59" y2="-59" stroke="#e0e0d0" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <line x1="-52" y1="-48" x2="-54" y2="-57" stroke="#e0e0d0" stroke-width="1.3" stroke-linecap="round" opacity="0.6"/>
+          <!-- Right arm gripping staff at midpoint -->
+          <path d="M30,-5 Q48,-20 52,-40 Q53,-45 50,-42 L45,-30 Q42,-18 28,0" fill="#304530"/>
+          <ellipse cx="49" cy="-39" rx="5" ry="4" fill="#304530"/>
+          <!-- Claws gripping staff -->
+          <line x1="46" y1="-42" x2="43" y2="-46" stroke="#e0e0d0" stroke-width="1.3" stroke-linecap="round" opacity="0.6"/>
+          <line x1="48" y1="-43" x2="46" y2="-47" stroke="#e0e0d0" stroke-width="1.3" stroke-linecap="round" opacity="0.6"/>
+          <line x1="51" y1="-43" x2="53" y2="-47" stroke="#e0e0d0" stroke-width="1.3" stroke-linecap="round" opacity="0.6"/>
+          <line x1="53" y1="-41" x2="56" y2="-45" stroke="#e0e0d0" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+          <!-- Staff — STRAIGHT VERTICAL, grip at middle -->
+          <!-- Full staff line: top to bottom, straight -->
+          <line x1="50" y1="-85" x2="50" y2="75" stroke="#6a4a28" stroke-width="4" stroke-linecap="round"/>
+          <line x1="50" y1="-85" x2="50" y2="75" stroke="#8a6a40" stroke-width="2" stroke-linecap="round" opacity="0.35"/>
+          <!-- Knots along shaft -->
+          <circle cx="50" cy="-15" r="2.5" fill="#5a3a18" opacity="0.5"/>
+          <circle cx="50" cy="20" r="2" fill="#5a3a18" opacity="0.4"/>
+          <circle cx="50" cy="50" r="2" fill="#5a3a18" opacity="0.4"/>
+          <circle cx="50" cy="-60" r="2" fill="#5a3a18" opacity="0.4"/>
+          <!-- Bottom tip -->
+          <ellipse cx="50" cy="76" rx="3" ry="2" fill="#808080" opacity="0.35"/>
+          <!-- Staff head — forked top cradling orb -->
+          <path d="M50,-83 Q46,-88 44,-92" stroke="#6a4a28" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+          <path d="M50,-83 Q54,-88 56,-92" stroke="#6a4a28" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+          <path d="M50,-83 Q50,-90 50,-93" stroke="#6a4a28" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+          <!-- Orb -->
+          <circle cx="50" cy="-95" r="10" fill="#7cc26a" opacity="0.07"/>
+          <circle cx="50" cy="-95" r="7" fill="#7cc26a" opacity="0.15"/>
+          <circle cx="50" cy="-95" r="4.5" fill="#7cc26a" opacity="0.3"/>
+          <circle cx="50" cy="-95" r="2.5" fill="#a0e090" opacity="0.55"/>
+          <circle cx="50" cy="-95" r="1.2" fill="#d0f0c0" opacity="0.85"/>
+          <!-- Magic particles -->
+          <circle cx="42" cy="-101" r="1" fill="#7cc26a" opacity="0.4"/>
+          <circle cx="58" cy="-100" r="0.8" fill="#a0e090" opacity="0.35"/>
+          <circle cx="46" cy="-105" r="0.7" fill="#7cc26a" opacity="0.3"/>
+          <circle cx="55" cy="-104" r="0.6" fill="#a0e090" opacity="0.25"/>
+          <circle cx="40" cy="-95" r="0.8" fill="#a0e090" opacity="0.25"/>
+          <circle cx="60" cy="-92" r="0.6" fill="#7cc26a" opacity="0.2"/>
+          <!-- Hind legs -->
+          <ellipse cx="-18" cy="75" rx="14" ry="12" fill="#304530"/>
+          <ellipse cx="18" cy="75" rx="14" ry="12" fill="#304530"/>
+          <!-- Shoulder hump -->
+          <ellipse cx="0" cy="-12" rx="35" ry="14" fill="#384838" opacity="0.6"/>
+          <!-- Fur texture -->
+          <g stroke="#3a4a38" stroke-width="0.6" opacity="0.5" fill="none">
+            <path d="M-15,10 Q-10,5 -5,10"/><path d="M5,10 Q10,5 15,10"/>
+            <path d="M-12,25 Q-7,20 -2,25"/><path d="M2,25 Q7,20 12,25"/>
+            <path d="M-20,0 Q-15,-5 -10,0"/><path d="M10,0 Q15,-5 20,0"/>
+          </g>
+          <!-- Druid rune -->
+          <circle cx="0" cy="10" r="8" fill="none" stroke="#7cc26a" stroke-width="1" opacity="0.5"/>
+          <path d="M0,3 L0,17" stroke="#7cc26a" stroke-width="0.8" opacity="0.45"/>
+          <path d="M-6,10 L6,10" stroke="#7cc26a" stroke-width="0.8" opacity="0.45"/>
+          <circle cx="0" cy="10" r="3" fill="#7cc26a" opacity="0.12"/>
+        </g>
+        <!-- Ground -->
+        <line x1="200" y1="205" x2="650" y2="205" stroke="#3d5a3a" stroke-width="0.6" opacity="0.4"/>
+        <g opacity="0.4" stroke="#5a8a4a" stroke-width="0.8" fill="none">
+          <path d="M280,205 L278,193 L282,205"/><path d="M500,205 L498,194 L502,205"/>
+          <path d="M380,205 L382,192 L384,205"/><path d="M560,205 L558,195 L562,205"/>
+        </g>
+        <g opacity="0.3" stroke="#7cc26a" stroke-width="1" fill="none">
+          <path d="M150,208 Q180,195 220,205 Q260,212 300,205"/>
+          <path d="M500,205 Q530,196 560,205 Q590,212 620,202"/>
+        </g>
+      </svg>
+    </div>
+    <div class="header-row">
+      <img class="header-portrait" src="https://bg3.wiki/w/images/4/45/Class_Druid_Moon_Badge_Icon.png" alt="Moon Druid">
+      <div class="header-text">
+        <div class="breadcrumb">BG3 › Builds › Druid</div>
+        <h1>Pure Moon Druid</h1>
+        <div class="subtitle">Forest Gnome · Circle of the Moon · Druid 12</div>
+      </div>
+    </div>
+    <div class="tag-row">
+      <span class="tag green">Tank</span>
+      <span class="tag green">Shapeshifter</span>
+      <span class="tag blue">Full Caster</span>
+      <span class="tag orange">Patch 7+</span>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="section" id="overview">
+    <h2>Overview</h2>
+
+    <p>Pure Moon Druid is the strongest Wild Shape build in BG3. You get 3 attacks per turn at level 10, elemental Myrmidon forms with massive AoE, the highest Wild Shape HP, and full 6th-level spellcasting for when you're not shifted. No multiclass can match it.</p>
+
+    <div class="callout">
+      <div class="callout-label">Why Not Multiclass?</div>
+      <p>Most martial features (Rage damage, Reckless Attack, Flurry of Blows, Stunning Strike) do NOT work in Wild Shape beast forms. Barbarian only gives resistance — no damage bonus. Monk is a trap. Pure Druid gives you Improved Wild Strike (3 attacks), Myrmidon forms, and better Wild Shape HP. Nothing beats it.</p>
+    </div>
+
+    <h3><img class="inline-icon" src="https://bg3.wiki/w/images/thumb/a/a3/Race_Forest_Gnome.png/100px-Race_Forest_Gnome.png.webp" alt="">Race — Forest Gnome</h3>
+    <ul class="picks">
+      <li><span class="label">Racial</span> <span class="name">Gnome Cunning</span> — <span class="note">Advantage on INT/WIS/CHA saves vs spells. One of the best passives in the game.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Speak with Animals</span> — <span class="note">Free once per long rest. Saves a prepared spell.</span></li>
+      <li><span class="label">Racial</span> <span class="name">Darkvision</span> — <span class="note">12m range.</span></li>
+    </ul>
+
+    <h3>Ability Scores</h3>
+    <div class="stats">
+      <div class="stat-box"><div class="stat-label">STR</div><div class="stat-val">10</div></div>
+      <div class="stat-box"><div class="stat-label">DEX</div><div class="stat-val">14</div></div>
+      <div class="stat-box primary"><div class="stat-label">CON</div><div class="stat-val">16</div></div>
+      <div class="stat-box"><div class="stat-label">INT</div><div class="stat-val">10</div></div>
+      <div class="stat-box primary"><div class="stat-label">WIS</div><div class="stat-val">16</div></div>
+      <div class="stat-box"><div class="stat-label">CHA</div><div class="stat-val">8</div></div>
+    </div>
+    <p style="font-size:0.88rem; color:var(--text-dim);">Point buy with bonuses included: +2 on WIS, +1 on CON. STR 10 (base 8 + 2 points). STR doesn't matter — Wild Shape uses the beast's stats. Cap WIS at 20 by level 8.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Two Characters in One</div>
+      <p>In beast form you're a frontline tank with 2–3 attacks. In gnome form you're a full caster with 6th level spells. Shift → tank → revert → cast → shift again. You never run out of things to do.</p>
+    </div>
+  </section>
+
+  <!-- LEVELS -->
+  <section class="section" id="levels">
+    <h2>Level-by-Level Progression</h2>
+    <p style="color:var(--text-dim); margin-bottom:1rem;">Click any level to expand. Tags show what to pick at a glance.</p>
+
+    <!-- 1 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">1</span>
+        <span class="lv-badge druid">Druid 1</span>
+        <span class="lv-title">Nature's Servant</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Guidance</span>
+          <span class="qp spell">Thorn Whip</span>
+          <span class="qp spell">Healing Word</span>
+          <span class="qp spell">Goodberry</span>
+          <span class="qp spell">Thunderwave</span>
+          <span class="qp spell">Entangle</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Cantrips</span> <span class="name">Guidance</span>, <span class="name">Thorn Whip</span></li>
+          <li><span class="label">Spells</span> <span class="name">Healing Word</span>, <span class="name">Goodberry</span>, <span class="name">Thunderwave</span>, <span class="name">Entangle</span></li>
+          <li><span class="label">Note</span> <span class="note">Forest Gnome gives Speak with Animals free — don't prep it</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These 4 Spells</div>
+          <ul class="prep-list">
+            <li>Healing Word</li>
+            <li>Goodberry</li>
+            <li>Thunderwave</li>
+            <li>Entangle</li>
+          </ul>
+          <div class="prep-note">4/4 slots · Longstrider is great too — swap situationally</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 2 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">2</span>
+        <span class="lv-badge druid">Druid 2</span>
+        <span class="lv-title">Circle of the Moon</span>
+        <span class="lv-spike">★ Power Spike</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Moon Druid</span>
+          <span class="qp form">Bear</span>
+          <span class="qp form">Dire Wolf</span>
+          <span class="qp spell">Moonbeam (free)</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Subclass</span> <span class="name">Circle of the Moon</span> — <span class="note">combat Wild Shape, bonus action shift</span></li>
+          <li><span class="label">Forms</span> <span class="name">Bear</span> — <span class="note">main early form</span>, <span class="name">Dire Wolf</span> — <span class="note">prone on hit</span></li>
+          <li><span class="label">Free</span> <span class="name">Moonbeam</span> — <span class="note">doesn't use a prep slot</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These 5 Spells</div>
+          <ul class="prep-list">
+            <li>Healing Word</li>
+            <li>Goodberry</li>
+            <li>Thunderwave</li>
+            <li>Entangle</li>
+            <li>Longstrider</li>
+          </ul>
+          <div class="prep-note">5/5 slots · Moonbeam is free and doesn't count</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 3 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">3</span>
+        <span class="lv-badge druid">Druid 3</span>
+        <span class="lv-title">Level 2 Spells</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Heat Metal</span>
+          <span class="qp spell">Pass Without Trace</span>
+          <span class="qp spell">Barkskin</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Spells</span> <span class="name">Heat Metal</span> — <span class="note">devastating vs armored enemies</span></li>
+          <li><span class="label">Spells</span> <span class="name">Pass Without Trace</span> — <span class="note">+10 party stealth</span></li>
+          <li><span class="label">Spells</span> <span class="name">Barkskin</span> — <span class="note">AC 16 floor (concentration)</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These 6 Spells</div>
+          <ul class="prep-list">
+            <li>Healing Word</li>
+            <li>Goodberry</li>
+            <li>Entangle</li>
+            <li>Longstrider</li>
+            <li class="new">Heat Metal</li>
+            <li class="new">Pass Without Trace</li>
+          </ul>
+          <div class="prep-note">6/6 slots · ★ = new this level · Barkskin is situational</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 4 YOU ARE HERE -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">4</span>
+        <span class="lv-badge druid">Druid 4</span>
+        <span class="lv-title">First Feat</span>
+<span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">+2 WIS → 18</span>
+          <span class="qp spell">Produce Flame</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat ✓</span> <span class="name">+2 WIS → 18</span> — <span class="note">+4 mod. Better spell DC and more prepared spells.</span></li>
+          <li><span class="label">Cantrip</span> <span class="name">Produce Flame</span> — <span class="note">ranged fire + light source</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These 8 Spells</div>
+          <ul class="prep-list">
+            <li>Healing Word</li>
+            <li>Goodberry</li>
+            <li>Entangle</li>
+            <li>Longstrider</li>
+            <li>Heat Metal</li>
+            <li>Pass Without Trace</li>
+            <li class="new">Thunderwave</li>
+            <li class="new">Barkskin</li>
+          </ul>
+          <div class="prep-note">8/8 slots (Druid 4 + WIS mod 4) · You gained 2 slots from the WIS boost</div>
+        </div>
+        <div class="callout warn" style="margin-top:0.75rem;">
+          <div class="callout-label">Respec at Withers</div>
+          <p>You have 1 Barbarian level — talk to Withers at camp, pay 100g, and rebuild as pure Druid 4. Use the same stats: WIS 16 (+2 bonus), CON 16 (+1 bonus), DEX 14, STR 10, INT 10, CHA 8.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 5 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">5</span>
+        <span class="lv-badge druid">Druid 5</span>
+        <span class="lv-title">Wild Strike + Lvl 3 Spells</span>
+        <span class="lv-spike">★ Power Spike</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Wild Strike (2 attacks)</span>
+          <span class="qp spell">Plant Growth</span>
+          <span class="qp spell">Call Lightning</span>
+          <span class="qp spell">Conjure Animals</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Wild Strike</span> — <span class="note">2 attacks per turn in beast form</span></li>
+          <li><span class="label">Spell ✓</span> <span class="name">Plant Growth</span> — <span class="note">NO concentration, halves enemy movement</span></li>
+          <li><span class="label">Spell</span> <span class="name">Call Lightning</span> — <span class="note">3d10 AoE, repeat each turn</span></li>
+          <li><span class="label">Spell</span> <span class="name">Conjure Animals</span> — <span class="note">summon allies while you tank</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These 9 Spells</div>
+          <ul class="prep-list">
+            <li>Healing Word</li>
+            <li>Longstrider</li>
+            <li>Entangle</li>
+            <li>Heat Metal</li>
+            <li>Pass Without Trace</li>
+            <li>Goodberry</li>
+            <li class="new">Plant Growth</li>
+            <li class="new">Call Lightning</li>
+            <li class="new">Conjure Animals</li>
+          </ul>
+          <div class="prep-note">9/9 slots (Druid 5 + WIS mod 4)</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 6 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">6</span>
+        <span class="lv-badge druid">Druid 6</span>
+        <span class="lv-title">Primal Strike + Owlbear</span>
+        <span class="lv-spike">★ Power Spike</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Primal Strike (magical)</span>
+          <span class="qp form">Owlbear</span>
+          <span class="qp form">Panther</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Primal Strike</span> — <span class="note">Wild Shape attacks count as magical</span></li>
+          <li><span class="label">Form</span> <span class="name">Owlbear</span> — <span class="note">highest HP, Crushing Flight charge</span></li>
+          <li><span class="label">Form</span> <span class="name">Panther</span> — <span class="note">stealth + Pounce for prone</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These 10 Spells</div>
+          <ul class="prep-list">
+            <li>Healing Word</li>
+            <li>Longstrider</li>
+            <li>Heat Metal</li>
+            <li>Pass Without Trace</li>
+            <li>Plant Growth</li>
+            <li>Call Lightning</li>
+            <li>Conjure Animals</li>
+            <li>Entangle</li>
+            <li>Goodberry</li>
+            <li>Thunderwave</li>
+          </ul>
+          <div class="prep-note">10/10 slots (Druid 6 + WIS mod 4)</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 7 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">7</span>
+        <span class="lv-badge druid">Druid 7</span>
+        <span class="lv-title">Level 4 Spells</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Ice Storm</span>
+          <span class="qp spell">Polymorph</span>
+          <span class="qp spell">Wall of Fire</span>
+          <span class="qp spell">Conjure Woodland Beings</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Spell</span> <span class="name">Ice Storm</span> — <span class="note">AoE damage + difficult terrain, no concentration</span></li>
+          <li><span class="label">Spell</span> <span class="name">Polymorph</span> — <span class="note">enemy → sheep, or ally → giant ape</span></li>
+          <li><span class="label">Spell</span> <span class="name">Wall of Fire</span> — <span class="note">line of fire damage, zone control</span></li>
+          <li><span class="label">Spell</span> <span class="name">Conjure Woodland Beings</span> — <span class="note">summon a dryad</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These 11 Spells</div>
+          <ul class="prep-list">
+            <li>Healing Word</li>
+            <li>Longstrider</li>
+            <li>Heat Metal</li>
+            <li>Plant Growth</li>
+            <li>Call Lightning</li>
+            <li>Conjure Animals</li>
+            <li class="new">Ice Storm</li>
+            <li class="new">Polymorph</li>
+            <li class="new">Conjure Woodland Beings</li>
+            <li>Pass Without Trace</li>
+            <li>Entangle</li>
+          </ul>
+          <div class="prep-note">11/11 slots (Druid 7 + WIS mod 4)</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 8 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">8</span>
+        <span class="lv-badge druid">Druid 8</span>
+        <span class="lv-title">Cap WIS + Sabre-Tooth</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">+2 WIS → 20 (max!)</span>
+          <span class="qp form">Sabre-Toothed Tiger</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat ✓</span> <span class="name">+2 WIS → 20</span> — <span class="note">caps WIS. +5 mod on all spells.</span></li>
+          <li><span class="label">Form</span> <span class="name">Sabre-Toothed Tiger</span> — <span class="note">fast, high damage, shred attack</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These 13 Spells</div>
+          <ul class="prep-list">
+            <li>Healing Word</li>
+            <li>Longstrider</li>
+            <li>Heat Metal</li>
+            <li>Plant Growth</li>
+            <li>Call Lightning</li>
+            <li>Conjure Animals</li>
+            <li>Ice Storm</li>
+            <li>Polymorph</li>
+            <li>Conjure Woodland Beings</li>
+            <li>Pass Without Trace</li>
+            <li>Entangle</li>
+            <li>Thunderwave</li>
+            <li>Goodberry</li>
+          </ul>
+          <div class="prep-note">13/13 slots (Druid 8 + WIS 20 mod 5)</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 9 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">9</span>
+        <span class="lv-badge druid">Druid 9</span>
+        <span class="lv-title">Level 5 Spells</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Conjure Elemental</span>
+          <span class="qp spell">Insect Plague</span>
+          <span class="qp spell">Greater Restoration</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Spell</span> <span class="name">Conjure Elemental</span> — <span class="note">summon a powerful elemental</span></li>
+          <li><span class="label">Spell</span> <span class="name">Insect Plague</span> — <span class="note">large AoE damage over time</span></li>
+          <li><span class="label">Spell</span> <span class="name">Greater Restoration</span> — <span class="note">remove any condition</span></li>
+        </ul>
+        <div class="prep">
+          <div class="prep-title">Prepare These 14 Spells</div>
+          <ul class="prep-list">
+            <li>Healing Word</li>
+            <li>Longstrider</li>
+            <li>Heat Metal</li>
+            <li>Plant Growth</li>
+            <li>Call Lightning</li>
+            <li>Conjure Animals</li>
+            <li>Ice Storm</li>
+            <li>Polymorph</li>
+            <li>Conjure Woodland Beings</li>
+            <li class="new">Conjure Elemental</li>
+            <li class="new">Insect Plague</li>
+            <li class="new">Greater Restoration</li>
+            <li>Entangle</li>
+            <li>Pass Without Trace</li>
+          </ul>
+          <div class="prep-note">14/14 slots</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 10 -->
+    <div class="level-card spike">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">10</span>
+        <span class="lv-badge druid">Druid 10</span>
+        <span class="lv-title">Improved Wild Strike + Myrmidons</span>
+        <span class="lv-spike">★★ Build Defining</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feature">Improved Wild Strike (3 attacks!)</span>
+          <span class="qp form">Water Myrmidon</span>
+          <span class="qp form">Earth Myrmidon</span>
+          <span class="qp form">Air Myrmidon</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feature</span> <span class="name">Improved Wild Strike</span> — <span class="note">3 attacks per turn in Wild Shape. This is why you go pure Druid.</span></li>
+          <li><span class="label">Best</span> <span class="name">Water Myrmidon</span> — <span class="note">healing + AoE cold damage</span></li>
+          <li><span class="label">Great</span> <span class="name">Earth Myrmidon</span> — <span class="note">tankiest form, AoE stun</span></li>
+          <li><span class="label">Good</span> <span class="name">Air Myrmidon</span> — <span class="note">ranged lightning, mobility</span></li>
+        </ul>
+        <div class="callout tip" style="margin-top:0.75rem;">
+          <div class="callout-label">The Payoff</div>
+          <p>3 attacks per turn in Owlbear or Myrmidon form, plus elemental AoE abilities. No multiclass can match this.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 11 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">11</span>
+        <span class="lv-badge druid">Druid 11</span>
+        <span class="lv-title">Level 6 Spells</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp spell">Heroes' Feast</span>
+          <span class="qp spell">Heal</span>
+          <span class="qp spell">Wall of Thorns</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Spell</span> <span class="name">Heroes' Feast</span> — <span class="note">party immunity to disease/poison/fear + HP boost. Pre-boss buff.</span></li>
+          <li><span class="label">Spell</span> <span class="name">Heal</span> — <span class="note">70 HP instant heal + removes conditions</span></li>
+          <li><span class="label">Spell</span> <span class="name">Wall of Thorns</span> — <span class="note">AoE damage wall + difficult terrain</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- 12 -->
+    <div class="level-card">
+      <div class="lv-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lv-num">12</span>
+        <span class="lv-badge druid">Druid 12</span>
+        <span class="lv-title">Final Feat — Build Complete</span>
+        <span class="lv-arrow">▸</span>
+      </div>
+      <div class="lv-body"><div class="lv-inner">
+        <div class="qp-row">
+          <span class="qp feat">War Caster</span>
+          <span class="qp feat">Alert</span>
+          <span class="qp feat">Resilient: CON</span>
+        </div>
+        <ul class="picks">
+          <li><span class="label">Feat ✓</span> <span class="name">War Caster</span> — <span class="note">advantage on concentration saves</span></li>
+          <li><span class="label">Alt</span> <span class="name">Alert</span> — <span class="note">+5 initiative, can't be surprised</span></li>
+          <li><span class="label">Alt</span> <span class="name">Resilient: CON</span> — <span class="note">CON save proficiency + CON 16→17</span></li>
+        </ul>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- FORMS -->
+  <section class="section" id="forms">
+    <h2>Wild Shape Forms</h2>
+    <p>Moon Druid gets exclusive combat forms. Here's when you unlock each and when to use them:</p>
+
+    <div class="form-img-row">
+      <div class="form-img-card">
+        <img src="https://bg3.wiki/w/images/thumb/e/e0/Wild_Shape_Bear.webp/300px-Wild_Shape_Bear.webp" alt="Bear">
+        <div class="form-img-label">Bear · Lvl 2</div>
+      </div>
+      <div class="form-img-card">
+        <img src="https://bg3.wiki/w/images/thumb/9/9b/Wild_Shape_Owlbear.webp/300px-Wild_Shape_Owlbear.webp" alt="Owlbear">
+        <div class="form-img-label">Owlbear · Lvl 6</div>
+      </div>
+      <div class="form-img-card">
+        <img src="https://bg3.wiki/w/images/thumb/c/c1/Wild_Shape_Panther.webp/300px-Wild_Shape_Panther.webp" alt="Panther">
+        <div class="form-img-label">Panther · Lvl 6</div>
+      </div>
+      <div class="form-img-card">
+        <img src="https://bg3.wiki/w/images/1/10/Wild_Shape_Water_Myrmidon.webp" alt="Water Myrmidon">
+        <div class="form-img-label">Myrmidon · Lvl 10</div>
+      </div>
+    </div>
+
+    <table class="forms-table">
+      <thead><tr><th>Lvl</th><th>Form</th><th>Best For</th></tr></thead>
+      <tbody>
+        <tr><td>2</td><td><img class="form-icon" src="https://bg3.wiki/w/images/6/67/Wild_Shape_Bear_Icon.webp" alt=""><span class="form-name">Bear</span></td><td>Tanking, high HP pool, early game powerhouse</td></tr>
+        <tr><td>2</td><td><img class="form-icon" src="https://bg3.wiki/w/images/a/ae/Wild_Shape_Wolf_Icon.webp" alt=""><span class="form-name">Dire Wolf</span></td><td>Prone on hit, pack tactics with allies</td></tr>
+        <tr><td>4</td><td><img class="form-icon" src="https://bg3.wiki/w/images/b/bc/Wild_Shape_Dire_Raven_Icon.webp" alt=""><span class="form-name">Dire Raven</span></td><td>Flight, blinding attack, scouting</td></tr>
+        <tr><td>6</td><td><img class="form-icon" src="https://bg3.wiki/w/images/e/e6/Wild_Shape_Owlbear_Icon.webp" alt=""><span class="form-name">Owlbear</span> <span class="form-tier">★ TOP</span></td><td>Highest beast HP, Crushing Flight charge</td></tr>
+        <tr><td>6</td><td><img class="form-icon" src="https://bg3.wiki/w/images/3/3b/Wild_Shape_Panther_Icon.webp" alt=""><span class="form-name">Panther</span></td><td>Stealth (Prowl), Pounce for prone + burst</td></tr>
+        <tr><td>8</td><td><img class="form-icon" src="https://bg3.wiki/w/images/f/fa/Wild_Shape_Sabre-Toothed_Tiger_Icon.webp" alt=""><span class="form-name">Sabre-Toothed Tiger</span></td><td>High damage, fast, shred attack</td></tr>
+        <tr><td>10</td><td><img class="form-icon" src="https://bg3.wiki/w/images/3/34/Wild_Shape_Water_Myrmidon_Icon.webp" alt=""><span class="form-name">Water Myrmidon</span> <span class="form-tier">★ TOP</span></td><td>Self-heal, AoE cold, great all-rounder</td></tr>
+        <tr><td>10</td><td><img class="form-icon" src="https://bg3.wiki/w/images/5/55/Wild_Shape_Earth_Myrmidon_Icon.webp" alt=""><span class="form-name">Earth Myrmidon</span> <span class="form-tier">★ TOP</span></td><td>Tankiest form, AoE stun ability</td></tr>
+        <tr><td>10</td><td><img class="form-icon" src="https://bg3.wiki/w/images/1/18/Wild_Shape_Air_Myrmidon_Icon.webp" alt=""><span class="form-name">Air Myrmidon</span></td><td>Ranged lightning, flight, mobility</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-label">Form Strategy by Level</div>
+      <p><strong>Levels 2–5:</strong> Bear for most fights, Dire Wolf when you need prone.</p>
+      <p><strong>Levels 6–9:</strong> Owlbear is king. Crushing Flight opener → Wild Strike follow-up.</p>
+      <p><strong>Levels 10–12:</strong> Myrmidons dominate. Water for sustained fights, Earth for AoE control.</p>
+    </div>
+  </section>
+
+  <!-- SPELLS -->
+  <section class="section" id="spells">
+    <h2>Spell Recommendations</h2>
+
+    <div class="callout">
+      <div class="callout-label">Full Caster Advantage</div>
+      <p>Unlike multiclass builds, you have full spell progression through 6th level. Use spells before shifting, between shifts, and when Wild Shape isn't needed.</p>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Cantrips</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Guidance</div><div class="spell-desc">+1d4 to ability checks. Cast before every dialogue and skill check.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Thorn Whip</div><div class="spell-desc">Ranged pull — yank enemies off ledges or into hazards.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Produce Flame</div><div class="spell-desc">Ranged fire + light source. Backup ranged option.</div></div><span class="spell-badge good">Good</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Level 1</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Healing Word</div><div class="spell-desc">Bonus action ranged heal. Pick up downed allies.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Goodberry</div><div class="spell-desc">10 healing berries. Cast with leftover slots before long rest.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Longstrider</div><div class="spell-desc">+10ft movement, no concentration, lasts all day.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Entangle</div><div class="spell-desc">AoE restrain. Excellent opener before shifting.</div></div><span class="spell-badge conc">Conc · Good</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Thunderwave</div><div class="spell-desc">AoE knockback. Push enemies off ledges.</div></div><span class="spell-badge good">Good</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Level 2</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Heat Metal</div><div class="spell-desc">2d8 fire + disadvantage on armored enemies. Very strong in BG3.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Pass Without Trace</div><div class="spell-desc">+10 stealth for the whole party.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Moonbeam</div><div class="spell-desc">Free from Moon Druid. Radiant AoE.</div></div><span class="spell-badge free">Free</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Lesser Restoration</div><div class="spell-desc">Remove poison, disease, paralysis, blindness.</div></div><span class="spell-badge good">Good</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Level 3</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Plant Growth</div><div class="spell-desc">Halves movement, huge area, NO concentration.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Call Lightning</div><div class="spell-desc">3d10 AoE, repeat each turn. Best damage spell.</div></div><span class="spell-badge conc">Conc · Great</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Conjure Animals</div><div class="spell-desc">Summon animal allies. Action economy is everything.</div></div><span class="spell-badge conc">Conc · Great</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Sleet Storm</div><div class="spell-desc">AoE prone + breaks concentration.</div></div><span class="spell-badge conc">Conc · Good</span></div>
+    </div>
+
+    <div class="spell-section">
+      <div class="spell-level">Level 4–6 Highlights</div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Ice Storm</div><div class="spell-desc">AoE damage + difficult terrain. No concentration.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Polymorph</div><div class="spell-desc">Enemy → sheep. Ally → giant ape.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Conjure Elemental</div><div class="spell-desc">Summon a powerful elemental to fight with you.</div></div><span class="spell-badge conc">Conc · Great</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Heroes' Feast</div><div class="spell-desc">Party immunity to fear/poison + max HP boost.</div></div><span class="spell-badge must">Must Pick</span></div>
+      <div class="spell-row"><div class="spell-info"><div class="spell-name">Heal</div><div class="spell-desc">70 HP instant heal + cures conditions.</div></div><span class="spell-badge must">Must Pick</span></div>
+    </div>
+  </section>
+
+  <!-- ITEMS -->
+  <section class="section" id="items">
+    <h2>Key Items</h2>
+
+    <div class="callout warn">
+      <div class="callout-label">Wild Shape + Gear</div>
+      <p>Almost ALL equipment stops working in Wild Shape. Only specifically coded items function in beast form. Prioritize those rare items + gear for your gnome caster form.</p>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Works IN Wild Shape (Confirmed)</div>
+      <div class="item-row">
+        <div><span class="item-name">Ring of Protection</span> <span class="item-slot">Ring</span></div>
+        <div class="item-desc">+1 AC, +1 saving throws. Works in Wild Shape. Wear always.</div>
+        <div class="item-loc">📍 Mol's stash (Tiefling hideout) or Last Light Inn</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Shapeshifter's Boon Ring</span> <span class="item-slot">Ring</span></div>
+        <div class="item-desc">+1d4 to ability checks while shapeshifted. Stacks with Guidance.</div>
+        <div class="item-loc">📍 Araj Oblodra, Moonrise Towers (Act 2)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Armour of Moonbasking</span> <span class="item-slot">Armor</span></div>
+        <div class="item-desc">+2 AC in Wild Shape, temp HP on shift, advantage on CON saves. THE Wild Shape armor.</div>
+        <div class="item-loc">📍 Voiceless Penitent Bareki, Undercity Ruins (Act 3)</div>
+      </div>
+    </div>
+
+    <div class="item-group">
+      <div class="item-group-title">Best Gnome Form Gear</div>
+      <div class="item-row">
+        <div><span class="item-name">Haste Helm</span> <span class="item-slot">Helmet</span></div>
+        <div class="item-desc">3 turns of Momentum at combat start. Close distance before shifting.</div>
+        <div class="item-loc">📍 Blighted Village — cellar chest</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Amulet of Misty Step</span> <span class="item-slot">Amulet</span></div>
+        <div class="item-desc">Free Misty Step per short rest. Teleport → shift.</div>
+        <div class="item-loc">📍 Shattered Sanctum — chest near Priestess Gut</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Cloak of Protection</span> <span class="item-slot">Cloak</span></div>
+        <div class="item-desc">+1 AC, +1 saving throws. Great for gnome form.</div>
+        <div class="item-loc">📍 Quartermaster Talli, Last Light Inn (Act 2)</div>
+      </div>
+      <div class="item-row">
+        <div><span class="item-name">Helm of Balduran</span> <span class="item-slot">Helmet</span></div>
+        <div class="item-desc">+1 AC, +1 saves, HP regen, can't be stunned/crit. Best helm in game.</div>
+        <div class="item-loc">📍 Wyrmway — defeat Ansur (Act 3)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMBAT -->
+  <section class="section" id="combat">
+    <h2>Combat Guide</h2>
+
+    <div style="width:100%;border-radius:8px;border:1px solid var(--border);overflow:hidden;margin:1rem 0;background:var(--bg-card);">
+      <svg viewBox="0 0 900 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+        <defs>
+          <radialGradient id="cGlow" cx="50%" cy="45%" r="55%">
+            <stop offset="0%" stop-color="#1a2a18" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="bPool" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#4a1010" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#2a0808" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="900" height="220" fill="url(#cGlow)"/>
+
+        <!-- Fallen body 1 — far left, face down -->
+        <g transform="translate(140,185)" opacity="0.55">
+          <ellipse cx="0" cy="0" rx="22" ry="7" fill="#2a2018"/>
+          <circle cx="-18" cy="3" r="6" fill="#2a2018"/>
+          <line x1="16" y1="-2" x2="30" y2="-6" stroke="#2a2018" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="12" y1="5" x2="25" y2="8" stroke="#2a2018" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="-8" y1="-5" x2="-22" y2="-12" stroke="#2a2018" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="-26" y1="-14" x2="-42" y2="-10" stroke="#808080" stroke-width="1.5" opacity="0.4"/>
+          <ellipse cx="-3" cy="5" rx="16" ry="5" fill="url(#bPool)"/>
+          <circle cx="8" cy="-6" r="2" fill="#4a1010" opacity="0.35"/>
+        </g>
+
+        <!-- Fallen body 2 — left of bear, on back -->
+        <g transform="translate(290,188)" opacity="0.5">
+          <ellipse cx="0" cy="0" rx="18" ry="8" fill="#2a2018"/>
+          <circle cx="15" cy="-2" r="6" fill="#2a2018"/>
+          <line x1="-12" y1="-4" x2="-25" y2="-10" stroke="#2a2018" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="-10" y1="5" x2="-22" y2="7" stroke="#2a2018" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="3" y1="-7" x2="10" y2="-18" stroke="#2a2018" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="-3" y1="-6" x2="-12" y2="-17" stroke="#2a2018" stroke-width="2.5" stroke-linecap="round"/>
+          <ellipse cx="-20" cy="-15" rx="7" ry="9" fill="none" stroke="#606060" stroke-width="1.3" opacity="0.3"/>
+          <ellipse cx="3" cy="5" rx="15" ry="4" fill="url(#bPool)"/>
+          <line x1="-5" y1="-3" x2="7" y2="3" stroke="#4a1010" stroke-width="1" opacity="0.45"/>
+          <line x1="-3" y1="-1" x2="9" y2="5" stroke="#4a1010" stroke-width="1" opacity="0.4"/>
+        </g>
+
+        <!-- Fallen body 3 — right side, crumpled -->
+        <g transform="translate(650,186)" opacity="0.45">
+          <ellipse cx="0" cy="0" rx="18" ry="8" fill="#2a2018" transform="rotate(-12)"/>
+          <circle cx="-15" cy="-4" r="6" fill="#2a2018"/>
+          <line x1="12" y1="4" x2="24" y2="10" stroke="#2a2018" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="8" y1="-5" x2="18" y2="-12" stroke="#2a2018" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="-8" y1="-7" x2="-22" y2="-4" stroke="#2a2018" stroke-width="2.5" stroke-linecap="round"/>
+          <ellipse cx="2" cy="7" rx="14" ry="4" fill="url(#bPool)"/>
+        </g>
+
+        <!-- THE BEAR — center, mid-slash on last victim -->
+        <g transform="translate(480,120) scale(1.3)" opacity="0.95">
+          <!-- Body lunging -->
+          <ellipse cx="0" cy="15" rx="48" ry="28" fill="#304530"/>
+          <ellipse cx="-12" cy="-2" rx="30" ry="14" fill="#384838" opacity="0.6"/>
+          <!-- Head forward -->
+          <ellipse cx="-48" cy="2" rx="22" ry="18" fill="#304530"/>
+          <ellipse cx="-48" cy="-6" rx="20" ry="6" fill="#384838"/>
+          <!-- Ears -->
+          <circle cx="-62" cy="-16" r="6" fill="#304530"/><circle cx="-62" cy="-16" r="3.5" fill="#253525"/>
+          <circle cx="-38" cy="-18" r="6" fill="#304530"/><circle cx="-38" cy="-18" r="3.5" fill="#253525"/>
+          <!-- Snout snarling -->
+          <ellipse cx="-64" cy="6" rx="13" ry="9" fill="#384838"/>
+          <ellipse cx="-66" cy="12" rx="10" ry="6" fill="#0a0a0a"/>
+          <!-- Teeth -->
+          <path d="M-74,7 L-72,13 L-70,7" fill="#e0e0d0" opacity="0.85"/>
+          <path d="M-78,8 L-75,15 L-73,8" fill="#e0e0d0" opacity="0.9"/>
+          <path d="M-64,6 L-62,12 L-60,6" fill="#e0e0d0" opacity="0.7"/>
+          <path d="M-71,14 L-69,10 L-67,14" fill="#e0e0d0" opacity="0.5"/>
+          <!-- Blood on snout -->
+          <circle cx="-68" cy="8" r="2" fill="#6a1515" opacity="0.6"/>
+          <circle cx="-62" cy="12" r="1.5" fill="#5a1010" opacity="0.5"/>
+          <!-- Nose -->
+          <ellipse cx="-68" cy="1" rx="4.5" ry="3" fill="#253525"/>
+          <!-- Eyes — on the HEAD, properly placed -->
+          <ellipse cx="-55" cy="-3" rx="3.5" ry="2.2" fill="#5a8a4a" opacity="0.95"/>
+          <ellipse cx="-43" cy="-5" rx="3" ry="2" fill="#5a8a4a" opacity="0.9"/>
+          <ellipse cx="-55" cy="-3" rx="1.8" ry="1" fill="#7cc26a" opacity="0.7"/>
+          <ellipse cx="-43" cy="-5" rx="1.3" ry="0.8" fill="#7cc26a" opacity="0.6"/>
+
+          <!-- LEFT arm swiping down -->
+          <path d="M-25,18 Q-50,5 -68,-12 Q-74,-20 -68,-16 L-58,-5 Q-45,8 -22,20" fill="#304530"/>
+          <!-- Claws -->
+          <line x1="-68" y1="-12" x2="-80" y2="-24" stroke="#e0e0d0" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
+          <line x1="-66" y1="-16" x2="-76" y2="-28" stroke="#e0e0d0" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
+          <line x1="-63" y1="-18" x2="-71" y2="-29" stroke="#e0e0d0" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <!-- Blood on claws -->
+          <circle cx="-78" cy="-22" r="1.5" fill="#6a1515" opacity="0.65"/>
+          <circle cx="-74" cy="-26" r="1" fill="#5a1010" opacity="0.55"/>
+
+          <!-- RIGHT arm planted -->
+          <path d="M15,22 Q28,32 32,48" fill="#304530" stroke="#304530" stroke-width="7" stroke-linecap="round"/>
+          <!-- Hind legs -->
+          <ellipse cx="28" cy="38" rx="14" ry="9" fill="#304530"/>
+          <ellipse cx="44" cy="36" rx="12" ry="9" fill="#304530"/>
+          <!-- Tail -->
+          <ellipse cx="48" cy="8" rx="7" ry="4" fill="#304530"/>
+          <!-- Druid rune -->
+          <circle cx="-5" cy="2" r="6" fill="none" stroke="#7cc26a" stroke-width="0.8" opacity="0.4"/>
+          <circle cx="-5" cy="2" r="2.5" fill="#7cc26a" opacity="0.08"/>
+
+          <!-- Slash trails -->
+          <g stroke="#6a1515" stroke-width="1" opacity="0.4" fill="none">
+            <path d="M-70,-14 Q-82,-8 -90,2"/>
+            <path d="M-68,-18 Q-80,-12 -88,-2"/>
+          </g>
+          <!-- Blood spray -->
+          <circle cx="-82" cy="-8" r="2" fill="#6a1515" opacity="0.5"/>
+          <circle cx="-86" cy="0" r="1.5" fill="#5a1010" opacity="0.4"/>
+          <circle cx="-78" cy="-18" r="1" fill="#4a0a0a" opacity="0.35"/>
+        </g>
+
+        <!-- VICTIM — staggering, being slashed -->
+        <g transform="translate(395,155)" opacity="0.65">
+          <ellipse cx="0" cy="5" rx="12" ry="20" fill="#2a2018" transform="rotate(18)"/>
+          <circle cx="6" cy="-16" r="6" fill="#2a2018"/>
+          <line x1="-6" y1="-4" x2="-20" y2="-16" stroke="#2a2018" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="4" y1="-6" x2="15" y2="-22" stroke="#2a2018" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="-4" y1="20" x2="-10" y2="34" stroke="#2a2018" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="4" y1="18" x2="12" y2="32" stroke="#2a2018" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="17" y1="-24" x2="32" y2="-35" stroke="#808080" stroke-width="1.3" opacity="0.4"/>
+          <line x1="-5" y1="-4" x2="6" y2="10" stroke="#6a1515" stroke-width="1" opacity="0.5"/>
+          <line x1="-3" y1="-2" x2="8" y2="12" stroke="#5a1010" stroke-width="1" opacity="0.45"/>
+          <circle cx="3" cy="2" r="2.5" fill="#5a1010" opacity="0.45"/>
+        </g>
+
+        <!-- Ground -->
+        <line x1="80" y1="205" x2="820" y2="205" stroke="#3d5a3a" stroke-width="0.5" opacity="0.25"/>
+        <ellipse cx="330" cy="203" rx="25" ry="3" fill="#3a0a0a" opacity="0.25"/>
+        <ellipse cx="500" cy="201" rx="18" ry="2.5" fill="#3a0a0a" opacity="0.2"/>
+      </svg>
+    </div>
+
+    <h3>Standard Rotation</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-action">Pre-buff</span> <span class="step-timing pre">Before Combat</span>
+        <div class="step-detail">Longstrider on everyone (lasts all day). Heroes' Feast before boss fights. Plant Growth on chokepoints.</div>
+      </li>
+      <li>
+        <span class="step-action">Opening spell or shift</span> <span class="step-timing turn">Turn 1</span>
+        <div class="step-detail">Option A: Cast a big spell (Call Lightning, Entangle) then shift next turn.<br>Option B: Wild Shape immediately (bonus action) and attack with your action.</div>
+      </li>
+      <li>
+        <span class="step-action">Maul with Wild Strike</span> <span class="step-timing every">Every Turn</span>
+        <div class="step-detail">2 attacks per turn (3 at level 10). Use form abilities — Owlbear Crushing Flight, Myrmidon AoE, Panther Pounce.</div>
+      </li>
+      <li>
+        <span class="step-action">When Wild Shape drops</span> <span class="step-timing turn">Reactive</span>
+        <div class="step-detail">You revert to gnome form with full HP and spell slots. Cast Heal, throw a big spell, or shift again. This is your second life.</div>
+      </li>
+    </ol>
+
+    <div class="callout tip" style="margin-top:1.25rem;">
+      <div class="callout-label">When to Stay in Gnome Form</div>
+      <p>• Against many weak enemies — Call Lightning or Ice Storm clears faster<br>
+      • When allies need healing — Heal (70 HP) or Healing Word<br>
+      • Summoning — Conjure Animals/Elemental then let them fight<br>
+      • Dialogue, puzzles, or exploration</p>
+    </div>
+  </section>
+
+  <!-- PARTY -->
+  <section class="section" id="party">
+    <h2>Recommended Party</h2>
+    <p>You're the flexible frontliner + off-healer. Build around sustained damage and a dedicated healer.</p>
+
+    <div class="party-grid" style="margin-top:1rem;">
+      <div class="party-card">
+        <div class="party-name">Shadowheart</div>
+        <div class="party-role">Cleric · Primary Healer</div>
+        <div class="party-desc">Heals the party while you tank in beast form. Spirit Guardians + your frontline shreds melee encounters.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Gale</div>
+        <div class="party-role">Wizard · AoE Nuker</div>
+        <div class="party-desc">You lock enemies down with Plant Growth or prone — he drops Fireball on top. Haste on you before shifting is huge.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Astarion</div>
+        <div class="party-role">Rogue · Burst DPS</div>
+        <div class="party-desc">You Pounce enemies prone — he gets free Sneak Attack crits. Handles traps, locks, and scouting.</div>
+      </div>
+      <div class="party-card">
+        <div class="party-name">Alt: Lae'zel</div>
+        <div class="party-role">Fighter · Sustained DPS</div>
+        <div class="party-desc">Two frontliners. Action Surge combos with your prone setup. Swap for Gale if you want melee-heavy.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="guide-footer">BG3 Pure Moon Druid Build Guide · Forest Gnome · Patch 7+</div>
+
+</main>
+</div>
+
+<script>
+// Highlight active sidebar link on scroll
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector('.sidebar a[href="#' + entry.target.id + '"]');
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
