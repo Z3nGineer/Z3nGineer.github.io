@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Z3nGineer — Game Guides</title>
+<title>Z3nGineer — Guides, Modpacks &amp; Tools</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -24,10 +24,12 @@
   --gold-bright:#e4c565;
   --gold-dim:#8a7234;
   --gold-glow:rgba(201,168,76,0.08);
+  --gold-border:rgba(201,168,76,0.12);
   --blue:#4a88cc;
   --blue-bright:#5ea0e8;
   --blue-dim:#385a80;
   --blue-glow:rgba(74,136,204,0.08);
+  --blue-border:rgba(74,136,204,0.12);
 }
 
 html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--ash) var(--void)}
@@ -52,6 +54,57 @@ body::before{
   z-index:9999;
 }
 
+a{text-decoration:none;color:inherit}
+
+/* === STICKY NAV === */
+.nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(5,5,5,0.85);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--ash);
+  padding:0 2rem;
+}
+
+.nav-inner{
+  max-width:1200px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:56px;
+}
+
+.nav-brand{
+  font-family:'Cinzel',serif;
+  font-size:0.8rem;
+  font-weight:700;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--parchment);
+}
+
+.nav-links{
+  display:flex;
+  gap:2rem;
+  list-style:none;
+}
+
+.nav-links a{
+  font-family:'Cinzel',serif;
+  font-size:0.65rem;
+  font-weight:600;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--dust);
+  transition:color 0.3s ease;
+  padding:0.25rem 0;
+}
+.nav-links a:hover{color:var(--parchment)}
+
+/* === HERO === */
 .hero{
   position:relative;
   display:flex;
@@ -59,52 +112,31 @@ body::before{
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding:6rem 2rem 5rem;
+  padding:7rem 2rem 5rem;
   overflow:hidden;
-}
-
-.hero::before{
-  content:'';
-  position:absolute;
-  top:0;left:0;right:0;
-  height:1px;
-  background:linear-gradient(90deg,transparent,var(--gold-dim),var(--gold),var(--gold-dim),transparent);
-  opacity:0.4;
-}
-
-.hero::after{
-  content:'';
-  position:absolute;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:min(600px,80%);
-  height:1px;
-  background:linear-gradient(90deg,transparent,var(--ash-light),transparent);
 }
 
 .hero-glow{
   position:absolute;
-  top:30%;left:50%;
+  top:25%;left:50%;
   transform:translate(-50%,-50%);
-  width:700px;height:400px;
-  background:radial-gradient(ellipse,rgba(201,168,76,0.04) 0%,transparent 70%);
+  width:800px;height:500px;
+  background:radial-gradient(ellipse,rgba(201,168,76,0.035) 0%,transparent 70%);
   pointer-events:none;
 }
 
 .brand{
   font-family:'Cinzel',serif;
   font-weight:800;
-  font-size:clamp(2.4rem,5vw,3.6rem);
-  letter-spacing:0.18em;
+  font-size:clamp(2.8rem,6vw,4.2rem);
+  letter-spacing:0.2em;
   text-transform:uppercase;
-  color:var(--parchment);
   position:relative;
   animation:fadeDown 0.8s ease both;
 }
 
 .brand span{
-  background:linear-gradient(180deg,var(--parchment) 30%,var(--gold) 100%);
+  background:linear-gradient(180deg,var(--parchment) 20%,var(--gold) 100%);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   background-clip:text;
@@ -119,7 +151,7 @@ body::before{
 }
 .ornament::before,.ornament::after{
   content:'';
-  width:clamp(40px,10vw,100px);
+  width:clamp(40px,12vw,120px);
   height:1px;
   background:linear-gradient(90deg,transparent,var(--gold-dim));
 }
@@ -136,49 +168,134 @@ body::before{
 
 .tagline{
   font-family:'Cormorant Garamond',serif;
-  font-size:clamp(1.1rem,2.5vw,1.4rem);
+  font-size:clamp(1.15rem,2.5vw,1.5rem);
   font-weight:400;
   font-style:italic;
   color:var(--dust);
   letter-spacing:0.04em;
-  max-width:500px;
+  max-width:550px;
   animation:fadeIn 1s ease 0.5s both;
 }
 
-.section{
-  max-width:1100px;
+.hero-stats{
+  display:flex;
+  gap:3rem;
+  margin-top:3rem;
+  animation:fadeIn 1s ease 0.7s both;
+}
+
+.stat{text-align:center}
+.stat-num{
+  font-family:'Cinzel',serif;
+  font-size:1.6rem;
+  font-weight:700;
+  color:var(--parchment);
+  display:block;
+}
+.stat-label{
+  font-size:0.7rem;
+  font-weight:600;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--dust);
+}
+
+/* === GAME SECTIONS === */
+.game-section{
+  max-width:1200px;
   margin:0 auto;
   padding:0 2rem 5rem;
+  position:relative;
 }
 
-.section-header{
-  text-align:center;
-  margin-bottom:3rem;
-  animation:fadeIn 0.8s ease 0.6s both;
+.game-header{
+  display:flex;
+  align-items:center;
+  gap:1.5rem;
+  margin-bottom:2.5rem;
+  padding-bottom:1.5rem;
+  border-bottom:1px solid var(--ash);
+  position:relative;
 }
 
-.section-label{
+/* Colored accent line on game header */
+.game-header::after{
+  content:'';
+  position:absolute;
+  bottom:-1px;
+  left:0;
+  width:80px;
+  height:2px;
+}
+
+.game-section[data-game="oblivion"] .game-header::after{background:var(--gold)}
+.game-section[data-game="bg3"] .game-header::after{background:var(--blue)}
+
+.game-icon{
+  width:52px;
+  height:52px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.5rem;
+  flex-shrink:0;
+}
+
+.game-section[data-game="oblivion"] .game-icon{
+  background:var(--gold-glow);
+  border:1px solid var(--gold-border);
+  color:var(--gold);
+}
+.game-section[data-game="bg3"] .game-icon{
+  background:var(--blue-glow);
+  border:1px solid var(--blue-border);
+  color:var(--blue);
+}
+
+.game-info{flex:1}
+
+.game-title{
   font-family:'Cinzel',serif;
-  font-size:0.7rem;
+  font-size:clamp(1.2rem,2.5vw,1.6rem);
   font-weight:700;
-  letter-spacing:0.25em;
-  text-transform:uppercase;
-  color:var(--gold-dim);
-  margin-bottom:0.5rem;
-}
-
-.section-title{
-  font-family:'Cinzel',serif;
-  font-size:clamp(1.3rem,3vw,1.8rem);
-  font-weight:600;
   color:var(--parchment);
-  letter-spacing:0.08em;
+  letter-spacing:0.06em;
 }
 
+.game-subtitle{
+  font-size:0.85rem;
+  color:var(--dust);
+  margin-top:0.15rem;
+}
+
+.game-count{
+  font-family:'Cinzel',serif;
+  font-size:0.65rem;
+  font-weight:600;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  padding:0.35rem 0.9rem;
+  border-radius:2px;
+  flex-shrink:0;
+}
+
+.game-section[data-game="oblivion"] .game-count{
+  color:var(--gold-dim);
+  background:var(--gold-glow);
+  border:1px solid var(--gold-border);
+}
+.game-section[data-game="bg3"] .game-count{
+  color:var(--blue-dim);
+  background:var(--blue-glow);
+  border:1px solid var(--blue-border);
+}
+
+/* === GUIDE CARDS === */
 .guides{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:1.5rem;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:1.25rem;
 }
 
 .guide-card{
@@ -187,19 +304,13 @@ body::before{
   flex-direction:column;
   background:var(--stone);
   border:1px solid var(--ash);
-  border-radius:2px;
+  border-radius:3px;
   overflow:hidden;
-  text-decoration:none;
-  color:inherit;
   transition:transform 0.35s ease,border-color 0.35s ease,box-shadow 0.35s ease;
-  animation:fadeUp 0.7s ease both;
 }
-.guide-card:nth-child(1){animation-delay:0.7s}
-.guide-card:nth-child(2){animation-delay:0.85s}
-.guide-card:nth-child(3){animation-delay:1s}
 
 .guide-card:hover{
-  transform:translateY(-4px);
+  transform:translateY(-3px);
   border-color:var(--ash-light);
 }
 
@@ -214,91 +325,68 @@ body::before{
 .guide-card:hover::before{opacity:1}
 
 .guide-card[data-accent="gold"]::before{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-.guide-card[data-accent="gold"]:hover{box-shadow:0 8px 40px rgba(201,168,76,0.06)}
+.guide-card[data-accent="gold"]:hover{box-shadow:0 8px 40px rgba(201,168,76,0.05)}
 
 .guide-card[data-accent="blue"]::before{background:linear-gradient(90deg,transparent,var(--blue),transparent)}
-.guide-card[data-accent="blue"]:hover{box-shadow:0 8px 40px rgba(74,136,204,0.06)}
+.guide-card[data-accent="blue"]:hover{box-shadow:0 8px 40px rgba(74,136,204,0.05)}
 
-.card-banner{
-  position:relative;
-  padding:2.5rem 2rem 2rem;
-  overflow:hidden;
+.card-top{
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
+  padding:1.5rem 1.75rem 0;
 }
 
-.card-banner::after{
-  content:'';
-  position:absolute;
-  bottom:0;left:10%;right:10%;
-  height:1px;
-  background:linear-gradient(90deg,transparent,var(--ash-light),transparent);
-}
-
-.card-game{
-  font-family:'Cinzel',serif;
-  font-size:0.6rem;
+.card-type{
+  font-size:0.65rem;
   font-weight:600;
-  letter-spacing:0.2em;
+  letter-spacing:0.12em;
   text-transform:uppercase;
-  margin-bottom:0.75rem;
+  padding:0.25rem 0.6rem;
+  border-radius:2px;
 }
 
-.guide-card[data-accent="gold"] .card-game{color:var(--gold-dim)}
-.guide-card[data-accent="blue"] .card-game{color:var(--blue-dim)}
+.guide-card[data-accent="gold"] .card-type{
+  color:var(--gold);
+  background:var(--gold-glow);
+  border:1px solid var(--gold-border);
+}
+.guide-card[data-accent="blue"] .card-type{
+  color:var(--blue);
+  background:var(--blue-glow);
+  border:1px solid var(--blue-border);
+}
+
+.card-body{
+  padding:1.25rem 1.75rem 1.5rem;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
 
 .card-title{
   font-family:'Cinzel',serif;
-  font-size:1.4rem;
+  font-size:1.3rem;
   font-weight:700;
   color:var(--parchment);
   line-height:1.3;
   letter-spacing:0.03em;
+  margin-bottom:0.6rem;
   transition:color 0.3s ease;
 }
 
 .guide-card[data-accent="gold"]:hover .card-title{color:var(--gold-bright)}
 .guide-card[data-accent="blue"]:hover .card-title{color:var(--blue-bright)}
 
-.card-body{
-  padding:1.5rem 2rem;
-  flex:1;
-  display:flex;
-  flex-direction:column;
-}
-
-.card-type{
-  display:inline-flex;
-  align-items:center;
-  gap:0.4rem;
-  font-size:0.7rem;
-  font-weight:600;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  padding:0.3rem 0.7rem;
-  border-radius:2px;
-  width:fit-content;
-  margin-bottom:1rem;
-}
-
-.guide-card[data-accent="gold"] .card-type{
-  color:var(--gold);
-  background:var(--gold-glow);
-  border:1px solid rgba(201,168,76,0.1);
-}
-.guide-card[data-accent="blue"] .card-type{
-  color:var(--blue);
-  background:var(--blue-glow);
-  border:1px solid rgba(74,136,204,0.1);
-}
-
 .card-desc{
   color:var(--silver);
-  font-size:0.95rem;
+  font-size:0.9rem;
   line-height:1.7;
   flex:1;
 }
 
 .card-footer{
-  padding:1.25rem 2rem;
+  padding:1rem 1.75rem;
   border-top:1px solid var(--ash);
   display:flex;
   align-items:center;
@@ -307,7 +395,7 @@ body::before{
 
 .card-cta{
   font-family:'Cinzel',serif;
-  font-size:0.7rem;
+  font-size:0.65rem;
   font-weight:600;
   letter-spacing:0.15em;
   text-transform:uppercase;
@@ -320,7 +408,7 @@ body::before{
 .guide-card[data-accent="blue"]:hover .card-cta{color:var(--blue);letter-spacing:0.2em}
 
 .card-arrow{
-  font-size:1.1rem;
+  font-size:1rem;
   transition:transform 0.3s ease,opacity 0.3s ease;
   opacity:0.3;
 }
@@ -329,54 +417,75 @@ body::before{
 .guide-card[data-accent="gold"] .card-arrow{color:var(--gold)}
 .guide-card[data-accent="blue"] .card-arrow{color:var(--blue)}
 
-.soon{
-  text-align:center;
-  padding:3rem 2rem 6rem;
-  animation:fadeIn 1s ease 1.1s both;
-}
-
-.soon-divider{
+/* === SECTION DIVIDER === */
+.divider{
+  max-width:1200px;
+  margin:0 auto 5rem;
+  padding:0 2rem;
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:1.2rem;
-  margin-bottom:2.5rem;
+  gap:1.5rem;
 }
-.soon-divider::before,.soon-divider::after{
+.divider::before,.divider::after{
   content:'';
-  width:clamp(30px,8vw,80px);
+  flex:1;
   height:1px;
-  background:var(--ash-light);
+  background:linear-gradient(90deg,transparent,var(--ash),transparent);
 }
-.soon-divider-dot{
+.divider-dot{
   width:4px;height:4px;
   background:var(--ash-light);
   transform:rotate(45deg);
 }
 
-.soon-text{
+/* === MORE GAMES TEASER === */
+.more-games{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 2rem 6rem;
+  text-align:center;
+}
+
+.more-games-box{
+  border:1px dashed var(--ash);
+  border-radius:3px;
+  padding:3.5rem 2rem;
+  background:rgba(22,21,20,0.4);
+}
+
+.more-games-label{
   font-family:'Cinzel',serif;
-  font-size:0.75rem;
+  font-size:0.7rem;
   font-weight:600;
   letter-spacing:0.3em;
   text-transform:uppercase;
   color:var(--dust);
+  margin-bottom:0.75rem;
 }
 
-.soon-sub{
+.more-games-text{
   font-family:'Cormorant Garamond',serif;
-  font-size:1.05rem;
+  font-size:1.15rem;
   font-style:italic;
   color:var(--ash-light);
-  margin-top:0.75rem;
 }
 
+/* === FOOTER === */
 .footer{
-  text-align:center;
-  padding:2rem;
   border-top:1px solid var(--ash);
+  padding:2.5rem 2rem;
 }
-.footer-text{
+
+.footer-inner{
+  max-width:1200px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.footer-brand{
   font-family:'Cinzel',serif;
   font-size:0.6rem;
   letter-spacing:0.2em;
@@ -384,6 +493,12 @@ body::before{
   color:var(--ash-light);
 }
 
+.footer-note{
+  font-size:0.75rem;
+  color:var(--ash-light);
+}
+
+/* === ANIMATIONS === */
 @keyframes fadeDown{
   from{opacity:0;transform:translateY(-20px)}
   to{opacity:1;transform:translateY(0)}
@@ -397,42 +512,84 @@ body::before{
   to{opacity:1}
 }
 
+/* === RESPONSIVE === */
 @media(max-width:700px){
-  .hero{padding:4rem 1.5rem 3.5rem}
-  .section{padding:0 1.25rem 4rem}
-  .guides{grid-template-columns:1fr;gap:1.25rem}
-  .card-banner{padding:2rem 1.5rem 1.5rem}
-  .card-body{padding:1.25rem 1.5rem}
-  .card-footer{padding:1rem 1.5rem}
+  .nav-links{gap:1rem}
+  .hero{padding:5rem 1.5rem 3.5rem}
+  .hero-stats{gap:2rem}
+  .game-section{padding:0 1.25rem 4rem}
+  .game-header{flex-wrap:wrap;gap:1rem}
+  .game-count{display:none}
+  .guides{grid-template-columns:1fr;gap:1rem}
+  .card-top{padding:1.25rem 1.25rem 0}
+  .card-body{padding:1rem 1.25rem 1.25rem}
+  .card-footer{padding:0.85rem 1.25rem}
+  .footer-inner{flex-direction:column;gap:0.75rem}
+  .more-games{padding:0 1.25rem 5rem}
+}
+
+@media(max-width:480px){
+  .nav-links{display:none}
+  .hero-stats{flex-direction:column;gap:1.25rem}
 }
 </style>
 </head>
 <body>
 
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="nav-brand">Z3nGineer</span>
+    <ul class="nav-links">
+      <li><a href="#oblivion">Oblivion</a></li>
+      <li><a href="#bg3">Baldur's Gate 3</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
 <header class="hero">
   <div class="hero-glow"></div>
   <h1 class="brand"><span>Z3nGineer</span></h1>
   <div class="ornament">
     <div class="ornament-diamond"></div>
   </div>
-  <p class="tagline">Build guides, modpacks, and deep dives for the games worth mastering</p>
+  <p class="tagline">Guides, modpacks, and tools for the games worth mastering</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">3</span>
+      <span class="stat-label">Guides</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">2</span>
+      <span class="stat-label">Games</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1</span>
+      <span class="stat-label">Modpack</span>
+    </div>
+  </div>
 </header>
 
-<main class="section">
-  <div class="section-header">
-    <p class="section-label">Collection</p>
-    <h2 class="section-title">Guides &amp; Modpacks</h2>
+<!-- OBLIVION REMASTERED -->
+<section class="game-section" data-game="oblivion" id="oblivion">
+  <div class="game-header">
+    <div class="game-icon">&#9876;</div>
+    <div class="game-info">
+      <h2 class="game-title">Oblivion Remastered</h2>
+      <p class="game-subtitle">The Elder Scrolls IV</p>
+    </div>
+    <span class="game-count">2 Resources</span>
   </div>
 
   <div class="guides">
 
     <a href="CHIM.html" class="guide-card" data-accent="gold">
-      <div class="card-banner">
-        <p class="card-game">Oblivion Remastered</p>
-        <h3 class="card-title">CHIM</h3>
+      <div class="card-top">
+        <span class="card-type">Modpack</span>
       </div>
       <div class="card-body">
-        <span class="card-type">Modpack</span>
+        <h3 class="card-title">CHIM</h3>
         <p class="card-desc">A curated modpack built for a darker, deeper Cyrodiil. Hand-tested load order, conflict resolution, and custom patches included.</p>
       </div>
       <div class="card-footer">
@@ -442,12 +599,11 @@ body::before{
     </a>
 
     <a href="oblivion-spellsword-guide.html" class="guide-card" data-accent="gold">
-      <div class="card-banner">
-        <p class="card-game">Oblivion Remastered</p>
-        <h3 class="card-title">Breton Spellsword</h3>
+      <div class="card-top">
+        <span class="card-type">Build Guide</span>
       </div>
       <div class="card-body">
-        <span class="card-type">Build Guide</span>
+        <h3 class="card-title">Breton Spellsword</h3>
         <p class="card-desc">Blade and spell in equal measure. A leveling-efficient Breton build covering race, birthsign, class design, and the path to endgame enchanting.</p>
       </div>
       <div class="card-footer">
@@ -456,13 +612,30 @@ body::before{
       </div>
     </a>
 
+  </div>
+</section>
+
+<div class="divider"><div class="divider-dot"></div></div>
+
+<!-- BALDUR'S GATE 3 -->
+<section class="game-section" data-game="bg3" id="bg3">
+  <div class="game-header">
+    <div class="game-icon">&#9733;</div>
+    <div class="game-info">
+      <h2 class="game-title">Baldur's Gate 3</h2>
+      <p class="game-subtitle">Larian Studios</p>
+    </div>
+    <span class="game-count">1 Resource</span>
+  </div>
+
+  <div class="guides">
+
     <a href="bg3-moon-druid-guide.html" class="guide-card" data-accent="blue">
-      <div class="card-banner">
-        <p class="card-game">Baldur's Gate 3</p>
-        <h3 class="card-title">Pure Moon Druid</h3>
+      <div class="card-top">
+        <span class="card-type">Build Guide</span>
       </div>
       <div class="card-body">
-        <span class="card-type">Build Guide</span>
+        <h3 class="card-title">Pure Moon Druid</h3>
         <p class="card-desc">Full commitment to the circle. Wild Shape optimization, spell selection, and gear picks for a Druid that never breaks form.</p>
       </div>
       <div class="card-footer">
@@ -472,18 +645,24 @@ body::before{
     </a>
 
   </div>
-</main>
-
-<section class="soon">
-  <div class="soon-divider">
-    <div class="soon-divider-dot"></div>
-  </div>
-  <p class="soon-text">More Guides Coming Soon</p>
-  <p class="soon-sub">New builds, new games, same depth.</p>
 </section>
 
+<div class="divider"><div class="divider-dot"></div></div>
+
+<!-- MORE GAMES -->
+<section class="more-games">
+  <div class="more-games-box">
+    <p class="more-games-label">More Games Coming Soon</p>
+    <p class="more-games-text">New builds, new worlds, same depth.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer class="footer">
-  <p class="footer-text">&copy; 2026 Z3nGineer</p>
+  <div class="footer-inner">
+    <span class="footer-brand">&copy; 2026 Z3nGineer</span>
+    <span class="footer-note">All guides hand-crafted. No filler.</span>
+  </div>
 </footer>
 
 </body>
