@@ -4,593 +4,248 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Z3nGineer — Software Engineer, Chef &amp; Musician</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-
 :root{
-  --void:#050505;
-  --abyss:#0a0908;
-  --obsidian:#0f0e0d;
-  --stone:#161514;
-  --ash:#2a2826;
-  --ash-light:#3a3735;
-  --dust:#7a7468;
-  --silver:#a09888;
-  --bone:#c8bca8;
-  --parchment:#e0d8c8;
-  --white:#f0ece4;
-  --gold:#c9a84c;
-  --gold-bright:#e4c565;
-  --gold-dim:#8a7234;
-  --gold-glow:rgba(201,168,76,0.07);
-  --gold-border:rgba(201,168,76,0.12);
-  --blue:#4a88cc;
-  --blue-dim:#385a80;
-  --blue-glow:rgba(74,136,204,0.07);
-  --blue-border:rgba(74,136,204,0.12);
-  --green:#5a9a5a;
-  --green-dim:#3a6a3a;
-  --green-glow:rgba(90,154,90,0.07);
-  --green-border:rgba(90,154,90,0.12);
-  --purple:#8a6ab5;
-  --purple-dim:#5a4080;
-  --purple-glow:rgba(138,106,181,0.07);
-  --purple-border:rgba(138,106,181,0.12);
-  --orange:#c88040;
-  --orange-dim:#8a5a2a;
-  --orange-glow:rgba(200,128,64,0.07);
-  --orange-border:rgba(200,128,64,0.12);
+  --bg:#080808;--surface:#111;--surface-2:#181818;--surface-3:#1e1e1e;
+  --border:#222;--border-light:#2a2a2a;
+  --text:#f0ece4;--text-dim:#aaa;--text-muted:#666;
+  --accent:#c9a84c;--accent-bright:#e4c565;--accent-dim:#8a7234;--accent-glow:rgba(201,168,76,0.08);
+  --purple:#8a6ab5;--purple-glow:rgba(138,106,181,0.08);
+  --blue:#4a88cc;--blue-glow:rgba(74,136,204,0.08);
+  --green:#5a9a5a;--green-glow:rgba(90,154,90,0.08);
+  --orange:#e85d26;--orange-glow:rgba(232,93,38,0.08);
 }
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--accent-dim) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:18px;line-height:1.7;overflow-x:hidden}
+::selection{background:var(--accent);color:var(--bg)}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--accent-bright)}
 
-html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--ash) var(--void)}
-body{
-  background:var(--abyss);
-  color:var(--bone);
-  font-family:'Source Sans 3',sans-serif;
-  font-size:19px;
-  line-height:1.7;
-  -webkit-font-smoothing:antialiased;
-}
+/* Cursor glow */
+.glow{position:fixed;width:500px;height:500px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(201,168,76,0.03) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left 0.3s,top 0.3s}
 
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  opacity:0.025;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size:200px;
-  pointer-events:none;
-  z-index:9999;
-}
-
-a{color:var(--gold);text-decoration:none}
-a:hover{color:var(--gold-bright);text-decoration:underline}
-
-/* === NAV === */
-.nav{
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:rgba(5,5,5,0.85);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--ash);
-  padding:0 2rem;
-}
-.nav-inner{
-  max-width:900px;
-  margin:0 auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  height:56px;
-}
-.nav-brand{
-  font-family:'Cinzel',serif;
-  font-size:0.8rem;
-  font-weight:700;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  color:var(--parchment);
-  text-decoration:none;
-}
-.nav-brand:hover{color:var(--gold-bright);text-decoration:none}
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.nav-brand{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;color:var(--text);text-decoration:none;transition:color 0.3s}
+.nav-brand:hover{color:var(--accent)}
 .nav-links{display:flex;gap:2rem;list-style:none}
-.nav-links a{
-  font-family:'Cinzel',serif;
-  font-size:0.65rem;
-  font-weight:600;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  color:var(--dust);
-  transition:color 0.3s ease;
-  text-decoration:none;
-}
-.nav-links a:hover{color:var(--parchment);text-decoration:none}
+.nav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.3s;position:relative}
+.nav-links a:hover{color:var(--accent)}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--accent);transform:scaleX(0);transition:transform 0.3s;transform-origin:right}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
 
-/* === PAGE LAYOUT === */
-.page{
-  max-width:900px;
-  margin:0 auto;
-  padding:4rem 2rem 6rem;
-}
+/* Hero */
+.hero{padding:10rem 2rem 5rem;max-width:1100px;margin:0 auto;position:relative;z-index:2}
+.hero-img{width:100%;border-radius:12px;border:1px solid var(--border);margin-bottom:3rem;animation:fadeUp 0.8s ease both}
+.hero-label{font-size:0.7rem;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;animation:fadeUp 0.8s ease 0.15s both}
+.hero h1{font-family:'Cinzel',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:800;color:var(--text);letter-spacing:0.08em;line-height:1.2;margin-bottom:1.5rem;animation:fadeUp 0.8s ease 0.25s both}
+.hero-bio{max-width:750px;color:var(--text-dim);font-size:1.1rem;line-height:1.9;font-weight:300;animation:fadeUp 0.8s ease 0.35s both}
+.hero-bio p+p{margin-top:1rem}
+.hero-bio strong{color:var(--text);font-weight:600}
 
-/* === INTRO === */
-.intro{margin-bottom:4rem}
+.tech-bar{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:2rem;animation:fadeUp 0.8s ease 0.45s both}
+.tech{font-family:'JetBrains Mono',monospace;font-size:0.7rem;font-weight:500;padding:0.3rem 0.7rem;border-radius:4px;color:var(--text-muted);background:var(--surface);border:1px solid var(--border)}
 
-.intro-label{
-  font-family:'Cinzel',serif;
-  font-size:0.65rem;
-  font-weight:600;
-  letter-spacing:0.25em;
-  text-transform:uppercase;
-  color:var(--gold-dim);
-  margin-bottom:1rem;
-}
+/* Section */
+.section{max-width:1100px;margin:0 auto;padding:5rem 2rem}
+.section+.section{border-top:1px solid var(--border)}
+.section-label{font-size:0.65rem;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:2.5rem}
 
-.intro-title{
-  font-family:'Cinzel',serif;
-  font-size:clamp(1.8rem,4vw,2.6rem);
-  font-weight:700;
-  color:var(--parchment);
-  letter-spacing:0.06em;
-  line-height:1.25;
-  margin-bottom:1.5rem;
-}
-
-.intro-body{
-  color:var(--silver);
-  font-size:1.05rem;
-  line-height:1.85;
-  max-width:750px;
-}
-.intro-body p + p{margin-top:1rem}
-
-/* === TECH STACK BAR === */
-.tech-bar{
-  display:flex;
-  flex-wrap:wrap;
-  gap:0.5rem;
-  margin-top:2rem;
-}
-.tech-tag{
-  font-family:'JetBrains Mono',monospace;
-  font-size:0.7rem;
-  font-weight:500;
-  padding:0.3rem 0.7rem;
-  border-radius:2px;
-  color:var(--dust);
-  background:var(--stone);
-  border:1px solid var(--ash);
-}
-
-/* === PROJECT SECTIONS === */
+/* Project Cards */
+.projects{display:flex;flex-direction:column;gap:2rem}
 .project{
-  margin-bottom:4rem;
-  padding-bottom:4rem;
-  border-bottom:1px solid var(--ash);
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  padding:2.5rem;position:relative;overflow:hidden;
+  transition:all 0.4s cubic-bezier(0.16,1,0.3,1);
 }
-.project:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.project:hover{border-color:var(--border-light);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.project::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity 0.4s}
+.project:hover::before{opacity:1}
+.project[data-c="purple"]::before{background:linear-gradient(90deg,transparent,var(--purple),transparent)}
+.project[data-c="blue"]::before{background:linear-gradient(90deg,transparent,var(--blue),transparent)}
+.project[data-c="orange"]::before{background:linear-gradient(90deg,transparent,var(--orange),transparent)}
+.project[data-c="gold"]::before{background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.project[data-c="green"]::before{background:linear-gradient(90deg,transparent,var(--green),transparent)}
 
-.project-header{
-  display:flex;
-  align-items:flex-start;
-  gap:1.25rem;
-  margin-bottom:2rem;
-}
+.project-top{display:flex;align-items:center;gap:1.2rem;margin-bottom:1.5rem}
+.project-icon{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.project[data-c="purple"] .project-icon{background:var(--purple-glow);color:var(--purple);border:1px solid rgba(138,106,181,0.15)}
+.project[data-c="blue"] .project-icon{background:var(--blue-glow);color:var(--blue);border:1px solid rgba(74,136,204,0.15)}
+.project[data-c="orange"] .project-icon{background:var(--orange-glow);color:var(--orange);border:1px solid rgba(232,93,38,0.15)}
+.project[data-c="gold"] .project-icon{background:var(--accent-glow);color:var(--accent);border:1px solid rgba(201,168,76,0.15)}
+.project[data-c="green"] .project-icon{background:var(--green-glow);color:var(--green);border:1px solid rgba(90,154,90,0.15)}
 
-.project-icon{
-  width:48px;
-  height:48px;
-  border-radius:8px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:1.3rem;
-  flex-shrink:0;
-  margin-top:0.2rem;
-}
+.project-name{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--text)}
+.project-sub{font-size:0.8rem;color:var(--text-muted);margin-top:0.1rem}
+.project-desc{color:var(--text-dim);font-size:0.95rem;line-height:1.8;margin-bottom:1.5rem;font-weight:300}
+.project-img{width:100%;max-width:500px;border-radius:8px;border:1px solid var(--border);margin-bottom:1.5rem}
 
-.project[data-color="gold"] .project-icon{background:var(--gold-glow);border:1px solid var(--gold-border);color:var(--gold)}
-.project[data-color="blue"] .project-icon{background:var(--blue-glow);border:1px solid var(--blue-border);color:var(--blue)}
-.project[data-color="green"] .project-icon{background:var(--green-glow);border:1px solid var(--green-border);color:var(--green)}
-.project[data-color="purple"] .project-icon{background:var(--purple-glow);border:1px solid var(--purple-border);color:var(--purple)}
-.project[data-color="orange"] .project-icon{background:var(--orange-glow);border:1px solid var(--orange-border);color:var(--orange)}
+.features{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0.6rem}
+.feat{display:flex;align-items:flex-start;gap:0.7rem;padding:0.8rem 1rem;background:var(--surface-2);border:1px solid var(--border);border-radius:6px}
+.feat-dot{width:5px;height:5px;border-radius:1px;transform:rotate(45deg);margin-top:0.5rem;flex-shrink:0}
+.project[data-c="purple"] .feat-dot{background:var(--purple)}
+.project[data-c="blue"] .feat-dot{background:var(--blue)}
+.project[data-c="orange"] .feat-dot{background:var(--orange)}
+.project[data-c="gold"] .feat-dot{background:var(--accent)}
+.project[data-c="green"] .feat-dot{background:var(--green)}
+.feat-text{font-size:0.85rem;line-height:1.5;color:var(--text-dim);font-weight:300}
+.feat-text strong{color:var(--text);font-weight:600}
 
-.project-info{flex:1}
+.stack{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1.5rem}
+.stack .tech{font-size:0.6rem;padding:0.2rem 0.5rem}
 
-.project-name{
-  font-family:'Cinzel',serif;
-  font-size:1.4rem;
-  font-weight:700;
-  color:var(--parchment);
-  letter-spacing:0.04em;
-  line-height:1.3;
-}
+footer{border-top:1px solid var(--border);padding:2.5rem;text-align:center;max-width:1100px;margin:0 auto}
+footer span{font-size:0.75rem;color:var(--text-muted);font-weight:300}
 
-.project-sub{
-  font-size:0.85rem;
-  color:var(--dust);
-  margin-top:0.2rem;
-}
+.reveal{opacity:0;transform:translateY(25px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.r1{transition-delay:0.1s}.r2{transition-delay:0.2s}
 
-.project-desc{
-  color:var(--silver);
-  font-size:0.95rem;
-  line-height:1.8;
-  margin-bottom:1.75rem;
-}
-
-/* Feature list */
-.features{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:0.75rem;
-}
-
-.feature{
-  display:flex;
-  align-items:flex-start;
-  gap:0.75rem;
-  padding:0.85rem 1rem;
-  background:var(--stone);
-  border:1px solid var(--ash);
-  border-radius:2px;
-}
-
-.feature-bullet{
-  width:5px;
-  height:5px;
-  border-radius:1px;
-  transform:rotate(45deg);
-  margin-top:0.55rem;
-  flex-shrink:0;
-}
-
-.project[data-color="gold"] .feature-bullet{background:var(--gold-dim)}
-.project[data-color="blue"] .feature-bullet{background:var(--blue-dim)}
-.project[data-color="green"] .feature-bullet{background:var(--green-dim)}
-.project[data-color="purple"] .feature-bullet{background:var(--purple-dim)}
-.project[data-color="orange"] .feature-bullet{background:var(--orange-dim)}
-
-.feature-text{
-  font-size:0.85rem;
-  line-height:1.5;
-  color:var(--bone);
-}
-
-.feature-text strong{color:var(--parchment);font-weight:600}
-
-/* Stack tags per project */
-.project-stack{
-  display:flex;
-  flex-wrap:wrap;
-  gap:0.4rem;
-  margin-top:1.5rem;
-}
-.project-stack .tech-tag{
-  font-size:0.65rem;
-  padding:0.2rem 0.55rem;
-}
-
-/* === FOOTER === */
-.footer{
-  border-top:1px solid var(--ash);
-  padding:2.5rem 2rem;
-}
-.footer-inner{
-  max-width:900px;
-  margin:0 auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-.footer-brand{
-  font-family:'Cinzel',serif;
-  font-size:0.6rem;
-  letter-spacing:0.2em;
-  text-transform:uppercase;
-  color:var(--ash-light);
-}
-.footer-note{
-  font-size:0.75rem;
-  color:var(--ash-light);
-}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(25px)}100%{opacity:1;transform:translateY(0)}}
 
 @media(max-width:700px){
-  .page{padding:3rem 1.25rem 5rem}
-  .nav-links{gap:1rem}
-  .project-header{flex-direction:column;gap:0.75rem}
-  .features{grid-template-columns:1fr}
-  .footer-inner{flex-direction:column;gap:0.75rem;text-align:center}
-}
-@media(max-width:480px){
   .nav-links{display:none}
+  .hero{padding:7rem 1.5rem 3rem}
+  .section{padding:3rem 1.5rem}
+  .project{padding:1.8rem}
+  .features{grid-template-columns:1fr}
+  .project-top{flex-wrap:wrap}
 }
 </style>
 </head>
 <body>
 
+<div class="glow" id="glow"></div>
+
 <nav class="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-brand">Z3nGineer</a>
     <ul class="nav-links">
-      <li><a href="guides.html">Guides</a></li>
+      <li><a href="guides.html">Game Guides</a></li>
       <li><a href="CHIM.html">CHIM Modpack</a></li>
       <li><a href="crockednloaded.html">Cooking</a></li>
-      <li><a href="#omnisuite">Projects</a></li>
+      <li><a href="#projects">Projects</a></li>
     </ul>
   </div>
 </nav>
 
-<div class="page">
-
-  <!-- HERO IMAGE -->
-  <img src="img/studio.jpg" alt="Studio setup" style="width:100%;border-radius:3px;margin-bottom:3rem;border:1px solid var(--ash);">
-
-  <!-- INTRO -->
-  <div class="intro">
-    <p class="intro-label">Portfolio</p>
-    <h1 class="intro-title">Software Engineer, Chef &amp; Musician</h1>
-    <div class="intro-body">
-      <p>I've been writing code since I was 15, when I taught myself HTML and CSS building full custom MySpace layouts — not picking themes, but writing the actual div-based page structures from scratch. Two decades later, the tools have changed but the instinct is the same: if I can see it, I can build it.</p>
-      <p>Today I design and build full-stack applications from the ground up — backend APIs, desktop frontends, ML pipelines, real-time streaming, and everything in between. Every project here was architected, coded, and shipped by me. No templates, no boilerplate generators, no outsourcing.</p>
-      <p>I work across the entire stack: Python backend systems, modern web frontends, GPU-accelerated machine learning, Docker infrastructure, audio/video signal processing, and low-level system tuning. If it can be built, I'll figure out how.</p>
-      <p>When I'm not coding, I'm either in the kitchen or in the studio. I'm a professional chef and I make music under the name <strong>MACK3Y</strong> — singing, producing, and building out the tools to do it all from my home studio. I also co-host <strong>CrockedNLoaded</strong>, a cooking channel with my boy CrockPotDaddy.</p>
-    </div>
-    <div class="tech-bar">
-      <span class="tech-tag">Python</span>
-      <span class="tech-tag">FastAPI</span>
-      <span class="tech-tag">JavaScript</span>
-      <span class="tech-tag">HTML/CSS</span>
-      <span class="tech-tag">TypeScript</span>
-      <span class="tech-tag">PyTorch</span>
-      <span class="tech-tag">Docker</span>
-      <span class="tech-tag">FFmpeg</span>
-      <span class="tech-tag">CUDA</span>
-      <span class="tech-tag">Linux</span>
-      <span class="tech-tag">Git</span>
-      <span class="tech-tag">REST APIs</span>
-      <span class="tech-tag">SSE/Streaming</span>
-      <span class="tech-tag">ChromaDB</span>
-    </div>
+<header class="hero">
+  <img src="img/studio.jpg" alt="My setup" class="hero-img">
+  <p class="hero-label">Portfolio</p>
+  <h1>Software Engineer, Chef &amp; Musician</h1>
+  <div class="hero-bio">
+    <p>I taught myself to code at 15 building MySpace layouts from scratch — not picking themes, writing the actual HTML and CSS. Twenty years later the tools changed but I didn't. If I can see it, I can build it.</p>
+    <p>I build full-stack apps from the ground up. Backend APIs, desktop frontends, ML pipelines, real-time streaming, audio and video processing. Everything on this site was designed, coded, and shipped by me. No templates, no generators, no outsourcing.</p>
+    <p>When I'm not coding I'm in the kitchen or the studio. I'm a professional chef and I make music as <strong>MACK3Y</strong>. I also co-host <strong><a href="crockednloaded.html">CrockedNLoaded</a></strong> — a cooking channel with my boy CrockPotDaddy where we cook whatever sounds fun and see what happens.</p>
   </div>
-
-  <!-- OMNISUITE -->
-  <div class="project" data-color="purple" id="omnisuite">
-    <div class="project-header">
-      <div class="project-icon">&#9830;</div>
-      <div class="project-info">
-        <h2 class="project-name">OmniSuite</h2>
-        <p class="project-sub">AI-Powered Music Production Platform</p>
-      </div>
-    </div>
-    <p class="project-desc">A full-stack desktop application for AI-assisted music production. OmniSuite integrates song generation, audio analysis, professional mixing and mastering, vocal production, voice conversion, image generation, and video creation into a single unified interface — all running locally on consumer hardware.</p>
-
-    <div class="features">
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Song Generation Engine</strong> — SSE-streamed Suno integration with captcha solving, Clerk auth fallback, and 73 few-shot genre examples for prompt engineering</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>3-Tier Audio Analysis</strong> — Gemini AI, librosa signal processing, and offline fallback. Multi-method BPM voting, key detection, and 16-profile genre fingerprinting</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Mix &amp; Master Engine</strong> — 14 genre presets with per-stem frequency pockets, full mix bus chain, LUFS-targeted mastering. Suno WAV stem resolution with Demucs fallback</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Vocal Production Pipeline</strong> — 10-stage LA studio vocal chain, RVC voice conversion with custom-trained model (6000 steps), per-layer pitch detection via pyin</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Stem Separation</strong> — Demucs + UVR5 pipeline for vocal isolation, de-reverb, and de-echo. Decompose and convert lead, harmony, and ad-lib layers independently</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Image Generation</strong> — Local-only pipeline: nunchaku, FLUX.1-dev, FLUX.1-schnell, and SDXL backends. No cloud dependencies</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Video Pipeline</strong> — 5-tier music analysis, LLM-directed shot lists, 54 genre-specific color grades, beat-synced editorial, LTX-Video I2V animation</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Lyrical AI</strong> — ChromaDB knowledge base with 452 documents, 294 artist profiles across 13 genres. Context-injected generation with universal craft principles</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Instrument Lab</strong> — Full 10-stage instrument replacement pipeline with MusicGen, Stable Audio, and audio super-resolution</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Chat Interface</strong> — AI assistant with SSE streaming, knowledge base retrieval, session memory, and tool orchestration across all subsystems</div>
-      </div>
-    </div>
-
-    <div class="project-stack">
-      <span class="tech-tag">Python</span>
-      <span class="tech-tag">FastAPI</span>
-      <span class="tech-tag">pywebview</span>
-      <span class="tech-tag">PyTorch</span>
-      <span class="tech-tag">CUDA 12.8</span>
-      <span class="tech-tag">Docker</span>
-      <span class="tech-tag">ChromaDB</span>
-      <span class="tech-tag">Demucs</span>
-      <span class="tech-tag">RVC</span>
-      <span class="tech-tag">pedalboard</span>
-      <span class="tech-tag">librosa</span>
-      <span class="tech-tag">FFmpeg</span>
-      <span class="tech-tag">FLUX</span>
-      <span class="tech-tag">LTX-Video</span>
-      <span class="tech-tag">SSE</span>
-    </div>
+  <div class="tech-bar">
+    <span class="tech">Python</span><span class="tech">FastAPI</span><span class="tech">JavaScript</span>
+    <span class="tech">HTML/CSS</span><span class="tech">TypeScript</span><span class="tech">PyTorch</span>
+    <span class="tech">Docker</span><span class="tech">FFmpeg</span><span class="tech">CUDA</span>
+    <span class="tech">Linux</span><span class="tech">Git</span><span class="tech">REST APIs</span>
+    <span class="tech">SSE/Streaming</span><span class="tech">ChromaDB</span>
   </div>
+</header>
 
-  <!-- HEATSYNC -->
-  <div class="project" data-color="blue" id="heatsync">
-    <div class="project-header">
-      <div class="project-icon">&#9832;</div>
-      <div class="project-info">
-        <h2 class="project-name">HeatSync</h2>
-        <p class="project-sub">Real-Time System Monitor</p>
+<div class="section" id="projects">
+  <p class="section-label reveal">Projects</p>
+  <div class="projects">
+
+    <div class="project reveal" data-c="purple">
+      <div class="project-top">
+        <div class="project-icon">&#9830;</div>
+        <div><h2 class="project-name">OmniSuite</h2><p class="project-sub">AI-Powered Music Production Platform</p></div>
+      </div>
+      <p class="project-desc">A full desktop app for AI-assisted music production. Song generation, audio analysis, mixing and mastering, vocal production, voice conversion, image generation, video creation — all in one interface, all running locally on my RTX 5070 Ti. This is the project I built because the tools I wanted didn't exist.</p>
+      <div class="features">
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Song Generation</strong> — SSE streaming, captcha solving, 73 few-shot genre examples</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>3-Tier Audio Analysis</strong> — Gemini, librosa, offline fallback with BPM voting and key detection</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Mix & Master</strong> — 14 genre presets, per-stem EQ, LUFS-targeted mastering chain</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Vocal Pipeline</strong> — 10-stage chain, RVC voice conversion, per-layer pitch detection</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Stem Separation</strong> — Demucs + UVR5, de-reverb, de-echo, independent layer conversion</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Image Gen</strong> — Local nunchaku, FLUX, SDXL backends. Zero cloud dependencies</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Video Pipeline</strong> — LLM-directed shots, 54 color grades, beat-synced editing</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Lyrical AI</strong> — 452 docs, 294 artist profiles, context-injected generation</div></div>
+      </div>
+      <div class="stack">
+        <span class="tech">Python</span><span class="tech">FastAPI</span><span class="tech">pywebview</span>
+        <span class="tech">PyTorch</span><span class="tech">CUDA 12.8</span><span class="tech">Docker</span>
+        <span class="tech">ChromaDB</span><span class="tech">Demucs</span><span class="tech">RVC</span>
+        <span class="tech">FFmpeg</span><span class="tech">FLUX</span><span class="tech">SSE</span>
       </div>
     </div>
-    <p class="project-desc">A desktop system monitoring application that provides real-time hardware telemetry at a glance. Tracks CPU and GPU usage, temperatures, memory, VRAM, clock speeds, disk usage, power draw, and compositor performance — all in a clean, always-visible overlay.</p>
 
-    <div class="features">
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Live Hardware Telemetry</strong> — CPU usage, CPU temp, GPU usage, GPU temp with real-time sparkline graphs</div>
+    <div class="project reveal" data-c="blue">
+      <div class="project-top">
+        <div class="project-icon">&#9832;</div>
+        <div><h2 class="project-name">HeatSync</h2><p class="project-sub">Real-Time System Monitor</p></div>
       </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>System Stats Bar</strong> — Memory, swap, VRAM, clock speed, disk, power draw, and compositor temperature at a glance</div>
+      <p class="project-desc">A desktop overlay that gives me everything I need at a glance — CPU and GPU temps, usage, VRAM, clock speeds, power draw, memory. Built it because I got tired of opening five different apps to check if my GPU was throttling.</p>
+      <div class="features">
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Live Telemetry</strong> — CPU, GPU, temps, usage with real-time sparkline graphs</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Stats Bar</strong> — Memory, VRAM, clocks, disk, power draw at a glance</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Minimal Footprint</strong> — Sits at the top of the screen, stays out of the way</div></div>
       </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Minimal Overhead</strong> — Designed to sit at the top of the screen and stay out of the way while providing everything you need</div>
-      </div>
+      <div class="stack"><span class="tech">Desktop App</span><span class="tech">System APIs</span><span class="tech">NVIDIA SMI</span><span class="tech">Real-time</span></div>
     </div>
 
-    <div class="project-stack">
-      <span class="tech-tag">Desktop App</span>
-      <span class="tech-tag">System APIs</span>
-      <span class="tech-tag">NVIDIA SMI</span>
-      <span class="tech-tag">Real-time</span>
+    <div class="project reveal" data-c="orange">
+      <div class="project-top">
+        <div class="project-icon">&#x1F525;</div>
+        <div><h2 class="project-name">CrockedNLoaded</h2><p class="project-sub">Cooking Channel & Brand</p></div>
+      </div>
+      <p class="project-desc">A cooking channel I co-host with my friend CrockPotDaddy. I'm a professional chef, he's a home cook — we cook whatever sounds fun and talk trash while we do it. I designed and built the entire <a href="crockednloaded.html">brand site</a> from scratch.</p>
+      <img src="img/cooking-hero.jpg" alt="CrockedNLoaded" class="project-img">
+      <div class="features">
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Brand Site</strong> — Dark modern design, ember particles, cursor glow, scroll animations</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Responsive</strong> — Full mobile support, works on everything</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>The Concept</strong> — Chef vs. home cook, real personality, zero script</div></div>
+      </div>
+      <div class="stack"><span class="tech">HTML/CSS</span><span class="tech">JavaScript</span><span class="tech">Branding</span><span class="tech">Responsive</span></div>
     </div>
+
+    <div class="project reveal" data-c="gold">
+      <div class="project-top">
+        <div class="project-icon">&#9876;</div>
+        <div><h2 class="project-name">Z3nGineer Game Guides</h2><p class="project-sub">Gaming Resource Hub</p></div>
+      </div>
+      <p class="project-desc">A multi-game <a href="guides.html">guides site</a> with build guides and the <a href="CHIM.html">CHIM modpack</a> for Oblivion Remastered. Every page is designed from scratch to match the game's aesthetic. I also wrote custom Lua patches to fix broken mod APIs and tuned lighting profiles for the modpack.</p>
+      <div class="features">
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>CHIM Modpack</strong> — 60+ mods, custom patches, curated load order for Oblivion Remastered</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Build Guides</strong> — Oblivion and BG3, written for people actually mid-playthrough</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Custom Patches</strong> — Lua API fixes, lighting profiles, mod conflict resolution</div></div>
+      </div>
+      <div class="stack"><span class="tech">HTML/CSS</span><span class="tech">GitHub Pages</span><span class="tech">UE4SS / Lua</span><span class="tech">Mod Development</span></div>
+    </div>
+
+    <div class="project reveal" data-c="green">
+      <div class="project-top">
+        <div class="project-icon">&#9881;</div>
+        <div><h2 class="project-name">Linux Systems Engineering</h2><p class="project-sub">CachyOS / Arch — Bare Metal</p></div>
+      </div>
+      <p class="project-desc">My daily driver is a custom-tuned Arch Linux (CachyOS) workstation with an RTX 5070 Ti on bleeding-edge NVIDIA drivers. Every layer is configured by hand — kernel scheduler, GPU overclocking, sleep state management, pacman hooks. It breaks sometimes. I fix it. That's the deal.</p>
+      <div class="features">
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>GPU Tuning</strong> — +400 core, +5000 mem, 350W, custom fan curve</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Kernel</strong> — sched-ext bpfland, pacman hooks to survive updates</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>ML Stack</strong> — CUDA 12.8, PyTorch nightly, separate venvs, Docker services</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Gaming</strong> — Proton, DXVK, per-game launch configs, KDE Wayland multi-monitor</div></div>
+      </div>
+      <div class="stack"><span class="tech">Arch Linux</span><span class="tech">KDE Plasma 6</span><span class="tech">Wayland</span><span class="tech">NVIDIA</span><span class="tech">Docker</span><span class="tech">Proton</span></div>
+    </div>
+
   </div>
-
-  <!-- CROCKEDNLOADED -->
-  <div class="project" data-color="orange" id="cooking">
-    <div class="project-header">
-      <div class="project-icon">&#x1F525;</div>
-      <div class="project-info">
-        <h2 class="project-name">CrockedNLoaded</h2>
-        <p class="project-sub">Cooking Channel &amp; Brand</p>
-      </div>
-    </div>
-    <p class="project-desc">A cooking YouTube channel I co-host with my friend CrockPotDaddy. I'm a professional chef, he's a home cook with instinct — together we make food, talk trash, and see what happens. "What Could Possibly Go Wrong?" Designed and built the full brand site at <a href="crockednloaded.html">crockednloaded.html</a>.</p>
-    <img src="img/cooking-hero.jpg" alt="CrockedNLoaded" style="width:100%;max-width:600px;border-radius:6px;margin:1.5rem 0;border:1px solid var(--ash);">
-
-    <div class="features">
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Brand Site</strong> — Chalkboard-aesthetic landing page with chalk dust textures, Permanent Marker + Caveat handwriting fonts, CSS grain overlay, dashed chalk borders</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Responsive Design</strong> — Full mobile support, flexible grid layout, touch-friendly social links</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Brand Identity</strong> — Custom logo, host bios, social media integration, "What Could Possibly Go Wrong?" tagline</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>The Concept</strong> — Professional chef + home cook, two perspectives on the same dish, real personality not scripted content</div>
-      </div>
-    </div>
-
-    <div class="project-stack">
-      <span class="tech-tag">HTML/CSS</span>
-      <span class="tech-tag">Branding</span>
-      <span class="tech-tag">Responsive</span>
-      <span class="tech-tag">YouTube</span>
-    </div>
-  </div>
-
-  <!-- Z3NGINEER.GITHUB.IO -->
-  <div class="project" data-color="gold" id="guides-site">
-    <div class="project-header">
-      <div class="project-icon">&#9876;</div>
-      <div class="project-info">
-        <h2 class="project-name">Z3nGineer Game Guides</h2>
-        <p class="project-sub">Gaming Resource Hub</p>
-      </div>
-    </div>
-    <p class="project-desc">A multi-game guides website featuring in-depth build guides and a full modpack. Every guide is a hand-crafted single-page application with custom design per game — not a blog template, not a wiki, but purpose-built reference pages designed to be used mid-playthrough.</p>
-
-    <div class="features">
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>CHIM Modpack</strong> — Complete Oblivion Remastered modpack with curated load order, conflict resolution, custom UE4SS mods, and installation guides</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Build Guides</strong> — Detailed character build guides for Oblivion Remastered and Baldur's Gate 3 with leveling paths, gear picks, and theory</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Custom Patches</strong> — Wrote custom Lua code to fix broken mod APIs, tuned lighting and interior brightness profiles, and resolved mod conflicts across the load order</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Per-Game Design</strong> — Each guide has its own visual identity, color palette, and typography matched to the game's aesthetic</div>
-      </div>
-    </div>
-
-    <div class="project-stack">
-      <span class="tech-tag">HTML/CSS</span>
-      <span class="tech-tag">GitHub Pages</span>
-      <span class="tech-tag">UE4SS / Lua</span>
-      <span class="tech-tag">Mod Development</span>
-    </div>
-  </div>
-
-  <!-- LINUX SYSTEMS -->
-  <div class="project" data-color="green" id="systems">
-    <div class="project-header">
-      <div class="project-icon">&#9881;</div>
-      <div class="project-info">
-        <h2 class="project-name">Linux Systems Engineering</h2>
-        <p class="project-sub">CachyOS / Arch — Bare Metal</p>
-      </div>
-    </div>
-    <p class="project-desc">Daily-driving a custom-tuned CachyOS (Arch-based) workstation with an RTX 5070 Ti on bleeding-edge drivers. Every layer of the system is configured by hand — from kernel scheduler selection and GPU overclocking to sleep state management and pacman hooks that survive kernel updates.</p>
-
-    <div class="features">
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>GPU Tuning</strong> — RTX 5070 Ti overclocked (+400 core, +5000 mem, 350W), custom fan curve, NVIDIA 595 driver with manual fixes for clock cap and sleep bugs</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Kernel &amp; Scheduler</strong> — sched-ext bpfland scheduler, custom pacman hooks to preserve config across updates, S3 deep sleep restoration</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>Multi-GPU Workload</strong> — CUDA 12.8 + PyTorch nightly for ML, separate Python venvs for different workloads, Docker sidecar services</div>
-      </div>
-      <div class="feature">
-        <div class="feature-bullet"></div>
-        <div class="feature-text"><strong>KDE/Wayland</strong> — Multi-monitor with portrait rotation, custom KWin tiling scripts, Proton gaming optimizations (DXVK, per-game launch configs)</div>
-      </div>
-    </div>
-
-    <div class="project-stack">
-      <span class="tech-tag">Arch Linux</span>
-      <span class="tech-tag">KDE Plasma 6</span>
-      <span class="tech-tag">Wayland</span>
-      <span class="tech-tag">NVIDIA</span>
-      <span class="tech-tag">systemd</span>
-      <span class="tech-tag">pacman</span>
-      <span class="tech-tag">Docker</span>
-      <span class="tech-tag">Proton</span>
-    </div>
-  </div>
-
 </div>
 
-<footer class="footer">
-  <div class="footer-inner">
-    <span class="footer-brand">&copy; 2026 Z3nGineer</span>
-    <span class="footer-note">Everything on this page was built by one person.</span>
-  </div>
-</footer>
+<footer><span>&copy; 2026 Z3nGineer &mdash; Everything on this page was built by one person.</span></footer>
 
+<script>
+const g=document.getElementById('glow');
+document.addEventListener('mousemove',e=>{g.style.left=e.clientX+'px';g.style.top=e.clientY+'px'});
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0.08,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
 </body>
 </html>

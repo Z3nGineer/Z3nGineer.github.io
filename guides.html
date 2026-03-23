@@ -3,690 +3,172 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Z3nGineer — Guides &amp; Resources</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<title>Z3nGineer — Game Guides</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-
 :root{
-  --void:#050505;
-  --abyss:#0a0908;
-  --obsidian:#0f0e0d;
-  --stone:#161514;
-  --stone-warm:#1a1816;
-  --ash:#2a2826;
-  --ash-light:#3a3735;
-  --dust:#7a7468;
-  --silver:#a09888;
-  --bone:#c8bca8;
-  --parchment:#e0d8c8;
-  --gold:#c9a84c;
-  --gold-bright:#e4c565;
-  --gold-dim:#8a7234;
-  --gold-glow:rgba(201,168,76,0.08);
-  --gold-border:rgba(201,168,76,0.12);
-  --blue:#4a88cc;
-  --blue-bright:#5ea0e8;
-  --blue-dim:#385a80;
-  --blue-glow:rgba(74,136,204,0.08);
-  --blue-border:rgba(74,136,204,0.12);
+  --bg:#080808;--surface:#111;--surface-2:#181818;--border:#222;--border-light:#2a2a2a;
+  --text:#f0ece4;--text-dim:#aaa;--text-muted:#666;
+  --gold:#c9a84c;--gold-bright:#e4c565;--gold-dim:#8a7234;--gold-glow:rgba(201,168,76,0.08);
+  --blue:#4a88cc;--blue-bright:#5ea0e8;--blue-glow:rgba(74,136,204,0.08);
 }
-
-html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--ash) var(--void)}
-body{
-  background:var(--abyss);
-  color:var(--bone);
-  font-family:'Source Sans 3',sans-serif;
-  font-size:19px;
-  line-height:1.7;
-  -webkit-font-smoothing:antialiased;
-  min-height:100vh;
-}
-
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  opacity:0.025;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size:200px;
-  pointer-events:none;
-  z-index:9999;
-}
-
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--gold-dim) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:18px;line-height:1.7;overflow-x:hidden}
+::selection{background:var(--gold);color:var(--bg)}
 a{text-decoration:none;color:inherit}
 
-/* === STICKY NAV === */
-.nav{
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:rgba(5,5,5,0.85);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--ash);
-  padding:0 2rem;
-}
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.nav-brand{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;color:var(--text);transition:color 0.3s}
+.nav-brand:hover{color:var(--gold)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);transition:color 0.3s;position:relative}
+.nav-links a:hover{color:var(--gold)}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform 0.3s;transform-origin:right}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
 
-.nav-inner{
-  max-width:1200px;
-  margin:0 auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  height:56px;
-}
+.hero{min-height:50vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 4rem;position:relative}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--border-light),transparent)}
+.hero h1{font-family:'Cinzel',serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:800;letter-spacing:0.15em;background:linear-gradient(180deg,var(--text) 30%,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fadeUp 0.8s ease both}
+.hero p{font-size:1.2rem;font-weight:300;color:var(--text-dim);margin-top:1rem;max-width:550px;animation:fadeUp 0.8s ease 0.2s both}
 
-.nav-brand{
-  font-family:'Cinzel',serif;
-  font-size:0.8rem;
-  font-weight:700;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  color:var(--parchment);
-}
+.game{max-width:1100px;margin:0 auto;padding:5rem 2rem}
+.game+.game{border-top:1px solid var(--border)}
 
-.nav-links{
-  display:flex;
-  gap:2rem;
-  list-style:none;
-}
+.game-header{display:flex;align-items:center;gap:1.5rem;margin-bottom:3rem}
+.game-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.game[data-game="oblivion"] .game-icon{background:var(--gold-glow);border:1px solid rgba(201,168,76,0.15);color:var(--gold)}
+.game[data-game="bg3"] .game-icon{background:var(--blue-glow);border:1px solid rgba(74,136,204,0.15);color:var(--blue)}
+.game-info h2{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;color:var(--text);letter-spacing:0.05em}
+.game-info p{font-size:0.85rem;color:var(--text-muted);margin-top:0.15rem}
 
-.nav-links a{
-  font-family:'Cinzel',serif;
-  font-size:0.65rem;
-  font-weight:600;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  color:var(--dust);
-  transition:color 0.3s ease;
-  padding:0.25rem 0;
-}
-.nav-links a:hover{color:var(--parchment)}
+.guides-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.5rem}
 
-/* === HERO === */
-.hero{
-  position:relative;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:7rem 2rem 5rem;
-  overflow:hidden;
+.guide{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  overflow:hidden;transition:all 0.4s cubic-bezier(0.16,1,0.3,1);
+  display:flex;flex-direction:column;
 }
+.guide:hover{border-color:rgba(201,168,76,0.25);transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.game[data-game="bg3"] .guide:hover{border-color:rgba(74,136,204,0.25)}
 
-.hero-glow{
-  position:absolute;
-  top:25%;left:50%;
-  transform:translate(-50%,-50%);
-  width:800px;height:500px;
-  background:radial-gradient(ellipse,rgba(201,168,76,0.035) 0%,transparent 70%);
-  pointer-events:none;
-}
+.guide-banner{height:160px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.game[data-game="oblivion"] .guide-banner{background:linear-gradient(135deg,#1a1508,#2a2010,#1a1508)}
+.game[data-game="bg3"] .guide-banner{background:linear-gradient(135deg,#081520,#102030,#081520)}
+.guide-banner-icon{font-size:4rem;opacity:0.15}
+.guide-badge{position:absolute;top:1rem;left:1rem;font-size:0.6rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:0.3rem 0.8rem;border-radius:20px}
+.game[data-game="oblivion"] .guide-badge{background:rgba(201,168,76,0.15);color:var(--gold);border:1px solid rgba(201,168,76,0.2)}
+.game[data-game="bg3"] .guide-badge{background:rgba(74,136,204,0.15);color:var(--blue);border:1px solid rgba(74,136,204,0.2)}
 
-.brand{
-  font-family:'Cinzel',serif;
-  font-weight:800;
-  font-size:clamp(2.8rem,6vw,4.2rem);
-  letter-spacing:0.2em;
-  text-transform:uppercase;
-  position:relative;
-  animation:fadeDown 0.8s ease both;
-}
+.guide-body{padding:1.8rem;flex:1;display:flex;flex-direction:column}
+.guide-title{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--text);margin-bottom:0.6rem;transition:color 0.3s}
+.game[data-game="oblivion"] .guide:hover .guide-title{color:var(--gold-bright)}
+.game[data-game="bg3"] .guide:hover .guide-title{color:var(--blue-bright)}
+.guide-desc{font-size:0.95rem;color:var(--text-dim);line-height:1.7;flex:1;font-weight:300}
 
-.brand span{
-  background:linear-gradient(180deg,var(--parchment) 20%,var(--gold) 100%);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-}
+.guide-footer{padding:1rem 1.8rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.guide-cta{font-size:0.7rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;transition:all 0.3s}
+.game[data-game="oblivion"] .guide-cta{color:var(--gold-dim)}
+.game[data-game="oblivion"] .guide:hover .guide-cta{color:var(--gold);letter-spacing:0.2em}
+.game[data-game="bg3"] .guide-cta{color:rgba(74,136,204,0.5)}
+.game[data-game="bg3"] .guide:hover .guide-cta{color:var(--blue);letter-spacing:0.2em}
+.guide-arrow{font-size:1rem;opacity:0.3;transition:all 0.3s}
+.guide:hover .guide-arrow{opacity:0.8;transform:translateX(4px)}
 
-.ornament{
-  display:flex;
-  align-items:center;
-  gap:1rem;
-  margin:1.5rem 0 2rem;
-  animation:fadeIn 1s ease 0.3s both;
-}
-.ornament::before,.ornament::after{
-  content:'';
-  width:clamp(40px,12vw,120px);
-  height:1px;
-  background:linear-gradient(90deg,transparent,var(--gold-dim));
-}
-.ornament::after{
-  background:linear-gradient(90deg,var(--gold-dim),transparent);
-}
-.ornament-diamond{
-  width:6px;height:6px;
-  background:var(--gold);
-  transform:rotate(45deg);
-  flex-shrink:0;
-  opacity:0.7;
-}
+.coming-soon{max-width:1100px;margin:0 auto;padding:2rem 2rem 6rem;text-align:center}
+.coming-box{border:1px dashed var(--border-light);border-radius:16px;padding:4rem 2rem;background:var(--surface)}
+.coming-box h3{font-family:'Cinzel',serif;font-size:0.75rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.6rem}
+.coming-box p{font-size:1rem;color:var(--text-muted);font-weight:300;font-style:italic}
 
-.tagline{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(1.15rem,2.5vw,1.5rem);
-  font-weight:400;
-  font-style:italic;
-  color:var(--dust);
-  letter-spacing:0.04em;
-  max-width:550px;
-  animation:fadeIn 1s ease 0.5s both;
-}
+footer{border-top:1px solid var(--border);padding:2rem;text-align:center}
+footer span{font-size:0.75rem;color:var(--text-muted);font-weight:300}
 
-.hero-stats{
-  display:flex;
-  gap:3rem;
-  margin-top:3rem;
-  animation:fadeIn 1s ease 0.7s both;
-}
+.reveal{opacity:0;transform:translateY(25px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.r1{transition-delay:0.1s}.r2{transition-delay:0.2s}.r3{transition-delay:0.3s}
 
-.stat{text-align:center}
-.stat-num{
-  font-family:'Cinzel',serif;
-  font-size:1.6rem;
-  font-weight:700;
-  color:var(--parchment);
-  display:block;
-}
-.stat-label{
-  font-size:0.7rem;
-  font-weight:600;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  color:var(--dust);
-}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(25px)}100%{opacity:1;transform:translateY(0)}}
 
-/* === GAME SECTIONS === */
-.game-section{
-  max-width:1200px;
-  margin:0 auto;
-  padding:0 2rem 5rem;
-  position:relative;
-}
-
-.game-header{
-  display:flex;
-  align-items:center;
-  gap:1.5rem;
-  margin-bottom:2.5rem;
-  padding-bottom:1.5rem;
-  border-bottom:1px solid var(--ash);
-  position:relative;
-}
-
-/* Colored accent line on game header */
-.game-header::after{
-  content:'';
-  position:absolute;
-  bottom:-1px;
-  left:0;
-  width:80px;
-  height:2px;
-}
-
-.game-section[data-game="oblivion"] .game-header::after{background:var(--gold)}
-.game-section[data-game="bg3"] .game-header::after{background:var(--blue)}
-.game-section[data-game="cooking"] .game-header::after{background:#e85d26}
-
-.game-icon{
-  width:52px;
-  height:52px;
-  border-radius:8px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:1.5rem;
-  flex-shrink:0;
-}
-
-.game-section[data-game="oblivion"] .game-icon{
-  background:var(--gold-glow);
-  border:1px solid var(--gold-border);
-  color:var(--gold);
-}
-.game-section[data-game="bg3"] .game-icon{
-  background:var(--blue-glow);
-  border:1px solid var(--blue-border);
-  color:var(--blue);
-}
-.game-section[data-game="cooking"] .game-icon{
-  background:rgba(232,93,38,0.08);
-  border:1px solid rgba(232,93,38,0.15);
-  color:#e85d26;
-}
-.game-section[data-game="cooking"] .game-count{
-  color:#8a4520;
-  background:rgba(232,93,38,0.08);
-  border:1px solid rgba(232,93,38,0.15);
-}
-.guide-card[data-accent="orange"]::before{background:linear-gradient(90deg,transparent,#e85d26,transparent)}
-.guide-card[data-accent="orange"]:hover{box-shadow:0 8px 40px rgba(232,93,38,0.05)}
-.guide-card[data-accent="orange"] .card-type{color:#e85d26;background:rgba(232,93,38,0.08);border:1px solid rgba(232,93,38,0.15)}
-.guide-card[data-accent="orange"]:hover .card-title{color:#ff8c42}
-.guide-card[data-accent="orange"] .card-cta{color:#8a4520}
-.guide-card[data-accent="orange"]:hover .card-cta{color:#e85d26;letter-spacing:0.2em}
-.guide-card[data-accent="orange"] .card-arrow{color:#e85d26}
-
-.game-info{flex:1}
-
-.game-title{
-  font-family:'Cinzel',serif;
-  font-size:clamp(1.2rem,2.5vw,1.6rem);
-  font-weight:700;
-  color:var(--parchment);
-  letter-spacing:0.06em;
-}
-
-.game-subtitle{
-  font-size:0.85rem;
-  color:var(--dust);
-  margin-top:0.15rem;
-}
-
-.game-count{
-  font-family:'Cinzel',serif;
-  font-size:0.65rem;
-  font-weight:600;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  padding:0.35rem 0.9rem;
-  border-radius:2px;
-  flex-shrink:0;
-}
-
-.game-section[data-game="oblivion"] .game-count{
-  color:var(--gold-dim);
-  background:var(--gold-glow);
-  border:1px solid var(--gold-border);
-}
-.game-section[data-game="bg3"] .game-count{
-  color:var(--blue-dim);
-  background:var(--blue-glow);
-  border:1px solid var(--blue-border);
-}
-
-/* === GUIDE CARDS === */
-.guides{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
-  gap:1.25rem;
-}
-
-.guide-card{
-  position:relative;
-  display:flex;
-  flex-direction:column;
-  background:var(--stone);
-  border:1px solid var(--ash);
-  border-radius:3px;
-  overflow:hidden;
-  transition:transform 0.35s ease,border-color 0.35s ease,box-shadow 0.35s ease;
-}
-
-.guide-card:hover{
-  transform:translateY(-3px);
-  border-color:var(--ash-light);
-}
-
-.guide-card::before{
-  content:'';
-  position:absolute;
-  top:0;left:0;right:0;
-  height:2px;
-  opacity:0;
-  transition:opacity 0.35s ease;
-}
-.guide-card:hover::before{opacity:1}
-
-.guide-card[data-accent="gold"]::before{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-.guide-card[data-accent="gold"]:hover{box-shadow:0 8px 40px rgba(201,168,76,0.05)}
-
-.guide-card[data-accent="blue"]::before{background:linear-gradient(90deg,transparent,var(--blue),transparent)}
-.guide-card[data-accent="blue"]:hover{box-shadow:0 8px 40px rgba(74,136,204,0.05)}
-
-.card-top{
-  display:flex;
-  align-items:center;
-  gap:0.75rem;
-  padding:1.5rem 1.75rem 0;
-}
-
-.card-type{
-  font-size:0.65rem;
-  font-weight:600;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  padding:0.25rem 0.6rem;
-  border-radius:2px;
-}
-
-.guide-card[data-accent="gold"] .card-type{
-  color:var(--gold);
-  background:var(--gold-glow);
-  border:1px solid var(--gold-border);
-}
-.guide-card[data-accent="blue"] .card-type{
-  color:var(--blue);
-  background:var(--blue-glow);
-  border:1px solid var(--blue-border);
-}
-
-.card-body{
-  padding:1.25rem 1.75rem 1.5rem;
-  flex:1;
-  display:flex;
-  flex-direction:column;
-}
-
-.card-title{
-  font-family:'Cinzel',serif;
-  font-size:1.3rem;
-  font-weight:700;
-  color:var(--parchment);
-  line-height:1.3;
-  letter-spacing:0.03em;
-  margin-bottom:0.6rem;
-  transition:color 0.3s ease;
-}
-
-.guide-card[data-accent="gold"]:hover .card-title{color:var(--gold-bright)}
-.guide-card[data-accent="blue"]:hover .card-title{color:var(--blue-bright)}
-
-.card-desc{
-  color:var(--silver);
-  font-size:0.9rem;
-  line-height:1.7;
-  flex:1;
-}
-
-.card-footer{
-  padding:1rem 1.75rem;
-  border-top:1px solid var(--ash);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.card-cta{
-  font-family:'Cinzel',serif;
-  font-size:0.65rem;
-  font-weight:600;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  transition:color 0.3s ease,letter-spacing 0.3s ease;
-}
-
-.guide-card[data-accent="gold"] .card-cta{color:var(--gold-dim)}
-.guide-card[data-accent="gold"]:hover .card-cta{color:var(--gold);letter-spacing:0.2em}
-.guide-card[data-accent="blue"] .card-cta{color:var(--blue-dim)}
-.guide-card[data-accent="blue"]:hover .card-cta{color:var(--blue);letter-spacing:0.2em}
-
-.card-arrow{
-  font-size:1rem;
-  transition:transform 0.3s ease,opacity 0.3s ease;
-  opacity:0.3;
-}
-.guide-card:hover .card-arrow{transform:translateX(4px);opacity:0.7}
-
-.guide-card[data-accent="gold"] .card-arrow{color:var(--gold)}
-.guide-card[data-accent="blue"] .card-arrow{color:var(--blue)}
-
-/* === SECTION DIVIDER === */
-.divider{
-  max-width:1200px;
-  margin:0 auto 5rem;
-  padding:0 2rem;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:1.5rem;
-}
-.divider::before,.divider::after{
-  content:'';
-  flex:1;
-  height:1px;
-  background:linear-gradient(90deg,transparent,var(--ash),transparent);
-}
-.divider-dot{
-  width:4px;height:4px;
-  background:var(--ash-light);
-  transform:rotate(45deg);
-}
-
-/* === MORE GAMES TEASER === */
-.more-games{
-  max-width:1200px;
-  margin:0 auto;
-  padding:0 2rem 6rem;
-  text-align:center;
-}
-
-.more-games-box{
-  border:1px dashed var(--ash);
-  border-radius:3px;
-  padding:3.5rem 2rem;
-  background:rgba(22,21,20,0.4);
-}
-
-.more-games-label{
-  font-family:'Cinzel',serif;
-  font-size:0.7rem;
-  font-weight:600;
-  letter-spacing:0.3em;
-  text-transform:uppercase;
-  color:var(--dust);
-  margin-bottom:0.75rem;
-}
-
-.more-games-text{
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.15rem;
-  font-style:italic;
-  color:var(--ash-light);
-}
-
-/* === FOOTER === */
-.footer{
-  border-top:1px solid var(--ash);
-  padding:2.5rem 2rem;
-}
-
-.footer-inner{
-  max-width:1200px;
-  margin:0 auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.footer-brand{
-  font-family:'Cinzel',serif;
-  font-size:0.6rem;
-  letter-spacing:0.2em;
-  text-transform:uppercase;
-  color:var(--ash-light);
-}
-
-.footer-note{
-  font-size:0.75rem;
-  color:var(--ash-light);
-}
-
-/* === ANIMATIONS === */
-@keyframes fadeDown{
-  from{opacity:0;transform:translateY(-20px)}
-  to{opacity:1;transform:translateY(0)}
-}
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(24px)}
-  to{opacity:1;transform:translateY(0)}
-}
-@keyframes fadeIn{
-  from{opacity:0}
-  to{opacity:1}
-}
-
-/* === RESPONSIVE === */
 @media(max-width:700px){
-  .nav-links{gap:1rem}
-  .hero{padding:5rem 1.5rem 3.5rem}
-  .hero-stats{gap:2rem}
-  .game-section{padding:0 1.25rem 4rem}
-  .game-header{flex-wrap:wrap;gap:1rem}
-  .game-count{display:none}
-  .guides{grid-template-columns:1fr;gap:1rem}
-  .card-top{padding:1.25rem 1.25rem 0}
-  .card-body{padding:1rem 1.25rem 1.25rem}
-  .card-footer{padding:0.85rem 1.25rem}
-  .footer-inner{flex-direction:column;gap:0.75rem}
-  .more-games{padding:0 1.25rem 5rem}
-}
-
-@media(max-width:480px){
   .nav-links{display:none}
-  .hero-stats{flex-direction:column;gap:1.25rem}
+  .guides-grid{grid-template-columns:1fr}
+  .game{padding:3rem 1.5rem}
+  .game-header{flex-wrap:wrap}
+  .hero{padding:6rem 1.5rem 3rem}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
-    <span class="nav-brand">Z3nGineer</span>
+    <a href="index.html" class="nav-brand">Z3nGineer</a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="#oblivion">Oblivion</a></li>
-      <li><a href="#bg3">Baldur's Gate 3</a></li>
+      <li><a href="CHIM.html">CHIM Modpack</a></li>
+      <li><a href="crockednloaded.html">Cooking</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- HERO -->
 <header class="hero">
-  <div class="hero-glow"></div>
-  <h1 class="brand"><span>Z3nGineer</span></h1>
-  <div class="ornament">
-    <div class="ornament-diamond"></div>
-  </div>
-  <p class="tagline">Guides, modpacks, cooking, and tools — built by one guy who does too many things</p>
-  <div class="hero-stats">
-    <div class="stat">
-      <span class="stat-num">3</span>
-      <span class="stat-label">Guides</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">2</span>
-      <span class="stat-label">Games</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">1</span>
-      <span class="stat-label">Modpack</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">1</span>
-      <span class="stat-label">Kitchen</span>
-    </div>
-  </div>
+  <h1>Game Guides</h1>
+  <p>Build guides and deep dives for the games I'm actually playing. No filler, no fluff — just the stuff I wish I had when I started.</p>
 </header>
 
-<!-- OBLIVION REMASTERED -->
-<section class="game-section" data-game="oblivion" id="oblivion">
-  <div class="game-header">
+<section class="game" data-game="oblivion" id="oblivion">
+  <div class="game-header reveal">
     <div class="game-icon">&#9876;</div>
     <div class="game-info">
-      <h2 class="game-title">Oblivion Remastered</h2>
-      <p class="game-subtitle">The Elder Scrolls IV</p>
+      <h2>Oblivion Remastered</h2>
+      <p>The Elder Scrolls IV</p>
     </div>
-    <span class="game-count">2 Resources</span>
   </div>
-
-  <div class="guides">
-
-    <a href="CHIM.html" class="guide-card" data-accent="gold">
-      <div class="card-top">
-        <span class="card-type">Modpack</span>
+  <div class="guides-grid">
+    <a href="oblivion-spellsword-guide.html" class="guide reveal">
+      <div class="guide-banner"><span class="guide-banner-icon">&#9876;</span><span class="guide-badge">Build Guide</span></div>
+      <div class="guide-body">
+        <h3 class="guide-title">Breton Spellsword</h3>
+        <p class="guide-desc">My first playthrough build. Blade in one hand, spell in the other. Covers race, birthsign, class setup, leveling strategy, and the path to endgame enchanting. Built to be strong from level 1.</p>
       </div>
-      <div class="card-body">
-        <h3 class="card-title">CHIM</h3>
-        <p class="card-desc">60+ hand-tested mods, custom patches, and tuned lighting. A curated vanilla-plus modpack for a darker, deeper Cyrodiil.</p>
-      </div>
-      <div class="card-footer">
-        <span class="card-cta">View Modpack</span>
-        <span class="card-arrow">&rarr;</span>
-      </div>
+      <div class="guide-footer"><span class="guide-cta">Read Guide</span><span class="guide-arrow">&rarr;</span></div>
     </a>
-
-    <a href="oblivion-spellsword-guide.html" class="guide-card" data-accent="gold">
-      <div class="card-top">
-        <span class="card-type">Build Guide</span>
-      </div>
-      <div class="card-body">
-        <h3 class="card-title">Breton Spellsword</h3>
-        <p class="card-desc">Blade and spell in equal measure. A leveling-efficient Breton build covering race, birthsign, class design, and the path to endgame enchanting.</p>
-      </div>
-      <div class="card-footer">
-        <span class="card-cta">Read Guide</span>
-        <span class="card-arrow">&rarr;</span>
-      </div>
-    </a>
-
   </div>
 </section>
 
-<div class="divider"><div class="divider-dot"></div></div>
-
-<!-- BALDUR'S GATE 3 -->
-<section class="game-section" data-game="bg3" id="bg3">
-  <div class="game-header">
+<section class="game" data-game="bg3" id="bg3">
+  <div class="game-header reveal">
     <div class="game-icon">&#9733;</div>
     <div class="game-info">
-      <h2 class="game-title">Baldur's Gate 3</h2>
-      <p class="game-subtitle">Larian Studios</p>
+      <h2>Baldur's Gate 3</h2>
+      <p>Larian Studios</p>
     </div>
-    <span class="game-count">1 Resource</span>
   </div>
-
-  <div class="guides">
-
-    <a href="bg3-moon-druid-guide.html" class="guide-card" data-accent="blue">
-      <div class="card-top">
-        <span class="card-type">Build Guide</span>
+  <div class="guides-grid">
+    <a href="bg3-moon-druid-guide.html" class="guide reveal">
+      <div class="guide-banner"><span class="guide-banner-icon">&#9733;</span><span class="guide-badge">Build Guide</span></div>
+      <div class="guide-body">
+        <h3 class="guide-title">Pure Moon Druid</h3>
+        <p class="guide-desc">Full commitment to the circle. Wild Shape optimization, spell picks, gear choices, and a few tricks I figured out the hard way. Built for people who actually want to stay in animal form.</p>
       </div>
-      <div class="card-body">
-        <h3 class="card-title">Pure Moon Druid</h3>
-        <p class="card-desc">Full commitment to the circle. Wild Shape optimization, spell selection, and gear picks for a Druid that never breaks form.</p>
-      </div>
-      <div class="card-footer">
-        <span class="card-cta">Read Guide</span>
-        <span class="card-arrow">&rarr;</span>
-      </div>
+      <div class="guide-footer"><span class="guide-cta">Read Guide</span><span class="guide-arrow">&rarr;</span></div>
     </a>
-
   </div>
 </section>
 
-<div class="divider"><div class="divider-dot"></div></div>
-
-<!-- MORE GAMES -->
-<section class="more-games">
-  <div class="more-games-box">
-    <p class="more-games-label">More Games Coming Soon</p>
-    <p class="more-games-text">New builds, new worlds, same depth.</p>
+<div class="coming-soon">
+  <div class="coming-box reveal">
+    <h3>More Guides Coming</h3>
+    <p>Whatever I play next gets a guide. That's just how it works.</p>
   </div>
-</section>
+</div>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-inner">
-    <span class="footer-brand">&copy; 2026 Z3nGineer</span>
-    <span class="footer-note">All guides hand-crafted. No filler.</span>
-  </div>
-</footer>
+<footer><span>&copy; 2026 Z3nGineer</span></footer>
 
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
 </body>
 </html>
