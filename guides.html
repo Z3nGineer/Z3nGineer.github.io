@@ -10,14 +10,21 @@
 :root{
   --bg:#080808;--surface:#111;--surface-2:#181818;--border:#222;--border-light:#2a2a2a;
   --text:#f0ece4;--text-dim:#aaa;--text-muted:#666;
-  --gold:#c9a84c;--gold-bright:#e4c565;--gold-dim:#8a7234;--gold-glow:rgba(201,168,76,0.08);
-  --blue:#4a88cc;--blue-bright:#5ea0e8;--blue-glow:rgba(74,136,204,0.08);
+  --gold:#c9a84c;--gold-bright:#e4c565;--gold-dim:#8a7234;--gold-glow:rgba(201,168,76,0.06);
+  --blue:#4a88cc;--blue-bright:#5ea0e8;--blue-glow:rgba(74,136,204,0.06);
 }
 html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--gold-dim) var(--bg)}
 body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:18px;line-height:1.7;overflow-x:hidden}
 ::selection{background:var(--gold);color:var(--bg)}
 a{text-decoration:none;color:inherit}
 
+/* Noise */
+body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:0.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
+
+/* Cursor glow */
+.glow{position:fixed;width:500px;height:500px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(201,168,76,0.03) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left 0.3s,top 0.3s}
+
+/* Nav */
 .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
 .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
 .nav-brand{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;color:var(--text);transition:color 0.3s}
@@ -25,89 +32,137 @@ a{text-decoration:none;color:inherit}
 .nav-links{display:flex;gap:2rem;list-style:none}
 .nav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);transition:color 0.3s;position:relative}
 .nav-links a:hover{color:var(--gold)}
+.nav-links a.active{color:var(--gold)}
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform 0.3s;transform-origin:right}
-.nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);transform-origin:left}
 
-.hero{min-height:50vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 4rem;position:relative}
+/* Hero */
+.hero{
+  min-height:55vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:8rem 2rem 5rem;position:relative;z-index:2;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 40%,rgba(201,168,76,0.03),transparent),
+    radial-gradient(ellipse 80% 40% at 30% 60%,rgba(74,136,204,0.02),transparent),
+    var(--bg);
+}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--border-light),transparent)}
-.hero h1{font-family:'Cinzel',serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:800;letter-spacing:0.15em;background:linear-gradient(180deg,var(--text) 30%,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fadeUp 0.8s ease both}
-.hero p{font-size:1.2rem;font-weight:300;color:var(--text-dim);margin-top:1rem;max-width:550px;animation:fadeUp 0.8s ease 0.2s both}
 
-.game{max-width:1100px;margin:0 auto;padding:5rem 2rem}
+.hero h1{
+  font-family:'Cinzel',serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:800;
+  letter-spacing:0.12em;
+  background:linear-gradient(180deg,var(--text) 30%,var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:fadeUp 0.8s ease both;
+}
+.hero p{
+  font-size:1.2rem;font-weight:300;color:var(--text-dim);
+  margin-top:1rem;max-width:550px;line-height:1.8;
+  animation:fadeUp 0.8s ease 0.2s both;
+}
+.hero-stats{
+  display:flex;gap:3rem;margin-top:2.5rem;animation:fadeUp 0.8s ease 0.4s both;
+}
+.stat{text-align:center}
+.stat-num{font-family:'Cinzel',serif;font-size:2rem;font-weight:700;color:var(--text);display:block}
+.stat-label{font-size:0.65rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted)}
+
+/* Game sections */
+.game{max-width:1100px;margin:0 auto;padding:5rem 2rem;position:relative;z-index:2}
 .game+.game{border-top:1px solid var(--border)}
 
-.game-header{display:flex;align-items:center;gap:1.5rem;margin-bottom:3rem}
-.game-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
-.game[data-game="oblivion"] .game-icon{background:var(--gold-glow);border:1px solid rgba(201,168,76,0.15);color:var(--gold)}
-.game[data-game="bg3"] .game-icon{background:var(--blue-glow);border:1px solid rgba(74,136,204,0.15);color:var(--blue)}
-.game-info h2{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;color:var(--text);letter-spacing:0.05em}
-.game-info p{font-size:0.85rem;color:var(--text-muted);margin-top:0.15rem}
+.game-top{display:flex;align-items:center;gap:1.5rem;margin-bottom:1rem}
+.game-icon{
+  width:60px;height:60px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;flex-shrink:0;
+}
+.game[data-g="oblivion"] .game-icon{background:var(--gold-glow);border:1px solid rgba(201,168,76,0.15);color:var(--gold)}
+.game[data-g="bg3"] .game-icon{background:var(--blue-glow);border:1px solid rgba(74,136,204,0.15);color:var(--blue)}
+.game-info h2{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:700;color:var(--text);letter-spacing:0.06em}
+.game-info p{font-size:0.85rem;color:var(--text-muted);margin-top:0.1rem}
+.game-desc{color:var(--text-dim);font-size:1rem;font-weight:300;line-height:1.8;margin-bottom:2.5rem;max-width:700px}
 
-.guides-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.5rem}
+/* Guide cards */
+.guides{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.5rem}
 
 .guide{
   background:var(--surface);border:1px solid var(--border);border-radius:16px;
-  overflow:hidden;transition:all 0.4s cubic-bezier(0.16,1,0.3,1);
-  display:flex;flex-direction:column;
+  overflow:hidden;display:flex;flex-direction:column;
+  transition:all 0.4s cubic-bezier(0.16,1,0.3,1);
 }
 .guide:hover{border-color:rgba(201,168,76,0.25);transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.3)}
-.game[data-game="bg3"] .guide:hover{border-color:rgba(74,136,204,0.25)}
+.game[data-g="bg3"] .guide:hover{border-color:rgba(74,136,204,0.25)}
 
-.guide-banner{height:160px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.game[data-game="oblivion"] .guide-banner{background:linear-gradient(135deg,#1a1508,#2a2010,#1a1508)}
-.game[data-game="bg3"] .guide-banner{background:linear-gradient(135deg,#081520,#102030,#081520)}
-.guide-banner-icon{font-size:4rem;opacity:0.15}
-.guide-badge{position:absolute;top:1rem;left:1rem;font-size:0.6rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:0.3rem 0.8rem;border-radius:20px}
-.game[data-game="oblivion"] .guide-badge{background:rgba(201,168,76,0.15);color:var(--gold);border:1px solid rgba(201,168,76,0.2)}
-.game[data-game="bg3"] .guide-badge{background:rgba(74,136,204,0.15);color:var(--blue);border:1px solid rgba(74,136,204,0.2)}
+.guide-banner{
+  height:180px;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.game[data-g="oblivion"] .guide-banner{background:linear-gradient(135deg,#1a1508 0%,#2a2010 50%,#1a1508 100%)}
+.game[data-g="bg3"] .guide-banner{background:linear-gradient(135deg,#081520 0%,#102030 50%,#081520 100%)}
+.guide-banner-icon{font-size:5rem;opacity:0.08}
+.guide-badge{
+  position:absolute;top:1rem;left:1rem;
+  font-size:0.6rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+  padding:0.35rem 0.9rem;border-radius:20px;
+}
+.game[data-g="oblivion"] .guide-badge{background:rgba(201,168,76,0.15);color:var(--gold);border:1px solid rgba(201,168,76,0.2)}
+.game[data-g="bg3"] .guide-badge{background:rgba(74,136,204,0.15);color:var(--blue);border:1px solid rgba(74,136,204,0.2)}
 
-.guide-body{padding:1.8rem;flex:1;display:flex;flex-direction:column}
-.guide-title{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--text);margin-bottom:0.6rem;transition:color 0.3s}
-.game[data-game="oblivion"] .guide:hover .guide-title{color:var(--gold-bright)}
-.game[data-game="bg3"] .guide:hover .guide-title{color:var(--blue-bright)}
-.guide-desc{font-size:0.95rem;color:var(--text-dim);line-height:1.7;flex:1;font-weight:300}
+.guide-body{padding:2rem;flex:1;display:flex;flex-direction:column}
+.guide-title{font-family:'Cinzel',serif;font-size:1.4rem;font-weight:700;color:var(--text);margin-bottom:0.8rem;transition:color 0.3s}
+.game[data-g="oblivion"] .guide:hover .guide-title{color:var(--gold-bright)}
+.game[data-g="bg3"] .guide:hover .guide-title{color:var(--blue-bright)}
+.guide-desc{font-size:1rem;color:var(--text-dim);line-height:1.8;flex:1;font-weight:300}
 
-.guide-footer{padding:1rem 1.8rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.guide-footer{
+  padding:1.2rem 2rem;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
 .guide-cta{font-size:0.7rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;transition:all 0.3s}
-.game[data-game="oblivion"] .guide-cta{color:var(--gold-dim)}
-.game[data-game="oblivion"] .guide:hover .guide-cta{color:var(--gold);letter-spacing:0.2em}
-.game[data-game="bg3"] .guide-cta{color:rgba(74,136,204,0.5)}
-.game[data-game="bg3"] .guide:hover .guide-cta{color:var(--blue);letter-spacing:0.2em}
-.guide-arrow{font-size:1rem;opacity:0.3;transition:all 0.3s}
+.game[data-g="oblivion"] .guide-cta{color:var(--gold-dim)}
+.game[data-g="oblivion"] .guide:hover .guide-cta{color:var(--gold);letter-spacing:0.2em}
+.game[data-g="bg3"] .guide-cta{color:rgba(74,136,204,0.5)}
+.game[data-g="bg3"] .guide:hover .guide-cta{color:var(--blue);letter-spacing:0.2em}
+.guide-arrow{font-size:1.1rem;opacity:0.3;transition:all 0.3s}
 .guide:hover .guide-arrow{opacity:0.8;transform:translateX(4px)}
 
-.coming-soon{max-width:1100px;margin:0 auto;padding:2rem 2rem 6rem;text-align:center}
+/* More coming */
+.coming{max-width:1100px;margin:0 auto;padding:2rem 2rem 6rem;text-align:center;z-index:2;position:relative}
 .coming-box{border:1px dashed var(--border-light);border-radius:16px;padding:4rem 2rem;background:var(--surface)}
-.coming-box h3{font-family:'Cinzel',serif;font-size:0.75rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.6rem}
-.coming-box p{font-size:1rem;color:var(--text-muted);font-weight:300;font-style:italic}
+.coming-box h3{font-family:'Cinzel',serif;font-size:0.75rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.5rem}
+.coming-box p{font-size:1rem;color:var(--text-muted);font-weight:300}
 
-footer{border-top:1px solid var(--border);padding:2rem;text-align:center}
+footer{border-top:1px solid var(--border);padding:2rem;text-align:center;position:relative;z-index:2}
 footer span{font-size:0.75rem;color:var(--text-muted);font-weight:300}
 
-.reveal{opacity:0;transform:translateY(25px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.7s ease,transform 0.7s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
-.r1{transition-delay:0.1s}.r2{transition-delay:0.2s}.r3{transition-delay:0.3s}
+.r1{transition-delay:0.1s}.r2{transition-delay:0.2s}
 
 @keyframes fadeUp{0%{opacity:0;transform:translateY(25px)}100%{opacity:1;transform:translateY(0)}}
 
 @media(max-width:700px){
   .nav-links{display:none}
-  .guides-grid{grid-template-columns:1fr}
+  .guides{grid-template-columns:1fr}
   .game{padding:3rem 1.5rem}
-  .game-header{flex-wrap:wrap}
   .hero{padding:6rem 1.5rem 3rem}
+  .hero-stats{gap:2rem}
+  .guide-banner{height:140px}
 }
+@media(max-width:480px){.hero-stats{flex-direction:column;gap:1rem}}
 </style>
 </head>
 <body>
+
+<div class="glow" id="glow"></div>
 
 <nav class="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-brand">Z3nGineer</a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
+      <li><a href="guides.html" class="active">Game Guides</a></li>
       <li><a href="CHIM.html">CHIM Modpack</a></li>
-      <li><a href="crockednloaded.html">Cooking</a></li>
+      
     </ul>
   </div>
 </nav>
@@ -115,49 +170,49 @@ footer span{font-size:0.75rem;color:var(--text-muted);font-weight:300}
 <header class="hero">
   <h1>Game Guides</h1>
   <p>Build guides and deep dives for the games I'm actually playing. No filler, no fluff — just the stuff I wish I had when I started.</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">2</span><span class="stat-label">Games</span></div>
+    <div class="stat"><span class="stat-num">2</span><span class="stat-label">Guides</span></div>
+  </div>
 </header>
 
-<section class="game" data-game="oblivion" id="oblivion">
-  <div class="game-header reveal">
+<section class="game" data-g="oblivion">
+  <div class="game-top reveal">
     <div class="game-icon">&#9876;</div>
-    <div class="game-info">
-      <h2>Oblivion Remastered</h2>
-      <p>The Elder Scrolls IV</p>
-    </div>
+    <div class="game-info"><h2>Oblivion Remastered</h2><p>The Elder Scrolls IV</p></div>
   </div>
-  <div class="guides-grid">
-    <a href="oblivion-spellsword-guide.html" class="guide reveal">
+  <p class="game-desc reveal r1">My first time playing Oblivion. Yeah, I know. Better late than never. These guides are what I figured out along the way.</p>
+  <div class="guides">
+    <a href="oblivion-spellsword-guide.html" class="guide reveal r2">
       <div class="guide-banner"><span class="guide-banner-icon">&#9876;</span><span class="guide-badge">Build Guide</span></div>
       <div class="guide-body">
         <h3 class="guide-title">Breton Spellsword</h3>
-        <p class="guide-desc">My first playthrough build. Blade in one hand, spell in the other. Covers race, birthsign, class setup, leveling strategy, and the path to endgame enchanting. Built to be strong from level 1.</p>
+        <p class="guide-desc">My first playthrough build. Blade in one hand, spell in the other. Race, birthsign, class setup, leveling strategy, and the path to endgame enchanting. Strong from level 1.</p>
       </div>
       <div class="guide-footer"><span class="guide-cta">Read Guide</span><span class="guide-arrow">&rarr;</span></div>
     </a>
   </div>
 </section>
 
-<section class="game" data-game="bg3" id="bg3">
-  <div class="game-header reveal">
+<section class="game" data-g="bg3">
+  <div class="game-top reveal">
     <div class="game-icon">&#9733;</div>
-    <div class="game-info">
-      <h2>Baldur's Gate 3</h2>
-      <p>Larian Studios</p>
-    </div>
+    <div class="game-info"><h2>Baldur's Gate 3</h2><p>Larian Studios</p></div>
   </div>
-  <div class="guides-grid">
-    <a href="bg3-moon-druid-guide.html" class="guide reveal">
+  <p class="game-desc reveal r1">One of the best RPGs ever made. Here's the build I used to beat it without ever leaving Wild Shape.</p>
+  <div class="guides">
+    <a href="bg3-moon-druid-guide.html" class="guide reveal r2">
       <div class="guide-banner"><span class="guide-banner-icon">&#9733;</span><span class="guide-badge">Build Guide</span></div>
       <div class="guide-body">
         <h3 class="guide-title">Pure Moon Druid</h3>
-        <p class="guide-desc">Full commitment to the circle. Wild Shape optimization, spell picks, gear choices, and a few tricks I figured out the hard way. Built for people who actually want to stay in animal form.</p>
+        <p class="guide-desc">Full commitment to the circle. Wild Shape optimization, spell picks, gear choices, and tricks I figured out the hard way. For people who actually want to stay in animal form.</p>
       </div>
       <div class="guide-footer"><span class="guide-cta">Read Guide</span><span class="guide-arrow">&rarr;</span></div>
     </a>
   </div>
 </section>
 
-<div class="coming-soon">
+<div class="coming">
   <div class="coming-box reveal">
     <h3>More Guides Coming</h3>
     <p>Whatever I play next gets a guide. That's just how it works.</p>
@@ -167,7 +222,9 @@ footer span{font-size:0.75rem;color:var(--text-muted);font-weight:300}
 <footer><span>&copy; 2026 Z3nGineer</span></footer>
 
 <script>
-const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+const g=document.getElementById('glow');
+document.addEventListener('mousemove',e=>{g.style.left=e.clientX+'px';g.style.top=e.clientY+'px'});
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0.08,rootMargin:'0px 0px -50px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 </script>
 </body>
