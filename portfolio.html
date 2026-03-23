@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Z3nGineer — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --void:#050505;
+  --abyss:#0a0908;
+  --obsidian:#0f0e0d;
+  --stone:#161514;
+  --ash:#2a2826;
+  --ash-light:#3a3735;
+  --dust:#7a7468;
+  --silver:#a09888;
+  --bone:#c8bca8;
+  --parchment:#e0d8c8;
+  --white:#f0ece4;
+  --gold:#c9a84c;
+  --gold-bright:#e4c565;
+  --gold-dim:#8a7234;
+  --gold-glow:rgba(201,168,76,0.07);
+  --gold-border:rgba(201,168,76,0.12);
+  --blue:#4a88cc;
+  --blue-dim:#385a80;
+  --blue-glow:rgba(74,136,204,0.07);
+  --blue-border:rgba(74,136,204,0.12);
+  --green:#5a9a5a;
+  --green-dim:#3a6a3a;
+  --green-glow:rgba(90,154,90,0.07);
+  --green-border:rgba(90,154,90,0.12);
+  --purple:#8a6ab5;
+  --purple-dim:#5a4080;
+  --purple-glow:rgba(138,106,181,0.07);
+  --purple-border:rgba(138,106,181,0.12);
+  --orange:#c88040;
+  --orange-dim:#8a5a2a;
+  --orange-glow:rgba(200,128,64,0.07);
+  --orange-border:rgba(200,128,64,0.12);
+}
+
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--ash) var(--void)}
+body{
+  background:var(--abyss);
+  color:var(--bone);
+  font-family:'Source Sans 3',sans-serif;
+  font-size:19px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  opacity:0.025;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:200px;
+  pointer-events:none;
+  z-index:9999;
+}
+
+a{color:var(--gold);text-decoration:none}
+a:hover{color:var(--gold-bright);text-decoration:underline}
+
+/* === NAV === */
+.nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(5,5,5,0.85);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--ash);
+  padding:0 2rem;
+}
+.nav-inner{
+  max-width:900px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:56px;
+}
+.nav-brand{
+  font-family:'Cinzel',serif;
+  font-size:0.8rem;
+  font-weight:700;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--parchment);
+  text-decoration:none;
+}
+.nav-brand:hover{color:var(--gold-bright);text-decoration:none}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{
+  font-family:'Cinzel',serif;
+  font-size:0.65rem;
+  font-weight:600;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--dust);
+  transition:color 0.3s ease;
+  text-decoration:none;
+}
+.nav-links a:hover{color:var(--parchment);text-decoration:none}
+
+/* === PAGE LAYOUT === */
+.page{
+  max-width:900px;
+  margin:0 auto;
+  padding:4rem 2rem 6rem;
+}
+
+/* === INTRO === */
+.intro{margin-bottom:4rem}
+
+.intro-label{
+  font-family:'Cinzel',serif;
+  font-size:0.65rem;
+  font-weight:600;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:var(--gold-dim);
+  margin-bottom:1rem;
+}
+
+.intro-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(1.8rem,4vw,2.6rem);
+  font-weight:700;
+  color:var(--parchment);
+  letter-spacing:0.06em;
+  line-height:1.25;
+  margin-bottom:1.5rem;
+}
+
+.intro-body{
+  color:var(--silver);
+  font-size:1.05rem;
+  line-height:1.85;
+  max-width:750px;
+}
+.intro-body p + p{margin-top:1rem}
+
+/* === TECH STACK BAR === */
+.tech-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.5rem;
+  margin-top:2rem;
+}
+.tech-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.7rem;
+  font-weight:500;
+  padding:0.3rem 0.7rem;
+  border-radius:2px;
+  color:var(--dust);
+  background:var(--stone);
+  border:1px solid var(--ash);
+}
+
+/* === PROJECT SECTIONS === */
+.project{
+  margin-bottom:4rem;
+  padding-bottom:4rem;
+  border-bottom:1px solid var(--ash);
+}
+.project:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+
+.project-header{
+  display:flex;
+  align-items:flex-start;
+  gap:1.25rem;
+  margin-bottom:2rem;
+}
+
+.project-icon{
+  width:48px;
+  height:48px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.3rem;
+  flex-shrink:0;
+  margin-top:0.2rem;
+}
+
+.project[data-color="gold"] .project-icon{background:var(--gold-glow);border:1px solid var(--gold-border);color:var(--gold)}
+.project[data-color="blue"] .project-icon{background:var(--blue-glow);border:1px solid var(--blue-border);color:var(--blue)}
+.project[data-color="green"] .project-icon{background:var(--green-glow);border:1px solid var(--green-border);color:var(--green)}
+.project[data-color="purple"] .project-icon{background:var(--purple-glow);border:1px solid var(--purple-border);color:var(--purple)}
+.project[data-color="orange"] .project-icon{background:var(--orange-glow);border:1px solid var(--orange-border);color:var(--orange)}
+
+.project-info{flex:1}
+
+.project-name{
+  font-family:'Cinzel',serif;
+  font-size:1.4rem;
+  font-weight:700;
+  color:var(--parchment);
+  letter-spacing:0.04em;
+  line-height:1.3;
+}
+
+.project-sub{
+  font-size:0.85rem;
+  color:var(--dust);
+  margin-top:0.2rem;
+}
+
+.project-desc{
+  color:var(--silver);
+  font-size:0.95rem;
+  line-height:1.8;
+  margin-bottom:1.75rem;
+}
+
+/* Feature list */
+.features{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:0.75rem;
+}
+
+.feature{
+  display:flex;
+  align-items:flex-start;
+  gap:0.75rem;
+  padding:0.85rem 1rem;
+  background:var(--stone);
+  border:1px solid var(--ash);
+  border-radius:2px;
+}
+
+.feature-bullet{
+  width:5px;
+  height:5px;
+  border-radius:1px;
+  transform:rotate(45deg);
+  margin-top:0.55rem;
+  flex-shrink:0;
+}
+
+.project[data-color="gold"] .feature-bullet{background:var(--gold-dim)}
+.project[data-color="blue"] .feature-bullet{background:var(--blue-dim)}
+.project[data-color="green"] .feature-bullet{background:var(--green-dim)}
+.project[data-color="purple"] .feature-bullet{background:var(--purple-dim)}
+.project[data-color="orange"] .feature-bullet{background:var(--orange-dim)}
+
+.feature-text{
+  font-size:0.85rem;
+  line-height:1.5;
+  color:var(--bone);
+}
+
+.feature-text strong{color:var(--parchment);font-weight:600}
+
+/* Stack tags per project */
+.project-stack{
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.4rem;
+  margin-top:1.5rem;
+}
+.project-stack .tech-tag{
+  font-size:0.65rem;
+  padding:0.2rem 0.55rem;
+}
+
+/* === FOOTER === */
+.footer{
+  border-top:1px solid var(--ash);
+  padding:2.5rem 2rem;
+}
+.footer-inner{
+  max-width:900px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.footer-brand{
+  font-family:'Cinzel',serif;
+  font-size:0.6rem;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--ash-light);
+}
+.footer-note{
+  font-size:0.75rem;
+  color:var(--ash-light);
+}
+
+@media(max-width:700px){
+  .page{padding:3rem 1.25rem 5rem}
+  .nav-links{gap:1rem}
+  .project-header{flex-direction:column;gap:0.75rem}
+  .features{grid-template-columns:1fr}
+  .footer-inner{flex-direction:column;gap:0.75rem;text-align:center}
+}
+@media(max-width:480px){
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">Z3nGineer</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Guides</a></li>
+      <li><a href="#omnisuite">OmniSuite</a></li>
+      <li><a href="#heatsync">HeatSync</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- INTRO -->
+  <div class="intro">
+    <p class="intro-label">Portfolio</p>
+    <h1 class="intro-title">Software Engineer &amp; Builder</h1>
+    <div class="intro-body">
+      <p>I've been writing code since I was 15, when I taught myself HTML and CSS building full custom MySpace layouts — not picking themes, but writing the actual div-based page structures from scratch. Two decades later, the tools have changed but the instinct is the same: if I can see it, I can build it.</p>
+      <p>Today I design and build full-stack applications from the ground up — backend APIs, desktop frontends, ML pipelines, real-time streaming, and everything in between. Every project here was architected, coded, and shipped by me. No templates, no boilerplate generators, no outsourcing.</p>
+      <p>I work across the entire stack: Python backend systems, modern web frontends, GPU-accelerated machine learning, Docker infrastructure, audio/video signal processing, and low-level system tuning. If it can be built, I'll figure out how.</p>
+    </div>
+    <div class="tech-bar">
+      <span class="tech-tag">Python</span>
+      <span class="tech-tag">FastAPI</span>
+      <span class="tech-tag">JavaScript</span>
+      <span class="tech-tag">HTML/CSS</span>
+      <span class="tech-tag">TypeScript</span>
+      <span class="tech-tag">PyTorch</span>
+      <span class="tech-tag">Docker</span>
+      <span class="tech-tag">FFmpeg</span>
+      <span class="tech-tag">CUDA</span>
+      <span class="tech-tag">Linux</span>
+      <span class="tech-tag">Git</span>
+      <span class="tech-tag">REST APIs</span>
+      <span class="tech-tag">SSE/Streaming</span>
+      <span class="tech-tag">ChromaDB</span>
+    </div>
+  </div>
+
+  <!-- OMNISUITE -->
+  <div class="project" data-color="purple" id="omnisuite">
+    <div class="project-header">
+      <div class="project-icon">&#9830;</div>
+      <div class="project-info">
+        <h2 class="project-name">OmniSuite</h2>
+        <p class="project-sub">AI-Powered Music Production Platform</p>
+      </div>
+    </div>
+    <p class="project-desc">A full-stack desktop application for AI-assisted music production. OmniSuite integrates song generation, audio analysis, professional mixing and mastering, vocal production, voice conversion, image generation, and video creation into a single unified interface — all running locally on consumer hardware.</p>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Song Generation Engine</strong> — SSE-streamed Suno integration with captcha solving, Clerk auth fallback, and 73 few-shot genre examples for prompt engineering</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>3-Tier Audio Analysis</strong> — Gemini AI, librosa signal processing, and offline fallback. Multi-method BPM voting, key detection, and 16-profile genre fingerprinting</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Mix &amp; Master Engine</strong> — 14 genre presets with per-stem frequency pockets, full mix bus chain, LUFS-targeted mastering. Suno WAV stem resolution with Demucs fallback</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Vocal Production Pipeline</strong> — 10-stage LA studio vocal chain, RVC voice conversion with custom-trained model (6000 steps), per-layer pitch detection via pyin</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Stem Separation</strong> — Demucs + UVR5 pipeline for vocal isolation, de-reverb, and de-echo. Decompose and convert lead, harmony, and ad-lib layers independently</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Image Generation</strong> — Local-only pipeline: nunchaku, FLUX.1-dev, FLUX.1-schnell, and SDXL backends. No cloud dependencies</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Video Pipeline</strong> — 5-tier music analysis, LLM-directed shot lists, 54 genre-specific color grades, beat-synced editorial, LTX-Video I2V animation</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Lyrical AI</strong> — ChromaDB knowledge base with 452 documents, 294 artist profiles across 13 genres. Context-injected generation with universal craft principles</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Instrument Lab</strong> — Full 10-stage instrument replacement pipeline with MusicGen, Stable Audio, and audio super-resolution</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Chat Interface</strong> — AI assistant with SSE streaming, knowledge base retrieval, session memory, and tool orchestration across all subsystems</div>
+      </div>
+    </div>
+
+    <div class="project-stack">
+      <span class="tech-tag">Python</span>
+      <span class="tech-tag">FastAPI</span>
+      <span class="tech-tag">pywebview</span>
+      <span class="tech-tag">PyTorch</span>
+      <span class="tech-tag">CUDA 12.8</span>
+      <span class="tech-tag">Docker</span>
+      <span class="tech-tag">ChromaDB</span>
+      <span class="tech-tag">Demucs</span>
+      <span class="tech-tag">RVC</span>
+      <span class="tech-tag">pedalboard</span>
+      <span class="tech-tag">librosa</span>
+      <span class="tech-tag">FFmpeg</span>
+      <span class="tech-tag">FLUX</span>
+      <span class="tech-tag">LTX-Video</span>
+      <span class="tech-tag">SSE</span>
+    </div>
+  </div>
+
+  <!-- HEATSYNC -->
+  <div class="project" data-color="blue" id="heatsync">
+    <div class="project-header">
+      <div class="project-icon">&#9832;</div>
+      <div class="project-info">
+        <h2 class="project-name">HeatSync</h2>
+        <p class="project-sub">Real-Time System Monitor</p>
+      </div>
+    </div>
+    <p class="project-desc">A desktop system monitoring application that provides real-time hardware telemetry at a glance. Tracks CPU and GPU usage, temperatures, memory, VRAM, clock speeds, disk usage, power draw, and compositor performance — all in a clean, always-visible overlay.</p>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Live Hardware Telemetry</strong> — CPU usage, CPU temp, GPU usage, GPU temp with real-time sparkline graphs</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>System Stats Bar</strong> — Memory, swap, VRAM, clock speed, disk, power draw, and compositor temperature at a glance</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Minimal Overhead</strong> — Designed to sit at the top of the screen and stay out of the way while providing everything you need</div>
+      </div>
+    </div>
+
+    <div class="project-stack">
+      <span class="tech-tag">Desktop App</span>
+      <span class="tech-tag">System APIs</span>
+      <span class="tech-tag">NVIDIA SMI</span>
+      <span class="tech-tag">Real-time</span>
+    </div>
+  </div>
+
+  <!-- COOKING WEBSITE -->
+  <div class="project" data-color="orange" id="cooking">
+    <div class="project-header">
+      <div class="project-icon">&#9734;</div>
+      <div class="project-info">
+        <h2 class="project-name">Cooking Website</h2>
+        <p class="project-sub">Full Recipe &amp; Culinary Platform</p>
+      </div>
+    </div>
+    <p class="project-desc">A complete cooking and recipe website built from scratch. Full frontend and backend — recipe browsing, search, and presentation with a clean, responsive design built for actual use in the kitchen.</p>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Full-Stack Build</strong> — Complete website with frontend design, backend logic, and data management</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Responsive Design</strong> — Works on desktop and mobile for hands-free kitchen use</div>
+      </div>
+    </div>
+
+    <div class="project-stack">
+      <span class="tech-tag">HTML/CSS</span>
+      <span class="tech-tag">JavaScript</span>
+      <span class="tech-tag">Responsive</span>
+    </div>
+  </div>
+
+  <!-- Z3NGINEER.GITHUB.IO -->
+  <div class="project" data-color="gold" id="guides-site">
+    <div class="project-header">
+      <div class="project-icon">&#9876;</div>
+      <div class="project-info">
+        <h2 class="project-name">Z3nGineer Game Guides</h2>
+        <p class="project-sub">Gaming Resource Hub</p>
+      </div>
+    </div>
+    <p class="project-desc">A multi-game guides website featuring in-depth build guides and a full modpack. Every guide is a hand-crafted single-page application with custom design per game — not a blog template, not a wiki, but purpose-built reference pages designed to be used mid-playthrough.</p>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>CHIM Modpack</strong> — Complete Oblivion Remastered modpack with curated load order, conflict resolution, custom UE4SS mods, and installation guides</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Build Guides</strong> — Detailed character build guides for Oblivion Remastered and Baldur's Gate 3 with leveling paths, gear picks, and theory</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Custom Modding</strong> — Wrote a custom DarkerNights UE4SS mod using a 4-system approach (skylight, directional light, fog, auto-exposure) that's frame-gen safe</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Per-Game Design</strong> — Each guide has its own visual identity, color palette, and typography matched to the game's aesthetic</div>
+      </div>
+    </div>
+
+    <div class="project-stack">
+      <span class="tech-tag">HTML/CSS</span>
+      <span class="tech-tag">GitHub Pages</span>
+      <span class="tech-tag">UE4SS / Lua</span>
+      <span class="tech-tag">Mod Development</span>
+    </div>
+  </div>
+
+  <!-- LINUX SYSTEMS -->
+  <div class="project" data-color="green" id="systems">
+    <div class="project-header">
+      <div class="project-icon">&#9881;</div>
+      <div class="project-info">
+        <h2 class="project-name">Linux Systems Engineering</h2>
+        <p class="project-sub">CachyOS / Arch — Bare Metal</p>
+      </div>
+    </div>
+    <p class="project-desc">Daily-driving a custom-tuned CachyOS (Arch-based) workstation with an RTX 5070 Ti on bleeding-edge drivers. Every layer of the system is configured by hand — from kernel scheduler selection and GPU overclocking to sleep state management and pacman hooks that survive kernel updates.</p>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>GPU Tuning</strong> — RTX 5070 Ti overclocked (+400 core, +5000 mem, 350W), custom fan curve, NVIDIA 595 driver with manual fixes for clock cap and sleep bugs</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Kernel &amp; Scheduler</strong> — sched-ext bpfland scheduler, custom pacman hooks to preserve config across updates, S3 deep sleep restoration</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Multi-GPU Workload</strong> — CUDA 12.8 + PyTorch nightly for ML, separate Python venvs for different workloads, Docker sidecar services</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>KDE/Wayland</strong> — Multi-monitor with portrait rotation, custom KWin tiling scripts, Proton gaming optimizations (DXVK, per-game launch configs)</div>
+      </div>
+    </div>
+
+    <div class="project-stack">
+      <span class="tech-tag">Arch Linux</span>
+      <span class="tech-tag">KDE Plasma 6</span>
+      <span class="tech-tag">Wayland</span>
+      <span class="tech-tag">NVIDIA</span>
+      <span class="tech-tag">systemd</span>
+      <span class="tech-tag">pacman</span>
+      <span class="tech-tag">Docker</span>
+      <span class="tech-tag">Proton</span>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="footer-brand">&copy; 2026 Z3nGineer</span>
+    <span class="footer-note">Everything on this page was built by one person.</span>
+  </div>
+</footer>
+
+</body>
+</html>
