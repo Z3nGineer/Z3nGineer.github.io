@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CrockedNLoaded — What Could Possibly Go Wrong?</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Caveat:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --board:#1e2a1e;
+  --board-light:#2a3a2a;
+  --board-dark:#141e14;
+  --chalk:#e8e0d0;
+  --chalk-dim:#a09880;
+  --chalk-faint:#706858;
+  --ember:#e85d26;
+  --flame:#ff8c42;
+  --heat:#ff6b35;
+  --coal:#b8420e;
+  --smudge:rgba(232,224,208,0.06);
+}
+
+html{scroll-behavior:smooth}
+body{
+  /* Chalkboard green-black */
+  background:var(--board-dark);
+  color:var(--chalk);
+  font-family:'Caveat',cursive;
+  font-size:32px;line-height:1.7;overflow-x:hidden;
+}
+
+/* Chalkboard texture overlay */
+body::before{
+  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+  opacity:0.08;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='6' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Chalk dust smudge effect */
+body::after{
+  content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;
+  background:
+    radial-gradient(ellipse 40% 30% at 20% 80%,rgba(232,224,208,0.03),transparent),
+    radial-gradient(ellipse 30% 40% at 85% 20%,rgba(232,224,208,0.02),transparent),
+    radial-gradient(ellipse 50% 20% at 60% 90%,rgba(232,224,208,0.025),transparent);
+}
+
+::selection{background:var(--ember);color:var(--board-dark)}
+
+/* ====== HERO ====== */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  padding:2rem;position:relative;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 40%,var(--board) 0%,var(--board-dark) 70%),
+    linear-gradient(180deg,var(--board-dark),var(--board),var(--board-dark));
+}
+
+/* Chalk border frame */
+.hero::before{
+  content:'';position:absolute;
+  top:3%;left:3%;right:3%;bottom:3%;
+  border:2px solid rgba(232,224,208,0.08);
+  border-radius:4px;pointer-events:none;
+}
+
+.hero-logo{
+  max-width:min(650px,85vw);height:auto;
+  filter:drop-shadow(0 8px 30px rgba(0,0,0,0.5));
+  animation:fadeUp 1s ease 0.3s both;
+  border-radius:8px;
+}
+
+.hero-tagline{
+  font-family:'Permanent Marker',cursive;
+  font-size:clamp(1.3rem,3vw,1.8rem);
+  color:var(--flame);margin:1.5rem 0 2.5rem;
+  letter-spacing:0.1em;
+  text-shadow:2px 2px 0 rgba(0,0,0,0.4);
+  animation:fadeUp 1s ease 0.6s both;
+}
+
+.cta-btn{
+  display:inline-block;padding:0.9rem 2.5rem;
+  font-family:'Permanent Marker',cursive;font-size:1.4rem;
+  color:var(--board-dark);background:var(--ember);
+  text-decoration:none;border:none;border-radius:3px;
+  cursor:pointer;
+  transition:background 0.3s,transform 0.2s,box-shadow 0.3s;
+  box-shadow:0 4px 20px rgba(232,93,38,0.4);
+  animation:fadeUp 1s ease 0.8s both;
+}
+.cta-btn:hover{
+  background:var(--flame);transform:translateY(-3px) rotate(-1deg);
+  box-shadow:0 6px 30px rgba(232,93,38,0.5);
+}
+
+.scroll-hint{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:0.4rem;
+  animation:bob 2s ease-in-out infinite,fadeUp 1s ease 1.2s both;z-index:2;
+}
+.scroll-hint span{
+  font-family:'Caveat',cursive;font-size:1rem;color:var(--chalk-faint);
+}
+.scroll-hint .line{
+  width:1px;height:30px;
+  background:linear-gradient(180deg,var(--chalk-faint),transparent);
+}
+
+/* ====== SECTION COMMON ====== */
+section{padding:5rem 2rem;position:relative}
+.container{max-width:850px;margin:0 auto}
+
+.chalk-rule{
+  width:100px;height:2px;margin:0 auto 2.5rem;
+  background:linear-gradient(90deg,transparent,var(--chalk-dim),transparent);
+  border-radius:2px;
+}
+.section-title{
+  font-family:'Permanent Marker',cursive;
+  font-size:clamp(2rem,5vw,3rem);
+  color:var(--chalk);text-align:center;margin-bottom:0.5rem;
+  text-shadow:2px 2px 0 rgba(0,0,0,0.3);
+}
+.section-sub{
+  text-align:center;color:var(--chalk-dim);font-size:1.1rem;
+  font-family:'Caveat',cursive;margin-bottom:2rem;
+}
+
+/* ====== CHALKBOARD PANELS ====== */
+.crew-section{
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%,var(--board),var(--board-dark));
+}
+
+.crew-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;
+  margin-top:1.5rem;
+}
+
+.crew-card{
+  text-align:center;padding:2.5rem 2rem;
+  background:rgba(232,224,208,0.02);
+  border:1px dashed var(--chalk-faint);border-radius:6px;
+  position:relative;
+  transition:border-color 0.4s,transform 0.3s;
+}
+.crew-card:hover{border-color:var(--ember);transform:rotate(-0.5deg) scale(1.01)}
+
+/* Chalk scribble decorative corners */
+.crew-card::before{
+  content:'*';position:absolute;top:8px;right:12px;
+  font-family:'Permanent Marker',cursive;font-size:1.35rem;
+  color:var(--chalk-faint);opacity:0.3;
+}
+
+.crew-emoji{font-size:3.5rem;margin-bottom:1rem;display:block}
+
+.crew-name{
+  font-family:'Permanent Marker',cursive;font-size:2rem;
+  color:var(--flame);margin-bottom:0.2rem;
+  text-shadow:1px 1px 0 rgba(0,0,0,0.3);
+}
+.crew-role{
+  font-family:'Caveat',cursive;font-size:1.1rem;
+  color:var(--chalk-dim);margin-bottom:1rem;
+  font-style:italic;
+}
+.crew-desc{
+  color:var(--chalk);font-size:1.3rem;line-height:1.7;
+  font-family:'Caveat',cursive;
+}
+
+/* ====== SOCIALS ====== */
+.socials-section{
+  background:var(--board-dark);
+}
+
+.social-grid{
+  display:flex;justify-content:center;gap:1.2rem;flex-wrap:wrap;
+  margin-top:1.5rem;
+}
+
+.social-link{
+  display:flex;align-items:center;gap:0.6rem;
+  padding:0.8rem 1.8rem;
+  background:transparent;
+  border:2px dashed var(--chalk-faint);border-radius:4px;
+  text-decoration:none;color:var(--chalk);
+  font-family:'Permanent Marker',cursive;font-size:1.35rem;
+  transition:border-color 0.3s,transform 0.2s,color 0.3s;
+}
+.social-link:hover{
+  border-color:var(--ember);color:var(--flame);
+  transform:translateY(-3px) rotate(-1deg);
+}
+.social-icon{font-size:1.3rem}
+
+/* ====== COMING SOON ====== */
+.soon-section{
+  background:radial-gradient(ellipse 80% 60% at 50% 50%,var(--board),var(--board-dark));
+}
+.soon-box{
+  text-align:center;padding:3.5rem 2rem;
+  border:2px dashed var(--chalk-faint);border-radius:6px;
+  position:relative;
+}
+.soon-box::before{
+  content:'~ coming soon ~';position:absolute;top:-14px;left:50%;
+  transform:translateX(-50%);background:var(--board);
+  padding:0 1rem;font-family:'Caveat',cursive;
+  font-size:0.9rem;color:var(--chalk-faint);
+}
+.soon-box h3{
+  font-family:'Permanent Marker',cursive;font-size:2rem;
+  color:var(--flame);margin-bottom:0.8rem;
+  text-shadow:2px 2px 0 rgba(0,0,0,0.3);
+}
+.soon-box p{
+  color:var(--chalk-dim);font-size:1.35rem;
+  font-family:'Caveat',cursive;
+  max-width:500px;margin:0 auto;
+}
+
+/* ====== FOOTER ====== */
+footer{
+  text-align:center;padding:3rem 2rem;
+  border-top:1px dashed var(--chalk-faint);
+  background:var(--board-dark);
+}
+.footer-brand{
+  font-family:'Permanent Marker',cursive;font-size:1.6rem;
+  color:var(--chalk-dim);margin-bottom:0.3rem;
+}
+.footer-brand .n{color:var(--coal)}
+.footer-sub{
+  font-family:'Caveat',cursive;font-size:1rem;
+  color:var(--chalk-faint);
+}
+
+/* ====== ANIMATIONS ====== */
+@keyframes fadeUp{
+  0%{opacity:0;transform:translateY(30px)}
+  100%{opacity:1;transform:translateY(0)}
+}
+@keyframes bob{
+  0%,100%{transform:translateX(-50%) translateY(0)}
+  50%{transform:translateX(-50%) translateY(8px)}
+}
+.reveal{opacity:0;transform:translateY(25px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:0.15s}
+.reveal-d2{transition-delay:0.3s}
+
+/* ====== RESPONSIVE ====== */
+@media(max-width:700px){
+  .crew-grid{grid-template-columns:1fr;gap:2rem}
+  .social-grid{flex-direction:column;align-items:center}
+  .social-link{width:100%;max-width:280px;justify-content:center}
+  section{padding:3.5rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <img src="img/cooking-hero.jpg" alt="Crocked N' Loaded — What Could Possibly Go Wrong?" class="hero-logo">
+  <p class="hero-tagline">A chef and a home cook walk into a kitchen...</p>
+  <a href="#socials" class="cta-btn">Follow The Flavor</a>
+  <div class="scroll-hint">
+    <span>scroll down</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<!-- The Crew -->
+<section class="crew-section" id="crew">
+  <div class="container">
+    <h2 class="section-title reveal">Meet The Cooks</h2>
+    <div class="chalk-rule reveal reveal-d1"></div>
+
+    <div class="crew-grid">
+      <div class="crew-card reveal">
+        <span class="crew-emoji">&#x1F525;</span>
+        <h3 class="crew-name">CrockPotDaddy</h3>
+        <p class="crew-role">The Home Cook</p>
+        <p class="crew-desc">Never went to culinary school, doesn't need to. This man will open the fridge, see three random things, and somehow make the best meal you've ever had. Don't ask him how. He doesn't know either.</p>
+      </div>
+      <div class="crew-card reveal reveal-d2">
+        <span class="crew-emoji">&#x1F468;&#x200D;&#x1F373;</span>
+        <h3 class="crew-name">MACK3Y</h3>
+        <p class="crew-role">The Chef</p>
+        <p class="crew-desc">Actually trained for this. Knows the techniques, knows the science, knows when to follow the rules and when to throw them out. Also makes music, because apparently one creative outlet wasn't enough.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Socials -->
+<section class="socials-section" id="socials">
+  <div class="container">
+    <h2 class="section-title reveal">Find Us</h2>
+    <div class="chalk-rule reveal reveal-d1"></div>
+
+    <div class="social-grid">
+      <a href="#" class="social-link reveal"><span class="social-icon">&#9654;</span> YouTube</a>
+      <a href="#" class="social-link reveal reveal-d1"><span class="social-icon">&#128247;</span> Instagram</a>
+      <a href="#" class="social-link reveal reveal-d1"><span class="social-icon">&#9836;</span> TikTok</a>
+      <a href="#" class="social-link reveal reveal-d2"><span class="social-icon">&#128077;</span> Facebook</a>
+    </div>
+  </div>
+</section>
+
+<!-- Coming Soon -->
+<section class="soon-section">
+  <div class="container">
+    <div class="soon-box reveal">
+      <h3>Videos Coming Soon</h3>
+      <p>We're getting the cameras set up and figuring out how not to burn the kitchen down on the first episode. No promises on the second one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-brand">Crocked<span class="n">N</span>Loaded</div>
+  <p class="footer-sub">&copy; 2026 &mdash; What Could Possibly Go Wrong?</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

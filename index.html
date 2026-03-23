@@ -230,6 +230,7 @@ a{text-decoration:none;color:inherit}
 
 .game-section[data-game="oblivion"] .game-header::after{background:var(--gold)}
 .game-section[data-game="bg3"] .game-header::after{background:var(--blue)}
+.game-section[data-game="cooking"] .game-header::after{background:#e85d26}
 
 .game-icon{
   width:52px;
@@ -252,6 +253,23 @@ a{text-decoration:none;color:inherit}
   border:1px solid var(--blue-border);
   color:var(--blue);
 }
+.game-section[data-game="cooking"] .game-icon{
+  background:rgba(232,93,38,0.08);
+  border:1px solid rgba(232,93,38,0.15);
+  color:#e85d26;
+}
+.game-section[data-game="cooking"] .game-count{
+  color:#8a4520;
+  background:rgba(232,93,38,0.08);
+  border:1px solid rgba(232,93,38,0.15);
+}
+.guide-card[data-accent="orange"]::before{background:linear-gradient(90deg,transparent,#e85d26,transparent)}
+.guide-card[data-accent="orange"]:hover{box-shadow:0 8px 40px rgba(232,93,38,0.05)}
+.guide-card[data-accent="orange"] .card-type{color:#e85d26;background:rgba(232,93,38,0.08);border:1px solid rgba(232,93,38,0.15)}
+.guide-card[data-accent="orange"]:hover .card-title{color:#ff8c42}
+.guide-card[data-accent="orange"] .card-cta{color:#8a4520}
+.guide-card[data-accent="orange"]:hover .card-cta{color:#e85d26;letter-spacing:0.2em}
+.guide-card[data-accent="orange"] .card-arrow{color:#e85d26}
 
 .game-info{flex:1}
 
@@ -543,6 +561,7 @@ a{text-decoration:none;color:inherit}
     <ul class="nav-links">
       <li><a href="#oblivion">Oblivion</a></li>
       <li><a href="#bg3">Baldur's Gate 3</a></li>
+      <li><a href="#cooking">Cooking</a></li>
       <li><a href="portfolio.html">Portfolio</a></li>
     </ul>
   </div>
@@ -555,7 +574,7 @@ a{text-decoration:none;color:inherit}
   <div class="ornament">
     <div class="ornament-diamond"></div>
   </div>
-  <p class="tagline">Guides, modpacks, and tools for the games worth mastering</p>
+  <p class="tagline">Guides, modpacks, cooking, and tools — built by one guy who does too many things</p>
   <div class="hero-stats">
     <div class="stat">
       <span class="stat-num">3</span>
@@ -568,6 +587,10 @@ a{text-decoration:none;color:inherit}
     <div class="stat">
       <span class="stat-num">1</span>
       <span class="stat-label">Modpack</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1</span>
+      <span class="stat-label">Kitchen</span>
     </div>
   </div>
 </header>
@@ -645,6 +668,36 @@ a{text-decoration:none;color:inherit}
       </div>
     </a>
 
+  </div>
+</section>
+
+<div class="divider"><div class="divider-dot"></div></div>
+
+<!-- CROCKEDNLOADED -->
+<section class="game-section" data-game="cooking" id="cooking">
+  <div class="game-header">
+    <div class="game-icon">&#x1F525;</div>
+    <div class="game-info">
+      <h2 class="game-title">CrockedNLoaded</h2>
+      <p class="game-subtitle">Cooking Channel &amp; Brand</p>
+    </div>
+    <span class="game-count">1 Resource</span>
+  </div>
+
+  <div class="guides">
+    <a href="crockednloaded.html" class="guide-card" data-accent="orange">
+      <div class="card-top">
+        <span class="card-type">Landing Page</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">CrockedNLoaded — What Could Possibly Go Wrong?</h3>
+        <p class="card-desc">A professional chef and a home cook walk into a kitchen. Landing page for our cooking YouTube channel with links to all socials.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-cta">Visit Site</span>
+        <span class="card-arrow">&rarr;</span>
+      </div>
+    </a>
   </div>
 </section>
 
