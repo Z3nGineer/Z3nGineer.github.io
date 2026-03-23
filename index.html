@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Z3nGineer — Guides, Modpacks &amp; Tools</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<title>Z3nGineer — Software Engineer, Chef &amp; Musician</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
@@ -13,23 +13,34 @@
   --abyss:#0a0908;
   --obsidian:#0f0e0d;
   --stone:#161514;
-  --stone-warm:#1a1816;
   --ash:#2a2826;
   --ash-light:#3a3735;
   --dust:#7a7468;
   --silver:#a09888;
   --bone:#c8bca8;
   --parchment:#e0d8c8;
+  --white:#f0ece4;
   --gold:#c9a84c;
   --gold-bright:#e4c565;
   --gold-dim:#8a7234;
-  --gold-glow:rgba(201,168,76,0.08);
+  --gold-glow:rgba(201,168,76,0.07);
   --gold-border:rgba(201,168,76,0.12);
   --blue:#4a88cc;
-  --blue-bright:#5ea0e8;
   --blue-dim:#385a80;
-  --blue-glow:rgba(74,136,204,0.08);
+  --blue-glow:rgba(74,136,204,0.07);
   --blue-border:rgba(74,136,204,0.12);
+  --green:#5a9a5a;
+  --green-dim:#3a6a3a;
+  --green-glow:rgba(90,154,90,0.07);
+  --green-border:rgba(90,154,90,0.12);
+  --purple:#8a6ab5;
+  --purple-dim:#5a4080;
+  --purple-glow:rgba(138,106,181,0.07);
+  --purple-border:rgba(138,106,181,0.12);
+  --orange:#c88040;
+  --orange-dim:#8a5a2a;
+  --orange-glow:rgba(200,128,64,0.07);
+  --orange-border:rgba(200,128,64,0.12);
 }
 
 html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--ash) var(--void)}
@@ -40,7 +51,6 @@ body{
   font-size:19px;
   line-height:1.7;
   -webkit-font-smoothing:antialiased;
-  min-height:100vh;
 }
 
 body::before{
@@ -54,9 +64,10 @@ body::before{
   z-index:9999;
 }
 
-a{text-decoration:none;color:inherit}
+a{color:var(--gold);text-decoration:none}
+a:hover{color:var(--gold-bright);text-decoration:underline}
 
-/* === STICKY NAV === */
+/* === NAV === */
 .nav{
   position:sticky;
   top:0;
@@ -67,16 +78,14 @@ a{text-decoration:none;color:inherit}
   border-bottom:1px solid var(--ash);
   padding:0 2rem;
 }
-
 .nav-inner{
-  max-width:1200px;
+  max-width:900px;
   margin:0 auto;
   display:flex;
   align-items:center;
   justify-content:space-between;
   height:56px;
 }
-
 .nav-brand{
   font-family:'Cinzel',serif;
   font-size:0.8rem;
@@ -84,14 +93,10 @@ a{text-decoration:none;color:inherit}
   letter-spacing:0.15em;
   text-transform:uppercase;
   color:var(--parchment);
+  text-decoration:none;
 }
-
-.nav-links{
-  display:flex;
-  gap:2rem;
-  list-style:none;
-}
-
+.nav-brand:hover{color:var(--gold-bright);text-decoration:none}
+.nav-links{display:flex;gap:2rem;list-style:none}
 .nav-links a{
   font-family:'Cinzel',serif;
   font-size:0.65rem;
@@ -100,393 +105,173 @@ a{text-decoration:none;color:inherit}
   text-transform:uppercase;
   color:var(--dust);
   transition:color 0.3s ease;
-  padding:0.25rem 0;
+  text-decoration:none;
 }
-.nav-links a:hover{color:var(--parchment)}
+.nav-links a:hover{color:var(--parchment);text-decoration:none}
 
-/* === HERO === */
-.hero{
-  position:relative;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:7rem 2rem 5rem;
-  overflow:hidden;
+/* === PAGE LAYOUT === */
+.page{
+  max-width:900px;
+  margin:0 auto;
+  padding:4rem 2rem 6rem;
 }
 
-.hero-glow{
-  position:absolute;
-  top:25%;left:50%;
-  transform:translate(-50%,-50%);
-  width:800px;height:500px;
-  background:radial-gradient(ellipse,rgba(201,168,76,0.035) 0%,transparent 70%);
-  pointer-events:none;
-}
+/* === INTRO === */
+.intro{margin-bottom:4rem}
 
-.brand{
+.intro-label{
   font-family:'Cinzel',serif;
-  font-weight:800;
-  font-size:clamp(2.8rem,6vw,4.2rem);
-  letter-spacing:0.2em;
+  font-size:0.65rem;
+  font-weight:600;
+  letter-spacing:0.25em;
   text-transform:uppercase;
-  position:relative;
-  animation:fadeDown 0.8s ease both;
+  color:var(--gold-dim);
+  margin-bottom:1rem;
 }
 
-.brand span{
-  background:linear-gradient(180deg,var(--parchment) 20%,var(--gold) 100%);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-
-.ornament{
-  display:flex;
-  align-items:center;
-  gap:1rem;
-  margin:1.5rem 0 2rem;
-  animation:fadeIn 1s ease 0.3s both;
-}
-.ornament::before,.ornament::after{
-  content:'';
-  width:clamp(40px,12vw,120px);
-  height:1px;
-  background:linear-gradient(90deg,transparent,var(--gold-dim));
-}
-.ornament::after{
-  background:linear-gradient(90deg,var(--gold-dim),transparent);
-}
-.ornament-diamond{
-  width:6px;height:6px;
-  background:var(--gold);
-  transform:rotate(45deg);
-  flex-shrink:0;
-  opacity:0.7;
-}
-
-.tagline{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(1.15rem,2.5vw,1.5rem);
-  font-weight:400;
-  font-style:italic;
-  color:var(--dust);
-  letter-spacing:0.04em;
-  max-width:550px;
-  animation:fadeIn 1s ease 0.5s both;
-}
-
-.hero-stats{
-  display:flex;
-  gap:3rem;
-  margin-top:3rem;
-  animation:fadeIn 1s ease 0.7s both;
-}
-
-.stat{text-align:center}
-.stat-num{
+.intro-title{
   font-family:'Cinzel',serif;
-  font-size:1.6rem;
+  font-size:clamp(1.8rem,4vw,2.6rem);
   font-weight:700;
   color:var(--parchment);
-  display:block;
-}
-.stat-label{
-  font-size:0.7rem;
-  font-weight:600;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  color:var(--dust);
+  letter-spacing:0.06em;
+  line-height:1.25;
+  margin-bottom:1.5rem;
 }
 
-/* === GAME SECTIONS === */
-.game-section{
-  max-width:1200px;
-  margin:0 auto;
-  padding:0 2rem 5rem;
-  position:relative;
+.intro-body{
+  color:var(--silver);
+  font-size:1.05rem;
+  line-height:1.85;
+  max-width:750px;
 }
+.intro-body p + p{margin-top:1rem}
 
-.game-header{
+/* === TECH STACK BAR === */
+.tech-bar{
   display:flex;
-  align-items:center;
-  gap:1.5rem;
-  margin-bottom:2.5rem;
-  padding-bottom:1.5rem;
+  flex-wrap:wrap;
+  gap:0.5rem;
+  margin-top:2rem;
+}
+.tech-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.7rem;
+  font-weight:500;
+  padding:0.3rem 0.7rem;
+  border-radius:2px;
+  color:var(--dust);
+  background:var(--stone);
+  border:1px solid var(--ash);
+}
+
+/* === PROJECT SECTIONS === */
+.project{
+  margin-bottom:4rem;
+  padding-bottom:4rem;
   border-bottom:1px solid var(--ash);
-  position:relative;
+}
+.project:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+
+.project-header{
+  display:flex;
+  align-items:flex-start;
+  gap:1.25rem;
+  margin-bottom:2rem;
 }
 
-/* Colored accent line on game header */
-.game-header::after{
-  content:'';
-  position:absolute;
-  bottom:-1px;
-  left:0;
-  width:80px;
-  height:2px;
-}
-
-.game-section[data-game="oblivion"] .game-header::after{background:var(--gold)}
-.game-section[data-game="bg3"] .game-header::after{background:var(--blue)}
-.game-section[data-game="cooking"] .game-header::after{background:#e85d26}
-
-.game-icon{
-  width:52px;
-  height:52px;
+.project-icon{
+  width:48px;
+  height:48px;
   border-radius:8px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:1.5rem;
+  font-size:1.3rem;
   flex-shrink:0;
+  margin-top:0.2rem;
 }
 
-.game-section[data-game="oblivion"] .game-icon{
-  background:var(--gold-glow);
-  border:1px solid var(--gold-border);
-  color:var(--gold);
-}
-.game-section[data-game="bg3"] .game-icon{
-  background:var(--blue-glow);
-  border:1px solid var(--blue-border);
-  color:var(--blue);
-}
-.game-section[data-game="cooking"] .game-icon{
-  background:rgba(232,93,38,0.08);
-  border:1px solid rgba(232,93,38,0.15);
-  color:#e85d26;
-}
-.game-section[data-game="cooking"] .game-count{
-  color:#8a4520;
-  background:rgba(232,93,38,0.08);
-  border:1px solid rgba(232,93,38,0.15);
-}
-.guide-card[data-accent="orange"]::before{background:linear-gradient(90deg,transparent,#e85d26,transparent)}
-.guide-card[data-accent="orange"]:hover{box-shadow:0 8px 40px rgba(232,93,38,0.05)}
-.guide-card[data-accent="orange"] .card-type{color:#e85d26;background:rgba(232,93,38,0.08);border:1px solid rgba(232,93,38,0.15)}
-.guide-card[data-accent="orange"]:hover .card-title{color:#ff8c42}
-.guide-card[data-accent="orange"] .card-cta{color:#8a4520}
-.guide-card[data-accent="orange"]:hover .card-cta{color:#e85d26;letter-spacing:0.2em}
-.guide-card[data-accent="orange"] .card-arrow{color:#e85d26}
+.project[data-color="gold"] .project-icon{background:var(--gold-glow);border:1px solid var(--gold-border);color:var(--gold)}
+.project[data-color="blue"] .project-icon{background:var(--blue-glow);border:1px solid var(--blue-border);color:var(--blue)}
+.project[data-color="green"] .project-icon{background:var(--green-glow);border:1px solid var(--green-border);color:var(--green)}
+.project[data-color="purple"] .project-icon{background:var(--purple-glow);border:1px solid var(--purple-border);color:var(--purple)}
+.project[data-color="orange"] .project-icon{background:var(--orange-glow);border:1px solid var(--orange-border);color:var(--orange)}
 
-.game-info{flex:1}
+.project-info{flex:1}
 
-.game-title{
+.project-name{
   font-family:'Cinzel',serif;
-  font-size:clamp(1.2rem,2.5vw,1.6rem);
+  font-size:1.4rem;
   font-weight:700;
   color:var(--parchment);
-  letter-spacing:0.06em;
+  letter-spacing:0.04em;
+  line-height:1.3;
 }
 
-.game-subtitle{
+.project-sub{
   font-size:0.85rem;
   color:var(--dust);
-  margin-top:0.15rem;
+  margin-top:0.2rem;
 }
 
-.game-count{
-  font-family:'Cinzel',serif;
-  font-size:0.65rem;
-  font-weight:600;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  padding:0.35rem 0.9rem;
+.project-desc{
+  color:var(--silver);
+  font-size:0.95rem;
+  line-height:1.8;
+  margin-bottom:1.75rem;
+}
+
+/* Feature list */
+.features{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:0.75rem;
+}
+
+.feature{
+  display:flex;
+  align-items:flex-start;
+  gap:0.75rem;
+  padding:0.85rem 1rem;
+  background:var(--stone);
+  border:1px solid var(--ash);
   border-radius:2px;
+}
+
+.feature-bullet{
+  width:5px;
+  height:5px;
+  border-radius:1px;
+  transform:rotate(45deg);
+  margin-top:0.55rem;
   flex-shrink:0;
 }
 
-.game-section[data-game="oblivion"] .game-count{
-  color:var(--gold-dim);
-  background:var(--gold-glow);
-  border:1px solid var(--gold-border);
-}
-.game-section[data-game="bg3"] .game-count{
-  color:var(--blue-dim);
-  background:var(--blue-glow);
-  border:1px solid var(--blue-border);
+.project[data-color="gold"] .feature-bullet{background:var(--gold-dim)}
+.project[data-color="blue"] .feature-bullet{background:var(--blue-dim)}
+.project[data-color="green"] .feature-bullet{background:var(--green-dim)}
+.project[data-color="purple"] .feature-bullet{background:var(--purple-dim)}
+.project[data-color="orange"] .feature-bullet{background:var(--orange-dim)}
+
+.feature-text{
+  font-size:0.85rem;
+  line-height:1.5;
+  color:var(--bone);
 }
 
-/* === GUIDE CARDS === */
-.guides{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
-  gap:1.25rem;
-}
+.feature-text strong{color:var(--parchment);font-weight:600}
 
-.guide-card{
-  position:relative;
+/* Stack tags per project */
+.project-stack{
   display:flex;
-  flex-direction:column;
-  background:var(--stone);
-  border:1px solid var(--ash);
-  border-radius:3px;
-  overflow:hidden;
-  transition:transform 0.35s ease,border-color 0.35s ease,box-shadow 0.35s ease;
+  flex-wrap:wrap;
+  gap:0.4rem;
+  margin-top:1.5rem;
 }
-
-.guide-card:hover{
-  transform:translateY(-3px);
-  border-color:var(--ash-light);
-}
-
-.guide-card::before{
-  content:'';
-  position:absolute;
-  top:0;left:0;right:0;
-  height:2px;
-  opacity:0;
-  transition:opacity 0.35s ease;
-}
-.guide-card:hover::before{opacity:1}
-
-.guide-card[data-accent="gold"]::before{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-.guide-card[data-accent="gold"]:hover{box-shadow:0 8px 40px rgba(201,168,76,0.05)}
-
-.guide-card[data-accent="blue"]::before{background:linear-gradient(90deg,transparent,var(--blue),transparent)}
-.guide-card[data-accent="blue"]:hover{box-shadow:0 8px 40px rgba(74,136,204,0.05)}
-
-.card-top{
-  display:flex;
-  align-items:center;
-  gap:0.75rem;
-  padding:1.5rem 1.75rem 0;
-}
-
-.card-type{
+.project-stack .tech-tag{
   font-size:0.65rem;
-  font-weight:600;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  padding:0.25rem 0.6rem;
-  border-radius:2px;
-}
-
-.guide-card[data-accent="gold"] .card-type{
-  color:var(--gold);
-  background:var(--gold-glow);
-  border:1px solid var(--gold-border);
-}
-.guide-card[data-accent="blue"] .card-type{
-  color:var(--blue);
-  background:var(--blue-glow);
-  border:1px solid var(--blue-border);
-}
-
-.card-body{
-  padding:1.25rem 1.75rem 1.5rem;
-  flex:1;
-  display:flex;
-  flex-direction:column;
-}
-
-.card-title{
-  font-family:'Cinzel',serif;
-  font-size:1.3rem;
-  font-weight:700;
-  color:var(--parchment);
-  line-height:1.3;
-  letter-spacing:0.03em;
-  margin-bottom:0.6rem;
-  transition:color 0.3s ease;
-}
-
-.guide-card[data-accent="gold"]:hover .card-title{color:var(--gold-bright)}
-.guide-card[data-accent="blue"]:hover .card-title{color:var(--blue-bright)}
-
-.card-desc{
-  color:var(--silver);
-  font-size:0.9rem;
-  line-height:1.7;
-  flex:1;
-}
-
-.card-footer{
-  padding:1rem 1.75rem;
-  border-top:1px solid var(--ash);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.card-cta{
-  font-family:'Cinzel',serif;
-  font-size:0.65rem;
-  font-weight:600;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  transition:color 0.3s ease,letter-spacing 0.3s ease;
-}
-
-.guide-card[data-accent="gold"] .card-cta{color:var(--gold-dim)}
-.guide-card[data-accent="gold"]:hover .card-cta{color:var(--gold);letter-spacing:0.2em}
-.guide-card[data-accent="blue"] .card-cta{color:var(--blue-dim)}
-.guide-card[data-accent="blue"]:hover .card-cta{color:var(--blue);letter-spacing:0.2em}
-
-.card-arrow{
-  font-size:1rem;
-  transition:transform 0.3s ease,opacity 0.3s ease;
-  opacity:0.3;
-}
-.guide-card:hover .card-arrow{transform:translateX(4px);opacity:0.7}
-
-.guide-card[data-accent="gold"] .card-arrow{color:var(--gold)}
-.guide-card[data-accent="blue"] .card-arrow{color:var(--blue)}
-
-/* === SECTION DIVIDER === */
-.divider{
-  max-width:1200px;
-  margin:0 auto 5rem;
-  padding:0 2rem;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:1.5rem;
-}
-.divider::before,.divider::after{
-  content:'';
-  flex:1;
-  height:1px;
-  background:linear-gradient(90deg,transparent,var(--ash),transparent);
-}
-.divider-dot{
-  width:4px;height:4px;
-  background:var(--ash-light);
-  transform:rotate(45deg);
-}
-
-/* === MORE GAMES TEASER === */
-.more-games{
-  max-width:1200px;
-  margin:0 auto;
-  padding:0 2rem 6rem;
-  text-align:center;
-}
-
-.more-games-box{
-  border:1px dashed var(--ash);
-  border-radius:3px;
-  padding:3.5rem 2rem;
-  background:rgba(22,21,20,0.4);
-}
-
-.more-games-label{
-  font-family:'Cinzel',serif;
-  font-size:0.7rem;
-  font-weight:600;
-  letter-spacing:0.3em;
-  text-transform:uppercase;
-  color:var(--dust);
-  margin-bottom:0.75rem;
-}
-
-.more-games-text{
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.15rem;
-  font-style:italic;
-  color:var(--ash-light);
+  padding:0.2rem 0.55rem;
 }
 
 /* === FOOTER === */
@@ -494,15 +279,13 @@ a{text-decoration:none;color:inherit}
   border-top:1px solid var(--ash);
   padding:2.5rem 2rem;
 }
-
 .footer-inner{
-  max-width:1200px;
+  max-width:900px;
   margin:0 auto;
   display:flex;
   align-items:center;
   justify-content:space-between;
 }
-
 .footer-brand{
   font-family:'Cinzel',serif;
   font-size:0.6rem;
@@ -510,212 +293,302 @@ a{text-decoration:none;color:inherit}
   text-transform:uppercase;
   color:var(--ash-light);
 }
-
 .footer-note{
   font-size:0.75rem;
   color:var(--ash-light);
 }
 
-/* === ANIMATIONS === */
-@keyframes fadeDown{
-  from{opacity:0;transform:translateY(-20px)}
-  to{opacity:1;transform:translateY(0)}
-}
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(24px)}
-  to{opacity:1;transform:translateY(0)}
-}
-@keyframes fadeIn{
-  from{opacity:0}
-  to{opacity:1}
-}
-
-/* === RESPONSIVE === */
 @media(max-width:700px){
+  .page{padding:3rem 1.25rem 5rem}
   .nav-links{gap:1rem}
-  .hero{padding:5rem 1.5rem 3.5rem}
-  .hero-stats{gap:2rem}
-  .game-section{padding:0 1.25rem 4rem}
-  .game-header{flex-wrap:wrap;gap:1rem}
-  .game-count{display:none}
-  .guides{grid-template-columns:1fr;gap:1rem}
-  .card-top{padding:1.25rem 1.25rem 0}
-  .card-body{padding:1rem 1.25rem 1.25rem}
-  .card-footer{padding:0.85rem 1.25rem}
-  .footer-inner{flex-direction:column;gap:0.75rem}
-  .more-games{padding:0 1.25rem 5rem}
+  .project-header{flex-direction:column;gap:0.75rem}
+  .features{grid-template-columns:1fr}
+  .footer-inner{flex-direction:column;gap:0.75rem;text-align:center}
 }
-
 @media(max-width:480px){
   .nav-links{display:none}
-  .hero-stats{flex-direction:column;gap:1.25rem}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
-    <span class="nav-brand">Z3nGineer</span>
+    <a href="index.html" class="nav-brand">Z3nGineer</a>
     <ul class="nav-links">
-      <li><a href="#oblivion">Oblivion</a></li>
-      <li><a href="#bg3">Baldur's Gate 3</a></li>
-      <li><a href="#cooking">Cooking</a></li>
-      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="guides.html">Guides</a></li>
+      <li><a href="CHIM.html">CHIM Modpack</a></li>
+      <li><a href="crockednloaded.html">Cooking</a></li>
+      <li><a href="#omnisuite">Projects</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- HERO -->
-<header class="hero">
-  <div class="hero-glow"></div>
-  <h1 class="brand"><span>Z3nGineer</span></h1>
-  <div class="ornament">
-    <div class="ornament-diamond"></div>
-  </div>
-  <p class="tagline">Guides, modpacks, cooking, and tools — built by one guy who does too many things</p>
-  <div class="hero-stats">
-    <div class="stat">
-      <span class="stat-num">3</span>
-      <span class="stat-label">Guides</span>
+<div class="page">
+
+  <!-- HERO IMAGE -->
+  <img src="img/studio.jpg" alt="Studio setup" style="width:100%;border-radius:3px;margin-bottom:3rem;border:1px solid var(--ash);">
+
+  <!-- INTRO -->
+  <div class="intro">
+    <p class="intro-label">Portfolio</p>
+    <h1 class="intro-title">Software Engineer, Chef &amp; Musician</h1>
+    <div class="intro-body">
+      <p>I've been writing code since I was 15, when I taught myself HTML and CSS building full custom MySpace layouts — not picking themes, but writing the actual div-based page structures from scratch. Two decades later, the tools have changed but the instinct is the same: if I can see it, I can build it.</p>
+      <p>Today I design and build full-stack applications from the ground up — backend APIs, desktop frontends, ML pipelines, real-time streaming, and everything in between. Every project here was architected, coded, and shipped by me. No templates, no boilerplate generators, no outsourcing.</p>
+      <p>I work across the entire stack: Python backend systems, modern web frontends, GPU-accelerated machine learning, Docker infrastructure, audio/video signal processing, and low-level system tuning. If it can be built, I'll figure out how.</p>
+      <p>When I'm not coding, I'm either in the kitchen or in the studio. I'm a professional chef and I make music under the name <strong>MACK3Y</strong> — singing, producing, and building out the tools to do it all from my home studio. I also co-host <strong>CrockedNLoaded</strong>, a cooking channel with my boy CrockPotDaddy.</p>
     </div>
-    <div class="stat">
-      <span class="stat-num">2</span>
-      <span class="stat-label">Games</span>
+    <div class="tech-bar">
+      <span class="tech-tag">Python</span>
+      <span class="tech-tag">FastAPI</span>
+      <span class="tech-tag">JavaScript</span>
+      <span class="tech-tag">HTML/CSS</span>
+      <span class="tech-tag">TypeScript</span>
+      <span class="tech-tag">PyTorch</span>
+      <span class="tech-tag">Docker</span>
+      <span class="tech-tag">FFmpeg</span>
+      <span class="tech-tag">CUDA</span>
+      <span class="tech-tag">Linux</span>
+      <span class="tech-tag">Git</span>
+      <span class="tech-tag">REST APIs</span>
+      <span class="tech-tag">SSE/Streaming</span>
+      <span class="tech-tag">ChromaDB</span>
     </div>
-    <div class="stat">
-      <span class="stat-num">1</span>
-      <span class="stat-label">Modpack</span>
+  </div>
+
+  <!-- OMNISUITE -->
+  <div class="project" data-color="purple" id="omnisuite">
+    <div class="project-header">
+      <div class="project-icon">&#9830;</div>
+      <div class="project-info">
+        <h2 class="project-name">OmniSuite</h2>
+        <p class="project-sub">AI-Powered Music Production Platform</p>
+      </div>
     </div>
-    <div class="stat">
-      <span class="stat-num">1</span>
-      <span class="stat-label">Kitchen</span>
+    <p class="project-desc">A full-stack desktop application for AI-assisted music production. OmniSuite integrates song generation, audio analysis, professional mixing and mastering, vocal production, voice conversion, image generation, and video creation into a single unified interface — all running locally on consumer hardware.</p>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Song Generation Engine</strong> — SSE-streamed Suno integration with captcha solving, Clerk auth fallback, and 73 few-shot genre examples for prompt engineering</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>3-Tier Audio Analysis</strong> — Gemini AI, librosa signal processing, and offline fallback. Multi-method BPM voting, key detection, and 16-profile genre fingerprinting</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Mix &amp; Master Engine</strong> — 14 genre presets with per-stem frequency pockets, full mix bus chain, LUFS-targeted mastering. Suno WAV stem resolution with Demucs fallback</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Vocal Production Pipeline</strong> — 10-stage LA studio vocal chain, RVC voice conversion with custom-trained model (6000 steps), per-layer pitch detection via pyin</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Stem Separation</strong> — Demucs + UVR5 pipeline for vocal isolation, de-reverb, and de-echo. Decompose and convert lead, harmony, and ad-lib layers independently</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Image Generation</strong> — Local-only pipeline: nunchaku, FLUX.1-dev, FLUX.1-schnell, and SDXL backends. No cloud dependencies</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Video Pipeline</strong> — 5-tier music analysis, LLM-directed shot lists, 54 genre-specific color grades, beat-synced editorial, LTX-Video I2V animation</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Lyrical AI</strong> — ChromaDB knowledge base with 452 documents, 294 artist profiles across 13 genres. Context-injected generation with universal craft principles</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Instrument Lab</strong> — Full 10-stage instrument replacement pipeline with MusicGen, Stable Audio, and audio super-resolution</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Chat Interface</strong> — AI assistant with SSE streaming, knowledge base retrieval, session memory, and tool orchestration across all subsystems</div>
+      </div>
+    </div>
+
+    <div class="project-stack">
+      <span class="tech-tag">Python</span>
+      <span class="tech-tag">FastAPI</span>
+      <span class="tech-tag">pywebview</span>
+      <span class="tech-tag">PyTorch</span>
+      <span class="tech-tag">CUDA 12.8</span>
+      <span class="tech-tag">Docker</span>
+      <span class="tech-tag">ChromaDB</span>
+      <span class="tech-tag">Demucs</span>
+      <span class="tech-tag">RVC</span>
+      <span class="tech-tag">pedalboard</span>
+      <span class="tech-tag">librosa</span>
+      <span class="tech-tag">FFmpeg</span>
+      <span class="tech-tag">FLUX</span>
+      <span class="tech-tag">LTX-Video</span>
+      <span class="tech-tag">SSE</span>
     </div>
   </div>
-</header>
 
-<!-- OBLIVION REMASTERED -->
-<section class="game-section" data-game="oblivion" id="oblivion">
-  <div class="game-header">
-    <div class="game-icon">&#9876;</div>
-    <div class="game-info">
-      <h2 class="game-title">Oblivion Remastered</h2>
-      <p class="game-subtitle">The Elder Scrolls IV</p>
+  <!-- HEATSYNC -->
+  <div class="project" data-color="blue" id="heatsync">
+    <div class="project-header">
+      <div class="project-icon">&#9832;</div>
+      <div class="project-info">
+        <h2 class="project-name">HeatSync</h2>
+        <p class="project-sub">Real-Time System Monitor</p>
+      </div>
     </div>
-    <span class="game-count">2 Resources</span>
-  </div>
+    <p class="project-desc">A desktop system monitoring application that provides real-time hardware telemetry at a glance. Tracks CPU and GPU usage, temperatures, memory, VRAM, clock speeds, disk usage, power draw, and compositor performance — all in a clean, always-visible overlay.</p>
 
-  <div class="guides">
-
-    <a href="CHIM.html" class="guide-card" data-accent="gold">
-      <div class="card-top">
-        <span class="card-type">Modpack</span>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Live Hardware Telemetry</strong> — CPU usage, CPU temp, GPU usage, GPU temp with real-time sparkline graphs</div>
       </div>
-      <div class="card-body">
-        <h3 class="card-title">CHIM</h3>
-        <p class="card-desc">60+ hand-tested mods, custom patches, and tuned lighting. A curated vanilla-plus modpack for a darker, deeper Cyrodiil.</p>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>System Stats Bar</strong> — Memory, swap, VRAM, clock speed, disk, power draw, and compositor temperature at a glance</div>
       </div>
-      <div class="card-footer">
-        <span class="card-cta">View Modpack</span>
-        <span class="card-arrow">&rarr;</span>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Minimal Overhead</strong> — Designed to sit at the top of the screen and stay out of the way while providing everything you need</div>
       </div>
-    </a>
-
-    <a href="oblivion-spellsword-guide.html" class="guide-card" data-accent="gold">
-      <div class="card-top">
-        <span class="card-type">Build Guide</span>
-      </div>
-      <div class="card-body">
-        <h3 class="card-title">Breton Spellsword</h3>
-        <p class="card-desc">Blade and spell in equal measure. A leveling-efficient Breton build covering race, birthsign, class design, and the path to endgame enchanting.</p>
-      </div>
-      <div class="card-footer">
-        <span class="card-cta">Read Guide</span>
-        <span class="card-arrow">&rarr;</span>
-      </div>
-    </a>
-
-  </div>
-</section>
-
-<div class="divider"><div class="divider-dot"></div></div>
-
-<!-- BALDUR'S GATE 3 -->
-<section class="game-section" data-game="bg3" id="bg3">
-  <div class="game-header">
-    <div class="game-icon">&#9733;</div>
-    <div class="game-info">
-      <h2 class="game-title">Baldur's Gate 3</h2>
-      <p class="game-subtitle">Larian Studios</p>
     </div>
-    <span class="game-count">1 Resource</span>
-  </div>
 
-  <div class="guides">
-
-    <a href="bg3-moon-druid-guide.html" class="guide-card" data-accent="blue">
-      <div class="card-top">
-        <span class="card-type">Build Guide</span>
-      </div>
-      <div class="card-body">
-        <h3 class="card-title">Pure Moon Druid</h3>
-        <p class="card-desc">Full commitment to the circle. Wild Shape optimization, spell selection, and gear picks for a Druid that never breaks form.</p>
-      </div>
-      <div class="card-footer">
-        <span class="card-cta">Read Guide</span>
-        <span class="card-arrow">&rarr;</span>
-      </div>
-    </a>
-
-  </div>
-</section>
-
-<div class="divider"><div class="divider-dot"></div></div>
-
-<!-- CROCKEDNLOADED -->
-<section class="game-section" data-game="cooking" id="cooking">
-  <div class="game-header">
-    <div class="game-icon">&#x1F525;</div>
-    <div class="game-info">
-      <h2 class="game-title">CrockedNLoaded</h2>
-      <p class="game-subtitle">Cooking Channel &amp; Brand</p>
+    <div class="project-stack">
+      <span class="tech-tag">Desktop App</span>
+      <span class="tech-tag">System APIs</span>
+      <span class="tech-tag">NVIDIA SMI</span>
+      <span class="tech-tag">Real-time</span>
     </div>
-    <span class="game-count">1 Resource</span>
   </div>
 
-  <div class="guides">
-    <a href="crockednloaded.html" class="guide-card" data-accent="orange">
-      <div class="card-top">
-        <span class="card-type">Landing Page</span>
+  <!-- CROCKEDNLOADED -->
+  <div class="project" data-color="orange" id="cooking">
+    <div class="project-header">
+      <div class="project-icon">&#x1F525;</div>
+      <div class="project-info">
+        <h2 class="project-name">CrockedNLoaded</h2>
+        <p class="project-sub">Cooking Channel &amp; Brand</p>
       </div>
-      <div class="card-body">
-        <h3 class="card-title">CrockedNLoaded — What Could Possibly Go Wrong?</h3>
-        <p class="card-desc">A professional chef and a home cook walk into a kitchen. Landing page for our cooking YouTube channel with links to all socials.</p>
+    </div>
+    <p class="project-desc">A cooking YouTube channel I co-host with my friend CrockPotDaddy. I'm a professional chef, he's a home cook with instinct — together we make food, talk trash, and see what happens. "What Could Possibly Go Wrong?" Designed and built the full brand site at <a href="crockednloaded.html">crockednloaded.html</a>.</p>
+    <img src="img/cooking-hero.jpg" alt="CrockedNLoaded" style="width:100%;max-width:600px;border-radius:6px;margin:1.5rem 0;border:1px solid var(--ash);">
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Brand Site</strong> — Chalkboard-aesthetic landing page with chalk dust textures, Permanent Marker + Caveat handwriting fonts, CSS grain overlay, dashed chalk borders</div>
       </div>
-      <div class="card-footer">
-        <span class="card-cta">Visit Site</span>
-        <span class="card-arrow">&rarr;</span>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Responsive Design</strong> — Full mobile support, flexible grid layout, touch-friendly social links</div>
       </div>
-    </a>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Brand Identity</strong> — Custom logo, host bios, social media integration, "What Could Possibly Go Wrong?" tagline</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>The Concept</strong> — Professional chef + home cook, two perspectives on the same dish, real personality not scripted content</div>
+      </div>
+    </div>
+
+    <div class="project-stack">
+      <span class="tech-tag">HTML/CSS</span>
+      <span class="tech-tag">Branding</span>
+      <span class="tech-tag">Responsive</span>
+      <span class="tech-tag">YouTube</span>
+    </div>
   </div>
-</section>
 
-<div class="divider"><div class="divider-dot"></div></div>
+  <!-- Z3NGINEER.GITHUB.IO -->
+  <div class="project" data-color="gold" id="guides-site">
+    <div class="project-header">
+      <div class="project-icon">&#9876;</div>
+      <div class="project-info">
+        <h2 class="project-name">Z3nGineer Game Guides</h2>
+        <p class="project-sub">Gaming Resource Hub</p>
+      </div>
+    </div>
+    <p class="project-desc">A multi-game guides website featuring in-depth build guides and a full modpack. Every guide is a hand-crafted single-page application with custom design per game — not a blog template, not a wiki, but purpose-built reference pages designed to be used mid-playthrough.</p>
 
-<!-- MORE GAMES -->
-<section class="more-games">
-  <div class="more-games-box">
-    <p class="more-games-label">More Games Coming Soon</p>
-    <p class="more-games-text">New builds, new worlds, same depth.</p>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>CHIM Modpack</strong> — Complete Oblivion Remastered modpack with curated load order, conflict resolution, custom UE4SS mods, and installation guides</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Build Guides</strong> — Detailed character build guides for Oblivion Remastered and Baldur's Gate 3 with leveling paths, gear picks, and theory</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Custom Patches</strong> — Wrote custom Lua code to fix broken mod APIs, tuned lighting and interior brightness profiles, and resolved mod conflicts across the load order</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Per-Game Design</strong> — Each guide has its own visual identity, color palette, and typography matched to the game's aesthetic</div>
+      </div>
+    </div>
+
+    <div class="project-stack">
+      <span class="tech-tag">HTML/CSS</span>
+      <span class="tech-tag">GitHub Pages</span>
+      <span class="tech-tag">UE4SS / Lua</span>
+      <span class="tech-tag">Mod Development</span>
+    </div>
   </div>
-</section>
 
-<!-- FOOTER -->
+  <!-- LINUX SYSTEMS -->
+  <div class="project" data-color="green" id="systems">
+    <div class="project-header">
+      <div class="project-icon">&#9881;</div>
+      <div class="project-info">
+        <h2 class="project-name">Linux Systems Engineering</h2>
+        <p class="project-sub">CachyOS / Arch — Bare Metal</p>
+      </div>
+    </div>
+    <p class="project-desc">Daily-driving a custom-tuned CachyOS (Arch-based) workstation with an RTX 5070 Ti on bleeding-edge drivers. Every layer of the system is configured by hand — from kernel scheduler selection and GPU overclocking to sleep state management and pacman hooks that survive kernel updates.</p>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>GPU Tuning</strong> — RTX 5070 Ti overclocked (+400 core, +5000 mem, 350W), custom fan curve, NVIDIA 595 driver with manual fixes for clock cap and sleep bugs</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Kernel &amp; Scheduler</strong> — sched-ext bpfland scheduler, custom pacman hooks to preserve config across updates, S3 deep sleep restoration</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>Multi-GPU Workload</strong> — CUDA 12.8 + PyTorch nightly for ML, separate Python venvs for different workloads, Docker sidecar services</div>
+      </div>
+      <div class="feature">
+        <div class="feature-bullet"></div>
+        <div class="feature-text"><strong>KDE/Wayland</strong> — Multi-monitor with portrait rotation, custom KWin tiling scripts, Proton gaming optimizations (DXVK, per-game launch configs)</div>
+      </div>
+    </div>
+
+    <div class="project-stack">
+      <span class="tech-tag">Arch Linux</span>
+      <span class="tech-tag">KDE Plasma 6</span>
+      <span class="tech-tag">Wayland</span>
+      <span class="tech-tag">NVIDIA</span>
+      <span class="tech-tag">systemd</span>
+      <span class="tech-tag">pacman</span>
+      <span class="tech-tag">Docker</span>
+      <span class="tech-tag">Proton</span>
+    </div>
+  </div>
+
+</div>
+
 <footer class="footer">
   <div class="footer-inner">
     <span class="footer-brand">&copy; 2026 Z3nGineer</span>
-    <span class="footer-note">All guides hand-crafted. No filler.</span>
+    <span class="footer-note">Everything on this page was built by one person.</span>
   </div>
 </footer>
 
