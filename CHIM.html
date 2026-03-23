@@ -4,807 +4,360 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CHIM — Oblivion Remastered Modpack</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-
 :root{
-  --void:#050505;
-  --abyss:#0a0908;
-  --obsidian:#111110;
-  --stone:#1a1918;
-  --ash:#2a2826;
-  --dust:#8a8478;
-  --silver:#b0a89a;
-  --bone:#d4cabb;
-  --gold:#c9a84c;
-  --gold-bright:#e4c565;
-  --gold-dim:#8a7234;
-  --gold-glow:rgba(201,168,76,0.15);
-  --esp:#4a7fb5;
-  --pak:#5a9a5a;
-  --ue4ss:#8a5ab5;
-  --chim-patch:#c9a84c;
-  --danger:#b54a4a;
+  --bg:#060605;--surface:#0e0e0d;--surface-2:#161615;--surface-3:#1e1e1d;
+  --border:#252523;--border-light:#333;
+  --text:#e8e0d0;--text-dim:#a09888;--text-muted:#6a6258;
+  --gold:#c9a84c;--gold-bright:#e4c565;--gold-dim:#8a7234;--gold-glow:rgba(201,168,76,0.07);
+  --esp:#5a8ec5;--esp-glow:rgba(90,142,197,0.1);
+  --pak:#5a9a5a;--pak-glow:rgba(90,154,90,0.1);
+  --ue4ss:#9a6ac5;--ue4ss-glow:rgba(154,106,197,0.1);
+  --obse:#c5a05a;--obse-glow:rgba(197,160,90,0.1);
+  --json:#5ac5a0;--json-glow:rgba(90,197,160,0.1);
+  --warn:#c55a5a;
 }
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--gold-dim) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:18px;line-height:1.7;overflow-x:hidden}
+::selection{background:var(--gold);color:var(--bg)}
+a{color:var(--gold);text-decoration:none}a:hover{color:var(--gold-bright)}
 
-html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--gold-dim) var(--void)}
-body{
-  background:var(--void);
-  color:var(--bone);
-  font-family:'Cormorant Garamond',Georgia,serif;
-  font-size:32px;
-  line-height:1.9;
-  overflow-x:hidden;
-}
+/* Cursor */
+.glow{position:fixed;width:500px;height:500px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(201,168,76,0.03) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left 0.3s,top 0.3s}
 
-/* Noise texture overlay */
-body::before{
-  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
-  opacity:0.03;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-size:256px 256px;
-}
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(6,6,5,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.nav-brand{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;color:var(--text);text-decoration:none;transition:color 0.3s}
+.nav-brand:hover{color:var(--gold)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.3s;position:relative}
+.nav-links a:hover{color:var(--gold)}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform 0.3s;transform-origin:right}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
 
-::selection{background:var(--gold);color:var(--void)}
-
-/* ====== SCROLL ANIMATIONS ====== */
-.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.8s ease,transform 0.8s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.reveal-delay-1{transition-delay:0.1s}
-.reveal-delay-2{transition-delay:0.2s}
-.reveal-delay-3{transition-delay:0.3s}
-.reveal-delay-4{transition-delay:0.4s}
-
-/* ====== NAVIGATION ====== */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  padding:1rem 2rem;
-  background:linear-gradient(180deg,rgba(5,5,5,0.95) 0%,rgba(5,5,5,0.7) 70%,transparent 100%);
-  display:flex;align-items:center;justify-content:space-between;
-  backdrop-filter:blur(8px);
-  transition:padding 0.3s ease;
-}
-nav.scrolled{padding:0.6rem 2rem}
-nav .nav-brand{
-  font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:0.3em;color:var(--gold);
-  text-decoration:none;
-}
-nav .nav-links{display:flex;gap:2rem;list-style:none}
-nav .nav-links a{
-  color:var(--dust);text-decoration:none;font-family:'Rajdhani',sans-serif;
-  font-size:0.85rem;letter-spacing:0.15em;text-transform:uppercase;
-  transition:color 0.3s;font-weight:500;
-}
-nav .nav-links a:hover{color:var(--gold)}
-
-/* ====== HERO ====== */
+/* Hero */
 .hero{
-  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  position:relative;text-align:center;padding:2rem;
-  background:
-    linear-gradient(180deg,rgba(5,5,5,0.4) 0%,rgba(5,5,5,0.55) 40%,rgba(5,5,5,0.85) 80%,var(--void) 100%),
-    url('hero-bg.png') center center / cover no-repeat;
+  min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:8rem 2rem 5rem;position:relative;z-index:2;
+  background:url('hero-bg.png') center center / cover no-repeat,
+    linear-gradient(180deg,rgba(6,6,5,0.3),rgba(6,6,5,0.6) 50%,var(--bg) 100%);
+  background-blend-mode:darken;
 }
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(0deg,var(--bg),transparent);pointer-events:none}
 
-/* Decorative border lines */
-.hero::before{
-  content:'';position:absolute;top:15%;left:50%;transform:translateX(-50%);
-  width:1px;height:80px;
-  background:linear-gradient(180deg,transparent,var(--gold-dim),transparent);
-  animation:fadeInDown 2s ease 0.5s both;
+.hero h1{
+  font-family:'Cinzel',serif;font-size:clamp(3.5rem,10vw,7rem);font-weight:400;
+  letter-spacing:0.4em;color:var(--gold);position:relative;z-index:1;
+  text-shadow:0 0 60px rgba(201,168,76,0.25),0 0 120px rgba(201,168,76,0.08);
+  animation:fadeUp 1s ease both;
 }
-
-/* The Wheel of Aurbis — SVG logo */
-.aurbis-wheel{
-  width:180px;height:180px;margin-bottom:2rem;
-  animation:wheelFade 2s ease both;
-  filter:drop-shadow(0 0 30px rgba(201,168,76,0.2));
+.hero-sub{
+  font-family:'Cinzel',serif;font-size:clamp(0.8rem,1.5vw,1rem);
+  letter-spacing:0.5em;text-transform:uppercase;color:var(--text-muted);
+  margin:0.8rem 0 2rem;position:relative;z-index:1;
+  animation:fadeUp 1s ease 0.2s both;
 }
-.aurbis-wheel svg{width:100%;height:100%}
-.wheel-ring{fill:none;stroke:var(--gold);stroke-width:1.2;opacity:0.7}
-.wheel-ring-inner{fill:none;stroke:var(--gold-dim);stroke-width:0.8;opacity:0.5}
-.wheel-spoke{stroke:var(--gold-dim);stroke-width:0.6;opacity:0.4}
-.wheel-center{fill:var(--gold);opacity:0.9}
-.wheel-tower{fill:none;stroke:var(--gold);stroke-width:1.5}
-.wheel-glow{fill:url(#wheelGlow)}
-
-.hero-title{
-  font-family:'Cinzel',serif;font-size:clamp(3rem,8vw,6rem);
-  font-weight:400;letter-spacing:0.5em;color:var(--gold);
-  margin-bottom:0.5rem;
-  text-shadow:0 0 60px rgba(201,168,76,0.3),0 0 120px rgba(201,168,76,0.1);
-  animation:titleReveal 1.5s ease 0.3s both;
-}
-
-.hero-subtitle{
-  font-family:'Cinzel',serif;font-size:clamp(0.9rem,2vw,1.2rem);
-  letter-spacing:0.6em;color:var(--dust);font-weight:400;
-  margin-bottom:2.5rem;text-transform:uppercase;
-  animation:titleReveal 1.5s ease 0.6s both;
-}
-
 .hero-desc{
-  max-width:600px;color:var(--silver);font-size:1.15rem;
-  line-height:1.8;font-style:italic;font-weight:300;
-  animation:titleReveal 1.5s ease 0.9s both;
+  font-size:1.15rem;font-weight:300;color:var(--text-dim);
+  max-width:550px;position:relative;z-index:1;
+  animation:fadeUp 1s ease 0.4s both;
 }
-.hero-desc strong{color:var(--bone);font-weight:500;font-style:normal}
+.hero-desc strong{color:var(--text);font-weight:500}
 
-.scroll-indicator{
-  position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:0.5rem;
-  animation:bob 2s ease-in-out infinite,titleReveal 1.5s ease 1.5s both;
-}
-.scroll-indicator span{
-  font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:0.3em;
-  text-transform:uppercase;color:var(--gold-dim);
-}
-.scroll-line{width:1px;height:40px;background:linear-gradient(180deg,var(--gold-dim),transparent)}
+/* Sections */
+section{padding:5rem 2rem;position:relative;z-index:2}
+.container{max-width:1000px;margin:0 auto}
+.section-label{font-size:0.65rem;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:0.6rem}
+.section-title{font-family:'Cinzel',serif;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:700;color:var(--text);text-align:center;letter-spacing:0.1em;margin-bottom:0.8rem}
+.section-desc{text-align:center;color:var(--text-dim);font-size:1rem;font-weight:300;max-width:600px;margin:0 auto 3rem;line-height:1.8}
+.divider{width:50px;height:2px;margin:0 auto 3rem;background:linear-gradient(90deg,var(--gold-dim),var(--gold),var(--gold-dim));border-radius:2px}
 
-/* ====== SECTIONS ====== */
-section{padding:6rem 2rem;position:relative}
-.container{max-width:1100px;margin:0 auto}
+/* Philosophy */
+.phil-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.phil{
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:2rem 1.5rem;text-align:center;
+  transition:all 0.3s;
+}
+.phil:hover{border-color:rgba(201,168,76,0.2);transform:translateY(-3px)}
+.phil h3{font-family:'Cinzel',serif;font-size:0.85rem;font-weight:700;color:var(--gold);letter-spacing:0.1em;margin-bottom:0.6rem}
+.phil p{font-size:0.9rem;color:var(--text-dim);font-weight:300;line-height:1.6}
 
-.section-divider{
-  width:120px;height:1px;margin:0 auto 3rem;
-  background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);
-}
+/* Mod list */
+.cat{margin-bottom:3rem}
+.cat-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;padding-bottom:0.8rem;border-bottom:1px solid var(--border)}
+.cat-header h3{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--gold);letter-spacing:0.08em;white-space:nowrap}
+.cat-line{flex:1;height:1px;background:var(--border)}
+.cat-count{font-size:0.7rem;font-weight:600;letter-spacing:0.1em;color:var(--text-muted);white-space:nowrap}
 
-.section-title{
-  font-family:'Cinzel',serif;font-size:clamp(1.6rem,3.5vw,2.4rem);
-  color:var(--gold);text-align:center;letter-spacing:0.25em;
-  margin-bottom:1rem;font-weight:500;
-}
+.mods{display:flex;flex-direction:column;gap:0;max-width:100%}
+.mod{display:flex;align-items:flex-start;gap:1rem;padding:0.9rem 0;border-bottom:1px solid rgba(37,37,35,0.5)}
+.mod:last-child{border-bottom:none}
+.mod:hover{background:rgba(201,168,76,0.02);margin:0 -0.5rem;padding-left:0.5rem;padding-right:0.5rem;border-radius:6px}
 
-.section-subtitle{
-  text-align:center;color:var(--dust);font-size:1rem;
-  max-width:650px;margin:0 auto 3rem;font-style:italic;
-}
+.badge{font-family:'JetBrains Mono',monospace;font-size:0.6rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.2rem 0.55rem;border-radius:4px;flex-shrink:0;margin-top:0.15rem;text-align:center;min-width:48px}
+.b-esp{background:var(--esp-glow);color:var(--esp);border:1px solid rgba(90,142,197,0.2)}
+.b-pak{background:var(--pak-glow);color:var(--pak);border:1px solid rgba(90,154,90,0.2)}
+.b-ue4ss{background:var(--ue4ss-glow);color:var(--ue4ss);border:1px solid rgba(154,106,197,0.2)}
+.b-obse{background:var(--obse-glow);color:var(--obse);border:1px solid rgba(197,160,90,0.2)}
+.b-json{background:var(--json-glow);color:var(--json);border:1px solid rgba(90,197,160,0.2)}
 
-/* ====== PHILOSOPHY ====== */
-.philosophy-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2rem;
-  margin-top:2rem;
-}
-.philosophy-card{
-  background:linear-gradient(145deg,var(--obsidian),var(--abyss));
-  border:1px solid var(--ash);border-radius:2px;
-  padding:2rem;position:relative;overflow:hidden;
-  transition:border-color 0.4s,transform 0.3s;
-}
-.philosophy-card:hover{border-color:var(--gold-dim);transform:translateY(-2px)}
-.philosophy-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);
-  opacity:0;transition:opacity 0.4s;
-}
-.philosophy-card:hover::before{opacity:1}
-.philosophy-icon{
-  font-size:1.8rem;margin-bottom:1rem;display:block;
-  filter:grayscale(0.3);
-}
-.philosophy-card h3{
-  font-family:'Cinzel',serif;font-size:1rem;color:var(--gold);
-  letter-spacing:0.15em;margin-bottom:0.7rem;font-weight:500;
-}
-.philosophy-card p{color:var(--dust);font-size:1.15rem;line-height:1.75}
+.mod-info{flex:1}
+.mod-name{font-size:1rem;font-weight:600;color:var(--text)}
+.mod-desc{font-size:0.85rem;color:var(--text-dim);font-weight:300;margin-top:0.15rem}
+.mod-tags{display:flex;gap:0.4rem;margin-top:0.4rem;flex-wrap:wrap}
+.tag-patch{font-family:'JetBrains Mono',monospace;font-size:0.55rem;font-weight:600;letter-spacing:0.08em;color:var(--gold);background:var(--gold-glow);padding:0.15rem 0.5rem;border-radius:3px;border:1px solid rgba(201,168,76,0.15)}
+.tag-warn{font-family:'JetBrains Mono',monospace;font-size:0.55rem;font-weight:600;letter-spacing:0.08em;color:var(--warn);background:rgba(197,90,90,0.08);padding:0.15rem 0.5rem;border-radius:3px;border:1px solid rgba(197,90,90,0.15)}
 
-/* ====== MOD LIST ====== */
-.mod-category{margin-bottom:3.5rem}
-.mod-category-header{
-  display:flex;align-items:center;gap:1rem;
-  margin-bottom:1.5rem;padding-bottom:0.7rem;
-  border-bottom:1px solid var(--ash);
-}
-.mod-category-header h3{
-  font-family:'Cinzel',serif;font-size:1.15rem;color:var(--gold);
-  letter-spacing:0.15em;font-weight:500;white-space:nowrap;
-}
-.mod-category-header .cat-line{flex:1;height:1px;background:var(--ash)}
-.mod-category-header .cat-count{
-  font-family:'Rajdhani',sans-serif;font-size:0.75rem;color:var(--gold-dim);
-  letter-spacing:0.1em;white-space:nowrap;
-}
-
-.mod-grid{
-  display:flex;flex-direction:column;gap:0;
-  max-width:800px;margin:0 auto;
-}
-.mod-item{
-  display:flex;align-items:flex-start;gap:1.2rem;
-  padding:1.3rem 0;
-  border-bottom:1px solid rgba(42,40,38,0.6);
-  transition:background 0.3s;
-}
-.mod-item:last-child{border-bottom:none}
-.mod-item:hover{background:rgba(201,168,76,0.02)}
-
-.mod-badge{
-  font-family:'Rajdhani',sans-serif;font-size:0.7rem;font-weight:600;
-  letter-spacing:0.12em;text-transform:uppercase;
-  padding:0.25rem 0.6rem;border-radius:2px;
-  display:inline-block;min-width:52px;text-align:center;
-  line-height:1.5;flex-shrink:0;margin-top:0.15rem;
-}
-.badge-esp{background:rgba(74,127,181,0.15);color:var(--esp);border:1px solid rgba(74,127,181,0.25)}
-.badge-pak{background:rgba(90,154,90,0.15);color:var(--pak);border:1px solid rgba(90,154,90,0.25)}
-.badge-ue4ss{background:rgba(138,90,181,0.15);color:var(--ue4ss);border:1px solid rgba(138,90,181,0.25)}
-.badge-obse{background:rgba(181,150,90,0.15);color:#b5964a;border:1px solid rgba(181,150,90,0.25)}
-.badge-json{background:rgba(90,181,150,0.15);color:#5ab596;border:1px solid rgba(90,181,150,0.25)}
-
-.mod-info{display:flex;flex-direction:column;gap:0.25rem}
-.mod-name{
-  color:var(--bone);font-weight:600;font-size:1.2rem;
-  font-family:'Cinzel',serif;letter-spacing:0.04em;
-}
-.mod-desc{color:var(--dust);font-size:1.2rem;line-height:1.7}
-.mod-tags{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.2rem}
-.mod-patch{
-  font-family:'Rajdhani',sans-serif;font-size:0.65rem;font-weight:600;
-  color:var(--gold);letter-spacing:0.1em;
-  background:var(--gold-glow);padding:0.15rem 0.5rem;border-radius:2px;
-  border:1px solid rgba(201,168,76,0.2);
-}
-.mod-warn{
-  font-family:'Rajdhani',sans-serif;font-size:0.65rem;font-weight:600;
-  color:var(--danger);letter-spacing:0.1em;
-  background:rgba(181,74,74,0.1);padding:0.15rem 0.5rem;border-radius:2px;
-  border:1px solid rgba(181,74,74,0.2);
-}
-
-/* ====== PATCHES ====== */
-.patch-list{display:flex;flex-direction:column;gap:1.5rem}
-.patch-item{
-  background:linear-gradient(145deg,var(--obsidian),var(--abyss));
-  border:1px solid var(--ash);border-left:2px solid var(--gold-dim);
-  padding:1.5rem 2rem;border-radius:0 2px 2px 0;
+/* Patches */
+.patches{display:flex;flex-direction:column;gap:1rem}
+.patch{
+  background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--gold-dim);
+  border-radius:0 10px 10px 0;padding:1.5rem 2rem;
   transition:border-left-color 0.3s;
 }
-.patch-item:hover{border-left-color:var(--gold)}
-.patch-item h4{
-  font-family:'Cinzel',serif;font-size:0.95rem;color:var(--gold);
-  letter-spacing:0.1em;margin-bottom:0.5rem;font-weight:500;
-}
-.patch-item p{color:var(--dust);font-size:1.15rem;line-height:1.75}
-.patch-item code{
-  font-family:'Rajdhani',monospace;font-size:0.85rem;
-  color:var(--silver);background:rgba(255,255,255,0.04);
-  padding:0.1rem 0.4rem;border-radius:2px;
-}
+.patch:hover{border-left-color:var(--gold)}
+.patch h4{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;color:var(--gold);letter-spacing:0.06em;margin-bottom:0.5rem}
+.patch p{font-size:0.9rem;color:var(--text-dim);line-height:1.7;font-weight:300}
+.patch code{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--text);background:var(--surface-2);padding:0.1rem 0.4rem;border-radius:3px}
 
-/* ====== INSTALL ====== */
-.install-box{
-  text-align:center;padding:4rem 2rem;
-  background:linear-gradient(145deg,var(--obsidian),var(--abyss));
-  border:1px solid var(--ash);border-radius:2px;
-  position:relative;overflow:hidden;
-}
-.install-box::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% 0%,var(--gold-glow),transparent 60%);
-  pointer-events:none;
-}
-.install-box h3{
-  font-family:'Cinzel',serif;font-size:1.3rem;color:var(--gold);
-  letter-spacing:0.2em;margin-bottom:1rem;position:relative;
-}
-.install-box p{color:var(--dust);font-style:italic;position:relative}
-.install-platforms{
-  display:flex;justify-content:center;gap:2rem;margin-top:1.5rem;
-  position:relative;
-}
-.install-platforms span{
-  font-family:'Rajdhani',sans-serif;font-size:0.8rem;
-  letter-spacing:0.15em;text-transform:uppercase;
-  color:var(--gold-dim);
-  padding:0.5rem 1.5rem;border:1px solid var(--ash);border-radius:2px;
-}
+/* Install */
+.install{text-align:center;padding:3.5rem 2rem;background:var(--surface);border:1px solid var(--border);border-radius:16px;position:relative;overflow:hidden}
+.install::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,var(--gold-glow),transparent 60%);pointer-events:none}
+.install h3{font-family:'Cinzel',serif;font-size:1.2rem;font-weight:700;color:var(--gold);letter-spacing:0.15em;margin-bottom:0.8rem;position:relative}
+.install p{color:var(--text-muted);font-weight:300;position:relative}
+.install-platforms{display:flex;justify-content:center;gap:1.5rem;margin-top:1.2rem;position:relative}
+.install-platforms span{font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);padding:0.5rem 1.5rem;border:1px solid var(--border);border-radius:20px}
 
-/* ====== FOOTER ====== */
-footer{
-  text-align:center;padding:4rem 2rem 3rem;
-  border-top:1px solid var(--ash);
-  background:linear-gradient(0deg,var(--abyss),var(--void));
-}
-footer .footer-chim{
-  font-family:'Cinzel',serif;font-size:1.8rem;color:var(--gold);
-  letter-spacing:0.5em;margin-bottom:0.3rem;
-}
-footer .footer-iam{
-  font-family:'Cinzel',serif;font-size:0.85rem;color:var(--gold-dim);
-  letter-spacing:0.6em;margin-bottom:2rem;
-}
-footer .footer-credit{
-  font-family:'Rajdhani',sans-serif;font-size:0.75rem;
-  color:var(--dust);letter-spacing:0.2em;text-transform:uppercase;
-}
+/* Footer */
+footer{text-align:center;padding:3rem 2rem;border-top:1px solid var(--border);position:relative;z-index:2}
+.footer-chim{font-family:'Cinzel',serif;font-size:1.5rem;color:var(--gold);letter-spacing:0.4em;margin-bottom:0.2rem}
+.footer-iam{font-family:'Cinzel',serif;font-size:0.75rem;color:var(--gold-dim);letter-spacing:0.5em;margin-bottom:1.5rem}
+.footer-credit{font-size:0.7rem;color:var(--text-muted);font-weight:300}
 
-/* ====== KEYFRAMES ====== */
-@keyframes wheelFade{
-  0%{opacity:0;transform:scale(0.8) rotate(-10deg)}
-  100%{opacity:1;transform:scale(1) rotate(0deg)}
-}
-@keyframes titleReveal{
-  0%{opacity:0;transform:translateY(20px)}
-  100%{opacity:1;transform:translateY(0)}
-}
-@keyframes fadeInDown{
-  0%{opacity:0;transform:translateX(-50%) translateY(-20px)}
-  100%{opacity:1;transform:translateX(-50%) translateY(0)}
-}
-@keyframes bob{
-  0%,100%{transform:translateX(-50%) translateY(0)}
-  50%{transform:translateX(-50%) translateY(8px)}
-}
-@keyframes spin-slow{
-  0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}
-}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.r1{transition-delay:0.1s}.r2{transition-delay:0.2s}.r3{transition-delay:0.3s}.r4{transition-delay:0.4s}
 
-/* ====== RESPONSIVE ====== */
-@media(max-width:768px){
-  nav .nav-links{display:none}
-  .mod-item{grid-template-columns:1fr;gap:0.3rem}
-  .mod-badge{justify-self:start}
-  .philosophy-grid{grid-template-columns:1fr}
-  section{padding:4rem 1.2rem}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(25px)}100%{opacity:1;transform:translateY(0)}}
+
+@media(max-width:900px){.phil-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){
+  .nav-links{display:none}
+  .phil-grid{grid-template-columns:1fr}
+  .mod{flex-direction:column;gap:0.3rem}
+  .badge{align-self:flex-start}
+  section{padding:3.5rem 1.5rem}
 }
 </style>
 </head>
 <body>
 
-<!-- Navigation -->
-<nav id="nav">
-  <a href="#" class="nav-brand">CHIM</a>
-  <ul class="nav-links">
-    <li><a href="#philosophy">Philosophy</a></li>
-    <li><a href="#modlist">Mod List</a></li>
-    <li><a href="#patches">Patches</a></li>
-    <li><a href="#install">Install</a></li>
-  </ul>
+<div class="glow" id="glow"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">Z3nGineer</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="guides.html">Game Guides</a></li>
+      <li><a href="#modlist">Mod List</a></li>
+      <li><a href="#patches">Patches</a></li>
+    </ul>
+  </div>
 </nav>
 
-<!-- Hero -->
 <section class="hero">
-  <h1 class="hero-title">CHIM</h1>
-  <p class="hero-subtitle">See the dream. Reshape it.</p>
-  <p class="hero-desc">
-    A curated <strong>vanilla-plus modpack</strong> for The Elder Scrolls IV: Oblivion Remastered.<br>
-    60+ mods. Hand-tuned configs. Zero bloat.
-  </p>
-  <div class="scroll-indicator">
-    <span>Descend</span>
-    <div class="scroll-line"></div>
-  </div>
+  <h1>CHIM</h1>
+  <p class="hero-sub">See the dream. Reshape it.</p>
+  <p class="hero-desc">A curated <strong>vanilla-plus modpack</strong> for Oblivion Remastered. 60+ mods, hand-tuned configs, custom patches. Zero bloat.</p>
 </section>
 
-<!-- Philosophy -->
-<section id="philosophy">
+<section>
   <div class="container">
-    <div class="section-divider reveal"></div>
-    <h2 class="section-title reveal">The Old Ways</h2>
-    <p class="section-subtitle reveal reveal-delay-1">CHIM does not change Oblivion. It reveals what Oblivion was always meant to be.</p>
-    <div class="philosophy-grid">
-      <div class="philosophy-card reveal reveal-delay-1">
-        <span class="philosophy-icon">&mdash;</span>
-        <h3>Vanilla-Plus</h3>
-        <p>Better, not different. Every mod enhances the original vision without distorting it. No total conversions. No unfair difficulty spikes.</p>
-      </div>
-      <div class="philosophy-card reveal reveal-delay-2">
-        <span class="philosophy-icon">&mdash;</span>
-        <h3>Fun From Level 1</h3>
-        <p>No suffering through early game. Combat feels good, magic works, progression rewards you from the first hour to the last.</p>
-      </div>
-      <div class="philosophy-card reveal reveal-delay-3">
-        <span class="philosophy-icon">&mdash;</span>
-        <h3>Tested & Tuned</h3>
-        <p>Every mod tested for conflicts. Custom patches resolve incompatibilities. Load order curated by hand. No crashes, no CTDs.</p>
-      </div>
-      <div class="philosophy-card reveal reveal-delay-4">
-        <span class="philosophy-icon">&mdash;</span>
-        <h3>Linux & Windows</h3>
-        <p>Full compatibility with both platforms. Steam Proton tested. Includes platform-specific installation guides and launch options.</p>
-      </div>
+    <p class="section-label reveal">Philosophy</p>
+    <h2 class="section-title reveal r1">The Old Ways</h2>
+    <p class="section-desc reveal r2">CHIM doesn't change Oblivion. It reveals what Oblivion was always meant to be.</p>
+
+    <div class="phil-grid">
+      <div class="phil reveal"><h3>Vanilla-Plus</h3><p>Better, not different. Every mod enhances the original. No total conversions, no difficulty spikes.</p></div>
+      <div class="phil reveal r1"><h3>Fun From Level 1</h3><p>Combat feels good, magic works, progression rewards you from the first hour.</p></div>
+      <div class="phil reveal r2"><h3>Tested & Tuned</h3><p>Every mod checked for conflicts. Custom patches where needed. Hand-curated load order.</p></div>
+      <div class="phil reveal r3"><h3>Cross-Platform</h3><p>Works on Linux and Windows. Proton tested. Platform-specific install guides included.</p></div>
     </div>
   </div>
 </section>
 
-<!-- Mod List -->
-<section id="modlist">
+<section id="modlist" style="background:linear-gradient(180deg,var(--bg),var(--surface),var(--bg))">
   <div class="container">
-    <div class="section-divider reveal"></div>
-    <h2 class="section-title reveal">The Compendium</h2>
-    <p class="section-subtitle reveal reveal-delay-1">Every modification, catalogued and categorized. The dream, deconstructed.</p>
+    <p class="section-label reveal">The Compendium</p>
+    <h2 class="section-title reveal r1">Mod List</h2>
+    <p class="section-desc reveal r2">Every mod, catalogued. I tested all of these together so you don't have to.</p>
 
-    <!-- Bug Fixes & Framework -->
-    <div class="mod-category reveal">
-      <div class="mod-category-header">
-        <h3>Bug Fixes & Framework</h3>
-        <div class="cat-line"></div>
-        <span class="cat-count">9 mods</span>
-      </div>
-      <div class="mod-grid">
-        <div class="mod-item">
-          <span class="mod-badge badge-obse">OBSE</span>
-          <div class="mod-info"><span class="mod-name">OBSE64</span><span class="mod-desc">Script extender framework</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-obse">OBSE</span>
-          <div class="mod-info"><span class="mod-name">Address Library</span><span class="mod-desc">Memory address database for OBSE plugins</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-ue4ss">UE4SS</span>
-          <div class="mod-info"><span class="mod-name">UE4SS</span><span class="mod-desc">Unreal Engine scripting system</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Unofficial Oblivion Remastered Patch</span><span class="mod-desc">Community bug fixes</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-pak">PAK</span>
-          <div class="mod-info"><span class="mod-name">Oblivion Unreal Fixes</span><span class="mod-desc">Cloth physics &amp; clipping fixes</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-obse">OBSE</span>
-          <div class="mod-info"><span class="mod-name">ActiveEffectsFix</span><span class="mod-desc">Fixes stacking active effects</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-obse">OBSE</span>
-          <div class="mod-info"><span class="mod-name">Baka Achievement Enabler</span><span class="mod-desc">Achievements with mods enabled</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Difficulty Slider Fixed</span><span class="mod-desc">Makes difficulty slider work properly</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">RainFPSFix</span><span class="mod-desc">Fixes rain performance drop</span></div>
-        </div>
+    <div class="cat reveal">
+      <div class="cat-header"><h3>Bug Fixes & Framework</h3><div class="cat-line"></div><span class="cat-count">9 mods</span></div>
+      <div class="mods">
+        <div class="mod"><span class="badge b-obse">OBSE</span><div class="mod-info"><div class="mod-name">OBSE64</div><div class="mod-desc">Script extender framework</div></div></div>
+        <div class="mod"><span class="badge b-obse">OBSE</span><div class="mod-info"><div class="mod-name">Address Library</div><div class="mod-desc">Memory address database for OBSE plugins</div></div></div>
+        <div class="mod"><span class="badge b-ue4ss">UE4SS</span><div class="mod-info"><div class="mod-name">UE4SS</div><div class="mod-desc">Unreal Engine scripting system</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Unofficial Oblivion Remastered Patch</div><div class="mod-desc">Community bug fixes</div></div></div>
+        <div class="mod"><span class="badge b-pak">PAK</span><div class="mod-info"><div class="mod-name">Oblivion Unreal Fixes</div><div class="mod-desc">Cloth physics and clipping fixes</div></div></div>
+        <div class="mod"><span class="badge b-obse">OBSE</span><div class="mod-info"><div class="mod-name">ActiveEffectsFix</div><div class="mod-desc">Fixes stacking active effects</div></div></div>
+        <div class="mod"><span class="badge b-obse">OBSE</span><div class="mod-info"><div class="mod-name">Baka Achievement Enabler</div><div class="mod-desc">Achievements with mods enabled</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Difficulty Slider Fixed</div><div class="mod-desc">Makes the difficulty slider actually work</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">RainFPSFix</div><div class="mod-desc">Fixes the FPS drop when it rains</div></div></div>
       </div>
     </div>
 
-    <!-- Visuals & Lighting -->
-    <div class="mod-category reveal">
-      <div class="mod-category-header">
-        <h3>Visuals & Lighting</h3>
-        <div class="cat-line"></div>
-        <span class="cat-count">11 mods</span>
-      </div>
-      <div class="mod-grid">
-        <div class="mod-item">
-          <span class="mod-badge badge-ue4ss">UE4SS</span>
-          <div class="mod-info"><span class="mod-name">Shaders Revised</span><span class="mod-desc">Fixes orange tint, restores natural colors</span><span class="mod-patch">CHIM PATCHED</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-ue4ss">UE4SS</span>
-          <div class="mod-info"><span class="mod-name">Lumen Remastered</span><span class="mod-desc">Improved Lumen GI shadows</span><span class="mod-patch">CHIM PATCHED</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Lumiere</span><span class="mod-desc">Road lamps, inn lanterns, immersive light placement</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-ue4ss">UE4SS</span>
-          <div class="mod-info"><span class="mod-name">Eternal Darkness</span><span class="mod-desc">Dark nights &amp; dungeons</span><span class="mod-patch">CHIM PATCHED</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-ue4ss">UE4SS</span>
-          <div class="mod-info"><span class="mod-name">UltraPlusExtensions</span><span class="mod-desc">Graphics quality framework</span><span class="mod-patch">CHIM PATCHED</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-pak">PAK</span>
-          <div class="mod-info"><span class="mod-name">Young Textures Revamped</span><span class="mod-desc">Better character skin textures</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-pak">PAK</span>
-          <div class="mod-info"><span class="mod-name">Greener Grass</span><span class="mod-desc">Lush grass colors</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-pak">PAK</span>
-          <div class="mod-info"><span class="mod-name">Connor's Flora</span><span class="mod-desc">Enhanced trees and shrubs</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-ue4ss">UE4SS</span>
-          <div class="mod-info"><span class="mod-name">NPC Overhaul AIO + NPCAppearanceManager</span><span class="mod-desc">Better NPC faces</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-pak">PAK</span>
-          <div class="mod-info"><span class="mod-name">8K Color World Map</span><span class="mod-desc">High-res world map</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-pak">PAK</span>
-          <div class="mod-info"><span class="mod-name">Brighter Torches 1.5x</span><span class="mod-desc">Torches actually light your way</span></div>
-        </div>
+    <div class="cat reveal">
+      <div class="cat-header"><h3>Visuals & Lighting</h3><div class="cat-line"></div><span class="cat-count">11 mods</span></div>
+      <div class="mods">
+        <div class="mod"><span class="badge b-ue4ss">UE4SS</span><div class="mod-info"><div class="mod-name">Shaders Revised</div><div class="mod-desc">Fixes the orange tint, restores natural colors</div><div class="mod-tags"><span class="tag-patch">CHIM PATCHED</span></div></div></div>
+        <div class="mod"><span class="badge b-ue4ss">UE4SS</span><div class="mod-info"><div class="mod-name">Lumen Remastered</div><div class="mod-desc">Better Lumen GI shadows</div><div class="mod-tags"><span class="tag-patch">CHIM PATCHED</span></div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Lumiere</div><div class="mod-desc">Road lamps, inn lanterns, immersive light placement</div></div></div>
+        <div class="mod"><span class="badge b-ue4ss">UE4SS</span><div class="mod-info"><div class="mod-name">Eternal Darkness</div><div class="mod-desc">Actually dark nights and dungeons</div><div class="mod-tags"><span class="tag-patch">CHIM PATCHED</span></div></div></div>
+        <div class="mod"><span class="badge b-ue4ss">UE4SS</span><div class="mod-info"><div class="mod-name">UltraPlusExtensions</div><div class="mod-desc">Graphics quality framework</div><div class="mod-tags"><span class="tag-patch">CHIM PATCHED</span></div></div></div>
+        <div class="mod"><span class="badge b-pak">PAK</span><div class="mod-info"><div class="mod-name">Young Textures Revamped</div><div class="mod-desc">Better character skin textures</div></div></div>
+        <div class="mod"><span class="badge b-pak">PAK</span><div class="mod-info"><div class="mod-name">Greener Grass</div><div class="mod-desc">Lush grass that actually looks alive</div></div></div>
+        <div class="mod"><span class="badge b-pak">PAK</span><div class="mod-info"><div class="mod-name">Connor's Flora</div><div class="mod-desc">Better trees and shrubs</div></div></div>
+        <div class="mod"><span class="badge b-ue4ss">UE4SS</span><div class="mod-info"><div class="mod-name">NPC Overhaul AIO</div><div class="mod-desc">NPCs that don't all look the same</div></div></div>
+        <div class="mod"><span class="badge b-pak">PAK</span><div class="mod-info"><div class="mod-name">8K Color World Map</div><div class="mod-desc">High-res world map</div></div></div>
+        <div class="mod"><span class="badge b-pak">PAK</span><div class="mod-info"><div class="mod-name">Brighter Torches 1.5x</div><div class="mod-desc">Torches that actually light your way</div></div></div>
       </div>
     </div>
 
-    <!-- Camera & Animations -->
-    <div class="mod-category reveal">
-      <div class="mod-category-header">
-        <h3>Camera & Animations</h3>
-        <div class="cat-line"></div>
-        <span class="cat-count">5 mods</span>
-      </div>
-      <div class="mod-grid">
-        <div class="mod-item">
-          <span class="mod-badge badge-pak">PAK</span>
-          <div class="mod-info"><span class="mod-name">Improved Camera</span><span class="mod-desc">RE4 / God of War style camera</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-pak">PAK</span>
-          <div class="mod-info"><span class="mod-name">Pelinal's Edge</span><span class="mod-desc">1H sword animation overhaul</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-pak">PAK</span>
-          <div class="mod-info"><span class="mod-name">Morihaus Might</span><span class="mod-desc">2H weapon animation overhaul</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-pak">PAK</span>
-          <div class="mod-info"><span class="mod-name">Longsword Animation Overhaul</span><span class="mod-desc">Longsword moveset</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-pak">PAK</span>
-          <div class="mod-info"><span class="mod-name">Shortsword Anticipation</span><span class="mod-desc">Shortsword animations</span></div>
-        </div>
+    <div class="cat reveal">
+      <div class="cat-header"><h3>Camera & Animations</h3><div class="cat-line"></div><span class="cat-count">5 mods</span></div>
+      <div class="mods">
+        <div class="mod"><span class="badge b-pak">PAK</span><div class="mod-info"><div class="mod-name">Improved Camera</div><div class="mod-desc">RE4 / God of War style camera</div></div></div>
+        <div class="mod"><span class="badge b-pak">PAK</span><div class="mod-info"><div class="mod-name">Pelinal's Edge</div><div class="mod-desc">1H sword animations that feel good</div></div></div>
+        <div class="mod"><span class="badge b-pak">PAK</span><div class="mod-info"><div class="mod-name">Morihaus Might</div><div class="mod-desc">2H weapon animation overhaul</div></div></div>
+        <div class="mod"><span class="badge b-pak">PAK</span><div class="mod-info"><div class="mod-name">Longsword Overhaul</div><div class="mod-desc">New longsword moveset</div></div></div>
+        <div class="mod"><span class="badge b-pak">PAK</span><div class="mod-info"><div class="mod-name">Shortsword Anticipation</div><div class="mod-desc">Shortsword animations</div></div></div>
       </div>
     </div>
 
-    <!-- Combat & Magic -->
-    <div class="mod-category reveal">
-      <div class="mod-category-header">
-        <h3>Combat & Magic</h3>
-        <div class="cat-line"></div>
-        <span class="cat-count">6 mods</span>
-      </div>
-      <div class="mod-grid">
-        <div class="mod-item">
-          <span class="mod-badge badge-ue4ss">UE4SS</span>
-          <div class="mod-info"><span class="mod-name">UltraCombat V2</span><span class="mod-desc">Improves combat feel and responsiveness</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Responsive Combat AI</span><span class="mod-desc">Enemies fight smarter, not tankier</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Responsive Spellcaster AI</span><span class="mod-desc">Enemy mages use heals and buffs</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Supreme Magicka + modules</span><span class="mod-desc">Complete magic system overhaul</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Nascent Archery Overhaul</span><span class="mod-desc">Better bow mechanics</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Magic Skill Leveling Fixed</span><span class="mod-desc">Fair magic XP gain</span></div>
-        </div>
+    <div class="cat reveal">
+      <div class="cat-header"><h3>Combat & Magic</h3><div class="cat-line"></div><span class="cat-count">6 mods</span></div>
+      <div class="mods">
+        <div class="mod"><span class="badge b-ue4ss">UE4SS</span><div class="mod-info"><div class="mod-name">UltraCombat V2</div><div class="mod-desc">Makes combat feel responsive instead of floaty</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Responsive Combat AI</div><div class="mod-desc">Enemies fight smarter, not tankier</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Responsive Spellcaster AI</div><div class="mod-desc">Enemy mages actually use heals and buffs</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Supreme Magicka</div><div class="mod-desc">Complete magic overhaul — makes magic actually worth using</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Nascent Archery</div><div class="mod-desc">Better bow mechanics</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Magic Skill Leveling Fixed</div><div class="mod-desc">Fair magic XP — no more casting 500 spells to level up</div></div></div>
       </div>
     </div>
 
-    <!-- AI & World -->
-    <div class="mod-category reveal">
-      <div class="mod-category-header">
-        <h3>AI & World</h3>
-        <div class="cat-line"></div>
-        <span class="cat-count">5 mods</span>
-      </div>
-      <div class="mod-grid">
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">NPCs Come to Life (Naiad)</span><span class="mod-desc">NPCs have real schedules and routines</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Dynamic AI Behavior Animals</span><span class="mod-desc">Realistic animal behavior</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Climates Revised</span><span class="mod-desc">Region-specific weather patterns</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Balanced NPC Level Cap</span><span class="mod-desc">Stops infinite enemy level scaling</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Quest NPCs Run</span><span class="mod-desc">Escort NPCs actually run</span></div>
-        </div>
+    <div class="cat reveal">
+      <div class="cat-header"><h3>AI & World</h3><div class="cat-line"></div><span class="cat-count">5 mods</span></div>
+      <div class="mods">
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">NPCs Come to Life</div><div class="mod-desc">NPCs have real schedules instead of standing around</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Dynamic AI Animals</div><div class="mod-desc">Animals that behave like animals</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Climates Revised</div><div class="mod-desc">Region-specific weather — it actually snows in the mountains</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Balanced NPC Level Cap</div><div class="mod-desc">Stops enemies from scaling infinitely with you</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Quest NPCs Run</div><div class="mod-desc">Escort NPCs actually run instead of walking at 0.5 mph</div></div></div>
       </div>
     </div>
 
-    <!-- Items & Progression -->
-    <div class="mod-category reveal">
-      <div class="mod-category-header">
-        <h3>Items & Progression</h3>
-        <div class="cat-line"></div>
-        <span class="cat-count">4 mods</span>
-      </div>
-      <div class="mod-grid">
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Auto Upgrade Leveled Items</span><span class="mod-desc">Gear scales with your level</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">No Durability Damage</span><span class="mod-desc">No weapon/armor degradation</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-obse">OBSE</span>
-          <div class="mod-info"><span class="mod-name">No Enchantment Drain</span><span class="mod-desc">Enchanted weapons don't lose charge</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-ue4ss">UE4SS</span>
-          <div class="mod-info"><span class="mod-name">Carry Weight Overhaul + Weightless Misc</span><span class="mod-desc">No inventory management tedium</span></div>
-        </div>
+    <div class="cat reveal">
+      <div class="cat-header"><h3>Items & Progression</h3><div class="cat-line"></div><span class="cat-count">4 mods</span></div>
+      <div class="mods">
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Auto Upgrade Leveled Items</div><div class="mod-desc">Your gear scales with you so quest rewards don't become useless</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">No Durability Damage</div><div class="mod-desc">No more constantly repairing your gear</div></div></div>
+        <div class="mod"><span class="badge b-obse">OBSE</span><div class="mod-info"><div class="mod-name">No Enchantment Drain</div><div class="mod-desc">Enchanted weapons don't lose charge</div></div></div>
+        <div class="mod"><span class="badge b-ue4ss">UE4SS</span><div class="mod-info"><div class="mod-name">Carry Weight + Weightless Misc</div><div class="mod-desc">No more inventory management simulator</div></div></div>
       </div>
     </div>
 
-    <!-- Spells & Powers -->
-    <div class="mod-category reveal">
-      <div class="mod-category-header">
-        <h3>Spells & Powers</h3>
-        <div class="cat-line"></div>
-        <span class="cat-count">3 mods</span>
-      </div>
-      <div class="mod-grid">
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Spell Duration x10</span><span class="mod-desc">Buff spells last 10x longer</span><span class="mod-warn">CAUTION: amplifies negative effects</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Unlimited Powers</span><span class="mod-desc">Greater Powers usable anytime, not once per day</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Spell Freedom</span><span class="mod-desc">All spell effects available at spellmaking altar</span></div>
-        </div>
+    <div class="cat reveal">
+      <div class="cat-header"><h3>Spells & Powers</h3><div class="cat-line"></div><span class="cat-count">3 mods</span></div>
+      <div class="mods">
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Spell Duration x10</div><div class="mod-desc">Buff spells last way longer so you're not recasting every 30 seconds</div><div class="mod-tags"><span class="tag-warn">HEADS UP: negative effects last 10x too</span></div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Unlimited Powers</div><div class="mod-desc">Greater Powers usable anytime, not once per day</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Spell Freedom</div><div class="mod-desc">All spell effects available at the spellmaking altar</div></div></div>
       </div>
     </div>
 
-    <!-- UI & Quality of Life -->
-    <div class="mod-category reveal">
-      <div class="mod-category-header">
-        <h3>UI & Quality of Life</h3>
-        <div class="cat-line"></div>
-        <span class="cat-count">10 mods</span>
-      </div>
-      <div class="mod-grid">
-        <div class="mod-item">
-          <span class="mod-badge badge-pak">PAK</span>
-          <div class="mod-info"><span class="mod-name">Better HUD Slim</span><span class="mod-desc">Cleaner interface</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-json">JSON</span>
-          <div class="mod-info"><span class="mod-name">MISS Inventory Sorter</span><span class="mod-desc">Organized inventory</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-ue4ss">UE4SS</span>
-          <div class="mod-info"><span class="mod-name">Auto Local Map</span><span class="mod-desc">Automatically reveals local maps</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Additional Map Markers</span><span class="mod-desc">More discoverable locations</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Horse Whistle</span><span class="mod-desc">Call your horse anywhere</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Easier Persuasion</span><span class="mod-desc">Less tedious speech minigame</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Better Auto Lockpick</span><span class="mod-desc">Improved lockpicking</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Richer Vendors</span><span class="mod-desc">Merchants carry more gold</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">PreserveStats</span><span class="mod-desc">Safe race/appearance changes</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-pak">PAK</span>
-          <div class="mod-info"><span class="mod-name">Quieter Lockpicking</span><span class="mod-desc">Less ear-piercing lockpick sounds</span></div>
-        </div>
+    <div class="cat reveal">
+      <div class="cat-header"><h3>UI & Quality of Life</h3><div class="cat-line"></div><span class="cat-count">10 mods</span></div>
+      <div class="mods">
+        <div class="mod"><span class="badge b-pak">PAK</span><div class="mod-info"><div class="mod-name">Better HUD Slim</div><div class="mod-desc">Cleaner interface</div></div></div>
+        <div class="mod"><span class="badge b-json">JSON</span><div class="mod-info"><div class="mod-name">MISS Inventory Sorter</div><div class="mod-desc">Actually organized inventory</div></div></div>
+        <div class="mod"><span class="badge b-ue4ss">UE4SS</span><div class="mod-info"><div class="mod-name">Auto Local Map</div><div class="mod-desc">Local maps reveal automatically</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Additional Map Markers</div><div class="mod-desc">More places to discover on the map</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Horse Whistle</div><div class="mod-desc">Call your horse from anywhere</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Easier Persuasion</div><div class="mod-desc">The speech minigame is less of a chore</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Better Auto Lockpick</div><div class="mod-desc">Lockpicking that doesn't make you want to quit</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Richer Vendors</div><div class="mod-desc">Merchants carry enough gold to actually buy your stuff</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">PreserveStats</div><div class="mod-desc">Change your appearance without breaking your character</div></div></div>
+        <div class="mod"><span class="badge b-pak">PAK</span><div class="mod-info"><div class="mod-name">Quieter Lockpicking</div><div class="mod-desc">Less ear-piercing lockpick sounds</div></div></div>
       </div>
     </div>
 
-    <!-- Audio -->
-    <div class="mod-category reveal">
-      <div class="mod-category-header">
-        <h3>Audio</h3>
-        <div class="cat-line"></div>
-        <span class="cat-count">1 mod</span>
-      </div>
-      <div class="mod-grid">
-        <div class="mod-item">
-          <span class="mod-badge badge-pak">PAK</span>
-          <div class="mod-info"><span class="mod-name">High Quality Music Replacer V2c</span><span class="mod-desc">Higher fidelity soundtrack</span></div>
-        </div>
+    <div class="cat reveal">
+      <div class="cat-header"><h3>Audio</h3><div class="cat-line"></div><span class="cat-count">1 mod</span></div>
+      <div class="mods">
+        <div class="mod"><span class="badge b-pak">PAK</span><div class="mod-info"><div class="mod-name">High Quality Music Replacer</div><div class="mod-desc">Higher fidelity version of the soundtrack</div></div></div>
       </div>
     </div>
 
-    <!-- New Content -->
-    <div class="mod-category reveal">
-      <div class="mod-category-header">
-        <h3>New Content</h3>
-        <div class="cat-line"></div>
-        <span class="cat-count">5 mods</span>
-      </div>
-      <div class="mod-grid">
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Dark Brotherhood Infinitum</span><span class="mod-desc">Radiant assassination contracts</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Imperial Legion Infinitum</span><span class="mod-desc">Repeatable Legion missions</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Advanced Followers</span><span class="mod-desc">Improved companion system</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Lakeheart Manor</span><span class="mod-desc">Player home near Imperial City</span></div>
-        </div>
-        <div class="mod-item">
-          <span class="mod-badge badge-esp">ESP</span>
-          <div class="mod-info"><span class="mod-name">Radiant Mages Guild Quests</span><span class="mod-desc">167 new dungeon crawl quests</span></div>
-        </div>
+    <div class="cat reveal">
+      <div class="cat-header"><h3>New Content</h3><div class="cat-line"></div><span class="cat-count">5 mods</span></div>
+      <div class="mods">
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Dark Brotherhood Infinitum</div><div class="mod-desc">Radiant assassination contracts that keep going</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Imperial Legion Infinitum</div><div class="mod-desc">Repeatable Legion missions</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Advanced Followers</div><div class="mod-desc">Companions that are actually useful</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Lakeheart Manor</div><div class="mod-desc">Player home near the Imperial City</div></div></div>
+        <div class="mod"><span class="badge b-esp">ESP</span><div class="mod-info"><div class="mod-name">Radiant Mages Guild Quests</div><div class="mod-desc">167 new dungeon crawl quests for the Mages Guild</div></div></div>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- CHIM Patches -->
-<section id="patches" style="background:linear-gradient(180deg,var(--void),var(--abyss),var(--void))">
+<section id="patches">
   <div class="container">
-    <div class="section-divider reveal"></div>
-    <h2 class="section-title reveal">CHIM Patches</h2>
-    <p class="section-subtitle reveal reveal-delay-1">Original work. Where the dream is reshaped by hand.</p>
+    <p class="section-label reveal">Original Work</p>
+    <h2 class="section-title reveal r1">CHIM Patches</h2>
+    <p class="section-desc reveal r2">Where I had to write custom code to make things work together. These are the patches that come with the modpack.</p>
 
-    <div class="patch-list">
-      <div class="patch-item reveal">
-        <h4>Eternal Darkness &mdash; Nighttime &amp; Interior Tuning</h4>
-        <p>Outdoor skylight hidden via <code>SetActorHiddenInGame</code> for true darkness. Moonlight intensity raised to <code>0.7</code> for navigable nights. Interior skylight hiding disabled &mdash; brightness controlled by UltraPlusExtensions skylight profile instead. Generic interior point lights left at vanilla. Spotlight brightness tuned: caves <code>0.85</code>, other <code>0.75</code>.</p>
+    <div class="patches">
+      <div class="patch reveal">
+        <h4>Eternal Darkness &mdash; Night & Interior Tuning</h4>
+        <p>Outdoor skylight hidden for real darkness, moonlight bumped to <code>0.7</code> so you can actually navigate. Interior skylight hiding disabled — brightness is handled by the UltraPlus profile instead. Generic interior lights left at vanilla so dungeons aren't pitch black.</p>
       </div>
-      <div class="patch-item reveal reveal-delay-1">
-        <h4>UltraPlusExtensions &mdash; Interior Skylight Profile</h4>
-        <p>Custom-tuned <code>skylight_ultraplus_choice_brighter_v2.ini</code> with per-location multipliers. Caves, ruins, mines at <code>0.35</code>. Dungeons at <code>0.4</code>. Forts, sewers at <code>0.45</code>. Houses, inns at <code>0.6</code>. Exteriors unchanged at <code>1.25</code>. Balances atmosphere with playability.</p>
+      <div class="patch reveal r1">
+        <h4>UltraPlusExtensions &mdash; Interior Brightness Profile</h4>
+        <p>Custom-tuned <code>skylight_ultraplus_choice_brighter_v2.ini</code> with per-location multipliers. Caves and ruins at <code>0.35</code>, dungeons at <code>0.4</code>, houses and inns at <code>0.6</code>. Dark enough to feel atmospheric, bright enough to see what's trying to kill you.</p>
       </div>
-      <div class="patch-item reveal reveal-delay-2">
-        <h4>LumenRemastered &amp; ShadersRevised &mdash; API Compatibility Fix</h4>
-        <p>Both mods call <code>ExecuteConsoleCommand</code> with 3 parameters, but UE4SS now requires 4. CHIM patches both mods to pass <code>playerController</code> as the 4th argument, preventing crashes on level transitions and fast travel.</p>
+      <div class="patch reveal r2">
+        <h4>LumenRemastered & ShadersRevised &mdash; API Fix</h4>
+        <p>Both mods call <code>ExecuteConsoleCommand</code> with 3 params but UE4SS now needs 4. I patched both to pass <code>playerController</code> as the 4th arg so they stop crashing on fast travel and level transitions.</p>
       </div>
-      <div class="patch-item reveal reveal-delay-3">
+      <div class="patch reveal r3">
         <h4>Controller Force Feedback Fix</h4>
-        <p>Sustained spell effects trigger permanent controller vibration that never stops. CHIM adds <code>bEnableForceFeedback=False</code> to Engine.ini, disabling force feedback for Oblivion only. Other games unaffected.</p>
+        <p>Sustained spell effects trigger permanent controller vibration that never stops. Added <code>bEnableForceFeedback=False</code> to Engine.ini. Only affects Oblivion — other games keep rumble.</p>
       </div>
-      <div class="patch-item reveal reveal-delay-4">
-        <h4>Curated Plugins.txt Load Order</h4>
-        <p>Hand-ordered plugin load list ensuring all ESPs load in the correct sequence. Base game, DLCs, unofficial patch, then mods organized by category. Prevents conflicts and ensures overrides work correctly.</p>
+      <div class="patch reveal r4">
+        <h4>Curated Load Order</h4>
+        <p>Hand-ordered <code>Plugins.txt</code> with every ESP in the right sequence. Base game, DLCs, unofficial patch, then mods by category. Tested for conflicts so you don't have to.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Installation -->
-<section id="install">
+<section style="background:linear-gradient(180deg,var(--bg),var(--surface),var(--bg))">
   <div class="container">
-    <div class="section-divider reveal"></div>
-    <h2 class="section-title reveal">Installation</h2>
-    <div class="install-box reveal reveal-delay-1">
-      <h3>Coming Soon</h3>
-      <p>Automated installer script with one-command setup.</p>
+    <p class="section-label reveal">Installation</p>
+    <h2 class="section-title reveal r1">Get Started</h2>
+    <div class="divider reveal r2"></div>
+    <div class="install reveal r3">
+      <h3>Installer Coming Soon</h3>
+      <p>Working on an automated script that sets everything up in one command.</p>
       <div class="install-platforms">
         <span>Linux / Steam Deck</span>
         <span>Windows</span>
@@ -813,38 +366,17 @@ footer .footer-credit{
   </div>
 </section>
 
-<!-- Footer -->
 <footer>
   <div class="footer-chim">CHIM</div>
   <div class="footer-iam">I &ensp; A M</div>
-  <div class="footer-credit">A modpack by Zengineer</div>
+  <p class="footer-credit">A modpack by Z3nGineer</p>
 </footer>
 
 <script>
-// Scroll reveal
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// Nav scroll effect
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-});
-
-// Smooth anchor clicks
-document.querySelectorAll('nav a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
-  });
-});
+const g=document.getElementById('glow');
+document.addEventListener('mousemove',e=>{g.style.left=e.clientX+'px';g.style.top=e.clientY+'px'});
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0.08,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>
