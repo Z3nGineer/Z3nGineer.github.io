@@ -88,6 +88,7 @@ a{text-decoration:none;color:inherit}
 }
 .game-card[data-g="oblivion"] .game-card-count{color:var(--gold);background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.2)}
 .game-card[data-g="bg3"] .game-card-count{color:var(--blue);background:rgba(74,154,232,0.12);border:1px solid rgba(74,154,232,0.2)}
+.game-card[data-g="d2r"] .game-card-count{color:#c44030;background:rgba(196,64,48,0.12);border:1px solid rgba(196,64,48,0.2)}
 .game-card-arrow{
   margin-left:auto;width:36px;height:36px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
@@ -244,6 +245,13 @@ const games = [
     icon: '\u2694',
     guides: [
       {
+        href: 'oblivion-builds.html',
+        type: 'Top 10 Builds',
+        icon: '\u2694',
+        title: 'Top 10 Builds — Remastered',
+        desc: 'The 10 most powerful builds ranked by overall strength. Updated for the Remastered leveling overhaul, new combat mechanics, and all current patches.'
+      },
+      {
         href: 'oblivion-spellsword-guide.html',
         type: 'Build Guide',
         icon: '\u2694',
@@ -261,11 +269,35 @@ const games = [
     icon: '\u2733',
     guides: [
       {
+        href: 'bg3-builds.html',
+        type: 'Top 10 Builds + Companions',
+        icon: '\u2733',
+        title: 'Top 10 Builds + Companion Guides',
+        desc: 'The 10 strongest builds for Honour Mode plus optimized builds for all 6 companions. Updated for Patch 8 with all new subclasses.'
+      },
+      {
         href: 'bg3-moon-druid-guide.html',
         type: 'Build Guide',
         icon: '\u2733',
         title: 'Pure Moon Druid',
         desc: "Full commitment to Wild Shape. Spell picks, gear choices, and the tricks I figured out the hard way. For people who actually want to stay in animal form."
+      }
+    ]
+  },
+  {
+    id: 'd2r',
+    title: 'Diablo 2 Resurrected',
+    sub: 'Season 13 — Reign of the Warlock',
+    img: 'img/d2r-banner.jpg',
+    color: 'gold',
+    icon: '\uD83D\uDD25',
+    guides: [
+      {
+        href: 'd2r-builds.html',
+        type: 'Top 5 Builds',
+        icon: '\uD83D\uDD25',
+        title: 'Top 5 Builds — Season 13',
+        desc: 'The strongest builds for Season 13 including the new Echoing Strike Warlock. Updated for Reign of the Warlock expansion and Patch 3.1.1.'
       }
     ]
   }

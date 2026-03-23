@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top 5 Builds — Diablo 2 Resurrected | Z3nGineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0808;--bg-card:#141010;--bg-el:#1c1616;--bg-hover:#241c1c;
+  --border:#2a1e1e;--border-light:#3a2828;
+  --text:#e8e0d8;--text-dim:#a09088;--text-muted:#685850;--white:#f5efe8;
+  --crimson:#c4392d;--crimson-bright:#e04838;--crimson-dim:rgba(196,57,45,0.12);
+  --gold:#c8a050;--gold-dim:rgba(200,160,80,0.12);
+  --blue:#5090d0;--blue-dim:rgba(80,144,208,0.12);
+  --green:#58a048;--green-dim:rgba(88,160,72,0.10);
+  --purple:#9068c0;--purple-dim:rgba(144,104,192,0.10);
+  --ice:#60b8e8;--ice-dim:rgba(96,184,232,0.10);
+  --lightning:#e8d040;--lightning-dim:rgba(232,208,64,0.10);
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border-light) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--crimson);color:#fff}
+a{color:var(--crimson-bright);text-decoration:none}
+a:hover{color:#ff6050;text-decoration:underline}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,8,8,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:56px}
+.nav-brand{font-family:'Cinzel',serif;font-size:0.85rem;font-weight:700;letter-spacing:0.12em;color:var(--text);text-decoration:none;transition:color 0.3s}
+.nav-brand:hover{color:var(--crimson-bright)}
+.nav-links{display:flex;gap:0;list-style:none}
+.nav-links a{
+  font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--text-muted);padding:0 1rem;height:56px;
+  display:flex;align-items:center;position:relative;
+  transition:color 0.2s,background 0.2s;text-decoration:none;
+}
+.nav-links a:hover{color:var(--text);background:rgba(255,255,255,0.03);text-decoration:none}
+.nav-links a.active{color:var(--crimson-bright)}
+.nav-links a::after{
+  content:'';position:absolute;bottom:0;left:1rem;right:1rem;height:2px;
+  background:var(--crimson);transform:scaleX(0);transition:transform 0.2s;
+}
+.nav-links a.active::after,.nav-links a:hover::after{transform:scaleX(1)}
+
+/* Hamburger */
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:all 0.3s;border-radius:1px}
+.nav-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+@media(max-width:768px){
+  .nav-toggle{display:flex}
+  .nav-links{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:rgba(10,8,8,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0.5rem 0}
+  .nav-links.open{display:flex}
+  .nav-links a{height:44px;padding:0 2rem}
+}
+
+/* Page wrapper */
+.page-wrap{max-width:960px;margin:0 auto;padding:0 2rem;margin-top:56px}
+
+/* Hero */
+.hero{padding:5rem 0 3rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:800px;height:800px;
+  background:radial-gradient(circle,rgba(196,57,45,0.08) 0%,rgba(196,57,45,0.02) 40%,transparent 70%);
+  pointer-events:none;
+}
+.hero-rank{font-family:'Cinzel',serif;font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--crimson);margin-bottom:0.75rem}
+.hero h1{font-family:'Cinzel',serif;font-size:clamp(2rem,5vw,3rem);font-weight:900;color:var(--white);line-height:1.15;margin-bottom:0.75rem;letter-spacing:0.04em}
+.hero-sub{font-size:1rem;color:var(--text-dim);font-weight:400;max-width:550px;margin:0 auto}
+.hero-tags{display:flex;gap:0.5rem;justify-content:center;margin-top:1.25rem;flex-wrap:wrap}
+.hero-tag{font-size:0.7rem;font-weight:600;padding:0.3rem 0.8rem;border-radius:20px;text-transform:uppercase;letter-spacing:0.06em}
+.hero-tag.crimson{color:var(--crimson-bright);background:var(--crimson-dim);border:1px solid rgba(196,57,45,0.25)}
+.hero-tag.gold{color:var(--gold);background:var(--gold-dim);border:1px solid rgba(200,160,80,0.25)}
+
+/* Sections */
+.section{margin-top:4rem;opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease}
+.section.visible{opacity:1;transform:translateY(0)}
+.section h2{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:800;color:var(--white);margin-bottom:1rem;padding-bottom:0.6rem;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:0.6rem}
+.section h2 .s-num{color:var(--crimson);font-size:1.8rem}
+.section h3{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;color:var(--text);margin:1.75rem 0 0.6rem;display:flex;align-items:center;gap:0.4rem}
+.section h3 .h3-icon{color:var(--crimson);font-size:0.9rem}
+.section p{margin-bottom:1rem}
+
+/* Season notes */
+.season-card{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--crimson);border-radius:8px;padding:1.5rem 1.75rem;margin:1.5rem 0}
+.season-card h3{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:700;color:var(--crimson-bright);margin:0 0 0.75rem;padding:0}
+.season-card ul{list-style:none;padding:0}
+.season-card li{padding:0.35rem 0;font-size:0.95rem;color:var(--text-dim);display:flex;align-items:baseline;gap:0.5rem}
+.season-card li::before{content:'\25C6';color:var(--crimson);font-size:0.55rem;flex-shrink:0;margin-top:0.15rem}
+
+/* Build card header */
+.build-header{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.75rem;margin-bottom:1.5rem;position:relative;overflow:hidden}
+.build-header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--crimson),rgba(196,57,45,0.2),transparent)}
+.build-rank{font-family:'Cinzel',serif;font-size:2.5rem;font-weight:900;color:var(--crimson);opacity:0.2;position:absolute;top:0.75rem;right:1.25rem;line-height:1}
+.build-class{font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.35rem}
+.build-class.warlock{color:var(--purple)}
+.build-class.paladin{color:var(--gold)}
+.build-class.sorceress-cold{color:var(--ice)}
+.build-class.sorceress-light{color:var(--lightning)}
+.build-class.assassin{color:var(--green)}
+.build-name{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:900;color:var(--white);margin-bottom:0.5rem}
+.build-overview{color:var(--text-dim);font-size:0.95rem;line-height:1.7}
+.build-tags{display:flex;gap:0.4rem;margin-top:0.75rem;flex-wrap:wrap}
+.build-tag{font-size:0.65rem;font-weight:600;padding:0.2rem 0.55rem;border-radius:4px;text-transform:uppercase;letter-spacing:0.04em;background:var(--bg-el);border:1px solid var(--border);color:var(--text-dim)}
+.build-tag.new{color:var(--crimson-bright);border-color:rgba(196,57,45,0.3);background:var(--crimson-dim)}
+.build-tag.s-tier{color:var(--gold);border-color:rgba(200,160,80,0.3);background:var(--gold-dim)}
+.build-tag.beginner{color:var(--green);border-color:rgba(88,160,72,0.3);background:var(--green-dim)}
+
+/* Callout */
+.callout{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--crimson);border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0}
+.callout.warn{border-left-color:#d05030}
+.callout.tip{border-left-color:var(--green)}
+.callout-label{font-family:'Cinzel',serif;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.25rem;color:var(--crimson)}
+.callout.warn .callout-label{color:#d05030}
+.callout.tip .callout-label{color:var(--green)}
+.callout p{margin-bottom:0.4rem;font-size:0.92rem}.callout p:last-child{margin-bottom:0}
+
+/* Skill table */
+.skill-table{width:100%;border-collapse:collapse;margin:0.75rem 0}
+.skill-table th{font-family:'Cinzel',serif;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);text-align:left;padding:0.5rem 0.6rem;border-bottom:2px solid var(--border)}
+.skill-table td{padding:0.5rem 0.6rem;border-bottom:1px solid var(--border);font-size:0.9rem}
+.skill-table tr:hover{background:var(--bg-card)}
+.skill-name{font-weight:600;color:var(--white)}
+.skill-badge{font-size:0.65rem;font-weight:600;padding:0.12rem 0.4rem;border-radius:3px;text-transform:uppercase}
+.skill-badge.max{color:var(--crimson-bright);background:var(--crimson-dim);border:1px solid rgba(196,57,45,0.2)}
+.skill-badge.mid{color:var(--gold);background:var(--gold-dim);border:1px solid rgba(200,160,80,0.15)}
+.skill-badge.pts{color:var(--text-dim);background:var(--bg-el);border:1px solid var(--border)}
+
+/* Stat bars */
+.stat-row{display:flex;gap:0.5rem;flex-wrap:wrap;margin:0.75rem 0}
+.stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:0.5rem 0.75rem;text-align:center;min-width:4rem;flex:1}
+.stat-label{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted)}
+.stat-val{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:700;color:var(--white)}
+.stat-box.primary{border-color:rgba(196,57,45,0.4)}
+.stat-box.primary .stat-val{color:var(--crimson-bright)}
+
+/* Gear grid */
+.gear-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin:0.75rem 0}
+@media(max-width:600px){.gear-grid{grid-template-columns:1fr}}
+.gear-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:0.9rem 1rem;transition:border-color 0.15s}
+.gear-card:hover{border-color:var(--border-light)}
+.gear-slot{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:0.2rem}
+.gear-item{font-weight:700;color:var(--gold);font-size:0.95rem}
+.gear-item.unique{color:var(--gold)}
+.gear-item.runeword{color:var(--crimson-bright)}
+.gear-item.set{color:var(--green)}
+.gear-notes{color:var(--text-dim);font-size:0.82rem;margin-top:0.15rem}
+.gear-alt{font-size:0.78rem;color:var(--text-muted);margin-top:0.3rem;font-style:italic}
+
+/* Merc card */
+.merc-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin:0.75rem 0}
+.merc-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--gold);margin-bottom:0.5rem}
+.merc-detail{font-size:0.9rem;color:var(--text-dim);margin-bottom:0.3rem}
+.merc-detail strong{color:var(--white);font-weight:600}
+
+/* Playstyle list */
+.play-list{list-style:none;counter-reset:play;margin:0.75rem 0}
+.play-list li{position:relative;padding:0.6rem 0 0.6rem 2.5rem;border-left:2px solid var(--border);margin-left:0.75rem;counter-increment:play;font-size:0.95rem}
+.play-list li::before{
+  content:counter(play);position:absolute;left:-0.75rem;top:0.5rem;
+  width:1.3rem;height:1.3rem;background:var(--bg);border:2px solid var(--crimson);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel',serif;font-weight:700;font-size:0.7rem;color:var(--crimson)
+}
+.play-list li:last-child{border-left-color:transparent}
+
+/* Excel list */
+.excel-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin:0.75rem 0}
+@media(max-width:600px){.excel-grid{grid-template-columns:1fr}}
+.excel-item{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:0.6rem 0.9rem;font-size:0.9rem;display:flex;align-items:center;gap:0.5rem}
+.excel-item::before{content:'\2713';color:var(--crimson);font-weight:700;flex-shrink:0}
+
+/* Runeword table */
+.rw-table{width:100%;border-collapse:collapse;margin:1rem 0}
+.rw-table th{font-family:'Cinzel',serif;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);text-align:left;padding:0.6rem 0.75rem;border-bottom:2px solid var(--border)}
+.rw-table td{padding:0.65rem 0.75rem;border-bottom:1px solid var(--border);font-size:0.9rem;vertical-align:top}
+.rw-table tr:hover{background:var(--bg-card)}
+.rw-name{font-weight:700;color:var(--gold);white-space:nowrap}
+.rw-new{font-size:0.6rem;font-weight:700;color:var(--crimson-bright);background:var(--crimson-dim);padding:0.1rem 0.35rem;border-radius:3px;margin-left:0.4rem;vertical-align:middle;text-transform:uppercase}
+.rw-runes{color:var(--text-dim);font-size:0.85rem}
+.rw-stats{color:var(--text-dim);font-size:0.85rem;line-height:1.5}
+
+/* Divider */
+.build-divider{height:1px;background:linear-gradient(90deg,transparent,var(--crimson),transparent);margin:4rem 0;opacity:0.3}
+
+/* Footer */
+.page-footer{margin-top:4rem;padding:1.5rem 0;border-top:1px solid var(--border);text-align:center}
+.page-footer span{font-size:0.72rem;color:var(--text-muted)}
+
+/* Back link */
+.back-link{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.8rem;font-weight:600;color:var(--text-muted);text-decoration:none;margin-bottom:1rem;transition:color 0.2s;text-transform:uppercase;letter-spacing:0.06em}
+.back-link:hover{color:var(--text);text-decoration:none}
+.back-link svg{width:14px;height:14px}
+
+/* Scroll reveal */
+@keyframes fadeUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+
+/* Responsive */
+@media(max-width:768px){
+  .page-wrap{padding:0 1.25rem}
+  .hero{padding:3.5rem 0 2rem}
+  .hero h1{font-size:1.8rem}
+  .build-header{padding:1.25rem}
+  .build-rank{font-size:1.8rem}
+  .gear-grid{grid-template-columns:1fr}
+  .excel-grid{grid-template-columns:1fr}
+  .section h2{font-size:1.3rem}
+  .rw-table{font-size:0.82rem}
+  .rw-table th,.rw-table td{padding:0.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">Z3nGineer</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="guides.html">All Guides</a></li>
+      <li><a href="#warlock" class="active">Warlock</a></li>
+      <li><a href="#hammerdin">Hammerdin</a></li>
+      <li><a href="#blizzsorc">Blizz Sorc</a></li>
+      <li><a href="#lightsorc">Light Sorc</a></li>
+      <li><a href="#trapsin">Trapsin</a></li>
+      <li><a href="#runewords">Runewords</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-rank">Diablo II: Resurrected</div>
+  <h1>Top 5 Builds</h1>
+  <p class="hero-sub">Season 13 / Reign of the Warlock &mdash; Patch 3.1.1</p>
+  <div class="hero-tags">
+    <span class="hero-tag crimson">Season 13</span>
+    <span class="hero-tag gold">Patch 3.1.1</span>
+    <span class="hero-tag crimson">Warlock Class</span>
+  </div>
+</section>
+
+<!-- SEASON 13 NOTES -->
+<section class="section" id="season-notes">
+  <h2>Season 13 Notes</h2>
+  <div class="season-card">
+    <h3>Reign of the Warlock</h3>
+    <ul>
+      <li>The <strong style="color:var(--purple)">Warlock</strong> arrives as D2R's first new class &mdash; an arcane-melee hybrid that conjures astral weapon projections and curses. Entirely new skill trees, items, and synergies.</li>
+      <li>Four new runewords &mdash; <strong style="color:var(--gold)">Void</strong>, <strong style="color:var(--gold)">Authority</strong>, <strong style="color:var(--gold)">Ritual</strong>, and <strong style="color:var(--gold)">Coven</strong> &mdash; reshape gearing for casters and melee alike.</li>
+      <li>Trap Assassin damage formula reworked from Patch 2.6 &mdash; traps now apply -enemy resistance, pushing Trapsin back into the meta.</li>
+      <li>Cold Mastery diminishing returns softened slightly: Blizzard Sorc remains a top-tier ladder starter.</li>
+      <li>Hammerdin unchanged &mdash; still S-tier. The cockroach of D2 builds. Will survive the heat death of the universe.</li>
+      <li>Lightning Sorc benefits from the new <strong style="color:var(--gold)">Void</strong> runeword as a Spirit alternative, though Infinity remains mandatory.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- BUILD #1: ECHOING STRIKE WARLOCK      -->
+<!-- ══════════════════════════════════════ -->
+<div class="build-divider"></div>
+
+<section class="section" id="warlock">
+  <h2><span class="s-num">#1</span> Echoing Strike Warlock</h2>
+
+  <div class="build-header">
+    <span class="build-rank">#1</span>
+    <div class="build-class warlock">Warlock &mdash; New Class</div>
+    <div class="build-name">Echoing Strike</div>
+    <p class="build-overview">The Warlock's signature build and the reason this season is named after the class. Echoing Strike creates astral weapon projections that boomerang outward, piercing through packs and returning to you for a second hit. It scales with Faster Cast Rate rather than Increased Attack Speed &mdash; making it play more like a caster than a melee class. With Mirrored Blades multiplying your projections and Blade Warp giving you teleport-like repositioning, this build shreds density at a pace that rivals Hammerdin. Community consensus: the strongest Warlock build by far.</p>
+    <div class="build-tags">
+      <span class="build-tag new">New Class</span>
+      <span class="build-tag s-tier">S-Tier</span>
+      <span class="build-tag">FCR Scaling</span>
+      <span class="build-tag">Pierce</span>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <h3><span class="h3-icon">&#9670;</span> Skills</h3>
+  <table class="skill-table">
+    <thead><tr><th>Skill</th><th>Points</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="skill-name">Echoing Strike</td><td><span class="skill-badge max">Max</span></td><td>Primary damage. Astral projections boomerang and pierce.</td></tr>
+      <tr><td class="skill-name">Mirrored Blades</td><td><span class="skill-badge max">Max</span></td><td>Multiplies projections. Massive synergy with Echoing Strike.</td></tr>
+      <tr><td class="skill-name">Blade Warp</td><td><span class="skill-badge max">Max</span></td><td>Mobility + damage synergy. Pseudo-teleport repositioning.</td></tr>
+      <tr><td class="skill-name">Hex: Purge</td><td><span class="skill-badge max">Max</span></td><td>Curse that strips enemy resistances. Critical for bosses.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Stats -->
+  <h3><span class="h3-icon">&#9670;</span> Stats</h3>
+  <div class="stat-row">
+    <div class="stat-box"><div class="stat-label">Strength</div><div class="stat-val">Gear Req</div></div>
+    <div class="stat-box"><div class="stat-label">Dexterity</div><div class="stat-val">Base</div></div>
+    <div class="stat-box primary"><div class="stat-label">Vitality</div><div class="stat-val">All Rest</div></div>
+    <div class="stat-box"><div class="stat-label">Energy</div><div class="stat-val">Base</div></div>
+  </div>
+
+  <!-- Gear -->
+  <h3><span class="h3-icon">&#9670;</span> Gear</h3>
+  <div class="gear-grid">
+    <div class="gear-card">
+      <div class="gear-slot">Weapon (BiS)</div>
+      <div class="gear-item unique">Ethereal Arioc's Needle</div>
+      <div class="gear-notes">Best in slot. Ethereal doesn't consume durability on Warlock projections. Massive +skills and damage.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Armor</div>
+      <div class="gear-item runeword">Fortitude / Enigma</div>
+      <div class="gear-notes">Fortitude for raw damage, Enigma for Teleport utility + MF.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Helm</div>
+      <div class="gear-item unique">Harlequin Crest (Shako)</div>
+      <div class="gear-notes">+2 skills, life, mana, DR%. The universal helm.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Belt</div>
+      <div class="gear-item unique">Arachnid Mesh</div>
+      <div class="gear-notes">+1 skills, 20% FCR. Mandatory for hitting 125% breakpoint.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Shield</div>
+      <div class="gear-item runeword">Spirit / Stormshield</div>
+      <div class="gear-notes">Spirit for FCR/skills, Stormshield for hardcore or defense.</div>
+      <div class="gear-alt">Alt: New Void runeword (40% FCR, +2 skills)</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">FCR Breakpoint</div>
+      <div class="gear-item" style="color:var(--crimson-bright)">125% FCR</div>
+      <div class="gear-notes">This is the target. Echoing Strike scales with FCR, not IAS.</div>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <div class="callout-label">Warning</div>
+    <p><strong>Grief does NOT work.</strong> Echoing Strike uses astral projections, not physical weapon hits. Grief's flat +damage is not applied. Do not waste your runes.</p>
+  </div>
+
+  <!-- Mercenary -->
+  <h3><span class="h3-icon">&#9670;</span> Mercenary</h3>
+  <div class="merc-card">
+    <div class="merc-title">Act 2 Offensive &mdash; Might Aura</div>
+    <div class="merc-detail"><strong>Weapon:</strong> Infinity (Conviction aura breaks immunes)</div>
+    <div class="merc-detail"><strong>Armor:</strong> Fortitude or Treachery</div>
+    <div class="merc-detail"><strong>Helm:</strong> Andariel's Visage (with Ral rune) or Guillaume's Face</div>
+  </div>
+
+  <!-- Playstyle -->
+  <h3><span class="h3-icon">&#9670;</span> Playstyle</h3>
+  <ol class="play-list">
+    <li>Cast Hex: Purge on champion/unique packs to strip resistances.</li>
+    <li>Blade Warp into density &mdash; positions you and deals AoE damage.</li>
+    <li>Spam Echoing Strike &mdash; projections boomerang through everything.</li>
+    <li>Reposition with Blade Warp as needed. Keep moving forward.</li>
+  </ol>
+
+  <!-- Excels At -->
+  <h3><span class="h3-icon">&#9670;</span> What It Excels At</h3>
+  <div class="excel-grid">
+    <div class="excel-item">Density clearing (pierce + boomerang)</div>
+    <div class="excel-item">Maps and Terror Zones</div>
+    <div class="excel-item">Boss killing with Hex: Purge</div>
+    <div class="excel-item">HC-viable with Stormshield swap</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- BUILD #2: HAMMERDIN                   -->
+<!-- ══════════════════════════════════════ -->
+<div class="build-divider"></div>
+
+<section class="section" id="hammerdin">
+  <h2><span class="s-num">#2</span> Blessed Hammer Paladin</h2>
+
+  <div class="build-header">
+    <span class="build-rank">#2</span>
+    <div class="build-class paladin">Paladin</div>
+    <div class="build-name">Hammerdin</div>
+    <p class="build-overview">The build that has been S-tier in every single patch of Diablo 2 since 2001. Blessed Hammer deals magic damage, which almost nothing in the game is immune to. Pair it with Enigma for Teleport and you have the most consistent, versatile, and safe build in D2R. The new Void runeword is an option if you want even more FCR on your shield, but honestly Spirit is still perfect. Still S-tier. Always will be.</p>
+    <div class="build-tags">
+      <span class="build-tag s-tier">S-Tier</span>
+      <span class="build-tag">Magic Damage</span>
+      <span class="build-tag">No Immunes</span>
+      <span class="build-tag">Teleport</span>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <h3><span class="h3-icon">&#9670;</span> Skills</h3>
+  <table class="skill-table">
+    <thead><tr><th>Skill</th><th>Points</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="skill-name">Blessed Hammer</td><td><span class="skill-badge max">Max</span></td><td>Primary damage. Magic damage spirals outward.</td></tr>
+      <tr><td class="skill-name">Vigor</td><td><span class="skill-badge max">Max</span></td><td>Synergy. Also great for run speed.</td></tr>
+      <tr><td class="skill-name">Blessed Aim</td><td><span class="skill-badge max">Max</span></td><td>Synergy. Passive AR bonus as well.</td></tr>
+      <tr><td class="skill-name">Concentration</td><td><span class="skill-badge max">Max</span></td><td>Your active aura. Massive damage multiplier for hammers.</td></tr>
+      <tr><td class="skill-name">Holy Shield</td><td><span class="skill-badge mid">Remaining</span></td><td>Block chance and defense. Dump remaining points here.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Stats -->
+  <h3><span class="h3-icon">&#9670;</span> Stats</h3>
+  <div class="stat-row">
+    <div class="stat-box"><div class="stat-label">Strength</div><div class="stat-val">~103</div></div>
+    <div class="stat-box"><div class="stat-label">Dexterity</div><div class="stat-val">75% Block</div></div>
+    <div class="stat-box primary"><div class="stat-label">Vitality</div><div class="stat-val">All Rest</div></div>
+    <div class="stat-box"><div class="stat-label">Energy</div><div class="stat-val">Base</div></div>
+  </div>
+  <p style="font-size:0.88rem;color:var(--text-dim)">STR ~103 is enough for Enigma in a Mage Plate. DEX enough for max block (75%) with Holy Shield active.</p>
+
+  <!-- Gear -->
+  <h3><span class="h3-icon">&#9670;</span> Gear</h3>
+  <div class="gear-grid">
+    <div class="gear-card">
+      <div class="gear-slot">Weapon</div>
+      <div class="gear-item runeword">Heart of the Oak (HotO)</div>
+      <div class="gear-notes">+3 skills, 40% FCR, resistances. The Hammerdin weapon.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Shield</div>
+      <div class="gear-item runeword">Spirit (Paladin Shield)</div>
+      <div class="gear-notes">+45 all res base preferred. +2 skills, 35% FCR.</div>
+      <div class="gear-alt">Alt: New Void runeword (40% FCR, +2 skills, 15% magic skill dmg)</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Armor</div>
+      <div class="gear-item runeword">Enigma</div>
+      <div class="gear-notes">Teleport. Non-negotiable. Mage Plate base for low STR req.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Helm</div>
+      <div class="gear-item unique">Harlequin Crest (Shako)</div>
+      <div class="gear-notes">+2 skills, life, mana, DR%, MF. Always good.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Belt</div>
+      <div class="gear-item unique">Arachnid Mesh</div>
+      <div class="gear-notes">+1 skills, 20% FCR. Required for breakpoint.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">FCR Breakpoint</div>
+      <div class="gear-item" style="color:var(--crimson-bright)">125% FCR</div>
+      <div class="gear-notes">HotO (40) + Spirit (35) + Arachnid (20) + rings/gloves.</div>
+    </div>
+  </div>
+
+  <!-- Mercenary -->
+  <h3><span class="h3-icon">&#9670;</span> Mercenary</h3>
+  <div class="merc-card">
+    <div class="merc-title">Act 2 Defensive &mdash; Holy Freeze Aura</div>
+    <div class="merc-detail"><strong>Weapon:</strong> Insight (Meditation aura for infinite mana)</div>
+    <div class="merc-detail"><strong>Armor:</strong> Fortitude or Treachery</div>
+    <div class="merc-detail"><strong>Helm:</strong> Andariel's Visage (Ral'd) or Tal Rasha's Horadric Crest</div>
+  </div>
+
+  <!-- Playstyle -->
+  <h3><span class="h3-icon">&#9670;</span> Playstyle</h3>
+  <ol class="play-list">
+    <li>Teleport into density with Enigma.</li>
+    <li>Activate Concentration aura (should always be on).</li>
+    <li>Spam Blessed Hammer &mdash; hammers spiral outward from you.</li>
+    <li>Reposition slightly to hit stragglers. Hammers have a learning curve with their spiral pattern.</li>
+    <li>Teleport to next pack. Repeat until everything is dead.</li>
+  </ol>
+
+  <!-- Excels At -->
+  <h3><span class="h3-icon">&#9670;</span> What It Excels At</h3>
+  <div class="excel-grid">
+    <div class="excel-item">Almost zero immunes (magic damage)</div>
+    <div class="excel-item">Chaos Sanctuary / Baal runs</div>
+    <div class="excel-item">Uber Tristram capable</div>
+    <div class="excel-item">Consistent across every patch</div>
+    <div class="excel-item">Great MF farmer with Enigma</div>
+    <div class="excel-item">HC-viable (max block + Holy Shield)</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- BUILD #3: BLIZZARD SORCERESS          -->
+<!-- ══════════════════════════════════════ -->
+<div class="build-divider"></div>
+
+<section class="section" id="blizzsorc">
+  <h2><span class="s-num">#3</span> Blizzard Sorceress</h2>
+
+  <div class="build-header">
+    <span class="build-rank">#3</span>
+    <div class="build-class sorceress-cold">Sorceress &mdash; Cold</div>
+    <div class="build-name">Blizzard</div>
+    <p class="build-overview">The best ladder starter in Diablo 2 Resurrected, full stop. Blizzard Sorc requires zero expensive gear to function &mdash; a Spirit sword, a Lore helm, and Stealth armor will carry you through Hell. With endgame gear (Death's Fathom, Nightwing's Veil), the damage becomes absurd. You skip cold immunes rather than fight them, and Ancient Tunnels in Act 2 is your personal loot pinata with zero cold immunes. The build that funds every other build on your account.</p>
+    <div class="build-tags">
+      <span class="build-tag s-tier">S-Tier</span>
+      <span class="build-tag beginner">Best Starter</span>
+      <span class="build-tag">Cold Damage</span>
+      <span class="build-tag">MF Farming</span>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <h3><span class="h3-icon">&#9670;</span> Skills</h3>
+  <table class="skill-table">
+    <thead><tr><th>Skill</th><th>Points</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="skill-name">Blizzard</td><td><span class="skill-badge max">Max</span></td><td>Primary nuke. Massive AoE cold damage.</td></tr>
+      <tr><td class="skill-name">Glacial Spike</td><td><span class="skill-badge max">Max</span></td><td>Synergy + crowd control. Freezes on hit.</td></tr>
+      <tr><td class="skill-name">Ice Blast</td><td><span class="skill-badge max">Max</span></td><td>Synergy. Single-target filler between Blizzard cooldowns.</td></tr>
+      <tr><td class="skill-name">Ice Bolt</td><td><span class="skill-badge max">Max</span></td><td>Synergy. Pure point dump for damage scaling.</td></tr>
+      <tr><td class="skill-name">Cold Mastery</td><td><span class="skill-badge mid">Lvl 17</span></td><td>-enemy cold resistance. Level 17 is the sweet spot before diminishing returns.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Stats -->
+  <h3><span class="h3-icon">&#9670;</span> Stats</h3>
+  <div class="stat-row">
+    <div class="stat-box"><div class="stat-label">Strength</div><div class="stat-val">Gear Req</div></div>
+    <div class="stat-box"><div class="stat-label">Dexterity</div><div class="stat-val">Base</div></div>
+    <div class="stat-box primary"><div class="stat-label">Vitality</div><div class="stat-val">All Rest</div></div>
+    <div class="stat-box"><div class="stat-label">Energy</div><div class="stat-val">Base</div></div>
+  </div>
+
+  <!-- Gear -->
+  <h3><span class="h3-icon">&#9670;</span> Gear</h3>
+  <div class="gear-grid">
+    <div class="gear-card">
+      <div class="gear-slot">Weapon (BiS)</div>
+      <div class="gear-item unique">Death's Fathom + Cold Facet</div>
+      <div class="gear-notes">Up to 30% cold skill damage. Socket with 5/5 cold facet.</div>
+      <div class="gear-alt">Budget: Spirit Sword (dirt cheap, 35% FCR)</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Helm</div>
+      <div class="gear-item unique">Nightwing's Veil</div>
+      <div class="gear-notes">+cold skill damage, +DEX, +absorb. Perfect for cold builds.</div>
+      <div class="gear-alt">Budget: Lore runeword (Ort+Sol)</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Armor</div>
+      <div class="gear-item unique">Ormus' Robes</div>
+      <div class="gear-notes">Ideally +3 Blizzard roll. +15% cold skill damage.</div>
+      <div class="gear-alt">Budget: Stealth or Vipermagi</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Shield</div>
+      <div class="gear-item runeword">Spirit (Monarch)</div>
+      <div class="gear-notes">+2 skills, 35% FCR, mana, FHR. Always Spirit.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Belt</div>
+      <div class="gear-item unique">Arachnid Mesh</div>
+      <div class="gear-notes">+1 skills, 20% FCR.</div>
+      <div class="gear-alt">Budget: Goldwrap or Tal Rasha's belt</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">FCR Breakpoint</div>
+      <div class="gear-item" style="color:var(--crimson-bright)">105% FCR</div>
+      <div class="gear-notes">Sorc's 105% breakpoint. Spirit (35) + Arachnid (20) + rings/ammy.</div>
+    </div>
+  </div>
+
+  <!-- Mercenary -->
+  <h3><span class="h3-icon">&#9670;</span> Mercenary</h3>
+  <div class="merc-card">
+    <div class="merc-title">Act 2 &mdash; Holy Freeze or Might Aura</div>
+    <div class="merc-detail"><strong>Weapon:</strong> Insight (mana sustain) or Infinity (if clearing cold immunes)</div>
+    <div class="merc-detail"><strong>Armor:</strong> Fortitude or Treachery</div>
+    <div class="merc-detail"><strong>Helm:</strong> Andariel's Visage or Guillaume's Face</div>
+  </div>
+
+  <!-- Playstyle -->
+  <h3><span class="h3-icon">&#9670;</span> Playstyle</h3>
+  <ol class="play-list">
+    <li>Teleport to packs (Sorc has native Teleport, no Enigma needed).</li>
+    <li>Cast Blizzard on top of density. Blizzard has a cooldown &mdash; one cast, then move.</li>
+    <li>Fill with Glacial Spike or Ice Blast while Blizzard is on cooldown.</li>
+    <li>Skip cold immune packs entirely &mdash; let your merc handle stragglers.</li>
+    <li>Ancient Tunnels: zero cold immunes, farm it endlessly for wealth.</li>
+  </ol>
+
+  <!-- Excels At -->
+  <h3><span class="h3-icon">&#9670;</span> What It Excels At</h3>
+  <div class="excel-grid">
+    <div class="excel-item">Ladder starter (needs zero gear)</div>
+    <div class="excel-item">Ancient Tunnels farming</div>
+    <div class="excel-item">Mephisto runs</div>
+    <div class="excel-item">Magic Find farming</div>
+    <div class="excel-item">Solo self-found viable</div>
+    <div class="excel-item">Budget friendly at every stage</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- BUILD #4: LIGHTNING SORCERESS          -->
+<!-- ══════════════════════════════════════ -->
+<div class="build-divider"></div>
+
+<section class="section" id="lightsorc">
+  <h2><span class="s-num">#4</span> Lightning Sorceress</h2>
+
+  <div class="build-header">
+    <span class="build-rank">#4</span>
+    <div class="build-class sorceress-light">Sorceress &mdash; Lightning</div>
+    <div class="build-name">Lightning</div>
+    <p class="build-overview">The highest damage ceiling of any Sorceress build, and arguably the fastest clear speed in the game with endgame gear. The catch: it absolutely requires Infinity on your mercenary to break lightning immunities via Conviction aura. Without it, half the game is unkillable. With it, nothing survives. Lightning damage has a 1-to-max range, so your damage numbers will spike wildly &mdash; but the ceiling is staggeringly high. This is the build you graduate to once your Blizzard Sorc has farmed enough wealth.</p>
+    <div class="build-tags">
+      <span class="build-tag s-tier">S-Tier (with gear)</span>
+      <span class="build-tag">Lightning Damage</span>
+      <span class="build-tag">Highest Ceiling</span>
+      <span class="build-tag">Expensive</span>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <h3><span class="h3-icon">&#9670;</span> Skills</h3>
+  <table class="skill-table">
+    <thead><tr><th>Skill</th><th>Points</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="skill-name">Lightning</td><td><span class="skill-badge max">Max</span></td><td>Primary nuke. Massive single-bolt damage.</td></tr>
+      <tr><td class="skill-name">Chain Lightning</td><td><span class="skill-badge max">Max</span></td><td>AoE clearing. Chains between enemies.</td></tr>
+      <tr><td class="skill-name">Charged Bolt</td><td><span class="skill-badge max">Max</span></td><td>Synergy. Close-range shotgun potential.</td></tr>
+      <tr><td class="skill-name">Lightning Mastery</td><td><span class="skill-badge max">Max</span></td><td>Flat % lightning damage increase.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Stats -->
+  <h3><span class="h3-icon">&#9670;</span> Stats</h3>
+  <div class="stat-row">
+    <div class="stat-box"><div class="stat-label">Strength</div><div class="stat-val">Gear Req</div></div>
+    <div class="stat-box"><div class="stat-label">Dexterity</div><div class="stat-val">Base</div></div>
+    <div class="stat-box primary"><div class="stat-label">Vitality</div><div class="stat-val">All Rest</div></div>
+    <div class="stat-box"><div class="stat-label">Energy</div><div class="stat-val">Base</div></div>
+  </div>
+
+  <!-- Gear -->
+  <h3><span class="h3-icon">&#9670;</span> Gear</h3>
+  <div class="gear-grid">
+    <div class="gear-card">
+      <div class="gear-slot">Weapon (Option A)</div>
+      <div class="gear-item runeword">Crescent Moon</div>
+      <div class="gear-notes">-35% enemy lightning resistance. Budget-friendly and extremely effective.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Weapon (Option B)</div>
+      <div class="gear-item unique">Eschuta's Temper</div>
+      <div class="gear-notes">+3 Sorc skills, +20% lightning damage. Pairs with Griffon's Eye.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Helm (BiS)</div>
+      <div class="gear-item unique">Griffon's Eye</div>
+      <div class="gear-notes">+25% lightning damage, -25% enemy light res. The endgame helm.</div>
+      <div class="gear-alt">Alt: Shako for +skills/survivability</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Shield</div>
+      <div class="gear-item runeword">Spirit (Monarch)</div>
+      <div class="gear-notes">+2 skills, 35% FCR. Standard caster shield.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Armor</div>
+      <div class="gear-item runeword">Enigma / Vipermagi</div>
+      <div class="gear-notes">Enigma for Teleport if not using Sorc teleport. Vipermagi for res/FCR.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">FCR Breakpoint</div>
+      <div class="gear-item" style="color:var(--crimson-bright)">117% FCR</div>
+      <div class="gear-notes">Sorc's lightning breakpoint. Harder to hit than 105% &mdash; plan your gear carefully.</div>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <div class="callout-label">Requirement</div>
+    <p><strong>Infinity on merc is mandatory.</strong> Without Conviction aura breaking lightning immunities, this build cannot function in half the game's areas. Do not attempt this build without Infinity.</p>
+  </div>
+
+  <!-- Mercenary -->
+  <h3><span class="h3-icon">&#9670;</span> Mercenary</h3>
+  <div class="merc-card">
+    <div class="merc-title">Act 2 &mdash; Holy Freeze or Might Aura</div>
+    <div class="merc-detail"><strong>Weapon:</strong> Infinity (Conviction aura &mdash; REQUIRED, breaks light immunes)</div>
+    <div class="merc-detail"><strong>Armor:</strong> Fortitude (keeps merc alive to maintain Conviction)</div>
+    <div class="merc-detail"><strong>Helm:</strong> Andariel's Visage (Ral'd for fire res)</div>
+  </div>
+
+  <!-- Playstyle -->
+  <h3><span class="h3-icon">&#9670;</span> Playstyle</h3>
+  <ol class="play-list">
+    <li>Teleport into packs &mdash; position merc's Conviction aura on enemies.</li>
+    <li>Cast Lightning on single targets / bosses for massive damage.</li>
+    <li>Use Chain Lightning for AoE clearing against groups.</li>
+    <li>Charged Bolt for close-range "shotgunning" against large hitbox targets.</li>
+    <li>Static Field to 50% HP on bosses, then finish with Lightning.</li>
+  </ol>
+
+  <!-- Excels At -->
+  <h3><span class="h3-icon">&#9670;</span> What It Excels At</h3>
+  <div class="excel-grid">
+    <div class="excel-item">Highest damage ceiling (any Sorc)</div>
+    <div class="excel-item">Fastest clear speed with GG gear</div>
+    <div class="excel-item">Cow Level farming</div>
+    <div class="excel-item">Chaos Sanctuary / Baal runs</div>
+    <div class="excel-item">Terror Zone clearing</div>
+    <div class="excel-item">End-of-ladder flex build</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- BUILD #5: TRAPSIN                     -->
+<!-- ══════════════════════════════════════ -->
+<div class="build-divider"></div>
+
+<section class="section" id="trapsin">
+  <h2><span class="s-num">#5</span> Lightning Sentry Assassin</h2>
+
+  <div class="build-header">
+    <span class="build-rank">#5</span>
+    <div class="build-class assassin">Assassin</div>
+    <div class="build-name">Trapsin</div>
+    <p class="build-overview">The most laid-back build in Diablo 2. Drop your traps, walk away, collect loot. Lightning Sentry fires bolts autonomously, Death Sentry's Corpse Explosion chains through packs once the first enemy dies, and Fire Blast gives you a third damage type for stubborn immunes. Patch 2.6 buffed traps with -enemy resistance scaling, pushing this build firmly back into the meta. Three damage types (lightning, fire, physical via Corpse Explosion) means you can clear almost anything without a skip.</p>
+    <div class="build-tags">
+      <span class="build-tag s-tier">A-Tier</span>
+      <span class="build-tag beginner">Relaxed Playstyle</span>
+      <span class="build-tag">3 Damage Types</span>
+      <span class="build-tag">Trap Scaling</span>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <h3><span class="h3-icon">&#9670;</span> Skills</h3>
+  <table class="skill-table">
+    <thead><tr><th>Skill</th><th>Points</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="skill-name">Lightning Sentry</td><td><span class="skill-badge max">Max</span></td><td>Primary damage. Auto-fires lightning bolts.</td></tr>
+      <tr><td class="skill-name">Death Sentry</td><td><span class="skill-badge max">Max</span></td><td>Corpse Explosion chains + lightning bolts. The force multiplier.</td></tr>
+      <tr><td class="skill-name">Charged Bolt Sentry</td><td><span class="skill-badge max">Max</span></td><td>Synergy for Lightning Sentry.</td></tr>
+      <tr><td class="skill-name">Shock Web</td><td><span class="skill-badge max">Max</span></td><td>Synergy for Lightning Sentry.</td></tr>
+      <tr><td class="skill-name">Fire Blast</td><td><span class="skill-badge mid">Remaining</span></td><td>Fire damage filler. Handles lightning immunes.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Stats -->
+  <h3><span class="h3-icon">&#9670;</span> Stats</h3>
+  <div class="stat-row">
+    <div class="stat-box"><div class="stat-label">Strength</div><div class="stat-val">Gear Req</div></div>
+    <div class="stat-box"><div class="stat-label">Dexterity</div><div class="stat-val">Base</div></div>
+    <div class="stat-box primary"><div class="stat-label">Vitality</div><div class="stat-val">All Rest</div></div>
+    <div class="stat-box"><div class="stat-label">Energy</div><div class="stat-val">Base</div></div>
+  </div>
+
+  <!-- Gear -->
+  <h3><span class="h3-icon">&#9670;</span> Gear</h3>
+  <div class="gear-grid">
+    <div class="gear-card">
+      <div class="gear-slot">Weapon</div>
+      <div class="gear-item runeword">Heart of the Oak (HotO)</div>
+      <div class="gear-notes">+3 skills, 40% FCR, all res. Standard caster weapon.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Shield</div>
+      <div class="gear-item runeword">Spirit (Monarch)</div>
+      <div class="gear-notes">+2 skills, 35% FCR. Trap laying speed scales with FCR.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Armor</div>
+      <div class="gear-item runeword">Enigma</div>
+      <div class="gear-notes">Teleport. Assassin has no native Teleport &mdash; Enigma is essential for repositioning.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Helm</div>
+      <div class="gear-item unique">Harlequin Crest (Shako)</div>
+      <div class="gear-notes">+2 skills, life, mana, DR%, MF.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Belt</div>
+      <div class="gear-item unique">Arachnid Mesh</div>
+      <div class="gear-notes">+1 skills, 20% FCR. Helps with trap lay speed.</div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-slot">Claws (Alt)</div>
+      <div class="gear-item" style="color:var(--text-dim)">+3 Traps / +3 LS Claws</div>
+      <div class="gear-notes">Dual claw setup for max +skills if you don't need Enigma teleport.</div>
+    </div>
+  </div>
+
+  <!-- Mercenary -->
+  <h3><span class="h3-icon">&#9670;</span> Mercenary</h3>
+  <div class="merc-card">
+    <div class="merc-title">Act 2 Defensive &mdash; Holy Freeze Aura</div>
+    <div class="merc-detail"><strong>Weapon:</strong> Infinity (Conviction breaks lightning immunes for your traps)</div>
+    <div class="merc-detail"><strong>Armor:</strong> Fortitude or Treachery</div>
+    <div class="merc-detail"><strong>Helm:</strong> Andariel's Visage (Ral'd) or Guillaume's Face</div>
+  </div>
+
+  <!-- Playstyle -->
+  <h3><span class="h3-icon">&#9670;</span> Playstyle</h3>
+  <ol class="play-list">
+    <li>Teleport into a pack with Enigma.</li>
+    <li>Drop 3-5 Lightning Sentries in the center of the pack.</li>
+    <li>Place 1-2 Death Sentries &mdash; once the first corpse drops, CE chains everything.</li>
+    <li>Move to the next pack. Your traps keep firing behind you.</li>
+    <li>Use Fire Blast on lightning immunes while traps handle the rest.</li>
+  </ol>
+
+  <!-- Excels At -->
+  <h3><span class="h3-icon">&#9670;</span> What It Excels At</h3>
+  <div class="excel-grid">
+    <div class="excel-item">Automated playstyle (drop and go)</div>
+    <div class="excel-item">3 damage types = few skips</div>
+    <div class="excel-item">Chaos Sanctuary</div>
+    <div class="excel-item">Key farming (Countess, Summoner, Nihlathak)</div>
+    <div class="excel-item">HC-viable (distance from danger)</div>
+    <div class="excel-item">Corpse Explosion chains in density</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- NEW RUNEWORDS TABLE                   -->
+<!-- ══════════════════════════════════════ -->
+<div class="build-divider"></div>
+
+<section class="section" id="runewords">
+  <h2>New Runewords &mdash; Season 13</h2>
+  <p>Four new runewords introduced with Reign of the Warlock. Void and Coven are the standouts for casters; Ritual is a melee option; Authority is a Warlock leveling tool.</p>
+
+  <table class="rw-table">
+    <thead>
+      <tr>
+        <th>Runeword</th>
+        <th>Runes / Base</th>
+        <th>Key Stats</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="rw-name">Void</span><span class="rw-new">New</span></td>
+        <td class="rw-runes">Shield</td>
+        <td class="rw-stats">40% FCR, +2 to All Skills, 15% Magic Skill Damage. Spirit replacement for Hammerdin / Warlock. The magic skill damage bonus makes it a potential upgrade for pure magic builds.</td>
+      </tr>
+      <tr>
+        <td><span class="rw-name">Authority</span><span class="rw-new">New</span></td>
+        <td class="rw-runes">Hel + Shael + Ral<br>Warlock Weapon</td>
+        <td class="rw-stats">Warlock-only leveling runeword. Cheap runes, strong early damage. The Warlock's Stealth equivalent &mdash; makes the 1-to-70 grind smooth.</td>
+      </tr>
+      <tr>
+        <td><span class="rw-name">Ritual</span><span class="rw-new">New</span></td>
+        <td class="rw-runes">Melee Weapon</td>
+        <td class="rw-stats">40% IAS, 260% Enhanced Attack Rating, 250% Enhanced Damage to Demons. Melee build option for demon-heavy content (Chaos Sanctuary, Pandemonium).</td>
+      </tr>
+      <tr>
+        <td><span class="rw-name">Coven</span><span class="rw-new">New</span></td>
+        <td class="rw-runes">Ist + Ral + Io<br>Helm</td>
+        <td class="rw-stats">+1 to All Skills, caster helm. Affordable +skills option before you find Shako. Ist is the most expensive rune &mdash; still far cheaper than Griffon's or Nightwing's.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <div class="callout-label">Tip</div>
+    <p><strong>Void</strong> is the most impactful new runeword. If you're running Hammerdin or Echoing Strike Warlock, test it against Spirit &mdash; the 15% magic skill damage may outperform Spirit's +mana and FHR depending on your other gear.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <span>&copy; 2026 Z3nGineer &mdash; Diablo 2 Resurrected Season 13 Builds Guide</span>
+</footer>
+
+</div><!-- /page-wrap -->
+
+<script>
+// Hamburger nav toggle
+const toggle = document.getElementById('navToggle');
+const links = document.getElementById('navLinks');
+toggle.addEventListener('click', () => {
+  toggle.classList.toggle('open');
+  links.classList.toggle('open');
+});
+
+// Close mobile nav on link click
+links.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    toggle.classList.remove('open');
+    links.classList.remove('open');
+  });
+});
+
+// Scroll reveal
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+sections.forEach(s => observer.observe(s));
+
+// Active nav link on scroll
+const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+const buildSections = document.querySelectorAll('section[id]');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  buildSections.forEach(s => {
+    const top = s.offsetTop - 100;
+    if (window.scrollY >= top) current = s.getAttribute('id');
+  });
+  navAnchors.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+}, { passive: true });
+</script>
+
+</body>
+</html>
