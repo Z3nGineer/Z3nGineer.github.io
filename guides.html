@@ -357,7 +357,7 @@ function renderLanding() {
 }
 
 // ====== SHOW GAME GUIDES ======
-function showGame(id) {
+function showGame(id, skipPush) {
   const game = games.find(g => g.id === id);
   if (!game) return;
 
@@ -403,7 +403,7 @@ function showGame(id) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, 200);
 
-  history.pushState({ game: id }, '', `?game=${id}`);
+  if (!skipPush) history.pushState({ game: id }, '', `?game=${id}`);
 }
 
 // ====== BACK TO LANDING ======
@@ -426,7 +426,7 @@ function showLanding() {
 // ====== HANDLE BACK BUTTON ======
 window.addEventListener('popstate', (e) => {
   if (e.state && e.state.game) {
-    showGame(e.state.game);
+    showGame(e.state.game, true);
   } else {
     const landing = document.getElementById('landing');
     const view = document.getElementById('guides-view');
@@ -442,6 +442,7 @@ if(gBtn&&gNav){gBtn.addEventListener('click',()=>{gBtn.classList.toggle('open');
 
 // ====== INIT ======
 renderLanding();
+history.replaceState({}, '', window.location.href);
 const params = new URLSearchParams(window.location.search);
 if (params.get('game')) {
   const landing = document.getElementById('landing');
@@ -449,7 +450,7 @@ if (params.get('game')) {
   const view = document.getElementById('guides-view');
   const game = games.find(g => g.id === params.get('game'));
   if (game) {
-    showGame(game.id);
+    showGame(game.id, true);
     view.style.display = 'block';
   } else {
     landing.style.display = 'block';
