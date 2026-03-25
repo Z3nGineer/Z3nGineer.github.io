@@ -321,7 +321,7 @@ footer a{color:var(--purple-bright);text-decoration:none}
       <div class="feat reveal" data-c="pink">
         <span class="feat-icon">&#x1F3A4;</span>
         <h3>Vocal Production</h3>
-        <p>10-stage LA studio vocal chain. RVC voice conversion with a custom-trained model (6000 steps). Per-layer pitch detection via pyin — lead, harmonies, and ad-libs all converted independently.</p>
+        <p>10-stage LA studio vocal chain. Per-layer pitch detection via pyin — lead, harmonies, and ad-libs all processed independently through the full production pipeline.</p>
       </div>
       <div class="feat reveal r1" data-c="green">
         <span class="feat-icon">&#x1F3B6;</span>
@@ -395,21 +395,13 @@ footer a{color:var(--purple-bright);text-decoration:none}
         <div class="pipe-accent"></div>
         <div class="pipe-num">05</div>
         <div class="pipe-body">
-          <h4>Voice Conversion</h4>
-          <p>Each vocal layer converted independently through RVC with a custom-trained voice model. Auto pitch-shift detection per layer via pyin. B3/241Hz median target.</p>
-        </div>
-      </div>
-      <div class="pipe reveal r2">
-        <div class="pipe-accent"></div>
-        <div class="pipe-num">06</div>
-        <div class="pipe-body">
           <h4>Vocal Production</h4>
           <p>10-stage chain: noise gate, de-ess, compression, EQ, saturation, stereo width, delay, reverb, limiter, final gain staging. All via pedalboard.</p>
         </div>
       </div>
       <div class="pipe reveal">
         <div class="pipe-accent"></div>
-        <div class="pipe-num">07</div>
+        <div class="pipe-num">06</div>
         <div class="pipe-body">
           <h4>Mix & Master</h4>
           <p>Genre preset selects per-stem frequency pockets. Mix bus processing, then master chain targeting genre-specific LUFS. Output: radio-ready WAV.</p>
@@ -417,7 +409,7 @@ footer a{color:var(--purple-bright);text-decoration:none}
       </div>
       <div class="pipe reveal r1">
         <div class="pipe-accent"></div>
-        <div class="pipe-num">08</div>
+        <div class="pipe-num">07</div>
         <div class="pipe-body">
           <h4>Visual Production</h4>
           <p>Image gen for artwork, video pipeline for music videos. LLM-directed shot lists, beat-synced cuts, 54 color grades. LTX-Video for I2V animation.</p>
@@ -444,7 +436,7 @@ footer a{color:var(--purple-bright);text-decoration:none}
       </div>
       <div class="arch reveal r2">
         <h3>ML Environment</h3>
-        <p>Separate ml-venv (Python 3.12) with PyTorch nightly cu128 for the RTX 5070 Ti. Demucs, RVC, MusicGen, Stable Audio, audio-separator all isolated here.</p>
+        <p>Separate ml-venv (Python 3.12) with PyTorch nightly cu128 for the RTX 5070 Ti. Demucs, MusicGen, Stable Audio, audio-separator all isolated here.</p>
       </div>
       <div class="arch reveal r3">
         <h3>Docker Sidecar</h3>
@@ -475,7 +467,7 @@ footer a{color:var(--purple-bright);text-decoration:none}
       <div class="stack-item"><span class="stack-label">ML</span><span class="stack-value">PyTorch nightly (CUDA 12.8)</span></div>
       <div class="stack-item"><span class="stack-label">GPU</span><span class="stack-value">RTX 5070 Ti (16GB VRAM)</span></div>
       <div class="stack-item"><span class="stack-label">Audio</span><span class="stack-value">pedalboard, librosa, Demucs, UVR5</span></div>
-      <div class="stack-item"><span class="stack-label">Voice</span><span class="stack-value">RVC (custom 6000-step model)</span></div>
+      <div class="stack-item"><span class="stack-label">Audio FX</span><span class="stack-value">pedalboard (10-stage vocal chain)</span></div>
       <div class="stack-item"><span class="stack-label">Image</span><span class="stack-value">FLUX.1-dev, SDXL, nunchaku</span></div>
       <div class="stack-item"><span class="stack-label">Video</span><span class="stack-value">FFmpeg, LTX-Video, moviepy</span></div>
       <div class="stack-item"><span class="stack-label">Knowledge</span><span class="stack-value">ChromaDB (474 documents)</span></div>
@@ -486,7 +478,7 @@ footer a{color:var(--purple-bright);text-decoration:none}
     <div class="tags reveal">
       <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">pywebview</span>
       <span class="tag">PyTorch</span><span class="tag">CUDA 12.8</span><span class="tag">Docker</span>
-      <span class="tag">ChromaDB</span><span class="tag">Demucs</span><span class="tag">RVC</span>
+      <span class="tag">ChromaDB</span><span class="tag">Demucs</span>
       <span class="tag">FFmpeg</span><span class="tag">FLUX</span><span class="tag">SSE</span>
       <span class="tag">pedalboard</span><span class="tag">librosa</span><span class="tag">UVR5</span>
       <span class="tag">MusicGen</span><span class="tag">LTX-Video</span><span class="tag">Playwright</span>
