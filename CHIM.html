@@ -453,16 +453,121 @@ html{scroll-behavior:smooth}
     <p class="section-label reveal">Installation</p>
     <h2 class="section-title reveal r1">Get Started</h2>
     <div class="divider reveal r2"></div>
+
+    <!-- Download Buttons -->
     <div class="install reveal r3">
       <h3>Download the Installer</h3>
-      <p>Self-contained. No dependencies. Auto-detects your game, verifies every mod before installing.</p>
-      <p style="color:var(--text-dim);font-size:0.85rem;margin-top:0.5rem;position:relative">Two profiles: <strong style="color:var(--gold)">CHIM</strong> for PC (max quality) and <strong style="color:#5c9fd6">CHIM Deck</strong> for Steam Deck (max optimization).</p>
+      <p>One file. No dependencies. Works on Windows, Linux, and Steam Deck.</p>
       <div class="install-platforms" style="margin-top:1.5rem">
         <a href="https://github.com/Z3nGineer/chim-installer/releases/latest/download/CHIM_Installer.exe" style="font-size:0.85rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);padding:0.7rem 2rem;border:1px solid var(--gold-dim);border-radius:20px;text-decoration:none;transition:all 0.2s;position:relative">&#11015; Windows</a>
         <a href="https://github.com/Z3nGineer/chim-installer/releases/latest/download/CHIM_Installer_Linux.tar.gz" style="font-size:0.85rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);padding:0.7rem 2rem;border:1px solid var(--gold-dim);border-radius:20px;text-decoration:none;transition:all 0.2s;position:relative">&#11015; Linux / Steam Deck</a>
       </div>
-      <p style="color:var(--text-muted);font-size:0.7rem;margin-top:1.2rem;position:relative">Windows: double-click the .exe &nbsp;|&nbsp; Linux/Deck: extract the .tar.gz, double-click CHIM_Installer</p>
+      <p style="color:var(--text-muted);font-size:0.7rem;margin-top:1rem;position:relative">Windows: double-click the .exe &nbsp;|&nbsp; Linux/Deck: extract the .tar.gz, double-click CHIM_Installer</p>
     </div>
+
+    <!-- What the Installer Does -->
+    <div style="margin-top:3rem">
+      <p class="section-label reveal">How It Works</p>
+      <h2 class="section-title reveal r1">The CHIM Installer</h2>
+      <p class="section-desc reveal r2">A custom-built tool that handles everything. You download the mods, it does the rest.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem" class="reveal r3">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem">
+        <div style="font-family:'Cinzel',serif;font-weight:700;color:var(--gold);font-size:1rem;margin-bottom:0.6rem">1. Choose Your Profile</div>
+        <p style="color:var(--text-dim);font-size:0.9rem;line-height:1.7">The installer detects your hardware and offers two profiles. <strong style="color:var(--gold)">CHIM</strong> for PC — the full 59-mod experience with max quality visuals. <strong style="color:#5c9fd6">CHIM Deck</strong> for Steam Deck — strips heavy visual mods, adds 7 optimization mods, and deploys custom configs that make the game actually playable.</p>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem">
+        <div style="font-family:'Cinzel',serif;font-weight:700;color:var(--gold);font-size:1rem;margin-bottom:0.6rem">2. Download the Mods</div>
+        <p style="color:var(--text-dim);font-size:0.9rem;line-height:1.7">The installer walks you through each mod one at a time. Click the button, it opens the Nexus page, you hit "Slow Download" (free, no premium needed). The installer watches your Downloads folder and checks off each mod as it arrives. No guesswork.</p>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem">
+        <div style="font-family:'Cinzel',serif;font-weight:700;color:var(--gold);font-size:1rem;margin-bottom:0.6rem">3. Automatic Verification</div>
+        <p style="color:var(--text-dim);font-size:0.9rem;line-height:1.7">Before touching your game files, the installer runs a full verification pass. It checks every archive for corruption, validates file types, scans for conflicts between mods, verifies disk space, and confirms your game directory structure. Nothing gets installed until every check passes.</p>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem">
+        <div style="font-family:'Cinzel',serif;font-weight:700;color:var(--gold);font-size:1rem;margin-bottom:0.6rem">4. One-Click Install</div>
+        <p style="color:var(--text-dim);font-size:0.9rem;line-height:1.7">Every mod gets extracted and placed in the exact right directory. ESPs go to Data, PAKs go to the mods folder, OBSE plugins go to their folder, UE4SS mods get enabled. On Steam Deck, a custom Engine.ini with 50+ tuned variables gets deployed automatically. Your game is ready to launch.</p>
+      </div>
+    </div>
+
+    <!-- Two Profiles Explained -->
+    <div style="margin-top:3rem">
+      <p class="section-label reveal">Two Profiles</p>
+      <h2 class="section-title reveal r1">Built Different</h2>
+      <p class="section-desc reveal r2">Same great gameplay. Different approach to visuals.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem" class="reveal r3">
+      <div style="background:var(--surface);border:1px solid var(--gold-dim);border-radius:12px;padding:2rem">
+        <div style="font-family:'Cinzel',serif;font-weight:700;color:var(--gold);font-size:1.3rem;letter-spacing:0.1em;margin-bottom:0.3rem">CHIM</div>
+        <div style="color:var(--text-dim);font-size:0.8rem;margin-bottom:1rem">For PC — Max Quality</div>
+        <div style="color:var(--text-dim);font-size:0.9rem;line-height:1.8">
+          <strong style="color:var(--text)">59 mods.</strong> The full experience. Overhauled combat, smarter AI, better magic, new animations, visual upgrades across the board — darker nights, better lighting, higher-res textures, lush foliage, NPC overhaul, 8K world map. Every quality-of-life fix and new content mod included. If your PC can handle it, this is how Oblivion Remastered was meant to be played.
+        </div>
+      </div>
+      <div style="background:var(--surface);border:1px solid #3a6a9a;border-radius:12px;padding:2rem">
+        <div style="font-family:'Cinzel',serif;font-weight:700;color:#5c9fd6;font-size:1.3rem;letter-spacing:0.1em;margin-bottom:0.3rem">CHIM Deck</div>
+        <div style="color:var(--text-dim);font-size:0.8rem;margin-bottom:1rem">For Steam Deck — Max Optimization</div>
+        <div style="color:var(--text-dim);font-size:0.9rem;line-height:1.8">
+          <strong style="color:var(--text)">55 mods.</strong> Oblivion Remastered runs at 20-25 FPS on Steam Deck out of the box. CHIM Deck fixes that. We strip 11 visual mods that tank performance at 800p, add 7 optimization mods that fix VRAM crashes and disable forced ray tracing, and deploy a custom Engine.ini with 50+ tuned variables. Shadows, fog, grass density, nanite polygons, shader caching, loading screen crash fix — all handled. The result: a stable 30 FPS experience that Valve should have shipped. Every gameplay mod stays — combat, magic, AI, animations, QoL, new content. You lose nothing that matters.
+        </div>
+      </div>
+    </div>
+
+    <!-- Steam Deck Details -->
+    <div style="margin-top:3rem">
+      <p class="section-label reveal">Steam Deck</p>
+      <h2 class="section-title reveal r1">What CHIM Deck Actually Does</h2>
+      <p class="section-desc reveal r2">The game was barely playable. We fixed it.</p>
+    </div>
+
+    <div class="reveal r3" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:2rem;margin-bottom:2rem">
+      <div style="font-family:'Cinzel',serif;font-weight:700;color:#5c9fd6;font-size:1rem;margin-bottom:1rem">The Problem</div>
+      <p style="color:var(--text-dim);font-size:0.95rem;line-height:1.7;margin-bottom:1rem">Oblivion Remastered on Steam Deck runs at 20-25 FPS on Low settings with constant stuttering, VRAM overflow crashes, and a loading screen bug that freezes the Deck ~90% of the time when entering outdoor areas. Valve marked it "Verified" anyway. It's not playable out of the box.</p>
+
+      <div style="font-family:'Cinzel',serif;font-weight:700;color:#5c9fd6;font-size:1rem;margin-bottom:1rem;margin-top:1.5rem">What CHIM Deck Does About It</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+        <div style="color:var(--text-dim);font-size:0.85rem;line-height:1.7">
+          <strong style="color:var(--text)">Disables forced ray tracing</strong> — Lumen RT is the single biggest performance killer. The Deck can't do RT. CHIM Deck removes it entirely. 15-20 FPS gained.
+        </div>
+        <div style="color:var(--text-dim);font-size:0.85rem;line-height:1.7">
+          <strong style="color:var(--text)">Fixes VRAM crashes</strong> — The game tries to load unlimited textures into the Deck's shared 4GB GPU memory. CHIM Deck caps the streaming pool and fixes the memory leak.
+        </div>
+        <div style="color:var(--text-dim);font-size:0.85rem;line-height:1.7">
+          <strong style="color:var(--text)">Fixes loading screen crashes</strong> — The game spikes to 250 FPS during loads then crashes. CHIM Deck caps FPS at 30 even during load screens so the transition doesn't kill the GPU.
+        </div>
+        <div style="color:var(--text-dim);font-size:0.85rem;line-height:1.7">
+          <strong style="color:var(--text)">Reduces shadow cost by 80%</strong> — Shadow cascades dropped from 10 to 2, resolution from 8192 to 1024. You won't notice at 800p. Your framerate will.
+        </div>
+        <div style="color:var(--text-dim);font-size:0.85rem;line-height:1.7">
+          <strong style="color:var(--text)">Cuts grass/foliage density</strong> — Reduced to 40%. Still looks green and alive at 800p, but renders 60% less geometry. The open world is where the Deck struggles most.
+        </div>
+        <div style="color:var(--text-dim);font-size:0.85rem;line-height:1.7">
+          <strong style="color:var(--text)">Eliminates stutter</strong> — Shader pre-compilation, pipeline caching, and PSO disk caching prevent the compilation stutter that makes the game feel broken when you walk into a new area.
+        </div>
+        <div style="color:var(--text-dim);font-size:0.85rem;line-height:1.7">
+          <strong style="color:var(--text)">Disables fog and cloth physics</strong> — Volumetric fog and cloth simulation are pure GPU waste at 800p. Disabled. Frames reclaimed.
+        </div>
+        <div style="color:var(--text-dim);font-size:0.85rem;line-height:1.7">
+          <strong style="color:var(--text)">Custom GameUserSettings.ini</strong> — Every in-game setting optimized for 1280x800 with XeSS Performance upscaling. No guesswork about what to set where.
+        </div>
+      </div>
+
+      <div style="font-family:'Cinzel',serif;font-weight:700;color:#5c9fd6;font-size:1rem;margin-bottom:0.8rem;margin-top:1.5rem">After Install — Quick Access Menu Settings</div>
+      <p style="color:var(--text-dim);font-size:0.85rem;line-height:1.7;margin-bottom:0.5rem">Press the <strong style="color:var(--text)">...</strong> button on your Deck and set these for Oblivion Remastered:</p>
+      <div style="color:var(--text-dim);font-size:0.85rem;line-height:2">
+        Framerate Limit: <strong style="color:var(--text)">30 FPS</strong> &nbsp;|&nbsp;
+        Refresh Rate: <strong style="color:var(--text)">40 Hz</strong> &nbsp;|&nbsp;
+        Allow Tearing: <strong style="color:var(--text)">Off</strong> &nbsp;|&nbsp;
+        TDP Limit: <strong style="color:var(--text)">12-15W</strong> &nbsp;|&nbsp;
+        GPU Clock: <strong style="color:var(--text)">1200 MHz</strong>
+      </div>
+      <p style="color:var(--text-dim);font-size:0.85rem;line-height:1.7;margin-top:0.8rem">
+        Use <strong style="color:var(--text)">Proton Experimental</strong> or <strong style="color:var(--text)">GE-Proton 10-1+</strong>. Game must be on the <strong style="color:var(--text)">internal SSD</strong>, not the SD card.
+      </p>
+    </div>
+
   </div>
 </section>
 
