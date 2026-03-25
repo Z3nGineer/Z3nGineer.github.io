@@ -400,13 +400,16 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
 /* ── Easter egg: 5 rapid clicks on brand → secret page ── */
 ;(function(){
-  var b=document.querySelector('.global-nav-brand'),c=0,t=0;
+  var b=document.querySelector('.global-nav-brand'),c=0,t=0,reset;
   if(!b)return;
   b.addEventListener('click',function(e){
+    e.preventDefault();
     var now=Date.now();
     if(now-t>1500)c=0;
     c++;t=now;
-    if(c>=5){c=0;e.preventDefault();window.location.href='https://z3ngineer.github.io/shield-ne-kids/';}
+    clearTimeout(reset);
+    if(c>=5){c=0;window.location.href='https://z3ngineer.github.io/shield-ne-kids/';}
+    else{reset=setTimeout(function(){window.scrollTo({top:0,behavior:'smooth'});c=0;},400);}
   });
 })();
 </script>
