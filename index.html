@@ -27,42 +27,27 @@ a:hover{color:var(--accent-bright)}
 #bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
 
 /* Hamburger */
-.hamburger{display:none;background:none;border:none;cursor:pointer;padding:0.5rem;z-index:1001}
-.hamburger span{display:block;width:22px;height:2px;background:var(--text-dim);margin:5px 0;transition:all 0.3s ease;border-radius:1px}
-.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
-.hamburger.open span:nth-child(2){opacity:0}
-.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+/* hamburger handled by global-hamburger */
 
 /* Nav */
-.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
-.nav-brand{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;color:var(--text);text-decoration:none;transition:color 0.3s}
-.nav-brand:hover{color:var(--accent)}
-.nav-links{display:flex;gap:1.5rem;list-style:none;align-items:center}
-.nav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.3s;position:relative}
-.nav-links a:hover,.nav-links a.active{color:var(--accent)}
-.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--accent);transform:scaleX(0);transition:transform 0.3s;transform-origin:right}
-.nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
-
-/* Dropdown */
-.nav-dropdown{position:relative}
-.nav-dropdown>a::after{display:none}
-.nav-dropdown>a{display:flex;align-items:center;gap:0.3rem}
-.nav-dropdown>a .dd-arrow{font-size:0.5rem;transition:transform 0.2s;margin-top:1px}
-.nav-dropdown:hover>a .dd-arrow{transform:rotate(180deg)}
-.dd-menu{
-  position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);
-  background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid var(--border);border-radius:10px;
-  min-width:200px;padding:0.5rem 0;
-  opacity:0;visibility:hidden;transform:translateX(-50%) translateY(-5px);
-  transition:opacity 0.2s,visibility 0.2s,transform 0.2s;
-  box-shadow:0 12px 40px rgba(0,0,0,0.5);
-}
-.nav-dropdown:hover .dd-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
-.dd-menu a{display:block;padding:0.6rem 1.2rem;font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.15s,background 0.15s;white-space:nowrap}
-.dd-menu a:hover{color:var(--accent);background:rgba(201,168,76,0.06)}
-.dd-menu a::after{display:none}
+/* Global Nav — identical to all other pages */
+.global-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06)}
+.global-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.global-nav-brand{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;color:#e0e0e0;text-decoration:none;transition:color 0.3s}
+.global-nav-brand:hover{color:#c8a050}
+.global-nav-links{display:flex;gap:1.5rem;list-style:none;align-items:center}
+.global-nav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#6a6a6a;text-decoration:none;transition:color 0.3s}
+.global-nav-links a:hover{color:#c8a050;text-decoration:none}
+.global-nav-dropdown{position:relative}
+.global-nav-dropdown>a{display:flex;align-items:center;gap:0.3rem}
+.global-dd-arrow{font-size:0.5rem;transition:transform 0.2s;margin-top:1px}
+.global-nav-dropdown:hover .global-dd-arrow{transform:rotate(180deg)}
+.global-dd-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(8px);min-width:180px;background:rgba(15,15,15,0.97);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.5rem 0;opacity:0;visibility:hidden;transition:opacity 0.2s,transform 0.2s,visibility 0.2s}
+.global-nav-dropdown:hover .global-dd-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.global-dd-menu a{display:block;padding:0.55rem 1.25rem;font-size:0.78rem;font-weight:500;letter-spacing:0.06em;color:#999;transition:color 0.15s,background 0.15s}
+.global-dd-menu a:hover{color:#fff;background:rgba(255,255,255,0.04)}
+.global-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+.global-hamburger span{display:block;width:22px;height:2px;background:#e0e0e0;transition:all 0.3s}
 
 /* Hero */
 .hero{padding:10rem 2rem 5rem;max-width:1100px;margin:0 auto;position:relative;z-index:2}
@@ -138,24 +123,14 @@ footer span{font-size:0.75rem;color:var(--text-muted);font-weight:300}
 @keyframes fadeUp{0%{opacity:0;transform:translateY(25px)}100%{opacity:1;transform:translateY(0)}}
 
 @media(max-width:700px){
-  .hamburger{display:block}
-  .nav-links{
-    display:flex;flex-direction:column;gap:0;
-    position:absolute;top:60px;left:0;right:0;
-    background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-    border-bottom:1px solid var(--border);
-    max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;
-    padding:0 0;
-  }
-  .nav-links.open{max-height:600px;padding:0.5rem 0}
-  .nav-links>li{list-style:none}
-  .nav-links>li>a{display:block;padding:0.8rem 2rem;font-size:0.85rem;border-bottom:1px solid var(--border)}
-  .nav-links>li:last-child>a{border-bottom:none}
-  .nav-links a::after{display:none}
-  .dd-menu{position:static;opacity:1;visibility:visible;transform:none;border:none;border-radius:0;min-width:auto;padding:0;background:none;backdrop-filter:none;box-shadow:none}
-  .dd-menu a{padding:0.7rem 2rem 0.7rem 3rem;font-size:0.8rem;border-bottom:1px solid var(--border)}
-  .nav-dropdown>a{display:none}
-  .nav-dropdown{border-bottom:none}
+  .global-hamburger{display:flex}
+  .global-nav-links{display:flex;flex-direction:column;gap:0;position:absolute;top:60px;left:0;right:0;background:rgba(8,8,8,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;padding:0}
+  .global-nav-links.open{max-height:600px;padding:0.5rem 0}
+  .global-nav-links>li{list-style:none}
+  .global-nav-links>li>a{display:block;padding:0.8rem 2rem;font-size:0.85rem;border-bottom:1px solid rgba(255,255,255,0.04)}
+  .global-dd-menu{position:static;opacity:1;visibility:visible;transform:none;border:none;border-radius:0;min-width:auto;padding:0;background:none;backdrop-filter:none;box-shadow:none}
+  .global-dd-menu a{padding:0.7rem 2rem 0.7rem 3rem;font-size:0.8rem;border-bottom:1px solid rgba(255,255,255,0.04)}
+  .global-nav-dropdown>a{display:none}
   .hero{padding:7rem 1.5rem 3rem}
   .section{padding:3rem 1.5rem}
   .project{padding:1.8rem}
@@ -168,15 +143,15 @@ footer span{font-size:0.75rem;color:var(--text-muted);font-weight:300}
 
 <canvas id="bg-canvas"></canvas>
 
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-brand">Z3nGineer</a>
-    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-    <ul class="nav-links" id="nav-links">
-      <li><a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" class="active">Home</a></li>
-      <li class="nav-dropdown">
-        <a href="#">Projects <span class="dd-arrow">&#x25BC;</span></a>
-        <div class="dd-menu">
+<nav class="global-nav">
+  <div class="global-nav-inner">
+    <a href="index.html" class="global-nav-brand">Z3nGineer</a>
+    <button class="global-hamburger" id="globalHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="global-nav-links" id="globalNavLinks">
+      <li><a href="index.html" style="color:#c8a050">Home</a></li>
+      <li class="global-nav-dropdown">
+        <a href="#">Projects <span class="global-dd-arrow">&#x25BC;</span></a>
+        <div class="global-dd-menu">
           <a href="omnisuite.html">OmniSuite</a>
           <a href="heatsync.html">HeatSync</a>
           <a href="guides.html">Game Guides</a>
@@ -412,7 +387,7 @@ footer span{font-size:0.75rem;color:var(--text-muted);font-weight:300}
 
 /* ── Hamburger menu ── */
 (function(){
-  const btn=document.getElementById('hamburger'),nav=document.getElementById('nav-links');
+  const btn=document.getElementById('globalHamburger'),nav=document.getElementById('globalNavLinks');
   btn.addEventListener('click',()=>{btn.classList.toggle('open');nav.classList.toggle('open')});
   nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
     btn.classList.remove('open');nav.classList.remove('open');
@@ -422,6 +397,18 @@ footer span{font-size:0.75rem;color:var(--text-muted);font-weight:300}
 /* ── Scroll reveal ── */
 const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0.08,rootMargin:'0px 0px -50px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* ── Easter egg: 5 rapid clicks on brand → secret page ── */
+;(function(){
+  var b=document.querySelector('.global-nav-brand'),c=0,t=0;
+  if(!b)return;
+  b.addEventListener('click',function(e){
+    var now=Date.now();
+    if(now-t>1500)c=0;
+    c++;t=now;
+    if(c>=5){c=0;e.preventDefault();window.location.href='https://z3ngineer.github.io/shield-ne-kids/';}
+  });
+})();
 </script>
 </body>
 </html>
