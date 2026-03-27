@@ -4,428 +4,891 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Z3nGineer — Software Engineer, Chef &amp; Musician</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>if('scrollRestoration' in history) history.scrollRestoration='manual';window.scrollTo(0,0);</script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=Cinzel:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#080808;--surface:#111;--surface-2:#181818;--surface-3:#1e1e1e;
-  --border:#222;--border-light:#2a2a2a;
-  --text:#f0ece4;--text-dim:#aaa;--text-muted:#666;
-  --accent:#c9a84c;--accent-bright:#e4c565;--accent-dim:#8a7234;--accent-glow:rgba(201,168,76,0.08);
-  --purple:#8a6ab5;--purple-glow:rgba(138,106,181,0.08);
-  --blue:#4a88cc;--blue-glow:rgba(74,136,204,0.08);
-  --green:#5a9a5a;--green-glow:rgba(90,154,90,0.08);
-  --orange:#e85d26;--orange-glow:rgba(232,93,38,0.08);
+  --bg:#080808;--bg-warm:#0a0906;
+  --surface:rgba(255,255,255,0.025);--surface-hover:rgba(255,255,255,0.04);
+  --border:rgba(255,255,255,0.06);--border-hover:rgba(255,255,255,0.12);
+  --text:#f0ece4;--text-dim:#999;--text-muted:#555;
+  --accent:#c9a84c;--accent-bright:#e4c565;--accent-dim:#8a7234;
+  --purple:#8a6ab5;--blue:#4a88cc;--green:#5a9a5a;--orange:#e85d26;
 }
-html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--accent-dim) var(--bg)}
-body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:18px;line-height:1.7;overflow-x:hidden}
+html{scrollbar-width:thin;scrollbar-color:var(--accent-dim) var(--bg)}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:17px;line-height:1.7;overflow-x:hidden}
 ::selection{background:var(--accent);color:var(--bg)}
-a{color:var(--accent);text-decoration:none}
+a{color:var(--accent);text-decoration:none;transition:color .2s}
 a:hover{color:var(--accent-bright)}
+img{display:block;max-width:100%}
 
-/* Background canvas */
-#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+/* ═══════════════════ PRELOADER ═══════════════════ */
+#preloader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:flex-end;justify-content:space-between;padding:3rem clamp(2rem,5vw,4rem)}
+#preloader-left{display:flex;flex-direction:column;gap:.4rem}
+#preloader-brand{font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;letter-spacing:.2em;color:var(--text-muted);text-transform:uppercase}
+#preloader-tagline{font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:300;color:var(--text-muted);opacity:.5}
+#preloader-right{display:flex;align-items:baseline;gap:.6rem}
+#preloader-counter{font-family:'JetBrains Mono',monospace;font-size:clamp(3rem,8vw,5rem);font-weight:400;color:var(--text);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;min-width:3.5ch;text-align:right}
+#preloader-pct{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--text-muted);font-weight:400}
+#preloader-line{position:absolute;bottom:0;left:0;height:2px;background:var(--accent);width:0%}
 
-/* Hamburger */
-/* hamburger handled by global-hamburger */
+/* ═══════════════════ CURSOR ═══════════════════ */
+.cursor{position:fixed;width:40px;height:40px;border:1.5px solid #fff;border-radius:50%;pointer-events:none;z-index:9998;mix-blend-mode:difference;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-width .3s,opacity .3s}
+.cursor.hover{width:80px;height:80px;border-width:1px}
+.cursor.click{width:35px;height:35px}
+.cursor-label{position:fixed;pointer-events:none;z-index:9998;mix-blend-mode:difference;transform:translate(-50%,-50%);font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:500;letter-spacing:.2em;color:#fff;opacity:0;transition:opacity .3s}
+.cursor-label.visible{opacity:1}
+@media(hover:none){.cursor,.cursor-label{display:none!important}}
 
-/* Nav */
-/* Global Nav — identical to all other pages */
-.global-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06)}
-.global-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
-.global-nav-brand{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;color:#e0e0e0;text-decoration:none;transition:color 0.3s}
-.global-nav-brand:hover{color:#c8a050}
-.global-nav-links{display:flex;gap:1.5rem;list-style:none;align-items:center}
-.global-nav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#6a6a6a;text-decoration:none;transition:color 0.3s}
-.global-nav-links a:hover{color:#c8a050;text-decoration:none}
-.global-nav-dropdown{position:relative}
-.global-nav-dropdown>a{display:flex;align-items:center;gap:0.3rem}
-.global-dd-arrow{font-size:0.5rem;transition:transform 0.2s;margin-top:1px}
-.global-nav-dropdown:hover .global-dd-arrow{transform:rotate(180deg)}
-.global-dd-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(8px);min-width:180px;background:rgba(15,15,15,0.97);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.5rem 0;opacity:0;visibility:hidden;transition:opacity 0.2s,transform 0.2s,visibility 0.2s}
-.global-nav-dropdown:hover .global-dd-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
-.global-dd-menu a{display:block;padding:0.55rem 1.25rem;font-size:0.78rem;font-weight:500;letter-spacing:0.06em;color:#999;transition:color 0.15s,background 0.15s}
-.global-dd-menu a:hover{color:#fff;background:rgba(255,255,255,0.04)}
-.global-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
-.global-hamburger span{display:block;width:22px;height:2px;background:#e0e0e0;transition:all 0.3s}
+/* ═══════════════════ FILM GRAIN ═══════════════════ */
+/* Film grain removed — it was just making everything blurry */
 
-/* Hero */
-.hero{padding:10rem 2rem 5rem;max-width:1100px;margin:0 auto;position:relative;z-index:2}
-.hero-img{width:100%;border-radius:12px;border:1px solid var(--border);margin-bottom:3rem;animation:fadeUp 0.8s ease both}
-.hero-label{font-family:'Cinzel',serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);text-align:center;margin-bottom:0.5rem;animation:fadeUp 0.8s ease 0.15s both}
-.hero h1{font-family:'Cinzel',serif;font-size:clamp(1.2rem,2.5vw,1.6rem);font-weight:500;color:var(--text-dim);letter-spacing:0.12em;line-height:1.2;margin-bottom:2.5rem;animation:fadeUp 0.8s ease 0.25s both;text-align:center}
-.hero-intro{display:grid;grid-template-columns:320px 1fr;gap:3rem;align-items:start;animation:fadeUp 0.8s ease 0.3s both}
-.hero-portrait{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center 15%;border-radius:12px;border:2px solid var(--border);transition:border-color 0.3s}
-.hero-portrait:hover{border-color:var(--accent)}
-.hero-bio{color:var(--text-dim);font-size:1.1rem;line-height:1.9;font-weight:300}
-@media(max-width:700px){.hero-intro{grid-template-columns:1fr;gap:2rem}.hero-portrait{max-width:280px;margin:0 auto}}
-.hero-bio p+p{margin-top:1rem}
-.hero-bio strong{color:var(--text);font-weight:600}
+/* ═══════════════════ SCROLL PROGRESS ═══════════════════ */
+#scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent-dim),var(--accent),var(--accent-bright));z-index:1001;width:0%;transition:none}
 
-.tech-bar{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:2rem;animation:fadeUp 0.8s ease 0.45s both}
-.tech{font-family:'JetBrains Mono',monospace;font-size:0.7rem;font-weight:500;padding:0.3rem 0.7rem;border-radius:4px;color:var(--text-muted);background:var(--surface);border:1px solid var(--border)}
+/* ═══════════════════ BACKGROUND CANVAS ═══════════════════ */
+#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.5}
 
-/* Section */
-.section{max-width:1100px;margin:0 auto;padding:5rem 2rem}
-.section+.section{border-top:1px solid var(--border)}
-.section-label{font-size:0.65rem;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:2.5rem}
+/* ═══════════════════ NAV ═══════════════════ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 clamp(1.5rem,4vw,3rem);height:70px;display:flex;align-items:center;justify-content:space-between;background:transparent;transition:background .4s,backdrop-filter .4s}
+.nav.scrolled{background:rgba(8,8,8,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-brand{font-family:'Cinzel',serif;font-size:.85rem;font-weight:700;letter-spacing:.18em;color:var(--text);text-decoration:none;text-transform:uppercase;transition:color .3s}
+.nav-brand:hover{color:var(--accent)}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
+.nav-links a{font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;position:relative;transition:color .3s}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--accent);transition:width .3s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a:hover::after{width:100%}
+.nav-links a.active{color:var(--accent)}
+.nav-links a.active::after{width:100%}
+.nav-dropdown{position:relative}
+.nav-dropdown>a{display:flex;align-items:center;gap:.35rem}
+.nav-dd-arrow{font-size:.45rem;transition:transform .2s}
+.nav-dropdown:hover .nav-dd-arrow{transform:rotate(180deg)}
+.nav-dd-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%);min-width:180px;padding-top:10px;opacity:0;visibility:hidden;transition:all .25s;pointer-events:none}
+.nav-dd-menu-inner{padding:.6rem 0;background:rgba(12,12,12,0.97);backdrop-filter:blur(24px);border:1px solid var(--border);border-radius:10px}
+.nav-dropdown:hover .nav-dd-menu{opacity:1;visibility:visible;pointer-events:auto}
+.nav-dd-menu a{display:block;padding:.55rem 1.3rem;font-size:.72rem;letter-spacing:.06em;color:var(--text-dim);transition:all .15s}
+.nav-dd-menu a::after{display:none}
+.nav-dd-menu a:hover{color:#fff;background:rgba(255,255,255,0.04);padding-left:1.6rem}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.5rem}
+.nav-hamburger span{display:block;width:22px;height:1.5px;background:var(--text);transition:all .3s}
+.nav-hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.nav-hamburger.open span:nth-child(2){opacity:0}
+.nav-hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
 
-/* Project Cards */
-.projects{display:flex;flex-direction:column;gap:2rem}
-.project{
-  background:var(--surface);border:1px solid var(--border);border-radius:16px;
-  padding:2.5rem;position:relative;overflow:hidden;
-  transition:all 0.4s cubic-bezier(0.16,1,0.3,1);
-}
-.project:hover{border-color:var(--border-light);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,0.3)}
-.project::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity 0.4s}
-.project:hover::before{opacity:1}
-.project[data-c="purple"]::before{background:linear-gradient(90deg,transparent,var(--purple),transparent)}
-.project[data-c="blue"]::before{background:linear-gradient(90deg,transparent,var(--blue),transparent)}
-.project[data-c="orange"]::before{background:linear-gradient(90deg,transparent,var(--orange),transparent)}
-.project[data-c="gold"]::before{background:linear-gradient(90deg,transparent,var(--accent),transparent)}
-.project[data-c="green"]::before{background:linear-gradient(90deg,transparent,var(--green),transparent)}
+/* ═══════════════════ HERO ═══════════════════ */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:8rem 2rem 4rem;position:relative;z-index:2;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:-1;opacity:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.25) saturate(.6)}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,var(--bg) 0%,transparent 30%,transparent 60%,var(--bg) 100%)}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;color:var(--accent-dim);margin-bottom:1.5rem;opacity:0}
+.hero-name{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,7.5vw,6.5rem);font-weight:800;line-height:1;letter-spacing:-.02em;color:var(--text);margin-bottom:1.5rem;overflow:visible;white-space:nowrap;width:100%}
+.hero-name .char{display:inline-block;opacity:0;transform:translateY(100%)}
+.hero-sub{font-family:'Outfit',sans-serif;font-size:clamp(1rem,2vw,1.3rem);font-weight:300;color:var(--text-dim);letter-spacing:.08em;margin-bottom:3rem;opacity:0}
+.hero-scroll{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.8rem;opacity:0;transition:opacity .6s}
+.hero-scroll span{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;color:var(--text-muted)}
+.hero-scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--accent),transparent);animation:scrollPulse 2s ease infinite}
+@keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(.5) translateY(-10px)}50%{opacity:1;transform:scaleY(1) translateY(0)}}
+.hero-scroll.hidden{opacity:0!important;pointer-events:none}
 
-.project-top{display:flex;align-items:center;gap:1.2rem;margin-bottom:1.5rem}
-.project-icon{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
-.project[data-c="purple"] .project-icon{background:var(--purple-glow);color:var(--purple);border:1px solid rgba(138,106,181,0.15)}
-.project[data-c="blue"] .project-icon{background:var(--blue-glow);color:var(--blue);border:1px solid rgba(74,136,204,0.15)}
-.project[data-c="orange"] .project-icon{background:var(--orange-glow);color:var(--orange);border:1px solid rgba(232,93,38,0.15)}
-.project[data-c="gold"] .project-icon{background:var(--accent-glow);color:var(--accent);border:1px solid rgba(201,168,76,0.15)}
-.project[data-c="green"] .project-icon{background:var(--green-glow);color:var(--green);border:1px solid rgba(90,154,90,0.15)}
+/* ═══════════════════ MARQUEE ═══════════════════ */
+.marquee-section{padding:4rem 0;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:2;user-select:none;-webkit-user-select:none;pointer-events:none}
+.marquee{display:flex;width:max-content;animation:marqueeScroll 30s linear infinite}
+.marquee-item{font-family:'Syne',sans-serif;font-size:clamp(1.2rem,3vw,2rem);font-weight:700;white-space:nowrap;padding:0 2rem;text-transform:uppercase;letter-spacing:.05em}
+.marquee-item.filled{color:var(--text);opacity:.45}
+.marquee-item.stroke{-webkit-text-stroke:1.5px var(--text);color:transparent;opacity:.35}
+.marquee-sep{color:var(--accent);opacity:.3;font-size:clamp(.8rem,2vw,1.2rem);padding:0 .5rem;align-self:center;display:flex}
+@keyframes marqueeScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-.project-name{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--text)}
-.project-sub{font-size:0.8rem;color:var(--text-muted);margin-top:0.1rem}
-.project-desc{color:var(--text-dim);font-size:0.95rem;line-height:1.8;margin-bottom:1.5rem;font-weight:300}
-.project-img{width:100%;max-width:600px;border-radius:10px;border:1px solid var(--border);margin-bottom:1.5rem;display:block;margin-left:auto;margin-right:auto}
+/* ═══════════════════ SECTION COMMON ═══════════════════ */
+.section{position:relative;z-index:2}
+.section-inner{max-width:1300px;margin:0 auto;padding:8rem 2rem}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:500;letter-spacing:.35em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;opacity:0}
+.section-heading{font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:700;letter-spacing:-.02em;color:var(--text);margin-bottom:4rem;opacity:0;line-height:1.15}
 
-.features{display:flex;flex-direction:column;gap:0.4rem;margin-left:0.5rem}
-.feat{display:flex;align-items:flex-start;gap:0.8rem;padding:0.4rem 0}
-.feat-dot{width:4px;height:4px;border-radius:50%;margin-top:0.55rem;flex-shrink:0}
-.project[data-c="purple"] .feat-dot{background:var(--purple)}
-.project[data-c="blue"] .feat-dot{background:var(--blue)}
-.project[data-c="orange"] .feat-dot{background:var(--orange)}
-.project[data-c="gold"] .feat-dot{background:var(--accent)}
-.project[data-c="green"] .feat-dot{background:var(--green)}
-.feat-text{font-size:0.9rem;line-height:1.6;color:var(--text-dim);font-weight:300}
+/* ═══════════════════ FEATURED PROJECTS — HORIZONTAL SCROLL ═══════════════════ */
+.featured-section{position:relative;z-index:2}
+.featured-header{max-width:1300px;margin:0 auto;padding:8rem 2rem 3rem}
+.featured-pin{overflow:hidden}
+@media(max-width:768px){.featured-pin{overflow:visible}}
+.featured-track{display:flex;gap:3vw;padding:0 2rem;width:max-content;will-change:transform}
+.featured-card{width:min(78vw,1100px);flex-shrink:0;background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:border-color .4s}
+.featured-card:hover{border-color:var(--border-hover)}
+.featured-card-img{width:100%;aspect-ratio:16/9;object-fit:cover;border-bottom:1px solid var(--border)}
+.featured-card-body{padding:clamp(1.5rem,3vw,2.8rem)}
+.featured-card-top{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.featured-card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.featured-card-name{font-family:'Syne',sans-serif;font-size:clamp(1.3rem,2.5vw,2rem);font-weight:700;color:var(--text)}
+.featured-card-name a{color:inherit;text-decoration:none}
+.featured-card-name a:hover{color:var(--accent)}
+.featured-card-sub{font-size:.8rem;color:var(--text-muted);margin-top:.15rem;font-weight:400}
+.featured-card-desc{color:var(--text-dim);font-size:.95rem;line-height:1.8;margin-bottom:1.5rem;font-weight:300;max-width:700px}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.8rem .5rem}
+.feat{display:flex;align-items:flex-start;gap:.7rem;padding:.35rem 0}
+.feat-dot{width:4px;height:4px;border-radius:50%;margin-top:.55rem;flex-shrink:0;background:var(--accent)}
+.feat-text{font-size:.85rem;line-height:1.6;color:var(--text-dim);font-weight:300}
 .feat-text strong{color:var(--text);font-weight:500}
+.stack{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.5rem}
+.tech{font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:500;padding:.25rem .6rem;border-radius:4px;color:var(--text-muted);background:rgba(255,255,255,0.03);border:1px solid var(--border);letter-spacing:.03em}
+.featured-cta{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.8rem;font-family:'Syne',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--accent-dim),var(--accent),var(--accent-bright));padding:.7rem 2rem;border-radius:4px;text-decoration:none;transition:all .3s;box-shadow:0 0 25px rgba(201,168,76,0.15)}
+.featured-cta:hover{color:var(--bg);box-shadow:0 0 40px rgba(201,168,76,0.3);transform:translateY(-2px)}
 
-.stack{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1.5rem}
-.stack .tech{font-size:0.6rem;padding:0.2rem 0.5rem}
+/* Card accent colors */
+.featured-card[data-c="purple"] .feat-dot{background:var(--purple)}
+.featured-card[data-c="purple"] .featured-card-icon{background:rgba(138,106,181,0.08);border:1px solid rgba(138,106,181,0.15);color:var(--purple)}
+.featured-card[data-c="gold"] .feat-dot{background:var(--accent)}
+.featured-card[data-c="gold"] .featured-card-icon{background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.15);color:var(--accent)}
+.featured-card[data-c="blue"] .feat-dot{background:var(--blue)}
+.featured-card[data-c="blue"] .featured-card-icon{background:rgba(74,136,204,0.08);border:1px solid rgba(74,136,204,0.15);color:var(--blue)}
 
-footer{border-top:1px solid var(--border);padding:2.5rem;text-align:center;max-width:1100px;margin:0 auto}
-footer span{font-size:0.75rem;color:var(--text-muted);font-weight:300}
+/* ═══════════════════ BENTO GRID ═══════════════════ */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.bento-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:clamp(1.5rem,2.5vw,2.2rem);position:relative;overflow:hidden;transition:all .5s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column}
+.bento-card:hover{border-color:var(--border-hover);transform:translateY(-4px);box-shadow:0 25px 60px rgba(0,0,0,0.4)}
+.bento-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .4s}
+.bento-card:hover::before{opacity:1}
+.bento-card.span-2x2{grid-column:span 2;grid-row:span 2}
+.bento-card.span-wide{grid-column:span 4}
+.bento-card.span-2col{grid-column:span 2}
+.bento-card[data-c="purple"]::before{background:linear-gradient(90deg,transparent,var(--purple),transparent)}
+.bento-card[data-c="orange"]::before{background:linear-gradient(90deg,transparent,var(--orange),transparent)}
+.bento-card[data-c="green"]::before{background:linear-gradient(90deg,transparent,var(--green),transparent)}
+.bento-card[data-c="gold"]::before{background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.bento-card[data-c="purple"] .feat-dot{background:var(--purple)}
+.bento-card[data-c="orange"] .feat-dot{background:var(--orange)}
+.bento-card[data-c="green"] .feat-dot{background:var(--green)}
+.bento-card[data-c="gold"] .feat-dot{background:var(--accent)}
+.bento-card[data-c="purple"] .bento-icon{background:rgba(138,106,181,0.08);border:1px solid rgba(138,106,181,0.15);color:var(--purple)}
+.bento-card[data-c="orange"] .bento-icon{background:rgba(232,93,38,0.08);border:1px solid rgba(232,93,38,0.15);color:var(--orange)}
+.bento-card[data-c="green"] .bento-icon{background:rgba(90,154,90,0.08);border:1px solid rgba(90,154,90,0.15);color:var(--green)}
+.bento-card[data-c="gold"] .bento-icon{background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.15);color:var(--accent)}
+.bento-top{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.bento-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.bento-name{font-family:'Syne',sans-serif;font-size:clamp(1rem,1.5vw,1.3rem);font-weight:700;color:var(--text)}
+.bento-sub{font-size:.72rem;color:var(--text-muted);margin-top:.1rem;font-weight:400}
+.bento-desc{color:var(--text-dim);font-size:.88rem;line-height:1.7;font-weight:300;margin-bottom:1rem;flex:1}
+.bento-card .feat-text{font-size:.82rem}
+.bento-card .stack{margin-top:auto}
+.bento-img{width:100%;border-radius:10px;border:1px solid var(--border);margin-bottom:1rem}
+.bento-links{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+.bento-link{display:inline-flex;align-items:center;gap:.35rem;padding:.35rem .9rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:20px;font-size:.7rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:all .2s}
+.bento-link:hover{color:var(--text);border-color:var(--border-hover);background:rgba(255,255,255,0.05)}
 
-.reveal{opacity:0;transform:translateY(25px);transition:opacity 0.7s ease,transform 0.7s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.r1{transition-delay:0.1s}.r2{transition-delay:0.2s}
+/* ═══════════════════ ABOUT ═══════════════════ */
+.about-grid{display:grid;grid-template-columns:380px 1fr;gap:4rem;align-items:start}
+.about-portrait-wrap{position:relative;overflow:hidden;border-radius:16px;border:1px solid var(--border)}
+.about-portrait{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center 15%;transition:transform 8s ease}
+.about-portrait-wrap:hover .about-portrait{transform:scale(1.04)}
+.about-text{color:var(--text-dim);font-size:1.05rem;line-height:1.9;font-weight:300}
+.about-text p+p{margin-top:1.2rem}
+.about-text strong{color:var(--text);font-weight:600}
+.about-text a{color:var(--accent);text-decoration:none;transition:color .2s}
+.about-text a:hover{color:var(--accent-bright)}
+.tech-bar{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:2.5rem}
 
-@keyframes fadeUp{0%{opacity:0;transform:translateY(25px)}100%{opacity:1;transform:translateY(0)}}
+/* ═══════════════════ FOOTER ═══════════════════ */
+footer{border-top:1px solid var(--border);position:relative;z-index:2}
+.footer-inner{max-width:1300px;margin:0 auto;padding:4rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.footer-left{font-size:.75rem;color:var(--text-muted);font-weight:300}
+.footer-right{display:flex;gap:2rem}
+.footer-right a{font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color .2s}
+.footer-right a:hover{color:var(--accent)}
 
-@media(max-width:700px){
-  .global-hamburger{display:flex}
-  .global-nav-links{display:flex;flex-direction:column;gap:0;position:absolute;top:60px;left:0;right:0;background:rgba(8,8,8,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;padding:0}
-  .global-nav-links.open{max-height:600px;padding:0.5rem 0}
-  .global-nav-links>li{list-style:none}
-  .global-nav-links>li>a{display:block;padding:0.8rem 2rem;font-size:0.85rem;border-bottom:1px solid rgba(255,255,255,0.04)}
-  .global-dd-menu{position:static;opacity:1;visibility:visible;transform:none;border:none;border-radius:0;min-width:auto;padding:0;background:none;backdrop-filter:none;box-shadow:none}
-  .global-dd-menu a{padding:0.7rem 2rem 0.7rem 3rem;font-size:0.8rem;border-bottom:1px solid rgba(255,255,255,0.04)}
-  .global-nav-dropdown>a{display:none}
-  .hero{padding:7rem 1.5rem 3rem}
-  .section{padding:3rem 1.5rem}
-  .project{padding:1.8rem}
-  .features{grid-template-columns:1fr}
-  .project-top{flex-wrap:wrap}
+/* ═══════════════════ RESPONSIVE ═══════════════════ */
+@media(max-width:1024px){
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .bento-card.span-2x2{grid-column:span 2;grid-row:span 2}
+  .bento-card.span-wide{grid-column:span 2}
+  .about-grid{grid-template-columns:280px 1fr;gap:3rem}
+}
+@media(max-width:768px){
+  .nav-hamburger{display:flex}
+  .nav-links{position:fixed;top:70px;left:0;right:0;flex-direction:column;background:rgba(8,8,8,0.97);backdrop-filter:blur(20px);gap:0;max-height:0;overflow:hidden;transition:max-height .4s,padding .4s;padding:0;border-bottom:1px solid transparent}
+  .nav-links.open{max-height:600px;padding:.5rem 0;border-color:var(--border)}
+  .nav-links>li{list-style:none}
+  .nav-links>li>a{display:block;padding:.9rem 2rem;font-size:.85rem}
+  .nav-dd-menu{position:static;opacity:1;visibility:visible;transform:none;border:none;border-radius:0;min-width:auto;padding:0;background:none;backdrop-filter:none;pointer-events:auto}
+  .nav-dd-menu-inner{background:none;border:none;border-radius:0;padding:0;backdrop-filter:none}
+  .nav-dd-menu a{padding:.7rem 2rem .7rem 3.5rem;font-size:.78rem}
+  .nav-dropdown>a{display:none}
+  .hero{min-height:85vh;padding:6rem 1.5rem 3rem}
+  .hero-name{font-size:clamp(2.5rem,12vw,5rem);white-space:normal}
+  .hero-scroll{bottom:1.5rem}
+  #preloader{padding:2rem 1.5rem}
+  #preloader-counter{font-size:clamp(2.5rem,10vw,4rem)}
+  .featured-track{flex-direction:column;width:100%;padding:0 1.5rem;gap:1.5rem}
+  .featured-card{width:100%}
+  .featured-card-img{aspect-ratio:16/10}
+  .bento{grid-template-columns:1fr}
+  .bento-card.span-2x2,.bento-card.span-wide,.bento-card.span-2col{grid-column:span 1;grid-row:span 1}
+  .about-grid{grid-template-columns:1fr;gap:2rem}
+  .about-portrait-wrap{max-width:320px;margin:0 auto}
+  .section-inner{padding:5rem 1.5rem}
+  .featured-header{padding:5rem 1.5rem 2rem}
+  .footer-inner{flex-direction:column;gap:1.5rem;text-align:center}
+  .footer-right{gap:1.5rem}
+  .featured-cta{width:100%;justify-content:center}
+  .marquee-item{font-size:1rem;padding:0 1.2rem}
+}
+@media(max-width:480px){
+  .feat-grid{grid-template-columns:1fr}
+  .hero{padding:5rem 1rem 2.5rem}
+  .hero-eyebrow{font-size:.55rem;letter-spacing:.25em}
+  .hero-sub{font-size:.9rem}
+  .marquee-section{padding:2.5rem 0}
+  .section-inner{padding:4rem 1rem}
+  .featured-header{padding:4rem 1rem 1.5rem}
+  .featured-track{padding:0 1rem}
+  .featured-card-body{padding:1.2rem}
+  .bento-card{padding:1.2rem}
+  .about-grid{gap:1.5rem}
+  .about-portrait-wrap{max-width:260px}
+  .footer-inner{padding:3rem 1rem}
+  .footer-right{flex-wrap:wrap;justify-content:center}
 }
 </style>
 </head>
 <body>
 
+<!-- ═══════════════════ PRELOADER ═══════════════════ -->
+<div id="preloader">
+  <div id="preloader-left">
+    <div id="preloader-brand">Z3nGineer</div>
+    <div id="preloader-tagline">Portfolio</div>
+  </div>
+  <div id="preloader-right">
+    <div id="preloader-counter">0</div>
+    <div id="preloader-pct">%</div>
+  </div>
+  <div id="preloader-line"></div>
+</div>
+
+<!-- ═══════════════════ CURSOR ═══════════════════ -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-label" id="cursor-label"></div>
+
+
+<!-- ═══════════════════ SCROLL PROGRESS ═══════════════════ -->
+<div id="scroll-progress"></div>
+
+<!-- ═══════════════════ BACKGROUND CANVAS ═══════════════════ -->
 <canvas id="bg-canvas"></canvas>
 
-<nav class="global-nav">
-  <div class="global-nav-inner">
-    <a href="index.html" class="global-nav-brand">Z3nGineer</a>
-    <button class="global-hamburger" id="globalHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-    <ul class="global-nav-links" id="globalNavLinks">
-      <li><a href="index.html" style="color:#c8a050">Home</a></li>
-      <li class="global-nav-dropdown">
-        <a href="#">Projects <span class="global-dd-arrow">&#x25BC;</span></a>
-        <div class="global-dd-menu">
-          <a href="omnisuite.html">OmniSuite</a>
-          <a href="heatsync.html">HeatSync</a>
-          <a href="guides.html">Game Guides</a>
-          <a href="https://getchim.github.io">CHIM Modpack</a>
-          <a href="https://crockednloaded.com">CrockedNLoaded</a>
-        </div>
-      </li>
-    </ul>
-  </div>
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav class="nav" id="mainNav">
+  <a href="index.html" class="nav-brand" id="navBrand">Z3nGineer</a>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li class="nav-dropdown">
+      <a href="#">Projects <span class="nav-dd-arrow">&#x25BC;</span></a>
+      <div class="nav-dd-menu"><div class="nav-dd-menu-inner">
+        <a href="omnisuite.html">OmniSuite</a>
+        <a href="heatsync.html">HeatSync</a>
+        <a href="guides.html">Game Guides</a>
+        <a href="https://getchim.github.io">CHIM Modpack</a>
+        <a href="https://crockednloaded.com">CrockedNLoaded</a>
+      </div></div>
+    </li>
+  </ul>
 </nav>
 
-<header class="hero">
-  <img src="img/studio.jpg" alt="My setup" class="hero-img">
-  <p class="hero-label">Steve Mackey</p>
-  <h1>Software Engineer, Chef &amp; Musician</h1>
-  <div class="hero-intro">
-    <img src="img/steve-city.jpg" alt="Steve Mackey" class="hero-portrait">
-    <div>
-      <div class="hero-bio">
-        <p>I taught myself to code at 15 building MySpace layouts from scratch — not picking themes, writing the actual HTML and CSS. Twenty years later the tools changed but I didn't. If I can see it, I can build it.</p>
-        <p>I build full-stack apps from the ground up. Backend APIs, desktop frontends, ML pipelines, real-time streaming, audio and video processing. I'm also going deep on AI systems — local LLMs, MCP servers, and using AI as a development force multiplier, not a crutch. Everything on this site was designed, coded, and shipped by me.</p>
-        <p>When I'm not coding I'm in the kitchen or the studio. I'm a professional chef and I make music as <strong>MACK3Y</strong>. I also co-host <strong><a href="https://crockednloaded.com">CrockedNLoaded</a></strong> — a cooking channel with my boy CrockPotDaddy where we cook whatever sounds fun and see what happens.</p>
-      </div>
-      <div class="tech-bar">
-    <span class="tech">Python</span><span class="tech">FastAPI</span><span class="tech">JavaScript</span>
-    <span class="tech">HTML/CSS</span><span class="tech">TypeScript</span><span class="tech">PyTorch</span>
-    <span class="tech">Docker</span><span class="tech">FFmpeg</span><span class="tech">CUDA</span>
-    <span class="tech">Linux</span><span class="tech">Git</span><span class="tech">REST APIs</span>
-    <span class="tech">SSE/Streaming</span><span class="tech">ChromaDB</span>
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-bg"><img src="img/studio.jpg" alt=""></div>
+  <div class="hero-eyebrow" id="heroEyebrow">Software Engineer &bull; Chef &bull; Musician</div>
+  <h1 class="hero-name" id="heroName">STEVE MACKEY</h1>
+  <p class="hero-sub" id="heroSub">Building things that don't exist yet.</p>
+  <div class="hero-scroll" id="heroScroll">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
   </div>
-    </div>
-  </div>
-</header>
+</section>
 
-<div class="section" id="projects">
-  <p class="section-label reveal">Projects</p>
-  <div class="projects">
-
-    <div class="project reveal" data-c="orange">
-      <div class="project-top">
-        <div class="project-icon">&#x1F525;</div>
-        <div><h2 class="project-name">PC Tuning & Overclocking</h2><p class="project-sub">Custom Hardware Optimization — Windows & Linux</p></div>
-      </div>
-      <p class="project-desc">I tune my own hardware from scratch. No presets, no auto-OC utilities — manual voltage curves, stress testing, and fan profiles until everything is stable under real workloads. I've done this across both Windows and Linux on the same hardware, so I know the tuning process on both platforms.</p>
-      <div class="features">
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>GPU — RTX 5070 Ti</strong> — +400 core, +5000 memory, 350W power limit. Custom fan curve balanced for thermals and noise. Stable under hours of ML training, rendering, and gaming</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>CPU — Ryzen 9 9800X3D</strong> — -30 curve optimizer, +200MHz boost override hitting 5.4GHz all-core. Fully stress-tested and stable. Those are serious numbers for a 3D V-Cache chip</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>RAM</strong> — Overclocked to 6000MHz, tuned and stability validated. The full system — CPU, GPU, and memory — is all manually dialed in and rock solid</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Cross-Platform</strong> — Same hardware tuned and validated on both Windows and Linux. BIOS-level tweaks, OS-specific power management, driver configs on both platforms</div></div>
-      </div>
-      <div class="stack"><span class="tech">RTX 5070 Ti</span><span class="tech">Ryzen 9 9800X3D</span><span class="tech">Manual OC</span><span class="tech">Curve Optimizer</span><span class="tech">Fan Curves</span><span class="tech">Stress Testing</span><span class="tech">BIOS Tuning</span></div>
-    </div>
-
-    <div class="project reveal" data-c="green">
-      <div class="project-top">
-        <div class="project-icon">&#9881;</div>
-        <div><h2 class="project-name">Linux Systems Engineering</h2><p class="project-sub">CachyOS / Arch — Bare Metal</p></div>
-      </div>
-      <p class="project-desc">My daily driver is a custom-tuned Arch Linux (CachyOS) workstation. Every layer is configured by hand — kernel scheduler, sleep state management, pacman hooks, driver configs. It breaks sometimes. I fix it. That's the deal.</p>
-      <div class="features">
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>OS &amp; Kernel</strong> — sched-ext bpfland scheduler, custom pacman hooks, modprobe configs, multi-monitor position persistence</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>ML Stack</strong> — CUDA 12.8, PyTorch nightly cu128, separate venvs for app vs ML workloads, Docker services</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Gaming</strong> — Proton + DXVK, per-game launch configs, DX11 over DX12 for lower overhead, multi-monitor Wayland</div></div>
-      </div>
-      <div class="stack"><span class="tech">Arch Linux</span><span class="tech">KDE Plasma 6</span><span class="tech">Wayland</span><span class="tech">NVIDIA 595</span><span class="tech">Docker</span><span class="tech">Proton</span></div>
-    </div>
-
-    <div class="project reveal" data-c="purple">
-      <div class="project-top">
-        <div class="project-icon">&#x1F9E0;</div>
-        <div><h2 class="project-name">AI Systems Engineering</h2><p class="project-sub">Local LLMs, MCP Servers &amp; AI-Augmented Development</p></div>
-      </div>
-      <p class="project-desc">I've been going deep on AI infrastructure — not just using ChatGPT, but building the systems around it. Running local LLMs on my own hardware, setting up MCP servers for tool orchestration, integrating AI into my actual development workflow, and building full applications with AI as a co-pilot. I'm a software engineer first — I've been writing code for 20 years — but AI is the biggest shift in how we build things since the internet, and I'm making sure I'm not left behind.</p>
-      <div class="features">
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Local LLM Infrastructure</strong> — Running models locally on an RTX 5070 Ti with Ollama, vLLM, and custom inference pipelines. No cloud dependency for core AI work</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>MCP Server Architecture</strong> — Built custom Model Context Protocol servers for tool orchestration, knowledge retrieval, and multi-system integration</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>AI-Augmented Development</strong> — Using AI as a force multiplier for coding, debugging, architecture decisions, and rapid prototyping. Not a replacement for knowing how to code — an amplifier for someone who does</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Vector Databases & RAG</strong> — ChromaDB knowledge bases with hundreds of documents, context-aware retrieval, session memory across conversations</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>ML Pipeline Management</strong> — PyTorch, CUDA 12.8, separate virtual environments for different ML workloads, model fine-tuning (RVC voice models, 6000 training steps)</div></div>
-      </div>
-      <div class="stack">
-        <span class="tech">Claude</span><span class="tech">Ollama</span><span class="tech">MCP</span>
-        <span class="tech">ChromaDB</span><span class="tech">PyTorch</span><span class="tech">CUDA</span>
-        <span class="tech">LLM Inference</span><span class="tech">RAG</span><span class="tech">RVC</span>
-        <span class="tech">Prompt Engineering</span>
-      </div>
-    </div>
-
-    <div class="project reveal" data-c="purple">
-      <div class="project-top">
-        <img src="img/omni-icon.png" alt="OmniSuite" style="width:50px;height:50px;border-radius:12px;">
-        <div><h2 class="project-name"><a href="omnisuite.html" style="color:inherit;text-decoration:none">OmniSuite</a></h2><p class="project-sub">AI-Powered Music Production Platform</p></div>
-      </div>
-      <p class="project-desc">A full desktop app for AI-assisted music production. Song generation, audio analysis, mixing and mastering, vocal production, voice conversion, image generation, video creation — all in one interface, all running locally on my RTX 5070 Ti. This is the project I built because the tools I wanted didn't exist.</p>
-      <div class="features">
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Song Generation</strong> — SSE streaming, captcha solving, 73 few-shot genre examples</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>3-Tier Audio Analysis</strong> — Gemini, librosa, offline fallback with BPM voting and key detection</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Mix & Master</strong> — 14 genre presets, per-stem EQ, LUFS-targeted mastering chain</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Vocal Pipeline</strong> — 10-stage chain, RVC voice conversion, per-layer pitch detection</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Stem Separation</strong> — Demucs + UVR5, de-reverb, de-echo, independent layer conversion</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Image Gen</strong> — Local nunchaku, FLUX, SDXL backends. Zero cloud dependencies</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Video Pipeline</strong> — LLM-directed shots, 54 color grades, beat-synced editing</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Lyrical AI</strong> — 452 docs, 294 artist profiles, context-injected generation</div></div>
-      </div>
-      <div class="stack">
-        <span class="tech">Python</span><span class="tech">FastAPI</span><span class="tech">pywebview</span>
-        <span class="tech">PyTorch</span><span class="tech">CUDA 12.8</span><span class="tech">Docker</span>
-        <span class="tech">ChromaDB</span><span class="tech">Demucs</span><span class="tech">RVC</span>
-        <span class="tech">FFmpeg</span><span class="tech">FLUX</span><span class="tech">SSE</span>
-      </div>
-    </div>
-
-    <div class="project reveal" data-c="blue">
-      <div class="project-top">
-        <img src="img/heatsync-icon.png" alt="HeatSync" style="width:50px;height:50px;border-radius:12px;">
-        <div><h2 class="project-name"><a href="heatsync.html" style="color:inherit;text-decoration:none">HeatSync</a></h2><p class="project-sub">Real-Time System Monitor</p></div>
-      </div>
-      <p class="project-desc">A cross-platform desktop system monitor I built and <a href="https://github.com/VibeSmiths/HeatSync">open-sourced</a>. CPU and GPU temps, usage, VRAM, clock speeds, power draw — everything at a glance. Built it because I got tired of opening five different apps to check if my GPU was throttling. Runs natively on Linux, Windows, and macOS — which is rare for a tool this simple. There's a GitHub Actions workflow that automatically builds all three installers (AppImage, .exe, .dmg) on every release. Full details on the <a href="heatsync.html">HeatSync page</a>.</p>
-      <div class="features">
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Live Telemetry</strong> — CPU, GPU, temps, usage with real-time sparkline graphs</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>True Cross-Platform</strong> — Linux AppImage, Windows .exe, macOS .dmg — all built automatically via GitHub Actions CI</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Minimal Footprint</strong> — Sits at the top of the screen, stays out of the way</div></div>
-      </div>
-      <div class="stack"><span class="tech">Desktop App</span><span class="tech">System APIs</span><span class="tech">NVIDIA SMI</span><span class="tech">GitHub Actions CI</span><span class="tech">Cross-Platform</span></div>
-    </div>
-
-    <div class="project reveal" data-c="gold">
-      <div class="project-top">
-        <div class="project-icon">&#x2726;</div>
-        <div><h2 class="project-name"><a href="https://getchim.github.io" style="color:inherit;text-decoration:none">CHIM</a></h2><p class="project-sub">Oblivion Remastered Modpack &mdash; Linux, Steam Deck &amp; Windows</p></div>
-      </div>
-      <p class="project-desc">The only fully working modpack for Oblivion Remastered. 79 hand-tested mods, custom installer, and a Steam Deck profile that makes the game actually playable at a stable 30 FPS. Every other modpack for this game is either dead or broken. I wrote custom patches, fixed mod conflicts the authors didn't know about, and built an installer from scratch that handles the entire setup. The Deck version alone is worth it &mdash; this game ships "Verified" by Valve at 20 FPS with constant VRAM crashes. CHIM fixes all of it.</p>
-      <div class="features">
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Cross-Platform Installer</strong> &mdash; One codebase, three platforms. Built in Python with tkinter &mdash; handles Nexus downloads, archive extraction, file routing, load order generation, and framework deployment across Linux, Windows, and Steam Deck. Detects the platform and adapts automatically</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>79 Curated Mods</strong> &mdash; Combat overhaul, magic rework, AI improvements, new quests, visual upgrades, QoL fixes. Every mod tested together, hand-ordered load order, custom patches where mods conflicted</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Steam Deck Profile</strong> &mdash; Strips heavy visuals, adds 7 optimization mods, ships a custom Engine.ini with 50+ tweaked settings. Kills forced ray tracing, fixes the VRAM crash, caps loading screen FPS. Stable 30 at 800p</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Framework Pinning</strong> &mdash; OBSE and UE4SS bundled at tested versions so Nexus updates can't break anything. Patched Plugins.txt format that every other guide gets wrong</div></div>
-      </div>
-      <div class="stack"><span class="tech">Python</span><span class="tech">tkinter</span><span class="tech">Nexus API</span><span class="tech">Proton</span><span class="tech">UE4SS</span><span class="tech">OBSE</span><span class="tech">GitHub Actions</span><span class="tech">Cloudflare Pages</span></div>
-      <a href="https://getchim.github.io" target="_blank" style="display:inline-block;margin-top:1.5rem;font-family:'Cinzel',serif;font-size:0.85rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#060605;background:linear-gradient(135deg,#8a7234,#c9a84c,#e4c565);padding:0.7rem 2rem;border-radius:3px;text-decoration:none;transition:all 0.3s;box-shadow:0 0 20px rgba(201,168,76,0.15)">View CHIM &rarr;</a>
-    </div>
-
-    <div class="project reveal" data-c="orange">
-      <div class="project-top">
-        <div class="project-icon">&#x1F525;</div>
-        <div><h2 class="project-name">CrockedNLoaded</h2><p class="project-sub">Cooking Channel & Brand</p></div>
-      </div>
-      <p class="project-desc">A cooking channel I co-host with my friend CrockPotDaddy. I'm a professional chef, he's a home cook — we cook whatever sounds fun and talk trash while we do it. I designed and built the entire brand site from scratch at <a href="https://crockednloaded.com">crockednloaded.com</a>.</p>
-      <img src="img/cooking-hero.jpg" alt="CrockedNLoaded" class="project-img">
-      <div class="features">
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Brand Site</strong> — Dark modern design, ember particles, cursor glow, scroll animations</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Responsive</strong> — Full mobile support, works on everything</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>The Concept</strong> — Chef vs. home cook, real personality, zero script</div></div>
-      </div>
-      <div class="stack"><span class="tech">HTML/CSS</span><span class="tech">JavaScript</span><span class="tech">Branding</span><span class="tech">Responsive</span></div>
-    </div>
-
-    <div class="project reveal" data-c="purple">
-      <div class="project-top">
-        <div class="project-icon">&#x1F3B5;</div>
-        <div><h2 class="project-name">Music &amp; Media</h2><p class="project-sub">MACK3Y — Singer, Producer &amp; COO of Project 2 Studios</p></div>
-      </div>
-      <p class="project-desc">I write, produce, and release music professionally under the name <strong>MACK3Y</strong>, distributed through DistroKid to all major platforms. I'm also the COO of <strong>Project 2 Studios</strong>, a media company focused on artist development, content production, and creative strategy.</p>
-      <img src="img/project2.jpg" alt="Project 2 Studios" class="project-img">
-      <div class="features">
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Released Artist</strong> — Music professionally distributed via DistroKid to Spotify, Apple Music, YouTube Music, and all major platforms</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Project 2 Studios</strong> — COO of a media company handling artist development, content production, and creative strategy</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Full Pipeline</strong> — Writing, recording, mixing, mastering, cover art, video production — I handle every stage of the release process</div></div>
-      </div>
-      <div style="display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:1.5rem">
-        <a href="https://open.spotify.com/artist/2Il72DDQFro4dZnyejIuLy" target="_blank" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:20px;font-size:0.75rem;font-weight:600;color:var(--text-dim);text-decoration:none;transition:all 0.2s"><span>&#x1F3B5;</span> Spotify</a>
-        <a href="https://www.youtube.com/channel/UCk8wi40ouNv9JhnE8Pn6r-A" target="_blank" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:20px;font-size:0.75rem;font-weight:600;color:var(--text-dim);text-decoration:none;transition:all 0.2s"><span>&#x25B6;</span> YouTube Music</a>
-        <a href="https://www.facebook.com/profile.php?id=61582326641559" target="_blank" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:20px;font-size:0.75rem;font-weight:600;color:var(--text-dim);text-decoration:none;transition:all 0.2s"><span>&#x1F3B6;</span> MACK3Y on Facebook</a>
-        <a href="https://www.facebook.com/Project2Studios/" target="_blank" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:20px;font-size:0.75rem;font-weight:600;color:var(--text-dim);text-decoration:none;transition:all 0.2s"><span>&#x1F3AC;</span> Project 2 Studios</a>
-      </div>
-      <div class="stack"><span class="tech">DistroKid</span><span class="tech">Spotify</span><span class="tech">Apple Music</span><span class="tech">YouTube Music</span><span class="tech">Production</span><span class="tech">Mixing</span><span class="tech">Mastering</span></div>
-    </div>
-
-    <div class="project reveal" data-c="gold">
-      <div class="project-top">
-        <div class="project-icon">&#x1F310;</div>
-        <div><h2 class="project-name">Web Development & Brand Building</h2><p class="project-sub">Design, Development &amp; Digital Strategy</p></div>
-      </div>
-      <p class="project-desc">Every site in this portfolio was designed and hand-coded by me — no templates, no page builders. From this portfolio to the <a href="https://crockednloaded.com">CrockedNLoaded brand site</a>, <a href="omnisuite.html">OmniSuite product page</a>, <a href="heatsync.html">HeatSync product page</a>, <a href="guides.html">game guides hub</a>, and the <a href="https://getchim.github.io">CHIM modpack page</a>. I also manage social media strategy and content creation for brand growth — building engaged audiences through consistent content, platform-native formats, and understanding what drives engagement across YouTube, TikTok, Instagram, and Facebook.</p>
-      <div class="features">
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Full-Stack Web</strong> — Responsive, mobile-first sites with custom animations, lightboxes, canvas effects, scroll reveals. All vanilla HTML/CSS/JS — no frameworks, no bloat</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Brand Development</strong> — Complete brand identity for CrockedNLoaded: site design, social media presence, content strategy, audience building from zero</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Social Media Strategy</strong> — Platform-specific content creation, engagement optimization, audience growth across YouTube, TikTok, Instagram, and Facebook</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Product Pages</strong> — Purpose-built showcase pages for software projects with themed designs, interactive screenshots, and technical documentation</div></div>
-        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Content Hubs</strong> — Multi-game guides site, modpack documentation, build guides — all with game-matched aesthetics and data-driven JS rendering</div></div>
-      </div>
-      <div class="stack"><span class="tech">HTML/CSS</span><span class="tech">JavaScript</span><span class="tech">GitHub Pages</span><span class="tech">Responsive Design</span><span class="tech">Cloudflare</span><span class="tech">Brand Strategy</span><span class="tech">Social Media</span><span class="tech">Content Creation</span></div>
-    </div>
-
+<!-- ═══════════════════ MARQUEE ═══════════════════ -->
+<div class="marquee-section">
+  <div class="marquee" id="marquee">
+    <span class="marquee-item filled">Python</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item stroke">FastAPI</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item filled">PyTorch</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item stroke">CUDA</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item filled">Docker</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item stroke">FFmpeg</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item filled">JavaScript</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item stroke">Linux</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item filled">Git</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item stroke">ChromaDB</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item filled">SSE</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item stroke">REST APIs</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item filled">HTML/CSS</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item stroke">TypeScript</span><span class="marquee-sep">&bull;</span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item filled">Python</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item stroke">FastAPI</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item filled">PyTorch</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item stroke">CUDA</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item filled">Docker</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item stroke">FFmpeg</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item filled">JavaScript</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item stroke">Linux</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item filled">Git</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item stroke">ChromaDB</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item filled">SSE</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item stroke">REST APIs</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item filled">HTML/CSS</span><span class="marquee-sep">&bull;</span>
+    <span class="marquee-item stroke">TypeScript</span><span class="marquee-sep">&bull;</span>
   </div>
 </div>
 
-<footer><span>&copy; 2026 Z3nGineer &mdash; Everything on this page was built by one person.</span></footer>
+<!-- ═══════════════════ FEATURED PROJECTS ═══════════════════ -->
+<section class="featured-section">
+  <div class="featured-header">
+    <p class="section-label" id="featuredLabel">Featured Work</p>
+    <h2 class="section-heading" id="featuredHeading">The flagship projects.</h2>
+  </div>
+  <div class="featured-pin" id="featuredPin">
+    <div class="featured-track" id="featuredTrack">
 
+      <!-- OmniSuite -->
+      <div class="featured-card" data-c="purple">
+        <img src="img/omni-studio.png" alt="OmniSuite" class="featured-card-img">
+        <div class="featured-card-body">
+          <div class="featured-card-top">
+            <img src="img/omni-icon.png" alt="" class="featured-card-icon" style="border:none;background:none">
+            <div>
+              <h3 class="featured-card-name"><a href="omnisuite.html">OmniSuite</a></h3>
+              <p class="featured-card-sub">AI-Powered Music Production Platform</p>
+            </div>
+          </div>
+          <p class="featured-card-desc">A full desktop app for AI-assisted music production. Song generation, audio analysis, mixing and mastering, vocal production, voice conversion, image generation, video creation — all in one interface, all running locally on my RTX 5070 Ti. This is the project I built because the tools I wanted didn't exist.</p>
+          <div class="feat-grid">
+            <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Song Generation</strong> — SSE streaming, captcha solving, 73 few-shot genre examples</div></div>
+            <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>3-Tier Audio Analysis</strong> — Gemini, librosa, offline fallback with BPM voting and key detection</div></div>
+            <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Mix & Master</strong> — 14 genre presets, per-stem EQ, LUFS-targeted mastering chain</div></div>
+            <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Vocal Pipeline</strong> — 10-stage chain, RVC voice conversion, per-layer pitch detection</div></div>
+            <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Stem Separation</strong> — Demucs + UVR5, de-reverb, de-echo, independent layer conversion</div></div>
+            <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Image Gen</strong> — Local nunchaku, FLUX, SDXL backends. Zero cloud dependencies</div></div>
+            <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Video Pipeline</strong> — LLM-directed shots, 54 color grades, beat-synced editing</div></div>
+            <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Lyrical AI</strong> — 452 docs, 294 artist profiles, context-injected generation</div></div>
+          </div>
+          <div class="stack">
+            <span class="tech">Python</span><span class="tech">FastAPI</span><span class="tech">pywebview</span>
+            <span class="tech">PyTorch</span><span class="tech">CUDA 12.8</span><span class="tech">Docker</span>
+            <span class="tech">ChromaDB</span><span class="tech">Demucs</span><span class="tech">RVC</span>
+            <span class="tech">FFmpeg</span><span class="tech">FLUX</span><span class="tech">SSE</span>
+          </div>
+          <a href="omnisuite.html" class="featured-cta">View Project &rarr;</a>
+        </div>
+      </div>
+
+      <!-- CHIM -->
+      <div class="featured-card" data-c="gold">
+        <img src="hero-bg.jpg" alt="CHIM Modpack" class="featured-card-img">
+        <div class="featured-card-body">
+          <div class="featured-card-top">
+            <div class="featured-card-icon">&#x2726;</div>
+            <div>
+              <h3 class="featured-card-name"><a href="https://getchim.github.io">CHIM</a></h3>
+              <p class="featured-card-sub">Oblivion Remastered Modpack — Linux, Steam Deck &amp; Windows</p>
+            </div>
+          </div>
+          <p class="featured-card-desc">The only fully working modpack for Oblivion Remastered. 79 hand-tested mods, custom installer, and a Steam Deck profile that makes the game actually playable at a stable 30 FPS. Every other modpack for this game is either dead or broken. I wrote custom patches, fixed mod conflicts the authors didn't know about, and built an installer from scratch that handles the entire setup.</p>
+          <div class="feat-grid">
+            <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Cross-Platform Installer</strong> — One codebase, three platforms. Python + tkinter, handles Nexus downloads, archive extraction, file routing, load order generation</div></div>
+            <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>79 Curated Mods</strong> — Combat overhaul, magic rework, AI improvements, new quests, visual upgrades, QoL fixes. Hand-ordered load order, custom patches</div></div>
+            <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Steam Deck Profile</strong> — Custom Engine.ini with 50+ tweaked settings. Kills forced ray tracing, fixes VRAM crash. Stable 30 at 800p</div></div>
+            <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Framework Pinning</strong> — OBSE and UE4SS bundled at tested versions so Nexus updates can't break anything</div></div>
+          </div>
+          <div class="stack">
+            <span class="tech">Python</span><span class="tech">tkinter</span><span class="tech">Nexus API</span><span class="tech">Proton</span>
+            <span class="tech">UE4SS</span><span class="tech">OBSE</span><span class="tech">GitHub Actions</span><span class="tech">Cloudflare Pages</span>
+          </div>
+          <a href="https://getchim.github.io" target="_blank" class="featured-cta">View CHIM &rarr;</a>
+        </div>
+      </div>
+
+      <!-- HeatSync -->
+      <div class="featured-card" data-c="blue">
+        <img src="img/heatsync-screenshot.png" alt="HeatSync" class="featured-card-img">
+        <div class="featured-card-body">
+          <div class="featured-card-top">
+            <img src="img/heatsync-icon.png" alt="" class="featured-card-icon" style="border:none;background:none">
+            <div>
+              <h3 class="featured-card-name"><a href="heatsync.html">HeatSync</a></h3>
+              <p class="featured-card-sub">Real-Time System Monitor</p>
+            </div>
+          </div>
+          <p class="featured-card-desc">A cross-platform desktop system monitor I built and <a href="https://github.com/VibeSmiths/HeatSync">open-sourced</a>. CPU and GPU temps, usage, VRAM, clock speeds, power draw — everything at a glance. Built it because I got tired of opening five different apps to check if my GPU was throttling. Runs natively on Linux, Windows, and macOS. There's a GitHub Actions workflow that automatically builds all three installers on every release.</p>
+          <div class="feat-grid">
+            <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Live Telemetry</strong> — CPU, GPU, temps, usage with real-time sparkline graphs</div></div>
+            <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>True Cross-Platform</strong> — Linux AppImage, Windows .exe, macOS .dmg — all built via GitHub Actions CI</div></div>
+            <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Minimal Footprint</strong> — Sits at the top of the screen, stays out of the way</div></div>
+          </div>
+          <div class="stack">
+            <span class="tech">Desktop App</span><span class="tech">System APIs</span><span class="tech">NVIDIA SMI</span>
+            <span class="tech">GitHub Actions CI</span><span class="tech">Cross-Platform</span>
+          </div>
+          <a href="heatsync.html" class="featured-cta">View Project &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SECONDARY PROJECTS — BENTO GRID ═══════════════════ -->
+<section class="section">
+  <div class="section-inner">
+    <p class="section-label">More Work</p>
+    <h2 class="section-heading">Everything else I do.</h2>
+    <div class="bento">
+
+      <!-- AI Systems — 2x2 -->
+      <div class="bento-card span-2x2" data-c="purple">
+        <div class="bento-top">
+          <div class="bento-icon">&#x1F9E0;</div>
+          <div><h3 class="bento-name">AI Systems Engineering</h3><p class="bento-sub">Local LLMs, MCP Servers &amp; AI-Augmented Development</p></div>
+        </div>
+        <p class="bento-desc">I've been going deep on AI infrastructure — not just using ChatGPT, but building the systems around it. Running local LLMs on my own hardware, setting up MCP servers for tool orchestration, integrating AI into my actual development workflow, and building full applications with AI as a co-pilot. I'm a software engineer first — I've been writing code for 20 years — but AI is the biggest shift in how we build things since the internet, and I'm making sure I'm not left behind.</p>
+        <div class="feat-grid">
+          <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Local LLM Infrastructure</strong> — Ollama, vLLM, custom inference pipelines on RTX 5070 Ti</div></div>
+          <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>MCP Server Architecture</strong> — Custom Model Context Protocol servers for tool orchestration</div></div>
+          <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>AI-Augmented Dev</strong> — Force multiplier for coding, architecture, rapid prototyping</div></div>
+          <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Vector Databases & RAG</strong> — ChromaDB knowledge bases, context-aware retrieval</div></div>
+          <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>ML Pipelines</strong> — PyTorch, CUDA 12.8, model fine-tuning (RVC, 6000 steps)</div></div>
+        </div>
+        <div class="stack">
+          <span class="tech">Claude</span><span class="tech">Ollama</span><span class="tech">MCP</span>
+          <span class="tech">ChromaDB</span><span class="tech">PyTorch</span><span class="tech">CUDA</span>
+          <span class="tech">LLM Inference</span><span class="tech">RAG</span><span class="tech">RVC</span>
+          <span class="tech">Prompt Engineering</span>
+        </div>
+      </div>
+
+      <!-- PC Tuning — 1x1 -->
+      <div class="bento-card" data-c="orange">
+        <div class="bento-top">
+          <div class="bento-icon">&#x1F525;</div>
+          <div><h3 class="bento-name">PC Tuning & OC</h3><p class="bento-sub">Custom Hardware Optimization</p></div>
+        </div>
+        <p class="bento-desc">Manual voltage curves, stress testing, fan profiles. No presets, no auto-OC. Same hardware tuned on both Windows and Linux.</p>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>GPU</strong> — RTX 5070 Ti: +400 core, +5000 mem, 350W, custom fan curve</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>CPU</strong> — 9800X3D: -30 CO, 5.4GHz all-core boost</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>RAM</strong> — 6000MHz, fully stability-validated</div></div>
+        <div class="stack"><span class="tech">Manual OC</span><span class="tech">Curve Optimizer</span><span class="tech">Fan Curves</span><span class="tech">BIOS Tuning</span></div>
+      </div>
+
+      <!-- Linux Systems — 1x1 -->
+      <div class="bento-card" data-c="green">
+        <div class="bento-top">
+          <div class="bento-icon">&#9881;</div>
+          <div><h3 class="bento-name">Linux Systems</h3><p class="bento-sub">CachyOS / Arch — Bare Metal</p></div>
+        </div>
+        <p class="bento-desc">Custom-tuned Arch workstation. Kernel scheduler, sleep states, pacman hooks, driver configs. It breaks sometimes. I fix it.</p>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>OS</strong> — sched-ext bpfland, custom modprobe configs</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>ML Stack</strong> — CUDA 12.8, PyTorch nightly, Docker</div></div>
+        <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Gaming</strong> — Proton + DXVK, per-game configs, Wayland</div></div>
+        <div class="stack"><span class="tech">Arch Linux</span><span class="tech">KDE Plasma 6</span><span class="tech">Wayland</span><span class="tech">NVIDIA 595</span><span class="tech">Proton</span></div>
+      </div>
+
+      <!-- Web Dev — full width -->
+      <div class="bento-card span-wide" data-c="gold">
+        <div class="bento-top">
+          <div class="bento-icon">&#x1F310;</div>
+          <div><h3 class="bento-name">Web Development & Brand Building</h3><p class="bento-sub">Design, Development &amp; Digital Strategy</p></div>
+        </div>
+        <p class="bento-desc">Every site in this portfolio was designed and hand-coded by me — no templates, no page builders. From this portfolio to the <a href="https://crockednloaded.com">CrockedNLoaded brand site</a>, <a href="omnisuite.html">OmniSuite product page</a>, <a href="heatsync.html">HeatSync product page</a>, <a href="guides.html">game guides hub</a>, and the <a href="https://getchim.github.io">CHIM modpack page</a>. I also manage social media strategy and content creation for brand growth.</p>
+        <div class="feat-grid" style="margin-bottom:0">
+          <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Full-Stack Web</strong> — Responsive, mobile-first with custom animations, canvas effects, scroll reveals. All vanilla HTML/CSS/JS</div></div>
+          <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Brand Development</strong> — Complete brand identity for CrockedNLoaded: site, social media, content strategy</div></div>
+          <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Product Pages</strong> — Purpose-built showcases with themed designs, interactive screenshots</div></div>
+          <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Social Media Strategy</strong> — Platform-specific content, audience growth across YouTube, TikTok, Instagram, Facebook</div></div>
+          <div class="feat"><div class="feat-dot"></div><div class="feat-text"><strong>Content Hubs</strong> — Multi-game guides, modpack docs, build guides with game-matched aesthetics</div></div>
+        </div>
+        <div class="stack"><span class="tech">HTML/CSS</span><span class="tech">JavaScript</span><span class="tech">GitHub Pages</span><span class="tech">Responsive</span><span class="tech">Cloudflare</span><span class="tech">Brand Strategy</span><span class="tech">Social Media</span></div>
+      </div>
+
+      <!-- CrockedNLoaded — 1x1 -->
+      <div class="bento-card span-2col" data-c="orange">
+        <div class="bento-top">
+          <div class="bento-icon">&#x1F525;</div>
+          <div><h3 class="bento-name">CrockedNLoaded</h3><p class="bento-sub">Cooking Channel &amp; Brand</p></div>
+        </div>
+        <img src="img/cooking-hero.jpg" alt="CrockedNLoaded" class="bento-img">
+        <p class="bento-desc">A cooking channel I co-host with my friend CrockPotDaddy. I'm a professional chef, he's a home cook — we cook whatever sounds fun and talk trash while we do it. I designed and built the entire brand site from scratch.</p>
+        <div class="stack"><span class="tech">HTML/CSS</span><span class="tech">JavaScript</span><span class="tech">Branding</span><span class="tech">Responsive</span></div>
+        <div class="bento-links">
+          <a href="https://crockednloaded.com" target="_blank" class="bento-link">&#x1F525; Visit Site</a>
+        </div>
+      </div>
+
+      <!-- Music & Media — 1x1 -->
+      <div class="bento-card span-2col" data-c="purple">
+        <div class="bento-top">
+          <div class="bento-icon">&#x1F3B5;</div>
+          <div><h3 class="bento-name">Music &amp; Media</h3><p class="bento-sub">MACK3Y — Singer, Producer &amp; COO of Project 2 Studios</p></div>
+        </div>
+        <img src="img/project2.jpg" alt="Project 2 Studios" class="bento-img">
+        <p class="bento-desc">I write, produce, and release music professionally under the name <strong>MACK3Y</strong>, distributed through DistroKid to all major platforms. I'm also the COO of <strong>Project 2 Studios</strong>, a media company focused on artist development.</p>
+        <div class="stack"><span class="tech">DistroKid</span><span class="tech">Spotify</span><span class="tech">Apple Music</span><span class="tech">YouTube Music</span><span class="tech">Production</span><span class="tech">Mixing</span></div>
+        <div class="bento-links">
+          <a href="https://open.spotify.com/artist/2Il72DDQFro4dZnyejIuLy" target="_blank" class="bento-link">&#x1F3B5; Spotify</a>
+          <a href="https://www.youtube.com/channel/UCk8wi40ouNv9JhnE8Pn6r-A" target="_blank" class="bento-link">&#x25B6; YouTube Music</a>
+          <a href="https://www.facebook.com/profile.php?id=61582326641559" target="_blank" class="bento-link">&#x1F3B6; MACK3Y</a>
+          <a href="https://www.facebook.com/Project2Studios/" target="_blank" class="bento-link">&#x1F3AC; Project 2 Studios</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ ABOUT ═══════════════════ -->
+<section class="section" style="background:var(--bg-warm)">
+  <div class="section-inner">
+    <p class="section-label">About</p>
+    <h2 class="section-heading">The person behind the code.</h2>
+    <div class="about-grid">
+      <div class="about-portrait-wrap">
+        <img src="img/steve-city.jpg" alt="Steve Mackey" class="about-portrait">
+      </div>
+      <div>
+        <div class="about-text">
+          <p>I taught myself to code at 15 building MySpace layouts from scratch — not picking themes, writing the actual HTML and CSS. Twenty years later the tools changed but I didn't. If I can see it, I can build it.</p>
+          <p>I build full-stack apps from the ground up. Backend APIs, desktop frontends, ML pipelines, real-time streaming, audio and video processing. I'm also going deep on AI systems — local LLMs, MCP servers, and using AI as a development force multiplier, not a crutch. Everything on this site was designed, coded, and shipped by me.</p>
+          <p>When I'm not coding I'm in the kitchen or the studio. I'm a professional chef and I make music as <strong>MACK3Y</strong>. I also co-host <strong><a href="https://crockednloaded.com">CrockedNLoaded</a></strong> — a cooking channel with my boy CrockPotDaddy where we cook whatever sounds fun and see what happens.</p>
+        </div>
+        <div class="tech-bar">
+          <span class="tech">Python</span><span class="tech">FastAPI</span><span class="tech">JavaScript</span>
+          <span class="tech">HTML/CSS</span><span class="tech">TypeScript</span><span class="tech">PyTorch</span>
+          <span class="tech">Docker</span><span class="tech">FFmpeg</span><span class="tech">CUDA</span>
+          <span class="tech">Linux</span><span class="tech">Git</span><span class="tech">REST APIs</span>
+          <span class="tech">SSE/Streaming</span><span class="tech">ChromaDB</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-left">&copy; 2026 Z3nGineer — Everything on this page was built by one person.</span>
+    <div class="footer-right">
+      <a href="omnisuite.html">OmniSuite</a>
+      <a href="heatsync.html">HeatSync</a>
+      <a href="https://getchim.github.io">CHIM</a>
+      <a href="guides.html">Guides</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════ SCRIPTS ═══════════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
 <script>
-/* ── Background canvas: subtle dot grid + floating particles ── */
-(function(){
-  const c=document.getElementById('bg-canvas'),ctx=c.getContext('2d');
-  let w,h,mx=0,my=0,particles=[];
-  const GOLD=[201,168,76];
-  function resize(){w=c.width=innerWidth;h=c.height=innerHeight;initDots()}
-  let dots=[];
-  function initDots(){
-    dots=[];
-    const sp=50;
-    for(let x=sp;x<w;x+=sp)for(let y=sp;y<h;y+=sp)dots.push({x,y});
+/* ═══════════════════ LENIS SMOOTH SCROLL ═══════════════════ */
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  touchMultiplier: 2,
+});
+function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+gsap.registerPlugin(ScrollTrigger);
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(time => lenis.raf(time * 1000));
+gsap.ticker.lagSmoothing(0);
+
+/* ═══════════════════ PRELOADER ═══════════════════ */
+;(function() {
+  const counter = document.getElementById('preloader-counter');
+  const line = document.getElementById('preloader-line');
+  const preloader = document.getElementById('preloader');
+  const obj = { val: 0 };
+
+  document.body.style.overflow = 'hidden';
+  lenis.stop();
+
+  gsap.to(obj, {
+    val: 100,
+    duration: 2,
+    ease: 'power3.inOut',
+    onUpdate() {
+      const v = Math.round(obj.val);
+      counter.textContent = v;
+      line.style.width = v + '%';
+    },
+    onComplete() {
+      gsap.to(preloader, {
+        yPercent: -100,
+        duration: .7,
+        ease: 'power4.inOut',
+        delay: .3,
+        onComplete() {
+          preloader.remove();
+          document.body.style.overflow = '';
+          lenis.start();
+          animateHero();
+        }
+      });
+    }
+  });
+})();
+
+/* ═══════════════════ CUSTOM CURSOR ═══════════════════ */
+;(function() {
+  if (matchMedia('(hover:none)').matches) return;
+  const cur = document.getElementById('cursor');
+  const label = document.getElementById('cursor-label');
+  let mx = -100, my = -100, cx = -100, cy = -100;
+
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  document.addEventListener('mousedown', () => cur.classList.add('click'));
+  document.addEventListener('mouseup', () => cur.classList.remove('click'));
+
+  function tick() {
+    cx += (mx - cx) * 0.15;
+    cy += (my - cy) * 0.15;
+    cur.style.left = cx + 'px';
+    cur.style.top = cy + 'px';
+    label.style.left = cx + 'px';
+    label.style.top = cy + 'px';
+    requestAnimationFrame(tick);
   }
-  function initParticles(){
-    particles=[];
-    const n=Math.min(35,Math.floor(w*h/30000));
-    for(let i=0;i<n;i++)particles.push({
-      x:Math.random()*w,y:Math.random()*h,
-      vx:(Math.random()-0.5)*0.15,vy:(Math.random()-0.5)*0.15,
-      r:Math.random()*1.5+0.5,a:Math.random()*0.12+0.03
+  tick();
+
+  document.querySelectorAll('a, button, .featured-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cur.classList.add('hover');
+      if (el.classList.contains('featured-card')) {
+        label.textContent = 'VIEW';
+        label.classList.add('visible');
+      }
+    });
+    el.addEventListener('mouseleave', () => {
+      cur.classList.remove('hover');
+      label.textContent = '';
+      label.classList.remove('visible');
+    });
+  });
+})();
+
+/* ═══════════════════ SCROLL PROGRESS ═══════════════════ */
+;(function() {
+  const bar = document.getElementById('scroll-progress');
+  lenis.on('scroll', () => {
+    const pct = lenis.progress * 100;
+    bar.style.width = pct + '%';
+  });
+})();
+
+/* ═══════════════════ NAV SCROLL STATE ═══════════════════ */
+;(function() {
+  const nav = document.getElementById('mainNav');
+  lenis.on('scroll', () => {
+    nav.classList.toggle('scrolled', lenis.scroll > 80);
+  });
+})();
+
+/* ═══════════════════ HAMBURGER ═══════════════════ */
+;(function() {
+  const btn = document.getElementById('hamburger');
+  const links = document.getElementById('navLinks');
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('open');
+    links.classList.toggle('open');
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    btn.classList.remove('open');
+    links.classList.remove('open');
+  }));
+})();
+
+/* ═══════════════════ HERO ANIMATION ═══════════════════ */
+function animateHero() {
+  const name = document.getElementById('heroName');
+  const text = name.textContent;
+  name.innerHTML = '';
+  text.split('').forEach(ch => {
+    const span = document.createElement('span');
+    span.className = 'char';
+    span.textContent = ch === ' ' ? '\u00A0' : ch;
+    name.appendChild(span);
+  });
+
+  const tl = gsap.timeline();
+  tl.to('.hero-bg', { opacity: 1, duration: 1.2, ease: 'power2.out' })
+    .to('#heroEyebrow', { opacity: 1, y: 0, duration: .8, ease: 'power2.out' }, '-=.6')
+    .to('.hero-name .char', {
+      opacity: 1, y: 0,
+      duration: .6, stagger: .04, ease: 'power3.out'
+    }, '-=.4')
+    .to('#heroSub', { opacity: 1, y: 0, duration: .8, ease: 'power2.out' }, '-=.3')
+    .to('#heroScroll', { opacity: 1, duration: .6 }, '-=.2');
+
+  gsap.set('#heroEyebrow', { y: 20 });
+  gsap.set('#heroSub', { y: 20 });
+
+  ScrollTrigger.create({
+    trigger: '.hero',
+    start: 'top top',
+    end: 'bottom top',
+    onLeave: () => document.getElementById('heroScroll').classList.add('hidden'),
+    onEnterBack: () => document.getElementById('heroScroll').classList.remove('hidden'),
+  });
+}
+
+/* ═══════════════════ FEATURED — HORIZONTAL SCROLL ═══════════════════ */
+;(function() {
+  const pin = document.getElementById('featuredPin');
+  const track = document.getElementById('featuredTrack');
+
+  function setupHScroll() {
+    ScrollTrigger.getAll().forEach(st => { if (st.vars.id === 'hscroll') st.kill(); });
+
+    if (window.innerWidth < 768) return;
+
+    const totalScroll = track.scrollWidth - pin.offsetWidth;
+
+    gsap.to(track, {
+      x: -totalScroll,
+      ease: 'none',
+      scrollTrigger: {
+        id: 'hscroll',
+        trigger: pin,
+        start: 'top top',
+        end: '+=' + totalScroll,
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      }
     });
   }
-  function draw(){
-    ctx.clearRect(0,0,w,h);
-    /* Dot grid */
-    for(const d of dots){
-      const dx=d.x-mx,dy=d.y-my,dist=Math.sqrt(dx*dx+dy*dy);
-      const glow=Math.max(0,1-dist/350);
-      const alpha=0.06+glow*0.12;
-      const size=1+glow*1.5;
-      ctx.beginPath();ctx.arc(d.x,d.y,size,0,Math.PI*2);
-      ctx.fillStyle=`rgba(${GOLD[0]},${GOLD[1]},${GOLD[2]},${alpha})`;
+
+  setupHScroll();
+  window.addEventListener('resize', () => {
+    clearTimeout(window._hscrollResize);
+    window._hscrollResize = setTimeout(setupHScroll, 250);
+  });
+})();
+
+/* ═══════════════════ SCROLL REVEALS ═══════════════════ */
+;(function() {
+  const reveals = document.querySelectorAll('.section-label, .section-heading, .bento-card, .about-portrait-wrap, .about-text');
+  reveals.forEach((el, i) => {
+    gsap.from(el, {
+      opacity: 0,
+      y: 40,
+      duration: .9,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+        toggleActions: 'play none none none',
+      }
+    });
+  });
+})();
+
+/* ═══════════════════ PARALLAX — HERO BG ═══════════════════ */
+;(function() {
+  gsap.to('.hero-bg img', {
+    y: 120,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true,
+    }
+  });
+})();
+
+/* ═══════════════════ MAGNETIC HOVER ═══════════════════ */
+;(function() {
+  if (matchMedia('(hover:none)').matches) return;
+  document.querySelectorAll('.nav-links a, .nav-brand, .featured-cta').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      el.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = '';
+      el.style.transition = 'transform .4s ease';
+      setTimeout(() => el.style.transition = '', 400);
+    });
+  });
+})();
+
+/* ═══════════════════ BACKGROUND CANVAS ═══════════════════ */
+;(function() {
+  const c = document.getElementById('bg-canvas'), ctx = c.getContext('2d');
+  let w, h, mx = 0, my = 0, particles = [];
+  const GOLD = [201, 168, 76];
+
+  function resize() { w = c.width = innerWidth; h = c.height = innerHeight; initDots(); }
+  let dots = [];
+  function initDots() {
+    dots = [];
+    const sp = 60;
+    for (let x = sp; x < w; x += sp) for (let y = sp; y < h; y += sp) dots.push({ x, y });
+  }
+  function initParticles() {
+    particles = [];
+    const n = Math.min(25, Math.floor(w * h / 40000));
+    for (let i = 0; i < n; i++) particles.push({
+      x: Math.random() * w, y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.12, vy: (Math.random() - 0.5) * 0.12,
+      r: Math.random() * 1.2 + 0.4, a: Math.random() * 0.08 + 0.02
+    });
+  }
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (const d of dots) {
+      const dx = d.x - mx, dy = d.y - my, dist = Math.sqrt(dx * dx + dy * dy);
+      const glow = Math.max(0, 1 - dist / 350);
+      const alpha = 0.04 + glow * 0.1;
+      const size = 0.8 + glow * 1.2;
+      ctx.beginPath(); ctx.arc(d.x, d.y, size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${GOLD[0]},${GOLD[1]},${GOLD[2]},${alpha})`;
       ctx.fill();
     }
-    /* Floating particles */
-    for(const p of particles){
-      p.x+=p.vx;p.y+=p.vy;
-      if(p.x<0)p.x=w;if(p.x>w)p.x=0;
-      if(p.y<0)p.y=h;if(p.y>h)p.y=0;
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(${GOLD[0]},${GOLD[1]},${GOLD[2]},${p.a})`;
+    for (const p of particles) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${GOLD[0]},${GOLD[1]},${GOLD[2]},${p.a})`;
       ctx.fill();
     }
     requestAnimationFrame(draw);
   }
-  addEventListener('resize',()=>{resize();initParticles()});
-  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
-  resize();initParticles();draw();
+  addEventListener('resize', () => { resize(); initParticles(); });
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  resize(); initParticles(); draw();
 })();
 
-/* ── Hamburger menu ── */
-(function(){
-  const btn=document.getElementById('globalHamburger'),nav=document.getElementById('globalNavLinks');
-  btn.addEventListener('click',()=>{btn.classList.toggle('open');nav.classList.toggle('open')});
-  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
-    btn.classList.remove('open');nav.classList.remove('open');
-  }));
-})();
-
-/* ── Scroll reveal ── */
-const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0.08,rootMargin:'0px 0px -50px 0px'});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-
-/* ── Easter egg: 5 rapid clicks on brand → secret page ── */
-;(function(){
-  var b=document.querySelector('.global-nav-brand'),c=0,t=0,reset;
-  if(!b)return;
-  b.addEventListener('click',function(e){
+/* ═══════════════════ EASTER EGG ═══════════════════ */
+;(function() {
+  var b = document.getElementById('navBrand'), c = 0, t = 0, reset;
+  if (!b) return;
+  b.addEventListener('click', function(e) {
     e.preventDefault();
-    var now=Date.now();
-    if(now-t>1500)c=0;
-    c++;t=now;
+    var now = Date.now();
+    if (now - t > 1500) c = 0;
+    c++; t = now;
     clearTimeout(reset);
-    if(c>=5){c=0;window.location.href='https://shieldnekids.github.io/';}
-    else{reset=setTimeout(function(){window.scrollTo({top:0,behavior:'smooth'});c=0;},400);}
+    if (c >= 5) { c = 0; window.location.href = 'https://shieldnekids.github.io/'; }
+    else { reset = setTimeout(function() { lenis.scrollTo(0); c = 0; }, 400); }
   });
 })();
 </script>
