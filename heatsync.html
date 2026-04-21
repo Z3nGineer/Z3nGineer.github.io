@@ -232,7 +232,7 @@ footer a{color:var(--cyan);text-decoration:none}
   <h1>Heat<span>Sync</span></h1>
   <p class="hero-sub">Real-time system monitoring for Windows, with a Linux AppImage for good measure. Built because I got tired of opening five apps to check if my GPU was throttling.</p>
   <div class="hero-badges">
-    <span class="badge badge-cyan">v1.0.79</span>
+    <span class="badge badge-cyan" id="versionBadge">v1.0.79</span>
     <span class="badge badge-cyan">Python 3.10+</span>
     <span class="badge badge-cyan">Windows + Linux</span>
     <span class="badge badge-green">MIT License</span>
@@ -376,6 +376,10 @@ footer a{color:var(--cyan);text-decoration:none}
 </div>
 
 <script>
+fetch('https://api.github.com/repos/Z3nGineer/HeatSync/releases/latest')
+  .then(r=>r.ok?r.json():null)
+  .then(d=>{if(d&&d.tag_name){const b=document.getElementById('versionBadge');if(b)b.textContent=d.tag_name}})
+  .catch(()=>{});
 const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0.08,rootMargin:'0px 0px -50px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 const gBtn=document.getElementById('globalHamburger'),gNav=document.getElementById('globalNavLinks');
