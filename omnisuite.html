@@ -4,6 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OmniSuite — AI-Powered Music Production Platform</title>
+
+<meta name="description" content="OmniSuite is a local-first AI music production platform for song generation, analysis, mixing, mastering, vocals, images, and video.">
+<link rel="canonical" href="https://z3ngineer.github.io/omnisuite.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://z3ngineer.github.io/omnisuite.html">
+<meta property="og:title" content="OmniSuite — AI-Powered Music Production Platform">
+<meta property="og:description" content="OmniSuite is a local-first AI music production platform for song generation, analysis, mixing, mastering, vocals, images, and video.">
+<meta property="og:image" content="https://z3ngineer.github.io/img/portfolio-banner.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="OmniSuite — AI-Powered Music Production Platform">
+<meta name="twitter:description" content="OmniSuite is a local-first AI music production platform for song generation, analysis, mixing, mastering, vocals, images, and video.">
+<meta name="twitter:image" content="https://z3ngineer.github.io/img/portfolio-banner.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -216,6 +230,8 @@ footer a{color:var(--purple-bright);text-decoration:none}
 .page-subnav a{font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#5a5a5a;text-decoration:none;transition:color 0.2s}
 .page-subnav a:hover,.page-subnav a.active{color:#ccc}
 
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:0.01ms!important}.reveal,.fade-in,.fade-out{opacity:1!important;transform:none!important}}
 </style>
 </head>
 <body>
@@ -223,11 +239,11 @@ footer a{color:var(--purple-bright);text-decoration:none}
 <nav class="global-nav">
   <div class="global-nav-inner">
     <a href="index.html" class="global-nav-brand">Z3nGineer</a>
-    <button class="global-hamburger" id="globalHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <button class="global-hamburger" id="globalHamburger" aria-label="Menu" aria-controls="globalNavLinks" aria-expanded="false"><span></span><span></span><span></span></button>
     <ul class="global-nav-links" id="globalNavLinks">
       <li><a href="index.html">Home</a></li>
       <li class="global-nav-dropdown">
-        <a href="#">Projects <span class="global-dd-arrow">&#x25BC;</span></a>
+        <a href="guides.html" aria-haspopup="true">Projects <span class="global-dd-arrow">&#x25BC;</span></a>
         <div class="global-dd-menu">
           <a href="omnisuite.html">OmniSuite</a>
           <a href="heatsync.html">HeatSync</a>
@@ -249,7 +265,7 @@ footer a{color:var(--purple-bright);text-decoration:none}
 </div>
 
 <header class="hero">
-  <img src="img/omni-icon.png" alt="OmniSuite" class="hero-icon">
+  <img src="img/omni-icon.png" alt="OmniSuite" class="hero-icon" loading="lazy" decoding="async">
   <h1>Omni<span>Suite</span></h1>
   <p class="hero-sub">A full desktop platform for AI-assisted music production. Song generation, audio analysis, mixing, mastering, vocal production, image gen, video creation — all in one interface, all running locally.</p>
   <div class="hero-badges">
@@ -267,28 +283,28 @@ footer a{color:var(--purple-bright);text-decoration:none}
     <div class="divider reveal r2"></div>
     <div class="screenshots">
       <div class="reveal">
-        <img src="img/omni-studio.png" alt="OmniSuite Song Studio" class="ss-hero">
+        <img src="img/omni-studio.png" alt="OmniSuite Song Studio" class="ss-hero" loading="lazy" decoding="async">
         <p class="ss-label">Song Studio — Generation, Lyrics, Cover Art, Prompt Engineering</p>
       </div>
       <div class="ss-grid">
         <div class="ss-item reveal">
-          <img src="img/omni-launch.png" alt="OmniSuite Launch Screen">
+          <img src="img/omni-launch.png" alt="OmniSuite Launch Screen" loading="lazy" decoding="async">
           <p class="ss-label">Launch — Service Health Check</p>
         </div>
         <div class="ss-item reveal r1">
-          <img src="img/omni-planner.png" alt="OmniSuite Release Planner">
+          <img src="img/omni-planner.png" alt="OmniSuite Release Planner" loading="lazy" decoding="async">
           <p class="ss-label">Release Planner — Dashboard</p>
         </div>
         <div class="ss-item reveal r2">
-          <img src="img/omni-imagegen.png" alt="OmniSuite Image Lab">
+          <img src="img/omni-imagegen.png" alt="OmniSuite Image Lab" loading="lazy" decoding="async">
           <p class="ss-label">Image Lab — Local Generation</p>
         </div>
         <div class="ss-item reveal r3">
-          <img src="img/omni-video.png" alt="OmniSuite Video Creator">
+          <img src="img/omni-video.png" alt="OmniSuite Video Creator" loading="lazy" decoding="async">
           <p class="ss-label">Video Creator — Music Video Pipeline</p>
         </div>
         <div class="ss-item reveal">
-          <img src="img/omni-social.png" alt="OmniSuite Social Command Center">
+          <img src="img/omni-social.png" alt="OmniSuite Social Command Center" loading="lazy" decoding="async">
           <p class="ss-label">Social Command Center</p>
         </div>
       </div>
@@ -494,7 +510,7 @@ footer a{color:var(--purple-bright);text-decoration:none}
   <button class="lb-close" id="lb-close" aria-label="Close">&times;</button>
   <button class="lb-nav lb-prev" id="lb-prev" aria-label="Previous">&#8592;</button>
   <button class="lb-nav lb-next" id="lb-next" aria-label="Next">&#8594;</button>
-  <div class="lb-img-wrap"><img id="lb-img" src="" alt=""></div>
+  <div class="lb-img-wrap"><img id="lb-img" src="" alt="" loading="lazy" decoding="async"></div>
   <div class="lb-bottom">
     <p class="lb-caption" id="lb-caption"></p>
     <p class="lb-counter" id="lb-counter"></p>
@@ -505,7 +521,11 @@ footer a{color:var(--purple-bright);text-decoration:none}
 const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0.08,rootMargin:'0px 0px -50px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 const gBtn=document.getElementById('globalHamburger'),gNav=document.getElementById('globalNavLinks');
-if(gBtn&&gNav){gBtn.addEventListener('click',()=>{gBtn.classList.toggle('open');gNav.classList.toggle('open')});gNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{gBtn.classList.remove('open');gNav.classList.remove('open')}))}
+if(gBtn&&gNav){
+  const setNavOpen=open=>{gBtn.classList.toggle('open',open);gNav.classList.toggle('open',open);gBtn.setAttribute('aria-expanded',String(open));};
+  gBtn.addEventListener('click',()=>setNavOpen(!gNav.classList.contains('open')));
+  gNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setNavOpen(false)));
+}
 
 /* Lightbox */
 (function(){

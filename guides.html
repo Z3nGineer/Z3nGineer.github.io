@@ -4,6 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Z3nGineer — Game Guides</title>
+
+<meta name="description" content="Game build guides and content hubs by Z3nGineer for Oblivion Remastered, Baldur Gate 3, and Diablo II Resurrected.">
+<link rel="canonical" href="https://z3ngineer.github.io/guides.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://z3ngineer.github.io/guides.html">
+<meta property="og:title" content="Z3nGineer — Game Guides">
+<meta property="og:description" content="Game build guides and content hubs by Z3nGineer for Oblivion Remastered, Baldur Gate 3, and Diablo II Resurrected.">
+<meta property="og:image" content="https://z3ngineer.github.io/img/portfolio-banner.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Z3nGineer — Game Guides">
+<meta name="twitter:description" content="Game build guides and content hubs by Z3nGineer for Oblivion Remastered, Baldur Gate 3, and Diablo II Resurrected.">
+<meta name="twitter:image" content="https://z3ngineer.github.io/img/portfolio-banner.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -227,18 +241,20 @@ footer span{font-size:0.7rem;color:var(--text-muted);font-weight:400}
 .page-subnav::-webkit-scrollbar{display:none}
 .page-subnav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;gap:1.5rem;white-space:nowrap}
 .page-subnav a{font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#5a5a5a;text-decoration:none;transition:color 0.2s}
-.page-subnav a:hover,.page-subnav a.active{color:#ccc}</style>
+.page-subnav a:hover,.page-subnav a.active{color:#ccc}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:0.01ms!important}.reveal,.fade-in,.fade-out{opacity:1!important;transform:none!important}}
+</style>
 </head>
 <body>
 
 <nav class="global-nav">
   <div class="global-nav-inner">
     <a href="index.html" class="global-nav-brand">Z3nGineer</a>
-    <button class="global-hamburger" id="globalHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <button class="global-hamburger" id="globalHamburger" aria-label="Menu" aria-controls="globalNavLinks" aria-expanded="false"><span></span><span></span><span></span></button>
     <ul class="global-nav-links" id="globalNavLinks">
       <li><a href="index.html">Home</a></li>
       <li class="global-nav-dropdown">
-        <a href="#">Projects <span class="global-dd-arrow">&#x25BC;</span></a>
+        <a href="guides.html" aria-haspopup="true">Projects <span class="global-dd-arrow">&#x25BC;</span></a>
         <div class="global-dd-menu">
           <a href="omnisuite.html">OmniSuite</a>
           <a href="heatsync.html">HeatSync</a>
@@ -343,7 +359,7 @@ function renderLanding() {
   const grid = document.getElementById('game-grid');
   grid.innerHTML = games.map(g => `
     <div class="game-card" data-g="${g.id}" onclick="showGame('${g.id}')">
-      <img src="${g.img}" alt="${g.title}" class="game-card-img">
+      <img src="${g.img}" alt="${g.title}" class="game-card-img" loading="lazy" decoding="async">
       <div class="game-card-overlay">
         <h2 class="game-card-title">${g.title}</h2>
         <p class="game-card-sub">${g.sub}</p>
@@ -368,7 +384,7 @@ function showGame(id, skipPush) {
   document.getElementById('guides-header').innerHTML = `
     <div class="guides-header">
       <div class="guides-header-accent" data-c="${game.color}"></div>
-      <img src="${game.img}" alt="${game.title}" class="guides-header-img">
+      <img src="${game.img}" alt="${game.title}" class="guides-header-img" loading="lazy" decoding="async">
       <div>
         <h2>${game.title}</h2>
         <p>${game.sub} &mdash; ${game.guides.length} guide${game.guides.length !== 1 ? 's' : ''} available</p>
@@ -438,7 +454,11 @@ window.addEventListener('popstate', (e) => {
 
 // ====== HAMBURGER NAV ======
 const gBtn=document.getElementById('globalHamburger'),gNav=document.getElementById('globalNavLinks');
-if(gBtn&&gNav){gBtn.addEventListener('click',()=>{gBtn.classList.toggle('open');gNav.classList.toggle('open')});gNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{gBtn.classList.remove('open');gNav.classList.remove('open')}))}
+if(gBtn&&gNav){
+  const setNavOpen=open=>{gBtn.classList.toggle('open',open);gNav.classList.toggle('open',open);gBtn.setAttribute('aria-expanded',String(open));};
+  gBtn.addEventListener('click',()=>setNavOpen(!gNav.classList.contains('open')));
+  gNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setNavOpen(false)));
+}
 
 // ====== INIT ======
 renderLanding();

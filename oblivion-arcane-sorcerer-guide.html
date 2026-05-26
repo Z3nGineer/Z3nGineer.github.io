@@ -4,6 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arcane Sorcerer — Oblivion Remastered Build Guide</title>
+
+<meta name="description" content="Arcane Sorcerer — Oblivion Remastered Build Guide by Z3nGineer, with build notes, recommendations, and hand-built static web presentation.">
+<link rel="canonical" href="https://z3ngineer.github.io/oblivion-arcane-sorcerer-guide.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://z3ngineer.github.io/oblivion-arcane-sorcerer-guide.html">
+<meta property="og:title" content="Arcane Sorcerer — Oblivion Remastered Build Guide">
+<meta property="og:description" content="Arcane Sorcerer — Oblivion Remastered Build Guide by Z3nGineer, with build notes, recommendations, and hand-built static web presentation.">
+<meta property="og:image" content="https://z3ngineer.github.io/img/portfolio-banner.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Arcane Sorcerer — Oblivion Remastered Build Guide">
+<meta name="twitter:description" content="Arcane Sorcerer — Oblivion Remastered Build Guide by Z3nGineer, with build notes, recommendations, and hand-built static web presentation.">
+<meta name="twitter:image" content="https://z3ngineer.github.io/img/portfolio-banner.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -255,6 +269,8 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
   .unav-dropdown{border-bottom:none}
 }
 
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:0.01ms!important}.reveal,.fade-in,.fade-out{opacity:1!important;transform:none!important}}
 </style>
 </head>
 <body>
@@ -265,7 +281,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
     <ul class="unav-links" id="unav-links">
       <li><a href="index.html">Home</a></li>
       <li class="unav-dropdown">
-        <a href="#">Projects <span class="dd-arrow">&#x25BC;</span></a>
+        <a href="guides.html" aria-haspopup="true">Projects <span class="dd-arrow">&#x25BC;</span></a>
         <div class="unav-dd">
           <a href="omnisuite.html">OmniSuite</a>
           <a href="heatsync.html">HeatSync</a>
@@ -300,7 +316,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
 <!-- SIDEBAR -->
 <nav class="sidebar">
   <div class="sidebar-badge">
-    <img src="https://images.uesp.net/thumb/1/12/OBR-class-Sorcerer.png/200px-OBR-class-Sorcerer.png" alt="Sorcerer">
+    <img src="https://images.uesp.net/thumb/1/12/OBR-class-Sorcerer.png/200px-OBR-class-Sorcerer.png" alt="Sorcerer" loading="lazy" decoding="async">
   </div>
   <div class="sidebar-title">Build Guide</div>
   <a href="#overview"><span class="nav-icon">&#9672;</span> Overview</a>
@@ -639,7 +655,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
       </svg>
     </div>
     <div class="header-row">
-      <img class="header-portrait" src="https://images.uesp.net/thumb/9/97/OBR-icon-race-HighElf.png/200px-OBR-icon-race-HighElf.png" alt="High Elf">
+      <img class="header-portrait" src="https://images.uesp.net/thumb/9/97/OBR-icon-race-HighElf.png/200px-OBR-icon-race-HighElf.png" alt="High Elf" loading="lazy" decoding="async">
       <div class="header-text">
         <div class="breadcrumb">Oblivion Remastered &rsaquo; Builds &rsaquo; Arcane Sorcerer</div>
         <h1>Arcane Sorcerer</h1>
@@ -667,7 +683,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
       <p>Most players avoid the Atronach birthsign because Stunted Magicka (zero regen) sounds brutal. But with smart Alchemy, Welkynd Stones, and eventually 100% Spell Absorption, you never run out. You turn the biggest "penalty" in the game into a <strong>weapon</strong> -- every enemy spell heals you.</p>
     </div>
 
-    <h3><img class="inline-icon" src="https://images.uesp.net/thumb/9/97/OBR-icon-race-HighElf.png/200px-OBR-icon-race-HighElf.png" alt="">Race -- High Elf (Altmer)</h3>
+    <h3><img class="inline-icon" src="https://images.uesp.net/thumb/9/97/OBR-icon-race-HighElf.png/200px-OBR-icon-race-HighElf.png" alt="" loading="lazy" decoding="async">Race -- High Elf (Altmer)</h3>
     <ul class="picks">
       <li><span class="label">Passive</span> <span class="name">+100 Magicka</span> -- <span class="note">the largest magicka bonus of any race, permanent</span></li>
       <li><span class="label">Passive</span> <span class="name">Weakness to Fire, Frost, Shock (25% each)</span> -- <span class="note">sounds bad, becomes irrelevant at 100% Spell Absorption</span></li>
@@ -757,7 +773,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
 
     <div class="bs-grid">
       <div class="bs-card recommended">
-        <img src="https://images.uesp.net/thumb/1/1f/OBbsign_Atronach.jpg/200px-OBbsign_Atronach.jpg" alt="The Atronach">
+        <img src="https://images.uesp.net/thumb/1/1f/OBbsign_Atronach.jpg/200px-OBbsign_Atronach.jpg" alt="The Atronach" loading="lazy" decoding="async">
         <div class="bs-name">The Atronach</div>
         <div class="bs-bonus">+150 Magicka, 50% Spell Absorption</div>
         <div class="bs-penalty">Stunted Magicka (ZERO regen, ever)</div>
@@ -765,13 +781,13 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
         <div style="margin-top:.5rem"><span class="tag gold">Required</span></div>
       </div>
       <div class="bs-card">
-        <img src="https://images.uesp.net/thumb/c/c7/OBbsign_Mage.jpg/200px-OBbsign_Mage.jpg" alt="The Mage">
+        <img src="https://images.uesp.net/thumb/c/c7/OBbsign_Mage.jpg/200px-OBbsign_Mage.jpg" alt="The Mage" loading="lazy" decoding="async">
         <div class="bs-name">The Mage</div>
         <div class="bs-bonus">+50 Magicka</div>
         <div class="bs-note">Safe and boring. +50 Magicka with no drawback. You'd have +150 total (race + sign) instead of +250, and zero absorption. Significantly weaker endgame.</div>
       </div>
       <div class="bs-card">
-        <img src="https://images.uesp.net/thumb/0/09/OBbsign_Apprentice.jpg/200px-OBbsign_Apprentice.jpg" alt="The Apprentice">
+        <img src="https://images.uesp.net/thumb/0/09/OBbsign_Apprentice.jpg/200px-OBbsign_Apprentice.jpg" alt="The Apprentice" loading="lazy" decoding="async">
         <div class="bs-name">The Apprentice</div>
         <div class="bs-bonus">+100 Magicka</div>
         <div class="bs-penalty">100% Weakness to Magic</div>
@@ -1005,7 +1021,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
     <h2>Best Spells by School</h2>
 
     <div class="spell-section">
-      <div class="spell-level"><img class="inline-icon" src="https://images.uesp.net/b/bd/OB-icon-skill-Destruction.png" alt="">Destruction -- Primary Offense (Touch Priority)</div>
+      <div class="spell-level"><img class="inline-icon" src="https://images.uesp.net/b/bd/OB-icon-skill-Destruction.png" alt="" loading="lazy" decoding="async">Destruction -- Primary Offense (Touch Priority)</div>
       <div class="spell-row"><div class="spell-info"><div class="spell-name">Burning Touch</div><div class="spell-desc">Your starter. Cheapest offensive touch spell. Spam it from level 1 to level Destruction.</div><div class="gear-loc">&#128205; Edgar's Discount Spells -- Imperial City</div></div><span class="spell-badge fire">Fire &middot; Nov</span></div>
       <div class="spell-row"><div class="spell-info"><div class="spell-name">Shocking Touch</div><div class="spell-desc">Shock damage + magicka drain on touch. Priority buy -- cripples enemy casters.</div><div class="gear-loc">&#128205; Edgar's Discount Spells &middot; Volanaro -- Bruma MG</div></div><span class="spell-badge shock">Shock &middot; Appr</span></div>
       <div class="spell-row"><div class="spell-info"><div class="spell-name">Lightning Bolt (ranged backup)</div><div class="spell-desc">For when you can't close distance -- flying enemies, archers on ledges. Use sparingly.</div><div class="gear-loc">&#128205; Vigge the Cautious -- Skingrad MG</div></div><span class="spell-badge shock">Shock &middot; Journ</span></div>
@@ -1082,7 +1098,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
         </div>
       </div>
       <div class="gear-row">
-        <img class="gear-img" src="https://images.uesp.net/thumb/5/51/OBR-item-Umbra.jpg/200px-OBR-item-Umbra.jpg" alt="Umbra">
+        <img class="gear-img" src="https://images.uesp.net/thumb/5/51/OBR-item-Umbra.jpg/200px-OBR-item-Umbra.jpg" alt="Umbra" loading="lazy" decoding="async">
         <div class="gear-info">
           <div><span class="gear-name">Umbra (Armor Set)</span> <span class="gear-slot">Heavy Armor</span></div>
           <div class="gear-desc">Kill Umbra NPC at level 1 for a full Ebony Armor set (AR 79). Cheese her by luring to Imperial City guards. The sword has Soul Trap for filling soul gems.</div>
@@ -1094,7 +1110,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
     <div class="gear-group">
       <div class="gear-group-title">Mid Game -- Levels 10-20</div>
       <div class="gear-row">
-        <img class="gear-img" src="https://images.uesp.net/thumb/6/64/OB-item-Ebony_Armor.jpg/200px-OB-item-Ebony_Armor.jpg" alt="Ebony Armor">
+        <img class="gear-img" src="https://images.uesp.net/thumb/6/64/OB-item-Ebony_Armor.jpg/200px-OB-item-Ebony_Armor.jpg" alt="Ebony Armor" loading="lazy" decoding="async">
         <div class="gear-info">
           <div><span class="gear-name">Ebony Armor</span> <span class="gear-slot">Heavy Armor</span></div>
           <div class="gear-desc">AR 69. Starts appearing at level 15. Each piece becomes an enchanting canvas for Spell Absorption.</div>
@@ -1102,7 +1118,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
         </div>
       </div>
       <div class="gear-row">
-        <img class="gear-img" src="https://images.uesp.net/thumb/b/ba/OBR-item-Spell_Breaker.jpg/200px-OBR-item-Spell_Breaker.jpg" alt="Spellbreaker">
+        <img class="gear-img" src="https://images.uesp.net/thumb/b/ba/OBR-item-Spell_Breaker.jpg/200px-OBR-item-Spell_Breaker.jpg" alt="Spellbreaker" loading="lazy" decoding="async">
         <div class="gear-info">
           <div><span class="gear-name">Spellbreaker</span> <span class="gear-slot">Shield</span></div>
           <div class="gear-desc">30% Reflect Spell. Excellent stopgap until you reach 100% absorption. Spells that aren't absorbed get reflected.</div>
@@ -1122,7 +1138,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
     <div class="gear-group">
       <div class="gear-group-title">Late Game -- Levels 20+</div>
       <div class="gear-row">
-        <img class="gear-img" src="https://images.uesp.net/thumb/7/7a/OB-item-Daedric_Armor.jpg/200px-OB-item-Daedric_Armor.jpg" alt="Daedric Armor">
+        <img class="gear-img" src="https://images.uesp.net/thumb/7/7a/OB-item-Daedric_Armor.jpg/200px-OB-item-Daedric_Armor.jpg" alt="Daedric Armor" loading="lazy" decoding="async">
         <div class="gear-info">
           <div><span class="gear-name">Daedric Armor (Enchanted)</span> <span class="gear-slot">Heavy Armor</span></div>
           <div class="gear-desc">Best heavy armor (AR 79+). Enchant every piece with Spell Absorption to reach 100% total. Your endgame set.</div>

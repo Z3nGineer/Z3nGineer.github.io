@@ -4,7 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Z3nGineer — Software Engineer, Chef &amp; Musician</title>
+<meta name="description" content="Portfolio of Steve Mackey, a software engineer, chef, musician, and builder of AI tools, desktop apps, game guides, and branded web experiences.">
+<link rel="canonical" href="https://z3ngineer.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://z3ngineer.github.io/">
+<meta property="og:title" content="Z3nGineer — Software Engineer, Chef &amp; Musician">
+<meta property="og:description" content="AI systems, desktop apps, media tools, game guides, and hand-built web experiences by Steve Mackey.">
+<meta property="og:image" content="https://z3ngineer.github.io/img/portfolio-banner.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Z3nGineer — Software Engineer, Chef &amp; Musician">
+<meta name="twitter:description" content="AI systems, desktop apps, media tools, game guides, and hand-built web experiences by Steve Mackey.">
+<meta name="twitter:image" content="https://z3ngineer.github.io/img/portfolio-banner.jpg">
 <script>if('scrollRestoration' in history) history.scrollRestoration='manual';window.scrollTo(0,0);</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="img/studio.jpg" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=Cinzel:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -250,6 +264,12 @@ footer{border-top:1px solid var(--border);position:relative;z-index:2}
   .footer-inner{padding:3rem 1rem}
   .footer-right{flex-wrap:wrap;justify-content:center}
 }
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:0.01ms!important}
+  #preloader,.cursor,.cursor-label,#bg-canvas,.hero-scroll,.marquee-section{display:none!important}
+  .hero-bg,.hero-eyebrow,.hero-name .char,.hero-sub,.section-label,.section-heading,.bento-card,.about-portrait-wrap,.about-text{opacity:1!important;transform:none!important}
+  .featured-track{transform:none!important}
+}
 </style>
 </head>
 <body>
@@ -281,11 +301,11 @@ footer{border-top:1px solid var(--border);position:relative;z-index:2}
 <!-- ═══════════════════ NAV ═══════════════════ -->
 <nav class="nav" id="mainNav">
   <a href="index.html" class="nav-brand" id="navBrand">Z3nGineer</a>
-  <button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu" aria-controls="navLinks" aria-expanded="false"><span></span><span></span><span></span></button>
   <ul class="nav-links" id="navLinks">
-    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="index.html" class="active" aria-current="page">Home</a></li>
     <li class="nav-dropdown">
-      <a href="#">Projects <span class="nav-dd-arrow">&#x25BC;</span></a>
+      <a href="guides.html" aria-haspopup="true">Projects <span class="nav-dd-arrow">&#x25BC;</span></a>
       <div class="nav-dd-menu"><div class="nav-dd-menu-inner">
         <a href="omnisuite.html">OmniSuite</a>
         <a href="heatsync.html">HeatSync</a>
@@ -299,7 +319,7 @@ footer{border-top:1px solid var(--border);position:relative;z-index:2}
 
 <!-- ═══════════════════ HERO ═══════════════════ -->
 <section class="hero" id="hero">
-  <div class="hero-bg"><img src="img/studio.jpg" alt=""></div>
+  <div class="hero-bg"><img src="img/studio.jpg" alt="" width="1200" height="800" fetchpriority="high" decoding="async"></div>
   <div class="hero-eyebrow" id="heroEyebrow">Software Engineer &bull; Chef &bull; Musician</div>
   <h1 class="hero-name" id="heroName">STEVE MACKEY</h1>
   <p class="hero-sub" id="heroSub">Building things that don't exist yet.</p>
@@ -355,10 +375,10 @@ footer{border-top:1px solid var(--border);position:relative;z-index:2}
 
       <!-- OmniSuite -->
       <div class="featured-card" data-c="purple">
-        <img src="img/omni-studio.png" alt="OmniSuite" class="featured-card-img">
+        <img src="img/omni-studio.png" alt="OmniSuite" class="featured-card-img" width="1200" height="675" loading="lazy" decoding="async">
         <div class="featured-card-body">
           <div class="featured-card-top">
-            <img src="img/omni-icon.png" alt="" class="featured-card-icon" style="border:none;background:none">
+            <img src="img/omni-icon.png" alt="" class="featured-card-icon" style="border:none;background:none" width="64" height="64" loading="lazy" decoding="async">
             <div>
               <h3 class="featured-card-name"><a href="omnisuite.html">OmniSuite</a></h3>
               <p class="featured-card-sub">AI-Powered Music Production Platform</p>
@@ -387,7 +407,7 @@ footer{border-top:1px solid var(--border);position:relative;z-index:2}
 
       <!-- CHIM -->
       <div class="featured-card" data-c="gold">
-        <img src="hero-bg.jpg" alt="CHIM Modpack" class="featured-card-img">
+        <img src="hero-bg.jpg" alt="CHIM Modpack" class="featured-card-img" width="1200" height="675" loading="lazy" decoding="async">
         <div class="featured-card-body">
           <div class="featured-card-top">
             <div class="featured-card-icon">&#x2726;</div>
@@ -407,16 +427,16 @@ footer{border-top:1px solid var(--border);position:relative;z-index:2}
             <span class="tech">Python</span><span class="tech">tkinter</span><span class="tech">Nexus API</span><span class="tech">Proton</span>
             <span class="tech">UE4SS</span><span class="tech">OBSE</span><span class="tech">GitHub Actions</span><span class="tech">Cloudflare Pages</span>
           </div>
-          <a href="https://getchim.github.io" target="_blank" class="featured-cta">View CHIM &rarr;</a>
+          <a href="https://getchim.github.io" target="_blank" rel="noopener noreferrer" class="featured-cta">View CHIM &rarr;</a>
         </div>
       </div>
 
       <!-- HeatSync -->
       <div class="featured-card" data-c="blue">
-        <img src="img/heatsync-screenshot.png" alt="HeatSync" class="featured-card-img">
+        <img src="img/heatsync-screenshot.png" alt="HeatSync" class="featured-card-img" width="1200" height="675" loading="lazy" decoding="async">
         <div class="featured-card-body">
           <div class="featured-card-top">
-            <img src="img/heatsync-icon.png" alt="" class="featured-card-icon" style="border:none;background:none">
+            <img src="img/heatsync-icon.png" alt="" class="featured-card-icon" style="border:none;background:none" width="64" height="64" loading="lazy" decoding="async">
             <div>
               <h3 class="featured-card-name"><a href="heatsync.html">HeatSync</a></h3>
               <p class="featured-card-sub">Real-Time System Monitor</p>
@@ -518,11 +538,11 @@ footer{border-top:1px solid var(--border);position:relative;z-index:2}
           <div class="bento-icon">&#x1F525;</div>
           <div><h3 class="bento-name">CrockedNLoaded</h3><p class="bento-sub">Cooking Channel &amp; Brand</p></div>
         </div>
-        <img src="img/cooking-hero.jpg" alt="CrockedNLoaded" class="bento-img">
+        <img src="img/cooking-hero.jpg" alt="CrockedNLoaded" class="bento-img" width="900" height="600" loading="lazy" decoding="async">
         <p class="bento-desc">A cooking channel I co-host with my friend CrockPotDaddy. I'm a professional chef, he's a home cook — we cook whatever sounds fun and talk trash while we do it. I designed and built the entire brand site from scratch.</p>
         <div class="stack"><span class="tech">HTML/CSS</span><span class="tech">JavaScript</span><span class="tech">Branding</span><span class="tech">Responsive</span></div>
         <div class="bento-links">
-          <a href="https://crockednloaded.com" target="_blank" class="bento-link">&#x1F525; Visit Site</a>
+          <a href="https://crockednloaded.com" target="_blank" rel="noopener noreferrer" class="bento-link">&#x1F525; Visit Site</a>
         </div>
       </div>
 
@@ -532,14 +552,14 @@ footer{border-top:1px solid var(--border);position:relative;z-index:2}
           <div class="bento-icon">&#x1F3B5;</div>
           <div><h3 class="bento-name">Music &amp; Media</h3><p class="bento-sub">MACK3Y — Singer, Producer &amp; COO of Project 2 Studios</p></div>
         </div>
-        <img src="img/project2.jpg" alt="Project 2 Studios" class="bento-img">
+        <img src="img/project2.jpg" alt="Project 2 Studios" class="bento-img" width="900" height="600" loading="lazy" decoding="async">
         <p class="bento-desc">I write, produce, and release music professionally under the name <strong>MACK3Y</strong>, distributed through DistroKid to all major platforms. I'm also the COO of <strong>Project 2 Studios</strong>, a media company focused on artist development.</p>
         <div class="stack"><span class="tech">DistroKid</span><span class="tech">Spotify</span><span class="tech">Apple Music</span><span class="tech">YouTube Music</span><span class="tech">Production</span><span class="tech">Mixing</span></div>
         <div class="bento-links">
-          <a href="https://open.spotify.com/artist/2Il72DDQFro4dZnyejIuLy" target="_blank" class="bento-link">&#x1F3B5; Spotify</a>
-          <a href="https://www.youtube.com/channel/UCk8wi40ouNv9JhnE8Pn6r-A" target="_blank" class="bento-link">&#x25B6; YouTube Music</a>
-          <a href="https://www.facebook.com/profile.php?id=61582326641559" target="_blank" class="bento-link">&#x1F3B6; MACK3Y</a>
-          <a href="https://www.facebook.com/Project2Studios/" target="_blank" class="bento-link">&#x1F3AC; Project 2 Studios</a>
+          <a href="https://open.spotify.com/artist/2Il72DDQFro4dZnyejIuLy" target="_blank" rel="noopener noreferrer" class="bento-link">&#x1F3B5; Spotify</a>
+          <a href="https://www.youtube.com/channel/UCk8wi40ouNv9JhnE8Pn6r-A" target="_blank" rel="noopener noreferrer" class="bento-link">&#x25B6; YouTube Music</a>
+          <a href="https://www.facebook.com/profile.php?id=61582326641559" target="_blank" rel="noopener noreferrer" class="bento-link">&#x1F3B6; MACK3Y</a>
+          <a href="https://www.facebook.com/Project2Studios/" target="_blank" rel="noopener noreferrer" class="bento-link">&#x1F3AC; Project 2 Studios</a>
         </div>
       </div>
 
@@ -554,7 +574,7 @@ footer{border-top:1px solid var(--border);position:relative;z-index:2}
     <h2 class="section-heading">The person behind the code.</h2>
     <div class="about-grid">
       <div class="about-portrait-wrap">
-        <img src="img/steve-city.jpg" alt="Steve Mackey" class="about-portrait">
+        <img src="img/steve-city.jpg" alt="Steve Mackey" class="about-portrait" width="900" height="1200" loading="lazy" decoding="async">
       </div>
       <div>
         <div class="about-text">
@@ -588,18 +608,18 @@ footer{border-top:1px solid var(--border);position:relative;z-index:2}
 </footer>
 
 <!-- ═══════════════════ SCRIPTS ═══════════════════ -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.23/dist/lenis.min.js"></script>
 <script>
 /* ═══════════════════ LENIS SMOOTH SCROLL ═══════════════════ */
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const lenis = new Lenis({
-  duration: 1.2,
+  duration: reduceMotion ? 0 : 1.2,
   easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   touchMultiplier: 2,
+  smoothWheel: !reduceMotion,
 });
-function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-requestAnimationFrame(raf);
 gsap.registerPlugin(ScrollTrigger);
 lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add(time => lenis.raf(time * 1000));
@@ -612,12 +632,18 @@ gsap.ticker.lagSmoothing(0);
   const preloader = document.getElementById('preloader');
   const obj = { val: 0 };
 
+  if (reduceMotion || sessionStorage.getItem('z3-preloader-seen') === '1') {
+    preloader.remove();
+    animateHero();
+    return;
+  }
+
   document.body.style.overflow = 'hidden';
   lenis.stop();
 
   gsap.to(obj, {
     val: 100,
-    duration: 2,
+    duration: .65,
     ease: 'power3.inOut',
     onUpdate() {
       const v = Math.round(obj.val);
@@ -632,6 +658,7 @@ gsap.ticker.lagSmoothing(0);
         delay: .3,
         onComplete() {
           preloader.remove();
+          sessionStorage.setItem('z3-preloader-seen', '1');
           document.body.style.overflow = '';
           lenis.start();
           animateHero();
@@ -700,13 +727,16 @@ gsap.ticker.lagSmoothing(0);
 ;(function() {
   const btn = document.getElementById('hamburger');
   const links = document.getElementById('navLinks');
+  const setOpen = open => {
+    btn.classList.toggle('open', open);
+    links.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+  };
   btn.addEventListener('click', () => {
-    btn.classList.toggle('open');
-    links.classList.toggle('open');
+    setOpen(!links.classList.contains('open'));
   });
   links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    btn.classList.remove('open');
-    links.classList.remove('open');
+    setOpen(false);
   }));
 })();
 
@@ -721,6 +751,11 @@ function animateHero() {
     span.textContent = ch === ' ' ? '\u00A0' : ch;
     name.appendChild(span);
   });
+
+  if (reduceMotion) {
+    gsap.set(['.hero-bg', '#heroEyebrow', '.hero-name .char', '#heroSub', '#heroScroll'], { opacity: 1, y: 0 });
+    return;
+  }
 
   const tl = gsap.timeline();
   tl.to('.hero-bg', { opacity: 1, duration: 1.2, ease: 'power2.out' })
@@ -752,7 +787,7 @@ function animateHero() {
   function setupHScroll() {
     ScrollTrigger.getAll().forEach(st => { if (st.vars.id === 'hscroll') st.kill(); });
 
-    if (window.innerWidth < 768) return;
+    if (reduceMotion || window.innerWidth < 768) return;
 
     const totalScroll = track.scrollWidth - pin.offsetWidth;
 
@@ -782,6 +817,10 @@ function animateHero() {
 /* ═══════════════════ SCROLL REVEALS ═══════════════════ */
 ;(function() {
   const reveals = document.querySelectorAll('.section-label, .section-heading, .bento-card, .about-portrait-wrap, .about-text');
+  if (reduceMotion) {
+    reveals.forEach(el => gsap.set(el, { opacity: 1, y: 0 }));
+    return;
+  }
   reveals.forEach((el, i) => {
     gsap.from(el, {
       opacity: 0,
@@ -799,6 +838,7 @@ function animateHero() {
 
 /* ═══════════════════ PARALLAX — HERO BG ═══════════════════ */
 ;(function() {
+  if (reduceMotion) return;
   gsap.to('.hero-bg img', {
     y: 120,
     ease: 'none',
@@ -831,6 +871,7 @@ function animateHero() {
 
 /* ═══════════════════ BACKGROUND CANVAS ═══════════════════ */
 ;(function() {
+  if (reduceMotion) return;
   const c = document.getElementById('bg-canvas'), ctx = c.getContext('2d');
   let w, h, mx = 0, my = 0, particles = [];
   const GOLD = [201, 168, 76];

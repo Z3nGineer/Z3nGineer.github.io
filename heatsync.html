@@ -4,6 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HeatSync — Real-Time System Monitor</title>
+
+<meta name="description" content="HeatSync is a cross-platform system monitor for CPU and GPU telemetry, temperatures, clocks, power draw, and compact desktop monitoring.">
+<link rel="canonical" href="https://z3ngineer.github.io/heatsync.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://z3ngineer.github.io/heatsync.html">
+<meta property="og:title" content="HeatSync — Real-Time System Monitor">
+<meta property="og:description" content="HeatSync is a cross-platform system monitor for CPU and GPU telemetry, temperatures, clocks, power draw, and compact desktop monitoring.">
+<meta property="og:image" content="https://z3ngineer.github.io/img/portfolio-banner.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HeatSync — Real-Time System Monitor">
+<meta name="twitter:description" content="HeatSync is a cross-platform system monitor for CPU and GPU telemetry, temperatures, clocks, power draw, and compact desktop monitoring.">
+<meta name="twitter:image" content="https://z3ngineer.github.io/img/portfolio-banner.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -196,6 +210,8 @@ footer a{color:var(--cyan);text-decoration:none}
 .page-subnav a{font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#5a5a5a;text-decoration:none;transition:color 0.2s}
 .page-subnav a:hover,.page-subnav a.active{color:#ccc}
 
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:0.01ms!important}.reveal,.fade-in,.fade-out{opacity:1!important;transform:none!important}}
 </style>
 </head>
 <body>
@@ -203,11 +219,11 @@ footer a{color:var(--cyan);text-decoration:none}
 <nav class="global-nav">
   <div class="global-nav-inner">
     <a href="index.html" class="global-nav-brand">Z3nGineer</a>
-    <button class="global-hamburger" id="globalHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <button class="global-hamburger" id="globalHamburger" aria-label="Menu" aria-controls="globalNavLinks" aria-expanded="false"><span></span><span></span><span></span></button>
     <ul class="global-nav-links" id="globalNavLinks">
       <li><a href="index.html">Home</a></li>
       <li class="global-nav-dropdown">
-        <a href="#">Projects <span class="global-dd-arrow">&#x25BC;</span></a>
+        <a href="guides.html" aria-haspopup="true">Projects <span class="global-dd-arrow">&#x25BC;</span></a>
         <div class="global-dd-menu">
           <a href="omnisuite.html">OmniSuite</a>
           <a href="heatsync.html">HeatSync</a>
@@ -228,7 +244,7 @@ footer a{color:var(--cyan);text-decoration:none}
 </div>
 
 <header class="hero">
-  <img src="img/heatsync-icon.png" alt="HeatSync" class="hero-icon">
+  <img src="img/heatsync-icon.png" alt="HeatSync" class="hero-icon" loading="lazy" decoding="async">
   <h1>Heat<span>Sync</span></h1>
   <p class="hero-sub">Real-time system monitoring for Windows, with a Linux AppImage for good measure. Built because I got tired of opening five apps to check if my GPU was throttling.</p>
   <div class="hero-badges">
@@ -250,15 +266,15 @@ footer a{color:var(--cyan);text-decoration:none}
     <div class="divider reveal r2"></div>
     <div class="screenshots">
       <div class="reveal">
-        <img src="img/heatsync-screenshot.png" alt="HeatSync Docked Mode">
+        <img src="img/heatsync-screenshot.png" alt="HeatSync Docked Mode" loading="lazy" decoding="async">
         <p class="screenshot-label">Docked Mode — Full-Width System Bar</p>
       </div>
       <div class="reveal r1">
-        <img src="img/heatsync-load.png" alt="HeatSync Standard View">
+        <img src="img/heatsync-load.png" alt="HeatSync Standard View" loading="lazy" decoding="async">
         <p class="screenshot-label">Standard View — Under Load</p>
       </div>
       <div class="reveal r2">
-        <img src="img/heatsync-compact.png" alt="HeatSync Compact Mode">
+        <img src="img/heatsync-compact.png" alt="HeatSync Compact Mode" loading="lazy" decoding="async">
         <p class="screenshot-label">Compact Mode — Minimal Footprint</p>
       </div>
     </div>
@@ -369,7 +385,7 @@ footer a{color:var(--cyan);text-decoration:none}
   <button class="lightbox-arrow lightbox-prev" aria-label="Previous">&#8249;</button>
   <button class="lightbox-arrow lightbox-next" aria-label="Next">&#8250;</button>
   <div class="lightbox-content">
-    <img src="" alt="">
+    <img src="" alt="" loading="lazy" decoding="async">
     <span class="lightbox-caption"></span>
     <span class="lightbox-counter"></span>
   </div>
@@ -383,7 +399,11 @@ fetch('https://api.github.com/repos/Z3nGineer/HeatSync/releases/latest')
 const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0.08,rootMargin:'0px 0px -50px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 const gBtn=document.getElementById('globalHamburger'),gNav=document.getElementById('globalNavLinks');
-if(gBtn&&gNav){gBtn.addEventListener('click',()=>{gBtn.classList.toggle('open');gNav.classList.toggle('open')});gNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{gBtn.classList.remove('open');gNav.classList.remove('open')}))}
+if(gBtn&&gNav){
+  const setNavOpen=open=>{gBtn.classList.toggle('open',open);gNav.classList.toggle('open',open);gBtn.setAttribute('aria-expanded',String(open));};
+  gBtn.addEventListener('click',()=>setNavOpen(!gNav.classList.contains('open')));
+  gNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setNavOpen(false)));
+}
 
 // Lightbox
 (function(){

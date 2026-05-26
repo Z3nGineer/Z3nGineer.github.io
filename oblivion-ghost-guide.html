@@ -4,6 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Ghost — 100% Chameleon Build — Oblivion Remastered</title>
+
+<meta name="description" content="The Ghost — 100% Chameleon Build — Oblivion Remastered by Z3nGineer, with build notes, recommendations, and hand-built static web presentation.">
+<link rel="canonical" href="https://z3ngineer.github.io/oblivion-ghost-guide.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://z3ngineer.github.io/oblivion-ghost-guide.html">
+<meta property="og:title" content="The Ghost — 100% Chameleon Build — Oblivion Remastered">
+<meta property="og:description" content="The Ghost — 100% Chameleon Build — Oblivion Remastered by Z3nGineer, with build notes, recommendations, and hand-built static web presentation.">
+<meta property="og:image" content="https://z3ngineer.github.io/img/portfolio-banner.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Ghost — 100% Chameleon Build — Oblivion Remastered">
+<meta name="twitter:description" content="The Ghost — 100% Chameleon Build — Oblivion Remastered by Z3nGineer, with build notes, recommendations, and hand-built static web presentation.">
+<meta name="twitter:image" content="https://z3ngineer.github.io/img/portfolio-banner.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -241,6 +255,8 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
   .unav-dropdown{border-bottom:none}
 }
 
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:0.01ms!important}.reveal,.fade-in,.fade-out{opacity:1!important;transform:none!important}}
 </style>
 </head>
 <body>
@@ -251,7 +267,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
     <ul class="unav-links" id="unav-links">
       <li><a href="index.html">Home</a></li>
       <li class="unav-dropdown">
-        <a href="#">Projects <span class="dd-arrow">&#x25BC;</span></a>
+        <a href="guides.html" aria-haspopup="true">Projects <span class="dd-arrow">&#x25BC;</span></a>
         <div class="unav-dd">
           <a href="omnisuite.html">OmniSuite</a>
           <a href="heatsync.html">HeatSync</a>
@@ -286,7 +302,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
 <!-- SIDEBAR -->
 <nav class="sidebar">
   <div class="sidebar-badge">
-    <img src="https://images.uesp.net/thumb/1/15/OBR-icon-race-Breton.png/200px-OBR-icon-race-Breton.png" alt="Breton">
+    <img src="https://images.uesp.net/thumb/1/15/OBR-icon-race-Breton.png/200px-OBR-icon-race-Breton.png" alt="Breton" loading="lazy" decoding="async">
   </div>
   <div class="sidebar-title">Build Guide</div>
   <a href="#overview"><span class="nav-icon">&#9826;</span> Overview</a>
@@ -508,7 +524,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
       </svg>
     </div>
     <div class="header-row">
-      <img class="header-portrait" src="https://images.uesp.net/thumb/1/15/OBR-icon-race-Breton.png/200px-OBR-icon-race-Breton.png" alt="Breton">
+      <img class="header-portrait" src="https://images.uesp.net/thumb/1/15/OBR-icon-race-Breton.png/200px-OBR-icon-race-Breton.png" alt="Breton" loading="lazy" decoding="async">
       <div class="header-text">
         <div class="breadcrumb">Oblivion Remastered &#8250; Builds &#8250; The Ghost</div>
         <h1>The Ghost</h1>
@@ -617,20 +633,20 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
     <h2>Birthsign</h2>
     <div class="bs-grid">
       <div class="bs-card recommended">
-        <img src="https://images.uesp.net/thumb/c/c7/OBbsign_Mage.jpg/200px-OBbsign_Mage.jpg" alt="The Mage">
+        <img src="https://images.uesp.net/thumb/c/c7/OBbsign_Mage.jpg/200px-OBbsign_Mage.jpg" alt="The Mage" loading="lazy" decoding="async">
         <div class="bs-name">The Mage</div>
         <div class="bs-bonus">+50 Magicka</div>
         <div class="bs-note">Total +100 Magicka with Breton racial. Fuels your Illusion and Conjuration until Chameleon is online. No drawbacks. Best overall pick.</div>
         <div style="margin-top:.5rem"><span class="tag gold">Recommended</span></div>
       </div>
       <div class="bs-card">
-        <img src="https://images.uesp.net/thumb/5/5f/OBbsign_Shadow.jpg/200px-OBbsign_Shadow.jpg" alt="The Shadow">
+        <img src="https://images.uesp.net/thumb/5/5f/OBbsign_Shadow.jpg/200px-OBbsign_Shadow.jpg" alt="The Shadow" loading="lazy" decoding="async">
         <div class="bs-name">The Shadow</div>
         <div class="bs-bonus">Invisibility (60 sec, 1/day)</div>
         <div class="bs-note">Thematic pick. Free daily Invisibility for early game stealth before Chameleon gear. Becomes redundant once you hit 100%.</div>
       </div>
       <div class="bs-card">
-        <img src="https://images.uesp.net/thumb/0/0b/OBbsign_Thief.jpg/200px-OBbsign_Thief.jpg" alt="The Thief">
+        <img src="https://images.uesp.net/thumb/0/0b/OBbsign_Thief.jpg/200px-OBbsign_Thief.jpg" alt="The Thief" loading="lazy" decoding="async">
         <div class="bs-name">The Thief</div>
         <div class="bs-bonus">+10 Agility, +10 Speed, +10 Luck</div>
         <div class="bs-note">Strong stat spread for a Stealth build. More Agility = more dagger damage in the remaster. Good alternative if you prefer raw stats over Magicka.</div>

@@ -4,6 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Destruction Archmage — Oblivion Remastered Build Guide</title>
+
+<meta name="description" content="Destruction Archmage — Oblivion Remastered Build Guide by Z3nGineer, with build notes, recommendations, and hand-built static web presentation.">
+<link rel="canonical" href="https://z3ngineer.github.io/oblivion-destruction-archmage-guide.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://z3ngineer.github.io/oblivion-destruction-archmage-guide.html">
+<meta property="og:title" content="Destruction Archmage — Oblivion Remastered Build Guide">
+<meta property="og:description" content="Destruction Archmage — Oblivion Remastered Build Guide by Z3nGineer, with build notes, recommendations, and hand-built static web presentation.">
+<meta property="og:image" content="https://z3ngineer.github.io/img/portfolio-banner.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Destruction Archmage — Oblivion Remastered Build Guide">
+<meta name="twitter:description" content="Destruction Archmage — Oblivion Remastered Build Guide by Z3nGineer, with build notes, recommendations, and hand-built static web presentation.">
+<meta name="twitter:image" content="https://z3ngineer.github.io/img/portfolio-banner.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -240,6 +254,8 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
   .unav-dropdown{border-bottom:none}
 }
 
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:0.01ms!important}.reveal,.fade-in,.fade-out{opacity:1!important;transform:none!important}}
 </style>
 </head>
 <body>
@@ -250,7 +266,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
     <ul class="unav-links" id="unav-links">
       <li><a href="index.html">Home</a></li>
       <li class="unav-dropdown">
-        <a href="#">Projects <span class="dd-arrow">&#x25BC;</span></a>
+        <a href="guides.html" aria-haspopup="true">Projects <span class="dd-arrow">&#x25BC;</span></a>
         <div class="unav-dd">
           <a href="omnisuite.html">OmniSuite</a>
           <a href="heatsync.html">HeatSync</a>
@@ -285,7 +301,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
 <!-- SIDEBAR -->
 <nav class="sidebar">
   <div class="sidebar-badge">
-    <img src="https://images.uesp.net/thumb/a/a2/OBR-class-Mage.png/200px-OBR-class-Mage.png" alt="Mage">
+    <img src="https://images.uesp.net/thumb/a/a2/OBR-class-Mage.png/200px-OBR-class-Mage.png" alt="Mage" loading="lazy" decoding="async">
   </div>
   <div class="sidebar-title">Build Guide</div>
   <a href="#overview"><span class="nav-icon">◈</span> Overview</a>
@@ -597,7 +613,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
       </svg>
     </div>
     <div class="header-row">
-      <img class="header-portrait" src="https://images.uesp.net/thumb/1/15/OBR-icon-race-Breton.png/200px-OBR-icon-race-Breton.png" alt="Breton">
+      <img class="header-portrait" src="https://images.uesp.net/thumb/1/15/OBR-icon-race-Breton.png/200px-OBR-icon-race-Breton.png" alt="Breton" loading="lazy" decoding="async">
       <div class="header-text">
         <div class="breadcrumb">Oblivion Remastered › Builds › Destruction Archmage</div>
         <h1>Destruction Archmage</h1>
@@ -622,7 +638,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
       <p><strong>Willpower-based regen is quadratic.</strong> In the original game, mages ran dry constantly. The remaster ties magicka regeneration to Willpower with exponential scaling — at 100 Willpower, your regen is fast enough to sustain continuous casting. Combined with no spell effectiveness penalty (you wear robes, not armor), every spell hits at 100% power from level 1.</p>
     </div>
 
-    <h3><img class="inline-icon" src="https://images.uesp.net/thumb/1/15/OBR-icon-race-Breton.png/200px-OBR-icon-race-Breton.png" alt="">Race — Breton</h3>
+    <h3><img class="inline-icon" src="https://images.uesp.net/thumb/1/15/OBR-icon-race-Breton.png/200px-OBR-icon-race-Breton.png" alt="" loading="lazy" decoding="async">Race — Breton</h3>
     <ul class="picks">
       <li><span class="label">Passive</span> <span class="name">50% Magic Resistance</span> — <span class="note">best defensive racial in the game, permanent. Enemy mages barely scratch you.</span></li>
       <li><span class="label">Passive</span> <span class="name">+50 Magicka</span> — <span class="note">permanent bonus to your mana pool, stacks with birthsign and Intelligence</span></li>
@@ -720,21 +736,21 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
     <p>Birthsign choice defines your entire mana economy. For a pure mage, this matters more than any other build.</p>
     <div class="bs-grid">
       <div class="bs-card recommended">
-        <img src="https://images.uesp.net/thumb/c/c7/OBbsign_Mage.jpg/200px-OBbsign_Mage.jpg" alt="The Mage">
+        <img src="https://images.uesp.net/thumb/c/c7/OBbsign_Mage.jpg/200px-OBbsign_Mage.jpg" alt="The Mage" loading="lazy" decoding="async">
         <div class="bs-name">The Mage</div>
         <div class="bs-bonus">+50 Magicka</div>
         <div class="bs-note">No drawbacks. Total +100 Magicka with racial bonus. Reliable, consistent, excellent for all experience levels. You will never feel magicka-starved early on, and the bonus stays relevant into endgame. Best choice for a first-time pure mage.</div>
         <div style="margin-top:.5rem"><span class="tag gold">Recommended</span></div>
       </div>
       <div class="bs-card">
-        <img src="https://images.uesp.net/thumb/1/1f/OBbsign_Atronach.jpg/200px-OBbsign_Atronach.jpg" alt="The Atronach">
+        <img src="https://images.uesp.net/thumb/1/1f/OBbsign_Atronach.jpg/200px-OBbsign_Atronach.jpg" alt="The Atronach" loading="lazy" decoding="async">
         <div class="bs-name">The Atronach</div>
         <div class="bs-bonus">+150 Magicka, 50% Spell Absorption</div>
         <div class="bs-penalty">ZERO magicka regen — ever</div>
         <div class="bs-note">The highest-ceiling mage birthsign. +200 total Magicka with racial. 50% Spell Absorption means half of all enemy spells restore your Magicka instead of damaging you. But you NEVER regenerate mana naturally — you rely entirely on Absorb, potions, and Welkynd Stones. Extremely powerful in the hands of an expert. Miserable if you don't know the sustain loop.</div>
       </div>
       <div class="bs-card">
-        <img src="https://images.uesp.net/thumb/7/7e/OBbsign_Apprentice.jpg/200px-OBbsign_Apprentice.jpg" alt="The Apprentice">
+        <img src="https://images.uesp.net/thumb/7/7e/OBbsign_Apprentice.jpg/200px-OBbsign_Apprentice.jpg" alt="The Apprentice" loading="lazy" decoding="async">
         <div class="bs-name">The Apprentice</div>
         <div class="bs-bonus">+100 Magicka</div>
         <div class="bs-penalty">100% Weakness to Magic</div>
@@ -991,7 +1007,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
     <h2>Spells by School</h2>
 
     <div class="spell-section">
-      <div class="spell-level"><img class="inline-icon" src="https://images.uesp.net/b/bd/OB-icon-skill-Destruction.png" alt="">Destruction — Primary Offense</div>
+      <div class="spell-level"><img class="inline-icon" src="https://images.uesp.net/b/bd/OB-icon-skill-Destruction.png" alt="" loading="lazy" decoding="async">Destruction — Primary Offense</div>
       <div class="spell-row"><div class="spell-info"><div class="spell-name">Flare</div><div class="spell-desc">Cheap fire damage. Your level 1 workhorse. Spam constantly to level Destruction. Buy from Druja in Skingrad or Volanaro in Bruma.</div><div class="gear-loc">Cost: 11 Magicka</div></div><span class="spell-badge fire">Fire · Novice</span></div>
       <div class="spell-row"><div class="spell-info"><div class="spell-name">Snowball</div><div class="spell-desc">Frost damage + movement slow on target. Essential for kiting — slow enemies, backpedal, cast again. Buy from Druja in Skingrad.</div><div class="gear-loc">Cost: 14 Magicka</div></div><span class="spell-badge frost">Frost · Novice</span></div>
       <div class="spell-row"><div class="spell-info"><div class="spell-name">Frost Touch</div><div class="spell-desc">Stronger frost at touch range. Touch spells cost less Magicka but require melee proximity — risky for a pure mage. Use only with Paralyze.</div><div class="gear-loc">Cost: 20 Magicka</div></div><span class="spell-badge frost">Frost · Appr</span></div>
@@ -1132,7 +1148,7 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);tex
     <div class="gear-group">
       <div class="gear-group-title">Defensive Gear</div>
       <div class="gear-row">
-        <img class="gear-img" src="https://images.uesp.net/thumb/b/ba/OBR-item-Spell_Breaker.jpg/200px-OBR-item-Spell_Breaker.jpg" alt="Spellbreaker">
+        <img class="gear-img" src="https://images.uesp.net/thumb/b/ba/OBR-item-Spell_Breaker.jpg/200px-OBR-item-Spell_Breaker.jpg" alt="Spellbreaker" loading="lazy" decoding="async">
         <div class="gear-info">
           <div><span class="gear-name">Spell Breaker</span> <span class="gear-slot">Shield (Daedric)</span></div>
           <div class="gear-desc">Reflect Spell 30%. Yes, equipping a shield adds armor and penalizes spell effectiveness. But for specific fights against magic-heavy enemies, the 30% reflect is worth the tradeoff. Swap it in situationally.</div>
